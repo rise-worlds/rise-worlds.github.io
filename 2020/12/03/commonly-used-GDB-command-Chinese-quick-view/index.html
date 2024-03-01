@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 7.1.1">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://unpkg.com/@fortawesome/fontawesome-free@6.5.1/css/all.min.css" integrity="sha256-wiz7ZSCn/btzhjKDQBms9Hx4sSeUYsDrTLg7roPstac=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://unpkg.com/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"rise-worlds.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.19.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="英文：Fsf，翻译：Linux中国&#x2F;robot527原始地址 • break — 在指定的行或函数处设置断点，缩写为 b • info breakpoints — 打印未删除的所有断点，观察点和捕获点的列表，缩写为 i b • disable — 禁用断点，缩写为 dis • enable — 启用断点 • clear — 清除指定行或函数处的断点 • delete — 删除断点，缩写为">
+<meta property="og:type" content="article">
+<meta property="og:title" content="常用 GDB 命令中文速览">
+<meta property="og:url" content="https://rise-worlds.github.io/2020/12/03/commonly-used-GDB-command-Chinese-quick-view/index.html">
+<meta property="og:site_name" content="Rise&#39;blogs">
+<meta property="og:description" content="英文：Fsf，翻译：Linux中国&#x2F;robot527原始地址 • break — 在指定的行或函数处设置断点，缩写为 b • info breakpoints — 打印未删除的所有断点，观察点和捕获点的列表，缩写为 i b • disable — 禁用断点，缩写为 dis • enable — 启用断点 • clear — 清除指定行或函数处的断点 • delete — 删除断点，缩写为">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-12-03T04:08:47.000Z">
+<meta property="article:modified_time" content="2024-03-01T04:55:49.061Z">
+<meta property="article:author" content="rise">
+<meta property="article:tag" content="gdb">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://rise-worlds.github.io/2020/12/03/commonly-used-GDB-command-Chinese-quick-view/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://rise-worlds.github.io/2020/12/03/commonly-used-GDB-command-Chinese-quick-view/","path":"2020/12/03/commonly-used-GDB-command-Chinese-quick-view/","title":"常用 GDB 命令中文速览"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>常用 GDB 命令中文速览 | Rise'blogs</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Rise'blogs</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li><li class="menu-item menu-item-sitemap"><a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>Sitemap</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#break"><span class="nav-number">1.</span> <span class="nav-text">break</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#info-breakpoints"><span class="nav-number">2.</span> <span class="nav-text">info breakpoints</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#disable"><span class="nav-number">3.</span> <span class="nav-text">disable</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#enable"><span class="nav-number">4.</span> <span class="nav-text">enable</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#clear"><span class="nav-number">5.</span> <span class="nav-text">clear</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#delete"><span class="nav-number">6.</span> <span class="nav-text">delete</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#tbreak"><span class="nav-number">7.</span> <span class="nav-text">tbreak</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#watch"><span class="nav-number">8.</span> <span class="nav-text">watch</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#step"><span class="nav-number">9.</span> <span class="nav-text">step</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#reverse-step"><span class="nav-number">10.</span> <span class="nav-text">reverse-step</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#next"><span class="nav-number">11.</span> <span class="nav-text">next</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#reverse-next"><span class="nav-number">12.</span> <span class="nav-text">reverse-next</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#return"><span class="nav-number">13.</span> <span class="nav-text">return</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#finish"><span class="nav-number">14.</span> <span class="nav-text">finish</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#until"><span class="nav-number">15.</span> <span class="nav-text">until</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#continue"><span class="nav-number">16.</span> <span class="nav-text">continue</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#print"><span class="nav-number">17.</span> <span class="nav-text">print</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#x"><span class="nav-number">18.</span> <span class="nav-text">x</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#display"><span class="nav-number">19.</span> <span class="nav-text">display</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#info-display"><span class="nav-number">20.</span> <span class="nav-text">info display</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#undisplay"><span class="nav-number">21.</span> <span class="nav-text">undisplay</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#disable-display"><span class="nav-number">22.</span> <span class="nav-text">disable display</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#enable-display"><span class="nav-number">23.</span> <span class="nav-text">enable display</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#help"><span class="nav-number">24.</span> <span class="nav-text">help</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#attach"><span class="nav-number">25.</span> <span class="nav-text">attach</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#run"><span class="nav-number">26.</span> <span class="nav-text">run</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#backtrace"><span class="nav-number">27.</span> <span class="nav-text">backtrace</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ptype"><span class="nav-number">28.</span> <span class="nav-text">ptype</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="rise"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">rise</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">26</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">50</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/rise-worlds" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;rise-worlds" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:rise.worlds@outlook.com" title="E-Mail → mailto:rise.worlds@outlook.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="Back to top">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://rise-worlds.github.io/2020/12/03/commonly-used-GDB-command-Chinese-quick-view/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="rise">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Rise'blogs">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="常用 GDB 命令中文速览 | Rise'blogs">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          常用 GDB 命令中文速览
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2020-12-03 04:08:47" itemprop="dateCreated datePublished" datetime="2020-12-03T04:08:47+00:00">2020-12-03</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/programs/" itemprop="url" rel="index"><span itemprop="name">programs</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>英文：Fsf，翻译：Linux中国&#x2F;robot527<br><a href="linux.cn/article-8900-1.html">原始地址</a></p>
+<pre><code>• break — 在指定的行或函数处设置断点，缩写为 b
+• info breakpoints — 打印未删除的所有断点，观察点和捕获点的列表，缩写为 i b
+• disable — 禁用断点，缩写为 dis
+• enable — 启用断点
+• clear — 清除指定行或函数处的断点
+• delete — 删除断点，缩写为 d
+• tbreak — 设置临时断点，参数同 break，但在程序第一次停住后会被自动删除
+• watch — 为表达式（或变量）设置观察点，当表达式（或变量）的值有变化时，暂停程序执行
+• step — 单步跟踪，如果有函数调用，会进入该函数，缩写为 s
+• reverse-step — 反向单步跟踪，如果有函数调用，会进入该函数
+• next — 单步跟踪，如果有函数调用，不会进入该函数，缩写为 n
+• reverse-next — 反向单步跟踪，如果有函数调用，不会进入该函数
+• return — 使选定的栈帧返回到其调用者
+• finish — 执行直到选择的栈帧返回，缩写为 fin
+• until — 执行直到达到当前栈帧中当前行后的某一行（用于跳过循环、递归函数调用），缩写为 u
+• continue — 恢复程序执行，缩写为 c
+• print — 打印表达式 EXP 的值，缩写为 p
+• x — 查看内存
+• display — 每次程序停止时打印表达式 EXP 的值（自动显示）
+• info display — 打印早先设置为自动显示的表达式列表
+• disable display — 禁用自动显示
+• enable display — 启用自动显示
+• undisplay — 删除自动显示项
+• help — 打印命令列表（带参数时查找命令的帮助），缩写为 h
+• attach — 挂接到已在运行的进程来调试
+• run — 启动被调试的程序，缩写为 r
+• backtrace — 查看程序调用栈的信息，缩写为 bt
+• ptype — 打印类型 TYPE 的定义
+</code></pre>
+<h3 id="break"><a href="#break" class="headerlink" title="break"></a>break</h3><p>使用 break 命令（缩写 b）来设置断点。</p>
+<p>用法：<br>    • break 当不带参数时，在所选栈帧中执行的下一条指令处设置断点。<br>    • break <function-name> 在函数体入口处打断点，在 C++ 中可以使用 class::function 或 function(type, …) 格式来指定函数名。<br>    • break <line-number> 在当前源码文件指定行的开始处打断点。<br>    • break -N break +N 在当前源码行前面或后面的 N 行开始处打断点，N 为正整数。<br>    • break <a href="filename:linenum">filename:linenum</a>  在源码文件 filename 的 linenum 行处打断点。<br>    • break <a href="filename:function">filename:function</a>  在源码文件 filename 的 function 函数入口处打断点。<br>    • break <address> 在程序指令的地址处打断点。<br>    • break … if <cond>  设置条件断点，… 代表上述参数之一（或无参数），cond为条件表达式，仅在 cond 值非零时暂停程序执行。</p>
+<h3 id="info-breakpoints"><a href="#info-breakpoints" class="headerlink" title="info breakpoints"></a>info breakpoints</h3><p>查看断点，观察点和捕获点的列表。</p>
+<p>用法：</p>
+<pre><code>• info breakpoints [list...]
+• info break [list...]
+• list... 用来指定若干个断点的编号（可省略），可以是 2， 1-3， 2 5 等。
+</code></pre>
+<h3 id="disable"><a href="#disable" class="headerlink" title="disable"></a>disable</h3><p>禁用一些断点。参数是用空格分隔的断点编号。要禁用所有断点，不加参数。<br>禁用的断点不会被忘记，但直到重新启用才有效。</p>
+<p>用法：</p>
+<pre><code>• disable [breakpoints] [list...]
+• breakpoints 是 disable 的子命令（可省略），list... 同 info breakpoints 中的描述。
+</code></pre>
+<h3 id="enable"><a href="#enable" class="headerlink" title="enable"></a>enable</h3><p>启用一些断点。给出断点编号（以空格分隔）作为参数。没有参数时，所有断点被启用。</p>
+<p>用法：</p>
+<pre><code>• enable [breakpoints] [list...] 启用指定的断点（或所有定义的断点）。
+• enable [breakpoints] once list... 临时启用指定的断点。GDB 在停止您的程序后立即禁用这些断点。
+• enable [breakpoints] delete list... 使指定的断点启用一次，然后删除。一旦您的程序停止，GDB 就会删除这些断点。等效于用 tbreak 设置的断点。
+</code></pre>
+<p>breakpoints 同 disable 中的描述。</p>
+<h3 id="clear"><a href="#clear" class="headerlink" title="clear"></a>clear</h3><p>在指定行或函数处清除断点。参数可以是行号，函数名称或 * 跟一个地址。</p>
+<p>用法：</p>
+<pre><code>• clear 当不带参数时，清除所选栈帧在执行的源码行中的所有断点。
+• clear &lt;function&gt;, clear &lt;filename:function&gt;  删除在命名函数的入口处设置的任何断点。
+• clear &lt;linenum&gt;, clear &lt;filename:linenum&gt;  删除在指定的文件指定的行号的代码中设置的任何断点。
+• clear &lt;address&gt; 清除指定程序指令的地址处的断点。
+</code></pre>
+<h3 id="delete"><a href="#delete" class="headerlink" title="delete"></a>delete</h3><p>删除一些断点或自动显示表达式。参数是用空格分隔的断点编号。要删除所有断点，不加参数。</p>
+<p>用法： delete [breakpoints] [list…]</p>
+<h3 id="tbreak"><a href="#tbreak" class="headerlink" title="tbreak"></a>tbreak</h3><p>设置临时断点。参数形式同 break 一样。</p>
+<p>除了断点是临时的之外，其他同 break 一样，所以在命中时会被删除。</p>
+<h3 id="watch"><a href="#watch" class="headerlink" title="watch"></a>watch</h3><p>为表达式设置观察点。</p>
+<p>用法： watch [-l|-location] <expr>  每当一个表达式的值改变时，观察点就会暂停程序执行。</p>
+<p>如果给出了 -l 或者 -location，则它会对 expr 求值并观察它所指向的内存。例如，watch *(int *)0x12345678 将在指定的地址处观察一个 4 字节的区域（假设 int 占用 4 个字节）。</p>
+<h3 id="step"><a href="#step" class="headerlink" title="step"></a>step</h3><p>单步执行程序，直到到达不同的源码行。</p>
+<p>用法： step [N] 参数 N 表示执行 N 次（或由于另一个原因直到程序停止）。</p>
+<p>警告：如果当控制在没有调试信息的情况下编译的函数中使用 step 命令，则执行将继续进行，直到控制到达具有调试信息的函数。 同样，它不会进入没有调试信息编译的函数。</p>
+<p>要执行没有调试信息的函数，请使用 stepi 命令，详见后文。</p>
+<h3 id="reverse-step"><a href="#reverse-step" class="headerlink" title="reverse-step"></a>reverse-step</h3><p>反向单步执行程序，直到到达另一个源码行的开头。</p>
+<p>用法： reverse-step [N] 参数 N 表示执行 N 次（或由于另一个原因直到程序停止）。</p>
+<h3 id="next"><a href="#next" class="headerlink" title="next"></a>next</h3><p>单步执行程序，执行完子程序调用。</p>
+<p>用法： next [N]</p>
+<p>与 step 不同，如果当前的源代码行调用子程序，则此命令不会进入子程序，而是将其视为单个源代码行，继续执行。</p>
+<h3 id="reverse-next"><a href="#reverse-next" class="headerlink" title="reverse-next"></a>reverse-next</h3><p>反向步进程序，执行完子程序调用。</p>
+<p>用法： reverse-next [N]</p>
+<p>如果要执行的源代码行调用子程序，则此命令不会进入子程序，调用被视为一个指令。</p>
+<p>参数 N 表示执行 N 次（或由于另一个原因直到程序停止）。</p>
+<h3 id="return"><a href="#return" class="headerlink" title="return"></a>return</h3><p>您可以使用 return 命令取消函数调用的执行。如果你给出一个表达式参数，它的值被用作函数的返回值。</p>
+<p>用法： return <expression>  将 expression 的值作为函数的返回值并使函数直接返回。</p>
+<h3 id="finish"><a href="#finish" class="headerlink" title="finish"></a>finish</h3><p>执行直到选定的栈帧返回。</p>
+<p>用法： finish 返回后，返回的值将被打印并放入到值历史记录中。</p>
+<h3 id="until"><a href="#until" class="headerlink" title="until"></a>until</h3><p>执行直到程序到达当前栈帧中当前行之后（与 break 命令相同的参数）的源码行。此命令用于通过一个多次的循环，以避免单步执行。</p>
+<p>用法：until <location>  或 u <location>  继续运行程序，直到达到指定的位置，或者当前栈帧返回。</p>
+<h3 id="continue"><a href="#continue" class="headerlink" title="continue"></a>continue</h3><p>在信号或断点之后，继续运行被调试的程序。</p>
+<p>用法： continue [N] 如果从断点开始，可以使用数字 N 作为参数，这意味着将该断点的忽略计数设置为 N - 1(以便断点在第 N 次到达之前不会中断)。如果启用了非停止模式（使用 show non-stop 查看），则仅继续当前线程，否则程序中的所有线程都将继续。</p>
+<h3 id="print"><a href="#print" class="headerlink" title="print"></a>print</h3><p>求值并打印表达式 EXP 的值。可访问的变量是所选栈帧的词法环境，以及范围为全局或整个文件的所有变量。</p>
+<p>用法：</p>
+<pre><code>• print [expr] 或 print /f [expr] expr 是一个（在源代码语言中的）表达式。
+</code></pre>
+<p>默认情况下，expr 的值以适合其数据类型的格式打印；您可以通过指定 &#x2F;f 来选择不同的格式，其中 f 是一个指定格式的字母；详见输出格式。</p>
+<p>如果省略 expr，GDB 再次显示最后一个值。</p>
+<p>要以每行一个成员带缩进的格式打印结构体变量请使用命令 set print pretty on，取消则使用命令 set print pretty off。</p>
+<p>可使用命令 show print 查看所有打印的设置。</p>
+<h3 id="x"><a href="#x" class="headerlink" title="x"></a>x</h3><p>检查内存。</p>
+<p>用法： x&#x2F;nfu <addr>  或 x <addr> n、f 和 u 都是可选参数，用于指定要显示的内存以及如何格式化。addr 是要开始显示内存的地址的表达式。</p>
+<p>n 重复次数（默认值是 1），指定要显示多少个单位（由 u 指定）的内存值。</p>
+<p>f 显示格式（初始默认值是 x），显示格式是 print(‘x’，’d’，’u’，’o’，’t’，’a’，’c’，’f’，’s’) 使用的格式之一，再加 i（机器指令）。</p>
+<p>u 单位大小，b 表示单字节，h 表示双字节，w 表示四字节，g 表示八字节。</p>
+<p>例如：</p>
+<p>x&#x2F;3uh 0x54320 表示从地址 0x54320 开始以无符号十进制整数的格式，双字节为单位来显示 3 个内存值。</p>
+<p>x&#x2F;16xb 0x7f95b7d18870 表示从地址 0x7f95b7d18870 开始以十六进制整数的格式，单字节为单位显示 16 个内存值。</p>
+<h3 id="display"><a href="#display" class="headerlink" title="display"></a>display</h3><p>每次程序暂停时，打印表达式 EXP 的值。</p>
+<p>用法： display <expr>,  display&#x2F;fmt <expr>  或 display&#x2F;fmt <addr>  fmt 用于指定显示格式。像 print 命令里的 &#x2F;f 一样。</p>
+<p>对于格式 i 或 s，或者包括单位大小或单位数量，将表达式 addr 添加为每次程序停止时要检查的内存地址。</p>
+<h3 id="info-display"><a href="#info-display" class="headerlink" title="info display"></a>info display</h3><p>打印自动显示的表达式列表，每个表达式都带有项目编号，但不显示其值。</p>
+<p>包括被禁用的表达式和不能立即显示的表达式（当前不可用的自动变量）。</p>
+<h3 id="undisplay"><a href="#undisplay" class="headerlink" title="undisplay"></a>undisplay</h3><p>取消某些表达式在程序暂停时的自动显示。参数是表达式的编号（使用 info display 查询编号）。不带参数表示取消所有自动显示表达式。</p>
+<p>delete display 具有与此命令相同的效果。</p>
+<h3 id="disable-display"><a href="#disable-display" class="headerlink" title="disable display"></a>disable display</h3><p>禁用某些表达式在程序暂停时的自动显示。禁用的显示项目不会被自动打印，但不会被忘记。 它可能稍后再次被启用。</p>
+<p>参数是表达式的编号（使用 info display 查询编号）。不带参数表示禁用所有自动显示表达式。</p>
+<h3 id="enable-display"><a href="#enable-display" class="headerlink" title="enable display"></a>enable display</h3><p>启用某些表达式在程序暂停时的自动显示。</p>
+<p>参数是重新显示的表达式的编号（使用 info display 查询编号）。不带参数表示启用所有自动显示表达式。</p>
+<h3 id="help"><a href="#help" class="headerlink" title="help"></a>help</h3><p>打印命令列表。</p>
+<p>您可以使用不带参数的 help（缩写为 h）来显示命令的类别名的简短列表。</p>
+<p>使用 help <class>  您可以获取该类中的各个命令的列表。使用 help <command>  显示如何使用该命令。</p>
+<h3 id="attach"><a href="#attach" class="headerlink" title="attach"></a>attach</h3><p>挂接到 GDB 之外的进程或文件。该命令可以将进程 ID 或设备文件作为参数。</p>
+<p>对于进程 ID，您必须具有向进程发送信号的权限，并且必须具有与调试器相同的有效的 uid。</p>
+<p>用法： attach <process-id>  GDB 在安排调试指定的进程之后做的第一件事是暂停该进程。</p>
+<p>无论是通过 attach 命令挂接的进程还是通过 run 命令启动的进程，您都可以使用的 GDB 命令来检查和修改挂接的进程。</p>
+<h3 id="run"><a href="#run" class="headerlink" title="run"></a>run</h3><p>启动被调试的程序。</p>
+<p>可以直接指定参数，也可以用 set args 设置（启动所需的）参数。</p>
+<p>例如： run arg1 arg2 … 等效于</p>
+<p>set args arg1 arg2 …<br>run</p>
+<p>还允许使用 &gt;、 &lt; 或 &gt;&gt; 进行输入和输出重定向。</p>
+<h3 id="backtrace"><a href="#backtrace" class="headerlink" title="backtrace"></a>backtrace</h3><p>打印整体栈帧信息。</p>
+<pre><code>• bt 打印整体栈帧信息，每个栈帧一行。
+• bt n 类似于上，但只打印最内层的 n 个栈帧。
+• bt -n 类似于上，但只打印最外层的 n 个栈帧。
+• bt full n 类似于 bt n，还打印局部变量的值。
+</code></pre>
+<p>where 和 info stack(缩写 info s) 是 backtrace 的别名。调用栈信息类似如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">(gdb) where</span><br><span class="line">#0  vconn_stream_run (vconn=0x99e5e38) at lib/vconn-stream.c:232</span><br><span class="line">#1  0x080ed68a in vconn_run (vconn=0x99e5e38) at lib/vconn.c:276</span><br><span class="line">#2  0x080dc6c8 in rconn_run (rc=0x99dbbe0) at lib/rconn.c:513</span><br><span class="line">#3  0x08077b83 in ofconn_run (ofconn=0x99e8070, handle_openflow=0x805e274 &lt;handle_openflow&gt;) at ofproto/connmgr.c:1234</span><br><span class="line">#4  0x08075f92 in connmgr_run (mgr=0x99dc878, handle_openflow=0x805e274 &lt;handle_openflow&gt;) at ofproto/connmgr.c:286</span><br><span class="line">#5  0x08057d58 in ofproto_run (p=0x99d9ba0) at ofproto/ofproto.c:1159</span><br><span class="line">#6  0x0804f96b in bridge_run () at vswitchd/bridge.c:2248</span><br><span class="line">#7  0x08054168 in main (argc=4, argv=0xbf8333e4) at vswitchd/ovs-vswitchd.c:125</span><br></pre></td></tr></table></figure>
+
+<h3 id="ptype"><a href="#ptype" class="headerlink" title="ptype"></a>ptype</h3><p>打印类型 TYPE 的定义。</p>
+<p>用法： ptype[&#x2F;FLAGS] TYPE-NAME | EXPRESSION</p>
+<p>参数可以是由 typedef 定义的类型名， 或者 struct STRUCT-TAG 或者 class CLASS-NAME 或者 union UNION-TAG 或者 enum ENUM-TAG。</p>
+<p>根据所选的栈帧的词法上下文来查找该名字。</p>
+<p>类似的命令是 whatis，区别在于 whatis 不展开由 typedef 定义的数据类型，而 ptype 会展开，举例如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* 类型声明与变量定义 */</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="type">double</span> <span class="type">real_t</span>;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">complex</span> &#123;</span></span><br><span class="line">    <span class="type">real_t</span> real;</span><br><span class="line">    <span class="type">double</span> imag;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">complex</span> <span class="title">complex_t</span>;</span></span><br><span class="line"> </span><br><span class="line"><span class="type">complex_t</span> var;</span><br><span class="line"><span class="type">real_t</span> *real_pointer_var;</span><br></pre></td></tr></table></figure>
+
+<p>这两个命令给出了如下输出：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">(gdb) whatis var</span><br><span class="line">type = complex_t</span><br><span class="line">(gdb) ptype var</span><br><span class="line">type = struct complex &#123;</span><br><span class="line">    real_t real;</span><br><span class="line">    double imag;</span><br><span class="line">&#125;</span><br><span class="line">(gdb) whatis complex_t</span><br><span class="line">type = struct complex</span><br><span class="line">(gdb) whatis struct complex</span><br><span class="line">type = struct complex</span><br><span class="line">(gdb) ptype struct complex</span><br><span class="line">type = struct complex &#123;</span><br><span class="line">    real_t real;</span><br><span class="line">    double imag;</span><br><span class="line">&#125;</span><br><span class="line">(gdb) whatis real_pointer_var</span><br><span class="line">type = real_t *</span><br><span class="line">(gdb) ptype real_pointer_var</span><br><span class="line">type = double *</span><br></pre></td></tr></table></figure>
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="followme">
+  <span>Welcome to my other publishing channels</span>
+
+  <div class="social-list">
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="https://twitter.com/WorldsRise">
+            <span class="icon">
+              <i class="fab fa-twitter"></i>
+            </span>
+
+            <span class="label">Twitter</span>
+          </a>
+      </div>
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/gdb/" rel="tag"># gdb</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2020/11/28/difference-between-memcpy-and-memmove/" rel="prev" title="memcpy和memmove的区别">
+                  <i class="fa fa-angle-left"></i> memcpy和memmove的区别
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2020/12/23/understand-C-11-rvalue-references-and-std-move/" rel="next" title="理解 C++ 11 右值引用和std::move">
+                  理解 C++ 11 右值引用和std::move <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">豫ICP备2021009490号 </a>
+  </div>
+<div class="copyright">
+<a href="https://icp.gov.moe/?keyword=20233669" target="_blank">萌ICP备20233669号</a>
+</div>
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">rise</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="reading-progress-bar"></div>
+
+  <a href="https://github.com/rise-worlds" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://unpkg.com/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@next-theme/pjax@0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script><script src="/js/pjax.js"></script>
+
+  
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://unpkg.com/mermaid@10.7.0/dist/mermaid.min.js","integrity":"sha256-TtLOdUA8mstPoO6sGvHIGx2ceXrrX4KgIItO06XOn8A="}}</script>
+  <script src="/js/third-party/tags/mermaid.js"></script>
+
+
+
+
+
+  
+
+
+
+
+  <script src="https://unpkg.com/quicklink@2.3.0/dist/quicklink.umd.js" integrity="sha256-yvJQOINiH9fWemHn0vCA5lsHWJaHs6/ZmO+1Ft04SvM=" crossorigin="anonymous"></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":true,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"https://rise-worlds.github.io/2020/12/03/commonly-used-GDB-command-Chinese-quick-view/"}</script>
+  <script src="/js/third-party/quicklink.js"></script>
+
+</body>
+</html>
