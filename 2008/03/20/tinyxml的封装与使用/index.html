@@ -1,0 +1,876 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://unpkg.com/@fortawesome/fontawesome-free@6.5.1/css/all.min.css" integrity="sha256-wiz7ZSCn/btzhjKDQBms9Hx4sSeUYsDrTLg7roPstac=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://unpkg.com/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"rise-worlds.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.19.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="tinyxml是个高效精简的xml解析开源代码.  针对tinyxml直接使用对于对xml不是很熟悉的入门新手来说,有些概念难以理解,因此我将其封装后,供大家使用.  头文件:  #include&lt;string&gt;  #include &quot;tinyxml.h&quot;  using namespace std;  class CXML  {  public:  &nbsp;&nbsp;&nbsp;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="tinyxml的封装与使用">
+<meta property="og:url" content="https://rise-worlds.github.io/2008/03/20/tinyxml%E7%9A%84%E5%B0%81%E8%A3%85%E4%B8%8E%E4%BD%BF%E7%94%A8/index.html">
+<meta property="og:site_name" content="Rise&#39;blogs">
+<meta property="og:description" content="tinyxml是个高效精简的xml解析开源代码.  针对tinyxml直接使用对于对xml不是很熟悉的入门新手来说,有些概念难以理解,因此我将其封装后,供大家使用.  头文件:  #include&lt;string&gt;  #include &quot;tinyxml.h&quot;  using namespace std;  class CXML  {  public:  &nbsp;&nbsp;&nbsp;">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2008-03-20T09:47:00.000Z">
+<meta property="article:modified_time" content="2008-03-24T16:32:00.000Z">
+<meta property="article:author" content="rise">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://rise-worlds.github.io/2008/03/20/tinyxml%E7%9A%84%E5%B0%81%E8%A3%85%E4%B8%8E%E4%BD%BF%E7%94%A8/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://rise-worlds.github.io/2008/03/20/tinyxml%E7%9A%84%E5%B0%81%E8%A3%85%E4%B8%8E%E4%BD%BF%E7%94%A8/","path":"2008/03/20/tinyxml的封装与使用/","title":"tinyxml的封装与使用"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>tinyxml的封装与使用 | Rise'blogs</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Rise'blogs</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li><li class="menu-item menu-item-sitemap"><a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>Sitemap</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="rise"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">rise</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">657</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">46</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">77</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="mailto:rise.worlds@outlook.com" title="E-Mail → mailto:rise.worlds@outlook.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://github.com/rise-worlds" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;rise-worlds" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://x.com/riseworlds" title="Twitter → https:&#x2F;&#x2F;x.com&#x2F;riseworlds" rel="noopener me" target="_blank"><i class="fab fa-twitter fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.facebook.com/rise.worlds" title="FB Page → https:&#x2F;&#x2F;www.facebook.com&#x2F;rise.worlds" rel="noopener me" target="_blank"><i class="fab fa-facebook fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.youtube.com/@YiXuan" title="YouTube → https:&#x2F;&#x2F;www.youtube.com&#x2F;@YiXuan" rel="noopener me" target="_blank"><i class="fab fa-youtube fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.instagram.com/rise.worlds/" title="Instagram → https:&#x2F;&#x2F;www.instagram.com&#x2F;rise.worlds&#x2F;" rel="noopener me" target="_blank"><i class="fab fa-instagram fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://t.me/riseworlds" title="Telegram → https:&#x2F;&#x2F;t.me&#x2F;riseworlds" rel="noopener me" target="_blank"><i class="fab fa-telegram fa-fw"></i></a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="Back to top">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+          Links
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <a href="https://www.cnblogs.com/flying_bat" title="https:&#x2F;&#x2F;www.cnblogs.com&#x2F;flying_bat" rel="noopener" target="_blank">my cnblogs</a>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://rise-worlds.github.io/2008/03/20/tinyxml%E7%9A%84%E5%B0%81%E8%A3%85%E4%B8%8E%E4%BD%BF%E7%94%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="rise">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Rise'blogs">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="tinyxml的封装与使用 | Rise'blogs">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          tinyxml的封装与使用
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2008-03-20 09:47:00" itemprop="dateCreated datePublished" datetime="2008-03-20T09:47:00+00:00">2008-03-20</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Dev/" itemprop="url" rel="index"><span itemprop="name">Dev</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Dev/C/" itemprop="url" rel="index"><span itemprop="name">C++</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>tinyxml是个高效精简的xml解析开源代码.
+
+<p>针对tinyxml直接使用对于对xml不是很熟悉的入门新手来说,有些概念难以理解,因此我将其封装后,供大家使用.
+
+<p>头文件:
+
+<p>#include&lt;string&gt;
+
+<p>#include "tinyxml.h"
+
+<p>using namespace std;
+
+<p>class CXML
+
+<p>{
+
+<p>public:
+
+<p>&nbsp;&nbsp;&nbsp; CXML(void)
+
+<p>&nbsp;&nbsp;&nbsp; {
+
+<p>&nbsp;&nbsp;&nbsp; }
+
+<p>&nbsp;&nbsp;&nbsp; ~CXML(void)
+
+<p>&nbsp;&nbsp;&nbsp; {
+
+<p>&nbsp;&nbsp;&nbsp; }
+
+<p>private:
+
+<p>&nbsp;&nbsp;&nbsp; TiXmlDocument m_xml;
+
+<p>&nbsp;&nbsp;&nbsp; TiXmlElement* pElement;
+
+<p>private:
+
+<p>&nbsp;&nbsp;&nbsp; TiXmlElement* getFirstElement(string ElementMark,TiXmlElement* pcrElement);
+
+<p>public:
+
+<p>&nbsp;&nbsp;&nbsp; //解析xml字符串
+
+<p>&nbsp;&nbsp;&nbsp; int ParseXmlStr(string xmlstr);
+
+<p>&nbsp;&nbsp;&nbsp; //解析xml文件
+
+<p>&nbsp;&nbsp;&nbsp; int ParseXmlFile(string xmlFile);
+
+<p>&nbsp;&nbsp;&nbsp; //根据标签取值
+
+<p>&nbsp;&nbsp;&nbsp; int getFirstElementValue(string ElementMark,string&amp; value);
+
+<p>&nbsp;&nbsp;&nbsp; //针对同一标签的记录取值,如果返回值是0表明再无此标签内容值可取
+
+<p>&nbsp;&nbsp;&nbsp; int getNextElementValue(string ElementMark,string&amp; value);
+
+<p>&nbsp;&nbsp;&nbsp; //取得属性值
+
+<p>&nbsp;&nbsp;&nbsp; int getElementAttributeValue(string AttributeName,string&amp; value);
+
+<p>&nbsp;&nbsp;&nbsp; //获取根结点
+
+<p>&nbsp;&nbsp;&nbsp; TiXmlElement* getRootElement();
+
+<p>&nbsp;&nbsp;&nbsp; //返回当前的xml字符串
+
+<p>&nbsp;&nbsp;&nbsp; string getXmlStr();
+
+<p>&nbsp;&nbsp;&nbsp; //清空解析的内容
+
+<p>&nbsp;&nbsp;&nbsp; void Clear();
+
+<p>&nbsp;&nbsp;&nbsp; //添加子节点
+
+<p>&nbsp;&nbsp;&nbsp; TiXmlElement* addXmlRootElement(string ElementMark);//添加一个根节点
+
+<p>&nbsp;&nbsp;&nbsp; //添加子节点
+
+<p>&nbsp;&nbsp;&nbsp; TiXmlElement* addXmlChildElement(TiXmlElement* pElement,string ElementMark);
+
+<p>&nbsp;&nbsp;&nbsp; //给节点添加值
+
+<p>&nbsp;&nbsp;&nbsp; void addElementValue(TiXmlElement* pElement,string value);
+
+<p>&nbsp;&nbsp;&nbsp; //添加属性及属性值
+
+<p>&nbsp;&nbsp;&nbsp; void addXmlAttribute(TiXmlElement* pElement,string AttributeMark,string value);
+
+<p>&nbsp;&nbsp;&nbsp; //添加声明
+
+<p>&nbsp;&nbsp;&nbsp; void addXmlDeclaration(string vesion,string encoding,string standalone);
+
+<p>&nbsp;&nbsp;&nbsp; //添加注释
+
+<p>&nbsp;&nbsp;&nbsp; void addXmlComment(TiXmlElement* pElement,string Comment);
+
+<p>&nbsp;&nbsp;&nbsp; //将xml内容保存到文件
+
+<p>&nbsp;&nbsp;&nbsp; void saveFile(string FileName);
+
+<p>};
+
+<p>///////////////////实现文件
+
+<p>#include "XML.h"
+
+<p>int CXML::ParseXmlFile(string xmlFile)
+
+<p>{
+
+<p>&nbsp;&nbsp;&nbsp; int result=0;
+
+<p>&nbsp;&nbsp;&nbsp; try
+
+<p>&nbsp;&nbsp;&nbsp; {
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if(m_xml.LoadFile(xmlFile.c_str()))
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; result=1;
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; else
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; result=0;
+
+<p>&nbsp;&nbsp;&nbsp; }
+
+<p>&nbsp;&nbsp;&nbsp; catch(...)
+
+<p>&nbsp;&nbsp;&nbsp; {
+
+<p>&nbsp;&nbsp;&nbsp; }
+
+<p>&nbsp;&nbsp;&nbsp; return result;
+
+<p>}
+
+<p>int CXML::ParseXmlStr(std::string xmlStr)
+
+<p>{
+
+<p>&nbsp;&nbsp;&nbsp; int result=0;
+
+<p>&nbsp;&nbsp;&nbsp; if(xmlStr=="")
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return 0;
+
+<p>&nbsp;&nbsp;&nbsp; try
+
+<p>&nbsp;&nbsp;&nbsp; {
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if(m_xml.Parse(xmlStr.c_str()))
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; result=1;
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; else
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; result=0;
+
+<p>&nbsp;&nbsp;&nbsp; }
+
+<p>&nbsp;&nbsp;&nbsp; catch(...)
+
+<p>&nbsp;&nbsp;&nbsp; {
+
+<p>&nbsp;&nbsp;&nbsp; }
+
+<p>&nbsp;&nbsp;&nbsp; return result;
+
+<p>}
+
+<p>TiXmlElement* CXML::getFirstElement(string ElementMark,TiXmlElement* pcrElement)
+
+<p>{
+
+<p>&nbsp;&nbsp;&nbsp; TiXmlElement* pElementtmp=NULL;
+
+<p>&nbsp;&nbsp;&nbsp; pElementtmp=pcrElement;
+
+<p>&nbsp;&nbsp;&nbsp; while(pElementtmp)
+
+<p>&nbsp;&nbsp;&nbsp; {
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if(strcmp(pElementtmp-&gt;Value(),ElementMark.c_str())==0)
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; //printf("%s\r\n",pElementtmp-&gt;Value());
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return pElementtmp;
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; else
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; TiXmlElement* nextElement=pElementtmp-&gt;FirstChildElement();
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; while(nextElement)
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; //printf("%s\r\n",nextElement-&gt;Value());
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if(strcmp(nextElement-&gt;Value(),ElementMark.c_str())==0)
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return nextElement;
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; else
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; TiXmlElement* reElement=NULL;
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; reElement=getFirstElement(ElementMark,nextElement);
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if(reElement)
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return reElement;
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; nextElement=nextElement-&gt;NextSiblingElement();
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; pElementtmp=pElementtmp-&gt;NextSiblingElement();
+
+<p>&nbsp;&nbsp;&nbsp; }
+
+<p>&nbsp;&nbsp;&nbsp; return NULL;
+
+<p>}
+
+<p>//根据标签取值
+
+<p>int CXML::getFirstElementValue(string ElementMark,string&amp; value)
+
+<p>{
+
+<p>&nbsp;&nbsp;&nbsp; int result=0;
+
+<p>&nbsp;&nbsp;&nbsp; if(ElementMark=="")
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return 0;
+
+<p>&nbsp;&nbsp;&nbsp; try
+
+<p>&nbsp;&nbsp;&nbsp; {
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; TiXmlElement* pcrElement=NULL;
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; pcrElement=m_xml.RootElement();
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; pcrElement=this-&gt;getFirstElement(ElementMark,pcrElement);
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if(pcrElement)
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; this-&gt;pElement=pcrElement;
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; value=this-&gt;pElement-&gt;GetText();
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; result=1;
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }
+
+<p>&nbsp;&nbsp;&nbsp; }
+
+<p>&nbsp;&nbsp;&nbsp; catch(...)
+
+<p>&nbsp;&nbsp;&nbsp; {
+
+<p>&nbsp;&nbsp;&nbsp; }
+
+<p>&nbsp;&nbsp;&nbsp; return result;
+
+<p>}
+
+<p>int CXML::getNextElementValue(string ElementMark,string&amp; value)
+
+<p>{
+
+<p>&nbsp;&nbsp;&nbsp; value="";
+
+<p>&nbsp;&nbsp;&nbsp; this-&gt;pElement=this-&gt;pElement-&gt;NextSiblingElement(ElementMark.c_str());
+
+<p>&nbsp;&nbsp;&nbsp; if(this-&gt;pElement)
+
+<p>&nbsp;&nbsp;&nbsp; {
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; value=this-&gt;pElement-&gt;GetText();
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return 1;
+
+<p>&nbsp;&nbsp;&nbsp; }
+
+<p>&nbsp;&nbsp;&nbsp; return 0;
+
+<p>}
+
+<p>string CXML::getXmlStr()
+
+<p>{
+
+<p>&nbsp;&nbsp;&nbsp; string result="";
+
+<p>&nbsp;&nbsp;&nbsp; try
+
+<p>&nbsp;&nbsp;&nbsp; {
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; TiXmlPrinter printer;
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; m_xml.Accept(&amp;printer);
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; result=printer.CStr();
+
+<p>&nbsp;&nbsp;&nbsp; }
+
+<p>&nbsp;&nbsp;&nbsp; catch(...)
+
+<p>&nbsp;&nbsp;&nbsp; {
+
+<p>&nbsp;&nbsp;&nbsp; }
+
+<p>&nbsp;&nbsp;&nbsp; return result;
+
+<p>}
+
+<p>void CXML::Clear()
+
+<p>{
+
+<p>&nbsp;&nbsp;&nbsp; m_xml.Clear();
+
+<p>}
+
+<p>//添加子节点
+
+<p>TiXmlElement* CXML::addXmlRootElement(string ElementMark)
+
+<p>{
+
+<p>&nbsp;&nbsp;&nbsp; TiXmlElement* RootElement=new TiXmlElement(ElementMark.c_str());
+
+<p>&nbsp;&nbsp;&nbsp; m_xml.LinkEndChild(RootElement);
+
+<p>&nbsp;&nbsp;&nbsp; return RootElement;
+
+<p>}
+
+<p>TiXmlElement* CXML::addXmlChildElement(TiXmlElement* pElement,string ElementMark)
+
+<p>{
+
+<p>&nbsp;&nbsp;&nbsp; if(pElement)
+
+<p>&nbsp;&nbsp;&nbsp; {
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; TiXmlElement* tempElement=new TiXmlElement(ElementMark.c_str());
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; pElement-&gt;LinkEndChild(tempElement);
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return tempElement;
+
+<p>&nbsp;&nbsp;&nbsp; }
+
+<p>&nbsp;&nbsp;&nbsp; return 0;
+
+<p>}
+
+<p>void CXML::addElementValue(TiXmlElement *pElement, std::string value)
+
+<p>{
+
+<p>&nbsp;&nbsp;&nbsp; if(pElement)
+
+<p>&nbsp;&nbsp;&nbsp; {
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; TiXmlText *pContent=new TiXmlText(value.c_str());
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; pElement-&gt;LinkEndChild(pContent);
+
+<p>&nbsp;&nbsp;&nbsp; }
+
+<p>}
+
+<p>//添加属性及属性值
+
+<p>void CXML::addXmlAttribute(TiXmlElement* pElement,string AttributeMark,string value)
+
+<p>{
+
+<p>&nbsp;&nbsp;&nbsp; if(pElement)
+
+<p>&nbsp;&nbsp;&nbsp; {
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; pElement-&gt;SetAttribute(AttributeMark.c_str(),value.c_str());
+
+<p>&nbsp;&nbsp;&nbsp; }
+
+<p>}
+
+<p>//添加声明
+
+<p>void CXML::addXmlDeclaration(string vesion,string encoding,string standalone)
+
+<p>{
+
+<p>&nbsp;&nbsp;&nbsp; TiXmlDeclaration *pDeclaration=new TiXmlDeclaration(vesion.c_str(),encoding.c_str(),standalone.c_str());
+
+<p>&nbsp;&nbsp;&nbsp; m_xml.LinkEndChild(pDeclaration);
+
+<p>}
+
+<p>//添加注释
+
+<p>void CXML::addXmlComment(TiXmlElement* pElement,string Comment)
+
+<p>{
+
+<p>&nbsp;&nbsp;&nbsp; if(pElement)
+
+<p>&nbsp;&nbsp;&nbsp; {
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; TiXmlComment *pComment=new TiXmlComment(Comment.c_str());
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; pElement-&gt;LinkEndChild(pComment);
+
+<p>&nbsp;&nbsp;&nbsp; }
+
+<p>}
+
+<p>TiXmlElement* CXML::getRootElement()
+
+<p>{
+
+<p>&nbsp;&nbsp;&nbsp; return m_xml.RootElement();
+
+<p>}
+
+<p>//取得属性值
+
+<p>int CXML::getElementAttributeValue(string AttributeName,string&amp; value)
+
+<p>{
+
+<p>&nbsp;&nbsp;&nbsp; if(this-&gt;pElement-&gt;Attribute(AttributeName.c_str()))
+
+<p>&nbsp;&nbsp;&nbsp; {
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; value=this-&gt;pElement-&gt;Attribute(AttributeName.c_str());
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return 1;
+
+<p>&nbsp;&nbsp;&nbsp; }
+
+<p>&nbsp;&nbsp;&nbsp; return 0;
+
+<p>}
+
+<p>void CXML::saveFile(string FileName)
+
+<p>{
+
+<p>&nbsp;&nbsp;&nbsp; this-&gt;m_xml.SaveFile(FileName.c_str());
+
+<p>}
+
+<p>//////////////////////////////////////////
+
+<p>注意:
+
+<p>xml字符串如果不是从文件中读出,那么必须以"\r\n"结束,否则解析失败</p>
+    
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="followme">
+  <span>Welcome to my other publishing channels</span>
+
+  <div class="social-list">
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="https://www.facebook.com/rise.worlds">
+            <span class="icon">
+              <i class="fab fa-facebook"></i>
+            </span>
+
+            <span class="label">FB Page</span>
+          </a>
+      </div>
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="https://twitter.com/riseworlds">
+            <span class="icon">
+              <i class="fab fa-twitter"></i>
+            </span>
+
+            <span class="label">Twitter</span>
+          </a>
+      </div>
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="https://t.me/riseworlds">
+            <span class="icon">
+              <i class="fab fa-telegram"></i>
+            </span>
+
+            <span class="label">Telegram</span>
+          </a>
+      </div>
+  </div>
+</div>
+
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2008/03/17/Windows%20Symbol%20Packages%20and%20Debugging%20Tools/" rel="prev" title="Windows Symbol Packages and Debugging Tools">
+                  <i class="fa fa-angle-left"></i> Windows Symbol Packages and Debugging Tools
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2008/03/20/D3D%E4%B8%AD%E7%9A%84Alpha%E8%9E%8D%E5%90%88%E6%8A%80%E6%9C%AF%EF%BC%881%EF%BC%89/" rel="next" title="D3D中的Alpha融合技术（1）">
+                  D3D中的Alpha融合技术（1） <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">豫ICP备2021009490号 </a>
+  </div>
+<div class="copyright">
+<a href="https://icp.gov.moe/?keyword=20233669" target="_blank">萌ICP备20233669号</a>
+</div>
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">rise</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="reading-progress-bar"></div>
+
+  <a href="https://github.com/rise-worlds" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://unpkg.com/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@next-theme/pjax@0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script><script src="/js/pjax.js"></script>
+
+  
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://unpkg.com/mermaid@10.7.0/dist/mermaid.min.js","integrity":"sha256-TtLOdUA8mstPoO6sGvHIGx2ceXrrX4KgIItO06XOn8A="}}</script>
+  <script src="/js/third-party/tags/mermaid.js"></script>
+
+
+
+
+
+  
+
+
+
+
+  <script src="https://unpkg.com/quicklink@2.3.0/dist/quicklink.umd.js" integrity="sha256-yvJQOINiH9fWemHn0vCA5lsHWJaHs6/ZmO+1Ft04SvM=" crossorigin="anonymous"></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":true,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"https://rise-worlds.github.io/2008/03/20/tinyxml%E7%9A%84%E5%B0%81%E8%A3%85%E4%B8%8E%E4%BD%BF%E7%94%A8/"}</script>
+  <script src="/js/third-party/quicklink.js"></script>
+
+</body>
+</html>

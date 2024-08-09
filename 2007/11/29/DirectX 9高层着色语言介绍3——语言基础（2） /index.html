@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://unpkg.com/@fortawesome/fontawesome-free@6.5.1/css/all.min.css" integrity="sha256-wiz7ZSCn/btzhjKDQBms9Hx4sSeUYsDrTLg7roPstac=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://unpkg.com/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"rise-worlds.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.19.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="original address: http:&#x2F;&#x2F;blog.csdn.net&#x2F;starflash2003&#x2F;archive&#x2F;2004&#x2F;10&#x2F;12&#x2F;132884.aspx   类型修饰符  在你的着色器中打算使用的HLSL中有几个可选的类型修饰符。通常把不想被着色器的代码修改的量设为const(常量)类型修饰符。在赋值符号左边使用常量(例如作为一个lval)会产生一个编译错误。  可以用row_maj">
+<meta property="og:type" content="article">
+<meta property="og:title" content="DirectX 9高层着色语言介绍3——语言基础（2）">
+<meta property="og:url" content="https://rise-worlds.github.io/2007/11/29/DirectX%209%E9%AB%98%E5%B1%82%E7%9D%80%E8%89%B2%E8%AF%AD%E8%A8%80%E4%BB%8B%E7%BB%8D3%E2%80%94%E2%80%94%E8%AF%AD%E8%A8%80%E5%9F%BA%E7%A1%80%EF%BC%882%EF%BC%89%20/index.html">
+<meta property="og:site_name" content="Rise&#39;blogs">
+<meta property="og:description" content="original address: http:&#x2F;&#x2F;blog.csdn.net&#x2F;starflash2003&#x2F;archive&#x2F;2004&#x2F;10&#x2F;12&#x2F;132884.aspx   类型修饰符  在你的着色器中打算使用的HLSL中有几个可选的类型修饰符。通常把不想被着色器的代码修改的量设为const(常量)类型修饰符。在赋值符号左边使用常量(例如作为一个lval)会产生一个编译错误。  可以用row_maj">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2007-11-29T16:02:00.000Z">
+<meta property="article:modified_time" content="2007-11-29T16:02:00.000Z">
+<meta property="article:author" content="rise">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://rise-worlds.github.io/2007/11/29/DirectX%209%E9%AB%98%E5%B1%82%E7%9D%80%E8%89%B2%E8%AF%AD%E8%A8%80%E4%BB%8B%E7%BB%8D3%E2%80%94%E2%80%94%E8%AF%AD%E8%A8%80%E5%9F%BA%E7%A1%80%EF%BC%882%EF%BC%89%20/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://rise-worlds.github.io/2007/11/29/DirectX%209%E9%AB%98%E5%B1%82%E7%9D%80%E8%89%B2%E8%AF%AD%E8%A8%80%E4%BB%8B%E7%BB%8D3%E2%80%94%E2%80%94%E8%AF%AD%E8%A8%80%E5%9F%BA%E7%A1%80%EF%BC%882%EF%BC%89%20/","path":"2007/11/29/DirectX 9高层着色语言介绍3——语言基础（2） /","title":"DirectX 9高层着色语言介绍3——语言基础（2）"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>DirectX 9高层着色语言介绍3——语言基础（2） | Rise'blogs</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Rise'blogs</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li><li class="menu-item menu-item-sitemap"><a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>Sitemap</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">类型修饰符</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">2.</span> <span class="nav-text">存储类别修饰符</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">3.</span> <span class="nav-text">初始化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">4.</span> <span class="nav-text">
+
+float2x2 fMat &#x3D; {3.0f, 5.0f,  &#x2F;&#x2F; row 1
+
+                 2.0f, 1.0f}; &#x2F;&#x2F; row 2
+float4   vPos &#x3D; {3.0f, 5.0f, 2.0f, 1.0f};
+float fFactor &#x3D; 0.2f;
+
+</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">5.</span> <span class="nav-text">向量运算</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">6.</span> <span class="nav-text">构造函数</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="rise"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">rise</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">657</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">46</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">77</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="mailto:rise.worlds@outlook.com" title="E-Mail → mailto:rise.worlds@outlook.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://github.com/rise-worlds" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;rise-worlds" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://x.com/riseworlds" title="Twitter → https:&#x2F;&#x2F;x.com&#x2F;riseworlds" rel="noopener me" target="_blank"><i class="fab fa-twitter fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.facebook.com/rise.worlds" title="FB Page → https:&#x2F;&#x2F;www.facebook.com&#x2F;rise.worlds" rel="noopener me" target="_blank"><i class="fab fa-facebook fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.youtube.com/@YiXuan" title="YouTube → https:&#x2F;&#x2F;www.youtube.com&#x2F;@YiXuan" rel="noopener me" target="_blank"><i class="fab fa-youtube fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.instagram.com/rise.worlds/" title="Instagram → https:&#x2F;&#x2F;www.instagram.com&#x2F;rise.worlds&#x2F;" rel="noopener me" target="_blank"><i class="fab fa-instagram fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://t.me/riseworlds" title="Telegram → https:&#x2F;&#x2F;t.me&#x2F;riseworlds" rel="noopener me" target="_blank"><i class="fab fa-telegram fa-fw"></i></a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="Back to top">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+          Links
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <a href="https://www.cnblogs.com/flying_bat" title="https:&#x2F;&#x2F;www.cnblogs.com&#x2F;flying_bat" rel="noopener" target="_blank">my cnblogs</a>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://rise-worlds.github.io/2007/11/29/DirectX%209%E9%AB%98%E5%B1%82%E7%9D%80%E8%89%B2%E8%AF%AD%E8%A8%80%E4%BB%8B%E7%BB%8D3%E2%80%94%E2%80%94%E8%AF%AD%E8%A8%80%E5%9F%BA%E7%A1%80%EF%BC%882%EF%BC%89%20/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="rise">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Rise'blogs">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="DirectX 9高层着色语言介绍3——语言基础（2） | Rise'blogs">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          DirectX 9高层着色语言介绍3——语言基础（2）
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2007-11-29 16:02:00" itemprop="dateCreated datePublished" datetime="2007-11-29T16:02:00+00:00">2007-11-29</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Dev/" itemprop="url" rel="index"><span itemprop="name">Dev</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Dev/GameDev/" itemprop="url" rel="index"><span itemprop="name">GameDev</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>original address: <a target="_blank" rel="noopener" href="http://blog.csdn.net/starflash2003/archive/2004/10/12/132884.aspx">http://blog.csdn.net/starflash2003/archive/2004/10/12/132884.aspx</a><br /></p>
+<br />
+
+<h3 class="dtH1">类型修饰符</h3>
+
+<p>在你的着色器中打算使用的HLSL中有几个可选的类型修饰符。通常把不想被着色器的代码修改的量设为const(常量)类型修饰符。在赋值符号左边使用常量(<span lang="en">例如作为一个</span><em>lval</em>)会产生一个编译错误。</p>
+
+<p>可以用row_major(行优先)类型修饰符与col_major(列优先)类型修饰符指定在存储常数硬件中的矩阵格式。row_major(行优先)类型修饰符表示矩阵中的每一行被存储在一个单个的常数寄存器中。同样地，使用col_major(列优先)表示矩阵中的每一列被存储在一个单个的常数寄存器中。默认为列优先。</p>
+
+<h3 class="dtH1">存储类别修饰符</h3>
+
+<p>存储类别修饰符通知编译器给定变量的作用域和生存期。这些修饰符是可选的，可在变量类型前以任意次序出现。</p>
+
+<p>像C 语言一样，一个变量可以被声明为static(静态变量)或extern(外部变量)。(这两个修饰符是互斥的)在全局范围，static(静态)类别修饰符表示变量只能由着色器访问，而不能由应用程序通过API访问。任何在全局范围声明的非静态变量可以由应用程序通过API修改。像C语言一样，在<em>局部</em>范围使用static(静态)修饰符表示变量所含数据将在所声明函数内始终存在(译者注：即生存期为全局，作用域为函数内)。</p>
+
+<p>在全局范围使用extern(外部)修饰符表示可由外部着色器通过API修改。不过这属于多此一举，因为在全局范围声明的变量默认就是这样。</p>
+
+<p>使用shared(共享)修饰符设定将由两种效果共享的全局变量。</p>
+
+<p>前缀为uniform的变量先在外部被初始化，然后进入HLSL着色器。(例如，通过<code class="ce">Set*ShaderConstant*()</code> API)。把全局变量当作被uniform声明。不过由于值在着色器中可以被修改，所以不可能是常数。</p>
+
+<p>例如，假定你在全局范围声明了下列变量：</p>
+
+<p>&nbsp;</p>
+
+<div style="border-right: #cccccc 1px solid; padding-right: 5px; border-top: #cccccc 1px solid; padding-left: 4px; font-size: 13px; padding-bottom: 4px; border-left: #cccccc 1px solid; width: 98%; word-break: break-all; padding-top: 4px; border-bottom: #cccccc 1px solid; background-color: #eeeeee"><span style="color: #0000ff">extern</span><span style="color: #000000">&nbsp;</span><span style="color: #0000ff">float</span><span style="color: #000000">&nbsp;translucencyCoeff;<br />
+
+<p></span><span style="color: #0000ff">const</span><span style="color: #000000">&nbsp;&nbsp;</span><span style="color: #0000ff">float</span><span style="color: #000000">&nbsp;gloss_bias;<br /></p>
+<p></span><span style="color: #0000ff">static</span><span style="color: #000000">&nbsp;</span><span style="color: #0000ff">float</span><span style="color: #000000">&nbsp;gloss_scale;<br /></p>
+<p></span><span style="color: #0000ff">float</span><span style="color: #000000">&nbsp;diffuse;<br /></p>
+<p></span></div></p>
+<p><br />
+
+<p>变量diffuse和translucencyCoeff可被Set<em>ShadercConstant</em>() API置位，也可被着色器本身修改。常量gloss_bias可被Set<em>ShadeConstant</em>() API置位，不过不能被着色器代码修改。最后，静态变量gloss_scale不能被Set<em>ShaderConstant</em>()API置位，不过可以也只能在着色器中被修改。</p></p>
+<h3 class="dtH1">初始化</h3>
+
+<p>如前面例子显示的，和C语言中的习惯一样可以在变量声明时进行初始化。例如：</p>
+
+<h3 class="dtH1">
+
+<div style="border-right: #cccccc 1px solid; padding-right: 5px; border-top: #cccccc 1px solid; padding-left: 4px; font-size: 13px; padding-bottom: 4px; border-left: #cccccc 1px solid; width: 98%; word-break: break-all; padding-top: 4px; border-bottom: #cccccc 1px solid; background-color: #eeeeee"><span style="color: #000000">float2x2&nbsp;fMat&nbsp;</span><span style="color: #000000">=</span><span style="color: #000000">&nbsp;{</span><span style="color: #000000">3.0f</span><span style="color: #000000">,&nbsp;</span><span style="color: #000000">5.0f</span><span style="color: #000000">,&nbsp;&nbsp;</span><span style="color: #008000">//</span><span style="color: #008000">&nbsp;row&nbsp;1</span><span style="color: #008000"><br />
+
+<p></span><span style="color: #000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #000000">2.0f</span><span style="color: #000000">,&nbsp;</span><span style="color: #000000">1.0f</span><span style="color: #000000">};&nbsp;</span><span style="color: #008000">&#x2F;&#x2F;</span><span style="color: #008000">&nbsp;row&nbsp;2</span><span style="color: #008000"><br /></p>
+<p></span><span style="color: #000000">float4&nbsp;&nbsp;&nbsp;vPos&nbsp;</span><span style="color: #000000">&#x3D;</span><span style="color: #000000">&nbsp;{</span><span style="color: #000000">3.0f</span><span style="color: #000000">,&nbsp;</span><span style="color: #000000">5.0f</span><span style="color: #000000">,&nbsp;</span><span style="color: #000000">2.0f</span><span style="color: #000000">,&nbsp;</span><span style="color: #000000">1.0f</span><span style="color: #000000">};<br /></p>
+<p></span><span style="color: #0000ff">float</span><span style="color: #000000">&nbsp;fFactor&nbsp;</span><span style="color: #000000">&#x3D;</span><span style="color: #000000">&nbsp;</span><span style="color: #000000">0.2f</span><span style="color: #000000">;<br /></p>
+<p></span></div></p>
+</h3>
+
+<h3 class="dtH1">向量运算</h3>
+
+<p>在HLSL中，当执行关于向量的数学运算时需要留心一些程序陷阱(gotchas)。如果为3D图形编写着色器，绝大部分程序陷阱(gotchas)可以靠直觉发现。例如，定义标准的二元运算符以进行每一维的运算。</p>
+
+<pre class="CODE">float4 vTone = vBrightness * vExposure;</pre>
+
+<p>假定vBrightness和vExposure都是float4类型，相当于：</p>
+
+<p>&nbsp;</p>
+
+<div style="border-right: #cccccc 1px solid; padding-right: 5px; border-top: #cccccc 1px solid; padding-left: 4px; font-size: 13px; padding-bottom: 4px; border-left: #cccccc 1px solid; width: 98%; word-break: break-all; padding-top: 4px; border-bottom: #cccccc 1px solid; background-color: #eeeeee"><span style="color: #000000">float4&nbsp;vTone;vTone.x&nbsp;</span><span style="color: #000000">=</span><span style="color: #000000">&nbsp;vBrightness.x&nbsp;</span><span style="color: #000000">*</span><span style="color: #000000">&nbsp;vExposure.x;<br />
+
+<p>vTone.y&nbsp;</span><span style="color: #000000">&#x3D;</span><span style="color: #000000">&nbsp;vBrightness.y&nbsp;</span><span style="color: #000000">*</span><span style="color: #000000">&nbsp;vExposure.y;<br /></p>
+<p>vTone.z&nbsp;</span><span style="color: #000000">&#x3D;</span><span style="color: #000000">&nbsp;vBrightness.z&nbsp;</span><span style="color: #000000">*</span><span style="color: #000000">&nbsp;vExposure.z;<br /></p>
+<p>vTone.w&nbsp;</span><span style="color: #000000">&#x3D;</span><span style="color: #000000">&nbsp;vBrightness.w&nbsp;</span><span style="color: #000000">*</span><span style="color: #000000">&nbsp;vExposure.w;<br /></p>
+<p></span></div></p>
+<p><br />
+
+<p>要注意在4D向量vBrightness和vExposure间不是点乘。此外，用这种方式乘以矩阵变量不会引起矩阵相乘。点乘法和矩阵相乘法是通过内部函数mul()实现的，这将在后边讨论。</p></p>
+<h3 class="dtH1">构造函数</h3>
+
+<p>常能在HLSL着色器中见到的属于其他语言特色的是构造函数，和C++中的类似不过增加了一些处理复杂数据类型的内容。构造函数使用的例子：<br />
+
+</p>
+
+<p>&nbsp;</p>
+
+<div style="border-right: #cccccc 1px solid; padding-right: 5px; border-top: #cccccc 1px solid; padding-left: 4px; font-size: 13px; padding-bottom: 4px; border-left: #cccccc 1px solid; width: 98%; word-break: break-all; padding-top: 4px; border-bottom: #cccccc 1px solid; background-color: #eeeeee"><span style="color: #000000">float3&nbsp;&nbsp;&nbsp;vPos&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #000000">=</span><span style="color: #000000">&nbsp;float3(</span><span style="color: #000000">4.0f</span><span style="color: #000000">,&nbsp;</span><span style="color: #000000">1.0f</span><span style="color: #000000">,&nbsp;</span><span style="color: #000000">2.0f</span><span style="color: #000000">);<br />
+
+<p></span><span style="color: #0000ff">float</span><span style="color: #000000">&nbsp;&nbsp;&nbsp;&nbsp;fDiffuse&nbsp;</span><span style="color: #000000">&#x3D;</span><span style="color: #000000">&nbsp;dot(vNormal,&nbsp;float3(</span><span style="color: #000000">1.0f</span><span style="color: #000000">,&nbsp;</span><span style="color: #000000">0.0f</span><span style="color: #000000">,&nbsp;</span><span style="color: #000000">0.0f</span><span style="color: #000000">));<br /></p>
+<p>float4&nbsp;&nbsp;&nbsp;vPack&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #000000">&#x3D;</span><span style="color: #000000">&nbsp;float4(vPos,&nbsp;fDiffuse);<br /></p>
+<p></span></div></p>
+<p><br />
+
+<p>构造函数通常用在：想要临时定义一个常量(如上边的dot(vNormal, float3(1.0f, 0.0f, 0.0f)))或想同时显式地压缩更小的数据类型。(如上边的float4(vPos, fDiffuse))。在这个例子中，构造函数float4接收一个float3类型和一个float类型同时返回一个数据被压缩的float4类型。</p></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="followme">
+  <span>Welcome to my other publishing channels</span>
+
+  <div class="social-list">
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="https://www.facebook.com/rise.worlds">
+            <span class="icon">
+              <i class="fab fa-facebook"></i>
+            </span>
+
+            <span class="label">FB Page</span>
+          </a>
+      </div>
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="https://twitter.com/riseworlds">
+            <span class="icon">
+              <i class="fab fa-twitter"></i>
+            </span>
+
+            <span class="label">Twitter</span>
+          </a>
+      </div>
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="https://t.me/riseworlds">
+            <span class="icon">
+              <i class="fab fa-telegram"></i>
+            </span>
+
+            <span class="label">Telegram</span>
+          </a>
+      </div>
+  </div>
+</div>
+
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2007/11/29/DirectX%209%E9%AB%98%E5%B1%82%E7%9D%80%E8%89%B2%E8%AF%AD%E8%A8%80%E4%BB%8B%E7%BB%8D4%E2%80%94%E2%80%94%E8%AF%AD%E8%A8%80%E5%9F%BA%E7%A1%80%EF%BC%883%EF%BC%89%20/" rel="prev" title="DirectX 9高层着色语言介绍4——语言基础（3）">
+                  <i class="fa fa-angle-left"></i> DirectX 9高层着色语言介绍4——语言基础（3）
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2007/11/29/%E8%BE%B9%E7%BC%98%E9%AB%98%E4%BA%AE%E6%95%88%E6%9E%9C/" rel="next" title="边缘高亮效果">
+                  边缘高亮效果 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">豫ICP备2021009490号 </a>
+  </div>
+<div class="copyright">
+<a href="https://icp.gov.moe/?keyword=20233669" target="_blank">萌ICP备20233669号</a>
+</div>
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">rise</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="reading-progress-bar"></div>
+
+  <a href="https://github.com/rise-worlds" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://unpkg.com/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@next-theme/pjax@0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script><script src="/js/pjax.js"></script>
+
+  
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://unpkg.com/mermaid@10.7.0/dist/mermaid.min.js","integrity":"sha256-TtLOdUA8mstPoO6sGvHIGx2ceXrrX4KgIItO06XOn8A="}}</script>
+  <script src="/js/third-party/tags/mermaid.js"></script>
+
+
+
+
+
+  
+
+
+
+
+  <script src="https://unpkg.com/quicklink@2.3.0/dist/quicklink.umd.js" integrity="sha256-yvJQOINiH9fWemHn0vCA5lsHWJaHs6/ZmO+1Ft04SvM=" crossorigin="anonymous"></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":true,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"https://rise-worlds.github.io/2007/11/29/DirectX%209%E9%AB%98%E5%B1%82%E7%9D%80%E8%89%B2%E8%AF%AD%E8%A8%80%E4%BB%8B%E7%BB%8D3%E2%80%94%E2%80%94%E8%AF%AD%E8%A8%80%E5%9F%BA%E7%A1%80%EF%BC%882%EF%BC%89%20/"}</script>
+  <script src="/js/third-party/quicklink.js"></script>
+
+</body>
+</html>

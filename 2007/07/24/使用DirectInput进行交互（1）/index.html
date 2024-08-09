@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://unpkg.com/@fortawesome/fontawesome-free@6.5.1/css/all.min.css" integrity="sha256-wiz7ZSCn/btzhjKDQBms9Hx4sSeUYsDrTLg7roPstac=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://unpkg.com/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"rise-worlds.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.19.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="DirectInput是一些COM对象的集合（和所有DirectX组件相同），这些COM对象描绘了输入系统和各个输入设备。最主要的对象是DirectInput8，它用于初始化系统以及创建输入设备接口。DirectInput COM对象：IDirectInput8：主要的DirectInput8 COM接口，其他所有接口都通过这个接口进行查询。DirectInputDevice8：用于输入设备的CO">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用DirectInput进行交互（1）">
+<meta property="og:url" content="https://rise-worlds.github.io/2007/07/24/%E4%BD%BF%E7%94%A8DirectInput%E8%BF%9B%E8%A1%8C%E4%BA%A4%E4%BA%92%EF%BC%881%EF%BC%89/index.html">
+<meta property="og:site_name" content="Rise&#39;blogs">
+<meta property="og:description" content="DirectInput是一些COM对象的集合（和所有DirectX组件相同），这些COM对象描绘了输入系统和各个输入设备。最主要的对象是DirectInput8，它用于初始化系统以及创建输入设备接口。DirectInput COM对象：IDirectInput8：主要的DirectInput8 COM接口，其他所有接口都通过这个接口进行查询。DirectInputDevice8：用于输入设备的CO">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2007-07-24T01:23:00.000Z">
+<meta property="article:modified_time" content="2007-08-27T17:21:00.000Z">
+<meta property="article:author" content="rise">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://rise-worlds.github.io/2007/07/24/%E4%BD%BF%E7%94%A8DirectInput%E8%BF%9B%E8%A1%8C%E4%BA%A4%E4%BA%92%EF%BC%881%EF%BC%89/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://rise-worlds.github.io/2007/07/24/%E4%BD%BF%E7%94%A8DirectInput%E8%BF%9B%E8%A1%8C%E4%BA%A4%E4%BA%92%EF%BC%881%EF%BC%89/","path":"2007/07/24/使用DirectInput进行交互（1）/","title":"使用DirectInput进行交互（1）"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>使用DirectInput进行交互（1） | Rise'blogs</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Rise'blogs</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li><li class="menu-item menu-item-sitemap"><a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>Sitemap</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="rise"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">rise</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">657</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">46</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">77</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="mailto:rise.worlds@outlook.com" title="E-Mail → mailto:rise.worlds@outlook.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://github.com/rise-worlds" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;rise-worlds" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://x.com/riseworlds" title="Twitter → https:&#x2F;&#x2F;x.com&#x2F;riseworlds" rel="noopener me" target="_blank"><i class="fab fa-twitter fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.facebook.com/rise.worlds" title="FB Page → https:&#x2F;&#x2F;www.facebook.com&#x2F;rise.worlds" rel="noopener me" target="_blank"><i class="fab fa-facebook fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.youtube.com/@YiXuan" title="YouTube → https:&#x2F;&#x2F;www.youtube.com&#x2F;@YiXuan" rel="noopener me" target="_blank"><i class="fab fa-youtube fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.instagram.com/rise.worlds/" title="Instagram → https:&#x2F;&#x2F;www.instagram.com&#x2F;rise.worlds&#x2F;" rel="noopener me" target="_blank"><i class="fab fa-instagram fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://t.me/riseworlds" title="Telegram → https:&#x2F;&#x2F;t.me&#x2F;riseworlds" rel="noopener me" target="_blank"><i class="fab fa-telegram fa-fw"></i></a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="Back to top">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+          Links
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <a href="https://www.cnblogs.com/flying_bat" title="https:&#x2F;&#x2F;www.cnblogs.com&#x2F;flying_bat" rel="noopener" target="_blank">my cnblogs</a>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://rise-worlds.github.io/2007/07/24/%E4%BD%BF%E7%94%A8DirectInput%E8%BF%9B%E8%A1%8C%E4%BA%A4%E4%BA%92%EF%BC%881%EF%BC%89/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="rise">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Rise'blogs">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="使用DirectInput进行交互（1） | Rise'blogs">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          使用DirectInput进行交互（1）
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2007-07-24 01:23:00" itemprop="dateCreated datePublished" datetime="2007-07-24T01:23:00+00:00">2007-07-24</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Dev/" itemprop="url" rel="index"><span itemprop="name">Dev</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Dev/GameDev/" itemprop="url" rel="index"><span itemprop="name">GameDev</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>DirectInput是一些COM对象的集合（和所有DirectX组件相同），这些COM对象描绘了输入系统和各个输入设备。最主要的对象是DirectInput8，它用于初始化系统以及创建输入设备接口。<BR><BR>DirectInput COM对象：<BR><BR>IDirectInput8：主要的DirectInput8 COM接口，其他所有接口都通过这个接口进行查询。<BR>DirectInputDevice8：用于输入设备的COM接口，每个设备都有自己单独的接口可供使用。<BR>DirectInputEffect：用于力反馈效果的 COM接口，比如某些游戏杆和某些鼠标上的力反馈效果。<BR><BR>各种输入设备（比如键盘、鼠标和游戏杆）都使用相同的接口对象IDirectInputDevice8。某些设备，比如游戏杆和鼠标，能够通过查询各自的IDirectInputDevice8对象以得到另外一个接口IDirectInputEffect，这个接口用于控制设备的力反馈效果。IDirectInput8组件对象包含了很多用于初始化输入系统以及获得设备接口的函数，在这些函数中，常用的只有两个，它们是IDirectInput8::EnumDevices和IDirectInput8::CreateDevice。<BR><BR><SPAN style="FONT-WEIGHT: bold">初始化DirectInput</SPAN><BR><BR>要使用DirectInput，需要确保包含了DInput.h和在工程中链接了DInput8.lib，一个IDirectInput8对象就代表了主要DirectInput对象。<BR>DirectInput提供了帮助函数DirectInput8Create用于初始化IDirectInput8接口。<BR><BR>Creates a Microsoft DirectInput object and returns an IDirectInput8 or later interface.<BR><BR style="COLOR: #5c4436"><SPAN style="FONT-WEIGHT: bold; COLOR: #3e764c">Syntax</SPAN><BR><BR>HRESULT WINAPI DirectInput8Create(&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; HINSTANCE hinst,<BR>&nbsp;&nbsp;&nbsp; DWORD dwVersion,<BR>&nbsp;&nbsp;&nbsp; REFIID riidltf,<BR>&nbsp;&nbsp;&nbsp; LPVOID <em>ppvOut,<BR>&nbsp;&nbsp;&nbsp; LPUNKNOWN punkOuter<BR>);<BR><BR><SPAN style="FONT-WEIGHT: bold; COLOR: #3e764c">Parameters</SPAN><BR><BR><SPAN style="FONT-WEIGHT: bold">hinst</SPAN><BR>Instance handle to the application or dynamic-link library (DLL) that is creating the DirectInput object. DirectInput uses this value to determine whether the application or DLL has been certified and to establish any special behaviors that might be necessary for backward compatibility. <BR><BR>It is an error for a DLL to pass the handle to the parent application. For example, an Microsoft ActiveX control embedded in a Web page that uses DirectInput must pass its own instance handle, and not the handle to the browser. This ensures that DirectInput recognizes the control and can enable any special behaviors that might be necessary.<BR><BR><SPAN style="FONT-WEIGHT: bold">dwVersion</SPAN><BR>Version number of DirectInput for which the application is designed. This value is normally DIRECTINPUT_VERSION. If the application defines DIRECTINPUT_VERSION before including Dinput.h, the value must be greater than 0x0800. For earlier versions, use DirectInputCreateEx, which is in Dinput.lib. <BR><BR><SPAN style="FONT-WEIGHT: bold">riidltf</SPAN><BR>Unique identifier of the desired interface. This value is IID_IDirectInput8A or IID_IDirectInput8W. Passing the IID_IDirectInput8 define selects the ANSI or Unicode version of the interface, depending on whether UNICODE is defined during compilation. <BR><BR><SPAN style="FONT-WEIGHT: bold">ppvOut</SPAN><BR>Address of a pointer to a variable to receive the interface pointer if the call succeeds. <BR><BR><SPAN style="FONT-WEIGHT: bold">punkOuter</SPAN><BR>Pointer to the address of the controlling object’s IUnknown interface for Component Object Model (COM) aggregation, or NULL if the interface is not aggregated. Most calling applications pass NULL. If aggregation is requested, the object returned in ppvOut is a pointer to IUnknown, as required by COM aggregation. <BR><BR><SPAN style="FONT-WEIGHT: bold">使用DirectInput设备的步骤</SPAN><BR><BR>1、获取设备GUID，调用IDirectInput8::EnumDevice来实现。<BR>2、创建设备COM对象，调用IDirectInput8::CreateDevice来实现。<BR>3、设置数据格式，调用IDirectInputDevice8::SetDataFormat来实现。<BR>4、设置协作级别，调用IDirectInputDevice8::SetCooperativeLevel来实现。<BR>5、设置任何特殊属性，调用IDirectInputDevice8::SetProperty来实现。<BR>6、获得设备，调用IDirectInputDevice8::Acquire来实现。<BR>7、轮询设备，调用IDirectInputDevice8::Poll来实现。<BR>8、读取数据，调用IDirectInputDevice8::GetDeviceState来实现。<BR><BR>在进行这些步骤前，要确保声明了一个IDirectInput设备对象，即IDirectInputDevice8对象。<BR><BR><SPAN style="FONT-WEIGHT: bold">获取设备GUID</SPAN><BR><BR>每个安装的设备都有一个系统分配的全局惟一标识符（global unique identification, GUID）数字。要使用一个设备，首先必须知道它的GUID。对于连接到系统上的鼠标和键盘，得到他们的GUID非常容易，DirectInput分别为鼠标和键盘的GUID定义成GUID_SysKeyboard和GUID_SysMouse。要使用GUID_SysKeyboard或GUID_SysMouse，必须在所有其他的预处理程序指令前定义INITGUID，或者将DXGuid.lib库链接到项目中。至于其他设备，必须枚举出这些设备，才能得到需要的那些设备的GUID。枚举就是遍历一个含有数据项的列表的过程，数据项就是诸如游戏杆之类的输入设备。假设有5个游戏杆连接到了系统上，那么在枚举的过程中，DirectInput就会传递各个游戏杆的相关信息，而且每次只传递一个游戏杆的信息，直到所有的游戏杆都已经被列出来或者列举被强行终止。<BR><BR>用于枚举设备的函数是IDirectInput8::EnumDevice。<BR><BR>Enumerates available devices.<BR><BR><SPAN style="FONT-WEIGHT: bold; COLOR: #3e764c">Syntax</SPAN><BR><BR>HRESULT EnumDevices(DWORD dwDevType,<BR>&nbsp;&nbsp;&nbsp; LPDIENUMDEVICESCALLBACK lpCallback,<BR>&nbsp;&nbsp;&nbsp; LPVOID pvRef,<BR>&nbsp;&nbsp;&nbsp; DWORD dwFlags<BR>);<BR><BR><SPAN style="FONT-WEIGHT: bold; COLOR: #3e764c">Parameters</SPAN><BR><BR><SPAN style="FONT-WEIGHT: bold">dwDevType</SPAN><BR>Device type filter. <BR><BR>To restrict the enumeration to a particular type of device, set this parameter to a DI8DEVTYPE_</em> value. See DIDEVICEINSTANCE. <BR><BR>To enumerate a class of devices, use one of the following values. <BR><BR>DI8DEVCLASS_ALL<BR>All devices. <BR><BR>DI8DEVCLASS_DEVICE<BR>All devices that do not fall into another class. <BR><BR>DI8DEVCLASS_GAMECTRL<BR>All game controllers. <BR><BR>DI8DEVCLASS_KEYBOARD<BR>All keyboards. Equivalent to DI8DEVTYPE_KEYBOARD. <BR><BR>DI8DEVCLASS_POINTER<BR>All devices of type DI8DEVTYPE_MOUSE and DI8DEVTYPE_SCREENPOINTER. <BR><BR><SPAN style="FONT-WEIGHT: bold">lpCallback</SPAN><BR>Address of a callback function to be called once for each device enumerated. See DIEnumDevicesCallback. <BR><BR><SPAN style="FONT-WEIGHT: bold">pvRef</SPAN><BR>Application-defined 32-bit value to be passed to the enumeration callback each time it is called. <BR><BR><SPAN style="FONT-WEIGHT: bold">dwFlags</SPAN><BR>Flag value that specifies the scope of the enumeration. This parameter can be one or more of the following values: <BR><BR>DIEDFL_ALLDEVICES<BR>All installed devices are enumerated. This is the default behavior. <BR><BR>DIEDFL_ATTACHEDONLY<BR>Only attached and installed devices. <BR><BR>DIEDFL_FORCEFEEDBACK<BR>Only devices that support force feedback. <BR><BR>DIEDFL_INCLUDEALIASES<BR>Include devices that are aliases for other devices. <BR><BR>DIEDFL_INCLUDEHIDDEN<BR>Include hidden devices. For more information about hidden devices, see DIDEVCAPS. <BR><BR>DIEDFL_INCLUDEPHANTOMS<BR>Include phantom (placeholder) devices. <BR><BR><SPAN style="FONT-WEIGHT: bold; COLOR: #3e764c">Return Value</SPAN><BR><BR>If the method succeeds, the return value is DI_OK.<BR><BR>If the method fails, the return value can be one of the following error values.<BR><BR>DIERR_INVALIDPARAM An invalid parameter was passed to the returning function, or the object was not in a state that permitted the function to be called. This value is equal to the E_INVALIDARG standard Component Object Model (COM) return value. <BR>DIERR_NOTINITIALIZED The object has not been initialized. <BR><BR><SPAN style="FONT-WEIGHT: bold; COLOR: #3e764c">Remarks</SPAN><BR><BR>All installed devices can be enumerated, even if they are not present. For example, a flight stick might be installed on the system but not currently plugged into the computer. Set the dwFlags parameter to indicate whether only attached or all installed devices should be enumerated. If the DIEDFL_ATTACHEDONLY flag is not present, all installed devices are enumerated. <BR><BR>A preferred device type can be passed as a dwDevType filter so that only the devices of that type are enumerated.<BR><BR>On Microsoft Windows XP, Microsoft DirectInput enumerates only one mouse and one keyboard device, referred to as the system mouse and the system keyboard. These devices represent the combined output of all mice and keyboards respectively on a system. For information about how to read from multiple mice or keyboards individually on Windows XP, see the WM_INPUT documentation.<BR><BR>Note&nbsp; The order in which devices are enumerated by DirectInput is not guaranteed.<BR><BR>lpCallback是一个指向枚举函数的指针，在系统上每找到一个匹配的设备时，就会调用该函数。<BR><BR>Application-defined callback function that receives Microsoft DirectInput devices as a result of a call to the IDirectInput8::EnumDevices method.<BR><BR><SPAN style="FONT-WEIGHT: bold; COLOR: #3e764c">Syntax</SPAN><BR><BR>BOOL CALLBACK DIEnumDevicesCallback(LPCDIDEVICEINSTANCE lpddi,<BR>&nbsp;&nbsp;&nbsp; LPVOID pvRef<BR>);<BR><BR><SPAN style="FONT-WEIGHT: bold; COLOR: #3e764c">Parameters</SPAN><BR><BR><SPAN style="FONT-WEIGHT: bold">lpddi</SPAN><BR>Address of a DIDEVICEINSTANCE structure that describes the device instance. <BR><BR><SPAN style="FONT-WEIGHT: bold">pvRef</SPAN><BR>The application-defined value passed to IDirectInput8::EnumDevices or IDirectInput8::EnumDevicesBySemantics as the pvRef parameter. <BR><BR><SPAN style="FONT-WEIGHT: bold; COLOR: #3e764c">Return Value</SPAN><BR><BR>Returns DIENUM_CONTINUE to continue the enumeration or DIENUM_STOP to stop the enumeration.<BR><BR><SPAN style="FONT-WEIGHT: bold; COLOR: #3e764c">Remarks</SPAN><BR><BR>If a single hardware device can function as more than one DirectInput device type, it is enumerated as each device type that it supports. For example, a keyboard with a built-in mouse is enumerated twice: once as a keyboard and once as a mouse. The product globally unique identifier (GUID) is the same for each device, however.<BR><BR>lpddi是一个指向DIDEVICEINSTANCE结构体的指针，此结构体包含了此次调用时当前枚举设备上的信息。<BR><BR>Describes an instance of a Microsoft DirectInput device. This structure is used with the IDirectInput8::EnumDevices, IDirectInput8::EnumDevicesBySemantics, and IDirectInputDevice8::GetDeviceInfo methods.<BR><BR><SPAN style="FONT-WEIGHT: bold; COLOR: #3e764c">Syntax</SPAN><BR><BR>typedef struct DIDEVICEINSTANCE { <BR>&nbsp;&nbsp;&nbsp; DWORD dwSize; <BR>&nbsp;&nbsp;&nbsp; GUID&nbsp; guidInstance; <BR>&nbsp;&nbsp;&nbsp; GUID&nbsp; guidProduct; <BR>&nbsp;&nbsp;&nbsp; DWORD dwDevType; <BR>&nbsp;&nbsp;&nbsp; TCHAR tszInstanceName[MAX_PATH]; <BR>&nbsp;&nbsp;&nbsp; TCHAR tszProductName[MAX_PATH];<BR>&nbsp;&nbsp;&nbsp; GUID&nbsp; guidFFDriver;<BR>&nbsp;&nbsp;&nbsp; WORD&nbsp; wUsagePage; <BR>&nbsp;&nbsp;&nbsp; WORD&nbsp; wUsage;<BR>} DIDEVICEINSTANCE, *LPDIDEVICEINSTANCE; <BR>&nbsp;<BR>typedef const DIDEVICEINSTANCE&nbsp; *LPCDIDEVICEINSTANCE;<BR><BR><SPAN style="FONT-WEIGHT: bold; COLOR: #3e764c">Members</SPAN><BR><BR>dwSize<BR>Size of this structure, in bytes. This member must be initialized before the structure is used. <BR><BR>guidInstance<BR>Unique identifier for the instance of the device. An application can save the instance globally unique identifier (GUID) into a configuration file and use it at a later time. Instance GUIDs are specific to a particular computer. An instance GUID obtained from one computer is unrelated to instance GUIDs on another. <BR><BR>guidProduct<BR>Unique identifier for the product. This identifier is established by the manufacturer of the device. <BR><BR>dwDevType<BR>Device type specifier. The least-significant byte of the device type description code specifies the device type. The next-significant byte specifies the device subtype. This value can also be combined with DIDEVTYPE_HID, which specifies a Human Interface Device (HID). <BR><BR>tszInstanceName<BR>Friendly name for the instance. For example, “Joystick 1.” <BR><BR>tszProductName<BR>Friendly name for the product. <BR><BR>guidFFDriver<BR>Unique identifier for the driver being used for force feedback. The driver’s manufacturer establishes this identifier. <BR><BR>wUsagePage<BR>If the device is a Human Interface Device (HID), this member contains the HID usage page code. <BR><BR>wUsage<BR>If the device is a Human Interface Device (HID), this member contains the HID usage code. <BR><BR><SPAN style="FONT-WEIGHT: bold">创建设备COM对象</SPAN><BR><BR>有了设备GUID，就能创建实际的IDirectInputDevice8 COM对象了，用于创建此COM对象的函数是IDirectInput8::CreateDevice。<BR><BR>Creates and initializes an instance of a device based on a given globally unique identifier (GUID), and obtains an IDirectInputDevice8 interface. <BR><BR><SPAN style="FONT-WEIGHT: bold; COLOR: #3e764c">Syntax</SPAN><BR><BR>HRESULT CreateDevice(REFGUID rguid,<BR>&nbsp;&nbsp;&nbsp; LPDIRECTINPUTDEVICE *lplpDirectInputDevice,<BR>&nbsp;&nbsp;&nbsp; LPUNKNOWN pUnkOuter<BR>);<BR><BR><SPAN style="FONT-WEIGHT: bold; COLOR: #3e764c">Parameters</SPAN><BR><BR><SPAN style="FONT-WEIGHT: bold">rguid</SPAN><BR>Reference to (C++) or address of (C) the instance GUID for the desired input device (see Remarks). The GUID is retrieved through the IDirectInput8::EnumDevices method, or it can be one of the predefined GUIDs listed below. For the following GUID values to be valid, your application must define INITGUID before all other preprocessor directives at the beginning of the source file, or link to Dxguid.lib. <BR><BR>GUID_SysKeyboard<BR>The default system keyboard. <BR><BR>GUID_SysMouse<BR>The default system mouse. <BR><BR><SPAN style="FONT-WEIGHT: bold">lplpDirectInputDevice</SPAN><BR>Address of a variable to receive the IDirectInputDevice8 interface pointer if successful. <BR><BR><SPAN style="FONT-WEIGHT: bold">pUnkOuter</SPAN><BR>Address of the controlling object’s IUnknown interface for Component Object Model (COM) aggregation, or NULL if the interface is not aggregated. Most calling applications pass NULL. <BR><BR><SPAN style="FONT-WEIGHT: bold; COLOR: #3e764c">Return Value</SPAN><BR><BR>If the method succeeds, the return value is DI_OK.<BR><BR>If the method fails, the return value can be one of the following:<BR><BR>DIERR_DEVICENOTREG： The device or device instance is not registered with Microsoft DirectInput. This value is equal to the REGDB_E_CLASSNOTREG standard COM return value. <BR><BR>DIERR_INVALIDPARAM： An invalid parameter was passed to the returning function, or the object was not in a state that permitted the function to be called. This value is equal to the E_INVALIDARG standard COM return value. <BR><BR>DIERR_NOINTERFACE： The specified interface is not supported by the object. This value is equal to the E_NOINTERFACE standard COM return value. <BR><BR>DIERR_NOTINITIALIZED： The object has not been initialized. <BR><BR>DIERR_OUTOFMEMORY： The DirectInput subsystem couldn’t allocate sufficient memory to complete the call. This value is equal to the E_OUTOFMEMORY standard COM return value. <BR><BR><SPAN style="FONT-WEIGHT: bold; COLOR: #3e764c">Remarks</SPAN><BR><BR>Calling this method with pUnkOuter &#x3D; NULL is equivalent to creating the object by CoCreateInstance (&amp;CLSID_DirectInputDevice, NULL, CLSCTX_INPROC_SERVER, riid, lplpDirectInputDevice) and then initializing it with Initialize.<BR><BR>Calling this method with pUnkOuter !&#x3D; NULL is equivalent to creating the object by CoCreateInstance (&amp;CLSID_DirectInputDevice, punkOuter, CLSCTX_INPROC_SERVER, &amp;IID_IUnknown, lplpDirectInputDevice). The aggregated object must be initialized manually.<BR>
+    </p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="followme">
+  <span>Welcome to my other publishing channels</span>
+
+  <div class="social-list">
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="https://www.facebook.com/rise.worlds">
+            <span class="icon">
+              <i class="fab fa-facebook"></i>
+            </span>
+
+            <span class="label">FB Page</span>
+          </a>
+      </div>
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="https://twitter.com/riseworlds">
+            <span class="icon">
+              <i class="fab fa-twitter"></i>
+            </span>
+
+            <span class="label">Twitter</span>
+          </a>
+      </div>
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="https://t.me/riseworlds">
+            <span class="icon">
+              <i class="fab fa-telegram"></i>
+            </span>
+
+            <span class="label">Telegram</span>
+          </a>
+      </div>
+  </div>
+</div>
+
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2007/07/22/D3D%E4%B8%AD%E7%BD%91%E6%A0%BC%E6%A8%A1%E5%9E%8B%E7%9A%84%E8%BF%90%E7%94%A8/" rel="prev" title="D3D中网格模型的运用">
+                  <i class="fa fa-angle-left"></i> D3D中网格模型的运用
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2007/07/24/%E2%80%9C%E7%88%B1%E5%9B%BD%E4%B9%A6%E6%B3%95%E5%AE%B6%E2%80%9D%E5%92%8C%E4%BB%96%E7%9A%84%E7%B2%89%E4%B8%9D/" rel="next" title="“爱国书法家”和他的粉丝">
+                  “爱国书法家”和他的粉丝 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">豫ICP备2021009490号 </a>
+  </div>
+<div class="copyright">
+<a href="https://icp.gov.moe/?keyword=20233669" target="_blank">萌ICP备20233669号</a>
+</div>
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">rise</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="reading-progress-bar"></div>
+
+  <a href="https://github.com/rise-worlds" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://unpkg.com/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@next-theme/pjax@0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script><script src="/js/pjax.js"></script>
+
+  
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://unpkg.com/mermaid@10.7.0/dist/mermaid.min.js","integrity":"sha256-TtLOdUA8mstPoO6sGvHIGx2ceXrrX4KgIItO06XOn8A="}}</script>
+  <script src="/js/third-party/tags/mermaid.js"></script>
+
+
+
+
+
+  
+
+
+
+
+  <script src="https://unpkg.com/quicklink@2.3.0/dist/quicklink.umd.js" integrity="sha256-yvJQOINiH9fWemHn0vCA5lsHWJaHs6/ZmO+1Ft04SvM=" crossorigin="anonymous"></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":true,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"https://rise-worlds.github.io/2007/07/24/%E4%BD%BF%E7%94%A8DirectInput%E8%BF%9B%E8%A1%8C%E4%BA%A4%E4%BA%92%EF%BC%881%EF%BC%89/"}</script>
+  <script src="/js/third-party/quicklink.js"></script>
+
+</body>
+</html>

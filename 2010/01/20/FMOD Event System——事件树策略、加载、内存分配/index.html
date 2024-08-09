@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://unpkg.com/@fortawesome/fontawesome-free@6.5.1/css/all.min.css" integrity="sha256-wiz7ZSCn/btzhjKDQBms9Hx4sSeUYsDrTLg7roPstac=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://unpkg.com/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"rise-worlds.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.19.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="FMOD最新API—Event Sytem，提供了比FMOD Ex更高层的接口，使引擎开发人员无需关注诸如音频数据管理、播放控制、channels管理等底层细节，而把精力放在考虑如何为上层应用（如：场景&#x2F;技能&#x2F;UI编辑器中的音效、音乐的编辑，游戏中各种音效、音乐的播放）设计适合的框架。此外，它还提供了相应的设计工具—FMOD Designer，让音效制作人员既可以很容易地实现各种复杂音效，也能方便">
+<meta property="og:type" content="article">
+<meta property="og:title" content="FMOD Event System——事件树策略、加载、内存分配">
+<meta property="og:url" content="https://rise-worlds.github.io/2010/01/20/FMOD%20Event%20System%E2%80%94%E2%80%94%E4%BA%8B%E4%BB%B6%E6%A0%91%E7%AD%96%E7%95%A5%E3%80%81%E5%8A%A0%E8%BD%BD%E3%80%81%E5%86%85%E5%AD%98%E5%88%86%E9%85%8D/index.html">
+<meta property="og:site_name" content="Rise&#39;blogs">
+<meta property="og:description" content="FMOD最新API—Event Sytem，提供了比FMOD Ex更高层的接口，使引擎开发人员无需关注诸如音频数据管理、播放控制、channels管理等底层细节，而把精力放在考虑如何为上层应用（如：场景&#x2F;技能&#x2F;UI编辑器中的音效、音乐的编辑，游戏中各种音效、音乐的播放）设计适合的框架。此外，它还提供了相应的设计工具—FMOD Designer，让音效制作人员既可以很容易地实现各种复杂音效，也能方便">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2010-01-20T20:54:00.000Z">
+<meta property="article:modified_time" content="2010-01-20T20:54:00.000Z">
+<meta property="article:author" content="rise">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://rise-worlds.github.io/2010/01/20/FMOD%20Event%20System%E2%80%94%E2%80%94%E4%BA%8B%E4%BB%B6%E6%A0%91%E7%AD%96%E7%95%A5%E3%80%81%E5%8A%A0%E8%BD%BD%E3%80%81%E5%86%85%E5%AD%98%E5%88%86%E9%85%8D/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://rise-worlds.github.io/2010/01/20/FMOD%20Event%20System%E2%80%94%E2%80%94%E4%BA%8B%E4%BB%B6%E6%A0%91%E7%AD%96%E7%95%A5%E3%80%81%E5%8A%A0%E8%BD%BD%E3%80%81%E5%86%85%E5%AD%98%E5%88%86%E9%85%8D/","path":"2010/01/20/FMOD Event System——事件树策略、加载、内存分配/","title":"FMOD Event System——事件树策略、加载、内存分配"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>FMOD Event System——事件树策略、加载、内存分配 | Rise'blogs</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Rise'blogs</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li><li class="menu-item menu-item-sitemap"><a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>Sitemap</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="rise"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">rise</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">657</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">46</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">77</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="mailto:rise.worlds@outlook.com" title="E-Mail → mailto:rise.worlds@outlook.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://github.com/rise-worlds" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;rise-worlds" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://x.com/riseworlds" title="Twitter → https:&#x2F;&#x2F;x.com&#x2F;riseworlds" rel="noopener me" target="_blank"><i class="fab fa-twitter fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.facebook.com/rise.worlds" title="FB Page → https:&#x2F;&#x2F;www.facebook.com&#x2F;rise.worlds" rel="noopener me" target="_blank"><i class="fab fa-facebook fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.youtube.com/@YiXuan" title="YouTube → https:&#x2F;&#x2F;www.youtube.com&#x2F;@YiXuan" rel="noopener me" target="_blank"><i class="fab fa-youtube fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.instagram.com/rise.worlds/" title="Instagram → https:&#x2F;&#x2F;www.instagram.com&#x2F;rise.worlds&#x2F;" rel="noopener me" target="_blank"><i class="fab fa-instagram fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://t.me/riseworlds" title="Telegram → https:&#x2F;&#x2F;t.me&#x2F;riseworlds" rel="noopener me" target="_blank"><i class="fab fa-telegram fa-fw"></i></a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="Back to top">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+          Links
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <a href="https://www.cnblogs.com/flying_bat" title="https:&#x2F;&#x2F;www.cnblogs.com&#x2F;flying_bat" rel="noopener" target="_blank">my cnblogs</a>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://rise-worlds.github.io/2010/01/20/FMOD%20Event%20System%E2%80%94%E2%80%94%E4%BA%8B%E4%BB%B6%E6%A0%91%E7%AD%96%E7%95%A5%E3%80%81%E5%8A%A0%E8%BD%BD%E3%80%81%E5%86%85%E5%AD%98%E5%88%86%E9%85%8D/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="rise">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Rise'blogs">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="FMOD Event System——事件树策略、加载、内存分配 | Rise'blogs">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          FMOD Event System——事件树策略、加载、内存分配
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2010-01-20 20:54:00" itemprop="dateCreated datePublished" datetime="2010-01-20T20:54:00+00:00">2010-01-20</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Dev/" itemprop="url" rel="index"><span itemprop="name">Dev</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Dev/GameDev/" itemprop="url" rel="index"><span itemprop="name">GameDev</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>FMOD最新API—Event Sytem，提供了比FMOD Ex更高层的接口，使引擎开发人员无需关注诸如音频数据管理、播放控制、channels管理等底层细节，而把精力放在考虑如何为上层应用（如：场景/技能/UI编辑器中的音效、音乐的编辑，游戏中各种音效、音乐的播放）设计适合的框架。此外，它还提供了相应的设计工具—FMOD Designer，让音效制作人员既可以很容易地实现各种复杂音效，也能方便地对各种参数（如：3D音效的范围、播放属性）进行设置，最终打包输出事件索引文件(.fev)和音频数据文件(.fsb)给应用程序使用。  <p>&nbsp;&nbsp;&nbsp; FMOD Event System有一些核心概念需要编程者知晓，我抽空对前段时间使用该API时产出的文档（基本上是译文+自己的理解）进行了整理，希望对使用该API的朋友有所帮助。[ P.S. 后面有时间再整理出更为详尽的文档 ]  <p><u><strong><em>术语</em></strong></u>  <p><strong>事件</strong>—事件树的叶子节点。获得其句柄后可以播放它，更新它的参数。  <p><strong>事件组</strong>—包含事件和子事件组的’文件夹’，用于组织和加载目的。  <p><strong>波形库</strong>(wave banks)—被加载的.fsb文件。  <p><strong>事件实例内存</strong>(event instance memory)—事件播放所要求的内存。如果在编辑工具中，事件的’max playbacks’属性被设置，FMOD将为对应数量的实例分配足够的内存，以使它们能被同时播放。通常，如果不使用特殊的DSP效果（诸如，反射、回音、和声等），内存的使用是很小的，而且有些DSP效果并不需要内存。  <p><strong><em><u>事件层次和波形库的组织</u></em></strong>  <p>&nbsp;&nbsp;&nbsp; 应该将事件划分到多个逻辑组中，便于一起加载和使用，例如关卡音效和公共音效。因此，你可以使用EventGroup::loadEventData加载整个分支，其中占有内存最大的通常是波形库数据。如果事件引用的FSB(即波形库)已经在加载其它事件时载入，绝不会发生重复加载。（注：FSB可以调用预加载函数预先加载到内存）  <p><u><strong><em>加载/分配概览</em></strong></u>  <ul> <li>EventSystem::load加载fev文件，仅分配保存事件树结构对象的小块内存。  <li>EventGroup::loadEventData从FSB文件加载所有波形数据(需要指定组和其子组)。该函数会递归加载所有子组。  <li>如果没有调用Event::loadEventData加载，当用户调用 EventGroup::getEvent/EventGroup::getEventByIndex加载指定事件时，会自动加载其所需的波形数据。  <li>如果EventSystem::getGroup/EventGroup::getGroupByIndex的cacheevents参数被置为true，将会为指定组中的所有事件分配事件实例内存（包括DSP特效内存）。这些函数不会递归加载。如果cacheevents参数被置为false，FMOD会等到你调用EventGroup::getEvent/EventGroup::getEventByIndex时分配事件实例内存。  <li>EventGroup::freeEventData卸载所有波形数据并且释放该组包含的所有事件实例内存(包括子组)。递归释放。  <li>如果EventGroup::loadEventData被调用，或者cache了group，EventGroup::getEvent/EventGroup::getEventByIndex不会有任何读盘开销。</li></ul> <p><strong><em><u>一些提示</u></em></strong>  <ul> <li>在游戏加载阶段调用EventGroup::loadEventData加载静态波形库(static banks)。  <li>如果需要有选择性的加载，不要使用EventGroup::loadEventData，使用EventGroup::getEvent/EventGroup::getEventByIndex，或者使用cacheevents = true调用GetGroup。  <li>EventGroup::freeEventData会释放组及其包含的子组和孩子相关的所有内存，包括波形库数据和事件实例内存。如果后面又要使用到该组数据，就不得不重新加载。</li></ul> <p><strong>参考文献</strong>  <p>[1]&nbsp; FMOD Ex &amp; Designer Documents</p>
+    
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="followme">
+  <span>Welcome to my other publishing channels</span>
+
+  <div class="social-list">
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="https://www.facebook.com/rise.worlds">
+            <span class="icon">
+              <i class="fab fa-facebook"></i>
+            </span>
+
+            <span class="label">FB Page</span>
+          </a>
+      </div>
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="https://twitter.com/riseworlds">
+            <span class="icon">
+              <i class="fab fa-twitter"></i>
+            </span>
+
+            <span class="label">Twitter</span>
+          </a>
+      </div>
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="https://t.me/riseworlds">
+            <span class="icon">
+              <i class="fab fa-telegram"></i>
+            </span>
+
+            <span class="label">Telegram</span>
+          </a>
+      </div>
+  </div>
+</div>
+
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2009/12/31/%E6%9C%80%E6%96%B0%E5%85%8D%E8%B4%B9AV%E4%B8%8B%E8%BD%BD/" rel="prev" title="最新免费AV下载">
+                  <i class="fa fa-angle-left"></i> 最新免费AV下载
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2010/01/27/%E6%8E%A8%E8%8D%90%E4%B8%80%E6%AC%BEWAR3MH%E5%B7%A5%E5%85%B7(VS)KyouHelper/" rel="next" title="推荐一款WAR3MH工具(VS)KyouHelper">
+                  推荐一款WAR3MH工具(VS)KyouHelper <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">豫ICP备2021009490号 </a>
+  </div>
+<div class="copyright">
+<a href="https://icp.gov.moe/?keyword=20233669" target="_blank">萌ICP备20233669号</a>
+</div>
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">rise</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="reading-progress-bar"></div>
+
+  <a href="https://github.com/rise-worlds" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://unpkg.com/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@next-theme/pjax@0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script><script src="/js/pjax.js"></script>
+
+  
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://unpkg.com/mermaid@10.7.0/dist/mermaid.min.js","integrity":"sha256-TtLOdUA8mstPoO6sGvHIGx2ceXrrX4KgIItO06XOn8A="}}</script>
+  <script src="/js/third-party/tags/mermaid.js"></script>
+
+
+
+
+
+  
+
+
+
+
+  <script src="https://unpkg.com/quicklink@2.3.0/dist/quicklink.umd.js" integrity="sha256-yvJQOINiH9fWemHn0vCA5lsHWJaHs6/ZmO+1Ft04SvM=" crossorigin="anonymous"></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":true,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"https://rise-worlds.github.io/2010/01/20/FMOD%20Event%20System%E2%80%94%E2%80%94%E4%BA%8B%E4%BB%B6%E6%A0%91%E7%AD%96%E7%95%A5%E3%80%81%E5%8A%A0%E8%BD%BD%E3%80%81%E5%86%85%E5%AD%98%E5%88%86%E9%85%8D/"}</script>
+  <script src="/js/third-party/quicklink.js"></script>
+
+</body>
+</html>

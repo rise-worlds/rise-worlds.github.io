@@ -1,0 +1,1036 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://unpkg.com/@fortawesome/fontawesome-free@6.5.1/css/all.min.css" integrity="sha256-wiz7ZSCn/btzhjKDQBms9Hx4sSeUYsDrTLg7roPstac=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://unpkg.com/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"rise-worlds.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.19.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="使用DirectMusic在DirectAudio 中，DirectSound负责数字音频方面的处理，而DirectMusic则负责Midi文件（Musical Instrument Data Interface，数字音乐格式，.mid作为文件扩展名），DirectMusic固有音乐文件（.sgt文件）和数字录音设备录制的波形格式文件（.wav文件）等文件的播放操作。能体现DirectMusic的">
+<meta property="og:type" content="article">
+<meta property="og:title" content="用DirectX Audio和DirectShow播放声音和音乐（5）">
+<meta property="og:url" content="https://rise-worlds.github.io/2007/07/31/%E7%94%A8DirectX%20Audio%E5%92%8CDirectShow%E6%92%AD%E6%94%BE%E5%A3%B0%E9%9F%B3%E5%92%8C%E9%9F%B3%E4%B9%90%EF%BC%885%EF%BC%89/index.html">
+<meta property="og:site_name" content="Rise&#39;blogs">
+<meta property="og:description" content="使用DirectMusic在DirectAudio 中，DirectSound负责数字音频方面的处理，而DirectMusic则负责Midi文件（Musical Instrument Data Interface，数字音乐格式，.mid作为文件扩展名），DirectMusic固有音乐文件（.sgt文件）和数字录音设备录制的波形格式文件（.wav文件）等文件的播放操作。能体现DirectMusic的">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2007-07-31T00:33:00.000Z">
+<meta property="article:modified_time" content="2007-08-27T17:17:00.000Z">
+<meta property="article:author" content="rise">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://rise-worlds.github.io/2007/07/31/%E7%94%A8DirectX%20Audio%E5%92%8CDirectShow%E6%92%AD%E6%94%BE%E5%A3%B0%E9%9F%B3%E5%92%8C%E9%9F%B3%E4%B9%90%EF%BC%885%EF%BC%89/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://rise-worlds.github.io/2007/07/31/%E7%94%A8DirectX%20Audio%E5%92%8CDirectShow%E6%92%AD%E6%94%BE%E5%A3%B0%E9%9F%B3%E5%92%8C%E9%9F%B3%E4%B9%90%EF%BC%885%EF%BC%89/","path":"2007/07/31/用DirectX Audio和DirectShow播放声音和音乐（5）/","title":"用DirectX Audio和DirectShow播放声音和音乐（5）"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>用DirectX Audio和DirectShow播放声音和音乐（5） | Rise'blogs</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Rise'blogs</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li><li class="menu-item menu-item-sitemap"><a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>Sitemap</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">Parameter</span></a></li><li class="nav-item nav-level-4"><a class="nav-link"><span class="nav-number">2.</span> <span class="nav-text">Return Values</span></a></li><li class="nav-item nav-level-4"><a class="nav-link"><span class="nav-number">3.</span> <span class="nav-text">Remarks</span></a></li><li class="nav-item nav-level-4"><a class="nav-link"><span class="nav-number">4.</span> <span class="nav-text">Remarks</span></a></li><li class="nav-item nav-level-4"><a class="nav-link"><span class="nav-number">5.</span> <span class="nav-text">Parameters</span></a></li><li class="nav-item nav-level-4"><a class="nav-link"><span class="nav-number">6.</span> <span class="nav-text">Return Values</span></a></li><li class="nav-item nav-level-4"><a class="nav-link"><span class="nav-number">7.</span> <span class="nav-text">Remarks</span></a></li><li class="nav-item nav-level-4"><a class="nav-link"><span class="nav-number">8.</span> <span class="nav-text">Parameters</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number"></span> <span class="nav-text">Return Value</span></a></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="rise"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">rise</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">657</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">46</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">77</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="mailto:rise.worlds@outlook.com" title="E-Mail → mailto:rise.worlds@outlook.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://github.com/rise-worlds" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;rise-worlds" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://x.com/riseworlds" title="Twitter → https:&#x2F;&#x2F;x.com&#x2F;riseworlds" rel="noopener me" target="_blank"><i class="fab fa-twitter fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.facebook.com/rise.worlds" title="FB Page → https:&#x2F;&#x2F;www.facebook.com&#x2F;rise.worlds" rel="noopener me" target="_blank"><i class="fab fa-facebook fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.youtube.com/@YiXuan" title="YouTube → https:&#x2F;&#x2F;www.youtube.com&#x2F;@YiXuan" rel="noopener me" target="_blank"><i class="fab fa-youtube fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.instagram.com/rise.worlds/" title="Instagram → https:&#x2F;&#x2F;www.instagram.com&#x2F;rise.worlds&#x2F;" rel="noopener me" target="_blank"><i class="fab fa-instagram fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://t.me/riseworlds" title="Telegram → https:&#x2F;&#x2F;t.me&#x2F;riseworlds" rel="noopener me" target="_blank"><i class="fab fa-telegram fa-fw"></i></a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="Back to top">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+          Links
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <a href="https://www.cnblogs.com/flying_bat" title="https:&#x2F;&#x2F;www.cnblogs.com&#x2F;flying_bat" rel="noopener" target="_blank">my cnblogs</a>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://rise-worlds.github.io/2007/07/31/%E7%94%A8DirectX%20Audio%E5%92%8CDirectShow%E6%92%AD%E6%94%BE%E5%A3%B0%E9%9F%B3%E5%92%8C%E9%9F%B3%E4%B9%90%EF%BC%885%EF%BC%89/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="rise">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Rise'blogs">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="用DirectX Audio和DirectShow播放声音和音乐（5） | Rise'blogs">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          用DirectX Audio和DirectShow播放声音和音乐（5）
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2007-07-31 00:33:00" itemprop="dateCreated datePublished" datetime="2007-07-31T00:33:00+00:00">2007-07-31</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Dev/" itemprop="url" rel="index"><span itemprop="name">Dev</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Dev/GameDev/" itemprop="url" rel="index"><span itemprop="name">GameDev</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p><SPAN style="FONT-WEIGHT: bold; COLOR: #137a2c">使用DirectMusic</SPAN><BR><BR>在DirectAudio 中，DirectSound负责数字音频方面的处理，而DirectMusic则负责Midi文件（Musical Instrument Data Interface，数字音乐格式，.mid作为文件扩展名），DirectMusic固有音乐文件（.sgt文件）和数字录音设备录制的波形格式文件（.wav文件）等文件的播放操作。<BR><BR>能体现DirectMusic的强大之处是DirectMusic固有文件格式，一首用DirectMusic固有文件格式制作的音乐包括数个小音乐格式，这些样式还能用不同的乐器组合一个接一个地播放。随机的样式和乐器的选取创造出了随时都在改变的音乐，再加上节拍变化，就形成了一个魅力无穷的音乐系统。DirectMusic的另一个特性是可以使用“基调”，就是在正在播放的音乐片段上叠加一段其他音乐，新加入的音乐可以很平滑的融入到原有的音乐中。这在很多时候都有用，比如一个玩家完成了一个目标，可以马上播放一段“获得荣誉”的音乐提示他。<BR><BR>除了传统的音符之外，Midi音乐中可以包含数字音频作为音符，比如枪声、猴子的尖叫、也或者是其他各种各样你觉得奇怪的东西。比如可以在游戏中使用曾经梦想到的最令你心惊胆颤的音乐，而这些MIDI音乐都能完成。使用数字乐谱还有一个巨大的好处，即音乐在所有的计算机上可以发出一致的声音，这点是通过使用统一的DirectSound合成器完成的，当然DirectMusic允许使用 DirectSound接口或者是个人创建的接口。音乐数据使用的合成器通道称为音频通道（Audio Path），你可以获取这个通道，并在普通的DirectSound音频缓冲中播放。<BR><BR>使用Midi文件和 DirectMusic固有文件有共同的好处，那就是可以修改播放的节拍，这也是很有用的特性。有了这个特性，就可以设计随着屏幕动作而加速或者减速的背景音乐。如果游戏进入紧张的时期，就加速节拍，使音乐具有紧张感，如果高潮的活动结束，可以放慢节拍。数字录音设备所录制下来的音乐也是非常丰富多彩的，尽管这种音乐可以拥有非常高的音乐质量，但是这种歌曲不能被修改以便匹配游戏活动，也就是说这些音乐只能保持最开始录制的那个样子，不能有更多的变化，也不能减少里面的元素。<BR><BR><SPAN style="FONT-WEIGHT: bold; COLOR: #137a2c">开始使用DirectMusic</SPAN><BR><BR>使用 DirectMusic的第一步是创建一个主对象，我们把这个对象叫做演奏器对象（performance object），它表现整个音乐系统，第二步创建一个叫加载器（loader object）的对象，加载器加载所有原始的音乐文件。最后必须加载音乐小节到音乐片段对象（segment object）中，多个小节可以被同时加载，并一个接一个地播放，这可以让我们创建更具动态效果的音乐。<BR><BR>DirectMusic并没有提供函数帮助创建或初始化DirectMusic主接口，所以需要自行初始化COM接口，初始化COM接口所调用的第一个函数是CoInitialize。<BR><BR></p>
+<P>Initializes the COM library on the current thread and identifies the concurrency model as single-thread apartment (STA). Applications must initialize the COM library before they can call COM library functions other than CoGetMalloc and memory allocation functions. </P>
+
+<P>New applications should call CoInitializeEx instead of <STRONG>CoInitialize</STRONG>. </P><PRE class=syntax><STRONG>HRESULT CoInitialize(<BR> LPVOID</STRONG><EM> pvReserved </EM>//Reserved; must be NULL<BR><STRONG>);</STRONG></PRE>
+
+<DIV class=reftip id=reftip style="VISIBILITY: hidden; OVERFLOW: visible; POSITION: absolute"></DIV>
+
+<H4>Parameter</H4>
+
+<DL>
+
+<DT><EM>pvReserved</EM> 
+
+<DD>[in] Reserved; must be NULL. </DD></DL>
+
+<H4>Return Values</H4>
+
+<P>This function supports the standard return values E_INVALIDARG, E_OUTOFMEMORY, and E_UNEXPECTED, as well as the following: </P>
+
+<DL>
+
+<DT>S_OK 
+
+<DD>The COM library was initialized successfully on this thread. 
+
+<DT>S_FALSE 
+
+<DD>The COM library is already initialized on this thread. 
+
+<DT>RPC_E_CHANGED_MODE 
+
+<DD>A previous call to <STRONG>CoInitializeEx</STRONG> specified the concurrency model for this thread as multithread apartment (MTA). </DD></DL>
+
+<H4>Remarks</H4>
+
+<P>CoInitializeEx provides the same functionality as <STRONG>CoInitialize</STRONG> and also provides a parameter to explicitly specify the thread's concurrency model. <STRONG>CoInitialize</STRONG> calls <STRONG>CoInitializeEx</STRONG> and specifies the concurrency model as single-thread apartment. Applications developed today should call <STRONG>CoInitializeEx</STRONG> rather than <STRONG>CoInitialize</STRONG>. </P>
+
+<P>You need to initialize the COM library on a thread before you call any of the library functions except CoGetMalloc, to get a pointer to the standard allocator, and the memory allocation functions.</P>
+
+<P>Once the concurrency model for a thread is set, it cannot be changed. A call to <STRONG>CoInitialize</STRONG> on an apartment that was previously initialized as multithreaded will fail and return RPC_E_CHANGED_MODE. </P>
+
+<P>Typically, the COM library is initialized on a thread only once. Subsequent calls to <STRONG>CoInitialize</STRONG> or <STRONG>CoInitializeEx</STRONG> on the same thread will succeed, as long as they do not attempt to change the concurrency model, but will return S_FALSE. To close the COM library gracefully, each successful call to <STRONG>CoInitialize</STRONG> or <STRONG>CoInitializeEx</STRONG>, including those that return S_FALSE, must be balanced by a corresponding call to <STRONG>CoUninitialize</STRONG>. However, the first thread in the application that calls <STRONG>CoInitialize(0)</STRONG> or <STRONG>CoInitializeEx(COINIT_APARTMENTTHREADED)</STRONG> must be the last thread to call <STRONG>CoUninitialize()</STRONG>. If the call sequence is not in this order, then subsequent calls to <STRONG>CoInitialize</STRONG> on the STA will fail and the application will not work.</P>
+
+<P>Because there is no way to control the order in which in-process servers are loaded or unloaded, it is not safe to call <STRONG>CoInitialize</STRONG>, <STRONG>CoInitializeEx</STRONG>, or <STRONG>CoUninitialize</STRONG> from the DllMain function. </P><BR>在开始使用DirectMusic的时候调用这个函数，因为该函数有一个内部的计数器，显示被调用的次数，每调用一次这个初始化函数，就必须调用一次关闭COM的函数CoUninitialize。<BR><BR>
+
+<P>Closes the COM library on the current thread, unloads all DLLs loaded by the thread, frees any other resources that the thread maintains, and forces all RPC connections on the thread to close.</P><PRE class=syntax><STRONG>void CoUninitialize( );</STRONG></PRE>
+
+<H4>Remarks</H4>
+
+<P>A thread must call <STRONG>CoUninitialize</STRONG> once for each successful call it has made to CoInitialize or CoInitializeEx. Only the <STRONG>CoUninitialize</STRONG> call corresponding to the <STRONG>CoInitialize</STRONG> or <STRONG>CoInitializeEx</STRONG> call that initialized the library can close it.</P>
+
+<P>Calls to OleInitialize must be balanced by calls to OleUninitialize. The <STRONG>OleUninitialize</STRONG> function calls <STRONG>CoUninitialize</STRONG> internally, so applications that call <STRONG>OleUninitialize</STRONG> do not also need to call <STRONG>CoUninitialize</STRONG>.</P>
+
+<P><STRONG>CoUninitialize</STRONG> should be called on application shutdown, as the last call made to the COM library after the application hides its main windows and falls through its main message loop. If there are open conversations remaining, <STRONG>CoUninitialize</STRONG> starts a modal message loop and dispatches any pending messages from the containers or server for this COM application. By dispatching the messages, <STRONG>CoUninitialize</STRONG> ensures that the application does not quit before receiving all of its pending messages. Non-COM messages are discarded.</P>
+
+<P>Because there is no way to control the order in which in-process servers are loaded or unloaded, it is not safe to call <STRONG>CoInitialize</STRONG>, <STRONG>CoInitializeEx</STRONG>, or <STRONG>CoUninitialize</STRONG> from the DllMain function. </P><BR>CoUninitialize函数减少COM接口的使用计数器，如果这个计数器减少到0，COM接口就会从系统释放内存，这样做可以提高内存的使用效率，所有的COM对象都遵循这个使用原则。<BR><BR><SPAN style="FONT-WEIGHT: bold; COLOR: #137a2c">创建演奏器对象</SPAN><BR><BR>演奏器对象是最主要的对象，可以创建多个演奏器对象，但是建议只使用一个演奏器。要创建演奏器，首先要声明一个IDirectMusicPerformance8对象，然后调用 CoCreateInstance初始化。<BR><BR>
+
+<P>Creates a single uninitialized object of the class associated with a specified CLSID. Call <STRONG>CoCreateInstance</STRONG> when you want to create only one object on the local system. To create a single object on a remote system, call CoCreateInstanceEx. To create multiple objects based on a single CLSID, refer to the CoGetClassObject function.</P><PRE class=syntax><STRONG>STDAPI CoCreateInstance(<BR> REFCLSID</STRONG><EM> rclsid</EM><STRONG>, </STRONG>//Class identifier (CLSID) of the object<BR><STRONG> LPUNKNOWN</STRONG><EM> pUnkOuter</EM><STRONG>, </STRONG>//Pointer to controlling IUnknown<BR><STRONG> DWORD</STRONG><EM> dwClsContext</EM><STRONG>, </STRONG>//Context for running executable code<BR><STRONG> REFIID</STRONG><EM> riid</EM><STRONG>, </STRONG>//Reference to the identifier of the interface<BR><STRONG> LPVOID *</STRONG><EM> ppv </EM>//Address of output variable that receives <BR> // the interface pointer requested in <EM>riid</EM><BR><STRONG>);</STRONG></PRE>
+
+<DIV class=reftip id=reftip style="VISIBILITY: hidden; OVERFLOW: visible; POSITION: absolute"></DIV>
+
+<H4>Parameters</H4>
+
+<DL>
+
+<DT><EM>rclsid</EM> 
+
+<DD>[in] CLSID associated with the data and code that will be used to create the object. 
+
+<DT><EM>pUnkOuter</EM> 
+
+<DD>[in] If <STRONG>NULL</STRONG>, indicates that the object is not being created as part of an aggregate. If non-<STRONG>NULL</STRONG>, pointer to the aggregate object's <STRONG>IUnknown</STRONG> interface (the controlling <STRONG>IUnknown</STRONG>). 
+
+<DT><EM>dwClsContext</EM> 
+
+<DD>[in] Context in which the code that manages the newly created object will run. The values are taken from the enumeration CLSCTX. 
+
+<DT><EM>riid</EM> 
+
+<DD>[in] Reference to the identifier of the interface to be used to communicate with the object. 
+
+<DT><EM>ppv</EM> 
+
+<DD>[out] Address of pointer variable that receives the interface pointer requested in <EM>riid</EM>. Upon successful return, *<EM>ppv</EM> contains the requested interface pointer. </DD></DL>
+
+<H4>Return Values</H4>
+
+<DL>
+
+<DT>S_OK 
+
+<DD>An instance of the specified object class was successfully created. 
+
+<DT>REGDB_E_CLASSNOTREG 
+
+<DD>A specified class is not registered in the registration database. Also can indicate that the type of server you requested in the <STRONG>CLSCTX</STRONG> enumeration is not registered or the values for the server types in the registry are corrupt. 
+
+<DT>CLASS_E_NOAGGREGATION 
+
+<DD>This class cannot be created as part of an aggregate. 
+
+<DT>E_NOINTERFACE 
+
+<DD>The specified class does not implement the requested interface, or the controlling <STRONG>IUnknown</STRONG> does not expose the requested interface. </DD></DL>
+
+<H4>Remarks</H4>
+
+<P>The <STRONG>CoCreateInstance</STRONG> helper function provides a convenient shortcut by connecting to the class object associated with the specified CLSID, creating an uninitialized instance, and releasing the class object. As such, it encapsulates the following functionality:</P><PRE>CoGetClassObject(rclsid, dwClsContext, NULL, IID_IClassFactory, &amp;pCF); <BR>hresult = pCF-&gt;CreateInstance(pUnkOuter, riid, ppvObj) <BR>pCF-&gt;Release(); </PRE>
+
+<P>It is convenient to use <STRONG>CoCreateInstance</STRONG> when you need to create only a single instance of an object on the local machine. If you are creating an instance on remote machine, call CoCreateInstanceEx. When you are creating multiple instances, it is more efficient to obtain a pointer to the class object's <STRONG>IClassFactory</STRONG> interface and use its methods as needed. In the latter case, you should use the CoGetClassObject function.</P>
+
+<P>In the CLSCTX enumeration, you can specify the type of server used to manage the object. The constants can be CLSCTX_INPROC_SERVER, CLSCTX_INPROC_HANDLER, CLSCTX_LOCAL_SERVER, or any combination of these values. The constant CLSCTX_ALL is defined as the combination of all three. For more information about the use of one or a combination of these constants, refer to CLSCTX.</P><BR>以下代码演示了如何创建演奏器对象：<BR><BR>
+
+<DIV style="BORDER-RIGHT: #ffffff 1px solid; PADDING-RIGHT: 5px; BORDER-TOP: #ffffff 1px solid; PADDING-LEFT: 4px; FONT-SIZE: 13px; PADDING-BOTTOM: 4px; BORDER-LEFT: #ffffff 1px solid; WIDTH: 98%; PADDING-TOP: 4px; BORDER-BOTTOM: #ffffff 1px solid; BACKGROUND-COLOR: #ffffff"><!--<br><br>Code highlighting produced by Actipro CodeHighlighter (freeware)<br>http://www.CodeHighlighter.com/<br><br>--><SPAN style="COLOR: #000000">IDirectMusicPerformance8</SPAN><SPAN style="COLOR: #000000">*</SPAN><SPAN style="COLOR: #000000">&nbsp;&nbsp;&nbsp;g_dm_performance;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #008000">//</SPAN><SPAN style="COLOR: #008000">&nbsp;directmusic&nbsp;performance<BR><BR></SPAN><SPAN style="COLOR: #008000">//</SPAN><SPAN style="COLOR: #008000">&nbsp;create&nbsp;the&nbsp;DirectMusic&nbsp;performance&nbsp;object<BR></SPAN><SPAN style="COLOR: #008000">//</SPAN><SPAN style="COLOR: #008000"><BR></SPAN><SPAN style="COLOR: #008000">//</SPAN><SPAN style="COLOR: #008000">&nbsp;creates&nbsp;a&nbsp;single&nbsp;uninitialized&nbsp;object&nbsp;of&nbsp;the&nbsp;class&nbsp;associated&nbsp;with&nbsp;a&nbsp;specified&nbsp;CLSID.</SPAN><SPAN style="COLOR: #008000"><BR></SPAN><SPAN style="COLOR: #000000">CoCreateInstance(CLSID_DirectMusicPerformance,&nbsp;NULL,&nbsp;CLSCTX_INPROC,&nbsp;IID_IDirectMusicPerformance8,&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(</SPAN><SPAN style="COLOR: #0000ff">void</SPAN><SPAN style="COLOR: #000000">**</SPAN><SPAN style="COLOR: #000000">)</SPAN><SPAN style="COLOR: #000000">&amp;</SPAN><SPAN style="COLOR: #000000">g_dm_performance);<BR></SPAN></DIV><BR>演奏器需要被初始化后才能工作，初始化的过程需要首先创建DirectMusic和DirectSound对象，然后由这两个对象创建音频缓冲区并且设置播放特性，还需要设置的内容是播放音乐所用的音频通道，一般情况的设置使用128种乐器（128乐器通道）并且拥有立体声和混音（回音）效果，可以调用InitAudio来初始化。<BR><BR>
+
+<P>The <STRONG>InitAudio </STRONG>method initializes the performance and optionally sets up a default audiopath. This method must be called before the performance can play using audiopaths.</P>
+
+<P>This method should be used in most cases instead of <STRONG>IDirectMusicPerformance8::Init</STRONG>.</P>
+
+<P class=blue><STRONG>Syntax</STRONG></P><PRE class=syntax><CODE><STRONG>HRESULT InitAudio(<BR> IDirectMusic** </STRONG><EM>ppDirectMusic</EM><STRONG>,</STRONG><BR><STRONG> IDirectSound** </STRONG><EM>ppDirectSound</EM><STRONG>,</STRONG><BR><STRONG> HWND </STRONG><EM>hWnd</EM><STRONG>,</STRONG><BR><STRONG> DWORD </STRONG><EM>dwDefaultPathType</EM><STRONG>,</STRONG><BR><STRONG> DWORD </STRONG><EM>dwPChannelCount,</EM><BR><STRONG> DWORD </STRONG><EM>dwFlags</EM><STRONG>,</STRONG><BR><STRONG> DMUS_AUDIOPARAMS *</STRONG><EM>pParams</EM><BR><STRONG>);</STRONG> </CODE></PRE>
+
+<P class=blue><STRONG>Parameters</STRONG></P>
+
+<P class=dt><EM>ppDirectMusic</EM></P>
+
+<P class=indent>Address of a variable that specifies or receives an interface pointer to a DirectMusic object.</P>
+
+<P class=indent>If the variable pointed to by <EM>ppDirectMusic</EM> contains a valid <STRONG>IDirectMusic</STRONG> or <STRONG>IDirectMusic8</STRONG> interface pointer, the existing object is assigned to the performance. The reference count of the interface is incremented.</P>
+
+<P class=indent>If the variable pointed to by <EM>ppDirectMusic</EM> contains NULL, a DirectMusic object is created and the <STRONG>IDirectMusic</STRONG> interface pointer is returned. Use <STRONG>QueryInterface</STRONG> to obtain <STRONG>IDirectMusic8</STRONG>.</P>
+
+<P class=indent>If <EM>ppDirectMusic</EM> is NULL, a DirectMusic object is created and used internally by the performance.</P>
+
+<P class=indent>See Remarks.</P>
+
+<P class=dt><EM>ppDirectSound</EM></P>
+
+<P class=indent>Address of a variable that specifies or receives an <STRONG>IDirectSound</STRONG> interface pointer for a DirectSound device object to use by default for waveform output. If this parameter contains a NULL pointer, DirectMusic creates a private DirectSound device object. If the variable pointed to contains NULL, DirectMusic creates a DirectSound device object and returns the interface pointer. See Remarks.</P>
+
+<P class=dt><EM>hWnd</EM></P>
+
+<P class=indent>Window handle to use for the creation of DirectSound. This parameter can be NULL, in which case the foreground window is used. See Remarks.</P>
+
+<P class=indent>This parameter is ignored if an <STRONG>IDirectSound</STRONG> interface pointer is passed to the method in <EM>ppDirectSound</EM>. In that case the application is responsible for setting the window handle by using <STRONG>IDirectSound8::SetCooperativeLevel</STRONG>.</P>
+
+<P class=dt><EM>dwDefaultPathType</EM></P>
+
+<P class=indent>Value that specifies the default audiopath type. Can be zero if no default path type is wanted. For a list of defined values, see <STRONG>IDirectMusicPerformance8::CreateStandardAudioPath</STRONG>.</P>
+
+<P class=dt><EM>dwPChannelCount</EM></P>
+
+<P class=indent>Value that specifies the number of <NOBR><U>performance channels</U></NOBR> to allocate to the path, if <EM>dwDefaultPathType</EM> is not zero.</P>
+
+<P class=dt><EM>dwFlags</EM></P>
+
+<P class=indent>Flags that specify requested features. If <EM>pParams</EM> is not NULL, this value is ignored and the requested features are specified in the <STRONG>dwFeatures</STRONG> member of the <STRONG>DMUS_AUDIOPARAMS</STRONG> structure. The values listed in the following table are defined for use in this parameter.</P>
+
+<TABLE class=style1 cols=2 cellPadding=5 rules=rows frame=below>&nbsp; 
+
+<TBODY>&nbsp; 
+
+<TR vAlign=top>&nbsp; 
+
+<TD class=style2 width="50%">Value</TD>&nbsp; 
+
+<TD class=style2 width="50%">Description</TD>&nbsp; </TR>&nbsp; 
+
+<TR vAlign=top>&nbsp; 
+
+<TD width="50%">DMUS_AUDIOF_3D</TD>&nbsp; 
+
+<TD width="50%">3-D buffers. This flag is not implemented. Buffers in 3-D audiopaths always have 3-D capabilities.</TD>&nbsp; </TR>&nbsp; 
+
+<TR vAlign=top>&nbsp; 
+
+<TD width="50%">DMUS_AUDIOF_ALL</TD>&nbsp; 
+
+<TD width="50%">All features.</TD>&nbsp; </TR>&nbsp; 
+
+<TR vAlign=top>&nbsp; 
+
+<TD width="50%">DMUS_AUDIOF_BUFFERS</TD>&nbsp; 
+
+<TD width="50%">Multiple buffers.</TD>&nbsp; </TR>&nbsp; 
+
+<TR vAlign=top>&nbsp; 
+
+<TD width="50%">DMUS_AUDIOF_DMOS</TD>&nbsp; 
+
+<TD width="50%">Additional DMOs. This flag is not implemented.</TD>&nbsp; </TR>&nbsp; 
+
+<TR vAlign=top>&nbsp; 
+
+<TD width="50%">DMUS_AUDIOF_ENVIRON</TD>&nbsp; 
+
+<TD width="50%">Environmental modeling. This flag is not implemented.</TD>&nbsp; </TR>&nbsp; 
+
+<TR vAlign=top>&nbsp; 
+
+<TD width="50%">DMUS_AUDIOF_EAX</TD>&nbsp; 
+
+<TD width="50%">Support for Environmental Audio Extensions (EAX). This flag is not implemented.</TD>&nbsp; </TR>&nbsp; 
+
+<TR vAlign=top>&nbsp; 
+
+<TD width="50%">DMUS_AUDIOF_STREAMING</TD>&nbsp; 
+
+<TD width="50%">Support for streaming waveforms. </TD>&nbsp; </TR>&nbsp; </TBODY></TABLE>
+
+<P class=dt><EM>pParams</EM></P>
+
+<P class=indent>Address of a <STRONG>DMUS_AUDIOPARAMS</STRONG> structure that specifies parameters for the synthesizer and receives information about what parameters were set. Can be NULL if the default parameters are wanted. </P>
+
+<P class=blue><STRONG>Return Values</STRONG></P>
+
+<P>If the method succeeds, the return value is S_OK.</P>
+
+<P>If it fails, the method can return one of the error values shown in the following table.</P>
+
+<TABLE class=style1 cols=1 cellPadding=5 rules=rows frame=below>&nbsp; 
+
+<TBODY>&nbsp; 
+
+<TR vAlign=top>&nbsp; 
+
+<TD class=style2 width="100%">Return code</TD>&nbsp; </TR>&nbsp; 
+
+<TR vAlign=top>&nbsp; 
+
+<TD width="100%">DMUS_E_ALREADY_INITED</TD>&nbsp; </TR>&nbsp; 
+
+<TR vAlign=top>&nbsp; 
+
+<TD width="100%">DSERR_BUFFERLOST</TD>&nbsp; </TR>&nbsp; 
+
+<TR vAlign=top>&nbsp; 
+
+<TD width="100%">DSERR_PRIOLEVELNEEDED</TD>&nbsp; </TR>&nbsp; 
+
+<TR vAlign=top>&nbsp; 
+
+<TD width="100%">DSERR_UNINITIALIZED</TD>&nbsp; </TR>&nbsp; 
+
+<TR vAlign=top>&nbsp; 
+
+<TD width="100%">E_NOINTERFACE</TD>&nbsp; </TR>&nbsp; 
+
+<TR vAlign=top>&nbsp; 
+
+<TD width="100%">E_OUTOFMEMORY</TD>&nbsp; </TR>&nbsp; 
+
+<TR vAlign=top>&nbsp; 
+
+<TD width="100%">E_POINTER</TD>&nbsp; </TR>&nbsp; </TBODY></TABLE>
+
+<P class=blue><STRONG>Remarks</STRONG></P>
+
+<P>This method can be called only once. It cannot be used to retrieve an existing <STRONG>IDirectMusic8</STRONG> interface.</P>
+
+<P>A DirectMusic object can be associated with the performance in the following ways. </P>
+
+<UL type=disc>&nbsp; 
+
+<LI>The application allows the performance to create the DirectMusic object and needs a pointer to that object. In this case, *<EM>ppDirectMusic</EM> is NULL on entry and contains the <STRONG>IDirectMusic</STRONG> pointer on exit. &nbsp; 
+
+<LI>The application allows the performance to initialize itself and does not need a DirectMusic object pointer. In this case, <EM>ppDirectMusic</EM> is NULL. &nbsp; 
+
+<LI>The application creates its own DirectMusic object and gives it to the performance by passing the address of the <STRONG>IDirectMusic8</STRONG> pointer in <EM>&nbsp; ppDirectMusic</EM>. Most applications do not use this technique. </LI></UL>
+
+<P>If you specify an interface pointer in <EM>ppDirectSound</EM>, it must be an interface to an object of class CLSID_DirectSound8. Objects of this class support both <STRONG>IDirectSound</STRONG> and <STRONG>IDirectSound8</STRONG>, but the <STRONG>IDirectSound</STRONG> interface must be passed. The DirectSound device object must be fully initialized before being passed to <STRONG>InitAudio</STRONG>. If the object was created by using <STRONG>CoCreateInstance</STRONG>, call <STRONG>IDirectSound8::Initialize</STRONG>. Set the cooperative level to DSSCL_PRIORITY by using <STRONG>IDirectSound8::SetCooperativeLevel</STRONG>.</P>
+
+<P>You can pass NULL in the <EM>hWnd</EM> parameter to pass the current foreground window handle to DirectSound. However, do not assume that the application window will be in the foreground during initialization. It is best to pass the top-level application window handle.</P>
+
+<P>The parameters set in <EM>dwFlags</EM> and <EM>pParams</EM> apply to the default audiopath and any audiopaths created subsequently.</P>
+
+<P>The method fails with DSERR_BUFFERLOST if a value other than zero is passed in <EM>dwDefaultPathType</EM> and any application has initialized DirectSound with the write-primary cooperative level.</P>
+
+<P>The performance must be terminated by using the <STRONG>IDirectMusicPerformance8::CloseDown</STRONG> method before being released.</P><BR>以下代码演示了如何使用InitAudio来初始化演奏器对象：<BR><BR>
+
+<DIV style="BORDER-RIGHT: #ffffff 1px solid; PADDING-RIGHT: 5px; BORDER-TOP: #ffffff 1px solid; PADDING-LEFT: 4px; FONT-SIZE: 13px; PADDING-BOTTOM: 4px; BORDER-LEFT: #ffffff 1px solid; WIDTH: 98%; PADDING-TOP: 4px; BORDER-BOTTOM: #ffffff 1px solid; BACKGROUND-COLOR: #ffffff"><!--<br><br>Code highlighting produced by Actipro CodeHighlighter (freeware)<br>http://www.CodeHighlighter.com/<br><br>--><SPAN style="COLOR: #008000">//</SPAN><SPAN style="COLOR: #008000">&nbsp;initialize&nbsp;the&nbsp;performance&nbsp;with&nbsp;the&nbsp;standard&nbsp;audio&nbsp;path.<BR></SPAN><SPAN style="COLOR: #008000">//</SPAN><SPAN style="COLOR: #008000">&nbsp;this&nbsp;initialize&nbsp;both&nbsp;directmusic&nbsp;and&nbsp;directsound&nbsp;and&nbsp;sets&nbsp;up&nbsp;the&nbsp;synthesizer.</SPAN><SPAN style="COLOR: #008000"></SPAN><SPAN style="COLOR: #000000"> g_dm_performance</SPAN><SPAN style="COLOR: #000000">-&gt;</SPAN><SPAN style="COLOR: #000000">InitAudio(NULL,&nbsp;NULL,&nbsp;g_hwnd,&nbsp;DMUS_APATH_SHARED_STEREOPLUSREVERB,&nbsp;</SPAN><SPAN style="COLOR: #000000">128</SPAN><SPAN style="COLOR: #000000">,&nbsp;DMUS_AUDIOF_ALL,&nbsp;NULL);</SPAN></DIV><BR><SPAN style="FONT-WEIGHT: bold; COLOR: #137a2c">创建加载器对象</SPAN><BR><BR>创建加载器是使用DirectMusic 的第二步，这个对象其实是一个缓冲系统，用于加速数据加载和歌曲支持文件（比如乐器库）的加载。<BR><BR>IDirectMusicLoader8表示加载器对象，以下代码可以创建一个加载器：<BR><BR>
+
+<DIV style="BORDER-RIGHT: #ffffff 1px solid; PADDING-RIGHT: 5px; BORDER-TOP: #ffffff 1px solid; PADDING-LEFT: 4px; FONT-SIZE: 13px; PADDING-BOTTOM: 4px; BORDER-LEFT: #ffffff 1px solid; WIDTH: 98%; PADDING-TOP: 4px; BORDER-BOTTOM: #ffffff 1px solid; BACKGROUND-COLOR: #ffffff"><!--<br><br>Code highlighting produced by Actipro CodeHighlighter (freeware)<br>http://www.CodeHighlighter.com/<br><br>--><SPAN style="COLOR: #008000">//</SPAN><SPAN style="COLOR: #008000">&nbsp;create&nbsp;the&nbsp;DirectMusic&nbsp;loader&nbsp;object</SPAN><SPAN style="COLOR: #008000"><BR></SPAN><SPAN style="COLOR: #000000">&nbsp;&nbsp;&nbsp;&nbsp;CoCreateInstance(CLSID_DirectMusicLoader,&nbsp;NULL,&nbsp;CLSCTX_INPROC,&nbsp;IID_IDirectMusicLoader8,&nbsp;(</SPAN><SPAN style="COLOR: #0000ff">void</SPAN><SPAN style="COLOR: #000000">**</SPAN><SPAN style="COLOR: #000000">)</SPAN><SPAN style="COLOR: #000000">&amp;</SPAN><SPAN style="COLOR: #000000">g_dm_loader);</SPAN></DIV><BR>请确定在程序中只有一个加载器对象，这样可以帮助系统控制缓存和经常使用的数据资源。<BR><BR>使用加载器的下一步是告诉加载器在哪些目录搜索文件，一般情况下我们把这个路径叫做默认搜索路径（default search directory）。对于加载单独的MIDI文件，不需要设置默认的搜索路径，但是对于加载DirectMusic固有文件，必须设置搜索路径，以便让 DirectMusic能顺利找到支持文件。<BR><BR>可以通过调用IDirectMusicLoader8:: SetSearchDirectory函数来设置工作路径。<BR><BR>
+
+<P>The <STRONG>SetSearchDirectory </STRONG>method sets a search path for finding object files. The search path can be set for one object file type or for all files.</P>
+
+<P class=blue><STRONG>Syntax</STRONG></P><PRE class=syntax><CODE><STRONG>HRESULT SetSearchDirectory(<BR> REFGUID </STRONG><EM>rguidClass</EM><STRONG>,</STRONG><BR><STRONG> WCHAR* </STRONG><EM>pwszPath,</EM><BR> <STRONG>BOOL</STRONG><EM> fClear</EM><BR><STRONG>);</STRONG> </CODE></PRE>
+
+<P class=blue><STRONG>Parameters</STRONG></P>
+
+<P class=dt><EM>rguidClass</EM></P>
+
+<P class=indent>Reference to (C++) or address of (C) the identifier of the class of objects that the call pertains to. GUID_DirectMusicAllTypes specifies all objects. For a list of standard loadable classes, see <STRONG>IDirectMusicLoader8</STRONG>.</P>
+
+<P class=dt><EM>pwszPath</EM></P>
+
+<P class=indent>File path for directory. Must be a valid directory and must be less than MAX_PATH in length. The path, if not fully qualified, is relative to the current directory when <STRONG>IDirectMusicLoader8::ScanDirectory</STRONG> is called. </P>
+
+<P class=dt><EM>fClear</EM></P>
+
+<P class=indent>If TRUE, clears all information about objects before setting the directory. This prevents the loader from accessing objects in a previous directory when those objects have the same name. However, objects are not removed from the cache.</P>
+
+<P class=blue><STRONG>Return Values</STRONG></P>
+
+<P>If the method succeeds, the return value is S_OK, or S_FALSE if the search directory is already set to <EM>pwszPath</EM>.</P>
+
+<P>If it fails, the method can return one of the error values shown in the following table.</P>
+
+<TABLE class=style1 cols=1 cellPadding=5 rules=rows frame=below>
+
+<TBODY>
+
+<TR vAlign=top>
+
+<TD class=style2 width="100%">Return code</TD></TR>
+
+<TR vAlign=top>
+
+<TD width="100%">DMUS_E_LOADER_BADPATH</TD></TR>
+
+<TR vAlign=top>
+
+<TD width="100%">E_OUTOFMEMORY</TD></TR>
+
+<TR vAlign=top>
+
+<TD width="100%">E_POINTER</TD></TR></TBODY></TABLE>
+
+<P class=blue><STRONG>Remarks</STRONG></P>
+
+<P>After a search path is set, the loader does not need a full path every time it is given an object to load by file name. This enables objects that refer to other objects to find them by file name without knowing the full path.</P>
+
+<P>When this method has been called, the loader expects the <STRONG>wszFileName</STRONG> member of the <STRONG>DMUS_OBJECTDESC</STRONG> structure to contain only a file name or a path relative to the search directory, unless the DMUS_OBJ_FULLPATH flag is set in the <STRONG>dwValidData</STRONG> member.</P><BR>该函数接收的是宽字符串，使用时需要把字符串转换为WCHAR数据类型，可以通过mbstowcs来转换。<BR><BR>
+
+<P>Converts a sequence of multibyte characters to a corresponding sequence of wide characters. </P>
+
+<DIV class=section id=syntaxSection>
+
+<DIV class=code id=syntaxCodeBlocks><SPAN codelanguage="other">
+
+<TABLE cellSpacing=0 cellPadding=0 width="100%">
+
+<TBODY>
+
+<TR>
+
+<TH align=left><BR></TH></TR>
+
+<TR>
+
+<TD><PRE>size_t mbstowcs(<BR> wchar_t *<SPAN class=parameter>wcstr</SPAN>,<BR> const char *<SPAN class=parameter>mbstr</SPAN>,<BR> size_t <SPAN class=parameter>count</SPAN> <BR>);<BR></PRE></TD></TR></TBODY></TABLE></SPAN></DIV></DIV>
+
+<H4 class=subHeading>Parameters</H4>
+
+<DL>
+
+<DT>[out] <SPAN class=parameter>wcstr</SPAN> 
+
+<DD>
+
+<P>The address of a sequence of wide characters.</P></DD></DL>
+
+<DL>
+
+<DT>[in] <SPAN class=parameter>mbstr</SPAN> 
+
+<DD>
+
+<P>The address of a sequence of null terminated multibyte characters.</P></DD></DL>
+
+<DL>
+
+<DT>[in] <SPAN class=parameter>count</SPAN> 
+
+<DD>
+
+<P>The maximum number of multibyte characters to convert.</P></DD></DL>
+
+<H1 class=heading><SPAN onkeypress=ExpandCollapse_CheckKey(returnValueToggle) style="CURSOR: default" onclick=ExpandCollapse(returnValueToggle) tabIndex=0>Return Value</SPAN></H1>
+
+<DIV class=section id=returnValueSection name="collapseableSection">
+
+<P>If <STRONG>mbstowcs</STRONG> successfully converts the source string, it returns the number of converted multibyte characters. If the <SPAN class=parameter>wcstr</SPAN> argument is <STRONG>NULL</STRONG>, the function returns the required size (in wide characters) of the destination string. If <STRONG>mbstowcs</STRONG> encounters an invalid multibyte character, it returns –1. If the return value is <SPAN class=parameter>count</SPAN>, the wide-character string is not null-terminated.</P>
+
+<DIV class=alert>
+
+<TABLE cellSpacing=0 cellPadding=0 width="100%">
+
+<TBODY>
+
+<TR>
+
+<TH align=left>Security Note </TH></TR>
+
+<TR>
+
+<TD>
+
+<P>Ensure that <SPAN class=parameter>wcstr</SPAN> and <SPAN class=parameter>mbstr</SPAN> do not overlap, and that <SPAN class=parameter>count</SPAN> correctly reflects the number of multibyte characters to convert.</P></TD></TR></TBODY></TABLE></DIV></DIV><BR>以下代码演示了如何设置搜索路径：<BR><BR>
+
+<DIV style="BORDER-RIGHT: #ffffff 1px solid; PADDING-RIGHT: 5px; BORDER-TOP: #ffffff 1px solid; PADDING-LEFT: 4px; FONT-SIZE: 13px; PADDING-BOTTOM: 4px; BORDER-LEFT: #ffffff 1px solid; WIDTH: 98%; PADDING-TOP: 4px; BORDER-BOTTOM: #ffffff 1px solid; BACKGROUND-COLOR: #ffffff"><!--<br><br>Code highlighting produced by Actipro CodeHighlighter (freeware)<br>http://www.CodeHighlighter.com/<br><br>--><SPAN style="COLOR: #008000">//</SPAN><SPAN style="COLOR: #008000">&nbsp;tell&nbsp;directmusic&nbsp;where&nbsp;the&nbsp;default&nbsp;search&nbsp;path&nbsp;is</SPAN><SPAN style="COLOR: #008000"><BR></SPAN><SPAN style="COLOR: #000000"><BR>&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #0000ff">char</SPAN><SPAN style="COLOR: #000000">&nbsp;path[MAX_PATH];<BR>&nbsp;&nbsp;&nbsp;&nbsp;WCHAR&nbsp;search_path[MAX_PATH];<BR><BR>&nbsp;&nbsp;&nbsp;&nbsp;GetCurrentDirectory(MAX_PATH,&nbsp;path);<BR><BR>&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #008000">//</SPAN><SPAN style="COLOR: #008000">&nbsp;maps&nbsp;a&nbsp;character&nbsp;string&nbsp;to&nbsp;a&nbsp;wide-character&nbsp;(Unicode)&nbsp;string</SPAN><SPAN style="COLOR: #008000"><BR></SPAN><SPAN style="COLOR: #000000">&nbsp;&nbsp;&nbsp;&nbsp;MultiByteToWideChar(CP_ACP,&nbsp;</SPAN><SPAN style="COLOR: #000000">0</SPAN><SPAN style="COLOR: #000000">,&nbsp;path,&nbsp;</SPAN><SPAN style="COLOR: #000000">-</SPAN><SPAN style="COLOR: #000000">1</SPAN><SPAN style="COLOR: #000000">,&nbsp;search_path,&nbsp;MAX_PATH);<BR><BR>&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #008000">//</SPAN><SPAN style="COLOR: #008000">&nbsp;set&nbsp;a&nbsp;search&nbsp;path&nbsp;for&nbsp;finding&nbsp;object&nbsp;files</SPAN><SPAN style="COLOR: #008000"><BR></SPAN><SPAN style="COLOR: #000000">&nbsp;&nbsp;&nbsp;&nbsp;g_dm_loader</SPAN><SPAN style="COLOR: #000000">-&gt;</SPAN><SPAN style="COLOR: #000000">SetSearchDirectory(GUID_DirectMusicAllTypes,&nbsp;search_path,&nbsp;FALSE);</SPAN></DIV><BR><SPAN style="FONT-WEIGHT: bold; COLOR: #137a2c">使用音乐片段</SPAN><BR><BR>通过以上步骤，系统已经被初始化，加载器也已经准备就绪，现在该加载歌曲然后播放它们了。完成这个操作是IDirectMusicSegment8对象的工作，DirectMusic加载器的职责是加载音乐和乐器库，并且创建IDirectMusicSegment8对象，整个加载过程有2个步骤，第一个步骤是加载包含所需播放的音乐的音乐片段。 <BR><BR><SPAN style="FONT-WEIGHT: bold">加载音乐片段</SPAN><BR><BR>加载音乐片段的第一步是设置一个对象描述结构，这个结构被称为DMUS_OBJECTDESC，它描述了要加载的信息。<BR><BR>
+
+<P>The <STRONG>DMUS_OBJECTDESC</STRONG> structure is used to describe a loadable object. This structure is passed to the <STRONG>IDirectMusicLoader8::GetObject</STRONG> method to identify the object that the loader should retrieve from storage. Information about an object is retrieved in this structure by the <STRONG>IDirectMusicLoader8::EnumObject</STRONG> and <STRONG>IDirectMusicObject8::GetDescriptor</STRONG> methods.</P>
+
+<P class=blue><STRONG>Syntax</STRONG></P><PRE class=syntax><CODE>typedef struct _DMUS_OBJECTDESC {<BR> DWORD dwSize;<BR> DWORD dwValidData;<BR> GUID guidObject;<BR> GUID guidClass;<BR> FILETIME ftDate;<BR> DMUS_VERSION vVersion;<BR> WCHAR wszName[DMUS_MAX_NAME];<BR> WCHAR wszCategory[DMUS_MAX_CATEGORY];<BR> WCHAR wszFileName[DMUS_MAX_FILENAME];<BR> LONGLONG llMemLength;<BR> LPBYTE pbMemData;<BR> IStream* pStream<BR>} DMUS_OBJECTDESC, *LPDMUS_OBJECTDESC;<BR></CODE></PRE>
+
+<P class=blue><STRONG>Members</STRONG></P>
+
+<P class=dt><STRONG>dwSize</STRONG></P>
+
+<P class=indent>Size of the structure, in bytes. This member must be initialized to <STRONG>sizeof(DMUS_OBJECTDESC) </STRONG>before the structure is passed to any method.</P>
+
+<P class=dt><STRONG>dwValidData</STRONG></P>
+
+<P class=indent>Flags describing which members are valid and giving further information about some members. Thefollowing values are defined:</P>
+
+<TABLE cols=2 cellPadding=5 rules=rows border=0 frame=below>&nbsp; 
+
+<TBODY>&nbsp; 
+
+<TR vAlign=top>&nbsp; 
+
+<TD class=blue width="40%"><STRONG>Flag</STRONG></TD>&nbsp; 
+
+<TD class=blue width="60%"><STRONG>Description</STRONG></TD>&nbsp; </TR>&nbsp; 
+
+<TR vAlign=top>&nbsp; 
+
+<TD width="40%">DMUS_OBJ_CATEGORY</TD>&nbsp; 
+
+<TD width="60%">The <STRONG>wszCategory</STRONG> member is valid.</TD>&nbsp; </TR>&nbsp; 
+
+<TR vAlign=top>&nbsp; 
+
+<TD width="40%">DMUS_OBJ_CLASS</TD>&nbsp; 
+
+<TD width="60%">The <STRONG>guidClass</STRONG> member is valid.</TD>&nbsp; </TR>&nbsp; 
+
+<TR vAlign=top>&nbsp; 
+
+<TD width="40%">DMUS_OBJ_DATE</TD>&nbsp; 
+
+<TD width="60%">The <STRONG>ftDate</STRONG> member is valid.</TD>&nbsp; </TR>&nbsp; 
+
+<TR vAlign=top>&nbsp; 
+
+<TD width="40%">DMUS_OBJ_FILENAME</TD>&nbsp; 
+
+<TD width="60%">The <STRONG>wszFileName</STRONG> member is valid. The presence of this flag is assumed if DMUS_OBJ_FULLPATH is set.</TD>&nbsp; </TR>&nbsp; 
+
+<TR vAlign=top>&nbsp; 
+
+<TD width="40%">DMUS_OBJ_FULLPATH</TD>&nbsp; 
+
+<TD width="60%">The <STRONG>wszFileName</STRONG> member contains either the full path of a file or a path relative to the application directory. The directory set by <STRONG>IDirectMusicLoader8::SetSearchDirectory</STRONG> is not searched. If this flag is not set, <STRONG>wszFilename</STRONG> is always assumed to be relative to the application directory, or to the search directory if <STRONG>SetSearchDirectory</STRONG> has been called for this object type.</TD>&nbsp; </TR>&nbsp; 
+
+<TR vAlign=top>&nbsp; 
+
+<TD width="40%">DMUS_OBJ_LOADED</TD>&nbsp; 
+
+<TD width="60%">The object is currently loaded in memory.</TD>&nbsp; </TR>&nbsp; 
+
+<TR vAlign=top>&nbsp; 
+
+<TD width="40%">DMUS_OBJ_MEMORY</TD>&nbsp; 
+
+<TD width="60%">The object is in memory, and <STRONG>llMemLength</STRONG> and <STRONG>&nbsp; pbMemData</STRONG> are valid.</TD>&nbsp; </TR>&nbsp; 
+
+<TR vAlign=top>&nbsp; 
+
+<TD width="40%">DMUS_OBJ_NAME</TD>&nbsp; 
+
+<TD width="60%">The <STRONG>wszName</STRONG> member is valid.</TD>&nbsp; </TR>&nbsp; 
+
+<TR vAlign=top>&nbsp; 
+
+<TD width="40%">DMUS_OBJ_OBJECT</TD>&nbsp; 
+
+<TD width="60%">The <STRONG>guidObject</STRONG> member is valid.</TD>&nbsp; </TR>&nbsp; 
+
+<TR vAlign=top>&nbsp; 
+
+<TD width="40%">DMUS_OBJ_STREAM</TD>&nbsp; 
+
+<TD width="60%">The <STRONG>pStream</STRONG> member contains a pointer to the data stream.</TD>&nbsp; </TR>&nbsp; 
+
+<TR vAlign=top>&nbsp; 
+
+<TD width="40%">DMUS_OBJ_URL</TD>&nbsp; 
+
+<TD width="60%">The <STRONG>wszFileName</STRONG> member contains a URL. URLs are not currently supported by the DirectMusic loader.</TD>&nbsp; </TR>&nbsp; 
+
+<TR vAlign=top>&nbsp; 
+
+<TD width="40%">DMUS_OBJ_VERSION</TD>&nbsp; 
+
+<TD width="60%">The <STRONG>vVersion</STRONG> member is valid.</TD>&nbsp; </TR>&nbsp; </TBODY></TABLE><BR>
+
+<P class=dt><STRONG>guidObject</STRONG></P>
+
+<P class=indent>Unique identifier for this object.</P>
+
+<P class=dt><STRONG>guidClass</STRONG></P>
+
+<P class=indent>Unique identifier for the class of object. See DirectMusic Component GUIDs. </P>
+
+<P class=dt><STRONG>ftDate</STRONG></P>
+
+<P class=indent>Date that the object was last edited.</P>
+
+<P class=dt><STRONG>vVersion</STRONG></P>
+
+<P class=indent><STRONG>DMUS_VERSION</STRONG> structure containing version information.</P>
+
+<P class=dt><STRONG>wszName</STRONG></P>
+
+<P class=indent>Name of the object.</P>
+
+<P class=dt><STRONG>wszCategory</STRONG></P>
+
+<P class=indent>Category for the object.</P>
+
+<P class=dt><STRONG>wszFileName</STRONG></P>
+
+<P class=indent>File path. If DMUS_OBJ_FULLPATH is set, this is the full path; otherwise, it is the file name. If the <STRONG>IDirectMusicLoader8::SetSearchDirectory</STRONG> method has been called, this member must contain only a file name. </P>
+
+<P class=dt><STRONG>llMemLength</STRONG></P>
+
+<P class=indent>Size of data in memory.</P>
+
+<P class=dt><STRONG>pbMemData</STRONG></P>
+
+<P class=indent>Pointer to data in memory. Do not use this value except when loading from a resource contained in the executable file.</P>
+
+<P class=dt><STRONG>pStream</STRONG></P>
+
+<P class=indent>Address of the <STRONG>IStream</STRONG> interface of a custom stream that can be used to load the object into memory. In most cases this value should be NULL.See Remarks. </P>
+
+<P class=blue><STRONG>Remarks</STRONG></P>
+
+<P>At least one of <STRONG>wszName</STRONG>, <STRONG>guidObject</STRONG>, and <STRONG>wszFileName</STRONG> must contain valid data to retrieve the object by using the <STRONG>IDirectMusicLoader8::GetObject</STRONG> method. </P>
+
+<P>The name and category strings use 16-bit characters in the <STRONG>WCHAR</STRONG> format, not 8-bit ANSI characters. Be sure to convert as appropriate. You can use the C library <STRONG>mbstowcs</STRONG> function to convert from multibyte to Unicode and the <STRONG>wcstombs</STRONG> function to convert from Unicode back to multibyte.</P>
+
+<P>Instead of passing on object descriptor to <STRONG>IDirectMusicLoader8::GetObject</STRONG> or <STRONG>IDirectMusicLoader8::SetObject</STRONG> with a filename or memory pointer, an application can pass a stream. This is done by setting the DMUS_OBJ_STREAM flag in <STRONG>dwValidData</STRONG> and a pointer to the stream in <STRONG>pStream</STRONG>. When the application calls <STRONG>GetObject</STRONG>, the loader saves the stream's current location, reads the object from the stream, and then restores the saved location. The application can continue reading from the stream without being affected by the call to <STRONG>GetObject</STRONG>.</P>
+
+<P>When <STRONG>SetObject</STRONG> is called with a stream, the loader makes a clone of the stream object, and this clone is used if the object is later loaded. Thus an application can release a stream or continue to read from it after passing it to the loader by using <STRONG>SetObject</STRONG>. The actual data of the stream is not copied, so the application should not change or delete the data.</P><BR>DMUS_OBJECTDESC结构作为参数被传递到IDirectMusicLoader8::GetObject函数中，这个函数确定所有的数据被加载并且被链接到片段对象中。<BR><BR>
+
+<P>The <STRONG>GetObject </STRONG>method retrieves an object from a file or resource and returns the specified interface.</P>
+
+<P class=blue><STRONG>Syntax</STRONG></P><PRE class=syntax><CODE><STRONG>HRESULT GetObject(<BR> LPDMUS_OBJECTDESC </STRONG><EM>pDesc,</EM><BR> <STRONG>REFIID </STRONG><EM>riid</EM><STRONG>,</STRONG><BR><STRONG> LPVOID FAR * </STRONG><EM>ppv</EM><BR><STRONG>);</STRONG> </CODE></PRE>
+
+<P class=blue><STRONG>Parameters</STRONG></P>
+
+<P class=dt><EM>pDesc</EM></P>
+
+<P class=indent>Address of a <STRONG>DMUS_OBJECTDESC</STRONG> structure describing the object.</P>
+
+<P class=dt><EM>riid</EM></P>
+
+<P class=indent>Unique identifier of the interface. See DirectMusic Interface GUIDs.</P>
+
+<P class=dt><EM>ppv</EM></P>
+
+<P class=indent>Address of a variable that receives a pointer to the desired interface of the object.</P>
+
+<P class=blue><STRONG>Return Values</STRONG></P>
+
+<P>If the method succeeds, the return value is S_OK or DMUS_S_PARTIALLOAD.</P>
+
+<P>DMUS_S_PARTIALLOAD is returned if any referenced object cannot be found, such as a <NOBR><A class=PopLink id=PopUp target="_blank" rel="noopener" href="http://www.cppblog.com/lovedday/admin/EditPosts.aspx?opt=1#ProjectID113:style"><U><FONT color=#1b1b1b>style</FONT></U></A></NOBR> referenced in a segment. The loader might fail to find the style if it is referenced by name but <STRONG>IDirectMusicLoader8::ScanDirectory</STRONG> has not been called for styles. DMUS_S_PARTIALLOAD might also mean that the default instrument collection file, Gm.dls, is not available.</P>
+
+<P>If it fails, the method can return one of the error values shown in the following table.</P>
+
+<TABLE cols=1 cellPadding=5 rules=rows border=0 frame=below>
+
+<TBODY>
+
+<TR vAlign=top>
+
+<TD class=blue width="100%"><STRONG>Return code</STRONG></TD></TR>
+
+<TR vAlign=top>
+
+<TD width="100%">DMUS_E_LOADER_FAILEDCREATE</TD></TR>
+
+<TR vAlign=top>
+
+<TD width="100%">DMUS_E_LOADER_FAILEDOPEN</TD></TR>
+
+<TR vAlign=top>
+
+<TD width="100%">DMUS_E_LOADER_FORMATNOTSUPPORTED</TD></TR>
+
+<TR vAlign=top>
+
+<TD width="100%">DMUS_E_LOADER_NOCLASSID</TD></TR>
+
+<TR vAlign=top>
+
+<TD width="100%">E_FAIL</TD></TR>
+
+<TR vAlign=top>
+
+<TD width="100%">E_INVALIDARG</TD></TR>
+
+<TR vAlign=top>
+
+<TD width="100%">E_OUTOFMEMORY</TD></TR>
+
+<TR vAlign=top>
+
+<TD width="100%">E_POINTER</TD></TR>
+
+<TR vAlign=top>
+
+<TD width="100%">REGDB_E_CLASSNOTREG</TD></TR></TBODY></TABLE><BR>
+
+<P class=blue><STRONG>Remarks</STRONG></P>
+
+<P>For file objects, it is simpler to use the <STRONG>IDirectMusicLoader8::LoadObjectFromFile</STRONG> method.</P>
+
+<P>DirectMusic does not support loading from URLs. If the <STRONG>dwValidData</STRONG> member of the<STRONG> DMUS_OBJECTDESC</STRONG> structure contains DMUS_OBJ_URL, the method returns DMUS_E_LOADER_FORMATNOTSUPPORTED.</P>
+
+<P>The method does not require that all valid members of the <STRONG>DMUS_OBJECTDESC</STRONG> structure match before retrieving an object. The <STRONG>dwValidData</STRONG> flags are evaluated in the following order: </P>
+
+<OL>
+
+<LI>DMUS_OBJ_OBJECT 
+
+<LI>DMUS_OBJ_STREAM 
+
+<LI>DMUS_OBJ_MEMORY 
+
+<LI>DMUS_OBJ_FILENAME and DMUS_OBJ_FULLPATH 
+
+<LI>DMUS_OBJ_NAME and DMUS_OBJ_CATEGORY 
+
+<LI>DMUS_OBJ_NAME 
+
+<LI>DMUS_OBJ_FILENAME </LI></OL>
+
+<P>In other words, the highest priority goes to a unique GUID, followed by a stream pointer, followed by a resource, followed by the full file path name, followed by an internal name plus category, followed by an internal name, followed by a local file name.</P>
+
+<P>Do not load data from untrusted sources. Loading DirectMusic data files causes objects to be constructed, with the possibility that excessive demand on resources will lead to degradation of performance or system failure.</P><BR>以下代码演示了如何加载音乐片段：<BR><BR>
+
+<DIV style="BORDER-RIGHT: #ffffff 1px solid; PADDING-RIGHT: 5px; BORDER-TOP: #ffffff 1px solid; PADDING-LEFT: 4px; FONT-SIZE: 13px; PADDING-BOTTOM: 4px; BORDER-LEFT: #ffffff 1px solid; WIDTH: 98%; PADDING-TOP: 4px; BORDER-BOTTOM: #ffffff 1px solid; BACKGROUND-COLOR: #ffffff"><!--<br><br>Code highlighting produced by Actipro CodeHighlighter (freeware)<br>http://www.CodeHighlighter.com/<br><br>--><SPAN style="COLOR: #000000">&nbsp;&nbsp;&nbsp; DMUS_OBJECTDESC&nbsp;dm_obj_desc;<BR><BR>&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #008000">//</SPAN><SPAN style="COLOR: #008000">&nbsp;get&nbsp;the&nbsp;object</SPAN><SPAN style="COLOR: #008000"><BR></SPAN><SPAN style="COLOR: #000000"><BR>&nbsp;&nbsp;&nbsp;&nbsp;ZeroMemory(</SPAN><SPAN style="COLOR: #000000">&amp;</SPAN><SPAN style="COLOR: #000000">dm_obj_desc,&nbsp;</SPAN><SPAN style="COLOR: #0000ff">sizeof</SPAN><SPAN style="COLOR: #000000">(DMUS_OBJECTDESC));<BR><BR>&nbsp;&nbsp;&nbsp;&nbsp;dm_obj_desc.dwSize&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #000000">=</SPAN><SPAN style="COLOR: #000000">&nbsp;</SPAN><SPAN style="COLOR: #0000ff">sizeof</SPAN><SPAN style="COLOR: #000000">(DMUS_OBJECTDESC);<BR>&nbsp;&nbsp;&nbsp;&nbsp;dm_obj_desc.guidClass&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #000000">=</SPAN><SPAN style="COLOR: #000000">&nbsp;CLSID_DirectMusicSegment;<BR>&nbsp;&nbsp;&nbsp;&nbsp;dm_obj_desc.dwValidData&nbsp;</SPAN><SPAN style="COLOR: #000000">=</SPAN><SPAN style="COLOR: #000000">&nbsp;DMUS_OBJ_CLASS&nbsp;</SPAN><SPAN style="COLOR: #000000">|</SPAN><SPAN style="COLOR: #000000">&nbsp;DMUS_OBJ_FILENAME&nbsp;</SPAN><SPAN style="COLOR: #000000">|</SPAN><SPAN style="COLOR: #000000">&nbsp;DMUS_OBJ_FULLPATH;<BR><BR>&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #008000">//</SPAN><SPAN style="COLOR: #008000">&nbsp;Converts&nbsp;a&nbsp;sequence&nbsp;of&nbsp;multibyte&nbsp;characters&nbsp;to&nbsp;a&nbsp;corresponding&nbsp;sequence&nbsp;of&nbsp;wide&nbsp;characters</SPAN><SPAN style="COLOR: #008000"><BR></SPAN><SPAN style="COLOR: #000000">&nbsp;&nbsp;&nbsp;&nbsp;mbstowcs(dm_obj_desc.wszFileName,&nbsp;filename,&nbsp;MAX_PATH);<BR><BR>&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #008000">//</SPAN><SPAN style="COLOR: #008000">&nbsp;retrieves&nbsp;an&nbsp;object&nbsp;from&nbsp;a&nbsp;file&nbsp;or&nbsp;resource&nbsp;and&nbsp;returns&nbsp;the&nbsp;speficied&nbsp;interface</SPAN><SPAN style="COLOR: #008000"><BR></SPAN><SPAN style="COLOR: #000000">&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #0000ff">if</SPAN><SPAN style="COLOR: #000000">(FAILED(g_dm_loader</SPAN><SPAN style="COLOR: #000000">-&gt;</SPAN><SPAN style="COLOR: #000000">GetObject(</SPAN><SPAN style="COLOR: #000000">&amp;</SPAN><SPAN style="COLOR: #000000">dm_obj_desc,&nbsp;IID_IDirectMusicSegment8,&nbsp;(LPVOID</SPAN><SPAN style="COLOR: #000000">*</SPAN><SPAN style="COLOR: #000000">)</SPAN><SPAN style="COLOR: #000000">&amp;</SPAN><SPAN style="COLOR: #000000">g_dm_segment)))<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #0000ff">return</SPAN><SPAN style="COLOR: #000000">&nbsp;FALSE;</SPAN></DIV>
+    
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="followme">
+  <span>Welcome to my other publishing channels</span>
+
+  <div class="social-list">
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="https://www.facebook.com/rise.worlds">
+            <span class="icon">
+              <i class="fab fa-facebook"></i>
+            </span>
+
+            <span class="label">FB Page</span>
+          </a>
+      </div>
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="https://twitter.com/riseworlds">
+            <span class="icon">
+              <i class="fab fa-twitter"></i>
+            </span>
+
+            <span class="label">Twitter</span>
+          </a>
+      </div>
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="https://t.me/riseworlds">
+            <span class="icon">
+              <i class="fab fa-telegram"></i>
+            </span>
+
+            <span class="label">Telegram</span>
+          </a>
+      </div>
+  </div>
+</div>
+
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2007/07/29/%E7%94%A8DirectX%20Audio%E5%92%8CDirectShow%E6%92%AD%E6%94%BE%E5%A3%B0%E9%9F%B3%E5%92%8C%E9%9F%B3%E4%B9%90%EF%BC%884%EF%BC%89/" rel="prev" title="用DirectX Audio和DirectShow播放声音和音乐（4）">
+                  <i class="fa fa-angle-left"></i> 用DirectX Audio和DirectShow播放声音和音乐（4）
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2007/07/31/%E7%94%A8DirectX%20Audio%E5%92%8CDirectShow%E6%92%AD%E6%94%BE%E5%A3%B0%E9%9F%B3%E5%92%8C%E9%9F%B3%E4%B9%90%EF%BC%886%EF%BC%89/" rel="next" title="用DirectX Audio和DirectShow播放声音和音乐（6）">
+                  用DirectX Audio和DirectShow播放声音和音乐（6） <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">豫ICP备2021009490号 </a>
+  </div>
+<div class="copyright">
+<a href="https://icp.gov.moe/?keyword=20233669" target="_blank">萌ICP备20233669号</a>
+</div>
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">rise</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="reading-progress-bar"></div>
+
+  <a href="https://github.com/rise-worlds" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://unpkg.com/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@next-theme/pjax@0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script><script src="/js/pjax.js"></script>
+
+  
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://unpkg.com/mermaid@10.7.0/dist/mermaid.min.js","integrity":"sha256-TtLOdUA8mstPoO6sGvHIGx2ceXrrX4KgIItO06XOn8A="}}</script>
+  <script src="/js/third-party/tags/mermaid.js"></script>
+
+
+
+
+
+  
+
+
+
+
+  <script src="https://unpkg.com/quicklink@2.3.0/dist/quicklink.umd.js" integrity="sha256-yvJQOINiH9fWemHn0vCA5lsHWJaHs6/ZmO+1Ft04SvM=" crossorigin="anonymous"></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":true,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"https://rise-worlds.github.io/2007/07/31/%E7%94%A8DirectX%20Audio%E5%92%8CDirectShow%E6%92%AD%E6%94%BE%E5%A3%B0%E9%9F%B3%E5%92%8C%E9%9F%B3%E4%B9%90%EF%BC%885%EF%BC%89/"}</script>
+  <script src="/js/third-party/quicklink.js"></script>
+
+</body>
+</html>

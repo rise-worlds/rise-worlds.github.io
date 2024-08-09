@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://unpkg.com/@fortawesome/fontawesome-free@6.5.1/css/all.min.css" integrity="sha256-wiz7ZSCn/btzhjKDQBms9Hx4sSeUYsDrTLg7roPstac=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://unpkg.com/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"rise-worlds.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.19.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="在渲染多边形网格对象到场景中的时候，离观察者越远的对象应该越模糊，同时离观察者越近的物体应该越清楚，这就是深度排序（depth sorting）。深度排序有两种常用的方法。第一种方法称为画家算法（painter’s algorithm）。这种方法将对象划分成不同的多边形，由后往前对这些多边形进行排序，再按照排好的顺序绘制出这些多边形。采用这种方法绘制多边形，能够确保前面的多边形总是在其后多边形之前">
+<meta property="og:type" content="article">
+<meta property="og:title" content="D3D中的Z缓存使用示例">
+<meta property="og:url" content="https://rise-worlds.github.io/2007/07/04/D3D%E4%B8%AD%E7%9A%84Z%E7%BC%93%E5%AD%98%E4%BD%BF%E7%94%A8%E7%A4%BA%E4%BE%8B/index.html">
+<meta property="og:site_name" content="Rise&#39;blogs">
+<meta property="og:description" content="在渲染多边形网格对象到场景中的时候，离观察者越远的对象应该越模糊，同时离观察者越近的物体应该越清楚，这就是深度排序（depth sorting）。深度排序有两种常用的方法。第一种方法称为画家算法（painter’s algorithm）。这种方法将对象划分成不同的多边形，由后往前对这些多边形进行排序，再按照排好的顺序绘制出这些多边形。采用这种方法绘制多边形，能够确保前面的多边形总是在其后多边形之前">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2007-07-04T20:53:00.000Z">
+<meta property="article:modified_time" content="2007-08-27T17:22:00.000Z">
+<meta property="article:author" content="rise">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://rise-worlds.github.io/2007/07/04/D3D%E4%B8%AD%E7%9A%84Z%E7%BC%93%E5%AD%98%E4%BD%BF%E7%94%A8%E7%A4%BA%E4%BE%8B/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://rise-worlds.github.io/2007/07/04/D3D%E4%B8%AD%E7%9A%84Z%E7%BC%93%E5%AD%98%E4%BD%BF%E7%94%A8%E7%A4%BA%E4%BE%8B/","path":"2007/07/04/D3D中的Z缓存使用示例/","title":"D3D中的Z缓存使用示例"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>D3D中的Z缓存使用示例 | Rise'blogs</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Rise'blogs</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li><li class="menu-item menu-item-sitemap"><a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>Sitemap</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="rise"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">rise</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">657</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">46</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">77</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="mailto:rise.worlds@outlook.com" title="E-Mail → mailto:rise.worlds@outlook.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://github.com/rise-worlds" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;rise-worlds" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://x.com/riseworlds" title="Twitter → https:&#x2F;&#x2F;x.com&#x2F;riseworlds" rel="noopener me" target="_blank"><i class="fab fa-twitter fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.facebook.com/rise.worlds" title="FB Page → https:&#x2F;&#x2F;www.facebook.com&#x2F;rise.worlds" rel="noopener me" target="_blank"><i class="fab fa-facebook fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.youtube.com/@YiXuan" title="YouTube → https:&#x2F;&#x2F;www.youtube.com&#x2F;@YiXuan" rel="noopener me" target="_blank"><i class="fab fa-youtube fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.instagram.com/rise.worlds/" title="Instagram → https:&#x2F;&#x2F;www.instagram.com&#x2F;rise.worlds&#x2F;" rel="noopener me" target="_blank"><i class="fab fa-instagram fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://t.me/riseworlds" title="Telegram → https:&#x2F;&#x2F;t.me&#x2F;riseworlds" rel="noopener me" target="_blank"><i class="fab fa-telegram fa-fw"></i></a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="Back to top">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+          Links
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <a href="https://www.cnblogs.com/flying_bat" title="https:&#x2F;&#x2F;www.cnblogs.com&#x2F;flying_bat" rel="noopener" target="_blank">my cnblogs</a>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://rise-worlds.github.io/2007/07/04/D3D%E4%B8%AD%E7%9A%84Z%E7%BC%93%E5%AD%98%E4%BD%BF%E7%94%A8%E7%A4%BA%E4%BE%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="rise">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Rise'blogs">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="D3D中的Z缓存使用示例 | Rise'blogs">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          D3D中的Z缓存使用示例
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2007-07-04 20:53:00" itemprop="dateCreated datePublished" datetime="2007-07-04T20:53:00+00:00">2007-07-04</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Dev/" itemprop="url" rel="index"><span itemprop="name">Dev</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Dev/GameDev/" itemprop="url" rel="index"><span itemprop="name">GameDev</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>在渲染多边形网格对象到场景中的时候，离观察者越远的对象应该越模糊，同时离观察者越近的物体应该越清楚，这就是深度排序（depth sorting）。深度排序有两种常用的方法。<BR><BR>第一种方法称为画家算法（painter’s algorithm）。这种方法将对象划分成不同的多边形，由后往前对这些多边形进行排序，再按照排好的顺序绘制出这些多边形。采用这种方法绘制多边形，能够确保前面的多边形总是在其后多边形之前进行绘制。<BR><BR>深度排序的第二种方法称为z缓冲方法（z- buffer），它是图形硬件设备使用最多的方法。这种方法依赖于像素，每个像素都有一个z值（z值是像素距离观察者的距离）。当每个像素被写入时，渲染器首先检查是否已经存在一个z值更小的像素，如果不存在，这个像素就被绘制出来；如果存在，就跳过该像素。<BR><BR>许多 3D图形加速卡都有一个内置的z缓冲，这也是深度排序选择z缓冲方法的原因。在应用程序中使用z缓冲，最容易的方法就是在创建设备对象以及设置显示方式的时候初始化z缓冲，如下所示：<BR><BR></p>
+<DIV style="BORDER-RIGHT: #ffffff 1px solid; PADDING-RIGHT: 5px; BORDER-TOP: #ffffff 1px solid; PADDING-LEFT: 4px; FONT-SIZE: 13px; PADDING-BOTTOM: 4px; BORDER-LEFT: #ffffff 1px solid; WIDTH: 98%; PADDING-TOP: 4px; BORDER-BOTTOM: #ffffff 1px solid; BACKGROUND-COLOR: #ffffff"><!--<br><br>Code highlighting produced by Actipro CodeHighlighter (freeware)<br>http://www.CodeHighlighter.com/<br><br>--><SPAN style="COLOR: #000000">&nbsp;&nbsp; D3DPRESENT_PARAMETERS&nbsp;d3dpp;<BR><BR>&nbsp;&nbsp; ZeroMemory(</SPAN><SPAN style="COLOR: #000000">&amp;</SPAN><SPAN style="COLOR: #000000">d3dpp,&nbsp;</SPAN><SPAN style="COLOR: #0000ff">sizeof</SPAN><SPAN style="COLOR: #000000">(d3dpp));<BR><BR>&nbsp;&nbsp;d3dpp.Windowed&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #000000">=</SPAN><SPAN style="COLOR: #000000">&nbsp;TRUE;<BR>&nbsp;&nbsp;d3dpp.SwapEffect&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #000000">=</SPAN><SPAN style="COLOR: #000000">&nbsp;D3DSWAPEFFECT_DISCARD;<BR>&nbsp;&nbsp;d3dpp.BackBufferFormat&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #000000">=</SPAN><SPAN style="COLOR: #000000">&nbsp;d3ddm.Format;<BR>&nbsp;&nbsp;d3dpp.EnableAutoDepthStencil&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #000000">=</SPAN><SPAN style="COLOR: #000000">&nbsp;TRUE;<BR>&nbsp;&nbsp;d3dpp.AutoDepthStencilFormat&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #000000">=</SPAN><SPAN style="COLOR: #000000">&nbsp;D3DFMT_D16;<BR><BR>&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #0000ff">if</SPAN><SPAN style="COLOR: #000000">(FAILED(g_pD3D</SPAN><SPAN style="COLOR: #000000">-&gt;</SPAN><SPAN style="COLOR: #000000">CreateDevice(D3DADAPTER_DEFAULT,&nbsp;D3DDEVTYPE_HAL,&nbsp;g_hWnd,<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;D3DCREATE_SOFTWARE_VERTEXPROCESSING,&nbsp;</SPAN><SPAN style="COLOR: #000000">&amp;</SPAN><SPAN style="COLOR: #000000">d3dpp,&nbsp;</SPAN><SPAN style="COLOR: #000000">&amp;</SPAN><SPAN style="COLOR: #000000">g_pD3DDevice)))<BR>&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #0000ff">return</SPAN><SPAN style="COLOR: #000000">&nbsp;FALSE;<BR><BR>&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #008000">//</SPAN><SPAN style="COLOR: #008000">&nbsp;Set&nbsp;the&nbsp;rendering&nbsp;states</SPAN><SPAN style="COLOR: #008000"><BR></SPAN><SPAN style="COLOR: #000000">&nbsp;&nbsp;g_pD3DDevice</SPAN><SPAN style="COLOR: #000000">-&gt;</SPAN><SPAN style="COLOR: #000000">SetRenderState(D3DRS_LIGHTING,&nbsp;FALSE);<BR>&nbsp;&nbsp;g_pD3DDevice</SPAN><SPAN style="COLOR: #000000">-&gt;</SPAN><SPAN style="COLOR: #000000">SetRenderState(D3DRS_ZENABLE,&nbsp;D3DZB_TRUE);</SPAN></DIV><BR>同时在绘制每帧之前应该用IDirect3DDevice9::Clear来清除z缓存。<BR><BR>
+
+<DIV style="BORDER-RIGHT: #ffffff 1px solid; PADDING-RIGHT: 5px; BORDER-TOP: #ffffff 1px solid; PADDING-LEFT: 4px; FONT-SIZE: 13px; PADDING-BOTTOM: 4px; BORDER-LEFT: #ffffff 1px solid; WIDTH: 98%; PADDING-TOP: 4px; BORDER-BOTTOM: #ffffff 1px solid; BACKGROUND-COLOR: #ffffff"><!--<br><br>Code highlighting produced by Actipro CodeHighlighter (freeware)<br>http://www.CodeHighlighter.com/<br><br>--><SPAN style="COLOR: #008000">//</SPAN><SPAN style="COLOR: #008000">&nbsp;clear&nbsp;device&nbsp;back&nbsp;buffer</SPAN><SPAN style="COLOR: #008000"><BR></SPAN><SPAN style="COLOR: #000000">&nbsp;&nbsp;&nbsp;&nbsp;g_d3d_device</SPAN><SPAN style="COLOR: #000000">-&gt;</SPAN><SPAN style="COLOR: #000000">Clear(</SPAN><SPAN style="COLOR: #000000">0</SPAN><SPAN style="COLOR: #000000">,&nbsp;NULL,&nbsp;D3DCLEAR_TARGET&nbsp;</SPAN><SPAN style="COLOR: #000000">|</SPAN><SPAN style="COLOR: #000000">&nbsp;D3DCLEAR_ZBUFFER,&nbsp;D3DCOLOR_RGBA(</SPAN><SPAN style="COLOR: #000000">0</SPAN><SPAN style="COLOR: #000000">,&nbsp;</SPAN><SPAN style="COLOR: #000000">0</SPAN><SPAN style="COLOR: #000000">,&nbsp;</SPAN><SPAN style="COLOR: #000000">0</SPAN><SPAN style="COLOR: #000000">,&nbsp;</SPAN><SPAN style="COLOR: #000000">255</SPAN><SPAN style="COLOR: #000000">),&nbsp;</SPAN><SPAN style="COLOR: #000000">1.0f</SPAN><SPAN style="COLOR: #000000">,&nbsp;</SPAN><SPAN style="COLOR: #000000">0</SPAN><SPAN style="COLOR: #000000">);</SPAN></DIV><BR>完整代码如下所示：<BR><BR>
+
+<DIV style="BORDER-RIGHT: #ffffff 1px solid; PADDING-RIGHT: 5px; BORDER-TOP: #ffffff 1px solid; PADDING-LEFT: 4px; FONT-SIZE: 13px; PADDING-BOTTOM: 4px; BORDER-LEFT: #ffffff 1px solid; WIDTH: 98%; PADDING-TOP: 4px; BORDER-BOTTOM: #ffffff 1px solid; BACKGROUND-COLOR: #ffffff"><!--<br><br>Code highlighting produced by Actipro CodeHighlighter (freeware)<br>http://www.CodeHighlighter.com/<br><br>--><SPAN style="COLOR: #008000">/*</SPAN><SPAN style="COLOR: #008000">**************************************************************************************<BR>PURPOSE:<BR>&nbsp;&nbsp;&nbsp;&nbsp;ZBuffer&nbsp;Demo<BR><BR>Required&nbsp;libraries:<BR>&nbsp;&nbsp;WINMM.LIB,&nbsp;D3D9.LIB,&nbsp;D3DX9.LIB.<BR>&nbsp;**************************************************************************************</SPAN><SPAN style="COLOR: #008000">*/</SPAN><SPAN style="COLOR: #000000"><BR><BR>#include&nbsp;</SPAN><SPAN style="COLOR: #000000">&lt;</SPAN><SPAN style="COLOR: #000000">windows.h</SPAN><SPAN style="COLOR: #000000">&gt;</SPAN><SPAN style="COLOR: #000000"><BR>#include&nbsp;</SPAN><SPAN style="COLOR: #000000">&lt;</SPAN><SPAN style="COLOR: #000000">stdio.h</SPAN><SPAN style="COLOR: #000000">&gt;</SPAN><SPAN style="COLOR: #000000"><BR>#include&nbsp;</SPAN><SPAN style="COLOR: #000000">"</SPAN><SPAN style="COLOR: #000000">d3d9.h</SPAN><SPAN style="COLOR: #000000">"</SPAN><SPAN style="COLOR: #000000"><BR>#include&nbsp;</SPAN><SPAN style="COLOR: #000000">"</SPAN><SPAN style="COLOR: #000000">d3dx9.h</SPAN><SPAN style="COLOR: #000000">"</SPAN><SPAN style="COLOR: #000000"><BR><BR>#pragma&nbsp;comment(lib,&nbsp;</SPAN><SPAN style="COLOR: #000000">"</SPAN><SPAN style="COLOR: #000000">winmm.lib</SPAN><SPAN style="COLOR: #000000">"</SPAN><SPAN style="COLOR: #000000">)<BR>#pragma&nbsp;comment(lib,&nbsp;</SPAN><SPAN style="COLOR: #000000">"</SPAN><SPAN style="COLOR: #000000">d3d9.lib</SPAN><SPAN style="COLOR: #000000">"</SPAN><SPAN style="COLOR: #000000">)<BR>#pragma&nbsp;comment(lib,&nbsp;</SPAN><SPAN style="COLOR: #000000">"</SPAN><SPAN style="COLOR: #000000">d3dx9.lib</SPAN><SPAN style="COLOR: #000000">"</SPAN><SPAN style="COLOR: #000000">)<BR><BR>#pragma&nbsp;warning(disable&nbsp;:&nbsp;</SPAN><SPAN style="COLOR: #000000">4305</SPAN><SPAN style="COLOR: #000000">)<BR><BR></SPAN><SPAN style="COLOR: #0000ff">#define</SPAN><SPAN style="COLOR: #000000">&nbsp;WINDOW_WIDTH&nbsp;&nbsp;&nbsp;&nbsp;400</SPAN><SPAN style="COLOR: #000000"><BR></SPAN><SPAN style="COLOR: #0000ff">#define</SPAN><SPAN style="COLOR: #000000">&nbsp;WINDOW_HEIGHT&nbsp;&nbsp;&nbsp;400</SPAN><SPAN style="COLOR: #000000"><BR><BR></SPAN><SPAN style="COLOR: #0000ff">#define</SPAN><SPAN style="COLOR: #000000">&nbsp;Safe_Release(p)&nbsp;if((p))&nbsp;(p)-&gt;Release();</SPAN><SPAN style="COLOR: #000000"><BR><BR></SPAN><SPAN style="COLOR: #008000">//</SPAN><SPAN style="COLOR: #008000">&nbsp;window&nbsp;handles,&nbsp;class&nbsp;and&nbsp;caption&nbsp;text.</SPAN><SPAN style="COLOR: #008000"><BR></SPAN><SPAN style="COLOR: #000000">HWND&nbsp;g_hwnd;<BR>HINSTANCE&nbsp;g_inst;<BR></SPAN><SPAN style="COLOR: #0000ff">static</SPAN><SPAN style="COLOR: #000000">&nbsp;</SPAN><SPAN style="COLOR: #0000ff">char</SPAN><SPAN style="COLOR: #000000">&nbsp;g_class_name[]&nbsp;</SPAN><SPAN style="COLOR: #000000">=</SPAN><SPAN style="COLOR: #000000">&nbsp;</SPAN><SPAN style="COLOR: #000000">"</SPAN><SPAN style="COLOR: #000000">ZBufferClass</SPAN><SPAN style="COLOR: #000000">"</SPAN><SPAN style="COLOR: #000000">;<BR></SPAN><SPAN style="COLOR: #0000ff">static</SPAN><SPAN style="COLOR: #000000">&nbsp;</SPAN><SPAN style="COLOR: #0000ff">char</SPAN><SPAN style="COLOR: #000000">&nbsp;g_caption[]&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #000000">=</SPAN><SPAN style="COLOR: #000000">&nbsp;</SPAN><SPAN style="COLOR: #000000">"</SPAN><SPAN style="COLOR: #000000">ZBuffer&nbsp;Demo</SPAN><SPAN style="COLOR: #000000">"</SPAN><SPAN style="COLOR: #000000">;<BR><BR></SPAN><SPAN style="COLOR: #008000">//</SPAN><SPAN style="COLOR: #008000">&nbsp;the&nbsp;Direct3D&nbsp;and&nbsp;device&nbsp;object</SPAN><SPAN style="COLOR: #008000"><BR></SPAN><SPAN style="COLOR: #000000">IDirect3D9</SPAN><SPAN style="COLOR: #000000">*</SPAN><SPAN style="COLOR: #000000">&nbsp;g_d3d&nbsp;</SPAN><SPAN style="COLOR: #000000">=</SPAN><SPAN style="COLOR: #000000">&nbsp;NULL;<BR>IDirect3DDevice9</SPAN><SPAN style="COLOR: #000000">*</SPAN><SPAN style="COLOR: #000000">&nbsp;g_d3d_device&nbsp;</SPAN><SPAN style="COLOR: #000000">=</SPAN><SPAN style="COLOR: #000000">&nbsp;NULL;<BR><BR></SPAN><SPAN style="COLOR: #008000">//</SPAN><SPAN style="COLOR: #008000">&nbsp;The&nbsp;3D&nbsp;vertex&nbsp;format&nbsp;and&nbsp;descriptor</SPAN><SPAN style="COLOR: #008000"><BR></SPAN><SPAN style="COLOR: #000000">typedef&nbsp;</SPAN><SPAN style="COLOR: #0000ff">struct</SPAN><SPAN style="COLOR: #000000"><BR>{<BR>&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #0000ff">float</SPAN><SPAN style="COLOR: #000000">&nbsp;x,&nbsp;y,&nbsp;z;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #008000">//</SPAN><SPAN style="COLOR: #008000">&nbsp;3D&nbsp;coordinates&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #008000"><BR></SPAN><SPAN style="COLOR: #000000">&nbsp;&nbsp;&nbsp;&nbsp;D3DCOLOR&nbsp;color;&nbsp;</SPAN><SPAN style="COLOR: #008000">//</SPAN><SPAN style="COLOR: #008000">&nbsp;diffuse&nbsp;color</SPAN><SPAN style="COLOR: #008000"><BR></SPAN><SPAN style="COLOR: #000000">}&nbsp;VERTEX;<BR><BR></SPAN><SPAN style="COLOR: #0000ff">#define</SPAN><SPAN style="COLOR: #000000">&nbsp;VERTEX_FVF&nbsp;&nbsp;&nbsp;(D3DFVF_XYZ&nbsp;|&nbsp;D3DFVF_DIFFUSE)</SPAN><SPAN style="COLOR: #000000"><BR><BR>IDirect3DVertexBuffer9</SPAN><SPAN style="COLOR: #000000">*</SPAN><SPAN style="COLOR: #000000">&nbsp;g_vertex_buffer&nbsp;</SPAN><SPAN style="COLOR: #000000">=</SPAN><SPAN style="COLOR: #000000">&nbsp;NULL;<BR><BR></SPAN><SPAN style="COLOR: #008000">//</SPAN><SPAN style="COLOR: #008000">--------------------------------------------------------------------------------<BR></SPAN><SPAN style="COLOR: #008000">//</SPAN><SPAN style="COLOR: #008000">&nbsp;Window&nbsp;procedure.<BR></SPAN><SPAN style="COLOR: #008000">//</SPAN><SPAN style="COLOR: #008000">--------------------------------------------------------------------------------</SPAN><SPAN style="COLOR: #008000"><BR></SPAN><SPAN style="COLOR: #0000ff">long</SPAN><SPAN style="COLOR: #000000">&nbsp;WINAPI&nbsp;Window_Proc(HWND&nbsp;hwnd,&nbsp;UINT&nbsp;msg,&nbsp;WPARAM&nbsp;wParam,&nbsp;LPARAM&nbsp;lParam)<BR>{<BR>&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #0000ff">switch</SPAN><SPAN style="COLOR: #000000">(msg)<BR>&nbsp;&nbsp;&nbsp;&nbsp;{<BR>&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #0000ff">case</SPAN><SPAN style="COLOR: #000000">&nbsp;WM_DESTROY:<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PostQuitMessage(</SPAN><SPAN style="COLOR: #000000">0</SPAN><SPAN style="COLOR: #000000">);<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #0000ff">return</SPAN><SPAN style="COLOR: #000000">&nbsp;</SPAN><SPAN style="COLOR: #000000">0</SPAN><SPAN style="COLOR: #000000">;<BR>&nbsp;&nbsp;&nbsp;&nbsp;}<BR><BR>&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #0000ff">return</SPAN><SPAN style="COLOR: #000000">&nbsp;(</SPAN><SPAN style="COLOR: #0000ff">long</SPAN><SPAN style="COLOR: #000000">)&nbsp;DefWindowProc(hwnd,&nbsp;msg,&nbsp;wParam,&nbsp;lParam);<BR>}<BR><BR></SPAN><SPAN style="COLOR: #008000">//</SPAN><SPAN style="COLOR: #008000">--------------------------------------------------------------------------------<BR></SPAN><SPAN style="COLOR: #008000">//</SPAN><SPAN style="COLOR: #008000">&nbsp;Initialize&nbsp;d3d,&nbsp;d3d&nbsp;device,&nbsp;vertex&nbsp;buffer;&nbsp;set&nbsp;render&nbsp;state&nbsp;for&nbsp;d3d;<BR></SPAN><SPAN style="COLOR: #008000">//</SPAN><SPAN style="COLOR: #008000">&nbsp;set&nbsp;perspective&nbsp;matrix&nbsp;and&nbsp;view&nbsp;matrix.<BR></SPAN><SPAN style="COLOR: #008000">//</SPAN><SPAN style="COLOR: #008000">--------------------------------------------------------------------------------</SPAN><SPAN style="COLOR: #008000"><BR></SPAN><SPAN style="COLOR: #000000">BOOL&nbsp;Do_Init()<BR>{<BR>&nbsp;&nbsp;&nbsp;&nbsp;D3DPRESENT_PARAMETERS&nbsp;present_param;<BR>&nbsp;&nbsp;&nbsp;&nbsp;D3DDISPLAYMODE&nbsp;&nbsp;display_mode;<BR>&nbsp;&nbsp;&nbsp;&nbsp;D3DXMATRIX&nbsp;mat_proj,&nbsp;mat_view;<BR>&nbsp;&nbsp;&nbsp;&nbsp;BYTE</SPAN><SPAN style="COLOR: #000000">*</SPAN><SPAN style="COLOR: #000000">&nbsp;vertex_ptr;<BR><BR>&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #008000">//</SPAN><SPAN style="COLOR: #008000">&nbsp;initialize&nbsp;vertex&nbsp;data</SPAN><SPAN style="COLOR: #008000"><BR></SPAN><SPAN style="COLOR: #000000">&nbsp;&nbsp;&nbsp;&nbsp;VERTEX&nbsp;verts[]&nbsp;</SPAN><SPAN style="COLOR: #000000">=</SPAN><SPAN style="COLOR: #000000">&nbsp;{<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;</SPAN><SPAN style="COLOR: #000000">-</SPAN><SPAN style="COLOR: #000000">100.0f</SPAN><SPAN style="COLOR: #000000">,&nbsp;</SPAN><SPAN style="COLOR: #000000">-</SPAN><SPAN style="COLOR: #000000">100.0f</SPAN><SPAN style="COLOR: #000000">,&nbsp;</SPAN><SPAN style="COLOR: #000000">0.0f</SPAN><SPAN style="COLOR: #000000">,&nbsp;D3DCOLOR_RGBA(</SPAN><SPAN style="COLOR: #000000">255</SPAN><SPAN style="COLOR: #000000">,</SPAN><SPAN style="COLOR: #000000">0</SPAN><SPAN style="COLOR: #000000">,</SPAN><SPAN style="COLOR: #000000">0</SPAN><SPAN style="COLOR: #000000">,</SPAN><SPAN style="COLOR: #000000">255</SPAN><SPAN style="COLOR: #000000">)&nbsp;},<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;</SPAN><SPAN style="COLOR: #000000">-</SPAN><SPAN style="COLOR: #000000">100.0f</SPAN><SPAN style="COLOR: #000000">,&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #000000">100.0f</SPAN><SPAN style="COLOR: #000000">,&nbsp;</SPAN><SPAN style="COLOR: #000000">0.0f</SPAN><SPAN style="COLOR: #000000">,&nbsp;D3DCOLOR_RGBA(</SPAN><SPAN style="COLOR: #000000">255</SPAN><SPAN style="COLOR: #000000">,</SPAN><SPAN style="COLOR: #000000">0</SPAN><SPAN style="COLOR: #000000">,</SPAN><SPAN style="COLOR: #000000">0</SPAN><SPAN style="COLOR: #000000">,</SPAN><SPAN style="COLOR: #000000">255</SPAN><SPAN style="COLOR: #000000">)&nbsp;},<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #000000">100.0f</SPAN><SPAN style="COLOR: #000000">,&nbsp;</SPAN><SPAN style="COLOR: #000000">-</SPAN><SPAN style="COLOR: #000000">100.0f</SPAN><SPAN style="COLOR: #000000">,&nbsp;</SPAN><SPAN style="COLOR: #000000">0.0f</SPAN><SPAN style="COLOR: #000000">,&nbsp;D3DCOLOR_RGBA(</SPAN><SPAN style="COLOR: #000000">255</SPAN><SPAN style="COLOR: #000000">,</SPAN><SPAN style="COLOR: #000000">0</SPAN><SPAN style="COLOR: #000000">,</SPAN><SPAN style="COLOR: #000000">0</SPAN><SPAN style="COLOR: #000000">,</SPAN><SPAN style="COLOR: #000000">255</SPAN><SPAN style="COLOR: #000000">)&nbsp;},<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #000000">100.0f</SPAN><SPAN style="COLOR: #000000">,&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #000000">100.0f</SPAN><SPAN style="COLOR: #000000">,&nbsp;</SPAN><SPAN style="COLOR: #000000">0.0f</SPAN><SPAN style="COLOR: #000000">,&nbsp;D3DCOLOR_RGBA(</SPAN><SPAN style="COLOR: #000000">255</SPAN><SPAN style="COLOR: #000000">,</SPAN><SPAN style="COLOR: #000000">0</SPAN><SPAN style="COLOR: #000000">,</SPAN><SPAN style="COLOR: #000000">0</SPAN><SPAN style="COLOR: #000000">,</SPAN><SPAN style="COLOR: #000000">255</SPAN><SPAN style="COLOR: #000000">)&nbsp;},<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;</SPAN><SPAN style="COLOR: #000000">-</SPAN><SPAN style="COLOR: #000000">100.0f</SPAN><SPAN style="COLOR: #000000">,&nbsp;</SPAN><SPAN style="COLOR: #000000">-</SPAN><SPAN style="COLOR: #000000">100.0f</SPAN><SPAN style="COLOR: #000000">,&nbsp;</SPAN><SPAN style="COLOR: #000000">0.0f</SPAN><SPAN style="COLOR: #000000">,&nbsp;D3DCOLOR_RGBA(</SPAN><SPAN style="COLOR: #000000">255</SPAN><SPAN style="COLOR: #000000">,</SPAN><SPAN style="COLOR: #000000">0</SPAN><SPAN style="COLOR: #000000">,</SPAN><SPAN style="COLOR: #000000">0</SPAN><SPAN style="COLOR: #000000">,</SPAN><SPAN style="COLOR: #000000">255</SPAN><SPAN style="COLOR: #000000">)&nbsp;},<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;</SPAN><SPAN style="COLOR: #000000">-</SPAN><SPAN style="COLOR: #000000">100.0f</SPAN><SPAN style="COLOR: #000000">,&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #000000">100.0f</SPAN><SPAN style="COLOR: #000000">,&nbsp;</SPAN><SPAN style="COLOR: #000000">0.0f</SPAN><SPAN style="COLOR: #000000">,&nbsp;D3DCOLOR_RGBA(</SPAN><SPAN style="COLOR: #000000">255</SPAN><SPAN style="COLOR: #000000">,</SPAN><SPAN style="COLOR: #000000">0</SPAN><SPAN style="COLOR: #000000">,</SPAN><SPAN style="COLOR: #000000">0</SPAN><SPAN style="COLOR: #000000">,</SPAN><SPAN style="COLOR: #000000">255</SPAN><SPAN style="COLOR: #000000">)&nbsp;},<BR><BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;</SPAN><SPAN style="COLOR: #000000">-</SPAN><SPAN style="COLOR: #000000">100.0f</SPAN><SPAN style="COLOR: #000000">,&nbsp;</SPAN><SPAN style="COLOR: #000000">-</SPAN><SPAN style="COLOR: #000000">100.0f</SPAN><SPAN style="COLOR: #000000">,&nbsp;</SPAN><SPAN style="COLOR: #000000">0.0f</SPAN><SPAN style="COLOR: #000000">,&nbsp;D3DCOLOR_RGBA(</SPAN><SPAN style="COLOR: #000000">0</SPAN><SPAN style="COLOR: #000000">,</SPAN><SPAN style="COLOR: #000000">0</SPAN><SPAN style="COLOR: #000000">,</SPAN><SPAN style="COLOR: #000000">255</SPAN><SPAN style="COLOR: #000000">,</SPAN><SPAN style="COLOR: #000000">255</SPAN><SPAN style="COLOR: #000000">)&nbsp;},<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;</SPAN><SPAN style="COLOR: #000000">-</SPAN><SPAN style="COLOR: #000000">100.0f</SPAN><SPAN style="COLOR: #000000">,&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #000000">100.0f</SPAN><SPAN style="COLOR: #000000">,&nbsp;</SPAN><SPAN style="COLOR: #000000">0.0f</SPAN><SPAN style="COLOR: #000000">,&nbsp;D3DCOLOR_RGBA(</SPAN><SPAN style="COLOR: #000000">0</SPAN><SPAN style="COLOR: #000000">,</SPAN><SPAN style="COLOR: #000000">0</SPAN><SPAN style="COLOR: #000000">,</SPAN><SPAN style="COLOR: #000000">255</SPAN><SPAN style="COLOR: #000000">,</SPAN><SPAN style="COLOR: #000000">255</SPAN><SPAN style="COLOR: #000000">)&nbsp;},<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #000000">100.0f</SPAN><SPAN style="COLOR: #000000">,&nbsp;</SPAN><SPAN style="COLOR: #000000">-</SPAN><SPAN style="COLOR: #000000">100.0f</SPAN><SPAN style="COLOR: #000000">,&nbsp;</SPAN><SPAN style="COLOR: #000000">0.0f</SPAN><SPAN style="COLOR: #000000">,&nbsp;D3DCOLOR_RGBA(</SPAN><SPAN style="COLOR: #000000">0</SPAN><SPAN style="COLOR: #000000">,</SPAN><SPAN style="COLOR: #000000">0</SPAN><SPAN style="COLOR: #000000">,</SPAN><SPAN style="COLOR: #000000">255</SPAN><SPAN style="COLOR: #000000">,</SPAN><SPAN style="COLOR: #000000">255</SPAN><SPAN style="COLOR: #000000">)&nbsp;},<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #000000">100.0f</SPAN><SPAN style="COLOR: #000000">,&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #000000">100.0f</SPAN><SPAN style="COLOR: #000000">,&nbsp;</SPAN><SPAN style="COLOR: #000000">0.0f</SPAN><SPAN style="COLOR: #000000">,&nbsp;D3DCOLOR_RGBA(</SPAN><SPAN style="COLOR: #000000">0</SPAN><SPAN style="COLOR: #000000">,</SPAN><SPAN style="COLOR: #000000">0</SPAN><SPAN style="COLOR: #000000">,</SPAN><SPAN style="COLOR: #000000">255</SPAN><SPAN style="COLOR: #000000">,</SPAN><SPAN style="COLOR: #000000">255</SPAN><SPAN style="COLOR: #000000">)&nbsp;},<BR>&nbsp;&nbsp;&nbsp;&nbsp;};&nbsp;<BR><BR>&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #008000">//</SPAN><SPAN style="COLOR: #008000">&nbsp;do&nbsp;a&nbsp;windowed&nbsp;mode&nbsp;initialization&nbsp;of&nbsp;Direct3D</SPAN><SPAN style="COLOR: #008000"><BR></SPAN><SPAN style="COLOR: #000000">&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #0000ff">if</SPAN><SPAN style="COLOR: #000000">((g_d3d&nbsp;</SPAN><SPAN style="COLOR: #000000">=</SPAN><SPAN style="COLOR: #000000">&nbsp;Direct3DCreate9(D3D_SDK_VERSION))&nbsp;</SPAN><SPAN style="COLOR: #000000">==</SPAN><SPAN style="COLOR: #000000">&nbsp;NULL)<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #0000ff">return</SPAN><SPAN style="COLOR: #000000">&nbsp;FALSE;<BR><BR>&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #008000">//</SPAN><SPAN style="COLOR: #008000">&nbsp;retrieves&nbsp;the&nbsp;current&nbsp;display&nbsp;mode&nbsp;of&nbsp;the&nbsp;adapter</SPAN><SPAN style="COLOR: #008000"><BR></SPAN><SPAN style="COLOR: #000000">&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #0000ff">if</SPAN><SPAN style="COLOR: #000000">(FAILED(g_d3d</SPAN><SPAN style="COLOR: #000000">-&gt;</SPAN><SPAN style="COLOR: #000000">GetAdapterDisplayMode(D3DADAPTER_DEFAULT,&nbsp;</SPAN><SPAN style="COLOR: #000000">&amp;</SPAN><SPAN style="COLOR: #000000">display_mode)))<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #0000ff">return</SPAN><SPAN style="COLOR: #000000">&nbsp;FALSE;<BR><BR>&nbsp;&nbsp;&nbsp;&nbsp;ZeroMemory(</SPAN><SPAN style="COLOR: #000000">&amp;</SPAN><SPAN style="COLOR: #000000">present_param,&nbsp;</SPAN><SPAN style="COLOR: #0000ff">sizeof</SPAN><SPAN style="COLOR: #000000">(present_param));<BR><BR>&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #008000">//</SPAN><SPAN style="COLOR: #008000">&nbsp;initialize&nbsp;d3d&nbsp;presentation&nbsp;parameter</SPAN><SPAN style="COLOR: #008000"><BR></SPAN><SPAN style="COLOR: #000000">&nbsp;&nbsp;&nbsp;&nbsp;present_param.Windowed&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #000000">=</SPAN><SPAN style="COLOR: #000000">&nbsp;TRUE;<BR>&nbsp;&nbsp;&nbsp;&nbsp;present_param.SwapEffect&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #000000">=</SPAN><SPAN style="COLOR: #000000">&nbsp;D3DSWAPEFFECT_DISCARD;<BR>&nbsp;&nbsp;&nbsp;&nbsp;present_param.BackBufferFormat&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #000000">=</SPAN><SPAN style="COLOR: #000000">&nbsp;display_mode.Format;<BR>&nbsp;&nbsp;&nbsp;&nbsp;present_param.EnableAutoDepthStencil&nbsp;</SPAN><SPAN style="COLOR: #000000">=</SPAN><SPAN style="COLOR: #000000">&nbsp;TRUE;<BR>&nbsp;&nbsp;&nbsp;&nbsp;present_param.AutoDepthStencilFormat&nbsp;</SPAN><SPAN style="COLOR: #000000">=</SPAN><SPAN style="COLOR: #000000">&nbsp;D3DFMT_D16;<BR><BR>&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #008000">//</SPAN><SPAN style="COLOR: #008000">&nbsp;creates&nbsp;a&nbsp;device&nbsp;to&nbsp;represent&nbsp;the&nbsp;display&nbsp;adapter</SPAN><SPAN style="COLOR: #008000"><BR></SPAN><SPAN style="COLOR: #000000">&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #0000ff">if</SPAN><SPAN style="COLOR: #000000">(FAILED(g_d3d</SPAN><SPAN style="COLOR: #000000">-&gt;</SPAN><SPAN style="COLOR: #000000">CreateDevice(D3DADAPTER_DEFAULT,&nbsp;D3DDEVTYPE_HAL,&nbsp;g_hwnd,<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;D3DCREATE_SOFTWARE_VERTEXPROCESSING,&nbsp;</SPAN><SPAN style="COLOR: #000000">&amp;</SPAN><SPAN style="COLOR: #000000">present_param,&nbsp;</SPAN><SPAN style="COLOR: #000000">&amp;</SPAN><SPAN style="COLOR: #000000">g_d3d_device)))<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #0000ff">return</SPAN><SPAN style="COLOR: #000000">&nbsp;FALSE;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<BR><BR>&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #008000">//</SPAN><SPAN style="COLOR: #008000">&nbsp;set&nbsp;render&nbsp;state<BR><BR>&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #008000">//</SPAN><SPAN style="COLOR: #008000">&nbsp;disable&nbsp;d3d&nbsp;lighting</SPAN><SPAN style="COLOR: #008000"><BR></SPAN><SPAN style="COLOR: #000000">&nbsp;&nbsp;&nbsp;&nbsp;g_d3d_device</SPAN><SPAN style="COLOR: #000000">-&gt;</SPAN><SPAN style="COLOR: #000000">SetRenderState(D3DRS_LIGHTING,&nbsp;FALSE);<BR>&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #008000">//</SPAN><SPAN style="COLOR: #008000">&nbsp;enable&nbsp;z-buffer</SPAN><SPAN style="COLOR: #008000"><BR></SPAN><SPAN style="COLOR: #000000">&nbsp;&nbsp;&nbsp;&nbsp;g_d3d_device</SPAN><SPAN style="COLOR: #000000">-&gt;</SPAN><SPAN style="COLOR: #000000">SetRenderState(D3DRS_ZENABLE,&nbsp;D3DZB_TRUE);<BR><BR>&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #008000">//</SPAN><SPAN style="COLOR: #008000">&nbsp;create&nbsp;and&nbsp;set&nbsp;the&nbsp;projection&nbsp;matrix<BR><BR>&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #008000">//</SPAN><SPAN style="COLOR: #008000">&nbsp;builds&nbsp;a&nbsp;left-handed&nbsp;perspective&nbsp;projection&nbsp;matrix&nbsp;based&nbsp;on&nbsp;a&nbsp;field&nbsp;of&nbsp;view</SPAN><SPAN style="COLOR: #008000"><BR></SPAN><SPAN style="COLOR: #000000">&nbsp;&nbsp;&nbsp;&nbsp;D3DXMatrixPerspectiveFovLH(</SPAN><SPAN style="COLOR: #000000">&amp;</SPAN><SPAN style="COLOR: #000000">mat_proj,&nbsp;D3DX_PI</SPAN><SPAN style="COLOR: #000000">/</SPAN><SPAN style="COLOR: #000000">4.0</SPAN><SPAN style="COLOR: #000000">,&nbsp;</SPAN><SPAN style="COLOR: #000000">1.33333</SPAN><SPAN style="COLOR: #000000">,&nbsp;</SPAN><SPAN style="COLOR: #000000">1.0</SPAN><SPAN style="COLOR: #000000">,&nbsp;</SPAN><SPAN style="COLOR: #000000">1000.0</SPAN><SPAN style="COLOR: #000000">);<BR><BR>&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #008000">//</SPAN><SPAN style="COLOR: #008000">&nbsp;sets&nbsp;a&nbsp;single&nbsp;device&nbsp;transformation-related&nbsp;state</SPAN><SPAN style="COLOR: #008000"><BR></SPAN><SPAN style="COLOR: #000000">&nbsp;&nbsp;&nbsp;&nbsp;g_d3d_device</SPAN><SPAN style="COLOR: #000000">-&gt;</SPAN><SPAN style="COLOR: #000000">SetTransform(D3DTS_PROJECTION,&nbsp;</SPAN><SPAN style="COLOR: #000000">&amp;</SPAN><SPAN style="COLOR: #000000">mat_proj);<BR><BR>&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #008000">//</SPAN><SPAN style="COLOR: #008000">&nbsp;create&nbsp;and&nbsp;set&nbsp;the&nbsp;view&nbsp;matrix</SPAN><SPAN style="COLOR: #008000"><BR></SPAN><SPAN style="COLOR: #000000">&nbsp;&nbsp;&nbsp;&nbsp;D3DXMatrixLookAtLH(</SPAN><SPAN style="COLOR: #000000">&amp;</SPAN><SPAN style="COLOR: #000000">mat_view,&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #000000">&amp;</SPAN><SPAN style="COLOR: #000000">D3DXVECTOR3(</SPAN><SPAN style="COLOR: #000000">0.0</SPAN><SPAN style="COLOR: #000000">,&nbsp;</SPAN><SPAN style="COLOR: #000000">0.0</SPAN><SPAN style="COLOR: #000000">,&nbsp;</SPAN><SPAN style="COLOR: #000000">-</SPAN><SPAN style="COLOR: #000000">500.0</SPAN><SPAN style="COLOR: #000000">),<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #000000">&amp;</SPAN><SPAN style="COLOR: #000000">D3DXVECTOR3(</SPAN><SPAN style="COLOR: #000000">0.0f</SPAN><SPAN style="COLOR: #000000">,&nbsp;</SPAN><SPAN style="COLOR: #000000">0.0f</SPAN><SPAN style="COLOR: #000000">,&nbsp;</SPAN><SPAN style="COLOR: #000000">0.0f</SPAN><SPAN style="COLOR: #000000">),&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #000000">&amp;</SPAN><SPAN style="COLOR: #000000">D3DXVECTOR3(</SPAN><SPAN style="COLOR: #000000">0.0f</SPAN><SPAN style="COLOR: #000000">,&nbsp;</SPAN><SPAN style="COLOR: #000000">1.0f</SPAN><SPAN style="COLOR: #000000">,&nbsp;</SPAN><SPAN style="COLOR: #000000">0.0f</SPAN><SPAN style="COLOR: #000000">));<BR><BR>&nbsp;&nbsp;&nbsp;&nbsp;g_d3d_device</SPAN><SPAN style="COLOR: #000000">-&gt;</SPAN><SPAN style="COLOR: #000000">SetTransform(D3DTS_VIEW,&nbsp;</SPAN><SPAN style="COLOR: #000000">&amp;</SPAN><SPAN style="COLOR: #000000">mat_view);<BR><BR>&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #008000">//</SPAN><SPAN style="COLOR: #008000">&nbsp;create&nbsp;the&nbsp;vertex&nbsp;buffer&nbsp;and&nbsp;set&nbsp;data</SPAN><SPAN style="COLOR: #008000"><BR></SPAN><SPAN style="COLOR: #000000">&nbsp;&nbsp;&nbsp;&nbsp;g_d3d_device</SPAN><SPAN style="COLOR: #000000">-&gt;</SPAN><SPAN style="COLOR: #000000">CreateVertexBuffer(</SPAN><SPAN style="COLOR: #0000ff">sizeof</SPAN><SPAN style="COLOR: #000000">(verts),&nbsp;</SPAN><SPAN style="COLOR: #000000">0</SPAN><SPAN style="COLOR: #000000">,&nbsp;VERTEX_FVF,&nbsp;D3DPOOL_DEFAULT,&nbsp;</SPAN><SPAN style="COLOR: #000000">&amp;</SPAN><SPAN style="COLOR: #000000">g_vertex_buffer,&nbsp;NULL);<BR><BR>&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #008000">//</SPAN><SPAN style="COLOR: #008000">&nbsp;locks&nbsp;a&nbsp;range&nbsp;of&nbsp;vertex&nbsp;data&nbsp;and&nbsp;obtains&nbsp;a&nbsp;pointer&nbsp;to&nbsp;the&nbsp;vertex&nbsp;buffer&nbsp;memory</SPAN><SPAN style="COLOR: #008000"><BR></SPAN><SPAN style="COLOR: #000000">&nbsp;&nbsp;&nbsp;&nbsp;g_vertex_buffer</SPAN><SPAN style="COLOR: #000000">-&gt;</SPAN><SPAN style="COLOR: #000000">Lock(</SPAN><SPAN style="COLOR: #000000">0</SPAN><SPAN style="COLOR: #000000">,&nbsp;</SPAN><SPAN style="COLOR: #000000">0</SPAN><SPAN style="COLOR: #000000">,&nbsp;(</SPAN><SPAN style="COLOR: #0000ff">void</SPAN><SPAN style="COLOR: #000000">**</SPAN><SPAN style="COLOR: #000000">)</SPAN><SPAN style="COLOR: #000000">&amp;</SPAN><SPAN style="COLOR: #000000">vertex_ptr,&nbsp;</SPAN><SPAN style="COLOR: #000000">0</SPAN><SPAN style="COLOR: #000000">);<BR><BR>&nbsp;&nbsp;&nbsp;&nbsp;memcpy(vertex_ptr,&nbsp;verts,&nbsp;</SPAN><SPAN style="COLOR: #0000ff">sizeof</SPAN><SPAN style="COLOR: #000000">(verts));<BR><BR>&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #008000">//</SPAN><SPAN style="COLOR: #008000">&nbsp;unlocks&nbsp;vertex&nbsp;data</SPAN><SPAN style="COLOR: #008000"><BR></SPAN><SPAN style="COLOR: #000000">&nbsp;&nbsp;&nbsp;&nbsp;g_vertex_buffer</SPAN><SPAN style="COLOR: #000000">-&gt;</SPAN><SPAN style="COLOR: #000000">Unlock();<BR><BR>&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #0000ff">return</SPAN><SPAN style="COLOR: #000000">&nbsp;TRUE;<BR>}<BR><BR></SPAN><SPAN style="COLOR: #008000">//</SPAN><SPAN style="COLOR: #008000">--------------------------------------------------------------------------------<BR></SPAN><SPAN style="COLOR: #008000">//</SPAN><SPAN style="COLOR: #008000">&nbsp;Release&nbsp;all&nbsp;d3d&nbsp;resource.<BR></SPAN><SPAN style="COLOR: #008000">//</SPAN><SPAN style="COLOR: #008000">--------------------------------------------------------------------------------</SPAN><SPAN style="COLOR: #008000"><BR></SPAN><SPAN style="COLOR: #000000">BOOL&nbsp;Do_Shutdown()<BR>{<BR>&nbsp;&nbsp;&nbsp;&nbsp;Safe_Release(g_vertex_buffer);<BR>&nbsp;&nbsp;&nbsp;&nbsp;Safe_Release(g_d3d_device);<BR>&nbsp;&nbsp;&nbsp;&nbsp;Safe_Release(g_d3d);<BR><BR>&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #0000ff">return</SPAN><SPAN style="COLOR: #000000">&nbsp;TRUE;<BR>}<BR><BR></SPAN><SPAN style="COLOR: #008000">//</SPAN><SPAN style="COLOR: #008000">--------------------------------------------------------------------------------<BR></SPAN><SPAN style="COLOR: #008000">//</SPAN><SPAN style="COLOR: #008000">&nbsp;Render&nbsp;a&nbsp;frame.<BR></SPAN><SPAN style="COLOR: #008000">//</SPAN><SPAN style="COLOR: #008000">--------------------------------------------------------------------------------</SPAN><SPAN style="COLOR: #008000"><BR></SPAN><SPAN style="COLOR: #000000">BOOL&nbsp;Do_Frame()<BR>{<BR>&nbsp;&nbsp;&nbsp;&nbsp;D3DXMATRIX&nbsp;mat_world;<BR><BR>&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #008000">//</SPAN><SPAN style="COLOR: #008000">&nbsp;clear&nbsp;device&nbsp;back&nbsp;buffer</SPAN><SPAN style="COLOR: #008000"><BR></SPAN><SPAN style="COLOR: #000000">&nbsp;&nbsp;&nbsp;&nbsp;g_d3d_device</SPAN><SPAN style="COLOR: #000000">-&gt;</SPAN><SPAN style="COLOR: #000000">Clear(</SPAN><SPAN style="COLOR: #000000">0</SPAN><SPAN style="COLOR: #000000">,&nbsp;NULL,&nbsp;D3DCLEAR_TARGET&nbsp;</SPAN><SPAN style="COLOR: #000000">|</SPAN><SPAN style="COLOR: #000000">&nbsp;D3DCLEAR_ZBUFFER,&nbsp;D3DCOLOR_RGBA(</SPAN><SPAN style="COLOR: #000000">0</SPAN><SPAN style="COLOR: #000000">,&nbsp;</SPAN><SPAN style="COLOR: #000000">0</SPAN><SPAN style="COLOR: #000000">,&nbsp;</SPAN><SPAN style="COLOR: #000000">0</SPAN><SPAN style="COLOR: #000000">,&nbsp;</SPAN><SPAN style="COLOR: #000000">255</SPAN><SPAN style="COLOR: #000000">),&nbsp;</SPAN><SPAN style="COLOR: #000000">1.0f</SPAN><SPAN style="COLOR: #000000">,&nbsp;</SPAN><SPAN style="COLOR: #000000">0</SPAN><SPAN style="COLOR: #000000">);<BR><BR>&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #008000">//</SPAN><SPAN style="COLOR: #008000">&nbsp;Begin&nbsp;scene</SPAN><SPAN style="COLOR: #008000"><BR></SPAN><SPAN style="COLOR: #000000">&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #0000ff">if</SPAN><SPAN style="COLOR: #000000">(SUCCEEDED(g_d3d_device</SPAN><SPAN style="COLOR: #000000">-&gt;</SPAN><SPAN style="COLOR: #000000">BeginScene()))<BR>&nbsp;&nbsp;&nbsp;&nbsp;{<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #008000">//</SPAN><SPAN style="COLOR: #008000">&nbsp;set&nbsp;the&nbsp;vertex&nbsp;stream,&nbsp;shader.<BR><BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #008000">//</SPAN><SPAN style="COLOR: #008000">&nbsp;binds&nbsp;a&nbsp;vertex&nbsp;buffer&nbsp;to&nbsp;a&nbsp;device&nbsp;data&nbsp;stream</SPAN><SPAN style="COLOR: #008000"><BR></SPAN><SPAN style="COLOR: #000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;g_d3d_device</SPAN><SPAN style="COLOR: #000000">-&gt;</SPAN><SPAN style="COLOR: #000000">SetStreamSource(</SPAN><SPAN style="COLOR: #000000">0</SPAN><SPAN style="COLOR: #000000">,&nbsp;g_vertex_buffer,&nbsp;</SPAN><SPAN style="COLOR: #000000">0</SPAN><SPAN style="COLOR: #000000">,&nbsp;</SPAN><SPAN style="COLOR: #0000ff">sizeof</SPAN><SPAN style="COLOR: #000000">(VERTEX));<BR><BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #008000">//</SPAN><SPAN style="COLOR: #008000">&nbsp;set&nbsp;the&nbsp;current&nbsp;vertex&nbsp;stream&nbsp;declation</SPAN><SPAN style="COLOR: #008000"><BR></SPAN><SPAN style="COLOR: #000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;g_d3d_device</SPAN><SPAN style="COLOR: #000000">-&gt;</SPAN><SPAN style="COLOR: #000000">SetFVF(VERTEX_FVF);<BR><BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #008000">//</SPAN><SPAN style="COLOR: #008000">&nbsp;create&nbsp;and&nbsp;set&nbsp;the&nbsp;world&nbsp;transformation&nbsp;matrix<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #008000">//</SPAN><SPAN style="COLOR: #008000">&nbsp;rotate&nbsp;object&nbsp;along&nbsp;y-axis</SPAN><SPAN style="COLOR: #008000"><BR></SPAN><SPAN style="COLOR: #000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;D3DXMatrixRotationY(</SPAN><SPAN style="COLOR: #000000">&amp;</SPAN><SPAN style="COLOR: #000000">mat_world,&nbsp;(</SPAN><SPAN style="COLOR: #0000ff">float</SPAN><SPAN style="COLOR: #000000">)&nbsp;(timeGetTime()&nbsp;</SPAN><SPAN style="COLOR: #000000">/</SPAN><SPAN style="COLOR: #000000">&nbsp;</SPAN><SPAN style="COLOR: #000000">1000.0</SPAN><SPAN style="COLOR: #000000">));<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;g_d3d_device</SPAN><SPAN style="COLOR: #000000">-&gt;</SPAN><SPAN style="COLOR: #000000">SetTransform(D3DTS_WORLD,&nbsp;</SPAN><SPAN style="COLOR: #000000">&amp;</SPAN><SPAN style="COLOR: #000000">mat_world);&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<BR><BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #008000">//</SPAN><SPAN style="COLOR: #008000">&nbsp;renders&nbsp;a&nbsp;sequence&nbsp;of&nbsp;noindexed,&nbsp;geometric&nbsp;primitives&nbsp;of&nbsp;the&nbsp;specified&nbsp;type&nbsp;from&nbsp;the&nbsp;current&nbsp;set<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #008000">//</SPAN><SPAN style="COLOR: #008000">&nbsp;of&nbsp;data&nbsp;input&nbsp;stream.</SPAN><SPAN style="COLOR: #008000"><BR></SPAN><SPAN style="COLOR: #000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;g_d3d_device</SPAN><SPAN style="COLOR: #000000">-&gt;</SPAN><SPAN style="COLOR: #000000">DrawPrimitive(D3DPT_TRIANGLESTRIP,&nbsp;</SPAN><SPAN style="COLOR: #000000">0</SPAN><SPAN style="COLOR: #000000">,&nbsp;</SPAN><SPAN style="COLOR: #000000">4</SPAN><SPAN style="COLOR: #000000">);<BR><BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #008000">//</SPAN><SPAN style="COLOR: #008000">&nbsp;draw&nbsp;next&nbsp;four&nbsp;polygons,&nbsp;but&nbsp;rotate&nbsp;on&nbsp;z-axis.</SPAN><SPAN style="COLOR: #008000"><BR></SPAN><SPAN style="COLOR: #000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;D3DXMatrixRotationZ(</SPAN><SPAN style="COLOR: #000000">&amp;</SPAN><SPAN style="COLOR: #000000">mat_world,&nbsp;</SPAN><SPAN style="COLOR: #000000">-</SPAN><SPAN style="COLOR: #000000">(</SPAN><SPAN style="COLOR: #0000ff">float</SPAN><SPAN style="COLOR: #000000">)(timeGetTime()&nbsp;</SPAN><SPAN style="COLOR: #000000">/</SPAN><SPAN style="COLOR: #000000">&nbsp;</SPAN><SPAN style="COLOR: #000000">1000.0</SPAN><SPAN style="COLOR: #000000">));<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;g_d3d_device</SPAN><SPAN style="COLOR: #000000">-&gt;</SPAN><SPAN style="COLOR: #000000">SetTransform(D3DTS_WORLD,&nbsp;</SPAN><SPAN style="COLOR: #000000">&amp;</SPAN><SPAN style="COLOR: #000000">mat_world);<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;g_d3d_device</SPAN><SPAN style="COLOR: #000000">-&gt;</SPAN><SPAN style="COLOR: #000000">DrawPrimitive(D3DPT_TRIANGLESTRIP,&nbsp;</SPAN><SPAN style="COLOR: #000000">6</SPAN><SPAN style="COLOR: #000000">,&nbsp;</SPAN><SPAN style="COLOR: #000000">2</SPAN><SPAN style="COLOR: #000000">);<BR><BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #008000">//</SPAN><SPAN style="COLOR: #008000">&nbsp;end&nbsp;the&nbsp;scene</SPAN><SPAN style="COLOR: #008000"><BR></SPAN><SPAN style="COLOR: #000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;g_d3d_device</SPAN><SPAN style="COLOR: #000000">-&gt;</SPAN><SPAN style="COLOR: #000000">EndScene();<BR>&nbsp;&nbsp;&nbsp;&nbsp;}<BR><BR>&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #008000">//</SPAN><SPAN style="COLOR: #008000">&nbsp;present&nbsp;the&nbsp;contents&nbsp;of&nbsp;the&nbsp;next&nbsp;buffer&nbsp;in&nbsp;the&nbsp;sequence&nbsp;of&nbsp;back&nbsp;buffers&nbsp;owned&nbsp;by&nbsp;the&nbsp;device</SPAN><SPAN style="COLOR: #008000"><BR></SPAN><SPAN style="COLOR: #000000">&nbsp;&nbsp;&nbsp;&nbsp;g_d3d_device</SPAN><SPAN style="COLOR: #000000">-&gt;</SPAN><SPAN style="COLOR: #000000">Present(NULL,&nbsp;NULL,&nbsp;NULL,&nbsp;NULL);<BR><BR>&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #0000ff">return</SPAN><SPAN style="COLOR: #000000">&nbsp;TRUE;<BR>}<BR><BR></SPAN><SPAN style="COLOR: #008000">//</SPAN><SPAN style="COLOR: #008000">--------------------------------------------------------------------------------<BR></SPAN><SPAN style="COLOR: #008000">//</SPAN><SPAN style="COLOR: #008000">&nbsp;Main&nbsp;function,&nbsp;routine&nbsp;entry.<BR></SPAN><SPAN style="COLOR: #008000">//</SPAN><SPAN style="COLOR: #008000">--------------------------------------------------------------------------------</SPAN><SPAN style="COLOR: #008000"><BR></SPAN><SPAN style="COLOR: #0000ff">int</SPAN><SPAN style="COLOR: #000000">&nbsp;WINAPI&nbsp;WinMain(HINSTANCE&nbsp;inst,&nbsp;HINSTANCE,&nbsp;LPSTR&nbsp;cmd_line,&nbsp;</SPAN><SPAN style="COLOR: #0000ff">int</SPAN><SPAN style="COLOR: #000000">&nbsp;cmd_show)<BR>{<BR>&nbsp;&nbsp;&nbsp;&nbsp;WNDCLASSEX&nbsp;&nbsp;win_class;<BR>&nbsp;&nbsp;&nbsp;&nbsp;MSG&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;msg;<BR><BR>&nbsp;&nbsp;&nbsp;&nbsp;g_inst&nbsp;</SPAN><SPAN style="COLOR: #000000">=</SPAN><SPAN style="COLOR: #000000">&nbsp;inst;<BR><BR>&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #008000">//</SPAN><SPAN style="COLOR: #008000">&nbsp;create&nbsp;window&nbsp;class&nbsp;and&nbsp;register&nbsp;it</SPAN><SPAN style="COLOR: #008000"><BR></SPAN><SPAN style="COLOR: #000000">&nbsp;&nbsp;&nbsp;&nbsp;win_class.cbSize&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #000000">=</SPAN><SPAN style="COLOR: #000000">&nbsp;</SPAN><SPAN style="COLOR: #0000ff">sizeof</SPAN><SPAN style="COLOR: #000000">(win_class);<BR>&nbsp;&nbsp;&nbsp;&nbsp;win_class.style&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #000000">=</SPAN><SPAN style="COLOR: #000000">&nbsp;CS_CLASSDC;<BR>&nbsp;&nbsp;&nbsp;&nbsp;win_class.lpfnWndProc&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #000000">=</SPAN><SPAN style="COLOR: #000000">&nbsp;Window_Proc;<BR>&nbsp;&nbsp;&nbsp;&nbsp;win_class.cbClsExtra&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #000000">=</SPAN><SPAN style="COLOR: #000000">&nbsp;</SPAN><SPAN style="COLOR: #000000">0</SPAN><SPAN style="COLOR: #000000">;<BR>&nbsp;&nbsp;&nbsp;&nbsp;win_class.cbWndExtra&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #000000">=</SPAN><SPAN style="COLOR: #000000">&nbsp;</SPAN><SPAN style="COLOR: #000000">0</SPAN><SPAN style="COLOR: #000000">;<BR>&nbsp;&nbsp;&nbsp;&nbsp;win_class.hInstance&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #000000">=</SPAN><SPAN style="COLOR: #000000">&nbsp;inst;<BR>&nbsp;&nbsp;&nbsp;&nbsp;win_class.hIcon&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #000000">=</SPAN><SPAN style="COLOR: #000000">&nbsp;LoadIcon(NULL,&nbsp;IDI_APPLICATION);<BR>&nbsp;&nbsp;&nbsp;&nbsp;win_class.hCursor&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #000000">=</SPAN><SPAN style="COLOR: #000000">&nbsp;LoadCursor(NULL,&nbsp;IDC_ARROW);<BR>&nbsp;&nbsp;&nbsp;&nbsp;win_class.hbrBackground&nbsp;</SPAN><SPAN style="COLOR: #000000">=</SPAN><SPAN style="COLOR: #000000">&nbsp;NULL;<BR>&nbsp;&nbsp;&nbsp;&nbsp;win_class.lpszMenuName&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #000000">=</SPAN><SPAN style="COLOR: #000000">&nbsp;NULL;<BR>&nbsp;&nbsp;&nbsp;&nbsp;win_class.lpszClassName&nbsp;</SPAN><SPAN style="COLOR: #000000">=</SPAN><SPAN style="COLOR: #000000">&nbsp;g_class_name;<BR>&nbsp;&nbsp;&nbsp;&nbsp;win_class.hIconSm&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #000000">=</SPAN><SPAN style="COLOR: #000000">&nbsp;LoadIcon(NULL,&nbsp;IDI_APPLICATION);<BR><BR>&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #0000ff">if</SPAN><SPAN style="COLOR: #000000">(</SPAN><SPAN style="COLOR: #000000">!</SPAN><SPAN style="COLOR: #000000">&nbsp;RegisterClassEx(</SPAN><SPAN style="COLOR: #000000">&amp;</SPAN><SPAN style="COLOR: #000000">win_class))<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #0000ff">return</SPAN><SPAN style="COLOR: #000000">&nbsp;FALSE;<BR><BR>&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #008000">//</SPAN><SPAN style="COLOR: #008000">&nbsp;create&nbsp;the&nbsp;main&nbsp;window</SPAN><SPAN style="COLOR: #008000"><BR></SPAN><SPAN style="COLOR: #000000">&nbsp;&nbsp;&nbsp;&nbsp;g_hwnd&nbsp;</SPAN><SPAN style="COLOR: #000000">=</SPAN><SPAN style="COLOR: #000000">&nbsp;CreateWindow(g_class_name,&nbsp;g_caption,&nbsp;WS_CAPTION&nbsp;</SPAN><SPAN style="COLOR: #000000">|</SPAN><SPAN style="COLOR: #000000">&nbsp;WS_SYSMENU,&nbsp;</SPAN><SPAN style="COLOR: #000000">0</SPAN><SPAN style="COLOR: #000000">,&nbsp;</SPAN><SPAN style="COLOR: #000000">0</SPAN><SPAN style="COLOR: #000000">,<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;WINDOW_WIDTH,&nbsp;WINDOW_HEIGHT,&nbsp;NULL,&nbsp;NULL,&nbsp;inst,&nbsp;NULL);<BR><BR>&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #0000ff">if</SPAN><SPAN style="COLOR: #000000">(g_hwnd&nbsp;</SPAN><SPAN style="COLOR: #000000">==</SPAN><SPAN style="COLOR: #000000">&nbsp;NULL)<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #0000ff">return</SPAN><SPAN style="COLOR: #000000">&nbsp;FALSE;<BR><BR>&nbsp;&nbsp;&nbsp;&nbsp;ShowWindow(g_hwnd,&nbsp;SW_NORMAL);<BR>&nbsp;&nbsp;&nbsp;&nbsp;UpdateWindow(g_hwnd);<BR><BR>&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #008000">//</SPAN><SPAN style="COLOR: #008000">&nbsp;initialize&nbsp;game</SPAN><SPAN style="COLOR: #008000"><BR></SPAN><SPAN style="COLOR: #000000">&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #0000ff">if</SPAN><SPAN style="COLOR: #000000">(Do_Init()&nbsp;</SPAN><SPAN style="COLOR: #000000">==</SPAN><SPAN style="COLOR: #000000">&nbsp;FALSE)<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #0000ff">return</SPAN><SPAN style="COLOR: #000000">&nbsp;FALSE;<BR><BR>&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #008000">//</SPAN><SPAN style="COLOR: #008000">&nbsp;start&nbsp;message&nbsp;pump,&nbsp;waiting&nbsp;for&nbsp;signal&nbsp;to&nbsp;quit.</SPAN><SPAN style="COLOR: #008000"><BR></SPAN><SPAN style="COLOR: #000000">&nbsp;&nbsp;&nbsp;&nbsp;ZeroMemory(</SPAN><SPAN style="COLOR: #000000">&amp;</SPAN><SPAN style="COLOR: #000000">msg,&nbsp;</SPAN><SPAN style="COLOR: #0000ff">sizeof</SPAN><SPAN style="COLOR: #000000">(MSG));<BR><BR>&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #0000ff">while</SPAN><SPAN style="COLOR: #000000">(msg.message&nbsp;</SPAN><SPAN style="COLOR: #000000">!=</SPAN><SPAN style="COLOR: #000000">&nbsp;WM_QUIT)<BR>&nbsp;&nbsp;&nbsp;&nbsp;{<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #0000ff">if</SPAN><SPAN style="COLOR: #000000">(PeekMessage(</SPAN><SPAN style="COLOR: #000000">&amp;</SPAN><SPAN style="COLOR: #000000">msg,&nbsp;NULL,&nbsp;</SPAN><SPAN style="COLOR: #000000">0</SPAN><SPAN style="COLOR: #000000">,&nbsp;</SPAN><SPAN style="COLOR: #000000">0</SPAN><SPAN style="COLOR: #000000">,&nbsp;PM_REMOVE))<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TranslateMessage(</SPAN><SPAN style="COLOR: #000000">&amp;</SPAN><SPAN style="COLOR: #000000">msg);<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;DispatchMessage(</SPAN><SPAN style="COLOR: #000000">&amp;</SPAN><SPAN style="COLOR: #000000">msg);<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #008000">//</SPAN><SPAN style="COLOR: #008000">&nbsp;draw&nbsp;a&nbsp;frame</SPAN><SPAN style="COLOR: #008000"><BR></SPAN><SPAN style="COLOR: #000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #0000ff">if</SPAN><SPAN style="COLOR: #000000">(Do_Frame()&nbsp;</SPAN><SPAN style="COLOR: #000000">==</SPAN><SPAN style="COLOR: #000000">&nbsp;FALSE)<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #0000ff">break</SPAN><SPAN style="COLOR: #000000">;<BR>&nbsp;&nbsp;&nbsp;&nbsp;}<BR><BR>&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #008000">//</SPAN><SPAN style="COLOR: #008000">&nbsp;run&nbsp;shutdown&nbsp;function</SPAN><SPAN style="COLOR: #008000"><BR></SPAN><SPAN style="COLOR: #000000">&nbsp;&nbsp;&nbsp;&nbsp;Do_Shutdown();<BR><BR>&nbsp;&nbsp;&nbsp;&nbsp;UnregisterClass(g_class_name,&nbsp;inst);<BR>&nbsp;&nbsp;&nbsp;&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #0000ff">return</SPAN><SPAN style="COLOR: #000000">&nbsp;(</SPAN><SPAN style="COLOR: #0000ff">int</SPAN><SPAN style="COLOR: #000000">)&nbsp;msg.wParam;<BR>}</SPAN></DIV><BR>效果图：<BR><BR><IMG alt="" src="http://www.cppblog.com/images/cppblog_com/lovedday/4157/r_zbuffer.jpg"><BR>
+    
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="followme">
+  <span>Welcome to my other publishing channels</span>
+
+  <div class="social-list">
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="https://www.facebook.com/rise.worlds">
+            <span class="icon">
+              <i class="fab fa-facebook"></i>
+            </span>
+
+            <span class="label">FB Page</span>
+          </a>
+      </div>
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="https://twitter.com/riseworlds">
+            <span class="icon">
+              <i class="fab fa-twitter"></i>
+            </span>
+
+            <span class="label">Twitter</span>
+          </a>
+      </div>
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="https://t.me/riseworlds">
+            <span class="icon">
+              <i class="fab fa-telegram"></i>
+            </span>
+
+            <span class="label">Telegram</span>
+          </a>
+      </div>
+  </div>
+</div>
+
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2007/07/04/D3D%E4%B8%AD%E7%B2%92%E5%AD%90%E6%95%88%E6%9E%9C%E5%AE%9E%E7%8E%B0%E7%A4%BA%E4%BE%8B/" rel="prev" title="D3D中粒子效果实现示例">
+                  <i class="fa fa-angle-left"></i> D3D中粒子效果实现示例
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2007/07/11/%E7%8E%B0%E4%BB%A3%E4%B8%AD%E5%8C%BB%E4%B8%8E%E4%BC%A0%E7%BB%9F%E4%B8%AD%E5%8C%BB%E7%9A%84%E5%B7%AE%E5%88%AB/" rel="next" title="现代中医与传统中医的差别">
+                  现代中医与传统中医的差别 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">豫ICP备2021009490号 </a>
+  </div>
+<div class="copyright">
+<a href="https://icp.gov.moe/?keyword=20233669" target="_blank">萌ICP备20233669号</a>
+</div>
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">rise</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="reading-progress-bar"></div>
+
+  <a href="https://github.com/rise-worlds" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://unpkg.com/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@next-theme/pjax@0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script><script src="/js/pjax.js"></script>
+
+  
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://unpkg.com/mermaid@10.7.0/dist/mermaid.min.js","integrity":"sha256-TtLOdUA8mstPoO6sGvHIGx2ceXrrX4KgIItO06XOn8A="}}</script>
+  <script src="/js/third-party/tags/mermaid.js"></script>
+
+
+
+
+
+  
+
+
+
+
+  <script src="https://unpkg.com/quicklink@2.3.0/dist/quicklink.umd.js" integrity="sha256-yvJQOINiH9fWemHn0vCA5lsHWJaHs6/ZmO+1Ft04SvM=" crossorigin="anonymous"></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":true,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"https://rise-worlds.github.io/2007/07/04/D3D%E4%B8%AD%E7%9A%84Z%E7%BC%93%E5%AD%98%E4%BD%BF%E7%94%A8%E7%A4%BA%E4%BE%8B/"}</script>
+  <script src="/js/third-party/quicklink.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://unpkg.com/@fortawesome/fontawesome-free@6.5.1/css/all.min.css" integrity="sha256-wiz7ZSCn/btzhjKDQBms9Hx4sSeUYsDrTLg7roPstac=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://unpkg.com/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"rise-worlds.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.19.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="看一下这两个指令是如何影响变量在内存的存储的。  1、pack pragma pack pragma设置了struct、union或class中各成员的对齐方式，结构成员对齐指的是成员相对于起始地址的偏移量。该指令基本用法如下：#pragma pack(n)它指定了结构成员按n（1，2，4，8，16）字节对齐，如果未指定n，则恢复成默认值。需要注意的是，它并不是指结构体中的每个成员都要按n对齐，">
+<meta property="og:type" content="article">
+<meta property="og:title" content="pragma pack &amp; align()">
+<meta property="og:url" content="https://rise-worlds.github.io/2008/04/23/pragma%20pack%20&%20align()/index.html">
+<meta property="og:site_name" content="Rise&#39;blogs">
+<meta property="og:description" content="看一下这两个指令是如何影响变量在内存的存储的。  1、pack pragma pack pragma设置了struct、union或class中各成员的对齐方式，结构成员对齐指的是成员相对于起始地址的偏移量。该指令基本用法如下：#pragma pack(n)它指定了结构成员按n（1，2，4，8，16）字节对齐，如果未指定n，则恢复成默认值。需要注意的是，它并不是指结构体中的每个成员都要按n对齐，">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/None.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/None.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/None.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/None.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/None.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/None.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/None.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/None.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/ExpandedBlockStart.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/ContractedBlock.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/ExpandedBlockEnd.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/None.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/ExpandedBlockStart.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/ContractedBlock.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/ExpandedBlockEnd.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/None.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/None.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/None.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/ExpandedBlockStart.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/ContractedBlock.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/ExpandedBlockEnd.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/None.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/None.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/None.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/None.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/None.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/None.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/None.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/None.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/None.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/None.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/ExpandedBlockStart.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/ContractedBlock.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/ExpandedBlockEnd.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/None.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/None.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/ExpandedBlockStart.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/ContractedBlock.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/ExpandedBlockEnd.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/None.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/None.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/None.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/ExpandedBlockStart.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/ContractedBlock.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/ExpandedBlockEnd.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/None.gif">
+<meta property="og:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/None.gif">
+<meta property="article:published_time" content="2008-04-23T15:42:00.000Z">
+<meta property="article:modified_time" content="2008-04-23T15:42:00.000Z">
+<meta property="article:author" content="rise">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/None.gif">
+
+
+<link rel="canonical" href="https://rise-worlds.github.io/2008/04/23/pragma%20pack%20&%20align()/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://rise-worlds.github.io/2008/04/23/pragma%20pack%20&%20align()/","path":"2008/04/23/pragma pack & align()/","title":"pragma pack & align()"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>pragma pack & align() | Rise'blogs</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Rise'blogs</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li><li class="menu-item menu-item-sitemap"><a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>Sitemap</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">1、pack pragma</span></a></li><li class="nav-item nav-level-5"><a class="nav-link"><span class="nav-number">2.</span> <span class="nav-text">2、align指令</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="rise"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">rise</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">657</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">46</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">77</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="mailto:rise.worlds@outlook.com" title="E-Mail → mailto:rise.worlds@outlook.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://github.com/rise-worlds" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;rise-worlds" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://x.com/riseworlds" title="Twitter → https:&#x2F;&#x2F;x.com&#x2F;riseworlds" rel="noopener me" target="_blank"><i class="fab fa-twitter fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.facebook.com/rise.worlds" title="FB Page → https:&#x2F;&#x2F;www.facebook.com&#x2F;rise.worlds" rel="noopener me" target="_blank"><i class="fab fa-facebook fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.youtube.com/@YiXuan" title="YouTube → https:&#x2F;&#x2F;www.youtube.com&#x2F;@YiXuan" rel="noopener me" target="_blank"><i class="fab fa-youtube fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.instagram.com/rise.worlds/" title="Instagram → https:&#x2F;&#x2F;www.instagram.com&#x2F;rise.worlds&#x2F;" rel="noopener me" target="_blank"><i class="fab fa-instagram fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://t.me/riseworlds" title="Telegram → https:&#x2F;&#x2F;t.me&#x2F;riseworlds" rel="noopener me" target="_blank"><i class="fab fa-telegram fa-fw"></i></a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="Back to top">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+          Links
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <a href="https://www.cnblogs.com/flying_bat" title="https:&#x2F;&#x2F;www.cnblogs.com&#x2F;flying_bat" rel="noopener" target="_blank">my cnblogs</a>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://rise-worlds.github.io/2008/04/23/pragma%20pack%20&%20align()/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="rise">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Rise'blogs">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="pragma pack & align() | Rise'blogs">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          pragma pack & align()
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2008-04-23 15:42:00" itemprop="dateCreated datePublished" datetime="2008-04-23T15:42:00+00:00">2008-04-23</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Dev/" itemprop="url" rel="index"><span itemprop="name">Dev</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Dev/C/" itemprop="url" rel="index"><span itemprop="name">C++</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p></p> <p>看一下这两个指令是如何影响变量在内存的存储的。  <h5>1、pack pragma</h5> <p>pack pragma设置了struct、union或class中各成员的对齐方式，结构成员对齐指的是成员相对于起始地址的偏移量。该指令基本用法如下：<br>#pragma pack(n)<br>它指定了结构成员按n（1，2，4，8，16）字节对齐，如果未指定n，则恢复成默认值。需要注意的是，它并不是指结构体中的每个成员都要按n对齐，而是按照每个成员的大小和n相比较小的值对齐。下面引用MSDN中C++ Preprocessor Reference部分关于pack指令的说明： <p><em>n</em> (optional) <br>&nbsp;&nbsp;&nbsp; Specifies the value, in bytes, to be used for packing. The default value for <em>n</em> is 8. Valid values are 1, 2, 4, 8, and 16. The alignment of a member will be on a boundary that is either a multiple of <em>n</em> or a multiple of the size of the member, whichever is smaller. <p><strong>即成员member的对齐值 align of member = min( pack setting value, sizeof(member) )</strong> <p>请看下面示例代码： <p><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/None.gif" align="top">#include &lt;iostream&gt;<br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/None.gif" align="top">using namespace std;<br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/None.gif" align="top"><br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/None.gif" align="top">#pragma pack(show) //显示当前结构成员对齐设置<br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/None.gif" align="top"><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/None.gif" align="top"><br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/None.gif" align="top">#pragma pack(8)<br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/None.gif" align="top">struct A<br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/ExpandedBlockStart.gif" align="top"><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/ContractedBlock.gif" align="top">...{<br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif" align="top">&nbsp;&nbsp;&nbsp;&nbsp; int n;<br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif" align="top">&nbsp;&nbsp;&nbsp;&nbsp; char c;<br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif" align="top">&nbsp;&nbsp;&nbsp;&nbsp; short s;<br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/ExpandedBlockEnd.gif" align="top">};<br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/None.gif" align="top">struct B<br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/ExpandedBlockStart.gif" align="top"><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/ContractedBlock.gif" align="top">...{<br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif" align="top">&nbsp;&nbsp;&nbsp;&nbsp; char c;<br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif" align="top">&nbsp;&nbsp;&nbsp;&nbsp; int n;<br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif" align="top">&nbsp;&nbsp;&nbsp;&nbsp; short s;<br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/ExpandedBlockEnd.gif" align="top">};<br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/None.gif" align="top">#pragma pack()<br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/None.gif" align="top"><br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/None.gif" align="top">int _tmain(int argc, _TCHAR* argv[])<br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/ExpandedBlockStart.gif" align="top"><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/ContractedBlock.gif" align="top">...{<br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif" align="top">&nbsp;&nbsp;&nbsp;&nbsp; A a;<br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif" align="top">&nbsp;&nbsp;&nbsp;&nbsp; B b;<br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif" align="top"><br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif" align="top">&nbsp;&nbsp;&nbsp;&nbsp; memset( &amp;a, 0, sizeof(A) );<br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif" align="top">&nbsp;&nbsp;&nbsp;&nbsp; memset( &amp;b, 0, sizeof(B) );<br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif" align="top"><br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif" align="top">&nbsp;&nbsp;&nbsp;&nbsp; a.c = '1';<br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif" align="top">&nbsp;&nbsp;&nbsp;&nbsp; a.n = 2;<br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif" align="top">&nbsp;&nbsp;&nbsp;&nbsp; a.s = 3;<br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif" align="top"><br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif" align="top">&nbsp;&nbsp;&nbsp;&nbsp; b.c = '1';<br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif" align="top">&nbsp;&nbsp;&nbsp;&nbsp; b.n = 2;<br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif" align="top">&nbsp;&nbsp;&nbsp;&nbsp; b.s = 3;<br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif" align="top"><br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif" align="top">&nbsp;&nbsp;&nbsp;&nbsp; cout &lt;&lt; sizeof(A) &lt;&lt; endl;<br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif" align="top">&nbsp;&nbsp;&nbsp;&nbsp; cout &lt;&lt; sizeof(B) &lt;&lt; endl;<br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif" align="top"><br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif" align="top">&nbsp;&nbsp;&nbsp;&nbsp; return 0;<br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/ExpandedBlockEnd.gif" align="top">}<br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/None.gif" align="top"> <p>笔者的测试环境为x86体系32位计算机 win2000操作系统，VS2003编译器。<br>编译器默认的成员对齐值是8字节，通过#pragma pack(show)指令，编译的时候在输出栏会限制默认对齐值。以上程序运行完通过调试的内存察看功能得到a和b的内存存储区域如下：<br>a的存储区域：0x0012FED0 02 00 00 00 31 00 03 00<br>b的存储区域：0x0012FEBC 31 00 00 00 02 00 00 00 03 00 00 00<br>最前面的4字节整数是变量的起始地址，后面是变量的整个存储区域。 <p>现在我们按照 align of member = min( pack setting value, sizeof(member) )的公式分析一下a和b的存储。 <p>a 的第一个成员n为int，大小为4，align of a.n = min(8,sizeof(int) )，对齐值为4。第一个成员相对于结构体起始地址从0偏移开始，前四个字节02 00 00 00即为n的存储区域，因为x86是Little Endian（低字节在前）的字节顺序，所以第一字节是2，后面三个字节0，我们通常写成0x00000002； <p>a的第二个成员c为char，大小为1，align of a.c=min(8,sizeof(char))，对齐值为1。c紧接着a后面存储从偏移4开始，满足1字节对齐的要求。它的值为'1'，ASCII码为0x31，共一个字节31； <p>a的第三个成员为short，大小为2，align of a.s=min(8,sizeof(short))，对齐值为2。如果紧接第二个成员从偏移5开始存储就不满足2字节对齐，因此跳过1个字节，从偏移6字节的地方开始存储，即最后两个字节03 00； <p>b的第一个成员c为char，大小为1，align of a.c=min(8,sizeof(char))，对齐值为1。第一个成员从偏移起始地址0字节开始存储，它的值为'1'，ASCII码为0x31，共一个字节31； <p>b 的第二个成员n为int，大小为4，align of a.n = min(8,sizeof(int) )，对齐值为4。如果紧接第二个成员后面从偏移1开始存储就不能4字节对齐，因此跳过3个字节，从偏移4字节的地方开始存储，即第5-8的四个字节02 00 00 00； <p>b的第三个成员为short，大小为2，align of a.s=min(8,sizeof(short))，对齐值为2。紧接第二个成员从偏移8字节的地方开始存储，即9-10两个字节03 00； <p>这时有人可能要问，b为什么最后多了两个字节00 00呢？这就是我们下面要讲的，整个结构体的对齐。 <h5>2、align指令</h5> <p>align指令可以用于设置各种内置类型、自定义类型如struct、union或class的的对齐方式。指令格式为：<strong> __declspec(align(</strong> <em>#</em> <strong>))</strong> ，#是对齐值，取值为2的1次方至2的8192次方。在声明自定义类型或内置变量时，如果指定了对齐值，则对应变量的起始地址必须是该值的整数倍。除此外，它还会影响结构体的大小。下面引用两段MSDN关于align的描述： <p>Without <strong>__declspec(align(</strong> <em>#</em> <strong>))</strong> , Visual C++ aligns data on natural boundaries based on the size of the data, for example 4-byte integers on 4-byte boundaries and 8-byte doubles on 8-byte boundaries. Data in classes or structures is aligned within the class or structure at the minimum of its natural alignment and the current packing setting (from #pragma <strong>pack</strong> or the <strong>/Zp</strong> compiler option). <p>从这段可以看出，如果没有设置align(#)值，变量x按照sizeof(x)来对齐起始地址。类或结构体内的成员在类或结构体内部按照min( pack setting value,sizeof(member))来对齐。这个我们在pack指令部分已经分析过。 <p>The <code>sizeof</code> value for any structure is the offset of the final member, plus that member's size, rounded up to the nearest multiple of the largest member alignment value or the whole structure alignment value, whichever is greater. <p>从这段可以看出，align(#)指令会影响结构体或类的大小。总结公式为：<br><strong>sizeof(structure) = (结构体最后一个成员的偏移 + sizeof(结构体最后一个成员) ) 上取整 ( n* max( 结构体各成员的对齐值,align(#)设置的值 ) ); 其中n为正整数</strong> 。 <p>根据该公式我们分析一下b为什么后面会多两个填充字节0。<br>b的最后一个成s偏移为8，大小为2，b中各成员对齐值最大的为4，因为未设置align(#)，所以上取整的数值为4n。8+2按4的倍数上取整为12。因此后面需要填充两个字节，这样才能使sizeof(b) == 12。 <p>下面以一代码来说明align(#)指令的用法： <p><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/None.gif" align="top">#include &lt;iostream&gt;<br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/None.gif" align="top">using namespace std;<br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/None.gif" align="top"><br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/None.gif" align="top">#define CACHE_LINE&nbsp;&nbsp; 32<br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/None.gif" align="top">#define CACHE_ALIGN __declspec(align(CACHE_LINE))<br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/None.gif" align="top"><br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/None.gif" align="top">#pragma pack(8)<br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/None.gif" align="top"><br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/None.gif" align="top">struct CACHE_ALIGN S1&nbsp; <br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/ExpandedBlockStart.gif" align="top"><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/ContractedBlock.gif" align="top">...{<br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif" align="top">&nbsp;&nbsp;&nbsp; int a, b, c, d;<br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/ExpandedBlockEnd.gif" align="top">};<br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/None.gif" align="top"><br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/None.gif" align="top">struct S3<br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/ExpandedBlockStart.gif" align="top"><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/ContractedBlock.gif" align="top">...{<br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif" align="top">&nbsp;&nbsp;&nbsp; struct S1 s1;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif" align="top">&nbsp;&nbsp;&nbsp; int a;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/ExpandedBlockEnd.gif" align="top">};<br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/None.gif" align="top">#pragma pack()<br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/None.gif" align="top"><br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/None.gif" align="top">int _tmain(int argc, _TCHAR* argv[])<br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/ExpandedBlockStart.gif" align="top"><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/ContractedBlock.gif" align="top">...{<br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif" align="top">&nbsp;&nbsp;&nbsp;&nbsp; CACHE_ALIGN int i = 2;<br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif" align="top"><br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif" align="top">&nbsp;&nbsp;&nbsp;&nbsp; cout &lt;&lt; sizeof(S1) &lt;&lt; endl;<br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif" align="top">&nbsp;&nbsp;&nbsp;&nbsp; cout &lt;&lt; sizeof(S3) &lt;&lt; endl;<br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif" align="top"><br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/InBlock.gif" align="top">&nbsp;&nbsp;&nbsp;&nbsp; return 0;<br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/ExpandedBlockEnd.gif" align="top">}<br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/None.gif" align="top"><br><img src="http://images.csdn.net/syntaxhighlighting/OutliningIndicators/None.gif" align="top"> <p>运行程序输出32和64，按公式sizeof(structure) = (结构体最后一个成员的偏移 + sizeof(结构体最后一个成员) ) 上取整 ( n* max( 结构体各成员的对齐值,align(#)设置的值 ) )分析： <p>sizeof(S1) = (12+4) 上取整 ( n * max( 4, 32 ) )<br>sizeof(S1) = (16) 上取整 ( 32 )<br>sizeof(S1) = 32 <p>S3的大小留待大家练练手。</p>
+    
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="followme">
+  <span>Welcome to my other publishing channels</span>
+
+  <div class="social-list">
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="https://www.facebook.com/rise.worlds">
+            <span class="icon">
+              <i class="fab fa-facebook"></i>
+            </span>
+
+            <span class="label">FB Page</span>
+          </a>
+      </div>
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="https://twitter.com/riseworlds">
+            <span class="icon">
+              <i class="fab fa-twitter"></i>
+            </span>
+
+            <span class="label">Twitter</span>
+          </a>
+      </div>
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="https://t.me/riseworlds">
+            <span class="icon">
+              <i class="fab fa-telegram"></i>
+            </span>
+
+            <span class="label">Telegram</span>
+          </a>
+      </div>
+  </div>
+</div>
+
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2008/04/18/%E5%BE%AE%E8%BD%AF%E7%A0%94%E7%A9%B6%E9%99%A2Detour%E5%BC%80%E5%8F%91%E5%8C%85%E4%B9%8BAPI%E6%8B%A6%E6%88%AA%E6%8A%80%E6%9C%AF/" rel="prev" title="微软研究院Detour开发包之API拦截技术">
+                  <i class="fa fa-angle-left"></i> 微软研究院Detour开发包之API拦截技术
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2008/04/23/%E6%9C%89%E5%85%B3UNICODE%E3%80%81ANSI%E5%AD%97%E7%AC%A6%E9%9B%86%E5%92%8C%E7%9B%B8%E5%85%B3%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%93%8D%E4%BD%9C%E7%9A%84%E6%80%BB%E7%BB%93%EF%BC%81/" rel="next" title="有关UNICODE、ANSI字符集和相关字符串操作的总结！">
+                  有关UNICODE、ANSI字符集和相关字符串操作的总结！ <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">豫ICP备2021009490号 </a>
+  </div>
+<div class="copyright">
+<a href="https://icp.gov.moe/?keyword=20233669" target="_blank">萌ICP备20233669号</a>
+</div>
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">rise</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="reading-progress-bar"></div>
+
+  <a href="https://github.com/rise-worlds" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://unpkg.com/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@next-theme/pjax@0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script><script src="/js/pjax.js"></script>
+
+  
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://unpkg.com/mermaid@10.7.0/dist/mermaid.min.js","integrity":"sha256-TtLOdUA8mstPoO6sGvHIGx2ceXrrX4KgIItO06XOn8A="}}</script>
+  <script src="/js/third-party/tags/mermaid.js"></script>
+
+
+
+
+
+  
+
+
+
+
+  <script src="https://unpkg.com/quicklink@2.3.0/dist/quicklink.umd.js" integrity="sha256-yvJQOINiH9fWemHn0vCA5lsHWJaHs6/ZmO+1Ft04SvM=" crossorigin="anonymous"></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":true,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"https://rise-worlds.github.io/2008/04/23/pragma%20pack%20&%20align()/"}</script>
+  <script src="/js/third-party/quicklink.js"></script>
+
+</body>
+</html>

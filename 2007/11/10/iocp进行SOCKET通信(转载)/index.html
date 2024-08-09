@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://unpkg.com/@fortawesome/fontawesome-free@6.5.1/css/all.min.css" integrity="sha256-wiz7ZSCn/btzhjKDQBms9Hx4sSeUYsDrTLg7roPstac=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://unpkg.com/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"rise-worlds.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.19.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="当然TCP方式的模型还有事件选择模型。就是把所有的网络事件和我们的一个程序里定义的事件梆定。这个有它的好处，可能可以让我们更好的写一个线程来管理接收与发送。现在来讲一下一个完成端口模型。 &nbsp; 完成端口&nbsp;  一个完成端口其实就是一个通知队列，由操作系统把已经完成的重叠I&#x2F;O请求的通知 放入其中。当某项I&#x2F;O操作一旦完成，某个可以对该操作结果进行处理的工作者线程 就会收到一">
+<meta property="og:type" content="article">
+<meta property="og:title" content="iocp进行SOCKET通信(转载)">
+<meta property="og:url" content="https://rise-worlds.github.io/2007/11/10/iocp%E8%BF%9B%E8%A1%8CSOCKET%E9%80%9A%E4%BF%A1(%E8%BD%AC%E8%BD%BD)/index.html">
+<meta property="og:site_name" content="Rise&#39;blogs">
+<meta property="og:description" content="当然TCP方式的模型还有事件选择模型。就是把所有的网络事件和我们的一个程序里定义的事件梆定。这个有它的好处，可能可以让我们更好的写一个线程来管理接收与发送。现在来讲一下一个完成端口模型。 &nbsp; 完成端口&nbsp;  一个完成端口其实就是一个通知队列，由操作系统把已经完成的重叠I&#x2F;O请求的通知 放入其中。当某项I&#x2F;O操作一旦完成，某个可以对该操作结果进行处理的工作者线程 就会收到一">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/None.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/None.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/None.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/None.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/None.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/None.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/None.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/None.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/None.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/ExpandedBlockStart.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/ContractedBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/dot.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/ExpandedBlockEnd.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/None.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/None.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/None.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/ExpandedBlockStart.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/ContractedBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/dot.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/ExpandedBlockEnd.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/None.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/None.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/None.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/None.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/ExpandedBlockStart.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/ContractedBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/dot.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/ExpandedSubBlockStart.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/ContractedSubBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/dot.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/ExpandedSubBlockEnd.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/ExpandedSubBlockStart.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/ContractedSubBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/dot.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/ExpandedSubBlockEnd.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/ExpandedSubBlockStart.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/ContractedSubBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/dot.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/ExpandedSubBlockStart.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/ContractedSubBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/dot.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/ExpandedSubBlockEnd.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/ExpandedSubBlockEnd.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/ExpandedSubBlockStart.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/ContractedSubBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/dot.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/ExpandedSubBlockEnd.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/ExpandedSubBlockStart.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/ContractedSubBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/dot.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/ExpandedSubBlockEnd.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/ExpandedSubBlockStart.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/ContractedSubBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/dot.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/ExpandedSubBlockEnd.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/ExpandedSubBlockStart.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/ContractedSubBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/dot.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/ExpandedSubBlockStart.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/ContractedSubBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/dot.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/ExpandedSubBlockEnd.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/ExpandedSubBlockStart.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/ContractedSubBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/dot.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/ExpandedSubBlockEnd.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/ExpandedSubBlockStart.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/ContractedSubBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/dot.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/ExpandedSubBlockEnd.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/ExpandedSubBlockStart.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/ContractedSubBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/dot.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/ExpandedSubBlockEnd.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/ExpandedSubBlockStart.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/ContractedSubBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/dot.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/ExpandedSubBlockStart.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/ContractedSubBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/dot.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/ExpandedSubBlockEnd.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/ExpandedSubBlockEnd.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/ExpandedSubBlockEnd.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/ExpandedBlockEnd.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/None.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/None.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/ExpandedBlockStart.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/ContractedBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/dot.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/ExpandedSubBlockStart.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/ContractedSubBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/dot.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/ExpandedSubBlockStart.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/ContractedSubBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/dot.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/ExpandedSubBlockEnd.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/ExpandedSubBlockStart.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/ContractedSubBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/dot.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/ExpandedSubBlockStart.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/ContractedSubBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/dot.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/ExpandedSubBlockEnd.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/ExpandedSubBlockEnd.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/ExpandedSubBlockStart.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/ContractedSubBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/dot.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/ExpandedSubBlockEnd.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/ExpandedSubBlockStart.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/ContractedSubBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/dot.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/ExpandedSubBlockEnd.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/ExpandedSubBlockStart.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/ContractedSubBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/dot.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/ExpandedSubBlockStart.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/ContractedSubBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/dot.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/ExpandedSubBlockStart.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/ContractedSubBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/dot.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/ExpandedSubBlockEnd.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/ExpandedSubBlockEnd.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/ExpandedSubBlockEnd.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/ExpandedSubBlockStart.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/ContractedSubBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/dot.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/ExpandedSubBlockStart.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/ContractedSubBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/dot.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/ExpandedSubBlockStart.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/ContractedSubBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/dot.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/ExpandedSubBlockEnd.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/ExpandedSubBlockEnd.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/ExpandedSubBlockEnd.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/ExpandedSubBlockEnd.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/ExpandedBlockEnd.gif">
+<meta property="og:image" content="http://www.cppblog.com/Images/OutliningIndicators/None.gif">
+<meta property="article:published_time" content="2007-11-10T17:49:00.000Z">
+<meta property="article:modified_time" content="2007-11-10T17:49:00.000Z">
+<meta property="article:author" content="rise">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://www.cppblog.com/Images/OutliningIndicators/None.gif">
+
+
+<link rel="canonical" href="https://rise-worlds.github.io/2007/11/10/iocp%E8%BF%9B%E8%A1%8CSOCKET%E9%80%9A%E4%BF%A1(%E8%BD%AC%E8%BD%BD)/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://rise-worlds.github.io/2007/11/10/iocp%E8%BF%9B%E8%A1%8CSOCKET%E9%80%9A%E4%BF%A1(%E8%BD%AC%E8%BD%BD)/","path":"2007/11/10/iocp进行SOCKET通信(转载)/","title":"iocp进行SOCKET通信(转载)"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>iocp进行SOCKET通信(转载) | Rise'blogs</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Rise'blogs</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li><li class="menu-item menu-item-sitemap"><a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>Sitemap</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="rise"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">rise</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">657</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">46</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">77</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="mailto:rise.worlds@outlook.com" title="E-Mail → mailto:rise.worlds@outlook.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://github.com/rise-worlds" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;rise-worlds" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://x.com/riseworlds" title="Twitter → https:&#x2F;&#x2F;x.com&#x2F;riseworlds" rel="noopener me" target="_blank"><i class="fab fa-twitter fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.facebook.com/rise.worlds" title="FB Page → https:&#x2F;&#x2F;www.facebook.com&#x2F;rise.worlds" rel="noopener me" target="_blank"><i class="fab fa-facebook fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.youtube.com/@YiXuan" title="YouTube → https:&#x2F;&#x2F;www.youtube.com&#x2F;@YiXuan" rel="noopener me" target="_blank"><i class="fab fa-youtube fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.instagram.com/rise.worlds/" title="Instagram → https:&#x2F;&#x2F;www.instagram.com&#x2F;rise.worlds&#x2F;" rel="noopener me" target="_blank"><i class="fab fa-instagram fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://t.me/riseworlds" title="Telegram → https:&#x2F;&#x2F;t.me&#x2F;riseworlds" rel="noopener me" target="_blank"><i class="fab fa-telegram fa-fw"></i></a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="Back to top">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+          Links
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <a href="https://www.cnblogs.com/flying_bat" title="https:&#x2F;&#x2F;www.cnblogs.com&#x2F;flying_bat" rel="noopener" target="_blank">my cnblogs</a>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://rise-worlds.github.io/2007/11/10/iocp%E8%BF%9B%E8%A1%8CSOCKET%E9%80%9A%E4%BF%A1(%E8%BD%AC%E8%BD%BD)/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="rise">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Rise'blogs">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="iocp进行SOCKET通信(转载) | Rise'blogs">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          iocp进行SOCKET通信(转载)
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2007-11-10 17:49:00" itemprop="dateCreated datePublished" datetime="2007-11-10T17:49:00+00:00">2007-11-10</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Dev/" itemprop="url" rel="index"><span itemprop="name">Dev</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Dev/Win32Dev/" itemprop="url" rel="index"><span itemprop="name">Win32Dev</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><form id="Form1" name="Form1" action="http://www.cppblog.com/9529.html" method="post" _initialAction="9529.html"> <div id="main"> <div class="post"> <div class="postText"> <p>当然TCP方式的模型还有事件选择模型。<br>就是把所有的网络事件和我们的一个程序里定义的事件梆定。<br>这个有它的好处，可能可以让我们更好的写一个线程来管理<br>接收与发送。<br>现在来讲一下一个完成端口模型。</p> <p>&nbsp; 完成端口<br>&nbsp; <br> 一个完成端口其实就是一个通知队列，由操作系统把已经完成的重叠I/O请求的通知<br> 放入其中。当某项I/O操作一旦完成，某个可以对该操作结果进行处理的工作者线程<br> 就会收到一则通知。而套接字在被创建后，可以在任何时候与某个完成端口进行关<br> 联。<br>&nbsp;<br> 步骤:<br> 1、创建一个空的完成端口；<br> 2、得到本地机器的CPU个数；<br> 3、开启CPU*2个工作线程(又名线程池),全部都在等待完成端口的完成包;<br> 4、创建TCP的监听socket，使用事件邦定，创建监听线程;<br> 5、当有人连接进入的时候，将Client socket保存到一个我们自己定义的关键键，<br>&nbsp;&nbsp;&nbsp; 并把它与我们创建的完成端口关联；<br> 6、使用WSARecv和WSASend函数投递一些请求，这是使用重叠I/O的方式;<br> 7、重复5~6;</p> <p> 注：1、重叠I/O的方式中，接收与发送数据包的时候，一定要进行投递请求这是<br>&nbsp;&nbsp; 它们这个体系结构的特点<br>&nbsp;&nbsp; 当然，在完成端口方式中，不是直接使用的WSARecv和WSASend函数进行请求<br>&nbsp;&nbsp; 的投递的。而是使用的ReadFile,Write的方式<br>&nbsp; 2、完成端口使用了系统内部的一些模型，所以我们只要按照一定的顺序调用就<br>&nbsp;&nbsp; 可以完成了。<br>&nbsp; 3、完成端口是使用在这样的情况下，有成千上万的用户连接的时候，它能够<br>&nbsp;&nbsp; 保证性能不会降低。</p> <p><br>&nbsp;</p> <div style="border-right: #cccccc 1px solid; padding-right: 5px; border-top: #cccccc 1px solid; padding-left: 4px; font-size: 13px; padding-bottom: 4px; border-left: #cccccc 1px solid; width: 98%; word-break: break-all; padding-top: 4px; border-bottom: #cccccc 1px solid; background-color: #eeeeee"><img src="http://www.cppblog.com/Images/OutliningIndicators/None.gif" align="top"> <span style="color: #000000">#include </span> <span style="color: #000000">&lt;</span> <span style="color: #000000">winsock2.h</span> <span style="color: #000000">&gt;</span> <span style="color: #000000"><br><img src="http://www.cppblog.com/Images/OutliningIndicators/None.gif" align="top">#include </span> <span style="color: #000000">&lt;</span> <span style="color: #000000">windows.h</span> <span style="color: #000000">&gt;</span> <span style="color: #000000"><br><img src="http://www.cppblog.com/Images/OutliningIndicators/None.gif" align="top">#include </span> <span style="color: #000000">&lt;</span> <span style="color: #000000">stdio.h</span> <span style="color: #000000">&gt;</span> <span style="color: #000000"><br><img src="http://www.cppblog.com/Images/OutliningIndicators/None.gif" align="top"> <br><img src="http://www.cppblog.com/Images/OutliningIndicators/None.gif" align="top"> </span><span style="color: #0000ff">#define</span> <span style="color: #000000"> PORT 5150</span> <span style="color: #000000"><br><img src="http://www.cppblog.com/Images/OutliningIndicators/None.gif" align="top"> </span><span style="color: #0000ff">#define</span> <span style="color: #000000"> DATA_BUFSIZE 8192</span> <span style="color: #000000"><br><img src="http://www.cppblog.com/Images/OutliningIndicators/None.gif" align="top"> <br><img src="http://www.cppblog.com/Images/OutliningIndicators/None.gif" align="top"> </span><span style="color: #008000">//</span> <span style="color: #008000">关键项</span> <span style="color: #008000"><br><img src="http://www.cppblog.com/Images/OutliningIndicators/None.gif" align="top"> </span><span style="color: #000000">typedef </span> <span style="color: #0000ff">struct</span> <span style="color: #000000"><br><img id="Codehighlighter1_129_246_Open_Image" src="http://www.cppblog.com/Images/OutliningIndicators/ExpandedBlockStart.gif" align="top"> <img id="Codehighlighter1_129_246_Closed_Image" style="display: none" src="http://www.cppblog.com/Images/OutliningIndicators/ContractedBlock.gif" align="top"> </span><span id="Codehighlighter1_129_246_Closed_Text" style="border-right: #808080 1px solid; border-top: #808080 1px solid; display: none; border-left: #808080 1px solid; border-bottom: #808080 1px solid; background-color: #ffffff"><img src="http://www.cppblog.com/Images/dot.gif"> </span><span id="Codehighlighter1_129_246_Open_Text"><span style="color: #000000">{<br><img src="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif" align="top">&nbsp;&nbsp; OVERLAPPED Overlapped;<br><img src="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif" align="top">&nbsp;&nbsp; WSABUF DataBuf;<br><img src="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif" align="top">&nbsp;&nbsp; CHAR Buffer[DATA_BUFSIZE];<br><img src="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif" align="top">&nbsp;&nbsp; DWORD BytesSEND;<br><img src="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif" align="top">&nbsp;&nbsp; DWORD BytesRECV;<br><img src="http://www.cppblog.com/Images/OutliningIndicators/ExpandedBlockEnd.gif" align="top">}</span> </span><span style="color: #000000"> PER_IO_OPERATION_DATA, </span> <span style="color: #000000">*</span> <span style="color: #000000"> LPPER_IO_OPERATION_DATA;<br><img src="http://www.cppblog.com/Images/OutliningIndicators/None.gif" align="top"><br><img src="http://www.cppblog.com/Images/OutliningIndicators/None.gif" align="top"><br><img src="http://www.cppblog.com/Images/OutliningIndicators/None.gif" align="top">typedef </span> <span style="color: #0000ff">struct</span> <span style="color: #000000">&nbsp;<br><img id="Codehighlighter1_316_336_Open_Image" src="http://www.cppblog.com/Images/OutliningIndicators/ExpandedBlockStart.gif" align="top"><img id="Codehighlighter1_316_336_Closed_Image" style="display: none" src="http://www.cppblog.com/Images/OutliningIndicators/ContractedBlock.gif" align="top"></span> <span id="Codehighlighter1_316_336_Closed_Text" style="border-right: #808080 1px solid; border-top: #808080 1px solid; display: none; border-left: #808080 1px solid; border-bottom: #808080 1px solid; background-color: #ffffff"><img src="http://www.cppblog.com/Images/dot.gif"> </span><span id="Codehighlighter1_316_336_Open_Text"><span style="color: #000000">{<br><img src="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif" align="top">&nbsp;&nbsp; SOCKET Socket;<br><img src="http://www.cppblog.com/Images/OutliningIndicators/ExpandedBlockEnd.gif" align="top">}</span> </span><span style="color: #000000"> PER_HANDLE_DATA, </span> <span style="color: #000000">*</span> <span style="color: #000000"> LPPER_HANDLE_DATA;<br><img src="http://www.cppblog.com/Images/OutliningIndicators/None.gif" align="top"><br><img src="http://www.cppblog.com/Images/OutliningIndicators/None.gif" align="top">DWORD WINAPI ServerWorkerThread(LPVOID CompletionPortID);<br><img src="http://www.cppblog.com/Images/OutliningIndicators/None.gif" align="top"><br><img src="http://www.cppblog.com/Images/OutliningIndicators/None.gif" align="top"></span> <span style="color: #0000ff">void</span> <span style="color: #000000"> main(</span> <span style="color: #0000ff">void</span> <span style="color: #000000">)<br><img id="Codehighlighter1_452_4124_Open_Image" src="http://www.cppblog.com/Images/OutliningIndicators/ExpandedBlockStart.gif" align="top"><img id="Codehighlighter1_452_4124_Closed_Image" style="display: none" src="http://www.cppblog.com/Images/OutliningIndicators/ContractedBlock.gif" align="top"></span> <span id="Codehighlighter1_452_4124_Closed_Text" style="border-right: #808080 1px solid; border-top: #808080 1px solid; display: none; border-left: #808080 1px solid; border-bottom: #808080 1px solid; background-color: #ffffff"><img src="http://www.cppblog.com/Images/dot.gif"> </span><span id="Codehighlighter1_452_4124_Open_Text"><span style="color: #000000">{<br><img src="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif" align="top">&nbsp;&nbsp; SOCKADDR_IN InternetAddr;<br><img src="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif" align="top">&nbsp;&nbsp; SOCKET Listen;<br><img src="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif" align="top">&nbsp;&nbsp; SOCKET Accept;<br><img src="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif" align="top">&nbsp;&nbsp; HANDLE CompletionPort;<br><img src="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif" align="top">&nbsp;&nbsp; SYSTEM_INFO SystemInfo;<br><img src="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif" align="top">&nbsp;&nbsp; LPPER_HANDLE_DATA PerHandleData;<br><img src="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif" align="top">&nbsp;&nbsp; LPPER_IO_OPERATION_DATA PerIoData;<br><img src="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif" align="top">&nbsp;&nbsp; </span> <span style="color: #0000ff">int</span> <span style="color: #000000"> i;<br><img src="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif" align="top">&nbsp;&nbsp; DWORD RecvBytes;<br><img src="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif" align="top">&nbsp;&nbsp; DWORD Flags;<br><img src="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif" align="top">&nbsp;&nbsp; DWORD ThreadID;<br><img src="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif" align="top">&nbsp;&nbsp; WSADATA wsaData;<br><img src="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif" align="top">&nbsp;&nbsp; DWORD Ret;<br><img src="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif" align="top"><br><img src="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif" align="top">&nbsp;&nbsp; </span> <span style="color: #0000ff">if</span> <span style="color: #000000"> ((Ret </span> <span style="color: #000000">=</span> <span style="color: #000000"> WSAStartup(</span> <span style="color: #000000">0x0202</span> <span style="color: #000000">, </span> <span style="color: #000000">&amp;</span> <span style="color: #000000">wsaData)) </span> <span style="color: #000000">!=</span> <span style="color: #000000">&nbsp;</span> <span style="color: #000000">0</span> <span style="color: #000000">)<br><img id="Codehighlighter1_799_875_Open_Image" src="http://www.cppblog.com/Images/OutliningIndicators/ExpandedSubBlockStart.gif" align="top"><img id="Codehighlighter1_799_875_Closed_Image" style="display: none" src="http://www.cppblog.com/Images/OutliningIndicators/ContractedSubBlock.gif" align="top">&nbsp;&nbsp; </span> <span id="Codehighlighter1_799_875_Closed_Text" style="border-right: #808080 1px solid; border-top: #808080 1px solid; display: none; border-left: #808080 1px solid; border-bottom: #808080 1px solid; background-color: #ffffff"><img src="http://www.cppblog.com/Images/dot.gif"> </span><span id="Codehighlighter1_799_875_Open_Text"><span style="color: #000000">{<br><img src="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif" align="top">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; printf(</span> <span style="color: #000000">"</span> <span style="color: #000000">WSAStartup failed with error %d\n</span> <span style="color: #000000">"</span> <span style="color: #000000">, Ret);<br><img src="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif" align="top">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span> <span style="color: #0000ff">return</span> <span style="color: #000000">;<br><img src="http://www.cppblog.com/Images/OutliningIndicators/ExpandedSubBlockEnd.gif" align="top">&nbsp;&nbsp; }</span> </span><span style="color: #000000"><br><img src="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif" align="top"> <br><img src="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif" align="top">&nbsp;&nbsp; </span> <span style="color: #008000">//</span> <span style="color: #008000">打开一个空的完成端口</span> <span style="color: #008000"><br><img src="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif" align="top"> </span><span style="color: #000000"><br><img src="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif" align="top">&nbsp;&nbsp; </span> <span style="color: #0000ff">if</span> <span style="color: #000000"> ((CompletionPort </span> <span style="color: #000000">=</span> <span style="color: #000000"> CreateIoCompletionPort(INVALID_HANDLE_VALUE, NULL, </span> <span style="color: #000000">0</span> <span style="color: #000000">, </span> <span style="color: #000000">0</span> <span style="color: #000000">)) </span> <span style="color: #000000">==</span> <span style="color: #000000"> NULL)<br><img id="Codehighlighter1_990_1091_Open_Image" src="http://www.cppblog.com/Images/OutliningIndicators/ExpandedSubBlockStart.gif" align="top"><img id="Codehighlighter1_990_1091_Closed_Image" style="display: none" src="http://www.cppblog.com/Images/OutliningIndicators/ContractedSubBlock.gif" align="top">&nbsp;&nbsp; </span> <span id="Codehighlighter1_990_1091_Closed_Text" style="border-right: #808080 1px solid; border-top: #808080 1px solid; display: none; border-left: #808080 1px solid; border-bottom: #808080 1px solid; background-color: #ffffff"><img src="http://www.cppblog.com/Images/dot.gif"> </span><span id="Codehighlighter1_990_1091_Open_Text"><span style="color: #000000">{<br><img src="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif" align="top">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; printf( </span> <span style="color: #000000">"</span> <span style="color: #000000">CreateIoCompletionPort failed with error: %d\n</span> <span style="color: #000000">"</span> <span style="color: #000000">, GetLastError());<br><img src="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif" align="top">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span> <span style="color: #0000ff">return</span> <span style="color: #000000">;<br><img src="http://www.cppblog.com/Images/OutliningIndicators/ExpandedSubBlockEnd.gif" align="top">&nbsp;&nbsp; }</span> </span><span style="color: #000000"><br><img src="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif" align="top"> <br><img src="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif" align="top">&nbsp;&nbsp; </span> <span style="color: #008000">//</span> <span style="color: #008000"> Determine how many processors are on the system.</span> <span style="color: #008000"><br><img src="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif" align="top"> </span><span style="color: #000000"><br><img src="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif" align="top">&nbsp;&nbsp; GetSystemInfo(</span> <span style="color: #000000">&amp;</span> <span style="color: #000000">SystemInfo);<br><img src="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif" align="top"><br><img src="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif" align="top">&nbsp;&nbsp; </span> <span style="color: #008000">//</span> <span style="color: #008000"> 开启cpu个数的2倍个的线程</span> <span style="color: #008000"><br><img src="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif" align="top"> </span><span style="color: #000000"><br><img src="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif" align="top">&nbsp;&nbsp; </span> <span style="color: #0000ff">for</span> <span style="color: #000000">(i </span> <span style="color: #000000">=</span> <span style="color: #000000">&nbsp;</span> <span style="color: #000000">0</span> <span style="color: #000000">; i </span> <span style="color: #000000">&lt;</span> <span style="color: #000000"> SystemInfo.dwNumberOfProcessors </span> <span style="color: #000000">*</span> <span style="color: #000000">&nbsp;</span> <span style="color: #000000">2</span> <span style="color: #000000">; i</span> <span style="color: #000000">++</span> <span style="color: #000000">)<br><img id="Codehighlighter1_1267_1676_Open_Image" src="http://www.cppblog.com/Images/OutliningIndicators/ExpandedSubBlockStart.gif" align="top"><img id="Codehighlighter1_1267_1676_Closed_Image" style="display: none" src="http://www.cppblog.com/Images/OutliningIndicators/ContractedSubBlock.gif" align="top">&nbsp;&nbsp; </span> <span id="Codehighlighter1_1267_1676_Closed_Text" style="border-right: #808080 1px solid; border-top: #808080 1px solid; display: none; border-left: #808080 1px solid; border-bottom: #808080 1px solid; background-color: #ffffff"><img src="http://www.cppblog.com/Images/dot.gif"> </span><span id="Codehighlighter1_1267_1676_Open_Text"><span style="color: #000000">{<br><img src="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif" align="top">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; HANDLE ThreadHandle;<br><img src="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif" align="top"><br><img src="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif" align="top">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span> <span style="color: #008000">//</span> <span style="color: #008000"> Create a server worker thread and pass the completion port to the thread.</span> <span style="color: #008000"><br><img src="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif" align="top"> </span><span style="color: #000000"><br><img src="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif" align="top">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span> <span style="color: #0000ff">if</span> <span style="color: #000000"> ((ThreadHandle </span> <span style="color: #000000">=</span> <span style="color: #000000"> CreateThread(NULL, </span> <span style="color: #000000">0</span> <span style="color: #000000">, ServerWorkerThread, CompletionPort,<br><img src="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif" align="top">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span> <span style="color: #000000">0</span> <span style="color: #000000">, </span> <span style="color: #000000">&amp;</span> <span style="color: #000000">ThreadID)) </span> <span style="color: #000000">==</span> <span style="color: #000000"> NULL)<br><img id="Codehighlighter1_1504_1604_Open_Image" src="http://www.cppblog.com/Images/OutliningIndicators/ExpandedSubBlockStart.gif" align="top"><img id="Codehighlighter1_1504_1604_Closed_Image" style="display: none" src="http://www.cppblog.com/Images/OutliningIndicators/ContractedSubBlock.gif" align="top">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span> <span id="Codehighlighter1_1504_1604_Closed_Text" style="border-right: #808080 1px solid; border-top: #808080 1px solid; display: none; border-left: #808080 1px solid; border-bottom: #808080 1px solid; background-color: #ffffff"><img src="http://www.cppblog.com/Images/dot.gif"> </span><span id="Codehighlighter1_1504_1604_Open_Text"><span style="color: #000000">{<br><img src="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif" align="top">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; printf(</span> <span style="color: #000000">"</span> <span style="color: #000000">CreateThread() failed with error %d\n</span> <span style="color: #000000">"</span> <span style="color: #000000">, GetLastError());<br><img src="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif" align="top">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span> <span style="color: #0000ff">return</span> <span style="color: #000000">;<br><img src="http://www.cppblog.com/Images/OutliningIndicators/ExpandedSubBlockEnd.gif" align="top">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }</span> </span><span style="color: #000000"><br><img src="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif" align="top"> <br><img src="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif" align="top">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span> <span style="color: #008000">//</span> <span style="color: #008000"> Close the thread handle</span> <span style="color: #008000"><br><img src="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif" align="top"> </span><span style="color: #000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; CloseHandle(ThreadHandle);<br><img src="http://www.cppblog.com/Images/OutliningIndicators/ExpandedSubBlockEnd.gif" align="top">&nbsp;&nbsp; }</span> </span><span style="color: #000000"><br><img src="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif" align="top"> <br><img src="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif" align="top">&nbsp;&nbsp; </span> <span style="color: #008000">//</span> <span style="color: #008000">打开一个服务器socket</span> <span style="color: #008000"><br><img src="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif" align="top"> </span><span style="color: #000000"><br><img src="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif" align="top">&nbsp;&nbsp; </span> <span style="color: #0000ff">if</span> <span style="color: #000000"> ((Listen </span> <span style="color: #000000">=</span> <span style="color: #000000"> WSASocket(AF_INET, SOCK_STREAM, </span> <span style="color: #000000">0</span> <span style="color: #000000">, NULL, </span> <span style="color: #000000">0</span> <span style="color: #000000">,<br><img src="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif" align="top">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; WSA_FLAG_OVERLAPPED)) </span> <span style="color: #000000">==</span> <span style="color: #000000"> INVALID_SOCKET)<br><img id="Codehighlighter1_1810_1901_Open_Image" src="http://www.cppblog.com/Images/OutliningIndicators/ExpandedSubBlockStart.gif" align="top"><img id="Codehighlighter1_1810_1901_Closed_Image" style="display: none" src="http://www.cppblog.com/Images/OutliningIndicators/ContractedSubBlock.gif" align="top">&nbsp;&nbsp; </span> <span id="Codehighlighter1_1810_1901_Closed_Text" style="border-right: #808080 1px solid; border-top: #808080 1px solid; display: none; border-left: #808080 1px solid; border-bottom: #808080 1px solid; background-color: #ffffff"><img src="http://www.cppblog.com/Images/dot.gif"> </span><span id="Codehighlighter1_1810_1901_Open_Text"><span style="color: #000000">{<br><img src="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif" align="top">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; printf(</span> <span style="color: #000000">"</span> <span style="color: #000000">WSASocket() failed with error %d\n</span> <span style="color: #000000">"</span> <span style="color: #000000">, WSAGetLastError());<br><img src="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif" align="top">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span> <span style="color: #0000ff">return</span> <span style="color: #000000">;<br><img src="http://www.cppblog.com/Images/OutliningIndicators/ExpandedSubBlockEnd.gif" align="top">&nbsp;&nbsp; }</span> </span><span style="color: #000000">&nbsp;<br><img src="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif" align="top"><br><img src="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif" align="top">&nbsp;&nbsp; InternetAddr.sin_family </span> <span style="color: #000000">=</span> <span style="color: #000000"> AF_INET;<br><img src="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif" align="top">&nbsp;&nbsp; InternetAddr.sin_addr.s_addr </span> <span style="color: #000000">=</span> <span style="color: #000000"> htonl(INADDR_ANY);<br><img src="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif" align="top">&nbsp;&nbsp; InternetAddr.sin_port </span> <span style="color: #000000">=</span> <span style="color: #000000"> htons(PORT);<br><img src="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif" align="top"><br><img src="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif" align="top">&nbsp;&nbsp; </span> <span style="color: #0000ff">if</span> <span style="color: #000000"> (bind(Listen, (PSOCKADDR) </span> <span style="color: #000000">&amp;</span> <span style="color: #000000">InternetAddr, </span> <span style="color: #0000ff">sizeof</span> <span style="color: #000000">(InternetAddr)) </span> <span style="color: #000000">==</span> <span style="color: #000000"> SOCKET_ERROR)<br><img id="Codehighlighter1_2126_2212_Open_Image" src="http://www.cppblog.com/Images/OutliningIndicators/ExpandedSubBlockStart.gif" align="top"><img id="Codehighlighter1_2126_2212_Closed_Image" style="display: none" src="http://www.cppblog.com/Images/OutliningIndicators/ContractedSubBlock.gif" align="top">&nbsp;&nbsp; </span> <span id="Codehighlighter1_2126_2212_Closed_Text" style="border-right: #808080 1px solid; border-top: #808080 1px solid; display: none; border-left: #808080 1px solid; border-bottom: #808080 1px solid; background-color: #ffffff"><img src="http://www.cppblog.com/Images/dot.gif"> </span><span id="Codehighlighter1_2126_2212_Open_Text"><span style="color: #000000">{<br><img src="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif" align="top">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; printf(</span> <span style="color: #000000">"</span> <span style="color: #000000">bind() failed with error %d\n</span> <span style="color: #000000">"</span> <span style="color: #000000">, WSAGetLastError());<br><img src="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif" align="top">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span> <span style="color: #0000ff">return</span> <span style="color: #000000">;<br><img src="http://www.cppblog.com/Images/OutliningIndicators/ExpandedSubBlockEnd.gif" align="top">&nbsp;&nbsp; }</span> </span><span style="color: #000000"><br><img src="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif" align="top"> <br><img src="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif" align="top"> <br><img src="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif" align="top">&nbsp;&nbsp; </span> <span style="color: #0000ff">if</span> <span style="color: #000000"> (listen(Listen, </span> <span style="color: #000000">5</span> <span style="color: #000000">) </span> <span style="color: #000000">==</span> <span style="color: #000000"> SOCKET_ERROR)<br><img id="Codehighlighter1_2261_2349_Open_Image" src="http://www.cppblog.com/Images/OutliningIndicators/ExpandedSubBlockStart.gif" align="top"><img id="Codehighlighter1_2261_2349_Closed_Image" style="display: none" src="http://www.cppblog.com/Images/OutliningIndicators/ContractedSubBlock.gif" align="top">&nbsp;&nbsp; </span> <span id="Codehighlighter1_2261_2349_Closed_Text" style="border-right: #808080 1px solid; border-top: #808080 1px solid; display: none; border-left: #808080 1px solid; border-bottom: #808080 1px solid; background-color: #ffffff"><img src="http://www.cppblog.com/Images/dot.gif"> </span><span id="Codehighlighter1_2261_2349_Open_Text"><span style="color: #000000">{<br><img src="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif" align="top">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; printf(</span> <span style="color: #000000">"</span> <span style="color: #000000">listen() failed with error %d\n</span> <span style="color: #000000">"</span> <span style="color: #000000">, WSAGetLastError());<br><img src="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif" align="top">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span> <span style="color: #0000ff">return</span> <span style="color: #000000">;<br><img src="http://www.cppblog.com/Images/OutliningIndicators/ExpandedSubBlockEnd.gif" align="top">&nbsp;&nbsp; }</span> </span><span style="color: #000000"><br><img src="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif" align="top"> <br><img src="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif" align="top">&nbsp;&nbsp; </span> <span style="color: #008000">//</span> <span style="color: #008000">开始接收从客户端来的连接</span> <span style="color: #008000"><br><img src="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif" align="top"> </span><span style="color: #000000"><br><img src="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif" align="top">&nbsp;&nbsp; </span> <span style="color: #0000ff">while</span> <span style="color: #000000">(TRUE)<br><img id="Codehighlighter1_2389_4122_Open_Image" src="http://www.cppblog.com/Images/OutliningIndicators/ExpandedSubBlockStart.gif" align="top"><img id="Codehighlighter1_2389_4122_Closed_Image" style="display: none" src="http://www.cppblog.com/Images/OutliningIndicators/ContractedSubBlock.gif" align="top">&nbsp;&nbsp; </span> <span id="Codehighlighter1_2389_4122_Closed_Text" style="border-right: #808080 1px solid; border-top: #808080 1px solid; display: none; border-left: #808080 1px solid; border-bottom: #808080 1px solid; background-color: #ffffff"><img src="http://www.cppblog.com/Images/dot.gif"> </span><span id="Codehighlighter1_2389_4122_Open_Text"><span style="color: #000000">{<br><img src="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif" align="top">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span> <span style="color: #0000ff">if</span> <span style="color: #000000"> ((Accept </span> <span style="color: #000000">=</span> <span style="color: #000000"> WSAAccept(Listen, NULL, NULL, NULL, </span> <span style="color: #000000">0</span> <span style="color: #000000">)) </span> <span style="color: #000000">==</span> <span style="color: #000000"> SOCKET_ERROR)<br><img id="Codehighlighter1_2474_2574_Open_Image" src="http://www.cppblog.com/Images/OutliningIndicators/ExpandedSubBlockStart.gif" align="top"><img id="Codehighlighter1_2474_2574_Closed_Image" style="display: none" src="http://www.cppblog.com/Images/OutliningIndicators/ContractedSubBlock.gif" align="top">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span> <span id="Codehighlighter1_2474_2574_Closed_Text" style="border-right: #808080 1px solid; border-top: #808080 1px solid; display: none; border-left: #808080 1px solid; border-bottom: #808080 1px solid; background-color: #ffffff"><img src="http://www.cppblog.com/Images/dot.gif"> </span><span id="Codehighlighter1_2474_2574_Open_Text"><span style="color: #000000">{<br><img src="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif" align="top">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; printf(</span> <span style="color: #000000">"</span> <span style="color: #000000">WSAAccept() failed with error %d\n</span> <span style="color: #000000">"</span> <span style="color: #000000">, WSAGetLastError());<br><img src="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif" align="top">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span> <span style="color: #0000ff">return</span> <span style="color: #000000">;<br><img src="http://www.cppblog.com/Images/OutliningIndicators/ExpandedSubBlockEnd.gif" align="top">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }</span> </span><span style="color: #000000"><br><img src="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif" align="top"> <br><img src="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif" align="top">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span> <span style="color: #008000">//</span> <span style="color: #008000"> 创建一个关键项用于保存这个客户端的信息，用户接收发送的重叠结构，<br><img src="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif" align="top">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span> <span style="color: #008000">//</span> <span style="color: #008000"> 还有使用到的缓冲区</span> <span style="color: #008000"><br><img src="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif" align="top"> </span><span style="color: #000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span> <span style="color: #0000ff">if</span> <span style="color: #000000"> ((PerHandleData </span> <span style="color: #000000">=</span> <span style="color: #000000"> (LPPER_HANDLE_DATA) GlobalAlloc(GPTR, <br><img src="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif" align="top">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span> <span style="color: #0000ff">sizeof</span> <span style="color: #000000">(PER_HANDLE_DATA))) </span> <span style="color: #000000">==</span> <span style="color: #000000"> NULL)<br><img id="Codehighlighter1_2754_2853_Open_Image" src="http://www.cppblog.com/Images/OutliningIndicators/ExpandedSubBlockStart.gif" align="top"><img id="Codehighlighter1_2754_2853_Closed_Image" style="display: none" src="http://www.cppblog.com/Images/OutliningIndicators/ContractedSubBlock.gif" align="top">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span> <span id="Codehighlighter1_2754_2853_Closed_Text" style="border-right: #808080 1px solid; border-top: #808080 1px solid; display: none; border-left: #808080 1px solid; border-bottom: #808080 1px solid; background-color: #ffffff"><img src="http://www.cppblog.com/Images/dot.gif"> </span><span id="Codehighlighter1_2754_2853_Open_Text"><span style="color: #000000">{<br><img src="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif" align="top">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; printf(</span> <span style="color: #000000">"</span> <span style="color: #000000">GlobalAlloc() failed with error %d\n</span> <span style="color: #000000">"</span> <span style="color: #000000">, GetLastError());<br><img src="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif" align="top">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span> <span style="color: #0000ff">return</span> <span style="color: #000000">;<br><img src="http://www.cppblog.com/Images/OutliningIndicators/ExpandedSubBlockEnd.gif" align="top">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }</span> </span><span style="color: #000000"><br><img src="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif" align="top"> <br><img src="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif" align="top">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span> <span style="color: #008000">//</span> <span style="color: #008000"> Associate the accepted socket with the original completion port.</span> <span style="color: #008000"><br><img src="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif" align="top"> </span><span style="color: #000000"><br><img src="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif" align="top">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; printf(</span> <span style="color: #000000">"</span> <span style="color: #000000">Socket number %d connected\n</span> <span style="color: #000000">"</span> <span style="color: #000000">, Accept);<br><img src="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif" align="top">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; PerHandleData</span> <span style="color: #000000">-&gt;</span> <span style="color: #000000">Socket </span> <span style="color: #000000">=</span> <span style="color: #000000"> Accept;<br><img src="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif" align="top"><br><img src="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif" align="top">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span> <span style="color: #008000">//</span> <span style="color: #008000">与我们的创建的那个完成端口关联起来,将关键项也与指定的一个完成端口关联</span> <span style="color: #008000"><br><img src="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif" align="top"> </span><span style="color: #000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span> <span style="color: #0000ff">if</span> <span style="color: #000000"> (CreateIoCompletionPort((HANDLE) Accept, CompletionPort, (DWORD) PerHandleData,<br><img src="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif" align="top">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span> <span style="color: #000000">0</span> <span style="color: #000000">) </span> <span style="color: #000000">==</span> <span style="color: #000000"> NULL)<br><img id="Codehighlighter1_3185_3293_Open_Image" src="http://www.cppblog.com/Images/OutliningIndicators/ExpandedSubBlockStart.gif" align="top"><img id="Codehighlighter1_3185_3293_Closed_Image" style="display: none" src="http://www.cppblog.com/Images/OutliningIndicators/ContractedSubBlock.gif" align="top">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span> <span id="Codehighlighter1_3185_3293_Closed_Text" style="border-right: #808080 1px solid; border-top: #808080 1px solid; display: none; border-left: #808080 1px solid; border-bottom: #808080 1px solid; background-color: #ffffff"><img src="http://www.cppblog.com/Images/dot.gif"> </span><span id="Codehighlighter1_3185_3293_Open_Text"><span style="color: #000000">{<br><img src="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif" align="top">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; printf(</span> <span style="color: #000000">"</span> <span style="color: #000000">CreateIoCompletionPort failed with error %d\n</span> <span style="color: #000000">"</span> <span style="color: #000000">, GetLastError());<br><img src="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif" align="top">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span> <span style="color: #0000ff">return</span> <span style="color: #000000">;<br><img src="http://www.cppblog.com/Images/OutliningIndicators/ExpandedSubBlockEnd.gif" align="top">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }</span> </span><span style="color: #000000"><br><img src="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif" align="top"> <br><img src="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif" align="top">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span> <span style="color: #008000">//</span> <span style="color: #008000"> 投递一次接收，由于接收都需要使用这个函数来投递一个接收的准备</span> <span style="color: #008000"><br><img src="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif" align="top"> </span><span style="color: #000000"><br><img src="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif" align="top">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span> <span style="color: #0000ff">if</span> <span style="color: #000000"> ((PerIoData </span> <span style="color: #000000">=</span> <span style="color: #000000"> (LPPER_IO_OPERATION_DATA) GlobalAlloc(GPTR,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span> <span style="color: #0000ff">sizeof</span> <span style="color: #000000">(PER_IO_OPERATION_DATA))) </span> <span style="color: #000000">==</span> <span style="color: #000000"> NULL)<br><img id="Codehighlighter1_3460_3559_Open_Image" src="http://www.cppblog.com/Images/OutliningIndicators/ExpandedSubBlockStart.gif" align="top"><img id="Codehighlighter1_3460_3559_Closed_Image" style="display: none" src="http://www.cppblog.com/Images/OutliningIndicators/ContractedSubBlock.gif" align="top">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span> <span id="Codehighlighter1_3460_3559_Closed_Text" style="border-right: #808080 1px solid; border-top: #808080 1px solid; display: none; border-left: #808080 1px solid; border-bottom: #808080 1px solid; background-color: #ffffff"><img src="http://www.cppblog.com/Images/dot.gif"> </span><span id="Codehighlighter1_3460_3559_Open_Text"><span style="color: #000000">{<br><img src="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif" align="top">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; printf(</span> <span style="color: #000000">"</span> <span style="color: #000000">GlobalAlloc() failed with error %d\n</span> <span style="color: #000000">"</span> <span style="color: #000000">, GetLastError());<br><img src="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif" align="top">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span> <span style="color: #0000ff">return</span> <span style="color: #000000">;<br><img src="http://www.cppblog.com/Images/OutliningIndicators/ExpandedSubBlockEnd.gif" align="top">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }</span> </span><span style="color: #000000"><br><img src="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif" align="top"> <br><img src="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif" align="top">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ZeroMemory(</span> <span style="color: #000000">&amp;</span> <span style="color: #000000">(PerIoData</span> <span style="color: #000000">-&gt;</span> <span style="color: #000000">Overlapped), </span> <span style="color: #0000ff">sizeof</span> <span style="color: #000000">(OVERLAPPED));<br><img src="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif" align="top">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; PerIoData</span> <span style="color: #000000">-&gt;</span> <span style="color: #000000">BytesSEND </span> <span style="color: #000000">=</span> <span style="color: #000000">&nbsp;</span> <span style="color: #000000">0</span> <span style="color: #000000">;<br><img src="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif" align="top">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; PerIoData</span> <span style="color: #000000">-&gt;</span> <span style="color: #000000">BytesRECV </span> <span style="color: #000000">=</span> <span style="color: #000000">&nbsp;</span> <span style="color: #000000">0</span> <span style="color: #000000">;<br><img src="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif" align="top">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; PerIoData</span> <span style="color: #000000">-&gt;</span> <span style="color: #000000">DataBuf.len </span> <span style="color: #000000">=</span> <span style="color: #000000"> DATA_BUFSIZE;<br><img src="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif" align="top">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; PerIoData</span> <span style="color: #000000">-&gt;</span> <span style="color: #000000">DataBuf.buf </span> <span style="color: #000000">=</span> <span style="color: #000000"> PerIoData</span> <span style="color: #000000">-&gt;</span> <span style="color: #000000">Buffer;<br><img src="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif" align="top"><br><img src="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif" align="top">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Flags </span> <span style="color: #000000">=</span> <span style="color: #000000">&nbsp;</span> <span style="color: #000000">0</span> <span style="color: #000000">;<br><img src="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif" align="top">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span> <span style="color: #0000ff">if</span> <span style="color: #000000"> (WSARecv(Accept, </span> <span style="color: #000000">&amp;</span> <span style="color: #000000">(PerIoData</span> <span style="color: #000000">-&gt;</span> <span style="color: #000000">DataBuf), </span> <span style="color: #000000">1</span> <span style="color: #000000">, </span> <span style="color: #000000">&amp;</span> <span style="color: #000000">RecvBytes, </span> <span style="color: #000000">&amp;</span> <span style="color: #000000">Flags,<br><img src="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif" align="top">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span> <span style="color: #000000">&amp;</span> <span style="color: #000000">(PerIoData</span> <span style="color: #000000">-&gt;</span> <span style="color: #000000">Overlapped), NULL) </span> <span style="color: #000000">==</span> <span style="color: #000000"> SOCKET_ERROR)<br><img id="Codehighlighter1_3939_4117_Open_Image" src="http://www.cppblog.com/Images/OutliningIndicators/ExpandedSubBlockStart.gif" align="top"><img id="Codehighlighter1_3939_4117_Closed_Image" style="display: none" src="http://www.cppblog.com/Images/OutliningIndicators/ContractedSubBlock.gif" align="top">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span> <span id="Codehighlighter1_3939_4117_Closed_Text" style="border-right: #808080 1px solid; border-top: #808080 1px solid; display: none; border-left: #808080 1px solid; border-bottom: #808080 1px solid; background-color: #ffffff"><img src="http://www.cppblog.com/Images/dot.gif"> </span><span id="Codehighlighter1_3939_4117_Open_Text"><span style="color: #000000">{<br><img src="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif" align="top">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span> <span style="color: #0000ff">if</span> <span style="color: #000000"> (WSAGetLastError() </span> <span style="color: #000000">!=</span> <span style="color: #000000"> ERROR_IO_PENDING)<br><img id="Codehighlighter1_4002_4109_Open_Image" src="http://www.cppblog.com/Images/OutliningIndicators/ExpandedSubBlockStart.gif" align="top"><img id="Codehighlighter1_4002_4109_Closed_Image" style="display: none" src="http://www.cppblog.com/Images/OutliningIndicators/ContractedSubBlock.gif" align="top">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span> <span id="Codehighlighter1_4002_4109_Closed_Text" style="border-right: #808080 1px solid; border-top: #808080 1px solid; display: none; border-left: #808080 1px solid; border-bottom: #808080 1px solid; background-color: #ffffff"><img src="http://www.cppblog.com/Images/dot.gif"> </span><span id="Codehighlighter1_4002_4109_Open_Text"><span style="color: #000000">{<br><img src="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif" align="top">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; printf(</span> <span style="color: #000000">"</span> <span style="color: #000000">WSARecv() failed with error %d\n</span> <span style="color: #000000">"</span> <span style="color: #000000">, WSAGetLastError());<br><img src="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif" align="top">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span> <span style="color: #0000ff">return</span> <span style="color: #000000">;<br><img src="http://www.cppblog.com/Images/OutliningIndicators/ExpandedSubBlockEnd.gif" align="top">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }</span> </span><span style="color: #000000"><br><img src="http://www.cppblog.com/Images/OutliningIndicators/ExpandedSubBlockEnd.gif" align="top">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }</span> </span><span style="color: #000000"><br><img src="http://www.cppblog.com/Images/OutliningIndicators/ExpandedSubBlockEnd.gif" align="top">&nbsp;&nbsp; }</span> </span><span style="color: #000000"><br><img src="http://www.cppblog.com/Images/OutliningIndicators/ExpandedBlockEnd.gif" align="top">}</span> </span><span style="color: #000000"><br><img src="http://www.cppblog.com/Images/OutliningIndicators/None.gif" align="top"> </span><span style="color: #008000">//</span> <span style="color: #008000">工作线程</span> <span style="color: #008000"><br><img src="http://www.cppblog.com/Images/OutliningIndicators/None.gif" align="top"> </span><span style="color: #000000">DWORD WINAPI ServerWorkerThread(LPVOID CompletionPortID)<br><img id="Codehighlighter1_4190_6936_Open_Image" src="http://www.cppblog.com/Images/OutliningIndicators/ExpandedBlockStart.gif" align="top"><img id="Codehighlighter1_4190_6936_Closed_Image" style="display: none" src="http://www.cppblog.com/Images/OutliningIndicators/ContractedBlock.gif" align="top"></span> <span id="Codehighlighter1_4190_6936_Closed_Text" style="border-right: #808080 1px solid; border-top: #808080 1px solid; display: none; border-left: #808080 1px solid; border-bottom: #808080 1px solid; background-color: #ffffff"><img src="http://www.cppblog.com/Images/dot.gif"> </span><span id="Codehighlighter1_4190_6936_Open_Text"><span style="color: #000000">{<br><img src="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif" align="top">&nbsp;&nbsp; HANDLE CompletionPort </span> <span style="color: #000000">=</span> <span style="color: #000000"> (HANDLE) CompletionPortID;<br><img src="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif" align="top">&nbsp;&nbsp; DWORD BytesTransferred;<br><img src="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif" align="top">&nbsp;&nbsp; LPOVERLAPPED Overlapped;<br><img src="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif" align="top">&nbsp;&nbsp; LPPER_HANDLE_DATA PerHandleData;<br><img src="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif" align="top">&nbsp;&nbsp; LPPER_IO_OPERATION_DATA PerIoData;<br><img src="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif" align="top">&nbsp;&nbsp; DWORD SendBytes, RecvBytes;<br><img src="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif" align="top">&nbsp;&nbsp; DWORD Flags;<br><img src="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif" align="top">&nbsp;&nbsp; <br><img src="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif" align="top">&nbsp;&nbsp; </span> <span style="color: #0000ff">while</span> <span style="color: #000000">(TRUE)<br><img id="Codehighlighter1_4444_6934_Open_Image" src="http://www.cppblog.com/Images/OutliningIndicators/ExpandedSubBlockStart.gif" align="top"><img id="Codehighlighter1_4444_6934_Closed_Image" style="display: none" src="http://www.cppblog.com/Images/OutliningIndicators/ContractedSubBlock.gif" align="top">&nbsp;&nbsp; </span> <span id="Codehighlighter1_4444_6934_Closed_Text" style="border-right: #808080 1px solid; border-top: #808080 1px solid; display: none; border-left: #808080 1px solid; border-bottom: #808080 1px solid; background-color: #ffffff"><img src="http://www.cppblog.com/Images/dot.gif"> </span><span id="Codehighlighter1_4444_6934_Open_Text"><span style="color: #000000">{<br><img src="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif" align="top">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span> <span style="color: #008000">//</span> <span style="color: #008000">完成端口有消息来了</span> <span style="color: #008000"><br><img src="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif" align="top"> </span><span style="color: #000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span> <span style="color: #0000ff">if</span> <span style="color: #000000"> (GetQueuedCompletionStatus(CompletionPort, </span> <span style="color: #000000">&amp;</span> <span style="color: #000000">BytesTransferred,<br><img src="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif" align="top">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (LPDWORD)</span> <span style="color: #000000">&amp;</span> <span style="color: #000000">PerHandleData, (LPOVERLAPPED </span> <span style="color: #000000">*</span> <span style="color: #000000">) </span> <span style="color: #000000">&amp;</span> <span style="color: #000000">PerIoData, INFINITE) </span> <span style="color: #000000">==</span> <span style="color: #000000">&nbsp;</span> <span style="color: #000000">0</span> <span style="color: #000000">)<br><img id="Codehighlighter1_4620_4733_Open_Image" src="http://www.cppblog.com/Images/OutliningIndicators/ExpandedSubBlockStart.gif" align="top"><img id="Codehighlighter1_4620_4733_Closed_Image" style="display: none" src="http://www.cppblog.com/Images/OutliningIndicators/ContractedSubBlock.gif" align="top">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span> <span id="Codehighlighter1_4620_4733_Closed_Text" style="border-right: #808080 1px solid; border-top: #808080 1px solid; display: none; border-left: #808080 1px solid; border-bottom: #808080 1px solid; background-color: #ffffff"><img src="http://www.cppblog.com/Images/dot.gif"> </span><span id="Codehighlighter1_4620_4733_Open_Text"><span style="color: #000000">{<br><img src="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif" align="top">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; printf(</span> <span style="color: #000000">"</span> <span style="color: #000000">GetQueuedCompletionStatus failed with error %d\n</span> <span style="color: #000000">"</span> <span style="color: #000000">, GetLastError());<br><img src="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif" align="top">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span> <span style="color: #0000ff">return</span> <span style="color: #000000">&nbsp;</span> <span style="color: #000000">0</span> <span style="color: #000000">;<br><img src="http://www.cppblog.com/Images/OutliningIndicators/ExpandedSubBlockEnd.gif" align="top">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }</span> </span><span style="color: #000000"><br><img src="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif" align="top"> <br><img src="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif" align="top"> <br><img src="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif" align="top">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span> <span style="color: #008000">//</span> <span style="color: #008000">是不是有人退出了</span> <span style="color: #008000"><br><img src="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif" align="top"> </span><span style="color: #000000"><br><img src="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif" align="top">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span> <span style="color: #0000ff">if</span> <span style="color: #000000"> (BytesTransferred </span> <span style="color: #000000">==</span> <span style="color: #000000">&nbsp;</span> <span style="color: #000000">0</span> <span style="color: #000000">)<br><img id="Codehighlighter1_4794_5144_Open_Image" src="http://www.cppblog.com/Images/OutliningIndicators/ExpandedSubBlockStart.gif" align="top"><img id="Codehighlighter1_4794_5144_Closed_Image" style="display: none" src="http://www.cppblog.com/Images/OutliningIndicators/ContractedSubBlock.gif" align="top">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span> <span id="Codehighlighter1_4794_5144_Closed_Text" style="border-right: #808080 1px solid; border-top: #808080 1px solid; display: none; border-left: #808080 1px solid; border-bottom: #808080 1px solid; background-color: #ffffff"><img src="http://www.cppblog.com/Images/dot.gif"> </span><span id="Codehighlighter1_4794_5144_Open_Text"><span style="color: #000000">{<br><img src="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif" align="top">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; printf(</span> <span style="color: #000000">"</span> <span style="color: #000000">Closing socket %d\n</span> <span style="color: #000000">"</span> <span style="color: #000000">, PerHandleData</span> <span style="color: #000000">-&gt;</span> <span style="color: #000000">Socket);<br><img src="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif" align="top"><br><img src="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif" align="top">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span> <span style="color: #0000ff">if</span> <span style="color: #000000"> (closesocket(PerHandleData</span> <span style="color: #000000">-&gt;</span> <span style="color: #000000">Socket) </span> <span style="color: #000000">==</span> <span style="color: #000000"> SOCKET_ERROR)<br><img id="Codehighlighter1_4935_5048_Open_Image" src="http://www.cppblog.com/Images/OutliningIndicators/ExpandedSubBlockStart.gif" align="top"><img id="Codehighlighter1_4935_5048_Closed_Image" style="display: none" src="http://www.cppblog.com/Images/OutliningIndicators/ContractedSubBlock.gif" align="top">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span> <span id="Codehighlighter1_4935_5048_Closed_Text" style="border-right: #808080 1px solid; border-top: #808080 1px solid; display: none; border-left: #808080 1px solid; border-bottom: #808080 1px solid; background-color: #ffffff"><img src="http://www.cppblog.com/Images/dot.gif"> </span><span id="Codehighlighter1_4935_5048_Open_Text"><span style="color: #000000">{<br><img src="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif" align="top">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; printf(</span> <span style="color: #000000">"</span> <span style="color: #000000">closesocket() failed with error %d\n</span> <span style="color: #000000">"</span> <span style="color: #000000">, WSAGetLastError());<br><img src="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif" align="top">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span> <span style="color: #0000ff">return</span> <span style="color: #000000">&nbsp;</span> <span style="color: #000000">0</span> <span style="color: #000000">;<br><img src="http://www.cppblog.com/Images/OutliningIndicators/ExpandedSubBlockEnd.gif" align="top">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }</span> </span><span style="color: #000000"><br><img src="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif" align="top"> <br><img src="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif" align="top">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; GlobalFree(PerHandleData);<br><img src="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif" align="top">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; GlobalFree(PerIoData);<br><img src="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif" align="top">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span> <span style="color: #0000ff">continue</span> <span style="color: #000000">;<br><img src="http://www.cppblog.com/Images/OutliningIndicators/ExpandedSubBlockEnd.gif" align="top">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }</span> </span><span style="color: #000000"><br><img src="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif" align="top"> <br><img src="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif" align="top">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span> <span style="color: #008000">//<br><img src="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif" align="top"></span> <span style="color: #000000"><br><img src="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif" align="top">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span> <span style="color: #0000ff">if</span> <span style="color: #000000"> (PerIoData</span> <span style="color: #000000">-&gt;</span> <span style="color: #000000">BytesRECV </span> <span style="color: #000000">==</span> <span style="color: #000000">&nbsp;</span> <span style="color: #000000">0</span> <span style="color: #000000">)<br><img id="Codehighlighter1_5200_5293_Open_Image" src="http://www.cppblog.com/Images/OutliningIndicators/ExpandedSubBlockStart.gif" align="top"><img id="Codehighlighter1_5200_5293_Closed_Image" style="display: none" src="http://www.cppblog.com/Images/OutliningIndicators/ContractedSubBlock.gif" align="top">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span> <span id="Codehighlighter1_5200_5293_Closed_Text" style="border-right: #808080 1px solid; border-top: #808080 1px solid; display: none; border-left: #808080 1px solid; border-bottom: #808080 1px solid; background-color: #ffffff"><img src="http://www.cppblog.com/Images/dot.gif"> </span><span id="Codehighlighter1_5200_5293_Open_Text"><span style="color: #000000">{<br><img src="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif" align="top">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; PerIoData</span> <span style="color: #000000">-&gt;</span> <span style="color: #000000">BytesRECV </span> <span style="color: #000000">=</span> <span style="color: #000000"> BytesTransferred;<br><img src="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif" align="top">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; PerIoData</span> <span style="color: #000000">-&gt;</span> <span style="color: #000000">BytesSEND </span> <span style="color: #000000">=</span> <span style="color: #000000">&nbsp;</span> <span style="color: #000000">0</span> <span style="color: #000000">;<br><img src="http://www.cppblog.com/Images/OutliningIndicators/ExpandedSubBlockEnd.gif" align="top">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }</span> </span><span style="color: #000000"><br><img src="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif" align="top">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span> <span style="color: #0000ff">else</span> <span style="color: #000000"><br><img id="Codehighlighter1_5312_5371_Open_Image" src="http://www.cppblog.com/Images/OutliningIndicators/ExpandedSubBlockStart.gif" align="top"> <img id="Codehighlighter1_5312_5371_Closed_Image" style="display: none" src="http://www.cppblog.com/Images/OutliningIndicators/ContractedSubBlock.gif" align="top">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span> <span id="Codehighlighter1_5312_5371_Closed_Text" style="border-right: #808080 1px solid; border-top: #808080 1px solid; display: none; border-left: #808080 1px solid; border-bottom: #808080 1px solid; background-color: #ffffff"><img src="http://www.cppblog.com/Images/dot.gif"> </span><span id="Codehighlighter1_5312_5371_Open_Text"><span style="color: #000000">{<br><img src="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif" align="top">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; PerIoData</span> <span style="color: #000000">-&gt;</span> <span style="color: #000000">BytesSEND </span> <span style="color: #000000">+=</span> <span style="color: #000000"> BytesTransferred;<br><img src="http://www.cppblog.com/Images/OutliningIndicators/ExpandedSubBlockEnd.gif" align="top">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }</span> </span><span style="color: #000000"><br><img src="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif" align="top"> <br><img src="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif" align="top">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span> <span style="color: #0000ff">if</span> <span style="color: #000000"> (PerIoData</span> <span style="color: #000000">-&gt;</span> <span style="color: #000000">BytesRECV </span> <span style="color: #000000">&gt;</span> <span style="color: #000000"> PerIoData</span> <span style="color: #000000">-&gt;</span> <span style="color: #000000">BytesSEND)<br><img id="Codehighlighter1_5435_6230_Open_Image" src="http://www.cppblog.com/Images/OutliningIndicators/ExpandedSubBlockStart.gif" align="top"><img id="Codehighlighter1_5435_6230_Closed_Image" style="display: none" src="http://www.cppblog.com/Images/OutliningIndicators/ContractedSubBlock.gif" align="top">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span> <span id="Codehighlighter1_5435_6230_Closed_Text" style="border-right: #808080 1px solid; border-top: #808080 1px solid; display: none; border-left: #808080 1px solid; border-bottom: #808080 1px solid; background-color: #ffffff"><img src="http://www.cppblog.com/Images/dot.gif"> </span><span id="Codehighlighter1_5435_6230_Open_Text"><span style="color: #000000">{<br><img src="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif" align="top"><br><img src="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif" align="top">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span> <span style="color: #008000">//</span> <span style="color: #008000"> Post another WSASend() request.<br><img src="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif" align="top">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span> <span style="color: #008000">//</span> <span style="color: #008000"> Since WSASend() is not gauranteed to send all of the bytes requested,<br><img src="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif" align="top">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span> <span style="color: #008000">//</span> <span style="color: #008000"> continue posting WSASend() calls until all received bytes are sent.</span> <span style="color: #008000"><br><img src="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif" align="top"> </span><span style="color: #000000"><br><img src="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif" align="top">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ZeroMemory(</span> <span style="color: #000000">&amp;</span> <span style="color: #000000">(PerIoData</span> <span style="color: #000000">-&gt;</span> <span style="color: #000000">Overlapped), </span> <span style="color: #0000ff">sizeof</span> <span style="color: #000000">(OVERLAPPED));<br><img src="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif" align="top"><br><img src="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif" align="top">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; PerIoData</span> <span style="color: #000000">-&gt;</span> <span style="color: #000000">DataBuf.buf </span> <span style="color: #000000">=</span> <span style="color: #000000"> PerIoData</span> <span style="color: #000000">-&gt;</span> <span style="color: #000000">Buffer </span> <span style="color: #000000">+</span> <span style="color: #000000"> PerIoData</span> <span style="color: #000000">-&gt;</span> <span style="color: #000000">BytesSEND;<br><img src="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif" align="top">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; PerIoData</span> <span style="color: #000000">-&gt;</span> <span style="color: #000000">DataBuf.len </span> <span style="color: #000000">=</span> <span style="color: #000000"> PerIoData</span> <span style="color: #000000">-&gt;</span> <span style="color: #000000">BytesRECV </span> <span style="color: #000000">-</span> <span style="color: #000000"> PerIoData</span> <span style="color: #000000">-&gt;</span> <span style="color: #000000">BytesSEND;<br><img src="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif" align="top"><br><img src="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif" align="top">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span> <span style="color: #0000ff">if</span> <span style="color: #000000"> (WSASend(PerHandleData</span> <span style="color: #000000">-&gt;</span> <span style="color: #000000">Socket, </span> <span style="color: #000000">&amp;</span> <span style="color: #000000">(PerIoData</span> <span style="color: #000000">-&gt;</span> <span style="color: #000000">DataBuf), </span> <span style="color: #000000">1</span> <span style="color: #000000">, </span> <span style="color: #000000">&amp;</span> <span style="color: #000000">SendBytes, </span> <span style="color: #000000">0</span> <span style="color: #000000">,<br><img src="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif" align="top">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span> <span style="color: #000000">&amp;</span> <span style="color: #000000">(PerIoData</span> <span style="color: #000000">-&gt;</span> <span style="color: #000000">Overlapped), NULL) </span> <span style="color: #000000">==</span> <span style="color: #000000"> SOCKET_ERROR)<br><img id="Codehighlighter1_6024_6222_Open_Image" src="http://www.cppblog.com/Images/OutliningIndicators/ExpandedSubBlockStart.gif" align="top"><img id="Codehighlighter1_6024_6222_Closed_Image" style="display: none" src="http://www.cppblog.com/Images/OutliningIndicators/ContractedSubBlock.gif" align="top">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span> <span id="Codehighlighter1_6024_6222_Closed_Text" style="border-right: #808080 1px solid; border-top: #808080 1px solid; display: none; border-left: #808080 1px solid; border-bottom: #808080 1px solid; background-color: #ffffff"><img src="http://www.cppblog.com/Images/dot.gif"> </span><span id="Codehighlighter1_6024_6222_Open_Text"><span style="color: #000000">{<br><img src="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif" align="top">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span> <span style="color: #0000ff">if</span> <span style="color: #000000"> (WSAGetLastError() </span> <span style="color: #000000">!=</span> <span style="color: #000000"> ERROR_IO_PENDING)<br><img id="Codehighlighter1_6093_6211_Open_Image" src="http://www.cppblog.com/Images/OutliningIndicators/ExpandedSubBlockStart.gif" align="top"><img id="Codehighlighter1_6093_6211_Closed_Image" style="display: none" src="http://www.cppblog.com/Images/OutliningIndicators/ContractedSubBlock.gif" align="top">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span> <span id="Codehighlighter1_6093_6211_Closed_Text" style="border-right: #808080 1px solid; border-top: #808080 1px solid; display: none; border-left: #808080 1px solid; border-bottom: #808080 1px solid; background-color: #ffffff"><img src="http://www.cppblog.com/Images/dot.gif"> </span><span id="Codehighlighter1_6093_6211_Open_Text"><span style="color: #000000">{<br><img src="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif" align="top">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; printf(</span> <span style="color: #000000">"</span> <span style="color: #000000">WSASend() failed with error %d\n</span> <span style="color: #000000">"</span> <span style="color: #000000">, WSAGetLastError());<br><img src="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif" align="top">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span> <span style="color: #0000ff">return</span> <span style="color: #000000">&nbsp;</span> <span style="color: #000000">0</span> <span style="color: #000000">;<br><img src="http://www.cppblog.com/Images/OutliningIndicators/ExpandedSubBlockEnd.gif" align="top">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }</span> </span><span style="color: #000000"><br><img src="http://www.cppblog.com/Images/OutliningIndicators/ExpandedSubBlockEnd.gif" align="top">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }</span> </span><span style="color: #000000"><br><img src="http://www.cppblog.com/Images/OutliningIndicators/ExpandedSubBlockEnd.gif" align="top">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }</span> </span><span style="color: #000000"><br><img src="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif" align="top">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span> <span style="color: #0000ff">else</span> <span style="color: #000000"><br><img id="Codehighlighter1_6249_6929_Open_Image" src="http://www.cppblog.com/Images/OutliningIndicators/ExpandedSubBlockStart.gif" align="top"> <img id="Codehighlighter1_6249_6929_Closed_Image" style="display: none" src="http://www.cppblog.com/Images/OutliningIndicators/ContractedSubBlock.gif" align="top">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span> <span id="Codehighlighter1_6249_6929_Closed_Text" style="border-right: #808080 1px solid; border-top: #808080 1px solid; display: none; border-left: #808080 1px solid; border-bottom: #808080 1px solid; background-color: #ffffff"><img src="http://www.cppblog.com/Images/dot.gif"> </span><span id="Codehighlighter1_6249_6929_Open_Text"><span style="color: #000000">{<br><img src="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif" align="top">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; PerIoData</span> <span style="color: #000000">-&gt;</span> <span style="color: #000000">BytesRECV </span> <span style="color: #000000">=</span> <span style="color: #000000">&nbsp;</span> <span style="color: #000000">0</span> <span style="color: #000000">;<br><img src="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif" align="top"><br><img src="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif" align="top">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span> <span style="color: #008000">//</span> <span style="color: #008000"> Now that there are no more bytes to send post another WSARecv() request.</span> <span style="color: #008000"><br><img src="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif" align="top"> </span><span style="color: #000000"><br><img src="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif" align="top">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Flags </span> <span style="color: #000000">=</span> <span style="color: #000000">&nbsp;</span> <span style="color: #000000">0</span> <span style="color: #000000">;<br><img src="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif" align="top">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ZeroMemory(</span> <span style="color: #000000">&amp;</span> <span style="color: #000000">(PerIoData</span> <span style="color: #000000">-&gt;</span> <span style="color: #000000">Overlapped), </span> <span style="color: #0000ff">sizeof</span> <span style="color: #000000">(OVERLAPPED));<br><img src="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif" align="top"><br><img src="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif" align="top">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; PerIoData</span> <span style="color: #000000">-&gt;</span> <span style="color: #000000">DataBuf.len </span> <span style="color: #000000">=</span> <span style="color: #000000"> DATA_BUFSIZE;<br><img src="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif" align="top">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; PerIoData</span> <span style="color: #000000">-&gt;</span> <span style="color: #000000">DataBuf.buf </span> <span style="color: #000000">=</span> <span style="color: #000000"> PerIoData</span> <span style="color: #000000">-&gt;</span> <span style="color: #000000">Buffer;<br><img src="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif" align="top"><br><img src="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif" align="top">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span> <span style="color: #0000ff">if</span> <span style="color: #000000"> (WSARecv(PerHandleData</span> <span style="color: #000000">-&gt;</span> <span style="color: #000000">Socket, </span> <span style="color: #000000">&amp;</span> <span style="color: #000000">(PerIoData</span> <span style="color: #000000">-&gt;</span> <span style="color: #000000">DataBuf), </span> <span style="color: #000000">1</span> <span style="color: #000000">, </span> <span style="color: #000000">&amp;</span> <span style="color: #000000">RecvBytes, </span> <span style="color: #000000">&amp;</span> <span style="color: #000000">Flags,<br><img src="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif" align="top">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span> <span style="color: #000000">&amp;</span> <span style="color: #000000">(PerIoData</span> <span style="color: #000000">-&gt;</span> <span style="color: #000000">Overlapped), NULL) </span> <span style="color: #000000">==</span> <span style="color: #000000"> SOCKET_ERROR)<br><img id="Codehighlighter1_6723_6921_Open_Image" src="http://www.cppblog.com/Images/OutliningIndicators/ExpandedSubBlockStart.gif" align="top"><img id="Codehighlighter1_6723_6921_Closed_Image" style="display: none" src="http://www.cppblog.com/Images/OutliningIndicators/ContractedSubBlock.gif" align="top">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span> <span id="Codehighlighter1_6723_6921_Closed_Text" style="border-right: #808080 1px solid; border-top: #808080 1px solid; display: none; border-left: #808080 1px solid; border-bottom: #808080 1px solid; background-color: #ffffff"><img src="http://www.cppblog.com/Images/dot.gif"> </span><span id="Codehighlighter1_6723_6921_Open_Text"><span style="color: #000000">{<br><img src="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif" align="top">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span> <span style="color: #0000ff">if</span> <span style="color: #000000"> (WSAGetLastError() </span> <span style="color: #000000">!=</span> <span style="color: #000000"> ERROR_IO_PENDING)<br><img id="Codehighlighter1_6792_6910_Open_Image" src="http://www.cppblog.com/Images/OutliningIndicators/ExpandedSubBlockStart.gif" align="top"><img id="Codehighlighter1_6792_6910_Closed_Image" style="display: none" src="http://www.cppblog.com/Images/OutliningIndicators/ContractedSubBlock.gif" align="top">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span> <span id="Codehighlighter1_6792_6910_Closed_Text" style="border-right: #808080 1px solid; border-top: #808080 1px solid; display: none; border-left: #808080 1px solid; border-bottom: #808080 1px solid; background-color: #ffffff"><img src="http://www.cppblog.com/Images/dot.gif"> </span><span id="Codehighlighter1_6792_6910_Open_Text"><span style="color: #000000">{<br><img src="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif" align="top">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; printf(</span> <span style="color: #000000">"</span> <span style="color: #000000">WSARecv() failed with error %d\n</span> <span style="color: #000000">"</span> <span style="color: #000000">, WSAGetLastError());<br><img src="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif" align="top">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span> <span style="color: #0000ff">return</span> <span style="color: #000000">&nbsp;</span> <span style="color: #000000">0</span> <span style="color: #000000">;<br><img src="http://www.cppblog.com/Images/OutliningIndicators/ExpandedSubBlockEnd.gif" align="top">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }</span> </span><span style="color: #000000"><br><img src="http://www.cppblog.com/Images/OutliningIndicators/ExpandedSubBlockEnd.gif" align="top">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }</span> </span><span style="color: #000000"><br><img src="http://www.cppblog.com/Images/OutliningIndicators/ExpandedSubBlockEnd.gif" align="top">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }</span> </span><span style="color: #000000"><br><img src="http://www.cppblog.com/Images/OutliningIndicators/ExpandedSubBlockEnd.gif" align="top">&nbsp;&nbsp; }</span> </span><span style="color: #000000"><br><img src="http://www.cppblog.com/Images/OutliningIndicators/ExpandedBlockEnd.gif" align="top">}</span> </span><span style="color: #000000"><br><img src="http://www.cppblog.com/Images/OutliningIndicators/None.gif" align="top"> </span></div></div></div></div></form>
+    
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="followme">
+  <span>Welcome to my other publishing channels</span>
+
+  <div class="social-list">
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="https://www.facebook.com/rise.worlds">
+            <span class="icon">
+              <i class="fab fa-facebook"></i>
+            </span>
+
+            <span class="label">FB Page</span>
+          </a>
+      </div>
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="https://twitter.com/riseworlds">
+            <span class="icon">
+              <i class="fab fa-twitter"></i>
+            </span>
+
+            <span class="label">Twitter</span>
+          </a>
+      </div>
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="https://t.me/riseworlds">
+            <span class="icon">
+              <i class="fab fa-telegram"></i>
+            </span>
+
+            <span class="label">Telegram</span>
+          </a>
+      </div>
+  </div>
+</div>
+
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2007/11/10/TinyXML%E4%B8%AD%E6%96%87%E6%8C%87%E5%8D%97/" rel="prev" title="TinyXML中文指南">
+                  <i class="fa fa-angle-left"></i> TinyXML中文指南
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2007/11/10/%E5%9C%A8WinSock%E4%B8%8A%E4%BD%BF%E7%94%A8IOCP/" rel="next" title="在WinSock上使用IOCP">
+                  在WinSock上使用IOCP <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">豫ICP备2021009490号 </a>
+  </div>
+<div class="copyright">
+<a href="https://icp.gov.moe/?keyword=20233669" target="_blank">萌ICP备20233669号</a>
+</div>
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">rise</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="reading-progress-bar"></div>
+
+  <a href="https://github.com/rise-worlds" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://unpkg.com/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@next-theme/pjax@0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script><script src="/js/pjax.js"></script>
+
+  
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://unpkg.com/mermaid@10.7.0/dist/mermaid.min.js","integrity":"sha256-TtLOdUA8mstPoO6sGvHIGx2ceXrrX4KgIItO06XOn8A="}}</script>
+  <script src="/js/third-party/tags/mermaid.js"></script>
+
+
+
+
+
+  
+
+
+
+
+  <script src="https://unpkg.com/quicklink@2.3.0/dist/quicklink.umd.js" integrity="sha256-yvJQOINiH9fWemHn0vCA5lsHWJaHs6/ZmO+1Ft04SvM=" crossorigin="anonymous"></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":true,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"https://rise-worlds.github.io/2007/11/10/iocp%E8%BF%9B%E8%A1%8CSOCKET%E9%80%9A%E4%BF%A1(%E8%BD%AC%E8%BD%BD)/"}</script>
+  <script src="/js/third-party/quicklink.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://unpkg.com/@fortawesome/fontawesome-free@6.5.1/css/all.min.css" integrity="sha256-wiz7ZSCn/btzhjKDQBms9Hx4sSeUYsDrTLg7roPstac=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://unpkg.com/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"rise-worlds.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.19.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="设置数据格式每种设备都有一种用于读取数据的特定数据格式，需要考虑的东西也很多，包括键、鼠标按键、轴等。因此要使程序从设备读取数据，首先必须告诉DirectInput读取这种数据所采用的格式。通过 IDirectInputDevice8::SetDataFormat函数即可满足上述要求。Sets the data format for the Microsoft DirectInput device">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用DirectInput进行交互（2）">
+<meta property="og:url" content="https://rise-worlds.github.io/2007/07/24/%E4%BD%BF%E7%94%A8DirectInput%E8%BF%9B%E8%A1%8C%E4%BA%A4%E4%BA%92%EF%BC%882%EF%BC%89/index.html">
+<meta property="og:site_name" content="Rise&#39;blogs">
+<meta property="og:description" content="设置数据格式每种设备都有一种用于读取数据的特定数据格式，需要考虑的东西也很多，包括键、鼠标按键、轴等。因此要使程序从设备读取数据，首先必须告诉DirectInput读取这种数据所采用的格式。通过 IDirectInputDevice8::SetDataFormat函数即可满足上述要求。Sets the data format for the Microsoft DirectInput device">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2007-07-24T21:50:00.000Z">
+<meta property="article:modified_time" content="2007-08-27T17:20:00.000Z">
+<meta property="article:author" content="rise">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://rise-worlds.github.io/2007/07/24/%E4%BD%BF%E7%94%A8DirectInput%E8%BF%9B%E8%A1%8C%E4%BA%A4%E4%BA%92%EF%BC%882%EF%BC%89/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://rise-worlds.github.io/2007/07/24/%E4%BD%BF%E7%94%A8DirectInput%E8%BF%9B%E8%A1%8C%E4%BA%A4%E4%BA%92%EF%BC%882%EF%BC%89/","path":"2007/07/24/使用DirectInput进行交互（2）/","title":"使用DirectInput进行交互（2）"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>使用DirectInput进行交互（2） | Rise'blogs</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Rise'blogs</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li><li class="menu-item menu-item-sitemap"><a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>Sitemap</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="rise"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">rise</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">657</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">46</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">77</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="mailto:rise.worlds@outlook.com" title="E-Mail → mailto:rise.worlds@outlook.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://github.com/rise-worlds" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;rise-worlds" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://x.com/riseworlds" title="Twitter → https:&#x2F;&#x2F;x.com&#x2F;riseworlds" rel="noopener me" target="_blank"><i class="fab fa-twitter fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.facebook.com/rise.worlds" title="FB Page → https:&#x2F;&#x2F;www.facebook.com&#x2F;rise.worlds" rel="noopener me" target="_blank"><i class="fab fa-facebook fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.youtube.com/@YiXuan" title="YouTube → https:&#x2F;&#x2F;www.youtube.com&#x2F;@YiXuan" rel="noopener me" target="_blank"><i class="fab fa-youtube fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.instagram.com/rise.worlds/" title="Instagram → https:&#x2F;&#x2F;www.instagram.com&#x2F;rise.worlds&#x2F;" rel="noopener me" target="_blank"><i class="fab fa-instagram fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://t.me/riseworlds" title="Telegram → https:&#x2F;&#x2F;t.me&#x2F;riseworlds" rel="noopener me" target="_blank"><i class="fab fa-telegram fa-fw"></i></a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="Back to top">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+          Links
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <a href="https://www.cnblogs.com/flying_bat" title="https:&#x2F;&#x2F;www.cnblogs.com&#x2F;flying_bat" rel="noopener" target="_blank">my cnblogs</a>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://rise-worlds.github.io/2007/07/24/%E4%BD%BF%E7%94%A8DirectInput%E8%BF%9B%E8%A1%8C%E4%BA%A4%E4%BA%92%EF%BC%882%EF%BC%89/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="rise">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Rise'blogs">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="使用DirectInput进行交互（2） | Rise'blogs">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          使用DirectInput进行交互（2）
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2007-07-24 21:50:00" itemprop="dateCreated datePublished" datetime="2007-07-24T21:50:00+00:00">2007-07-24</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Dev/" itemprop="url" rel="index"><span itemprop="name">Dev</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Dev/GameDev/" itemprop="url" rel="index"><span itemprop="name">GameDev</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p><SPAN style="FONT-WEIGHT: bold">设置数据格式</SPAN><BR><BR>每种设备都有一种用于读取数据的特定数据格式，需要考虑的东西也很多，包括键、鼠标按键、轴等。因此要使程序从设备读取数据，首先必须告诉DirectInput读取这种数据所采用的格式。通过 IDirectInputDevice8::SetDataFormat函数即可满足上述要求。<BR><BR>Sets the data format for the Microsoft DirectInput device.<BR><BR><SPAN style="FONT-WEIGHT: bold; COLOR: #256429">Syntax</SPAN><BR><BR>HRESULT SetDataFormat(LPCDIDATAFORMAT lpdf);<BR><BR><SPAN style="FONT-WEIGHT: bold; COLOR: #256429">Parameters</SPAN><BR><BR>lpdf<BR>Address of a structure that describes the format of the data that the DirectInputDevice should return. An application can define its own DIDATAFORMAT structure or use one of the following predefined global variables:<BR>&nbsp;<BR>c_dfDIKeyboard<BR>c_dfDIMouse<BR>c_dfDIMouse2<BR>c_dfDIJoystick<BR>c_dfDIJoystick2<BR><BR><SPAN style="FONT-WEIGHT: bold; COLOR: #256429">Return Value</SPAN><BR><BR>If the method succeeds, the return value is DI_OK.<BR><BR>If the method fails, the return value can be one of the following error values:<BR><BR>DIERR_ACQUIRED The operation cannot be performed while the device is acquired.<BR>DIERR_INVALIDPARAM An invalid parameter was passed to the returning function, or the object was not in a state that permitted the function to be called. This value is equal to the E_INVALIDARG standard Component Object Model (COM) return value.<BR>DIERR_NOTINITIALIZED The object has not been initialized.<BR><BR><SPAN style="FONT-WEIGHT: bold; COLOR: #256429">Remarks</SPAN><BR><BR>The data format must be set before the device can be acquired by using the IDirectInputDevice8::Acquire method. It is necessary to set the data format only once. The data format cannot be changed while the device is acquired.<BR><BR>If the application is using action mapping, the data format is set instead by the call to IDirectInputDevice8::SetActionMap.<BR><BR>SetDataFormat函数只有一个参数，这个参数是一个指向DIDATAFORMAT结构体的指针，此结构体的定义如下：<BR><BR>Describes a device’s data format. This structure is used with the IDirectInputDevice8::SetDataFormat method.<BR><BR><SPAN style="FONT-WEIGHT: bold; COLOR: #256429">Syntax</SPAN><BR><BR>typedef struct DIDATAFORMAT { <BR>&nbsp;&nbsp;&nbsp; DWORD dwSize; <BR>&nbsp;&nbsp;&nbsp; DWORD dwObjSize; <BR>&nbsp;&nbsp;&nbsp; DWORD dwFlags; <BR>&nbsp;&nbsp;&nbsp; DWORD dwDataSize; <BR>&nbsp;&nbsp;&nbsp; DWORD dwNumObjs; <BR>&nbsp;&nbsp;&nbsp; LPDIOBJECTDATAFORMAT rgodf; <BR>} DIDATAFORMAT, *LPDIDATAFORMAT;<BR>&nbsp;<BR>typedef const DIDATAFORMAT *LPCDIDATAFORMAT;<BR><BR><SPAN style="FONT-WEIGHT: bold; COLOR: #256429">Members</SPAN><BR><BR>dwSize<BR>Size of this structure, in bytes. <BR><BR>dwObjSize<BR>Size of the DIOBJECTDATAFORMAT structure, in bytes. <BR><BR>dwFlags<BR>Flags describing other attributes of the data format. This value can be one of the following: <BR><BR>DIDF_ABSAXIS<BR>The axes are in absolute mode. Setting this flag in the data format is equivalent to manually setting the axis mode property, using the IDirectInputDevice8::SetProperty method. This cannot be combined with DIDF_RELAXIS flag. <BR><BR>DIDF_RELAXIS<BR>The axes are in relative mode. Setting this flag in the data format is equivalent to manually setting the axis mode property using the IDirectInputDevice8::SetProperty method. This cannot be combined with the DIDF_ABSAXIS flag. <BR><BR>dwDataSize<BR>Size of a data packet returned by the device, in bytes. This value must be a multiple of 4 and must exceed the largest offset value for an object’s data within the data packet. <BR><BR>dwNumObjs<BR>Number of objects in the rgodf array.<BR><BR>rgodf<BR>Address to an array of DIOBJECTDATAFORMAT structures. Each structure describes how one object’s data should be reported in the device data. Typical errors include placing two pieces of information in the same location and placing one piece of information in more than one location. <BR><BR><SPAN style="FONT-WEIGHT: bold; COLOR: #256429">Remarks</SPAN><BR><BR>Applications do not typically need to create a DIDATAFORMAT structure. An application can use one of the predefined global data format variables, c_dfDIMouse, c_dfDIMouse2, c_dfDIKeyboard, c_dfDIJoystick, or c_dfDIJoystick2.<BR><BR>Applications that need to create a DIDATAFORMAT structure must first call IDirectInputDevice8::EnumObjects to determine the available objects for the current device. This is because the IDirectInputDevice8::SetDataFormat method will return DIERR_INVALIDPARAM if an an object is described in the DIDATAFORMAT structure but does not exist on the current device.<BR><BR><SPAN style="FONT-WEIGHT: bold">设置协作级别</SPAN><BR><BR>首先必须面对一个事实，那就是每个程序都会使用许多输入设备。几乎每个程序都会使用键盘和鼠标，同时某些程序还会使用游戏杆。在处理的时候，必须同其他可能仍在运行的应用程序共享对这些设备的访问，或者应用程序独占对设备的所有访问，这样除非该应用程序结束了对设备的访问，否则就不允许其他应用程序控制这些设备。<BR><BR>设置协作级别的函数是IDirectInputDevice8::SetCooperativeLevel。<BR><BR>Establishes the cooperative level for this instance of the device. The cooperative level determines how this instance of the device interacts with other instances of the device and the rest of the system.<BR><BR><SPAN style="FONT-WEIGHT: bold; COLOR: #256429">Syntax</SPAN><BR><BR>HRESULT SetCooperativeLevel(HWND hwnd,<BR>&nbsp;&nbsp;&nbsp; DWORD dwFlags<BR>);<BR><BR><SPAN style="FONT-WEIGHT: bold; COLOR: #256429">Parameters</SPAN><BR><BR><SPAN style="FONT-WEIGHT: bold">hwnd</SPAN><BR>Window handle to be associated with the device. This parameter must be a valid top-level window handle that belongs to the process. The window associated with the device must not be destroyed while it is still active in a Microsoft DirectInput device. <BR><BR><SPAN style="FONT-WEIGHT: bold">dwFlags</SPAN><BR>Flags that describe the cooperative level associated with the device. The following flags are defined: <BR><BR>DISCL_BACKGROUND<BR>The application requires background access. If background access is granted, the device can be acquired at any time, even when the associated window is not the active window. <BR><BR>DISCL_EXCLUSIVE<BR>The application requires exclusive access. If exclusive access is granted, no other instance of the device can obtain exclusive access to the device while it is acquired. However, nonexclusive access to the device is always permitted, even if another application has obtained exclusive access. <BR><BR>An application that acquires the mouse or keyboard device in exclusive mode should always unacquire the devices when it receives WM_ENTERSIZEMOVE and WM_ENTERMENULOOP messages. Otherwise, the user cannot manipulate the menu or move and resize the window. <BR><BR>DISCL_FOREGROUND<BR>The application requires foreground access. If foreground access is granted, the device is automatically unacquired when the associated window moves to the background. <BR><BR>DISCL_NONEXCLUSIVE<BR>The application requires nonexclusive access. Access to the device does not interfere with other applications that are accessing the same device. <BR><BR>DISCL_NOWINKEY<BR>Disable the Microsoft Windows logo key. Setting this flag ensures that the user cannot inadvertently break out of the application. Note, however, that DISCL_NOWINKEY has no effect when the default action mapping user interface (UI) is displayed, and the Windows logo key will operate normally as long as that UI is present. <BR><BR><SPAN style="FONT-WEIGHT: bold; COLOR: #256429">Return Value</SPAN><BR><BR>If the method succeeds, the return value is DI_OK.<BR><BR>If the method fails, the return value can be one of the following error values:<BR><BR>DIERR_INVALIDPARAM An invalid parameter was passed to the returning function, or the object was not in a state that permitted the function to be called. This value is equal to the E_INVALIDARG standard Component Object Model (COM) return value. <BR>DIERR_NOTINITIALIZED The object has not been initialized. <BR>E_HANDLE The HWND parameter is not a valid top-level window that belongs to the process. <BR><BR><SPAN style="FONT-WEIGHT: bold; COLOR: #256429">Remarks</SPAN><BR><BR>Applications must specify either DISCL_FOREGROUND or DISCL_BACKGROUND; it is an error to specify both or neither. Similarly, applications must specify either DISCL_EXCLUSIVE or DISCL_NONEXCLUSIVE.<BR><BR>If the system mouse is acquired in exclusive mode, the pointer is removed from the screen until the device is unacquired. This applies only to a mouse created by passing GUID_SysMouse to IDirectInput8::CreateDevice.<BR><BR>Applications that select the background exclusive mode cooperative level are not guaranteed to retain access to the device if another application requests exclusive access. When a background exclusive mode application loses access, calls to DirectInput device methods will fail and return DIERR_NOTACQUIRED. The application can regain access to the device by manually unacquiring the device and reaquiring it.<BR><BR>Applications must call this method before acquiring the device by using the IDirectInputDevice8::Acquire method.<BR><BR><SPAN style="FONT-WEIGHT: bold">设置特殊属性</SPAN><BR><BR>设置设备的特殊属性，包括轴模式（axis mode），缓冲区（buffering）以及最大最小范围。对于轴模式，有两个选择：相对和绝对。绝对模式基于一个中心坐标来报告坐标。位于这个点左边或上面的值都报告成负值，同时位于这个点右边或下面的值都报告成正值。相对坐标就是当前位置同上一个位置之间的距离差。<BR><BR>最后一个特殊性属性是设备的最小和最大范围设置。举例来说，将游戏杆推动到最左边就会产生最小值，而推动到最右边就会产生最大值。这两边产生何种值取决于具体的设置，只有游戏杆才会涉及到最小和最大范围设置。<BR><BR>用于设置特殊属性的函数是 IDirectInputDevice8::SetProperty。<BR><BR>Sets properties that define the device behavior. These properties include input buffer size and axis mode.<BR><BR><SPAN style="FONT-WEIGHT: bold; COLOR: #256429">Syntax</SPAN><BR><BR>HRESULT SetProperty(REFGUID rguidProp,<BR>&nbsp;&nbsp;&nbsp; LPCDIPROPHEADER pdiph<BR>);<BR><BR><SPAN style="FONT-WEIGHT: bold; COLOR: #256429">Parameters</SPAN><BR><BR><SPAN style="FONT-WEIGHT: bold">rguidProp</SPAN><BR>Reference to (C++) or address of (C) the globally unique identifier (GUID) identifying the property to be set. This can be one of the predefined values, or a pointer to a GUID that identifies the property. The following property values are predefined for an input device: <BR><BR>DIPROP_APPDATA<BR>Sets the application-defined value associated with an in-game action, as a DIPROPPOINTER. <BR><BR>DIPROP_AUTOCENTER<BR>Specifies whether device objects are self centering. This setting applies to the entire device, rather than to any particular object, so the dwHow member of the associated DIPROPDWORD structure must be DIPH_DEVICE. <BR>The dwData member can be one of the following values. <BR><BR>DIPROPAUTOCENTER_OFF: The device should not automatically center when the user releases the device. An application that uses force feedback should disable autocentering before playing effects. <BR><BR>DIPROPAUTOCENTER_ON: The device should automatically center when the user releases the device. <BR><BR>Not all devices support the autocenter property. <BR><BR>DIPROP_AXISMODE<BR>Sets the axis mode. The value being set (DIPROPAXISMODE_ABS or DIPROPAXISMODE_REL) must be specified in the dwData member of the associated DIPROPDWORD structure. See the description of the pdiph parameter for more information. <BR><BR>This setting applies to the entire device, so the dwHow member of the associated DIPROPDWORD structure must be set to DIPH_DEVICE. <BR><BR>DIPROP_BUFFERSIZE<BR>Sets the input buffer size. The value being set must be specified in the dwData member of the associated DIPROPDWORD structure. See Remarks. This setting applies to the entire device, so the dwHow member of the associated DIPROPDWORD structure must be set to DIPH_DEVICE. <BR><BR>DIPROP_CALIBRATION<BR>Predefined property that allows the application to access the information that Microsoft DirectInput uses to manipulate axes that require calibration. This property exists primarily for applications of the control panel type. Normal applications should not need to deal with calibration information. <BR>You can access the calibration mode property for an axis by setting the dwHow member of the DIPROPHEADER structure to DIPH_BYID or to DIPH_BYOFFSET and setting the dwObj member to the object identifier (ID) or offset, respectively. <BR><BR>Control panel applications that set new calibration data must also invoke the IDirectInputJoyConfig::SendNotify method to notify other applications of the change in calibration. For more information about IDirectInputJoyConfig::SendNotify, see the Microsoft DirectX Driver Development Kit (DDK). <BR><BR>DIPROP_CALIBRATIONMODE<BR>Enables the application to specify whether DirectInput should retrieve calibrated or uncalibrated data from an axis. By default, DirectInput retrieves calibrated data. <BR>Setting the calibration mode for the entire device is equivalent to setting it for each axis individually. <BR><BR>The dwData member of the DIPROPDWORD structure can be one of the following values: <BR><BR>DIPROPCALIBRATIONMODE_COOKED: DirectInput should return data after applying calibration information. This is the default mode. <BR>DIPROPCALIBRATIONMODE_RAW: DirectInput should return raw, uncalibrated data. This mode is typically used only by applications of the control panel type. Note that raw data might include negative values. <BR><BR>Setting a device into raw mode causes the dead zone, saturation, and range settings to be ignored. <BR><BR>DIPROP_CPOINTS<BR>Sets calibration points used for the adjustment of incoming raw data. The values being set must be specified as CPOINT types in the cp array of the associated DIPROPCPOINTS structure. This setting applies to individual device objects, so the dwHow member of the associated DIPROPHEADER structure must be set to either DIPH_BYID or DIPH_BYOFFSET. <BR><BR>DIPROP_DEADZONE<BR>Sets the value for the dead zone of a joystick, in the range from 0 through 10,000, where 0 indicates that there is no dead zone, 5,000 indicates that the dead zone extends over 50 percent of the physical range of the axis on both sides of center, and 10,000 indicates that the entire physical range of the axis is dead. When the axis is within the dead zone, it is reported as being at the center of its range. This setting can be applied to either the entire device or to a specific axis. <BR><BR>DIPROP_FFGAIN<BR>Sets the gain for the device. This setting applies to the entire device, rather than to any particular object, so the dwHow member of the associated DIPROPDWORD structure must be DIPH_DEVICE. <BR>The dwData member contains a gain value that is applied to all effects created on the device. The value is an integer in the range from 0 through 10,000, specifying the amount by which effect magnitudes should be scaled for the device. For example, a value of 10,000 indicates that all effect magnitudes are to be taken at face value. A value of 9,000 indicates that all effect magnitudes are to be reduced to 90 percent of their nominal magnitudes. <BR><BR>DirectInput always checks the gain value before setting the gain property. If the gain is outside of the range (less than zero or greater than 10,000), IDirectInputDevice8::SetProperty will return DIERR_INVALIDPARAM. Otherwise, if successful, it will return DI_OK, even if the device does not support force feedback.<BR><BR>Setting a gain value is useful when an application wants to scale down the strength of all force-feedback effects uniformly, based on user preferences. <BR><BR>Unlike other properties, the gain can be set when the device is in an acquired state. <BR><BR>DIPROP_INSTANCENAME<BR>This property exists for advanced applications that want to change the friendly instance name of a device (as returned in the tszInstanceName member of the DIDEVICEINSTANCE structure) to distinguish it from similar devices that are plugged in simultaneously. Most applications should have no need to change the friendly name. <BR>This setting applies to the entire device, so the dwHow member of the associated DIPROPDWORD structure must be set to DIPH_DEVICE. <BR><BR>The pdiph parameter must be a pointer to the diph member of a DIPROPSTRING structure. <BR><BR>DIPROP_PRODUCTNAME<BR>This property exists for advanced applications that want to change the friendly product name of a device (as returned in the tszProductName member of the DIDEVICEINSTANCE structure) to distinguish it from similar devices which are plugged in simultaneously. Most applications should have no need to change the friendly name. <BR>This setting applies to the entire device, so the dwHow member of the associated DIPROPDWORD structure must be set to DIPH_DEVICE. <BR><BR>The pdiph parameter must be a pointer to the diph member of a DIPROPSTRING structure. <BR><BR>Setting the product name is only useful for changing the user-defined name of an analog joystick on Microsoft Windows 98,Windows 2000, and Windows Millennium Edition (Windows Me) computers. In other cases, attempting to set this property will still return DI_OK. However, the name is not stored in a location used by IDirectInputDevice8::GetProperty. <BR><BR>DIPROP_RANGE<BR>Sets the range of values an object can possibly report. The minimum and maximum values are taken from the lMin and lMax members of the associated DIPROPRANGE structure. <BR>For some devices, this is a read-only property. <BR><BR>You cannot set a reverse range; lMax must be greater than lMin. <BR><BR>DIPROP_SATURATION<BR>Sets the value for the saturation zones of a joystick, in the range from 0 through 10,000. The saturation level is the point at which the axis is considered to be at its most extreme position. For example, if the saturation level is set to 9,500, the axis reaches the extreme of its range when it has moved 95 percent of the physical distance from its center position (or from the dead zone). This setting can be applied to either the entire device or a specific axis. <BR><BR><SPAN style="FONT-WEIGHT: bold">pdiph</SPAN><BR>Address of the DIPROPHEADER structure contained within the type-specific property structure. <BR><BR><SPAN style="FONT-WEIGHT: bold; COLOR: #256429">Return Value</SPAN><BR><BR>If the method succeeds, the return value is DI_OK or DI_PROPNOEFFECT.<BR><BR>If the method fails, the return value can be one of the following error values.<BR><BR>DIERR_INVALIDPARAM An invalid parameter was passed to the returning function, or the object was not in a state that permitted the function to be called. This value is equal to the E_INVALIDARG standard Component Object Model (COM) return value. <BR>DIERR_NOTINITIALIZED The object has not been initialized. <BR>DIERR_OBJECTNOTFOUND The requested object does not exist. <BR>DIERR_UNSUPPORTED The function called is not supported at this time. This value is equal to the E_NOTIMPL standard COM return value. <BR><BR><SPAN style="FONT-WEIGHT: bold; COLOR: #256429">Remarks</SPAN><BR><BR>The buffer size determines the amount of data that the buffer can hold between calls to the IDirectInputDevice8::GetDeviceData method before data is lost. This value may be set to 0 to indicate that the application does not read buffered data from the device. If the buffer size in the dwData member of the DIPROPDWORD structure is too large for the device to support it, then the largest possible buffer size is set. <BR><BR>在调用SetProperty函数时始终要使用的DIPROPHEADER结构体定义如下：<BR><BR>Serves as a header for all property structures.<BR><BR><SPAN style="FONT-WEIGHT: bold; COLOR: #256429">Syntax</SPAN><BR><BR>typedef struct DIPROPHEADER { <BR>&nbsp;&nbsp;&nbsp; DWORD&nbsp;&nbsp;&nbsp; dwSize; <BR>&nbsp;&nbsp;&nbsp; DWORD&nbsp;&nbsp;&nbsp; dwHeaderSize; <BR>&nbsp;&nbsp;&nbsp; DWORD&nbsp;&nbsp;&nbsp; dwObj; <BR>&nbsp;&nbsp;&nbsp; DWORD&nbsp;&nbsp;&nbsp; dwHow; <BR>} DIPROPHEADER, *LPDIPROPHEADER; <BR>&nbsp;<BR>typedef const DIPROPHEADER *LPCDIPROPHEADER;<BR><BR><SPAN style="FONT-WEIGHT: bold; COLOR: #256429">Members</SPAN><BR><BR>dwSize<BR>Size of the enclosing structure. This member must be initialized before the structure is used. <BR><BR>dwHeaderSize<BR>Size of the DIPROPHEADER structure. <BR><BR>dwObj<BR>Object for which the property is to be accessed. The value set for this member depends on the value specified in the dwHow member.<BR><BR>dwHow<BR>Value that specifies how the dwObj member should be interpreted. This value can be one of the following: <BR><BR>DIPH_DEVICE<BR>The dwObj member must be 0. <BR><BR>DIPH_BYOFFSET<BR>The dwObj member is the offset into the current data format of the object whose property is being accessed. <BR><BR>DIPH_BYUSAGE<BR>The dwObj member is the HID usage page and usage values in packed form. <BR><BR>DIPH_BYID<BR>The dwObj member is the object type&#x2F;instance identifier. This identifier is returned in the dwType member of the DIDEVICEOBJECTINSTANCE structure returned from a previous call to the IDirectInputDevice8::EnumObjects member. <BR><BR><SPAN style="FONT-WEIGHT: bold">获得设备</SPAN><BR><BR>在使用任何设备之前，首先必须获得设备。只有获得了设备才能确保程序能够访问设备，以及同其他程序共享访问还是完全控制设备。要注意的是其他程序可能会争夺并抢走对设备的控制权，要补救这种情况就必须重新获得设备。何时必须获得设备？第一种情况就是在创建接口的时候，原因在于使用设备之前必须首先获得它。另一种情况就是当另一个程序抢走了对设备的控制，同时 DirectInput通知了程序时。<BR><BR>调用IDirectInputDevice8::Acquire函数即可获得设备。<BR><BR>Obtains access to the input device.<BR><BR><SPAN style="FONT-WEIGHT: bold; COLOR: #256429">Syntax</SPAN><BR><BR>HRESULT Acquire(VOID);<BR><BR><SPAN style="FONT-WEIGHT: bold; COLOR: #256429">Return Value</SPAN><BR><BR>If the method succeeds, the return value is DI_OK, or S_FALSE if the device was already acquired.<BR><BR>If the method fails, the return value can be one of the following error values.<BR><BR>DIERR_INVALIDPARAM An invalid parameter was passed to the returning function, or the object was not in a state that permitted the function to be called. This value is equal to the E_INVALIDARG standard Component Object Model (COM) return value. <BR>DIERR_NOTINITIALIZED The object has not been initialized. <BR>DIERR_OTHERAPPHASPRIO Another application has a higher priority level, preventing this call from succeeding. This value is equal to the E_ACCESSDENIED standard COM return value. This error can be returned when an application has only foreground access to a device but is attempting to acquire the device while in the background. <BR><BR><SPAN style="FONT-WEIGHT: bold; COLOR: #256429">Remarks</SPAN><BR><BR>Before a device can be acquired, a data format must be set by using the IDirectInputDevice8::SetDataFormat method or IDirectInputDevice8::SetActionMap method. If the data format has not been set, IDirectInputDevice8::Acquire returns DIERR_INVALIDPARAM.<BR><BR>Devices must be acquired before calling the IDirectInputDevice8::GetDeviceState or IDirectInputDevice8::GetDeviceData methods for that device.<BR><BR>Device acquisition does not use a reference count. Therefore, if an application calls the IDirectInputDevice8::Acquire method twice, then calls the IDirectInputDevice8::Unacquire method once, the device is unacquired.<BR><BR>If IDirectInputDevice8::BuildActionMap succeeds but no actions have been mapped, a subsequent call to IDirectInputDevice8::SetActionMap will return DI_OK but a call to IDirectInputDevice8::Acquire will fail with DIERR_INVALIDPARAM.<BR><BR><SPAN style="FONT-WEIGHT: bold">轮询设备</SPAN><BR><BR>轮询可以准备设备并在合适的情况下读取设备数据，因为数据可能具有临界时间。游戏杆就是这样的设备，要从设备读取数据，计算机需要发送一个电子脉冲给它。虽然轮询对于游戏杆输入而言是必须的，但是对键盘或鼠标来说却并不需要轮询。<BR><BR>轮询设备需要使用IDirectInputDevice8::Poll函数。<BR><BR>Retrieves data from polled objects on a Microsoft DirectInput device. If the device does not require polling, calling this method has no effect. If a device that requires polling is not polled periodically, no new data is received from the device. Calling this method causes DirectInput to update the device state, generate input events (if buffered data is enabled), and set notification events (if notification is enabled).<BR><BR><SPAN style="FONT-WEIGHT: bold; COLOR: #256429">Syntax</SPAN><BR><BR>HRESULT Poll(VOID);<BR><BR><SPAN style="FONT-WEIGHT: bold; COLOR: #256429">Return Value</SPAN><BR><BR>If the method succeeds, the return value is DI_OK, or DI_NOEFFECT if the device does not require polling.<BR><BR>If the method fails, the return value can be one of the following error values:<BR><BR>DIERR_INPUTLOST Access to the input device has been lost. It must be reacquired. <BR>DIERR_NOTACQUIRED The operation cannot be performed unless the device is acquired. <BR>DIERR_NOTINITIALIZED The object has not been initialized. <BR><BR><SPAN style="FONT-WEIGHT: bold; COLOR: #256429">Remarks</SPAN><BR><BR>Before a device data can be polled, the data format must be set by using the IDirectInputDevice8::SetDataFormat or IDirectInputDevice8::SetActionMap method, and the device must be acquired by using the IDirectInputDevice8::Acquire method.<BR><BR><SPAN style="FONT-WEIGHT: bold">读取数据</SPAN><BR><BR>经过以上的步骤，就剩下最后一步了，那就是使用 IDirectInputDevice8::GetDeviceState函数读取设备数据。为了存储设备的信息，必须传递一个数据缓冲区给此函数，这样程序才能使用设备的信息，每种设备的数据各不相同。<BR><BR>Retrieves immediate data from the device.<BR><BR><SPAN style="FONT-WEIGHT: bold; COLOR: #256429">Syntax</SPAN><BR><BR>HRESULT GetDeviceState(DWORD cbData,<BR>&nbsp;&nbsp;&nbsp; LPVOID lpvData<BR>);<BR><BR><SPAN style="FONT-WEIGHT: bold; COLOR: #256429">Parameters</SPAN><BR><BR>cbData<BR>Size of the buffer in the lpvData parameter, in bytes. <BR><BR>lpvData<BR>Address of a structure that receives the current state of the device. The format of the data is established by a prior call to the IDirectInputDevice8::SetDataFormat method. <BR><BR><SPAN style="FONT-WEIGHT: bold; COLOR: #256429">Return Value</SPAN><BR><BR>If the method succeeds, the return value is DI_OK.<BR><BR>If the method fails, the return value can be one of the following error values:<BR><BR>DIERR_INPUTLOST Access to the input device has been lost. It must be reacquired. <BR><BR>DIERR_INVALIDPARAM An invalid parameter was passed to the returning function, or the object was not in a state that permitted the function to be called. This value is equal to the E_INVALIDARG standard Component Object Model (COM) return value. <BR><BR>DIERR_NOTACQUIRED The operation cannot be performed unless the device is acquired. <BR><BR>DIERR_NOTINITIALIZED The object has not been initialized. <BR><BR>E_PENDING Data is not yet available. <BR><BR><SPAN style="FONT-WEIGHT: bold; COLOR: #256429">Remarks</SPAN><BR><BR>Before device data can be obtained, set the cooperative level by using the IDirectInputDevice8::SetCooperativeLevel method, then set the data format by using IDirectInputDevice8::SetDataFormat, and acquire the device by using the IDirectInputDevice8::Acquire method.<BR><BR>The five predefined data formats require corresponding device state structures according to the following table:<BR><BR>Data format State structure <BR>c_dfDIMouse DIMOUSESTATE <BR>c_dfDIMouse2 DIMOUSESTATE2 <BR>c_dfDIKeyboard array of 256 bytes <BR>c_dfDIJoystick DIJOYSTATE <BR>c_dfDIJoystick2 DIJOYSTATE2 <BR><BR>For example, if you passed the c_dfDIMouse format to the IDirectInputDevice8::SetDataFormat method, you must pass a DIMOUSESTATE structure to the IDirectInputDevice8::GetDeviceState method.<BR><BR>无论是哪种设备，下面的代码都能读取其数据。它们考虑了丢失设备并在适当的时刻重新获得设备的情况，必须传递一个指向缓冲区的指针给下面这个函数，缓冲区的大小要能够保存设备信息以及读取的数据量。<BR><BR></p>
+<DIV style="BORDER-RIGHT: #ffffff 1px solid; PADDING-RIGHT: 5px; BORDER-TOP: #ffffff 1px solid; PADDING-LEFT: 4px; FONT-SIZE: 13px; PADDING-BOTTOM: 4px; BORDER-LEFT: #ffffff 1px solid; WIDTH: 98%; PADDING-TOP: 4px; BORDER-BOTTOM: #ffffff 1px solid; BACKGROUND-COLOR: #ffffff"><!--<br><br>Code highlighting produced by Actipro CodeHighlighter (freeware)<br>http://www.CodeHighlighter.com/<br><br>--><SPAN style="COLOR: #000000">BOOL&nbsp;Read_Device(IDirectInputDevice8</SPAN><SPAN style="COLOR: #000000">*</SPAN><SPAN style="COLOR: #000000">&nbsp;directinput_device,&nbsp;</SPAN><SPAN style="COLOR: #0000ff">void</SPAN><SPAN style="COLOR: #000000">*</SPAN><SPAN style="COLOR: #000000">&nbsp;buffer,&nbsp;</SPAN><SPAN style="COLOR: #0000ff">long</SPAN><SPAN style="COLOR: #000000">&nbsp;buffer_size)<BR>{<BR>&nbsp;&nbsp;&nbsp;&nbsp;HRESULT&nbsp;rv;<BR><BR>&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #0000ff">while</SPAN><SPAN style="COLOR: #000000">(</SPAN><SPAN style="COLOR: #000000">1</SPAN><SPAN style="COLOR: #000000">)<BR>&nbsp;&nbsp;&nbsp;&nbsp;{<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #008000">//</SPAN><SPAN style="COLOR: #008000">&nbsp;poll&nbsp;device</SPAN><SPAN style="COLOR: #008000"><BR></SPAN><SPAN style="COLOR: #000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;g_directinput_device</SPAN><SPAN style="COLOR: #000000">-&gt;</SPAN><SPAN style="COLOR: #000000">Poll();<BR><BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #008000">//</SPAN><SPAN style="COLOR: #008000">&nbsp;read&nbsp;in&nbsp;state</SPAN><SPAN style="COLOR: #008000"><BR></SPAN><SPAN style="COLOR: #000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #0000ff">if</SPAN><SPAN style="COLOR: #000000">(SUCCEEDED(rv&nbsp;</SPAN><SPAN style="COLOR: #000000">=</SPAN><SPAN style="COLOR: #000000">&nbsp;g_directinput_device</SPAN><SPAN style="COLOR: #000000">-&gt;</SPAN><SPAN style="COLOR: #000000">GetDeviceState(buffer_size,&nbsp;buffer)))<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #0000ff">break</SPAN><SPAN style="COLOR: #000000">;<BR><BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #008000">//</SPAN><SPAN style="COLOR: #008000">&nbsp;return&nbsp;when&nbsp;an&nbsp;unknown&nbsp;error</SPAN><SPAN style="COLOR: #008000"><BR></SPAN><SPAN style="COLOR: #000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #0000ff">if</SPAN><SPAN style="COLOR: #000000">(rv&nbsp;</SPAN><SPAN style="COLOR: #000000">!=</SPAN><SPAN style="COLOR: #000000">&nbsp;DIERR_INPUTLOST&nbsp;</SPAN><SPAN style="COLOR: #000000">||</SPAN><SPAN style="COLOR: #000000">&nbsp;rv&nbsp;</SPAN><SPAN style="COLOR: #000000">!=</SPAN><SPAN style="COLOR: #000000">&nbsp;DIERR_NOTACQUIRED)<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #0000ff">return</SPAN><SPAN style="COLOR: #000000">&nbsp;FALSE;<BR><BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #008000">//</SPAN><SPAN style="COLOR: #008000">&nbsp;re-acquire&nbsp;and&nbsp;try&nbsp;again</SPAN><SPAN style="COLOR: #008000"><BR></SPAN><SPAN style="COLOR: #000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #0000ff">if</SPAN><SPAN style="COLOR: #000000">(FAILED(g_directinput_device</SPAN><SPAN style="COLOR: #000000">-&gt;</SPAN><SPAN style="COLOR: #000000">Acquire()))<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #0000ff">return</SPAN><SPAN style="COLOR: #000000">&nbsp;FALSE;<BR>&nbsp;&nbsp;&nbsp;&nbsp;}<BR><BR>&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #0000ff">return</SPAN><SPAN style="COLOR: #000000">&nbsp;TRUE;<BR>}</SPAN></DIV><BR><SPAN style="FONT-WEIGHT: bold">使用DirectInput处理键盘</SPAN><BR><BR>如果调用成功，下面的初始化函数则返回一个指向新创建的IDirectInputDevice8对象的指针；反之当函数调用失败时，返回NULL。只需给此函数传递父窗口的句柄和与定义的DirectInput对象即可。<BR><BR>
+
+<DIV style="BORDER-RIGHT: #ffffff 1px solid; PADDING-RIGHT: 5px; BORDER-TOP: #ffffff 1px solid; PADDING-LEFT: 4px; FONT-SIZE: 13px; PADDING-BOTTOM: 4px; BORDER-LEFT: #ffffff 1px solid; WIDTH: 98%; PADDING-TOP: 4px; BORDER-BOTTOM: #ffffff 1px solid; BACKGROUND-COLOR: #ffffff"><!--<br><br>Code highlighting produced by Actipro CodeHighlighter (freeware)<br>http://www.CodeHighlighter.com/<br><br>--><SPAN style="COLOR: #008000">//</SPAN><SPAN style="COLOR: #008000">--------------------------------------------------------------------------------<BR></SPAN><SPAN style="COLOR: #008000">//</SPAN><SPAN style="COLOR: #008000">&nbsp;Initialize&nbsp;keyboard&nbsp;interface,&nbsp;return&nbsp;a&nbsp;keyboad&nbsp;interface&nbsp;pointer.<BR></SPAN><SPAN style="COLOR: #008000">//</SPAN><SPAN style="COLOR: #008000">--------------------------------------------------------------------------------</SPAN><SPAN style="COLOR: #008000"><BR></SPAN><SPAN style="COLOR: #000000">IDirectInputDevice8</SPAN><SPAN style="COLOR: #000000">*</SPAN><SPAN style="COLOR: #000000">&nbsp;Init_Keyboard(HWND&nbsp;hwnd,&nbsp;IDirectInput8</SPAN><SPAN style="COLOR: #000000">*</SPAN><SPAN style="COLOR: #000000">&nbsp;directinput)<BR>{<BR>&nbsp;&nbsp;&nbsp;&nbsp;IDirectInputDevice8</SPAN><SPAN style="COLOR: #000000">*</SPAN><SPAN style="COLOR: #000000">&nbsp;directinput_device;<BR><BR>&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #008000">//</SPAN><SPAN style="COLOR: #008000">&nbsp;create&nbsp;the&nbsp;device&nbsp;object</SPAN><SPAN style="COLOR: #008000"><BR></SPAN><SPAN style="COLOR: #000000">&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #0000ff">if</SPAN><SPAN style="COLOR: #000000">(FAILED(directinput</SPAN><SPAN style="COLOR: #000000">-&gt;</SPAN><SPAN style="COLOR: #000000">CreateDevice(GUID_SysKeyboard,&nbsp;</SPAN><SPAN style="COLOR: #000000">&amp;</SPAN><SPAN style="COLOR: #000000">directinput_device,&nbsp;NULL)))<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #0000ff">return</SPAN><SPAN style="COLOR: #000000">&nbsp;NULL;<BR><BR>&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #008000">//</SPAN><SPAN style="COLOR: #008000">&nbsp;set&nbsp;the&nbsp;data&nbsp;format</SPAN><SPAN style="COLOR: #008000"><BR></SPAN><SPAN style="COLOR: #000000">&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #0000ff">if</SPAN><SPAN style="COLOR: #000000">(FAILED(directinput_device</SPAN><SPAN style="COLOR: #000000">-&gt;</SPAN><SPAN style="COLOR: #000000">SetDataFormat(</SPAN><SPAN style="COLOR: #000000">&amp;</SPAN><SPAN style="COLOR: #000000">c_dfDIKeyboard)))<BR>&nbsp;&nbsp;&nbsp;&nbsp;{<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;directinput_device</SPAN><SPAN style="COLOR: #000000">-&gt;</SPAN><SPAN style="COLOR: #000000">Release();<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #0000ff">return</SPAN><SPAN style="COLOR: #000000">&nbsp;NULL;<BR>&nbsp;&nbsp;&nbsp;&nbsp;}<BR><BR>&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #008000">//</SPAN><SPAN style="COLOR: #008000">&nbsp;set&nbsp;the&nbsp;coooperative&nbsp;mode</SPAN><SPAN style="COLOR: #008000"><BR></SPAN><SPAN style="COLOR: #000000">&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #0000ff">if</SPAN><SPAN style="COLOR: #000000">(FAILED(directinput_device</SPAN><SPAN style="COLOR: #000000">-&gt;</SPAN><SPAN style="COLOR: #000000">SetCooperativeLevel(hwnd,&nbsp;DISCL_FOREGROUND&nbsp;</SPAN><SPAN style="COLOR: #000000">|</SPAN><SPAN style="COLOR: #000000">&nbsp;DISCL_NONEXCLUSIVE)))<BR>&nbsp;&nbsp;&nbsp;&nbsp;{<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;directinput_device</SPAN><SPAN style="COLOR: #000000">-&gt;</SPAN><SPAN style="COLOR: #000000">Release();<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #0000ff">return</SPAN><SPAN style="COLOR: #000000">&nbsp;NULL;<BR>&nbsp;&nbsp;&nbsp;&nbsp;}<BR><BR>&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #008000">//</SPAN><SPAN style="COLOR: #008000">&nbsp;acquire&nbsp;the&nbsp;device&nbsp;for&nbsp;use</SPAN><SPAN style="COLOR: #008000"><BR></SPAN><SPAN style="COLOR: #000000">&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #0000ff">if</SPAN><SPAN style="COLOR: #000000">(FAILED(directinput_device</SPAN><SPAN style="COLOR: #000000">-&gt;</SPAN><SPAN style="COLOR: #000000">Acquire()))<BR>&nbsp;&nbsp;&nbsp;&nbsp;{<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;directinput_device</SPAN><SPAN style="COLOR: #000000">-&gt;</SPAN><SPAN style="COLOR: #000000">Release();<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #0000ff">return</SPAN><SPAN style="COLOR: #000000">&nbsp;NULL;<BR>&nbsp;&nbsp;&nbsp;&nbsp;}<BR><BR>&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #008000">//</SPAN><SPAN style="COLOR: #008000">&nbsp;everything&nbsp;well,&nbsp;so&nbsp;return&nbsp;a&nbsp;vaild&nbsp;pointer.</SPAN><SPAN style="COLOR: #008000"><BR></SPAN><SPAN style="COLOR: #000000">&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #0000ff">return</SPAN><SPAN style="COLOR: #000000">&nbsp;directinput_device;<BR>}</SPAN></DIV><BR>要存储键盘数据，必须使用一个大小为256字节的数组，每个字节存储一个键的状态，这样就给出了保存256个键的空间。每个字节存储键当前的状态信息，即键是否被按下。要得到键的状态，就要检查高位（字节），如果置位，键就被按下；如果清零，键就未被按下。在DirectInput 中，每个键都有一个属于自己的宏，这些宏都以DIK_为前缀。A键定义为DIK_A，ESC为DIK_ESCAPE等。查阅DX SDK或DInput.h可以得到其他键的宏。<BR><BR><A target="_blank" rel="noopener" href="http://www.cppblog.com/Files/lovedday/Keyboard.rar"><FONT color=#1b1b1b>点击下载源码和工程 </FONT></A><BR><BR>完整源码如下：<BR><BR>
+
+<DIV style="BORDER-RIGHT: #ffffff 1px solid; PADDING-RIGHT: 5px; BORDER-TOP: #ffffff 1px solid; PADDING-LEFT: 4px; FONT-SIZE: 13px; PADDING-BOTTOM: 4px; BORDER-LEFT: #ffffff 1px solid; WIDTH: 98%; PADDING-TOP: 4px; BORDER-BOTTOM: #ffffff 1px solid; BACKGROUND-COLOR: #ffffff"><!--<br><br>Code highlighting produced by Actipro CodeHighlighter (freeware)<br>http://www.CodeHighlighter.com/<br><br>--><SPAN style="COLOR: #008000">/*</SPAN><SPAN style="COLOR: #008000">**************************************************************************************<BR>PURPOSE:<BR>&nbsp;&nbsp;&nbsp;&nbsp;Keyboard&nbsp;device&nbsp;Demo<BR>&nbsp;**************************************************************************************</SPAN><SPAN style="COLOR: #008000">*/</SPAN><SPAN style="COLOR: #000000"><BR><BR></SPAN><SPAN style="COLOR: #0000ff">#define</SPAN><SPAN style="COLOR: #000000">&nbsp;DIRECTINPUT_VERSION&nbsp;0x0800</SPAN><SPAN style="COLOR: #000000"><BR><BR>#include&nbsp;</SPAN><SPAN style="COLOR: #000000">&lt;</SPAN><SPAN style="COLOR: #000000">windows.h</SPAN><SPAN style="COLOR: #000000">&gt;</SPAN><SPAN style="COLOR: #000000"><BR>#include&nbsp;</SPAN><SPAN style="COLOR: #000000">&lt;</SPAN><SPAN style="COLOR: #000000">stdio.h</SPAN><SPAN style="COLOR: #000000">&gt;</SPAN><SPAN style="COLOR: #000000"><BR>#include&nbsp;</SPAN><SPAN style="COLOR: #000000">&lt;</SPAN><SPAN style="COLOR: #000000">dinput.h</SPAN><SPAN style="COLOR: #000000">&gt;</SPAN><SPAN style="COLOR: #000000"><BR>#include&nbsp;</SPAN><SPAN style="COLOR: #000000">"</SPAN><SPAN style="COLOR: #000000">resource.h</SPAN><SPAN style="COLOR: #000000">"</SPAN><SPAN style="COLOR: #000000"><BR><BR>#pragma&nbsp;comment(lib,&nbsp;</SPAN><SPAN style="COLOR: #000000">"</SPAN><SPAN style="COLOR: #000000">dxguid.lib</SPAN><SPAN style="COLOR: #000000">"</SPAN><SPAN style="COLOR: #000000">)<BR>#pragma&nbsp;comment(lib,&nbsp;</SPAN><SPAN style="COLOR: #000000">"</SPAN><SPAN style="COLOR: #000000">dinput8.lib</SPAN><SPAN style="COLOR: #000000">"</SPAN><SPAN style="COLOR: #000000">)<BR><BR></SPAN><SPAN style="COLOR: #0000ff">#define</SPAN><SPAN style="COLOR: #000000">&nbsp;Safe_Release(p)&nbsp;if((p))&nbsp;(p)-&gt;Release();</SPAN><SPAN style="COLOR: #000000"><BR><BR></SPAN><SPAN style="COLOR: #008000">//</SPAN><SPAN style="COLOR: #008000">&nbsp;window&nbsp;handles,&nbsp;class&nbsp;and&nbsp;caption&nbsp;text.</SPAN><SPAN style="COLOR: #008000"><BR></SPAN><SPAN style="COLOR: #000000">HWND&nbsp;g_hwnd;<BR></SPAN><SPAN style="COLOR: #0000ff">static</SPAN><SPAN style="COLOR: #000000">&nbsp;</SPAN><SPAN style="COLOR: #0000ff">char</SPAN><SPAN style="COLOR: #000000">&nbsp;g_class_name[]&nbsp;</SPAN><SPAN style="COLOR: #000000">=</SPAN><SPAN style="COLOR: #000000">&nbsp;</SPAN><SPAN style="COLOR: #000000">"</SPAN><SPAN style="COLOR: #000000">KeyboardClass</SPAN><SPAN style="COLOR: #000000">"</SPAN><SPAN style="COLOR: #000000">;<BR><BR>IDirectInput8</SPAN><SPAN style="COLOR: #000000">*</SPAN><SPAN style="COLOR: #000000">&nbsp;g_directinput;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #008000">//</SPAN><SPAN style="COLOR: #008000">&nbsp;directinput&nbsp;component</SPAN><SPAN style="COLOR: #008000"><BR></SPAN><SPAN style="COLOR: #000000">IDirectInputDevice8</SPAN><SPAN style="COLOR: #000000">*</SPAN><SPAN style="COLOR: #000000">&nbsp;g_directinput_device;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #008000">//</SPAN><SPAN style="COLOR: #008000">&nbsp;keyboard&nbsp;device<BR><BR></SPAN><SPAN style="COLOR: #008000">//</SPAN><SPAN style="COLOR: #008000">--------------------------------------------------------------------------------<BR></SPAN><SPAN style="COLOR: #008000">//</SPAN><SPAN style="COLOR: #008000">&nbsp;Window&nbsp;procedure.<BR></SPAN><SPAN style="COLOR: #008000">//</SPAN><SPAN style="COLOR: #008000">--------------------------------------------------------------------------------</SPAN><SPAN style="COLOR: #008000"><BR></SPAN><SPAN style="COLOR: #0000ff">long</SPAN><SPAN style="COLOR: #000000">&nbsp;WINAPI&nbsp;Window_Proc(HWND&nbsp;hwnd,&nbsp;UINT&nbsp;msg,&nbsp;WPARAM&nbsp;wParam,&nbsp;LPARAM&nbsp;lParam)<BR>{<BR>&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #0000ff">switch</SPAN><SPAN style="COLOR: #000000">(msg)<BR>&nbsp;&nbsp;&nbsp;&nbsp;{<BR>&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #0000ff">case</SPAN><SPAN style="COLOR: #000000">&nbsp;WM_DESTROY:<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PostQuitMessage(</SPAN><SPAN style="COLOR: #000000">0</SPAN><SPAN style="COLOR: #000000">);<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #0000ff">return</SPAN><SPAN style="COLOR: #000000">&nbsp;</SPAN><SPAN style="COLOR: #000000">0</SPAN><SPAN style="COLOR: #000000">;<BR>&nbsp;&nbsp;&nbsp;&nbsp;}<BR><BR>&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #0000ff">return</SPAN><SPAN style="COLOR: #000000">&nbsp;(</SPAN><SPAN style="COLOR: #0000ff">long</SPAN><SPAN style="COLOR: #000000">)&nbsp;DefWindowProc(hwnd,&nbsp;msg,&nbsp;wParam,&nbsp;lParam);<BR>}<BR><BR></SPAN><SPAN style="COLOR: #008000">//</SPAN><SPAN style="COLOR: #008000">--------------------------------------------------------------------------------<BR></SPAN><SPAN style="COLOR: #008000">//</SPAN><SPAN style="COLOR: #008000">&nbsp;Initialize&nbsp;keyboard&nbsp;interface,&nbsp;return&nbsp;a&nbsp;keyboad&nbsp;interface&nbsp;pointer.<BR></SPAN><SPAN style="COLOR: #008000">//</SPAN><SPAN style="COLOR: #008000">--------------------------------------------------------------------------------</SPAN><SPAN style="COLOR: #008000"><BR></SPAN><SPAN style="COLOR: #000000">IDirectInputDevice8</SPAN><SPAN style="COLOR: #000000">*</SPAN><SPAN style="COLOR: #000000">&nbsp;Init_Keyboard(HWND&nbsp;hwnd,&nbsp;IDirectInput8</SPAN><SPAN style="COLOR: #000000">*</SPAN><SPAN style="COLOR: #000000">&nbsp;directinput)<BR>{<BR>&nbsp;&nbsp;&nbsp;&nbsp;IDirectInputDevice8</SPAN><SPAN style="COLOR: #000000">*</SPAN><SPAN style="COLOR: #000000">&nbsp;directinput_device;<BR><BR>&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #008000">//</SPAN><SPAN style="COLOR: #008000">&nbsp;create&nbsp;the&nbsp;device&nbsp;object</SPAN><SPAN style="COLOR: #008000"><BR></SPAN><SPAN style="COLOR: #000000">&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #0000ff">if</SPAN><SPAN style="COLOR: #000000">(FAILED(directinput</SPAN><SPAN style="COLOR: #000000">-&gt;</SPAN><SPAN style="COLOR: #000000">CreateDevice(GUID_SysKeyboard,&nbsp;</SPAN><SPAN style="COLOR: #000000">&amp;</SPAN><SPAN style="COLOR: #000000">directinput_device,&nbsp;NULL)))<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #0000ff">return</SPAN><SPAN style="COLOR: #000000">&nbsp;NULL;<BR><BR>&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #008000">//</SPAN><SPAN style="COLOR: #008000">&nbsp;set&nbsp;the&nbsp;data&nbsp;format</SPAN><SPAN style="COLOR: #008000"><BR></SPAN><SPAN style="COLOR: #000000">&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #0000ff">if</SPAN><SPAN style="COLOR: #000000">(FAILED(directinput_device</SPAN><SPAN style="COLOR: #000000">-&gt;</SPAN><SPAN style="COLOR: #000000">SetDataFormat(</SPAN><SPAN style="COLOR: #000000">&amp;</SPAN><SPAN style="COLOR: #000000">c_dfDIKeyboard)))<BR>&nbsp;&nbsp;&nbsp;&nbsp;{<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;directinput_device</SPAN><SPAN style="COLOR: #000000">-&gt;</SPAN><SPAN style="COLOR: #000000">Release();<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #0000ff">return</SPAN><SPAN style="COLOR: #000000">&nbsp;NULL;<BR>&nbsp;&nbsp;&nbsp;&nbsp;}<BR><BR>&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #008000">//</SPAN><SPAN style="COLOR: #008000">&nbsp;set&nbsp;the&nbsp;coooperative&nbsp;mode</SPAN><SPAN style="COLOR: #008000"><BR></SPAN><SPAN style="COLOR: #000000">&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #0000ff">if</SPAN><SPAN style="COLOR: #000000">(FAILED(directinput_device</SPAN><SPAN style="COLOR: #000000">-&gt;</SPAN><SPAN style="COLOR: #000000">SetCooperativeLevel(hwnd,&nbsp;DISCL_FOREGROUND&nbsp;</SPAN><SPAN style="COLOR: #000000">|</SPAN><SPAN style="COLOR: #000000">&nbsp;DISCL_NONEXCLUSIVE)))<BR>&nbsp;&nbsp;&nbsp;&nbsp;{<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;directinput_device</SPAN><SPAN style="COLOR: #000000">-&gt;</SPAN><SPAN style="COLOR: #000000">Release();<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #0000ff">return</SPAN><SPAN style="COLOR: #000000">&nbsp;NULL;<BR>&nbsp;&nbsp;&nbsp;&nbsp;}<BR><BR>&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #008000">//</SPAN><SPAN style="COLOR: #008000">&nbsp;acquire&nbsp;the&nbsp;device&nbsp;for&nbsp;use</SPAN><SPAN style="COLOR: #008000"><BR></SPAN><SPAN style="COLOR: #000000">&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #0000ff">if</SPAN><SPAN style="COLOR: #000000">(FAILED(directinput_device</SPAN><SPAN style="COLOR: #000000">-&gt;</SPAN><SPAN style="COLOR: #000000">Acquire()))<BR>&nbsp;&nbsp;&nbsp;&nbsp;{<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;directinput_device</SPAN><SPAN style="COLOR: #000000">-&gt;</SPAN><SPAN style="COLOR: #000000">Release();<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #0000ff">return</SPAN><SPAN style="COLOR: #000000">&nbsp;NULL;<BR>&nbsp;&nbsp;&nbsp;&nbsp;}<BR><BR>&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #008000">//</SPAN><SPAN style="COLOR: #008000">&nbsp;everything&nbsp;well,&nbsp;so&nbsp;return&nbsp;a&nbsp;vaild&nbsp;pointer.</SPAN><SPAN style="COLOR: #008000"><BR></SPAN><SPAN style="COLOR: #000000">&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #0000ff">return</SPAN><SPAN style="COLOR: #000000">&nbsp;directinput_device;<BR>}<BR><BR></SPAN><SPAN style="COLOR: #008000">//</SPAN><SPAN style="COLOR: #008000">--------------------------------------------------------------------------------<BR></SPAN><SPAN style="COLOR: #008000">//</SPAN><SPAN style="COLOR: #008000">&nbsp;Read&nbsp;keyboard&nbsp;buffer.<BR></SPAN><SPAN style="COLOR: #008000">//</SPAN><SPAN style="COLOR: #008000">--------------------------------------------------------------------------------</SPAN><SPAN style="COLOR: #008000"><BR></SPAN><SPAN style="COLOR: #000000">BOOL&nbsp;Read_Device(IDirectInputDevice8</SPAN><SPAN style="COLOR: #000000">*</SPAN><SPAN style="COLOR: #000000">&nbsp;directinput_device,&nbsp;</SPAN><SPAN style="COLOR: #0000ff">void</SPAN><SPAN style="COLOR: #000000">*</SPAN><SPAN style="COLOR: #000000">&nbsp;buffer,&nbsp;</SPAN><SPAN style="COLOR: #0000ff">long</SPAN><SPAN style="COLOR: #000000">&nbsp;buffer_size)<BR>{<BR>&nbsp;&nbsp;&nbsp;&nbsp;HRESULT&nbsp;rv;<BR><BR>&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #0000ff">while</SPAN><SPAN style="COLOR: #000000">(</SPAN><SPAN style="COLOR: #000000">1</SPAN><SPAN style="COLOR: #000000">)<BR>&nbsp;&nbsp;&nbsp;&nbsp;{<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #008000">//</SPAN><SPAN style="COLOR: #008000">&nbsp;poll&nbsp;device</SPAN><SPAN style="COLOR: #008000"><BR></SPAN><SPAN style="COLOR: #000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;g_directinput_device</SPAN><SPAN style="COLOR: #000000">-&gt;</SPAN><SPAN style="COLOR: #000000">Poll();<BR><BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #008000">//</SPAN><SPAN style="COLOR: #008000">&nbsp;read&nbsp;in&nbsp;state</SPAN><SPAN style="COLOR: #008000"><BR></SPAN><SPAN style="COLOR: #000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #0000ff">if</SPAN><SPAN style="COLOR: #000000">(SUCCEEDED(rv&nbsp;</SPAN><SPAN style="COLOR: #000000">=</SPAN><SPAN style="COLOR: #000000">&nbsp;g_directinput_device</SPAN><SPAN style="COLOR: #000000">-&gt;</SPAN><SPAN style="COLOR: #000000">GetDeviceState(buffer_size,&nbsp;buffer)))<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #0000ff">break</SPAN><SPAN style="COLOR: #000000">;<BR><BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #008000">//</SPAN><SPAN style="COLOR: #008000">&nbsp;return&nbsp;when&nbsp;an&nbsp;unknown&nbsp;error</SPAN><SPAN style="COLOR: #008000"><BR></SPAN><SPAN style="COLOR: #000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #0000ff">if</SPAN><SPAN style="COLOR: #000000">(rv&nbsp;</SPAN><SPAN style="COLOR: #000000">!=</SPAN><SPAN style="COLOR: #000000">&nbsp;DIERR_INPUTLOST&nbsp;</SPAN><SPAN style="COLOR: #000000">||</SPAN><SPAN style="COLOR: #000000">&nbsp;rv&nbsp;</SPAN><SPAN style="COLOR: #000000">!=</SPAN><SPAN style="COLOR: #000000">&nbsp;DIERR_NOTACQUIRED)<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #0000ff">return</SPAN><SPAN style="COLOR: #000000">&nbsp;FALSE;<BR><BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #008000">//</SPAN><SPAN style="COLOR: #008000">&nbsp;re-acquire&nbsp;and&nbsp;try&nbsp;again</SPAN><SPAN style="COLOR: #008000"><BR></SPAN><SPAN style="COLOR: #000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #0000ff">if</SPAN><SPAN style="COLOR: #000000">(FAILED(g_directinput_device</SPAN><SPAN style="COLOR: #000000">-&gt;</SPAN><SPAN style="COLOR: #000000">Acquire()))<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #0000ff">return</SPAN><SPAN style="COLOR: #000000">&nbsp;FALSE;<BR>&nbsp;&nbsp;&nbsp;&nbsp;}<BR><BR>&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #0000ff">return</SPAN><SPAN style="COLOR: #000000">&nbsp;TRUE;<BR>}<BR><BR></SPAN><SPAN style="COLOR: #008000">//</SPAN><SPAN style="COLOR: #008000">--------------------------------------------------------------------------------<BR></SPAN><SPAN style="COLOR: #008000">//</SPAN><SPAN style="COLOR: #008000">&nbsp;Main&nbsp;function,&nbsp;routine&nbsp;entry.<BR></SPAN><SPAN style="COLOR: #008000">//</SPAN><SPAN style="COLOR: #008000">--------------------------------------------------------------------------------</SPAN><SPAN style="COLOR: #008000"><BR></SPAN><SPAN style="COLOR: #0000ff">int</SPAN><SPAN style="COLOR: #000000">&nbsp;WINAPI&nbsp;WinMain(HINSTANCE&nbsp;inst,&nbsp;HINSTANCE,&nbsp;LPSTR&nbsp;cmd_line,&nbsp;</SPAN><SPAN style="COLOR: #0000ff">int</SPAN><SPAN style="COLOR: #000000">&nbsp;cmd_show)<BR>{<BR>&nbsp;&nbsp;&nbsp;&nbsp;WNDCLASS&nbsp;&nbsp;&nbsp;&nbsp;win_class;<BR>&nbsp;&nbsp;&nbsp;&nbsp;MSG&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;msg;<BR>&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #0000ff">char</SPAN><SPAN style="COLOR: #000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;key_state_buffer[</SPAN><SPAN style="COLOR: #000000">256</SPAN><SPAN style="COLOR: #000000">];<BR><BR>&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #008000">//</SPAN><SPAN style="COLOR: #008000">&nbsp;create&nbsp;window&nbsp;class&nbsp;and&nbsp;register&nbsp;it</SPAN><SPAN style="COLOR: #008000"><BR></SPAN><SPAN style="COLOR: #000000">&nbsp;&nbsp;&nbsp;&nbsp;win_class.style&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #000000">=</SPAN><SPAN style="COLOR: #000000">&nbsp;CS_HREDRAW&nbsp;</SPAN><SPAN style="COLOR: #000000">|</SPAN><SPAN style="COLOR: #000000">&nbsp;CS_VREDRAW;<BR>&nbsp;&nbsp;&nbsp;&nbsp;win_class.lpfnWndProc&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #000000">=</SPAN><SPAN style="COLOR: #000000">&nbsp;Window_Proc;<BR>&nbsp;&nbsp;&nbsp;&nbsp;win_class.cbClsExtra&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #000000">=</SPAN><SPAN style="COLOR: #000000">&nbsp;</SPAN><SPAN style="COLOR: #000000">0</SPAN><SPAN style="COLOR: #000000">;<BR>&nbsp;&nbsp;&nbsp;&nbsp;win_class.cbWndExtra&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #000000">=</SPAN><SPAN style="COLOR: #000000">&nbsp;DLGWINDOWEXTRA;<BR>&nbsp;&nbsp;&nbsp;&nbsp;win_class.hInstance&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #000000">=</SPAN><SPAN style="COLOR: #000000">&nbsp;inst;<BR>&nbsp;&nbsp;&nbsp;&nbsp;win_class.hIcon&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #000000">=</SPAN><SPAN style="COLOR: #000000">&nbsp;LoadIcon(inst,&nbsp;IDI_APPLICATION);<BR>&nbsp;&nbsp;&nbsp;&nbsp;win_class.hCursor&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #000000">=</SPAN><SPAN style="COLOR: #000000">&nbsp;LoadCursor(NULL,&nbsp;IDC_ARROW);<BR>&nbsp;&nbsp;&nbsp;&nbsp;win_class.hbrBackground&nbsp;</SPAN><SPAN style="COLOR: #000000">=</SPAN><SPAN style="COLOR: #000000">&nbsp;(HBRUSH)&nbsp;(COLOR_BTNFACE&nbsp;</SPAN><SPAN style="COLOR: #000000">+</SPAN><SPAN style="COLOR: #000000">&nbsp;</SPAN><SPAN style="COLOR: #000000">1</SPAN><SPAN style="COLOR: #000000">);<BR>&nbsp;&nbsp;&nbsp;&nbsp;win_class.lpszMenuName&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #000000">=</SPAN><SPAN style="COLOR: #000000">&nbsp;NULL;<BR>&nbsp;&nbsp;&nbsp;&nbsp;win_class.lpszClassName&nbsp;</SPAN><SPAN style="COLOR: #000000">=</SPAN><SPAN style="COLOR: #000000">&nbsp;g_class_name;&nbsp;&nbsp;&nbsp;&nbsp;<BR><BR>&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #0000ff">if</SPAN><SPAN style="COLOR: #000000">(</SPAN><SPAN style="COLOR: #000000">!</SPAN><SPAN style="COLOR: #000000">&nbsp;RegisterClass(</SPAN><SPAN style="COLOR: #000000">&amp;</SPAN><SPAN style="COLOR: #000000">win_class))<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #0000ff">return</SPAN><SPAN style="COLOR: #000000">&nbsp;FALSE;<BR><BR>&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #008000">//</SPAN><SPAN style="COLOR: #008000">&nbsp;create&nbsp;the&nbsp;main&nbsp;window</SPAN><SPAN style="COLOR: #008000"><BR></SPAN><SPAN style="COLOR: #000000">&nbsp;&nbsp;&nbsp;&nbsp;g_hwnd&nbsp;</SPAN><SPAN style="COLOR: #000000">=</SPAN><SPAN style="COLOR: #000000">&nbsp;CreateDialog(inst,&nbsp;MAKEINTRESOURCE(IDD_KEYBOARD),&nbsp;</SPAN><SPAN style="COLOR: #000000">0</SPAN><SPAN style="COLOR: #000000">,&nbsp;NULL);<BR><BR>&nbsp;&nbsp;&nbsp;&nbsp;ShowWindow(g_hwnd,&nbsp;cmd_show);<BR>&nbsp;&nbsp;&nbsp;&nbsp;UpdateWindow(g_hwnd);<BR><BR>&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #008000">//</SPAN><SPAN style="COLOR: #008000">&nbsp;initialize&nbsp;directinput&nbsp;and&nbsp;get&nbsp;keyboard&nbsp;device</SPAN><SPAN style="COLOR: #008000"><BR></SPAN><SPAN style="COLOR: #000000">&nbsp;&nbsp;&nbsp;&nbsp;DirectInput8Create(inst,&nbsp;DIRECTINPUT_VERSION,&nbsp;IID_IDirectInput8,&nbsp;(</SPAN><SPAN style="COLOR: #0000ff">void</SPAN><SPAN style="COLOR: #000000">&nbsp;</SPAN><SPAN style="COLOR: #000000">**</SPAN><SPAN style="COLOR: #000000">)&nbsp;</SPAN><SPAN style="COLOR: #000000">&amp;</SPAN><SPAN style="COLOR: #000000">g_directinput,&nbsp;NULL);<BR><BR>&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #008000">//</SPAN><SPAN style="COLOR: #008000">&nbsp;initialize&nbsp;keyboard</SPAN><SPAN style="COLOR: #008000"><BR></SPAN><SPAN style="COLOR: #000000">&nbsp;&nbsp;&nbsp;&nbsp;g_directinput_device&nbsp;</SPAN><SPAN style="COLOR: #000000">=</SPAN><SPAN style="COLOR: #000000">&nbsp;Init_Keyboard(g_hwnd,&nbsp;g_directinput);<BR><BR>&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #008000">//</SPAN><SPAN style="COLOR: #008000">&nbsp;start&nbsp;message&nbsp;pump,&nbsp;waiting&nbsp;for&nbsp;signal&nbsp;to&nbsp;quit.</SPAN><SPAN style="COLOR: #008000"><BR></SPAN><SPAN style="COLOR: #000000">&nbsp;&nbsp;&nbsp;&nbsp;ZeroMemory(</SPAN><SPAN style="COLOR: #000000">&amp;</SPAN><SPAN style="COLOR: #000000">msg,&nbsp;</SPAN><SPAN style="COLOR: #0000ff">sizeof</SPAN><SPAN style="COLOR: #000000">(MSG));<BR><BR>&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #0000ff">while</SPAN><SPAN style="COLOR: #000000">(msg.message&nbsp;</SPAN><SPAN style="COLOR: #000000">!=</SPAN><SPAN style="COLOR: #000000">&nbsp;WM_QUIT)<BR>&nbsp;&nbsp;&nbsp;&nbsp;{<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #0000ff">if</SPAN><SPAN style="COLOR: #000000">(PeekMessage(</SPAN><SPAN style="COLOR: #000000">&amp;</SPAN><SPAN style="COLOR: #000000">msg,&nbsp;NULL,&nbsp;</SPAN><SPAN style="COLOR: #000000">0</SPAN><SPAN style="COLOR: #000000">,&nbsp;</SPAN><SPAN style="COLOR: #000000">0</SPAN><SPAN style="COLOR: #000000">,&nbsp;PM_REMOVE))<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TranslateMessage(</SPAN><SPAN style="COLOR: #000000">&amp;</SPAN><SPAN style="COLOR: #000000">msg);<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;DispatchMessage(</SPAN><SPAN style="COLOR: #000000">&amp;</SPAN><SPAN style="COLOR: #000000">msg);<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #008000">//</SPAN><SPAN style="COLOR: #008000">&nbsp;read&nbsp;in&nbsp;keyboard&nbsp;and&nbsp;break&nbsp;if&nbsp;ESCAPE&nbsp;pressed</SPAN><SPAN style="COLOR: #008000"><BR></SPAN><SPAN style="COLOR: #000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Read_Device(g_directinput_device,&nbsp;key_state_buffer,&nbsp;</SPAN><SPAN style="COLOR: #0000ff">sizeof</SPAN><SPAN style="COLOR: #000000">(key_state_buffer));<BR><BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #0000ff">if</SPAN><SPAN style="COLOR: #000000">(key_state_buffer[DIK_ESCAPE]&nbsp;</SPAN><SPAN style="COLOR: #000000">&amp;</SPAN><SPAN style="COLOR: #000000">&nbsp;</SPAN><SPAN style="COLOR: #000000">0x80</SPAN><SPAN style="COLOR: #000000">)<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #0000ff">break</SPAN><SPAN style="COLOR: #000000">;<BR>&nbsp;&nbsp;&nbsp;&nbsp;}<BR><BR>&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #008000">//</SPAN><SPAN style="COLOR: #008000">&nbsp;release&nbsp;directinput&nbsp;objects</SPAN><SPAN style="COLOR: #008000"><BR></SPAN><SPAN style="COLOR: #000000">&nbsp;&nbsp;&nbsp;&nbsp;g_directinput_device</SPAN><SPAN style="COLOR: #000000">-&gt;</SPAN><SPAN style="COLOR: #000000">Unacquire();<BR>&nbsp;&nbsp;&nbsp;&nbsp;g_directinput_device</SPAN><SPAN style="COLOR: #000000">-&gt;</SPAN><SPAN style="COLOR: #000000">Release();<BR>&nbsp;&nbsp;&nbsp;&nbsp;g_directinput</SPAN><SPAN style="COLOR: #000000">-&gt;</SPAN><SPAN style="COLOR: #000000">Release();<BR><BR>&nbsp;&nbsp;&nbsp;&nbsp;UnregisterClass(g_class_name,&nbsp;inst);<BR>&nbsp;&nbsp;&nbsp;&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #0000ff">return</SPAN><SPAN style="COLOR: #000000">&nbsp;(</SPAN><SPAN style="COLOR: #0000ff">int</SPAN><SPAN style="COLOR: #000000">)&nbsp;msg.wParam;<BR>}<BR><BR></SPAN></DIV><BR>运行效果：<BR><BR><IMG alt="" src="http://www.cppblog.com/images/cppblog_com/lovedday/4157/r_keyboard1.jpg"><BR>
+    
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="followme">
+  <span>Welcome to my other publishing channels</span>
+
+  <div class="social-list">
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="https://www.facebook.com/rise.worlds">
+            <span class="icon">
+              <i class="fab fa-facebook"></i>
+            </span>
+
+            <span class="label">FB Page</span>
+          </a>
+      </div>
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="https://twitter.com/riseworlds">
+            <span class="icon">
+              <i class="fab fa-twitter"></i>
+            </span>
+
+            <span class="label">Twitter</span>
+          </a>
+      </div>
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="https://t.me/riseworlds">
+            <span class="icon">
+              <i class="fab fa-telegram"></i>
+            </span>
+
+            <span class="label">Telegram</span>
+          </a>
+      </div>
+  </div>
+</div>
+
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2007/07/24/%E2%80%9C%E7%88%B1%E5%9B%BD%E4%B9%A6%E6%B3%95%E5%AE%B6%E2%80%9D%E5%92%8C%E4%BB%96%E7%9A%84%E7%B2%89%E4%B8%9D/" rel="prev" title="“爱国书法家”和他的粉丝">
+                  <i class="fa fa-angle-left"></i> “爱国书法家”和他的粉丝
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2007/07/25/%E4%BD%BF%E7%94%A8DirectInput%E8%BF%9B%E8%A1%8C%E4%BA%A4%E4%BA%92%EF%BC%883%EF%BC%89/" rel="next" title="使用DirectInput进行交互（3）">
+                  使用DirectInput进行交互（3） <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">豫ICP备2021009490号 </a>
+  </div>
+<div class="copyright">
+<a href="https://icp.gov.moe/?keyword=20233669" target="_blank">萌ICP备20233669号</a>
+</div>
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">rise</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="reading-progress-bar"></div>
+
+  <a href="https://github.com/rise-worlds" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://unpkg.com/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@next-theme/pjax@0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script><script src="/js/pjax.js"></script>
+
+  
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://unpkg.com/mermaid@10.7.0/dist/mermaid.min.js","integrity":"sha256-TtLOdUA8mstPoO6sGvHIGx2ceXrrX4KgIItO06XOn8A="}}</script>
+  <script src="/js/third-party/tags/mermaid.js"></script>
+
+
+
+
+
+  
+
+
+
+
+  <script src="https://unpkg.com/quicklink@2.3.0/dist/quicklink.umd.js" integrity="sha256-yvJQOINiH9fWemHn0vCA5lsHWJaHs6/ZmO+1Ft04SvM=" crossorigin="anonymous"></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":true,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"https://rise-worlds.github.io/2007/07/24/%E4%BD%BF%E7%94%A8DirectInput%E8%BF%9B%E8%A1%8C%E4%BA%A4%E4%BA%92%EF%BC%882%EF%BC%89/"}</script>
+  <script src="/js/third-party/quicklink.js"></script>
+
+</body>
+</html>

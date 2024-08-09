@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://unpkg.com/@fortawesome/fontawesome-free@6.5.1/css/all.min.css" integrity="sha256-wiz7ZSCn/btzhjKDQBms9Hx4sSeUYsDrTLg7roPstac=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://unpkg.com/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"rise-worlds.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.19.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="&#x2F;&#x2F; Module Name: Ping.c&#x2F;&#x2F;&#x2F;&#x2F; Code by Rise&#x2F;&#x2F;&#x2F;&#x2F; Command Line Options&#x2F;Parameters:&#x2F;&#x2F;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Ping [hos">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ping的源代码">
+<meta property="og:url" content="https://rise-worlds.github.io/2006/03/12/ping%E7%9A%84%E6%BA%90%E4%BB%A3%E7%A0%81/index.html">
+<meta property="og:site_name" content="Rise&#39;blogs">
+<meta property="og:description" content="&#x2F;&#x2F; Module Name: Ping.c&#x2F;&#x2F;&#x2F;&#x2F; Code by Rise&#x2F;&#x2F;&#x2F;&#x2F; Command Line Options&#x2F;Parameters:&#x2F;&#x2F;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Ping [hos">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2006-03-12T11:15:00.000Z">
+<meta property="article:modified_time" content="2006-03-12T11:15:00.000Z">
+<meta property="article:author" content="rise">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://rise-worlds.github.io/2006/03/12/ping%E7%9A%84%E6%BA%90%E4%BB%A3%E7%A0%81/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://rise-worlds.github.io/2006/03/12/ping%E7%9A%84%E6%BA%90%E4%BB%A3%E7%A0%81/","path":"2006/03/12/ping的源代码/","title":"ping的源代码"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>ping的源代码 | Rise'blogs</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Rise'blogs</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li><li class="menu-item menu-item-sitemap"><a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>Sitemap</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="rise"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">rise</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">657</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">46</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">77</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="mailto:rise.worlds@outlook.com" title="E-Mail → mailto:rise.worlds@outlook.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://github.com/rise-worlds" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;rise-worlds" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://x.com/riseworlds" title="Twitter → https:&#x2F;&#x2F;x.com&#x2F;riseworlds" rel="noopener me" target="_blank"><i class="fab fa-twitter fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.facebook.com/rise.worlds" title="FB Page → https:&#x2F;&#x2F;www.facebook.com&#x2F;rise.worlds" rel="noopener me" target="_blank"><i class="fab fa-facebook fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.youtube.com/@YiXuan" title="YouTube → https:&#x2F;&#x2F;www.youtube.com&#x2F;@YiXuan" rel="noopener me" target="_blank"><i class="fab fa-youtube fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.instagram.com/rise.worlds/" title="Instagram → https:&#x2F;&#x2F;www.instagram.com&#x2F;rise.worlds&#x2F;" rel="noopener me" target="_blank"><i class="fab fa-instagram fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://t.me/riseworlds" title="Telegram → https:&#x2F;&#x2F;t.me&#x2F;riseworlds" rel="noopener me" target="_blank"><i class="fab fa-telegram fa-fw"></i></a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="Back to top">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+          Links
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <a href="https://www.cnblogs.com/flying_bat" title="https:&#x2F;&#x2F;www.cnblogs.com&#x2F;flying_bat" rel="noopener" target="_blank">my cnblogs</a>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://rise-worlds.github.io/2006/03/12/ping%E7%9A%84%E6%BA%90%E4%BB%A3%E7%A0%81/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="rise">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Rise'blogs">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="ping的源代码 | Rise'blogs">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          ping的源代码
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2006-03-12 11:15:00" itemprop="dateCreated datePublished" datetime="2006-03-12T11:15:00+00:00">2006-03-12</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Dev/" itemprop="url" rel="index"><span itemprop="name">Dev</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Dev/C/" itemprop="url" rel="index"><span itemprop="name">C++</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p><SPAN id=txtObj_0><SPAN style="FONT-SIZE: 10pt"><SPAN id=txtObj_0>&#x2F;&#x2F; Module Name: Ping.c<BR>&#x2F;&#x2F;<BR>&#x2F;&#x2F; Code by Rise<BR>&#x2F;&#x2F;<BR>&#x2F;&#x2F; Command Line Options&#x2F;Parameters:<BR>&#x2F;&#x2F;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Ping [host] [packet-size]<BR>&#x2F;&#x2F;<BR>&#x2F;&#x2F;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;host&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;String name of host to ping<BR>&#x2F;&#x2F;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;packet-size&nbsp;&nbsp;&nbsp;&nbsp;Integer size of packet to send (smaller than 1024 bytes)<BR>&#x2F;&#x2F;<BR>&#x2F;&#x2F;#pragma pack(1)<BR><BR>#define WIN32_LEAN_AND_MEAN<BR>#include &lt;winsock2.h&gt;<BR>#include &lt;ws2tcpip.h&gt;<BR>#include &lt;stdio.h&gt;<BR>#include &lt;stdlib.h&gt;<BR><BR>#define IP_RECORD_ROUTE 0x7<BR>&#x2F;&#x2F;<BR>&#x2F;&#x2F; IP header structure<BR>&#x2F;&#x2F;<BR>typedef struct _iphdr<BR>{<BR>&nbsp;&nbsp;&nbsp;&nbsp;unsigned int&nbsp;&nbsp;&nbsp;&nbsp;h_len:4;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x2F;&#x2F; Length of the header<BR>&nbsp;&nbsp;&nbsp;&nbsp;unsigned int&nbsp;&nbsp;&nbsp;&nbsp;version:4;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x2F;&#x2F; Version of IP<BR>&nbsp;&nbsp;&nbsp;&nbsp;unsigned char&nbsp;&nbsp;&nbsp;&nbsp; tos;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x2F;&#x2F; Type of service<BR>&nbsp;&nbsp;&nbsp;&nbsp;unsigned short&nbsp;&nbsp;&nbsp;&nbsp;total_len;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x2F;&#x2F; Total length of the packet<BR>&nbsp;&nbsp;&nbsp;&nbsp;unsigned short&nbsp;&nbsp;&nbsp;&nbsp;ident;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x2F;&#x2F; Unique identifier<BR>&nbsp;&nbsp;&nbsp;&nbsp;unsigned short&nbsp;&nbsp;&nbsp;&nbsp;frag_and_flags;&nbsp;&nbsp;&nbsp;&nbsp;&#x2F;&#x2F; Flags<BR>&nbsp;&nbsp;&nbsp;&nbsp;unsigned short&nbsp;&nbsp;&nbsp;&nbsp;ttl;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x2F;&#x2F; Time to live<BR>&nbsp;&nbsp;&nbsp;&nbsp;unsigned short&nbsp;&nbsp;&nbsp;&nbsp;proto;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x2F;&#x2F; Protocol (TCP, UDP, etc.)<BR>&nbsp;&nbsp;&nbsp;&nbsp;unsigned short&nbsp;&nbsp;&nbsp;&nbsp;checksum;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x2F;&#x2F; IP checksum<BR>&nbsp;&nbsp;&nbsp;&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;unsigned int&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sourceIP;<BR>&nbsp;&nbsp;&nbsp;&nbsp;unsigned int&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;destIP;<BR>}IpHeader;<BR><BR>#define ICMP_ECHO&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;8<BR>#define ICMP_ECHOREPLY&nbsp;&nbsp;&nbsp;&nbsp;0<BR>#define ICMP_MIN&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;8&nbsp;&nbsp;&nbsp;&nbsp;&#x2F;&#x2F; Minimun 8-byte ICMP packet (header)<BR><BR>&#x2F;&#x2F;<BR>&#x2F;&#x2F; ICMP header structure<BR>&#x2F;&#x2F;<BR>typedef struct _icmphdr<BR>{<BR>&nbsp;&nbsp;&nbsp;&nbsp;BYTE&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;i_type;<BR>&nbsp;&nbsp;&nbsp;&nbsp;BYTE&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;i_code;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x2F;&#x2F; Type sub code<BR>&nbsp;&nbsp;&nbsp;&nbsp;USHORT&nbsp;&nbsp;&nbsp;&nbsp;i_cksum;<BR>&nbsp;&nbsp;&nbsp;&nbsp;USHORT&nbsp;&nbsp;&nbsp;&nbsp;i_id;<BR>&nbsp;&nbsp;&nbsp;&nbsp;USHORT&nbsp;&nbsp;&nbsp;&nbsp;i_seq;<BR>&nbsp;&nbsp;&nbsp;&nbsp;&#x2F;&#x2F; This is not the standard header, but we reserve space for time<BR>&nbsp;&nbsp;&nbsp;&nbsp;ULONG timestamp;<BR>}IcmpHeader;<BR><BR>&#x2F;&#x2F;<BR>&#x2F;&#x2F; IP option header – use with socket option IP_OPTIONS<BR>&#x2F;&#x2F;<BR>typedef struct _ipoptionhdr<BR>{<BR>&nbsp;&nbsp;&nbsp;&nbsp;unsigned char&nbsp;&nbsp;&nbsp;&nbsp;code;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x2F;&#x2F; Option type<BR>&nbsp;&nbsp;&nbsp;&nbsp;unsigned char&nbsp;&nbsp;&nbsp;&nbsp;len;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x2F;&#x2F; Length of option hdr<BR>&nbsp;&nbsp;&nbsp;&nbsp;unsigned char&nbsp;&nbsp;&nbsp;&nbsp;prt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x2F;&#x2F; Offset into options<BR>&nbsp;&nbsp;&nbsp;&nbsp;unsigned long&nbsp;&nbsp;&nbsp;&nbsp;addr[9];&nbsp;&nbsp;&nbsp;&nbsp;&#x2F;&#x2F; List of IP addrs<BR>}IpOptionHeader;<BR>#define DEF_PACKET_SIZE 32&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x2F;&#x2F; Default packet size<BR>#define MAX_PACKET&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1024&nbsp;&nbsp;&nbsp;&nbsp;&#x2F;&#x2F; Max ICMP packet size<BR>#define MAX_IP_HDR_SIZE&nbsp;&nbsp;&nbsp;&nbsp;60&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x2F;&#x2F; Max IP header size w&#x2F;options<BR><BR>BOOL&nbsp;&nbsp;&nbsp;&nbsp;bRecordRoute;<BR>int&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;datasize;<BR>char*&nbsp;&nbsp;&nbsp;&nbsp;lpdest;<BR><BR>&#x2F;&#x2F;<BR>&#x2F;&#x2F; Function: usage<BR>&#x2F;&#x2F;<BR>&#x2F;&#x2F; Description:<BR>&#x2F;&#x2F;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Print usage information<BR>&#x2F;&#x2F;<BR>void usage(char* progname)<BR>{<BR>&nbsp;&nbsp;&nbsp;&nbsp;printf(“usage: ping -r &lt;host&gt; [data size]\n”);<BR>&nbsp;&nbsp;&nbsp;&nbsp;printf(“&nbsp;&nbsp;&nbsp;&nbsp;-r&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;record route\n”);<BR>&nbsp;&nbsp;&nbsp;&nbsp;printf(“&nbsp;&nbsp;&nbsp;&nbsp;host&nbsp;&nbsp;&nbsp;&nbsp;remote machine to Ping\n”);<BR>&nbsp;&nbsp;&nbsp;&nbsp;printf(“&nbsp;&nbsp;&nbsp;&nbsp;datasize&nbsp;&nbsp;&nbsp;&nbsp;can be up to 1 KB\n”);<BR>&nbsp;&nbsp;&nbsp;&nbsp;ExitProcess(-1);<BR>}<BR><BR>&#x2F;&#x2F;<BR>&#x2F;&#x2F; Function: FillICMPData<BR>&#x2F;&#x2F;<BR>&#x2F;&#x2F; Description:<BR>&#x2F;&#x2F;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Helper function to fill in various fields for our ICMP request<BR>&#x2F;&#x2F;<BR>void FillICMPData(char* icmp_data, int datasize)<BR>{<BR>&nbsp;&nbsp;&nbsp;&nbsp;IcmpHeader*&nbsp;&nbsp;&nbsp;&nbsp;icmp_hdr &#x3D; NULL;<BR>&nbsp;&nbsp;&nbsp;&nbsp;char*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;datapart &#x3D; NULL;<BR>&nbsp;&nbsp;&nbsp;&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;icmp_hdr &#x3D; (IcmpHeader*)icmp_data;<BR>&nbsp;&nbsp;&nbsp;&nbsp;icmp_hdr-&gt;i_type &#x3D; ICMP_ECHO;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x2F;&#x2F; Request an ICMP echo<BR>&nbsp;&nbsp;&nbsp;&nbsp;icmp_hdr-&gt;i_code &#x3D; 0;<BR>&nbsp;&nbsp;&nbsp;&nbsp;icmp_hdr-&gt;i_id &#x3D; (USHORT)GetCurrentProcessId();<BR>&nbsp;&nbsp;&nbsp;&nbsp;icmp_hdr-&gt;i_cksum &#x3D; 0;<BR>&nbsp;&nbsp;&nbsp;&nbsp;icmp_hdr-&gt;i_seq &#x3D; 0;<BR>&nbsp;&nbsp;&nbsp;&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;datapart &#x3D; icmp_data + sizeof(IcmpHeader);<BR>&nbsp;&nbsp;&nbsp;&nbsp;&#x2F;&#x2F;<BR>&nbsp;&nbsp;&nbsp;&nbsp;&#x2F;&#x2F; Place some junk in the buffer<BR>&nbsp;&nbsp;&nbsp;&nbsp;&#x2F;&#x2F;<BR>&nbsp;&nbsp;&nbsp;&nbsp;memset(datapart, ‘E’, datasize - sizeof(IcmpHeader));<BR>}<BR><BR>&#x2F;&#x2F;<BR>&#x2F;&#x2F; Function: checksum<BR>&#x2F;&#x2F;<BR>&#x2F;&#x2F; Description:<BR>&#x2F;&#x2F;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;This funcion calculates the 16-bit one’s complement sum<BR>&#x2F;&#x2F;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;of the supplied buffer (ICMP)header<BR>&#x2F;&#x2F;<BR>USHORT checksum(USHORT* buffer, int size)<BR>{<BR>&nbsp;&nbsp;&nbsp;&nbsp;unsigned long cksum &#x3D; 0 ;<BR>&nbsp;&nbsp;&nbsp;&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;while(size &gt; 1)<BR>&nbsp;&nbsp;&nbsp;&nbsp;{<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cksum +&#x3D; <em>buffer++;<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size -&#x3D; sizeof(USHORT);<BR>&nbsp;&nbsp;&nbsp;&nbsp;}<BR>&nbsp;&nbsp;&nbsp;&nbsp;if(size)<BR>&nbsp;&nbsp;&nbsp;&nbsp;{<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cksum +&#x3D; <em>(UCHAR</em>)buffer;<BR>&nbsp;&nbsp;&nbsp;&nbsp;}<BR>&nbsp;&nbsp;&nbsp;&nbsp;cksum &#x3D; (cksum&gt;&gt;16)+(cksum&amp;0xffff);<BR>&nbsp;&nbsp;&nbsp;&nbsp;cksum +&#x3D; (cksum&gt;&gt;16);<BR>&nbsp;&nbsp;&nbsp;&nbsp;return (USHORT)(~cksum);<BR>}<BR><BR>&#x2F;&#x2F;<BR>&#x2F;&#x2F; Function: DecodeIPOptions<BR>&#x2F;&#x2F;<BR>&#x2F;&#x2F; Description:<BR>&#x2F;&#x2F;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;If the IP option header is present. find the IP options<BR>&#x2F;&#x2F;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;within the IP header and print the record route option<BR>&#x2F;&#x2F;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;values<BR>&#x2F;&#x2F;<BR>void DecodeIPOptions(char</em>buf,int bytes)<BR>{<BR>&nbsp;&nbsp;&nbsp;&nbsp;IpOptionHeader* ipopt &#x3D; NULL;<BR>&nbsp;&nbsp;&nbsp;&nbsp;IN_ADDR&nbsp;&nbsp;&nbsp;&nbsp;inaddr;<BR>&nbsp;&nbsp;&nbsp;&nbsp;int&nbsp;&nbsp;&nbsp;&nbsp; i;<BR>&nbsp;&nbsp;&nbsp;&nbsp;HOSTENT <em>host &#x3D; NULL;<BR>&nbsp;&nbsp;&nbsp;&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;ipopt &#x3D; (IpOptionHeader</em>)(buf + 20);<BR>&nbsp;&nbsp;&nbsp;&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;printf(“RR:&nbsp;&nbsp;&nbsp;&nbsp;”);<BR>&nbsp;&nbsp;&nbsp;&nbsp;for(i&#x3D;0;i&lt;(ipopt-&gt;prt&#x2F;4)-1;i++)<BR>&nbsp;&nbsp;&nbsp;&nbsp;{<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;inaddr.S_un.S_addr &#x3D; ipopt-&gt;addr[i];<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(i !&#x3D; 0 )<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;printf(“&nbsp;&nbsp;&nbsp;&nbsp;”);<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;host &#x3D; gethostbyaddr((char*)&amp;inaddr.S_un.S_addr, sizeof(inaddr.S_un.S_addr), AF_INET);<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(host)<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;printf(“(%-15s) %s\n”, inet_ntoa(inaddr), host-&gt;h_name);<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;printf(“(%-15s)\n”, inet_ntoa(inaddr));<BR>&nbsp;&nbsp;&nbsp;&nbsp;}<BR>&nbsp;&nbsp;&nbsp;&nbsp;return;<BR>}<BR><BR>&#x2F;&#x2F;<BR>&#x2F;&#x2F; Function: DecodeICMPHeader<BR>&#x2F;&#x2F;<BR>&#x2F;&#x2F; Description:<BR>&#x2F;&#x2F;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The response is an IP packet. We must decode the IP header to locate the ICMP data.<BR>&#x2F;&#x2F;<BR>void DecodeICMPHeader(char* buf, int bytes, struct sockaddr_in <em>from)<BR>{<BR>&nbsp;&nbsp;&nbsp;&nbsp;IpHeader</em>&nbsp;&nbsp;&nbsp;&nbsp;iphdr &#x3D; NULL;<BR>&nbsp;&nbsp;&nbsp;&nbsp;IcmpHeader*&nbsp;&nbsp;&nbsp;&nbsp;icmphdr &#x3D; NULL;<BR>&nbsp;&nbsp;&nbsp;&nbsp;unsigned short iphdrlen;<BR>&nbsp;&nbsp;&nbsp;&nbsp;DWORD&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tick;<BR>&nbsp;&nbsp;&nbsp;&nbsp;static int&nbsp;&nbsp;&nbsp;&nbsp;icmpcount &#x3D; 0;<BR>&nbsp;&nbsp;&nbsp;&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;iphdr &#x3D; (IpHeader*)buf;<BR>&nbsp;&nbsp;&nbsp;&nbsp;&#x2F;&#x2F; Number of 32-bit words * 4 &#x3D; bytes<BR>&nbsp;&nbsp;&nbsp;&nbsp;iphdrlen &#x3D; iphdr-&gt;h_len * 4;<BR>&nbsp;&nbsp;&nbsp;&nbsp;tick &#x3D; GetTickCount();<BR>&nbsp;&nbsp;&nbsp;&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;if((iphdrlen &#x3D;&#x3D; MAX_IP_HDR_SIZE)&amp;&amp;(!icmpcount))<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;DecodeIPOptions(buf,bytes);<BR>&nbsp;&nbsp;&nbsp;&nbsp;if(bytes &lt; iphdrlen + ICMP_MIN)<BR>&nbsp;&nbsp;&nbsp;&nbsp;{<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;printf(“Too Few bytes from %s\n”,inet_ntoa(from-&gt;sin_addr));<BR>&nbsp;&nbsp;&nbsp;&nbsp;}<BR>&nbsp;&nbsp;&nbsp;&nbsp;icmphdr &#x3D; (IcmpHeader*)(buf + iphdrlen);<BR>&nbsp;&nbsp;&nbsp;&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;if(icmphdr-&gt;i_type !&#x3D; ICMP_ECHOREPLY)<BR>&nbsp;&nbsp;&nbsp;&nbsp;{<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;printf(“nonecho type %d recvd\n”, icmphdr-&gt;i_type);<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return;<BR>&nbsp;&nbsp;&nbsp;&nbsp;}<BR>&nbsp;&nbsp;&nbsp;&nbsp;&#x2F;&#x2F; Make sure this is an ICMP reply to something we sent!<BR>&nbsp;&nbsp;&nbsp;&nbsp;&#x2F;&#x2F;<BR>&nbsp;&nbsp;&nbsp;&nbsp;if(icmphdr-&gt;i_id !&#x3D; (USHORT)GetCurrentProcessId())<BR>&nbsp;&nbsp;&nbsp;&nbsp;{<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;printf(“someone else’s packet!\n”);<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return;<BR>&nbsp;&nbsp;&nbsp;&nbsp;}<BR>&nbsp;&nbsp;&nbsp;&nbsp;printf(“%d bytes from %s:”, bytes, inet_ntoa(from-&gt;sin_addr));<BR>&nbsp;&nbsp;&nbsp;&nbsp;printf(“ icmp-&gt;seq &#x3D; %d.”, icmphdr-&gt;i_seq);<BR>&nbsp;&nbsp;&nbsp;&nbsp;printf(“ time: %d ms”, tick-icmphdr-&gt;timestamp);<BR>&nbsp;&nbsp;&nbsp;&nbsp;printf(“\n”);<BR>&nbsp;&nbsp;&nbsp;&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;icmpcount++;<BR>&nbsp;&nbsp;&nbsp;&nbsp;return; <BR>}<BR><BR>void ValidateArgs(int argc, char <strong>argv)<BR>{<BR>&nbsp;&nbsp;&nbsp;&nbsp;int i;<BR>&nbsp;&nbsp;&nbsp;&nbsp;bRecordRoute &#x3D; FALSE;<BR>&nbsp;&nbsp;&nbsp;&nbsp;lpdest &#x3D; NULL;<BR>&nbsp;&nbsp;&nbsp;&nbsp;datasize &#x3D; DEF_PACKET_SIZE;<BR>&nbsp;&nbsp;&nbsp;&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;for(i &#x3D; 1; i &lt; argc; i++)<BR>&nbsp;&nbsp;&nbsp;&nbsp;{<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if((argv[i][0] &#x3D;&#x3D; ‘-‘)||(argv[i][0] &#x3D;&#x3D; ‘&#x2F;‘))<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;switch(tolower(argv[i][1]))<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;case ‘r’:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x2F;&#x2F; Record route option<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bRecordRoute &#x3D; TRUE;<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;break;<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;usage(argv[0]);<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;break;<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else if(isdigit(argv[i][0]))<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;datasize &#x3D; atoi(argv[i]);<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;lpdest &#x3D; argv[i];<BR>&nbsp;&nbsp;&nbsp;&nbsp;}<BR>}<BR><BR>&#x2F;&#x2F;<BR>&#x2F;&#x2F; Function: main<BR>&#x2F;&#x2F;<BR>&#x2F;&#x2F; Description<BR>&#x2F;&#x2F;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Set up the ICMP raw socket, and create the ICMP header. Add<BR>&#x2F;&#x2F;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;the appropriate IP ooption header, and start sending ICMP<BR>&#x2F;&#x2F;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;echo requests to the endpoint. For each send and receive.<BR>&#x2F;&#x2F;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;we set a timeout value so that we don’t wait forever for a<BR>&#x2F;&#x2F;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;response in case the endpoint is not responding. When we<BR>&#x2F;&#x2F;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;receive a packet. decode it.<BR>&#x2F;&#x2F;<BR>int main(int argc, char</strong> argv)<BR>{<BR>&nbsp;&nbsp;&nbsp;&nbsp;WSADATA&nbsp;&nbsp;&nbsp;&nbsp;wsaData;<BR>&nbsp;&nbsp;&nbsp;&nbsp;SOCKET&nbsp;&nbsp;&nbsp;&nbsp;sockRaw &#x3D; INVALID_SOCKET;<BR>&nbsp;&nbsp;&nbsp;&nbsp;struct sockaddr_in dest, from;<BR>&nbsp;&nbsp;&nbsp;&nbsp;int&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bread, fromlen &#x3D; sizeof(from), timeout &#x3D; 1000, ret;<BR>&nbsp;&nbsp;&nbsp;&nbsp;char&nbsp;&nbsp;&nbsp;&nbsp;<em>icmp_data &#x3D; NULL, <em>recvbuf &#x3D; NULL;<BR>&nbsp;&nbsp;&nbsp;&nbsp;unsigned int addr &#x3D; 0;<BR>&nbsp;&nbsp;&nbsp;&nbsp;USHORT&nbsp;&nbsp;&nbsp;&nbsp;seq_no &#x3D; 0;<BR>&nbsp;&nbsp;&nbsp;&nbsp;struct hostent <em>hp &#x3D; NULL;<BR>&nbsp;&nbsp;&nbsp;&nbsp;IpOptionHeader ipopt;<BR>&nbsp;&nbsp;&nbsp;&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;if(WSAStartup(MAKEWORD(2, 2), &amp;wsaData) !&#x3D; 0)<BR>&nbsp;&nbsp;&nbsp;&nbsp;{<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;printf(“WSAStartup() failed: %d\n”, GetLastError());<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return -1;<BR>&nbsp;&nbsp;&nbsp;&nbsp;}<BR>&nbsp;&nbsp;&nbsp;&nbsp;ValidateArgs(argc,argv);<BR>&nbsp;&nbsp;&nbsp;&nbsp;sockRaw &#x3D; WSASocket(AF_INET, SOCK_RAW, IPPROTO_ICMP, NULL, 0, WSA_FLAG_OVERLAPPED);<BR>&nbsp;&nbsp;&nbsp;&nbsp;if(sockRaw &#x3D;&#x3D; INVALID_SOCKET)<BR>&nbsp;&nbsp;&nbsp;&nbsp;{<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;printf(“WSASocket() failed: %d\n”, WSAGetLastError());<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return -1;<BR>&nbsp;&nbsp;&nbsp;&nbsp;}<BR>&nbsp;&nbsp;&nbsp;&nbsp;if(bRecordRoute)<BR>&nbsp;&nbsp;&nbsp;&nbsp;{<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x2F;&#x2F; Setup the IP option header to go out on every ICMP packet<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x2F;&#x2F;<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ZeroMemory(&amp;ipopt, sizeof(ipopt));<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ipopt.code &#x3D; IP_RECORD_ROUTE;&nbsp;&nbsp;&nbsp;&nbsp;&#x2F;&#x2F; Record route option<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ipopt.prt&nbsp;&nbsp;&#x3D; 4;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x2F;&#x2F; Point to the first addr offset<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ipopt.len&nbsp;&nbsp;&#x3D; 39;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x2F;&#x2F; Length of option header<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ret &#x3D; setsockopt(sockRaw, IPPROTO_IP, IP_OPTIONS, (char</em>)&amp;ipopt, sizeof(ipopt));<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(ret &#x3D;&#x3D; SOCKET_ERROR)<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;printf(“setsockopt(IP_OPTIONs) failed: %d\n”,WSAGetLastError());<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<BR>&nbsp;&nbsp;&nbsp;&nbsp;}<BR>&nbsp;&nbsp;&nbsp;&nbsp;&#x2F;&#x2F; Set the send&#x2F;recv timeout values<BR>&nbsp;&nbsp;&nbsp;&nbsp;&#x2F;&#x2F;<BR>&nbsp;&nbsp;&nbsp;&nbsp;bread &#x3D; setsockopt(sockRaw, SOL_SOCKET, SO_RCVTIMEO, (char</em>)&amp;timeout, sizeof(timeout));<BR>&nbsp;&nbsp;&nbsp;&nbsp;if(bread &#x3D;&#x3D; SOCKET_ERROR)<BR>&nbsp;&nbsp;&nbsp;&nbsp;{<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;printf(“setsockopt(SO_RCVTIME0)failed: %d\n”, WSAGetLastError());<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return -1;<BR>&nbsp;&nbsp;&nbsp;&nbsp;}<BR>&nbsp;&nbsp;&nbsp;&nbsp;timeout &#x3D; 1000;<BR>&nbsp;&nbsp;&nbsp;&nbsp;bread &#x3D; setsockopt(sockRaw, SOL_SOCKET, SO_SNDTIMEO, (char</em>)&amp;timeout, sizeof(timeout));<BR>&nbsp;&nbsp;&nbsp;&nbsp;if(bread &#x3D;&#x3D; SOCKET_ERROR)<BR>&nbsp;&nbsp;&nbsp;&nbsp;{<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;printf(“setsockopt(SO_SNDTIME0) failed: %d\n”, WSAGetLastError());<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return -1;<BR>&nbsp;&nbsp;&nbsp;&nbsp;}<BR>&nbsp;&nbsp;&nbsp;&nbsp;memset(&amp;dest, 0, sizeof(dest));<BR>&nbsp;&nbsp;&nbsp;&nbsp;&#x2F;&#x2F;<BR>&nbsp;&nbsp;&nbsp;&nbsp;&#x2F;&#x2F; Resolve the endpoint&#96;s name if necessary<BR>&nbsp;&nbsp;&nbsp;&nbsp;&#x2F;&#x2F;<BR>&nbsp;&nbsp;&nbsp;&nbsp;dest.sin_family &#x3D; AF_INET;<BR>&nbsp;&nbsp;&nbsp;&nbsp;if((dest.sin_addr.s_addr &#x3D; inet_addr(lpdest)) &#x3D;&#x3D; INADDR_NONE)<BR>&nbsp;&nbsp;&nbsp;&nbsp;{<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if((hp &#x3D; gethostbyname(lpdest)) !&#x3D; NULL)<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;memcpy(&amp;(dest.sin_addr), hp-&gt;h_addr, hp-&gt;h_length);<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dest.sin_family &#x3D; hp-&gt;h_addrtype;<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;printf(“dest.sin_addr &#x3D; %s\n”, inet_ntoa(dest.sin_addr));<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;printf(“gethostbyname() failed: %d\n”,WSAGetLastError());<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return -1;<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<BR>&nbsp;&nbsp;&nbsp;&nbsp;}<BR>&nbsp;&nbsp;&nbsp;&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;&#x2F;&#x2F;<BR>&nbsp;&nbsp;&nbsp;&nbsp;&#x2F;&#x2F; Create the ICMP packet<BR>&nbsp;&nbsp;&nbsp;&nbsp;&#x2F;&#x2F;<BR>&nbsp;&nbsp;&nbsp;&nbsp;datasize +&#x3D; sizeof(IcmpHeader);<BR>&nbsp;&nbsp;&nbsp;&nbsp;icmp_data &#x3D; HeapAlloc(GetProcessHeap(), HEAP_ZERO_MEMORY, MAX_PACKET);<BR>&nbsp;&nbsp;&nbsp;&nbsp;recvbuf &#x3D; HeapAlloc(GetProcessHeap(), HEAP_ZERO_MEMORY, MAX_PACKET);<BR>&nbsp;&nbsp;&nbsp;&nbsp;if(!icmp_data)<BR>&nbsp;&nbsp;&nbsp;&nbsp;{<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;printf(“HeapAlloc() failed: %d\n”,GetLastError());<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return -1;<BR>&nbsp;&nbsp;&nbsp;&nbsp;}<BR>&nbsp;&nbsp;&nbsp;&nbsp;memset(icmp_data, 0, MAX_PACKET);<BR>&nbsp;&nbsp;&nbsp;&nbsp;FillICMPData(icmp_data, datasize);<BR>&nbsp;&nbsp;&nbsp;&nbsp;&#x2F;&#x2F;<BR>&nbsp;&nbsp;&nbsp;&nbsp;&#x2F;&#x2F; Start sending&#x2F;receiving ICMP packets<BR>&nbsp;&nbsp;&nbsp;&nbsp;&#x2F;&#x2F;<BR>&nbsp;&nbsp;&nbsp;&nbsp;while(1)<BR>&nbsp;&nbsp;&nbsp;&nbsp;{<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;static int nCount &#x3D; 0;<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int bwrote;<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(nCount++ &#x3D;&#x3D;4)<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;break;<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;((IcmpHeader*)icmp_data)-&gt;i_cksum &#x3D; 0;<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;((IcmpHeader*)icmp_data)-&gt;timestamp &#x3D; GetTickCount();<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;((IcmpHeader*)icmp_data)-&gt;i_seq &#x3D; seq_no++;<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;((IcmpHeader*)icmp_data)-&gt;i_cksum &#x3D; checksum((USHORT*)icmp_data, datasize, 0, (struct sockaddr*)&amp;dest, sizeof(dest));<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bwrote &#x3D; sendto(sockRaw, icmp_data, datasize, 0, (struct sockaddr*)&amp;dest, sizeof(dest));<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(bwrote &#x3D;&#x3D; SOCKET_ERROR)<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(WSAGetLastError() &#x3D;&#x3D; WSAETIMEDOUT)<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;printf(“timed out\n”);<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;continue;<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;printf(“recvfrom() failed: %d\n”, WSAGetLastError());<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return -1;<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(bwrote &lt; datasize)<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;printf(“Wrote %d bytes\n”, bwrote);<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bread &#x3D; recvfrom(sockRaw, recvbuf, MAX_PACKET, 0, (struct sockaddr*)&amp;from, &amp;fromlen);<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(bread &#x3D;&#x3D; SOCKET_ERROR)<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(WSAGetLastError() &#x3D;&#x3D; WSAETIMEDOUT)<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;printf(“timed out\n”);<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;continue;<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;printf(“recvfrom() failed: %d\n”, WSAGetLastError());<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;DecodeICMPHeader(recvbuf, bread, &amp;from);<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Sleep(1000);<BR>&nbsp;&nbsp;&nbsp;&nbsp;}<BR>&nbsp;&nbsp;&nbsp;&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;&#x2F;&#x2F;Cleanup<BR>&nbsp;&nbsp;&nbsp;&nbsp;&#x2F;&#x2F;<BR>&nbsp;&nbsp;&nbsp;&nbsp;if(sockRaw !&#x3D; INVALID_SOCKET)<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;closesocket(sockRaw);<BR>&nbsp;&nbsp;&nbsp;&nbsp;HeapFree(GetProcessHeap(), 0, recvbuf);<BR>&nbsp;&nbsp;&nbsp;&nbsp;HeapFree(GetProcessHeap(), 0, icmp_data);<BR>&nbsp;&nbsp;&nbsp;&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;WSACleanup();<BR>&nbsp;&nbsp;&nbsp;&nbsp;return 0;<BR>}<BR><BR><BR><BR><BR><BR><BR><BR><BR><BR>cl ping.c &#x2F;lib Ws2_32.lib</SPAN> </SPAN></SPAN>
+    </p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="followme">
+  <span>Welcome to my other publishing channels</span>
+
+  <div class="social-list">
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="https://www.facebook.com/rise.worlds">
+            <span class="icon">
+              <i class="fab fa-facebook"></i>
+            </span>
+
+            <span class="label">FB Page</span>
+          </a>
+      </div>
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="https://twitter.com/riseworlds">
+            <span class="icon">
+              <i class="fab fa-twitter"></i>
+            </span>
+
+            <span class="label">Twitter</span>
+          </a>
+      </div>
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="https://t.me/riseworlds">
+            <span class="icon">
+              <i class="fab fa-telegram"></i>
+            </span>
+
+            <span class="label">Telegram</span>
+          </a>
+      </div>
+  </div>
+</div>
+
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2006/01/04/Windows%E4%BB%BB%E5%8A%A1%E7%AE%A1%E7%90%86%E5%99%A8%E4%B8%8D%E6%98%BE%E7%A4%BA%E7%94%A8%E6%88%B7%E5%90%8D%E7%9A%84%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/" rel="prev" title="Windows任务管理器不显示用户名的解决方法">
+                  <i class="fa fa-angle-left"></i> Windows任务管理器不显示用户名的解决方法
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2006/06/07/VC2005%E5%BC%80%E5%8F%91%E7%A7%BB%E5%8A%A8%E7%A8%8B%E5%BA%8F%E7%9A%84%E5%B0%8F%E9%97%AE%E9%A2%98/" rel="next" title="VC2005开发移动程序的小问题">
+                  VC2005开发移动程序的小问题 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">豫ICP备2021009490号 </a>
+  </div>
+<div class="copyright">
+<a href="https://icp.gov.moe/?keyword=20233669" target="_blank">萌ICP备20233669号</a>
+</div>
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">rise</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="reading-progress-bar"></div>
+
+  <a href="https://github.com/rise-worlds" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://unpkg.com/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@next-theme/pjax@0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script><script src="/js/pjax.js"></script>
+
+  
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://unpkg.com/mermaid@10.7.0/dist/mermaid.min.js","integrity":"sha256-TtLOdUA8mstPoO6sGvHIGx2ceXrrX4KgIItO06XOn8A="}}</script>
+  <script src="/js/third-party/tags/mermaid.js"></script>
+
+
+
+
+
+  
+
+
+
+
+  <script src="https://unpkg.com/quicklink@2.3.0/dist/quicklink.umd.js" integrity="sha256-yvJQOINiH9fWemHn0vCA5lsHWJaHs6/ZmO+1Ft04SvM=" crossorigin="anonymous"></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":true,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"https://rise-worlds.github.io/2006/03/12/ping%E7%9A%84%E6%BA%90%E4%BB%A3%E7%A0%81/"}</script>
+  <script src="/js/third-party/quicklink.js"></script>
+
+</body>
+</html>

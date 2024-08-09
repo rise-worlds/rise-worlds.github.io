@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://unpkg.com/@fortawesome/fontawesome-free@6.5.1/css/all.min.css" integrity="sha256-wiz7ZSCn/btzhjKDQBms9Hx4sSeUYsDrTLg7roPstac=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://unpkg.com/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"rise-worlds.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.19.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="DXUT框架与错误处理 Direct3D API的设计使程序能比较容易地处理各种错误，尽管大多数Direct3D API函数返回HTRSULT值，但只有一部分函数返回设备错误，如D3DERR_DEVICELOST或D3DERR_DRIVERINTERNALERROR。但是通常的Direct3D应用程序使用多种API函数，当传递的参数不合要求时，将返回D3DERR_INVALIDCALL。 当开发D">
+<meta property="og:type" content="article">
+<meta property="og:title" content="DXUT框架剖析（8）">
+<meta property="og:url" content="https://rise-worlds.github.io/2008/05/17/DXUT%E6%A1%86%E6%9E%B6%E5%89%96%E6%9E%90%EF%BC%888%EF%BC%89/index.html">
+<meta property="og:site_name" content="Rise&#39;blogs">
+<meta property="og:description" content="DXUT框架与错误处理 Direct3D API的设计使程序能比较容易地处理各种错误，尽管大多数Direct3D API函数返回HTRSULT值，但只有一部分函数返回设备错误，如D3DERR_DEVICELOST或D3DERR_DRIVERINTERNALERROR。但是通常的Direct3D应用程序使用多种API函数，当传递的参数不合要求时，将返回D3DERR_INVALIDCALL。 当开发D">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2008-05-17T11:56:00.000Z">
+<meta property="article:modified_time" content="2008-05-17T11:56:00.000Z">
+<meta property="article:author" content="rise">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://rise-worlds.github.io/2008/05/17/DXUT%E6%A1%86%E6%9E%B6%E5%89%96%E6%9E%90%EF%BC%888%EF%BC%89/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://rise-worlds.github.io/2008/05/17/DXUT%E6%A1%86%E6%9E%B6%E5%89%96%E6%9E%90%EF%BC%888%EF%BC%89/","path":"2008/05/17/DXUT框架剖析（8）/","title":"DXUT框架剖析（8）"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>DXUT框架剖析（8） | Rise'blogs</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Rise'blogs</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li><li class="menu-item menu-item-sitemap"><a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>Sitemap</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-6"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">Parameters</span></a></li><li class="nav-item nav-level-6"><a class="nav-link"><span class="nav-number">2.</span> <span class="nav-text">Return Values</span></a></li><li class="nav-item nav-level-6"><a class="nav-link"><span class="nav-number">3.</span> <span class="nav-text">Remarks</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number"></span> <span class="nav-text">DXUTMatchOptions</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">Members</span></a></li><li class="nav-item nav-level-6"><a class="nav-link"><span class="nav-number">2.</span> <span class="nav-text">Remarks</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number"></span> <span class="nav-text">DXUT_MATCH_TYPE</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">Constants</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="rise"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">rise</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">657</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">46</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">77</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="mailto:rise.worlds@outlook.com" title="E-Mail → mailto:rise.worlds@outlook.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://github.com/rise-worlds" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;rise-worlds" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://x.com/riseworlds" title="Twitter → https:&#x2F;&#x2F;x.com&#x2F;riseworlds" rel="noopener me" target="_blank"><i class="fab fa-twitter fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.facebook.com/rise.worlds" title="FB Page → https:&#x2F;&#x2F;www.facebook.com&#x2F;rise.worlds" rel="noopener me" target="_blank"><i class="fab fa-facebook fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.youtube.com/@YiXuan" title="YouTube → https:&#x2F;&#x2F;www.youtube.com&#x2F;@YiXuan" rel="noopener me" target="_blank"><i class="fab fa-youtube fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.instagram.com/rise.worlds/" title="Instagram → https:&#x2F;&#x2F;www.instagram.com&#x2F;rise.worlds&#x2F;" rel="noopener me" target="_blank"><i class="fab fa-instagram fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://t.me/riseworlds" title="Telegram → https:&#x2F;&#x2F;t.me&#x2F;riseworlds" rel="noopener me" target="_blank"><i class="fab fa-telegram fa-fw"></i></a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="Back to top">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+          Links
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <a href="https://www.cnblogs.com/flying_bat" title="https:&#x2F;&#x2F;www.cnblogs.com&#x2F;flying_bat" rel="noopener" target="_blank">my cnblogs</a>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://rise-worlds.github.io/2008/05/17/DXUT%E6%A1%86%E6%9E%B6%E5%89%96%E6%9E%90%EF%BC%888%EF%BC%89/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="rise">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Rise'blogs">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="DXUT框架剖析（8） | Rise'blogs">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          DXUT框架剖析（8）
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2008-05-17 11:56:00" itemprop="dateCreated datePublished" datetime="2008-05-17T11:56:00+00:00">2008-05-17</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Dev/" itemprop="url" rel="index"><span itemprop="name">Dev</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Dev/GameDev/" itemprop="url" rel="index"><span itemprop="name">GameDev</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p><strong>DXUT框架与错误处理</strong> <p>Direct3D API的设计使程序能比较容易地处理各种错误，尽管大多数Direct3D API函数返回HTRSULT值，但只有一部分函数返回设备错误，如D3DERR_DEVICELOST或D3DERR_DRIVERINTERNALERROR。但是通常的Direct3D应用程序使用多种API函数，当传递的参数不合要求时，将返回D3DERR_INVALIDCALL。 <p>当开发Direct3D应用程序时，应该检查所有的API调用是否成功，如果出现一个没有预测到的失败调用，应用程序应立即给出通知或记录该错误。使用这种方法，开发人员能很快发现哪些API函数的调用是不正确的。一个正确调用Direct3D API函数的应用程序应能安全地忽略大多数Direct3D API函数的失败调用，除了一些关键性的API函数，如Present()或TestCooperativeLevel()，这些函数返回的错误应用程序不能忽略。 <p>通过仅处理最重要的Direct3D错误，可以提高运行速度并使应用程序代码更健壮，因为代码中需要处理错误的地方并不多。对于为数不多的几个API函数的失败调用，必须予以适当处理。 <p>框架中错误的处理对应Direct3D API中如何设计错误的处理，对于各种各样的错误，如丢失媒体（missing media），应用程序能通知用户并终止。对于每一帧都将调用的大多数API函数，错误仅在调试时向开发人员显示一个错误消息框来处理，而在发布时这些错误都被忽略了。框架用在DXUT.h中定义的几个宏来完成这一操作： <p>#if defined(DEBUG) || defined(_DEBUG)<br>#ifndef V<br>#define V(x) { hr = (x); if( FAILED(hr) ) { DXUTTrace( __FILE__, (DWORD)__LINE__, hr, L#x, true ); } }<br>#endif<br>#ifndef V_RETURN<br>#define V_RETURN(x) { hr = (x); if( FAILED(hr) ) { return DXUTTrace( __FILE__, (DWORD)__LINE__, hr, L#x, true ); } }<br>#endif<br>#else<br>#ifndef V<br>#define V(x) { hr = (x); }<br>#endif<br>#ifndef V_RETURN<br>#define V_RETURN(x) { hr = (x); if( FAILED(hr) ) { return hr; } }<br>#endif<br>#endif <p>当使用vs.net时，如果想跳到出错代码所在的行，只需简单地双击调试输出窗口中输出的错误信息行即可。 <p><strong>选择最可行的设备</strong> <p>DXUT使用高度灵活的方法从枚举集合中选择最好的设备，这个设备枚举和分级系统可以通过调用函数DXUTFindValidDeviceSettings()独立于框架使用，该函数的声明如下： <p>Finds valid device settings to be used to create a new device.<pre><strong>HRESULT DXUTFindValidDeviceSettings(</strong><br>  <strong>DXUTDeviceSettings *</strong> <em>pOut</em><strong>,</strong><br>  <strong>DXUTDeviceSettings *</strong> <em>pIn</em><strong>,</strong><br>  <strong>DXUTMatchOptions *</strong> <em>pMatchOptions</em><br><strong>)</strong>;</pre>
+
+<h6>Parameters</h6>
+
+<dl>
+
+<dt><em>pOut</em>
+
+<dd>[out] Pointer to a DXUTDeviceSettings structure that contains valid settings for the new device. 
+
+<dt><em>pIn</em>
+
+<dd>[in] Pointer to a <strong>DXUTDeviceSettings</strong> structure that contains desired settings for the new device. The default value is NULL. 
+
+<dt><em>pMatchOptions</em>
+
+<dd>[in] Pointer to a DXUTMatchOptions structure that contains flags describing how to use the device settings when choosing valid output device settings. Optimal device settings will be created based upon the match values in <strong>DXUTMatchOptions</strong>. If NULL, the function acts as if all members of this structure were DXUTMT_IGNORE_INPUT, meaning that the function will return valid device settings as close as possible to default device settings. See Remarks. The default value is NULL. </dd></dl>
+
+<h6>Return Values</h6>
+
+<p>If the function succeeds, the return value is S_OK. If the function fails, the return value can be one of the error codes in DXUTERR.
+
+<h6>Remarks</h6>
+
+<p>This function attempts to find valid device settings based upon the input device settings, given by pIn. For each device setting, a match option in the <strong>DXUTDeviceSettings</strong> structure specifies how the function makes decisions. The function works for both Direct3D 9 and Direct3D 10 device settings.
+
+<p>This function is internally by DXUT used when toggling between full screen and windowed modes, when selecting between HAL and REF device types, and inside DXUTCreateDevice.
+
+<h3>DXUTMatchOptions</h3>
+
+<p>Describes match options for finding valid device settings using the DXUTFindValidDeviceSettings function. Each member of this structure corresponds to a setting described by the DXUTDeviceSettings structure.
+
+<p>Default values are used when a member is set to DXUTMT_IGNORE_INPUT. See Remarks.<pre>typedef struct DXUTMatchOptions {<br>    DXUT_MATCH_TYPE eAPIVersion;<br>    DXUT_MATCH_TYPE eAdapterOrdinal;<br>    DXUT_MATCH_TYPE eOutput;<br>    DXUT_MATCH_TYPE eDeviceType;<br>    DXUT_MATCH_TYPE eWindowed;<br>    DXUT_MATCH_TYPE eAdapterFormat;<br>    DXUT_MATCH_TYPE eVertexProcessing;<br>    DXUT_MATCH_TYPE eResolution;<br>    DXUT_MATCH_TYPE eBackBufferFormat;<br>    DXUT_MATCH_TYPE eBackBufferCount;<br>    DXUT_MATCH_TYPE eMultiSample;<br>    DXUT_MATCH_TYPE eSwapEffect;<br>    DXUT_MATCH_TYPE eDepthFormat;<br>    DXUT_MATCH_TYPE eStencilFormat;<br>    DXUT_MATCH_TYPE ePresentFlags;<br>    DXUT_MATCH_TYPE eRefreshRate;<br>    DXUT_MATCH_TYPE ePresentInterval;<br>} DXUTMatchOptions, *LPDXUTMatchOptions;</pre>
+
+<h6>Members</h6>
+
+<dl>
+
+<dt><strong>eAPIVersion</strong>
+
+<dd>Match type for the API version. 
+
+<dt><strong>eAdapterOrdinal</strong>
+
+<dd>Match type for the display adapter ordinal. 
+
+<dt><strong>eOutput</strong>
+
+<dd>Match type for the adapter output ordinal. 
+
+<dt><strong>eDeviceType</strong>
+
+<dd>Match type for the enumerated type of the device. If set to DXUTMT_IGNORE_INPUT, then the default value is D3DDEVTYPE_HAL. 
+
+<dt><strong>eWindowed</strong>
+
+<dd>Match type for the windowed or full-screen mode. if set to DXUTMT_IGNORE_INPUT, then the default value is windowed mode (TRUE). 
+
+<dt><strong>eAdapterFormat</strong>
+
+<dd>Match type for the adapter surface format. If set to DXUTMT_IGNORE_INPUT, then the default value is the desktop display mode, or D3DFMT_X8R8G8B8 if the desktop display mode is less than 32 bits. 
+
+<dt><strong>eVertexProcessing</strong>
+
+<dd>Match type for the vertex processing flags D3DCREATE_HARDWARE_VERTEXPROCESSING, D3DCREATE_MIXED_VERTEXPROCESSING, or D3DCREATE_SOFTWARE_VERTEXPROCESSING. if set to DXUTMT_IGNORE_INPUT, then the default value is D3DCREATE_HARDWARE_VERTEXPROCESSING. 
+
+<dt><strong>eResolution</strong>
+
+<dd>Match type for the display mode resolution. if set to DXUTMT_IGNORE_INPUT, then the default value is 640 x 480 pixels for windowed mode, or the desktop resolution for full-screen mode. 
+
+<dt><strong>eBackBufferFormat</strong>
+
+<dd>Match type for the back buffer format. if BackBufferFormat is set to DXUTMT_IGNORE_INPUT, then the default value is to match the adapter format. 
+
+<dt><strong>eBackBufferCount</strong>
+
+<dd>Match type for the number of back buffers. if BackBufferCount is set to DXUTMT_IGNORE_INPUT, then the default value is 2 for triple buffering. 
+
+<dt><strong>eMultiSample</strong>
+
+<dd>Match type for the quality level. if set to DXUTMT_IGNORE_INPUT, then the default value is to disable multisampling (MultiSampleQuality = 0). 
+
+<dt><strong>eSwapEffect</strong>
+
+<dd>Match type for the swap effect. if set to DXUTMT_IGNORE_INPUT, then the default value is D3DSWAPEFFECT_DISCARD. 
+
+<dt><strong>eDepthFormat</strong>
+
+<dd>Match type for the depth format of the automatic depth-stencil surface that the device will create. If both eDepthFormat and eStencilFormat are set to DXUTMT_IGNORE_INPUT, then the default value is D3DFMT_D16 if the backbuffer format is 16 bits or less, or D3DFMT_D32 otherwise. 
+
+<dt><strong>eStencilFormat</strong>
+
+<dd>Match type for the stencil format of the automatic depth-stencil surface that the device will create. if both eDepthFormat and eStencilFormat are set to DXUTMT_IGNORE_INPUT, then the default value is D3DFMT_D16 if the backbuffer format is 16 bits or less, or D3DFMT_D32 otherwise. 
+
+<dt><strong>ePresentFlags</strong>
+
+<dd>Match type for the presentation parameters flags. if set to DXUTMT_IGNORE_INPUT, then the default value is D3DPRESENTFLAG_DISCARD_DEPTHSTENCIL. 
+
+<dt><strong>eRefreshRate</strong>
+
+<dd>Match type for the rate at which the display adapter refreshes the screen. If set to DXUTMT_IGNORE_INPUT, then the default value is 0, indicating windowed mode. 
+
+<dt><strong>ePresentInterval</strong>
+
+<dd>Match type for the presentation interval. if set to DXUTMT_IGNORE_INPUT, then the default value is D3DPRESENT_INTERVAL_IMMEDIATE for windowed mode, or D3DPRESENT_INTERVAL_DEFAULT for full-screen mode. </dd></dl>
+
+<h6>Remarks</h6>
+
+<p>For each member of this structure, match options are specified using the constant values of the DXUT_MATCH_TYPE enumeration, as in the following code example. <pre>matchOptions.eResolution = DXUTMT_CLOSEST_TO_INPUT;<br></pre>
+
+<p>To use default device settings instead, use the DXUTMT_IGNORE_INPUT flag as follows: <pre>matchOptions.eResolution = DXUTMT_IGNORE_INPUT;<br><br></pre>
+
+<h3>DXUT_MATCH_TYPE</h3>
+
+<p>Describes how to match input device settings when creating a new device with a function.<pre>typedef enum DXUT_MATCH_TYPE<br>{<br>    DXUTMT_IGNORE_INPUT = 0,<br>    DXUTMT_PRESERVE_INPUT,<br>    DXUTMT_CLOSEST_TO_INPUT,<br>} DXUT_MATCH_TYPE, *LPDXUT_MATCH_TYPE;</pre>
+
+<h6>Constants</h6>
+
+<dl>
+
+<dt>DXUTMT_IGNORE_INPUT 
+
+<dd>Ignore the device setting input, and return a device setting as close as possible to a default device setting. 
+
+<dt>DXUTMT_PRESERVE_INPUT 
+
+<dd>Return without changing the device setting that was given as input to the function. 
+
+<dt>DXUTMT_CLOSEST_TO_INPUT 
+
+<dd>Return a device setting as close as possible to the device setting that was given as input to the function. </dd></dl>
+
+<p>假设想要获取一个硬件抽象层设备，其后台缓冲区格式是D3DFMT_A2B10G10R10，如果系统中的硬件抽象层设备不支持这种后台缓冲区格式，但有一个安装好的参考设备支持，那么该函数可以使用该参考设备或根据硬件抽象层设备改变后台缓冲区格式，这都将通过枚举类型DXUT_MATCH_TYPE来控制如何采用设备格式。</p>
+    
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="followme">
+  <span>Welcome to my other publishing channels</span>
+
+  <div class="social-list">
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="https://www.facebook.com/rise.worlds">
+            <span class="icon">
+              <i class="fab fa-facebook"></i>
+            </span>
+
+            <span class="label">FB Page</span>
+          </a>
+      </div>
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="https://twitter.com/riseworlds">
+            <span class="icon">
+              <i class="fab fa-twitter"></i>
+            </span>
+
+            <span class="label">Twitter</span>
+          </a>
+      </div>
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="https://t.me/riseworlds">
+            <span class="icon">
+              <i class="fab fa-telegram"></i>
+            </span>
+
+            <span class="label">Telegram</span>
+          </a>
+      </div>
+  </div>
+</div>
+
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2008/05/17/DXUT%E6%A1%86%E6%9E%B6%E5%89%96%E6%9E%90%EF%BC%887%EF%BC%89/" rel="prev" title="DXUT框架剖析（7）">
+                  <i class="fa fa-angle-left"></i> DXUT框架剖析（7）
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2008/05/17/DXUT%E6%A1%86%E6%9E%B6%E5%89%96%E6%9E%90%EF%BC%889%EF%BC%89/" rel="next" title="DXUT框架剖析（9）">
+                  DXUT框架剖析（9） <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">豫ICP备2021009490号 </a>
+  </div>
+<div class="copyright">
+<a href="https://icp.gov.moe/?keyword=20233669" target="_blank">萌ICP备20233669号</a>
+</div>
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">rise</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="reading-progress-bar"></div>
+
+  <a href="https://github.com/rise-worlds" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://unpkg.com/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@next-theme/pjax@0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script><script src="/js/pjax.js"></script>
+
+  
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://unpkg.com/mermaid@10.7.0/dist/mermaid.min.js","integrity":"sha256-TtLOdUA8mstPoO6sGvHIGx2ceXrrX4KgIItO06XOn8A="}}</script>
+  <script src="/js/third-party/tags/mermaid.js"></script>
+
+
+
+
+
+  
+
+
+
+
+  <script src="https://unpkg.com/quicklink@2.3.0/dist/quicklink.umd.js" integrity="sha256-yvJQOINiH9fWemHn0vCA5lsHWJaHs6/ZmO+1Ft04SvM=" crossorigin="anonymous"></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":true,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"https://rise-worlds.github.io/2008/05/17/DXUT%E6%A1%86%E6%9E%B6%E5%89%96%E6%9E%90%EF%BC%888%EF%BC%89/"}</script>
+  <script src="/js/third-party/quicklink.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,1012 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://unpkg.com/@fortawesome/fontawesome-free@6.5.1/css/all.min.css" integrity="sha256-wiz7ZSCn/btzhjKDQBms9Hx4sSeUYsDrTLg7roPstac=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://unpkg.com/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"rise-worlds.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.19.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="本篇是D3D中的Alpha颜色混合（1） 的后续篇，主要讲利用ID3DXSprite来实现图片间的颜色透明效果。在一幅图象上透明的显示另一幅图象，是Alpha颜色混合的一个典型应用，如下图所示，瞄准镜图象背景透明地显示在老虎背景图象上。实现瞄准镜的背景透明显示，首先需要准备如下两张图：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&amp;nb">
+<meta property="og:type" content="article">
+<meta property="og:title" content="D3D中的Alpha颜色混合（2）">
+<meta property="og:url" content="https://rise-worlds.github.io/2007/09/20/D3D%E4%B8%AD%E7%9A%84Alpha%E9%A2%9C%E8%89%B2%E6%B7%B7%E5%90%88%EF%BC%882%EF%BC%89/index.html">
+<meta property="og:site_name" content="Rise&#39;blogs">
+<meta property="og:description" content="本篇是D3D中的Alpha颜色混合（1） 的后续篇，主要讲利用ID3DXSprite来实现图片间的颜色透明效果。在一幅图象上透明的显示另一幅图象，是Alpha颜色混合的一个典型应用，如下图所示，瞄准镜图象背景透明地显示在老虎背景图象上。实现瞄准镜的背景透明显示，首先需要准备如下两张图：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&amp;nb">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2007-09-20T21:35:00.000Z">
+<meta property="article:modified_time" content="2007-09-20T21:35:00.000Z">
+<meta property="article:author" content="rise">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://rise-worlds.github.io/2007/09/20/D3D%E4%B8%AD%E7%9A%84Alpha%E9%A2%9C%E8%89%B2%E6%B7%B7%E5%90%88%EF%BC%882%EF%BC%89/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://rise-worlds.github.io/2007/09/20/D3D%E4%B8%AD%E7%9A%84Alpha%E9%A2%9C%E8%89%B2%E6%B7%B7%E5%90%88%EF%BC%882%EF%BC%89/","path":"2007/09/20/D3D中的Alpha颜色混合（2）/","title":"D3D中的Alpha颜色混合（2）"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>D3D中的Alpha颜色混合（2） | Rise'blogs</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Rise'blogs</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li><li class="menu-item menu-item-sitemap"><a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>Sitemap</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">Parameters</span></a></li><li class="nav-item nav-level-4"><a class="nav-link"><span class="nav-number">2.</span> <span class="nav-text">Return Values</span></a></li><li class="nav-item nav-level-4"><a class="nav-link"><span class="nav-number">3.</span> <span class="nav-text">Remarks</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number"></span> <span class="nav-text">ID3DXSprite Members</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">Remarks</span></a></li><li class="nav-item nav-level-4"><a class="nav-link"><span class="nav-number">2.</span> <span class="nav-text">Parameters</span></a></li><li class="nav-item nav-level-4"><a class="nav-link"><span class="nav-number">3.</span> <span class="nav-text">Return Values</span></a></li><li class="nav-item nav-level-4"><a class="nav-link"><span class="nav-number">4.</span> <span class="nav-text">Remarks</span></a></li><li class="nav-item nav-level-4"><a class="nav-link"><span class="nav-number">5.</span> <span class="nav-text">Parameters</span></a></li><li class="nav-item nav-level-4"><a class="nav-link"><span class="nav-number">6.</span> <span class="nav-text">Return Values</span></a></li><li class="nav-item nav-level-4"><a class="nav-link"><span class="nav-number">7.</span> <span class="nav-text">Remarks</span></a></li><li class="nav-item nav-level-4"><a class="nav-link"><span class="nav-number">8.</span> <span class="nav-text">Parameters</span></a></li><li class="nav-item nav-level-4"><a class="nav-link"><span class="nav-number">9.</span> <span class="nav-text">Return Values</span></a></li><li class="nav-item nav-level-4"><a class="nav-link"><span class="nav-number">10.</span> <span class="nav-text">Remarks</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="rise"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">rise</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">657</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">46</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">77</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="mailto:rise.worlds@outlook.com" title="E-Mail → mailto:rise.worlds@outlook.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://github.com/rise-worlds" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;rise-worlds" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://x.com/riseworlds" title="Twitter → https:&#x2F;&#x2F;x.com&#x2F;riseworlds" rel="noopener me" target="_blank"><i class="fab fa-twitter fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.facebook.com/rise.worlds" title="FB Page → https:&#x2F;&#x2F;www.facebook.com&#x2F;rise.worlds" rel="noopener me" target="_blank"><i class="fab fa-facebook fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.youtube.com/@YiXuan" title="YouTube → https:&#x2F;&#x2F;www.youtube.com&#x2F;@YiXuan" rel="noopener me" target="_blank"><i class="fab fa-youtube fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.instagram.com/rise.worlds/" title="Instagram → https:&#x2F;&#x2F;www.instagram.com&#x2F;rise.worlds&#x2F;" rel="noopener me" target="_blank"><i class="fab fa-instagram fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://t.me/riseworlds" title="Telegram → https:&#x2F;&#x2F;t.me&#x2F;riseworlds" rel="noopener me" target="_blank"><i class="fab fa-telegram fa-fw"></i></a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="Back to top">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+          Links
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <a href="https://www.cnblogs.com/flying_bat" title="https:&#x2F;&#x2F;www.cnblogs.com&#x2F;flying_bat" rel="noopener" target="_blank">my cnblogs</a>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://rise-worlds.github.io/2007/09/20/D3D%E4%B8%AD%E7%9A%84Alpha%E9%A2%9C%E8%89%B2%E6%B7%B7%E5%90%88%EF%BC%882%EF%BC%89/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="rise">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Rise'blogs">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="D3D中的Alpha颜色混合（2） | Rise'blogs">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          D3D中的Alpha颜色混合（2）
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2007-09-20 21:35:00" itemprop="dateCreated datePublished" datetime="2007-09-20T21:35:00+00:00">2007-09-20</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Dev/" itemprop="url" rel="index"><span itemprop="name">Dev</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Dev/GameDev/" itemprop="url" rel="index"><span itemprop="name">GameDev</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><P>本篇是D3D中的Alpha颜色混合（1） <A target="_blank" rel="noopener" href="http://www.cppblog.com/lovedday/archive/2007/05/15/24121.html"><FONT color=#1b1b1b></FONT></A>的后续篇，主要讲利用ID3DXSprite来实现图片间的颜色透明效果。<BR><BR>在一幅图象上透明的显示另一幅图象，是Alpha颜色混合的一个典型应用，如下图所示，瞄准镜图象背景透明地显示在老虎背景图象上。<BR><BR><IMG alt="" src="http://www.cppblog.com/images/cppblog_com/lovedday/4157/r_sprite1.jpg"><BR><BR>实现瞄准镜的背景透明显示，首先需要准备如下两张图：<BR><BR><IMG alt="" src="http://www.cppblog.com/images/cppblog_com/lovedday/4157/r_gun.bmp">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <IMG alt="" src="http://www.cppblog.com/images/cppblog_com/lovedday/4157/r_gun1.bmp"><BR>&nbsp; 瞄准镜源图&nbsp; （图1） &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 瞄准镜Alpha通道（屏蔽图）（图2）<BR><BR>Alpha通道图（屏蔽图）的黑色像素对应的源图像素不被显示出来，Alpha通道图（屏蔽图）的白色像素对应的源图像素会显示出来。<BR><BR>Alpha 通道图（屏蔽图）的像素颜色值是作为DirectX颜色结构体的alpha分量值来使用的。图2所示的黑色像素将产生一个为0的Alpha值，而白色像素将产生一个为1的Alpha值。如果此时将渲染管道流水线的D3DRS_SRCBLEND源混合因子参数设置为D3DBLEND_SRCALPHA，目标混合因子参数设置为D3DBLEND_INVSRCALPHA，然后先绘制图1所示的纹理图，再绘制图2所示的纹理图，那么混合后的结果将是图1所示的白色背景不被显示出来，仅显示一个圆和一个十字形，正因为Alpha通道图具有以上的屏蔽效果，因此图2所示的Alpha通道图也称为屏蔽图。<BR><BR>如果直接采用上面的方法实现图形间的透明效果，那么需要进行3次纹理贴图，并设置好相应的混合参数。第一次先绘制出老虎背景图，接着绘制瞄准镜源图，最后绘制瞄准镜Alpha通道图。这样做显然是比较繁琐的，因此可用DirectX提供的ID3DXSprite接口进行绘制。<BR><BR>首先，在DirectX安装目录下的Utilities目录下执行DxTex.exe，这是DirectX提供的用于生成纹理图象的Alpha通道图的工具。<BR><BR>（注：如果你执行DxTex.exe时系统提示如下信息：<BR><BR>Unable to create Direct3D Device. Please make sure your desktop color depth is 16 or 32 bit, and that d3dref.dll is installed.<BR><BR>请参考解决方案 <A target="_blank" rel="noopener" href="http://www.cppblog.com/lovedday/archive/2007/05/15/24156.html"><FONT color=#1b1b1b>运行DxTex.exe碰到的问题</FONT></A>）<BR><BR>首先执行"File - Open"菜单，将图1所示的瞄准镜源图打开，然后执行"Change Surface Format ..." 菜单，重新设置bmp图象的像素颜色格式为A8R8G8B8，即添加一个Alpha颜色值。<BR><BR><IMG alt="" src="http://www.cppblog.com/images/cppblog_com/lovedday/4157/r_DxTex1.jpg">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <IMG alt="" src="http://www.cppblog.com/images/cppblog_com/lovedday/4157/r_DxTex2.jpg"><BR><BR>执行新增加的"File - Open onto alpha channel of this texture..."菜单，弹出一个文件打开对话框，选择图2所示的瞄准镜Alpha通道图并打开，DxTex将自动把Alpha通道图的屏蔽信息插入图象中。如下图所示，DxTex默认的淡蓝色背景色表示该像素颜色已为透明色。最后，执行"File - Save"菜单，将同时具有源图信息和Alpha通道信息的图象保存为DDS格式的gun.dds。<BR><BR><IMG alt="" src="http://www.cppblog.com/images/cppblog_com/lovedday/4157/r_DxTex3.jpg"><BR><BR>生成瞄准镜的DDS文件后，就可以利用d3dx9.lib库的ID3DXSprite提供的方法，将瞄准镜背景透明地显示出来。ID3DXSprite接口对象是通过D3DXCreateSprite函数进行创建的，来看看该函数的具体使用信息：</P>
+
+<P>Creates a sprite object which is associated with a particular device. Sprite objects are used to draw 2D images to the screen.</P><PRE class=syntax><STRONG>HRESULT D3DXCreateSprite(</STRONG><BR>  <STRONG>LPDIRECT3DDEVICE9</STRONG> <EM>pDevice</EM><STRONG>,</STRONG><BR>  <STRONG>LPD3DXSPRITE *</STRONG> <EM>ppSprite</EM><BR><STRONG>);</STRONG></PRE>
+
+<H4>Parameters</H4>
+
+<DL>
+
+<DT><EM>pDevice</EM> 
+
+<DD>[in] Pointer to an IDirect3DDevice9 interface, the device to be associated with the sprite. 
+
+<DT><EM>ppSprite</EM> 
+
+<DD>[out] Address of a pointer to an ID3DXSprite interface. This interface allows the user to access sprite functions. </DD></DL>
+
+<H4>Return Values</H4>
+
+<P>If the function succeeds, the return value is S_OK. If the function fails, the return value can be one of the following: D3DERR_INVALIDCALL, E_OUTOFMEMORY.</P>
+
+<H4>Remarks</H4>
+
+<P>This interface can be used to draw two dimensional images in screen space of the associated device.</P><BR>再来看看SDK文档提供的有关<SPAN style="COLOR: #000000">ID3DXSprite的使用说明:</SPAN> 
+
+<P>The ID3DXSprite interface provides a set of methods that simplify the process of drawing sprites using Microsoft Direct3D.</P>
+
+<H2>ID3DXSprite Members</H2>
+
+<TABLE style="BORDER-COLLAPSE: collapse" borderColor=#c0c0c0 height=516 border=1>
+
+<TBODY>
+
+<TR>
+
+<TH bgColor=#eeeeee><FONT style="FONT-SIZE: 13pt" face=Tahoma>Method</FONT></TH>
+
+<TH bgColor=#eeeeee><FONT style="FONT-SIZE: 13pt" face=Tahoma>Description</FONT></TH></TR>
+
+<TR>
+
+<TD><FONT style="FONT-SIZE: 13pt" face=Tahoma color=#171717>ID3DXSprite::Begin</FONT></TD>
+
+<TD><FONT style="FONT-SIZE: 13pt" face=Tahoma color=#171717>Prepares a device for drawing sprites.</FONT></TD></TR>
+
+<TR>
+
+<TD><FONT style="FONT-SIZE: 13pt" face=Tahoma color=#171717>ID3DXSprite::Draw</FONT></TD>
+
+<TD><FONT style="FONT-SIZE: 13pt" face=Tahoma color=#171717>Adds a sprite to the list of batched sprites.</FONT></TD></TR>
+
+<TR>
+
+<TD><FONT style="FONT-SIZE: 13pt" face=Tahoma color=#171717>ID3DXSprite::End</FONT></TD>
+
+<TD><FONT style="FONT-SIZE: 13pt" face=Tahoma color=#171717>Calls ID3DXSprite::Flush and restores the device state to how it was before <STRONG>ID3DXSprite::Begin</STRONG> was called.</FONT></TD></TR>
+
+<TR>
+
+<TD><FONT style="FONT-SIZE: 13pt" face=Tahoma color=#171717><STRONG>ID3DXSprite::Flush</STRONG></FONT></TD>
+
+<TD><FONT style="FONT-SIZE: 13pt" face=Tahoma color=#171717>Forces all batched sprites to be submitted to the device. Device states remain as they were after the last call to <STRONG>ID3DXSprite::Begin</STRONG>. The list of batched sprites is then cleared.</FONT></TD></TR>
+
+<TR>
+
+<TD><FONT style="FONT-SIZE: 13pt" face=Tahoma color=#171717>ID3DXSprite::GetDevice</FONT></TD>
+
+<TD><FONT style="FONT-SIZE: 13pt" face=Tahoma color=#171717>Retrieves the device associated with the sprite object.</FONT></TD></TR>
+
+<TR>
+
+<TD><FONT style="FONT-SIZE: 13pt" face=Tahoma color=#171717>ID3DXSprite::GetTransform</FONT></TD>
+
+<TD><FONT style="FONT-SIZE: 13pt" face=Tahoma color=#171717>Gets the sprite transform.</FONT></TD></TR>
+
+<TR>
+
+<TD><FONT style="FONT-SIZE: 13pt" face=Tahoma color=#171717>ID3DXSprite::OnLostDevice</FONT></TD>
+
+<TD><FONT style="FONT-SIZE: 13pt" face=Tahoma color=#171717>Use this method to release all references to video memory resources and delete all stateblocks. This method should be called whenever a device is lost or before resetting a device.</FONT></TD></TR>
+
+<TR>
+
+<TD><FONT style="FONT-SIZE: 13pt" face=Tahoma color=#171717>ID3DXSprite::OnResetDevice</FONT></TD>
+
+<TD><FONT style="FONT-SIZE: 13pt" face=Tahoma color=#171717>Use this method to re-acquire resources and save initial state.</FONT></TD></TR>
+
+<TR>
+
+<TD><FONT style="FONT-SIZE: 13pt" face=Tahoma color=#171717>ID3DXSprite::SetTransform</FONT></TD>
+
+<TD><FONT style="FONT-SIZE: 13pt" face=Tahoma color=#171717>Sets the sprite transform.</FONT></TD></TR>
+
+<TR>
+
+<TD><FONT style="FONT-SIZE: 13pt" face=Tahoma color=#171717>ID3DXSprite::SetWorldViewLH</FONT></TD>
+
+<TD><FONT style="FONT-SIZE: 13pt" face=Tahoma color=#171717>Sets the left-handed world-view transform for a sprite. A call to this method is required before billboarding or sorting sprites.</FONT></TD></TR>
+
+<TR>
+
+<TD><FONT style="FONT-SIZE: 13pt" face=Tahoma color=#171717>ID3DXSprite::SetWorldViewRH</FONT></TD>
+
+<TD><FONT style="FONT-SIZE: 13pt" face=Tahoma color=#171717>Sets the right-handed world-view transform for a sprite. A call to this method is required before billboarding or sorting sprites.</FONT></TD></TR></TBODY></TABLE>
+
+<H4>Remarks</H4>
+
+<P>The <STRONG>ID3DXSprite</STRONG> interface is obtained by calling the D3DXCreateSprite function.</P>
+
+<P>The application typically first calls <STRONG>ID3DXSprite::Begin</STRONG>, which allows control over the device render state, alpha blending, and sprite transformation and sorting. Then for each sprite to be displayed, call <STRONG>ID3DXSprite::Draw</STRONG>. <STRONG>ID3DXSprite::Draw</STRONG> can be called repeatedly to store any number of sprites. To display the batched sprites to the device, call <STRONG>ID3DXSprite::End</STRONG> or <STRONG>ID3DXSprite::Flush</STRONG>.</P>
+
+<P>The LPD3DXSPRITE type is defined as a pointer to the <STRONG>ID3DXSprite</STRONG> interface.</P><PRE class=clsCode>typedef interface ID3DXSprite ID3DXSprite;<BR>typedef interface ID3DXSprite *LPD3DXSPRITE;<BR></PRE><BR>Begin方法和End方法表明绘制精灵图象的开始和结束，这是一对配套函数，必须用在IDirect3DDevice9::BeginScene和IDirect3DDevice9::EndScene的调用之间。<BR><BR>接着来看看Begin方法的使用说明: 
+
+<P>Prepares a device for drawing sprites.</P><PRE class=syntax><STRONG>HRESULT Begin(</STRONG><BR>  <STRONG>DWORD</STRONG> <EM>Flags</EM><BR><STRONG>);</STRONG></PRE>
+
+<H4>Parameters</H4>
+
+<DL>
+
+<DT><EM>Flags</EM> 
+
+<DD>[in] Combination of zero or more flags that describe sprite rendering options. For this method, the valid flags are: 
+
+<UL>
+
+<LI>D3DXSPRITE_ALPHABLEND 
+
+<LI>D3DXSprite__BILLBOARD 
+
+<LI>D3DXSPRITE_DONOTMODIFY_RENDERSTATE 
+
+<LI>D3DXSPRITE_DONOTSAVESTATE 
+
+<LI>D3DXSPRITE_OBJECTSPACE 
+
+<LI>D3DXSprite__SORT_DEPTH_BACKTOFRONT 
+
+<LI>D3DXSprite__SORT_DEPTH_FRONTTOBACK 
+
+<LI>D3DXSprite__SORT_TEXTURE </LI></UL>For a description of the flags and for information on how to control device state capture and device view transforms, see D3DXSPRITE. </DD></DL>
+
+<H4>Return Values</H4>
+
+<P>If the method succeeds, the return value is S_OK. If the method fails, the return value can be one of the following: D3DERR_INVALIDCALL, D3DERR_OUTOFVIDEOMEMORY, D3DXERR_INVALIDDATA, E_OUTOFMEMORY.</P>
+
+<H4>Remarks</H4>
+
+<P>This method must be called from inside a IDirect3DDevice9::BeginScene . . . IDirect3DDevice9::EndScene sequence. ID3DXSprite::Begin cannot be used as a substitute for either <STRONG>IDirect3DDevice9::BeginScene</STRONG> or ID3DXRenderToSurface::BeginScene.</P>
+
+<P>This method will set the following states on the device.</P>
+
+<P>Render States:</P>
+
+<TABLE style="BORDER-COLLAPSE: collapse" borderColor=#c0c0c0 height=884 border=1>
+
+<TBODY>
+
+<TR>
+
+<TH bgColor=#eeeeee><FONT style="FONT-SIZE: 13pt" face=Tahoma color=#171717>Type (D3DRENDERSTATETYPE)</FONT></TH>
+
+<TH bgColor=#eeeeee><FONT style="FONT-SIZE: 13pt" face=Tahoma color=#171717>Value</FONT></TH></TR>
+
+<TR>
+
+<TD><FONT style="FONT-SIZE: 13pt" face=Tahoma color=#171717>D3DRS_ALPHABLENDENABLE</FONT></TD>
+
+<TD><FONT style="FONT-SIZE: 13pt" face=Tahoma color=#171717>TRUE</FONT></TD></TR>
+
+<TR>
+
+<TD><FONT style="FONT-SIZE: 13pt" face=Tahoma color=#171717>D3DRS_ALPHAFUNC</FONT></TD>
+
+<TD><FONT style="FONT-SIZE: 13pt" face=Tahoma color=#171717>D3DCMP_GREATER</FONT></TD></TR>
+
+<TR>
+
+<TD><FONT style="FONT-SIZE: 13pt" face=Tahoma color=#171717>D3DRS_ALPHAREF</FONT></TD>
+
+<TD><FONT style="FONT-SIZE: 13pt" face=Tahoma color=#171717>0x00</FONT></TD></TR>
+
+<TR>
+
+<TD><FONT style="FONT-SIZE: 13pt" face=Tahoma color=#171717>D3DRS_ALPHATESTENABLE</FONT></TD>
+
+<TD><FONT style="FONT-SIZE: 13pt" face=Tahoma color=#171717>AlphaCmpCaps</FONT></TD></TR>
+
+<TR>
+
+<TD><FONT style="FONT-SIZE: 13pt" face=Tahoma color=#171717>D3DRS_BLENDOP</FONT></TD>
+
+<TD><FONT style="FONT-SIZE: 13pt" face=Tahoma color=#171717>D3DBLENDOP_ADD</FONT></TD></TR>
+
+<TR>
+
+<TD><FONT style="FONT-SIZE: 13pt" face=Tahoma color=#171717>D3DRS_CLIPPING</FONT></TD>
+
+<TD><FONT style="FONT-SIZE: 13pt" face=Tahoma color=#171717>TRUE</FONT></TD></TR>
+
+<TR>
+
+<TD><FONT style="FONT-SIZE: 13pt" face=Tahoma color=#171717>D3DRS_CLIPPLANEENABLE</FONT></TD>
+
+<TD><FONT style="FONT-SIZE: 13pt" face=Tahoma color=#171717>FALSE</FONT></TD></TR>
+
+<TR>
+
+<TD><FONT style="FONT-SIZE: 13pt" face=Tahoma color=#171717>D3DRS_COLORWRITEENABLE</FONT></TD>
+
+<TD><FONT style="FONT-SIZE: 13pt" face=Tahoma color=#171717>D3DCOLORWRITEENABLE_ALPHA | D3DCOLORWRITEENABLE_BLUE | D3DCOLORWRITEENABLE_GREEN | D3DCOLORWRITEENABLE_RED</FONT></TD></TR>
+
+<TR>
+
+<TD><FONT style="FONT-SIZE: 13pt" face=Tahoma color=#171717>D3DRS_CULLMODE</FONT></TD>
+
+<TD><FONT style="FONT-SIZE: 13pt" face=Tahoma color=#171717>D3DCULL_NONE</FONT></TD></TR>
+
+<TR>
+
+<TD><FONT style="FONT-SIZE: 13pt" face=Tahoma color=#171717>D3DRS_DESTBLEND</FONT></TD>
+
+<TD><FONT style="FONT-SIZE: 13pt" face=Tahoma color=#171717>D3DBLEND_INVSRCALPHA</FONT></TD></TR>
+
+<TR>
+
+<TD><FONT style="FONT-SIZE: 13pt" face=Tahoma color=#171717>D3DRS_DIFFUSEMATERIALSOURCE</FONT></TD>
+
+<TD><FONT style="FONT-SIZE: 13pt" face=Tahoma color=#171717>D3DMCS_COLOR1</FONT></TD></TR>
+
+<TR>
+
+<TD><FONT style="FONT-SIZE: 13pt" face=Tahoma color=#171717>D3DRS_ENABLEADAPTIVETESSELLATION</FONT></TD>
+
+<TD><FONT style="FONT-SIZE: 13pt" face=Tahoma color=#171717>FALSE</FONT></TD></TR>
+
+<TR>
+
+<TD><FONT style="FONT-SIZE: 13pt" face=Tahoma color=#171717>D3DRS_FILLMODE</FONT></TD>
+
+<TD><FONT style="FONT-SIZE: 13pt" face=Tahoma color=#171717>D3DFILL_SOLID</FONT></TD></TR>
+
+<TR>
+
+<TD><FONT style="FONT-SIZE: 13pt" face=Tahoma color=#171717>D3DRS_FOGENABLE</FONT></TD>
+
+<TD><FONT style="FONT-SIZE: 13pt" face=Tahoma color=#171717>FALSE</FONT></TD></TR>
+
+<TR>
+
+<TD><FONT style="FONT-SIZE: 13pt" face=Tahoma color=#171717>D3DRS_INDEXEDVERTEXBLENDENABLE</FONT></TD>
+
+<TD><FONT style="FONT-SIZE: 13pt" face=Tahoma color=#171717>FALSE</FONT></TD></TR>
+
+<TR>
+
+<TD><FONT style="FONT-SIZE: 13pt" face=Tahoma color=#171717>D3DRS_LIGHTING</FONT></TD>
+
+<TD><FONT style="FONT-SIZE: 13pt" face=Tahoma color=#171717>FALSE</FONT></TD></TR>
+
+<TR>
+
+<TD><FONT style="FONT-SIZE: 13pt" face=Tahoma color=#171717>D3DRS_RANGEFOGENABLE</FONT></TD>
+
+<TD><FONT style="FONT-SIZE: 13pt" face=Tahoma color=#171717>FALSE</FONT></TD></TR>
+
+<TR>
+
+<TD><FONT style="FONT-SIZE: 13pt" face=Tahoma color=#171717>D3DRS_SEPARATEALPHABLENDENABLE</FONT></TD>
+
+<TD><FONT style="FONT-SIZE: 13pt" face=Tahoma color=#171717>FALSE</FONT></TD></TR>
+
+<TR>
+
+<TD><FONT style="FONT-SIZE: 13pt" face=Tahoma color=#171717>D3DRS_SHADEMODE</FONT></TD>
+
+<TD><FONT style="FONT-SIZE: 13pt" face=Tahoma color=#171717>D3DSHADE_GOURAUD</FONT></TD></TR>
+
+<TR>
+
+<TD><FONT style="FONT-SIZE: 13pt" face=Tahoma color=#171717>D3DRS_SPECULARENABLE</FONT></TD>
+
+<TD><FONT style="FONT-SIZE: 13pt" face=Tahoma color=#171717>FALSE</FONT></TD></TR>
+
+<TR>
+
+<TD><FONT style="FONT-SIZE: 13pt" face=Tahoma color=#171717>D3DRS_SRCBLEND</FONT></TD>
+
+<TD><FONT style="FONT-SIZE: 13pt" face=Tahoma color=#171717>D3DBLEND_SRCALPHA</FONT></TD></TR>
+
+<TR>
+
+<TD><FONT style="FONT-SIZE: 13pt" face=Tahoma color=#171717>D3DRS_SRGBWRITEENABLE</FONT></TD>
+
+<TD><FONT style="FONT-SIZE: 13pt" face=Tahoma color=#171717>FALSE</FONT></TD></TR>
+
+<TR>
+
+<TD><FONT style="FONT-SIZE: 13pt" face=Tahoma color=#171717>D3DRS_STENCILENABLE</FONT></TD>
+
+<TD><FONT style="FONT-SIZE: 13pt" face=Tahoma color=#171717>FALSE</FONT></TD></TR>
+
+<TR>
+
+<TD><FONT style="FONT-SIZE: 13pt" face=Tahoma color=#171717>D3DRS_VERTEXBLEND</FONT></TD>
+
+<TD><FONT style="FONT-SIZE: 13pt" face=Tahoma color=#171717>FALSE</FONT></TD></TR>
+
+<TR>
+
+<TD><FONT style="FONT-SIZE: 13pt" face=Tahoma color=#171717>D3DRS_WRAP0</FONT></TD>
+
+<TD><FONT style="FONT-SIZE: 13pt" face=Tahoma color=#171717>0</FONT></TD></TR></TBODY></TABLE>
+
+<P>Texture Stage States:</P>
+
+<TABLE style="BORDER-COLLAPSE: collapse" borderColor=#c0c0c0 height=396 width=782 border=1>
+
+<TBODY>
+
+<TR>
+
+<TH bgColor=#eeeeee><FONT style="FONT-SIZE: 13pt" face=Tahoma color=#171717>Stage Identifier</FONT></TH>
+
+<TH bgColor=#eeeeee><FONT style="FONT-SIZE: 13pt" face=Tahoma color=#171717>Type (D3DTEXTURESTAGESTATETYPE)</FONT></TH>
+
+<TH bgColor=#eeeeee><FONT style="FONT-SIZE: 13pt" face=Tahoma color=#171717>Value</FONT></TH></TR>
+
+<TR>
+
+<TD><FONT style="FONT-SIZE: 13pt" face=Tahoma color=#171717>0</FONT></TD>
+
+<TD><FONT style="FONT-SIZE: 13pt" face=Tahoma color=#171717>D3DTSS_ALPHAARG1</FONT></TD>
+
+<TD><FONT style="FONT-SIZE: 13pt" face=Tahoma color=#171717>D3DTA_TEXTURE</FONT></TD></TR>
+
+<TR>
+
+<TD><FONT style="FONT-SIZE: 13pt" face=Tahoma color=#171717>0</FONT></TD>
+
+<TD><FONT style="FONT-SIZE: 13pt" face=Tahoma color=#171717>D3DTSS_ALPHAARG2</FONT></TD>
+
+<TD><FONT style="FONT-SIZE: 13pt" face=Tahoma color=#171717>D3DTA_DIFFUSE</FONT></TD></TR>
+
+<TR>
+
+<TD><FONT style="FONT-SIZE: 13pt" face=Tahoma color=#171717>0</FONT></TD>
+
+<TD><FONT style="FONT-SIZE: 13pt" face=Tahoma color=#171717>D3DTSS_ALPHAOP</FONT></TD>
+
+<TD><FONT style="FONT-SIZE: 13pt" face=Tahoma color=#171717>D3DTOP_MODULATE</FONT></TD></TR>
+
+<TR>
+
+<TD><FONT style="FONT-SIZE: 13pt" face=Tahoma color=#171717>0</FONT></TD>
+
+<TD><FONT style="FONT-SIZE: 13pt" face=Tahoma color=#171717>D3DTSS_COLORARG1</FONT></TD>
+
+<TD><FONT style="FONT-SIZE: 13pt" face=Tahoma color=#171717>D3DTA_TEXTURE</FONT></TD></TR>
+
+<TR>
+
+<TD><FONT style="FONT-SIZE: 13pt" face=Tahoma color=#171717>0</FONT></TD>
+
+<TD><FONT style="FONT-SIZE: 13pt" face=Tahoma color=#171717>D3DTSS_COLORARG2</FONT></TD>
+
+<TD><FONT style="FONT-SIZE: 13pt" face=Tahoma color=#171717>D3DTA_DIFFUSE</FONT></TD></TR>
+
+<TR>
+
+<TD><FONT style="FONT-SIZE: 13pt" face=Tahoma color=#171717>0</FONT></TD>
+
+<TD><FONT style="FONT-SIZE: 13pt" face=Tahoma color=#171717>D3DTSS_COLOROP</FONT></TD>
+
+<TD><FONT style="FONT-SIZE: 13pt" face=Tahoma color=#171717>D3DTOP_MODULATE</FONT></TD></TR>
+
+<TR>
+
+<TD><FONT style="FONT-SIZE: 13pt" face=Tahoma color=#171717>0</FONT></TD>
+
+<TD><FONT style="FONT-SIZE: 13pt" face=Tahoma color=#171717>D3DTSS_TEXCOORDINDEX</FONT></TD>
+
+<TD><FONT style="FONT-SIZE: 13pt" face=Tahoma color=#171717>0</FONT></TD></TR>
+
+<TR>
+
+<TD><FONT style="FONT-SIZE: 13pt" face=Tahoma color=#171717>0</FONT></TD>
+
+<TD><FONT style="FONT-SIZE: 13pt" face=Tahoma color=#171717>D3DTSS_TEXTURETRANSFORMFLAGS</FONT></TD>
+
+<TD><FONT style="FONT-SIZE: 13pt" face=Tahoma color=#171717>D3DTTFF_DISABLE</FONT></TD></TR>
+
+<TR>
+
+<TD><FONT style="FONT-SIZE: 13pt" face=Tahoma color=#171717>1</FONT></TD>
+
+<TD><FONT style="FONT-SIZE: 13pt" face=Tahoma color=#171717>D3DTSS_ALPHAOP</FONT></TD>
+
+<TD><FONT style="FONT-SIZE: 13pt" face=Tahoma color=#171717>D3DTOP_DISABLE</FONT></TD></TR>
+
+<TR>
+
+<TD><FONT style="FONT-SIZE: 13pt" face=Tahoma color=#171717>1</FONT></TD>
+
+<TD><FONT style="FONT-SIZE: 13pt" face=Tahoma color=#171717>D3DTSS_COLOROP</FONT></TD>
+
+<TD><FONT style="FONT-SIZE: 13pt" face=Tahoma color=#171717>D3DTOP_DISABLE</FONT></TD></TR></TBODY></TABLE>
+
+<P>Sampler States:</P>
+
+<TABLE style="BORDER-COLLAPSE: collapse" borderColor=#c0c0c0 height=447 border=1>
+
+<TBODY>
+
+<TR>
+
+<TH bgColor=#eeeeee><FONT style="FONT-SIZE: 13pt" face=Tahoma color=#171717>Sampler Stage Index</FONT></TH>
+
+<TH bgColor=#eeeeee><FONT style="FONT-SIZE: 13pt" face=Tahoma color=#171717>Type (D3DSAMPLERSTATETYPE)</FONT></TH>
+
+<TH bgColor=#eeeeee><FONT style="FONT-SIZE: 13pt" face=Tahoma color=#171717>Value</FONT></TH></TR>
+
+<TR>
+
+<TD><FONT style="FONT-SIZE: 13pt" face=Tahoma color=#171717>0</FONT></TD>
+
+<TD><FONT style="FONT-SIZE: 13pt" face=Tahoma color=#171717>D3DSAMP_ADDRESSU</FONT></TD>
+
+<TD><FONT style="FONT-SIZE: 13pt" face=Tahoma color=#171717>D3DTADDRESS_CLAMP</FONT></TD></TR>
+
+<TR>
+
+<TD><FONT style="FONT-SIZE: 13pt" face=Tahoma color=#171717>0</FONT></TD>
+
+<TD><FONT style="FONT-SIZE: 13pt" face=Tahoma color=#171717>D3DSAMP_ADDRESSV</FONT></TD>
+
+<TD><FONT style="FONT-SIZE: 13pt" face=Tahoma color=#171717>D3DTADDRESS_CLAMP</FONT></TD></TR>
+
+<TR>
+
+<TD><FONT style="FONT-SIZE: 13pt" face=Tahoma color=#171717>0</FONT></TD>
+
+<TD><FONT style="FONT-SIZE: 13pt" face=Tahoma color=#171717>D3DSAMP_MAGFILTER</FONT></TD>
+
+<TD><FONT style="FONT-SIZE: 13pt" face=Tahoma color=#171717>D3DTEXF_ANISOTROPIC if TextureFilterCaps includes D3DPTFILTERCAPS_MAGFANISOTROPIC; otherwise D3DTEXF_LINEAR</FONT></TD></TR>
+
+<TR>
+
+<TD><FONT style="FONT-SIZE: 13pt" face=Tahoma color=#171717>0</FONT></TD>
+
+<TD><FONT style="FONT-SIZE: 13pt" face=Tahoma color=#171717>D3DSAMP_MAXMIPLEVEL</FONT></TD>
+
+<TD><FONT style="FONT-SIZE: 13pt" face=Tahoma color=#171717>0</FONT></TD></TR>
+
+<TR>
+
+<TD><FONT style="FONT-SIZE: 13pt" face=Tahoma color=#171717>0</FONT></TD>
+
+<TD><FONT style="FONT-SIZE: 13pt" face=Tahoma color=#171717>D3DSAMP_MAXANISOTROPY</FONT></TD>
+
+<TD><FONT style="FONT-SIZE: 13pt" face=Tahoma color=#171717>MaxAnisotropy</FONT></TD></TR>
+
+<TR>
+
+<TD><FONT style="FONT-SIZE: 13pt" face=Tahoma color=#171717>0</FONT></TD>
+
+<TD><FONT style="FONT-SIZE: 13pt" face=Tahoma color=#171717>D3DSAMP_MINFILTER</FONT></TD>
+
+<TD><FONT style="FONT-SIZE: 13pt" face=Tahoma color=#171717>D3DTEXF_ANISOTROPIC if TextureFilterCaps includes D3DPTFILTERCAPS_MINFANISOTROPIC; otherwise D3DTEXF_LINEAR</FONT></TD></TR>
+
+<TR>
+
+<TD><FONT style="FONT-SIZE: 13pt" face=Tahoma color=#171717>0</FONT></TD>
+
+<TD><FONT style="FONT-SIZE: 13pt" face=Tahoma color=#171717>D3DSAMP_MIPFILTER</FONT></TD>
+
+<TD><FONT style="FONT-SIZE: 13pt" face=Tahoma color=#171717>D3DTEXF_LINEAR if TextureFilterCaps includes D3DPTFILTERCAPS_MIPFLINEAR; otherwise D3DTEXF_POINT</FONT></TD></TR>
+
+<TR>
+
+<TD><FONT style="FONT-SIZE: 13pt" face=Tahoma color=#171717>0</FONT></TD>
+
+<TD><FONT style="FONT-SIZE: 13pt" face=Tahoma color=#171717>D3DSAMP_MIPMAPLODBIAS</FONT></TD>
+
+<TD><FONT style="FONT-SIZE: 13pt" face=Tahoma color=#171717>0</FONT></TD></TR>
+
+<TR>
+
+<TD><FONT style="FONT-SIZE: 13pt" face=Tahoma color=#171717>0</FONT></TD>
+
+<TD><FONT style="FONT-SIZE: 13pt" face=Tahoma color=#171717>D3DSAMP_SRGBTEXTURE</FONT></TD>
+
+<TD><FONT style="FONT-SIZE: 13pt" face=Tahoma color=#171717>0</FONT></TD></TR></TBODY></TABLE>
+
+<P class=note><STRONG><EM>Note</EM></STRONG>&nbsp;&nbsp;&nbsp;&nbsp;This method disables N-patches.</P><BR>参数Flags允许设置的D3DXSPRITE模式如下所示： 
+
+<P>The following flags are used to specify sprite rendering options to the flags parameter in the ID3DXSprite::Begin method:</P>
+
+<TABLE style="BORDER-COLLAPSE: collapse" borderColor=#cccccc height=924 border=1>
+
+<TBODY>
+
+<TR>
+
+<TH bgColor=#eeeeee><FONT style="FONT-SIZE: 13pt" face=Tahoma color=#171717>#define</FONT></TH>
+
+<TH bgColor=#eeeeee><FONT style="FONT-SIZE: 13pt" face=Tahoma color=#171717>Description</FONT></TH></TR>
+
+<TR>
+
+<TD><FONT style="FONT-SIZE: 13pt" face=Tahoma color=#171717>D3DXSPRITE_DONOTSAVESTATE</FONT></TD>
+
+<TD><FONT style="FONT-SIZE: 13pt" face=Tahoma color=#171717>The device state is not to be saved or restored when <STRONG>ID3DXSprite::Begin</STRONG> or ID3DXSprite::End is called.</FONT></TD></TR>
+
+<TR>
+
+<TD><FONT style="FONT-SIZE: 13pt" face=Tahoma color=#171717>D3DXSPRITE_DONOTMODIFY_RENDERSTATE</FONT></TD>
+
+<TD><FONT style="FONT-SIZE: 13pt" face=Tahoma color=#171717>The device render state is not to be changed when <STRONG>ID3DXSprite::Begin</STRONG> is called. The device is assumed to be in a valid state to draw vertices containing UsageIndex = 0 in the D3DDECLUSAGE_POSITION, D3DDECLUSAGE_TEXCOORD, and D3DDECLUSAGE_COLOR data.</FONT></TD></TR>
+
+<TR>
+
+<TD><FONT style="FONT-SIZE: 13pt" face=Tahoma color=#171717>D3DXSPRITE_OBJECTSPACE</FONT></TD>
+
+<TD><FONT style="FONT-SIZE: 13pt" face=Tahoma color=#171717>The world, view, and projection transforms are not modified. The transforms currently set to the device are used to transform the sprites when the batched sprites are drawn (when ID3DXSprite::Flush or <STRONG>ID3DXSprite::End</STRONG> is called). If this flag is not specified, then world, view, and projection transforms are modified so that sprites are drawn in screen-space coordinates.</FONT></TD></TR>
+
+<TR>
+
+<TD><FONT style="FONT-SIZE: 13pt" face=Tahoma color=#171717>D3DXSPRITE_BILLBOARD</FONT></TD>
+
+<TD><FONT style="FONT-SIZE: 13pt" face=Tahoma color=#171717>Each sprite will be rotated about its center so that it is facing the viewer. ID3DXSprite::SetWorldViewLH or ID3DXSprite::SetWorldViewRH must be called first.</FONT></TD></TR>
+
+<TR>
+
+<TD><FONT style="FONT-SIZE: 13pt" face=Tahoma color=#171717>D3DXSPRITE_ALPHABLEND</FONT></TD>
+
+<TD><FONT style="FONT-SIZE: 13pt" face=Tahoma color=#171717>Enables alpha blending with D3DRS_ALPHATESTENABLE set to TRUE (for nonzero alpha). D3DBLEND_SRCALPHA will be the source blend state, and D3DBLEND_INVSRCALPHA will be the destination blend state in calls to IDirect3DDevice9::SetRenderState. See Alpha Blending State (Direct3D 9). ID3DXFont expects this flag to be set when drawing text.</FONT></TD></TR>
+
+<TR>
+
+<TD><FONT style="FONT-SIZE: 13pt" face=Tahoma color=#171717>D3DXSPRITE_SORT_TEXTURE</FONT></TD>
+
+<TD><FONT style="FONT-SIZE: 13pt" face=Tahoma color=#171717>Sort sprites by texture prior to drawing. This can improve performance when drawing non-overlapping sprites of uniform depth. </FONT>
+
+<P><FONT style="FONT-SIZE: 13pt" face=Tahoma color=#171717>You may also combine D3DXSPRITE_SORT_TEXTURE with either D3DXSPRITE_SORT_DEPTH_FRONTTOBACK or D3DXSPRITE_SORT_DEPTH_BACKTOFRONT. This will sort the list of sprites by depth first and texture second.</FONT></P></TD></TR>
+
+<TR>
+
+<TD><FONT style="FONT-SIZE: 13pt" face=Tahoma color=#171717>D3DXSPRITE_SORT_DEPTH_FRONTTOBACK</FONT></TD>
+
+<TD><FONT style="FONT-SIZE: 13pt" face=Tahoma color=#171717>Sprites are sorted by depth in front-to-back order prior to drawing. This procedure is recommended when drawing opaque sprites of varying depths. </FONT>
+
+<P><FONT style="FONT-SIZE: 13pt" face=Tahoma color=#171717>You may combine D3DXSPRITE_SORT_DEPTH_FRONTTOBACK with D3DXSPRITE_SORT_TEXTURE to sort first by depth, and second by texture.</FONT></P></TD></TR>
+
+<TR>
+
+<TD><FONT style="FONT-SIZE: 13pt" face=Tahoma color=#171717>D3DXSPRITE_SORT_DEPTH_BACKTOFRONT</FONT></TD>
+
+<TD><FONT style="FONT-SIZE: 13pt" face=Tahoma color=#171717>Sprites are sorted by depth in back-to-front order prior to drawing. This procedure is recommended when drawing transparent sprites of varying depths. </FONT>
+
+<P><FONT style="FONT-SIZE: 13pt" face=Tahoma color=#171717>You may combine D3DXSPRITE_SORT_DEPTH_BACKTOFRONT with D3DXSPRITE_SORT_TEXTURE to sort first by depth, and second by texture.</FONT></P></TD></TR>
+
+<TR>
+
+<TD><FONT style="FONT-SIZE: 13pt" face=Tahoma color=#171717>D3DXSPRITE_DO_NOT_ADDREF_TEXTURE</FONT></TD>
+
+<TD><FONT style="FONT-SIZE: 13pt" face=Tahoma color=#171717>Disables calling AddRef() on every draw, and Release() on Flush() for better performance.</FONT></TD></TR></TBODY></TABLE><BR>再来看看End方法的使用信息： 
+
+<P>Calls ID3DXSprite::Flush and restores the device state to how it was before ID3DXSprite::Begin was called.</P><PRE class=syntax><STRONG>HRESULT End();</STRONG></PRE>
+
+<H4>Parameters</H4>
+
+<P>None.</P>
+
+<H4>Return Values</H4>
+
+<P>If the method succeeds, the return value is S_OK. If the method fails, the following value will be returned.</P>D3DERR_INVALIDCALL 
+
+<H4>Remarks</H4>
+
+<P>ID3DXSprite::End cannot be used as a substitute for either IDirect3DDevice9::EndScene or ID3DXRenderToSurface::EndScene.</P><BR>Draw方法用来在指定位置绘制精灵，来看看它的使用说明： 
+
+<P>Adds a sprite to the list of batched sprites.</P><PRE class=syntax><STRONG>HRESULT Draw(</STRONG><BR>  <STRONG>LPDIRECT3DTEXTURE9</STRONG> <EM>pTexture</EM><STRONG>,</STRONG><BR>  <STRONG>CONST RECT *</STRONG> <EM>pSrcRect</EM><STRONG>,</STRONG><BR>  <STRONG>CONST D3DXVECTOR3 *</STRONG> <EM>pCenter</EM><STRONG>,</STRONG><BR>  <STRONG>CONST D3DXVECTOR3 *</STRONG> <EM>pPosition</EM><STRONG>,</STRONG><BR>  <STRONG>D3DCOLOR</STRONG> <EM>Color</EM><BR><STRONG>);</STRONG></PRE>
+
+<H4>Parameters</H4>
+
+<DL>
+
+<DT><EM>pTexture</EM> 
+
+<DD>[in] Pointer to an IDirect3DTexture9 interface that represents the sprite texture. 
+
+<DT><EM>pSrcRect</EM> 
+
+<DD>[in] Pointer to a RECT structure that indicates the portion of the source texture to use for the sprite. If this parameter is NULL, then the entire source image is used for the sprite. 
+
+<DT><EM>pCenter</EM> 
+
+<DD>[in] Pointer to a D3DXVECTOR3 vector that identifies the center of the sprite. If this argument is NULL, the point (0,0,0) is used, which is the upper-left corner. 
+
+<DT><EM>pPosition</EM> 
+
+<DD>[in] Pointer to a <STRONG>D3DXVECTOR3</STRONG> vector that identifies the position of the sprite. If this argument is NULL, the point (0,0,0) is used, which is the upper-left corner. 
+
+<DT><EM>Color</EM> 
+
+<DD>[in] D3DCOLOR type. The color and alpha channels are modulated by this value. A value of 0xFFFFFFFF maintains the original source color and alpha data. Use the D3DCOLOR_RGBA macro to help generate this color. </DD></DL>
+
+<H4>Return Values</H4>
+
+<P>If the method succeeds, the return value is S_OK. If the method fails, the return value can be one of the following: D3DERR_INVALIDCALL, D3DXERR_INVALIDDATA.</P>
+
+<H4>Remarks</H4>
+
+<P>To scale, rotate, or translate a sprite, call ID3DXSprite::SetTransform with a matrix that contains the scale, rotate, and translate (SRT) values, before calling ID3DXSprite::Draw. For information about setting SRT values in a matrix, see Matrix Transforms.</P>&nbsp; 
+
+<HR style="WIDTH: 100%; HEIGHT: 2px">
+
+<p><BR>好了，现在来看一个例子：<BR><BR><SPAN style="COLOR: #000000">需要在工程中设置链接d3dx9.lib d3d9.lib dinput8.lib dxguid.lib。<BR>由于文件中用到了GE_APP和GE_INPUT这两个类，它的具体使用说明请参阅<A target="_blank" rel="noopener" href="http://www.cppblog.com/lovedday/archive/2007/05/07/23546.html"><FONT color=#1b1b1b>主窗口和DirectInput的封装。</FONT></A></SPAN><BR><SPAN style="COLOR: #000000"><BR>若发现代码中存在错误，敬请指出。<BR><BR><A target="_blank" rel="noopener" href="http://www.cppblog.com/Files/lovedday/shoot.rar"><FONT color=#1b1b1b>源码及素材下载</FONT></A><BR><BR>来看看shoot.h的定义：<BR>&nbsp; </p>
+<DIV style="BORDER-RIGHT: #ffffff 1px solid; PADDING-RIGHT: 5px; BORDER-TOP: #ffffff 1px solid; PADDING-LEFT: 4px; FONT-SIZE: 15px; PADDING-BOTTOM: 4px; BORDER-LEFT: #ffffff 1px solid; WIDTH: 98%; PADDING-TOP: 4px; BORDER-BOTTOM: #ffffff 1px solid; BACKGROUND-COLOR: #ffffff"><!--<br><br>Code highlighting produced by Actipro CodeHighlighter (freeware)<br>http://www.CodeHighlighter.com/<br><br>--><SPAN style="COLOR: #008000">/*************************************************************************************<BR>&nbsp;[Include&nbsp;File]<BR><BR>&nbsp;PURPOSE:&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;Define&nbsp;for&nbsp;alpha&nbsp;blending&nbsp;test,&nbsp;use&nbsp;ID3DXSprit&nbsp;interface.<BR>*************************************************************************************/</SPAN><BR><BR>#ifndef&nbsp;SHOOT_H<BR><SPAN style="COLOR: #0000ff">#define</SPAN>&nbsp;SHOOT_H<BR><BR><SPAN style="COLOR: #0000ff">class</SPAN>&nbsp;SHOOT<BR>{<BR><SPAN style="COLOR: #0000ff">private</SPAN>:<BR>&nbsp;&nbsp;&nbsp;&nbsp;IDirect3D9*&nbsp;_d3d;<BR>&nbsp;&nbsp;&nbsp;&nbsp;IDirect3DDevice9*&nbsp;_d3d_device;<BR>&nbsp;&nbsp;&nbsp;&nbsp;IDirect3DTexture9*&nbsp;_texture_tiger;<BR>&nbsp;&nbsp;&nbsp;&nbsp;IDirect3DTexture9*&nbsp;_texture_gun;<BR>&nbsp;&nbsp;&nbsp;&nbsp;ID3DXSprite*&nbsp;_sprite_tiger;<BR>&nbsp;&nbsp;&nbsp;&nbsp;ID3DXSprite*&nbsp;_sprite_gun;<BR><BR><SPAN style="COLOR: #0000ff">public</SPAN>:<BR>&nbsp;&nbsp;&nbsp;&nbsp;<SPAN style="COLOR: #0000ff">float</SPAN>&nbsp;m_gun_pos_x,&nbsp;m_gun_pos_y;<BR><BR><SPAN style="COLOR: #0000ff">public</SPAN>:<BR>&nbsp;&nbsp;&nbsp;&nbsp;SHOOT();<BR>&nbsp;&nbsp;&nbsp;&nbsp;~SHOOT();<BR>&nbsp;&nbsp;&nbsp;&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;<SPAN style="COLOR: #0000ff">bool</SPAN>&nbsp;Create_D3D_Device(HWND&nbsp;hwnd,&nbsp;<SPAN style="COLOR: #0000ff">bool</SPAN>&nbsp;full_screen&nbsp;=&nbsp;<SPAN style="COLOR: #0000ff">true</SPAN>);<BR>&nbsp;&nbsp;&nbsp;&nbsp;<SPAN style="COLOR: #0000ff">bool</SPAN>&nbsp;Create_Sprite();<BR>&nbsp;&nbsp;&nbsp;&nbsp;<SPAN style="COLOR: #0000ff">bool</SPAN>&nbsp;Create_Sprite_Texture(IDirect3DTexture9**&nbsp;texture,&nbsp;<SPAN style="COLOR: #0000ff">const</SPAN>&nbsp;<SPAN style="COLOR: #0000ff">char</SPAN>*&nbsp;image_file);<BR>&nbsp;&nbsp;&nbsp;&nbsp;<SPAN style="COLOR: #0000ff">void</SPAN>&nbsp;Render();<BR>&nbsp;&nbsp;&nbsp;&nbsp;<SPAN style="COLOR: #0000ff">void</SPAN>&nbsp;Release_COM_Object();<BR>};<BR><BR><SPAN style="COLOR: #0000ff">#endif</SPAN></DIV><BR></SPAN><FONT color=#101010>再来看看shoot.cpp的定义：<BR><BR>&nbsp; </FONT>
+
+<DIV style="BORDER-RIGHT: #ffffff 1px solid; PADDING-RIGHT: 5px; BORDER-TOP: #ffffff 1px solid; PADDING-LEFT: 4px; FONT-SIZE: 15px; PADDING-BOTTOM: 4px; BORDER-LEFT: #ffffff 1px solid; WIDTH: 98%; PADDING-TOP: 4px; BORDER-BOTTOM: #ffffff 1px solid; BACKGROUND-COLOR: #ffffff"><!--<br><br>Code highlighting produced by Actipro CodeHighlighter (freeware)<br>http://www.CodeHighlighter.com/<br><br>--><SPAN style="COLOR: #008000">/*************************************************************************************<BR>&nbsp;[Implement&nbsp;File]<BR><BR>&nbsp;PURPOSE:&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;Define&nbsp;for&nbsp;alpha&nbsp;blending&nbsp;test,&nbsp;use&nbsp;ID3DXSprit&nbsp;interface.<BR>*************************************************************************************/</SPAN><SPAN style="COLOR: #000000"><BR><BR>#include&nbsp;"GE_COMMON.h"<BR>#include&nbsp;"GE_INPUT.h"<BR>#include&nbsp;"shoot.h"<BR><BR></SPAN><SPAN style="COLOR: #008000">//------------------------------------------------------------------------------------<BR>//&nbsp;Constructor,&nbsp;initialize&nbsp;data.<BR>//------------------------------------------------------------------------------------<BR></SPAN><SPAN style="COLOR: #000000">SHOOT::SHOOT()<BR>{<BR>&nbsp;&nbsp;&nbsp;&nbsp;_d3d&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;NULL;<BR>&nbsp;&nbsp;&nbsp;&nbsp;_d3d_device&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;NULL;<BR>&nbsp;&nbsp;&nbsp;&nbsp;_texture_tiger&nbsp;&nbsp;=&nbsp;NULL;<BR>&nbsp;&nbsp;&nbsp;&nbsp;_texture_gun&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;NULL;<BR>&nbsp;&nbsp;&nbsp;&nbsp;_sprite_tiger&nbsp;&nbsp;&nbsp;=&nbsp;NULL;<BR>&nbsp;&nbsp;&nbsp;&nbsp;_sprite_gun&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;NULL;<BR><BR>&nbsp;&nbsp;&nbsp;&nbsp;m_gun_pos_x&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;500.0f;<BR>&nbsp;&nbsp;&nbsp;&nbsp;m_gun_pos_y&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;180.0f;<BR>}<BR><BR></SPAN><SPAN style="COLOR: #008000">//------------------------------------------------------------------------------------<BR>//&nbsp;Destructor,&nbsp;release&nbsp;COM&nbsp;object.<BR>//------------------------------------------------------------------------------------<BR></SPAN><SPAN style="COLOR: #000000">SHOOT::~SHOOT()<BR>{<BR>&nbsp;&nbsp;&nbsp;&nbsp;Release_COM_Object();<BR>}<BR><BR></SPAN><SPAN style="COLOR: #008000">//------------------------------------------------------------------------------------<BR>//&nbsp;Create&nbsp;direct3D&nbsp;interface&nbsp;and&nbsp;direct3D&nbsp;device.<BR>//------------------------------------------------------------------------------------<BR></SPAN><SPAN style="COLOR: #0000ff">bool</SPAN><SPAN style="COLOR: #000000">&nbsp;SHOOT::Create_D3D_Device(HWND&nbsp;hwnd,&nbsp;</SPAN><SPAN style="COLOR: #0000ff">bool</SPAN><SPAN style="COLOR: #000000">&nbsp;full_screen)<BR>{<BR>&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #008000">//&nbsp;Create&nbsp;a&nbsp;IDirect3D9&nbsp;object&nbsp;and&nbsp;returns&nbsp;an&nbsp;interace&nbsp;to&nbsp;it.<BR></SPAN><SPAN style="COLOR: #000000">&nbsp;&nbsp;&nbsp;&nbsp;_d3d&nbsp;=&nbsp;Direct3DCreate9(D3D_SDK_VERSION);<BR>&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #0000ff">if</SPAN><SPAN style="COLOR: #000000">(_d3d&nbsp;==&nbsp;NULL)<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #0000ff">return</SPAN><SPAN style="COLOR: #000000">&nbsp;</SPAN><SPAN style="COLOR: #0000ff">false</SPAN><SPAN style="COLOR: #000000">;<BR><BR>&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #008000">//&nbsp;retrieve&nbsp;adapter&nbsp;capability<BR></SPAN><SPAN style="COLOR: #000000">&nbsp;&nbsp;&nbsp;&nbsp;D3DCAPS9&nbsp;d3d_caps;&nbsp;&nbsp;&nbsp;&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;_d3d-&gt;GetDeviceCaps(D3DADAPTER_DEFAULT,&nbsp;D3DDEVTYPE_HAL,&nbsp;&amp;d3d_caps);<BR>&nbsp;&nbsp;&nbsp;&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #0000ff">bool</SPAN><SPAN style="COLOR: #000000">&nbsp;hardware_process_enable&nbsp;=&nbsp;(d3d_caps.DevCaps&nbsp;&amp;&nbsp;D3DDEVCAPS_HWTRANSFORMANDLIGHT&nbsp;?&nbsp;</SPAN><SPAN style="COLOR: #0000ff">true</SPAN><SPAN style="COLOR: #000000">&nbsp;:&nbsp;</SPAN><SPAN style="COLOR: #0000ff">false</SPAN><SPAN style="COLOR: #000000">);<BR><BR>&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #008000">//&nbsp;Retrieves&nbsp;the&nbsp;current&nbsp;display&nbsp;mode&nbsp;of&nbsp;the&nbsp;adapter.<BR></SPAN><SPAN style="COLOR: #000000">&nbsp;&nbsp;&nbsp;&nbsp;D3DDISPLAYMODE&nbsp;display_mode;<BR>&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #0000ff">if</SPAN><SPAN style="COLOR: #000000">(FAILED(_d3d-&gt;GetAdapterDisplayMode(D3DADAPTER_DEFAULT,&nbsp;&amp;display_mode)))<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #0000ff">return</SPAN><SPAN style="COLOR: #000000">&nbsp;</SPAN><SPAN style="COLOR: #0000ff">false</SPAN><SPAN style="COLOR: #000000">;<BR><BR>&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #008000">//&nbsp;set&nbsp;present&nbsp;parameter&nbsp;for&nbsp;direct3D&nbsp;device<BR></SPAN><SPAN style="COLOR: #000000">&nbsp;&nbsp;&nbsp;&nbsp;D3DPRESENT_PARAMETERS&nbsp;present_param;<BR><BR>&nbsp;&nbsp;&nbsp;&nbsp;ZeroMemory(&amp;present_param,&nbsp;</SPAN><SPAN style="COLOR: #0000ff">sizeof</SPAN><SPAN style="COLOR: #000000">(present_param));<BR><BR>&nbsp;&nbsp;&nbsp;&nbsp;present_param.BackBufferWidth&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;WINDOW_WIDTH;<BR>&nbsp;&nbsp;&nbsp;&nbsp;present_param.BackBufferHeight&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;WINDOW_HEIGHT;<BR>&nbsp;&nbsp;&nbsp;&nbsp;present_param.BackBufferFormat&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;display_mode.Format;<BR>&nbsp;&nbsp;&nbsp;&nbsp;present_param.BackBufferCount&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;1;<BR>&nbsp;&nbsp;&nbsp;&nbsp;present_param.hDeviceWindow&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;hwnd;<BR>&nbsp;&nbsp;&nbsp;&nbsp;present_param.Windowed&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;!full_screen;<BR>&nbsp;&nbsp;&nbsp;&nbsp;present_param.SwapEffect&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;D3DSWAPEFFECT_FLIP;<BR>&nbsp;&nbsp;&nbsp;&nbsp;present_param.PresentationInterval&nbsp;=&nbsp;D3DPRESENT_INTERVAL_DEFAULT;<BR><BR>&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #008000">//&nbsp;Creates&nbsp;a&nbsp;device&nbsp;to&nbsp;represent&nbsp;the&nbsp;display&nbsp;adapter.<BR></SPAN><SPAN style="COLOR: #000000">&nbsp;&nbsp;&nbsp;&nbsp;DWORD&nbsp;behavior_flags;<BR><BR>&nbsp;&nbsp;&nbsp;&nbsp;behavior_flags&nbsp;=&nbsp;hardware_process_enable&nbsp;?<BR>&nbsp;D3DCREATE_HARDWARE_VERTEXPROCESSING&nbsp;:&nbsp;D3DCREATE_SOFTWARE_VERTEXPROCESSING;<BR><BR>&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #0000ff">if</SPAN><SPAN style="COLOR: #000000">(FAILED(_d3d-&gt;CreateDevice(D3DADAPTER_DEFAULT,&nbsp;D3DDEVTYPE_HAL,&nbsp;hwnd,&nbsp;behavior_flags,&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&amp;present_param,&nbsp;&amp;_d3d_device)))<BR>&nbsp;&nbsp;&nbsp;&nbsp;{<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #0000ff">return</SPAN><SPAN style="COLOR: #000000">&nbsp;</SPAN><SPAN style="COLOR: #0000ff">false</SPAN><SPAN style="COLOR: #000000">;<BR>&nbsp;&nbsp;&nbsp;&nbsp;}<BR>&nbsp;&nbsp;&nbsp;&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #008000">//&nbsp;create&nbsp;successfully<BR></SPAN><SPAN style="COLOR: #000000">&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #0000ff">return</SPAN><SPAN style="COLOR: #000000">&nbsp;</SPAN><SPAN style="COLOR: #0000ff">true</SPAN><SPAN style="COLOR: #000000">;<BR>}<BR><BR></SPAN><SPAN style="COLOR: #008000">//------------------------------------------------------------------------------------<BR>//&nbsp;Creates&nbsp;two&nbsp;sprite&nbsp;objects&nbsp;which&nbsp;is&nbsp;associated&nbsp;with&nbsp;a&nbsp;particular&nbsp;device.&nbsp;<BR>//&nbsp;Sprite&nbsp;objects&nbsp;are&nbsp;used&nbsp;to&nbsp;draw&nbsp;2D&nbsp;images&nbsp;to&nbsp;the&nbsp;screen.<BR>//------------------------------------------------------------------------------------<BR></SPAN><SPAN style="COLOR: #0000ff">bool</SPAN><SPAN style="COLOR: #000000">&nbsp;SHOOT::Create_Sprite()<BR>{<BR>&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #008000">//&nbsp;create&nbsp;sprite&nbsp;for&nbsp;image&nbsp;tiger<BR></SPAN><SPAN style="COLOR: #000000">&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #0000ff">if</SPAN><SPAN style="COLOR: #000000">(FAILED(D3DXCreateSprite(_d3d_device,&nbsp;&amp;_sprite_tiger)))<BR>&nbsp;&nbsp;&nbsp;&nbsp;{<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;MessageBox(NULL,&nbsp;"Create&nbsp;sprite&nbsp;tiger&nbsp;failed!",&nbsp;"ERROR",&nbsp;MB_OK);<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #0000ff">return</SPAN><SPAN style="COLOR: #000000">&nbsp;</SPAN><SPAN style="COLOR: #0000ff">false</SPAN><SPAN style="COLOR: #000000">;<BR>&nbsp;&nbsp;&nbsp;&nbsp;}<BR><BR>&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #008000">//&nbsp;create&nbsp;sprite&nbsp;for&nbsp;image&nbsp;gun<BR></SPAN><SPAN style="COLOR: #000000">&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #0000ff">if</SPAN><SPAN style="COLOR: #000000">(FAILED(D3DXCreateSprite(_d3d_device,&nbsp;&amp;_sprite_gun)))<BR>&nbsp;&nbsp;&nbsp;&nbsp;{<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;MessageBox(NULL,&nbsp;"Create&nbsp;sprite&nbsp;gun&nbsp;failed!",&nbsp;"ERROR",&nbsp;MB_OK);<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #0000ff">return</SPAN><SPAN style="COLOR: #000000">&nbsp;</SPAN><SPAN style="COLOR: #0000ff">false</SPAN><SPAN style="COLOR: #000000">;<BR>&nbsp;&nbsp;&nbsp;&nbsp;}<BR><BR>&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #008000">//&nbsp;create&nbsp;texture&nbsp;for&nbsp;tiger&nbsp;sprite<BR></SPAN><SPAN style="COLOR: #000000">&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #0000ff">if</SPAN><SPAN style="COLOR: #000000">(!&nbsp;Create_Sprite_Texture(&amp;_texture_tiger,&nbsp;"tiger.jpg"))<BR>&nbsp;&nbsp;&nbsp;&nbsp;{<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;MessageBox(NULL,&nbsp;"Create&nbsp;texture&nbsp;interface&nbsp;for&nbsp;sprite&nbsp;tiger&nbsp;failed.",&nbsp;"ERROR",&nbsp;MB_OK);<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #0000ff">return</SPAN><SPAN style="COLOR: #000000">&nbsp;</SPAN><SPAN style="COLOR: #0000ff">false</SPAN><SPAN style="COLOR: #000000">;<BR>&nbsp;&nbsp;&nbsp;&nbsp;}<BR><BR>&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #008000">//&nbsp;create&nbsp;texture&nbsp;for&nbsp;gun&nbsp;sprite<BR></SPAN><SPAN style="COLOR: #000000">&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #0000ff">if</SPAN><SPAN style="COLOR: #000000">(!&nbsp;Create_Sprite_Texture(&amp;_texture_gun,&nbsp;"gun.dds"))<BR>&nbsp;&nbsp;&nbsp;&nbsp;{<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;MessageBox(NULL,&nbsp;"Create&nbsp;texture&nbsp;interface&nbsp;for&nbsp;sprite&nbsp;gun&nbsp;failed.",&nbsp;"ERROR",&nbsp;MB_OK);<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #0000ff">return</SPAN><SPAN style="COLOR: #000000">&nbsp;</SPAN><SPAN style="COLOR: #0000ff">false</SPAN><SPAN style="COLOR: #000000">;<BR>&nbsp;&nbsp;&nbsp;&nbsp;}<BR><BR>&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #0000ff">return</SPAN><SPAN style="COLOR: #000000">&nbsp;</SPAN><SPAN style="COLOR: #0000ff">true</SPAN><SPAN style="COLOR: #000000">;<BR>}<BR><BR></SPAN><SPAN style="COLOR: #008000">//------------------------------------------------------------------------------------<BR>//&nbsp;Creates&nbsp;a&nbsp;texture&nbsp;from&nbsp;image&nbsp;file.<BR>//------------------------------------------------------------------------------------<BR></SPAN><SPAN style="COLOR: #0000ff">bool</SPAN><SPAN style="COLOR: #000000">&nbsp;SHOOT::Create_Sprite_Texture(IDirect3DTexture9**&nbsp;texture,&nbsp;</SPAN><SPAN style="COLOR: #0000ff">const</SPAN><SPAN style="COLOR: #000000">&nbsp;</SPAN><SPAN style="COLOR: #0000ff">char</SPAN><SPAN style="COLOR: #000000">*&nbsp;image_file)<BR>{<BR>&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #0000ff">if</SPAN><SPAN style="COLOR: #000000">(FAILED(D3DXCreateTextureFromFile(_d3d_device,&nbsp;image_file,&nbsp;texture)))<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #0000ff">return</SPAN><SPAN style="COLOR: #000000">&nbsp;</SPAN><SPAN style="COLOR: #0000ff">false</SPAN><SPAN style="COLOR: #000000">;<BR><BR>&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #0000ff">return</SPAN><SPAN style="COLOR: #000000">&nbsp;</SPAN><SPAN style="COLOR: #0000ff">true</SPAN><SPAN style="COLOR: #000000">;<BR>}<BR><BR></SPAN><SPAN style="COLOR: #008000">//------------------------------------------------------------------------------------<BR>//&nbsp;Draw&nbsp;alpha&nbsp;blend&nbsp;image.<BR>//------------------------------------------------------------------------------------<BR></SPAN><SPAN style="COLOR: #0000ff">void</SPAN><SPAN style="COLOR: #000000">&nbsp;SHOOT::Render()<BR>{<BR>&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #0000ff">if</SPAN><SPAN style="COLOR: #000000">(_d3d_device&nbsp;==&nbsp;NULL)<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #0000ff">return</SPAN><SPAN style="COLOR: #000000">;<BR><BR>&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #008000">//&nbsp;clear&nbsp;surface&nbsp;with&nbsp;black<BR></SPAN><SPAN style="COLOR: #000000">&nbsp;&nbsp;&nbsp;&nbsp;_d3d_device-&gt;Clear(0,&nbsp;NULL,&nbsp;D3DCLEAR_TARGET,&nbsp;D3DCOLOR_XRGB(0,&nbsp;0,&nbsp;0),&nbsp;1.0,&nbsp;0);<BR><BR>&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #008000">//&nbsp;1)&nbsp;draw&nbsp;tiger<BR><BR>&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;begin&nbsp;scene<BR></SPAN><SPAN style="COLOR: #000000">&nbsp;&nbsp;&nbsp;&nbsp;_d3d_device-&gt;BeginScene();&nbsp;&nbsp;&nbsp;&nbsp;<BR><BR>&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #008000">//&nbsp;Prepares&nbsp;a&nbsp;device&nbsp;for&nbsp;drawing&nbsp;sprites.<BR></SPAN><SPAN style="COLOR: #000000">&nbsp;&nbsp;&nbsp;&nbsp;_sprite_tiger-&gt;Begin(D3DXSPRITE_ALPHABLEND);<BR>&nbsp;&nbsp;&nbsp;&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #008000">//&nbsp;Adds&nbsp;a&nbsp;sprite&nbsp;to&nbsp;the&nbsp;list&nbsp;of&nbsp;batched&nbsp;sprites.<BR></SPAN><SPAN style="COLOR: #000000">&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #0000ff">if</SPAN><SPAN style="COLOR: #000000">(FAILED(_sprite_tiger-&gt;Draw(_texture_tiger,&nbsp;NULL,&nbsp;NULL,&nbsp;NULL,&nbsp;0xFFFFFFFF)))<BR>&nbsp;&nbsp;&nbsp;&nbsp;{<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;MessageBox(NULL,&nbsp;"Draw&nbsp;image&nbsp;tiger&nbsp;failed.",&nbsp;"ERROR",&nbsp;MB_OK);<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #0000ff">return</SPAN><SPAN style="COLOR: #000000">;<BR>&nbsp;&nbsp;&nbsp;&nbsp;}<BR><BR>&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #008000">//&nbsp;restores&nbsp;the&nbsp;device&nbsp;state&nbsp;to&nbsp;how&nbsp;it&nbsp;was&nbsp;before&nbsp;ID3DXSprite::Begin&nbsp;was&nbsp;called.<BR></SPAN><SPAN style="COLOR: #000000">&nbsp;&nbsp;&nbsp;&nbsp;_sprite_tiger-&gt;End();<BR><BR>&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #008000">//&nbsp;2)&nbsp;draw&nbsp;gun<BR><BR>&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;prepare&nbsp;for&nbsp;begin&nbsp;draw&nbsp;<BR></SPAN><SPAN style="COLOR: #000000">&nbsp;&nbsp;&nbsp;&nbsp;_sprite_gun-&gt;Begin(D3DXSPRITE_ALPHABLEND);<BR><BR>&nbsp;&nbsp;&nbsp;&nbsp;D3DXVECTOR3&nbsp;pos(m_gun_pos_x,&nbsp;m_gun_pos_y,&nbsp;0);<BR><BR>&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #008000">//&nbsp;draw&nbsp;gun&nbsp;now<BR></SPAN><SPAN style="COLOR: #000000">&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #0000ff">if</SPAN><SPAN style="COLOR: #000000">(FAILED(_sprite_gun-&gt;Draw(_texture_gun,&nbsp;NULL,&nbsp;NULL,&nbsp;&amp;pos,&nbsp;0xFFFFFFFF)))<BR>&nbsp;&nbsp;&nbsp;&nbsp;{<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;MessageBox(NULL,&nbsp;"Draw&nbsp;gun&nbsp;failed.",&nbsp;"ERROR",&nbsp;MB_OK);<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #0000ff">return</SPAN><SPAN style="COLOR: #000000">;<BR>&nbsp;&nbsp;&nbsp;&nbsp;}<BR><BR>&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #008000">//&nbsp;indicate&nbsp;end&nbsp;draw&nbsp;for&nbsp;sprite&nbsp;gun<BR></SPAN><SPAN style="COLOR: #000000">&nbsp;&nbsp;&nbsp;&nbsp;_sprite_gun-&gt;End();<BR><BR>&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #008000">//&nbsp;end&nbsp;scene<BR></SPAN><SPAN style="COLOR: #000000">&nbsp;&nbsp;&nbsp;&nbsp;_d3d_device-&gt;EndScene();<BR><BR>&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #008000">//&nbsp;Presents&nbsp;the&nbsp;contents&nbsp;of&nbsp;the&nbsp;next&nbsp;buffer&nbsp;in&nbsp;the&nbsp;sequence&nbsp;of&nbsp;back&nbsp;buffers&nbsp;owned&nbsp;by&nbsp;the&nbsp;device.<BR></SPAN><SPAN style="COLOR: #000000">&nbsp;&nbsp;&nbsp;&nbsp;_d3d_device-&gt;Present(NULL,&nbsp;NULL,&nbsp;NULL,&nbsp;NULL);<BR>}<BR><BR></SPAN><SPAN style="COLOR: #008000">//------------------------------------------------------------------------------------<BR>//&nbsp;Release&nbsp;all&nbsp;COM&nbsp;object.<BR>//------------------------------------------------------------------------------------<BR></SPAN><SPAN style="COLOR: #0000ff">void</SPAN><SPAN style="COLOR: #000000">&nbsp;SHOOT::Release_COM_Object()<BR>{<BR>&nbsp;&nbsp;&nbsp;&nbsp;Safe_Release(_texture_tiger);<BR>&nbsp;&nbsp;&nbsp;&nbsp;Safe_Release(_texture_gun);<BR>&nbsp;&nbsp;&nbsp;&nbsp;Safe_Release(_sprite_tiger);<BR>&nbsp;&nbsp;&nbsp;&nbsp;Safe_Release(_sprite_gun);&nbsp;&nbsp;&nbsp;&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;Safe_Release(_d3d_device);<BR>&nbsp;&nbsp;&nbsp;&nbsp;Safe_Release(_d3d);<BR>}</SPAN></DIV><BR>Create_Sprite方法用来创建背景图和瞄准镜的ID3DXSprite精灵接口对象和纹理接口对象， Create_Sprite_Texture方法根据图象文件创建精灵的纹理对象，这里使用DDS格式的文件创建出一个背景透明的瞄准器精灵对象。 Render方法调用ID3DXSprite接口的Begin，Draw，End方法绘制出背景图和背景透明的瞄准镜图象。<BR><BR>再来看看测试代码main.cpp：<BR><BR>&nbsp; 
+
+<DIV style="BORDER-RIGHT: #ffffff 1px solid; PADDING-RIGHT: 5px; BORDER-TOP: #ffffff 1px solid; PADDING-LEFT: 4px; FONT-SIZE: 15px; PADDING-BOTTOM: 4px; BORDER-LEFT: #ffffff 1px solid; WIDTH: 98%; PADDING-TOP: 4px; BORDER-BOTTOM: #ffffff 1px solid; BACKGROUND-COLOR: #ffffff"><!--<br><br>Code highlighting produced by Actipro CodeHighlighter (freeware)<br>http://www.CodeHighlighter.com/<br><br>--><SPAN style="COLOR: #008000">/*************************************************************************************<BR>&nbsp;[Implement&nbsp;File]<BR><BR>&nbsp;PURPOSE:&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;Test&nbsp;for&nbsp;sprite&nbsp;draw&nbsp;with&nbsp;alpha&nbsp;blending.<BR>*************************************************************************************/</SPAN><SPAN style="COLOR: #000000"><BR><BR></SPAN><SPAN style="COLOR: #0000ff">#define</SPAN><SPAN style="COLOR: #000000">&nbsp;DIRECTINPUT_VERSION&nbsp;0x0800<BR><BR>#include&nbsp;"GE_COMMON.h"<BR>#include&nbsp;"GE_APP.h"<BR>#include&nbsp;"GE_INPUT.h"<BR>#include&nbsp;"shoot.h"<BR><BR>#pragma&nbsp;warning(disable&nbsp;:&nbsp;4305&nbsp;4996)<BR><BR></SPAN><SPAN style="COLOR: #0000ff">int</SPAN><SPAN style="COLOR: #000000">&nbsp;WINAPI&nbsp;WinMain(HINSTANCE&nbsp;instance,&nbsp;HINSTANCE,&nbsp;LPSTR&nbsp;cmd_line,&nbsp;</SPAN><SPAN style="COLOR: #0000ff">int</SPAN><SPAN style="COLOR: #000000">&nbsp;cmd_show)<BR>{<BR>&nbsp;&nbsp;&nbsp;&nbsp;GE_APP&nbsp;ge_app;<BR>&nbsp;&nbsp;&nbsp;&nbsp;GE_INPUT&nbsp;ge_input;<BR>&nbsp;&nbsp;&nbsp;&nbsp;SHOOT&nbsp;shoot;<BR><BR>&nbsp;&nbsp;&nbsp;&nbsp;MSG&nbsp;msg&nbsp;=&nbsp;{0};<BR><BR>&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #008000">//&nbsp;create&nbsp;window<BR></SPAN><SPAN style="COLOR: #000000">&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #0000ff">if</SPAN><SPAN style="COLOR: #000000">(!&nbsp;ge_app.Create_Window("Sprite&nbsp;draw&nbsp;test&nbsp;with&nbsp;Alpha&nbsp;blending",&nbsp;instance,&nbsp;cmd_show))<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #0000ff">return</SPAN><SPAN style="COLOR: #000000">&nbsp;</SPAN><SPAN style="COLOR: #0000ff">false</SPAN><SPAN style="COLOR: #000000">;<BR><BR>&nbsp;&nbsp;&nbsp;&nbsp;HWND&nbsp;hwnd&nbsp;=&nbsp;ge_app.Get_Window_Handle();&nbsp;&nbsp;&nbsp;&nbsp;<BR><BR>&nbsp;&nbsp;&nbsp;&nbsp;SetWindowPos(hwnd,&nbsp;0,&nbsp;0,0,0,0,&nbsp;SWP_NOSIZE);<BR>&nbsp;&nbsp;&nbsp;&nbsp;SetCursorPos(0,&nbsp;0);&nbsp;&nbsp;&nbsp;&nbsp;<BR><BR>&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #008000">//&nbsp;create&nbsp;direct&nbsp;input<BR></SPAN><SPAN style="COLOR: #000000">&nbsp;&nbsp;&nbsp;&nbsp;ge_input.Create_Input(instance,&nbsp;hwnd);&nbsp;&nbsp;&nbsp;&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #008000">//&nbsp;Create&nbsp;direct3D&nbsp;interface&nbsp;and&nbsp;direct3D&nbsp;device.<BR></SPAN><SPAN style="COLOR: #000000">&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #0000ff">if</SPAN><SPAN style="COLOR: #000000">(!&nbsp;shoot.Create_D3D_Device(hwnd,&nbsp;</SPAN><SPAN style="COLOR: #0000ff">false</SPAN><SPAN style="COLOR: #000000">))<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #0000ff">return</SPAN><SPAN style="COLOR: #000000">&nbsp;</SPAN><SPAN style="COLOR: #0000ff">false</SPAN><SPAN style="COLOR: #000000">;<BR><BR>&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #008000">//&nbsp;create&nbsp;all&nbsp;sprites<BR></SPAN><SPAN style="COLOR: #000000">&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #0000ff">if</SPAN><SPAN style="COLOR: #000000">(!&nbsp;shoot.Create_Sprite())<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #0000ff">return</SPAN><SPAN style="COLOR: #000000">&nbsp;</SPAN><SPAN style="COLOR: #0000ff">false</SPAN><SPAN style="COLOR: #000000">;<BR><BR>&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #008000">//&nbsp;Draw&nbsp;all&nbsp;cones<BR></SPAN><SPAN style="COLOR: #000000">&nbsp;&nbsp;&nbsp;&nbsp;shoot.Render();<BR><BR>&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #0000ff">while</SPAN><SPAN style="COLOR: #000000">(msg.message&nbsp;!=&nbsp;WM_QUIT)<BR>&nbsp;&nbsp;&nbsp;&nbsp;{<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #0000ff">if</SPAN><SPAN style="COLOR: #000000">(PeekMessage(&amp;msg,&nbsp;NULL,&nbsp;0,0&nbsp;,&nbsp;PM_REMOVE))<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TranslateMessage(&amp;msg);<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;DispatchMessage(&amp;msg);<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #0000ff">else</SPAN><SPAN style="COLOR: #000000"><BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #008000">//&nbsp;get&nbsp;keyboard&nbsp;input<BR></SPAN><SPAN style="COLOR: #000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #0000ff">if</SPAN><SPAN style="COLOR: #000000">(ge_input.Read_Keyboard())<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #0000ff">if</SPAN><SPAN style="COLOR: #000000">(ge_input.Is_Key_Pressed(DIK_ESCAPE))<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PostQuitMessage(0);<BR><BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #0000ff">if</SPAN><SPAN style="COLOR: #000000">(ge_input.Is_Key_Pressed(DIK_RIGHT))<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;shoot.m_gun_pos_x&nbsp;+=&nbsp;5.5;<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;shoot.Render();<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<BR><BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #0000ff">if</SPAN><SPAN style="COLOR: #000000">(ge_input.Is_Key_Pressed(DIK_LEFT))<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;shoot.m_gun_pos_x&nbsp;-=&nbsp;5.5;<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;shoot.Render();<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<BR><BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #0000ff">if</SPAN><SPAN style="COLOR: #000000">(ge_input.Is_Key_Pressed(DIK_UP))<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;shoot.m_gun_pos_y&nbsp;-=&nbsp;5.5;<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;shoot.Render();<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<BR><BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #0000ff">if</SPAN><SPAN style="COLOR: #000000">(ge_input.Is_Key_Pressed(DIK_DOWN))<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;shoot.m_gun_pos_y&nbsp;+=&nbsp;5.5;<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;shoot.Render();<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<BR>&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;&nbsp;&nbsp;<BR><BR>&nbsp;&nbsp;&nbsp;&nbsp;UnregisterClass(WINDOW_CLASS_NAME,&nbsp;instance);<BR><BR>&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN style="COLOR: #0000ff">return</SPAN><SPAN style="COLOR: #000000">&nbsp;</SPAN><SPAN style="COLOR: #0000ff">true</SPAN><SPAN style="COLOR: #000000">;<BR>}</SPAN></DIV>&nbsp; <BR>
+    
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="followme">
+  <span>Welcome to my other publishing channels</span>
+
+  <div class="social-list">
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="https://www.facebook.com/rise.worlds">
+            <span class="icon">
+              <i class="fab fa-facebook"></i>
+            </span>
+
+            <span class="label">FB Page</span>
+          </a>
+      </div>
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="https://twitter.com/riseworlds">
+            <span class="icon">
+              <i class="fab fa-twitter"></i>
+            </span>
+
+            <span class="label">Twitter</span>
+          </a>
+      </div>
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="https://t.me/riseworlds">
+            <span class="icon">
+              <i class="fab fa-telegram"></i>
+            </span>
+
+            <span class="label">Telegram</span>
+          </a>
+      </div>
+  </div>
+</div>
+
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2007/09/20/D3D%E4%B8%AD%E7%9A%84Alpha%E9%A2%9C%E8%89%B2%E6%B7%B7%E5%90%88%EF%BC%881%EF%BC%89/" rel="prev" title="D3D中的Alpha颜色混合（1）">
+                  <i class="fa fa-angle-left"></i> D3D中的Alpha颜色混合（1）
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2007/09/20/D3D%E4%B8%AD%E7%9A%84Alpha%E9%A2%9C%E8%89%B2%E6%B7%B7%E5%90%88%EF%BC%883%EF%BC%89/" rel="next" title="D3D中的Alpha颜色混合（3）">
+                  D3D中的Alpha颜色混合（3） <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">豫ICP备2021009490号 </a>
+  </div>
+<div class="copyright">
+<a href="https://icp.gov.moe/?keyword=20233669" target="_blank">萌ICP备20233669号</a>
+</div>
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">rise</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="reading-progress-bar"></div>
+
+  <a href="https://github.com/rise-worlds" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://unpkg.com/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@next-theme/pjax@0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script><script src="/js/pjax.js"></script>
+
+  
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://unpkg.com/mermaid@10.7.0/dist/mermaid.min.js","integrity":"sha256-TtLOdUA8mstPoO6sGvHIGx2ceXrrX4KgIItO06XOn8A="}}</script>
+  <script src="/js/third-party/tags/mermaid.js"></script>
+
+
+
+
+
+  
+
+
+
+
+  <script src="https://unpkg.com/quicklink@2.3.0/dist/quicklink.umd.js" integrity="sha256-yvJQOINiH9fWemHn0vCA5lsHWJaHs6/ZmO+1Ft04SvM=" crossorigin="anonymous"></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":true,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"https://rise-worlds.github.io/2007/09/20/D3D%E4%B8%AD%E7%9A%84Alpha%E9%A2%9C%E8%89%B2%E6%B7%B7%E5%90%88%EF%BC%882%EF%BC%89/"}</script>
+  <script src="/js/third-party/quicklink.js"></script>
+
+</body>
+</html>
