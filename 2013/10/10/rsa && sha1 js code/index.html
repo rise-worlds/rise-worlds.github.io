@@ -1,0 +1,2322 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://unpkg.com/@fortawesome/fontawesome-free@6.5.2/css/all.min.css" integrity="sha256-XOqroi11tY4EFQMR9ZYwZWKj5ZXiftSx36RRuC3anlA=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://unpkg.com/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"rise-worlds.github.io","root":"/","images":"/images","scheme":"Mist","darkmode":true,"version":"8.20.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="jsbn.js    &#x2F;*   * Copyright (c) 2003-2005  Tom Wu   * All Rights Reserved.   *   * Permission is hereby granted, free of charge, to any person obtaining   * a copy of this software and associated docu">
+<meta property="og:type" content="article">
+<meta property="og:title" content="rsa &amp;&amp; sha1 js code">
+<meta property="og:url" content="https://rise-worlds.github.io/2013/10/10/rsa%20&&%20sha1%20js%20code/index.html">
+<meta property="og:site_name" content="Rise&#39;blogs">
+<meta property="og:description" content="jsbn.js    &#x2F;*   * Copyright (c) 2003-2005  Tom Wu   * All Rights Reserved.   *   * Permission is hereby granted, free of charge, to any person obtaining   * a copy of this software and associated docu">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2013-10-10T11:47:00.000Z">
+<meta property="article:modified_time" content="2013-10-10T11:47:00.000Z">
+<meta property="article:author" content="rise">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://rise-worlds.github.io/2013/10/10/rsa%20&&%20sha1%20js%20code/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://rise-worlds.github.io/2013/10/10/rsa%20&&%20sha1%20js%20code/","path":"2013/10/10/rsa && sha1 js code/","title":"rsa && sha1 js code"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>rsa && sha1 js code | Rise'blogs</title>
+  
+
+  <script src="/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?266da4e90214887b507c0bb6baa84e3e"></script>
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Rise'blogs</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-message"><a href="/message/" rel="section"><i class="fa fa-comments fa-fw"></i>留言板</a></li><li class="menu-item menu-item-sitemap"><a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>站点地图</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="rise"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">rise</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">661</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">47</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">93</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="mailto:rise.worlds@outlook.com" title="E-Mail → mailto:rise.worlds@outlook.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://github.com/rise-worlds" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;rise-worlds" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://x.com/riseworlds" title="Twitter → https:&#x2F;&#x2F;x.com&#x2F;riseworlds" rel="noopener me" target="_blank"><i class="fab fa-twitter fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.facebook.com/rise.worlds" title="FB Page → https:&#x2F;&#x2F;www.facebook.com&#x2F;rise.worlds" rel="noopener me" target="_blank"><i class="fab fa-facebook fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.youtube.com/@YiXuan" title="YouTube → https:&#x2F;&#x2F;www.youtube.com&#x2F;@YiXuan" rel="noopener me" target="_blank"><i class="fab fa-youtube fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.instagram.com/rise.worlds/" title="Instagram → https:&#x2F;&#x2F;www.instagram.com&#x2F;rise.worlds&#x2F;" rel="noopener me" target="_blank"><i class="fab fa-instagram fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://t.me/riseworlds" title="Telegram → https:&#x2F;&#x2F;t.me&#x2F;riseworlds" rel="noopener me" target="_blank"><i class="fab fa-telegram fa-fw"></i></a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+          链接
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <a href="https://www.cnblogs.com/flying_bat" title="https:&#x2F;&#x2F;www.cnblogs.com&#x2F;flying_bat" rel="noopener" target="_blank">My Cnblogs</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://www.github.com/rise-worlds" title="https:&#x2F;&#x2F;www.github.com&#x2F;rise-worlds" rel="noopener" target="_blank">My Github</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://www.google.com/" title="https:&#x2F;&#x2F;www.google.com&#x2F;" rel="noopener" target="_blank">Google</a>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://rise-worlds.github.io/2013/10/10/rsa%20&&%20sha1%20js%20code/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="rise">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Rise'blogs">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="rsa && sha1 js code | Rise'blogs">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          rsa && sha1 js code
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2013-10-10 11:47:00" itemprop="dateCreated datePublished" datetime="2013-10-10T11:47:00+00:00">2013-10-10</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/dev/" itemprop="url" rel="index"><span itemprop="name">dev</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/dev/c/" itemprop="url" rel="index"><span itemprop="name">c++</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>jsbn.js</p>
+
+<div class="cnblogs_code">
+
+<pre><span style="color: #008000;">/*</span><span style="color: #008000;">
+
+ * Copyright (c) 2003-2005  Tom Wu
+
+ * All Rights Reserved.
+
+ *
+
+ * Permission is hereby granted, free of charge, to any person obtaining
+
+ * a copy of this software and associated documentation files (the
+
+ * "Software"), to deal in the Software without restriction, including
+
+ * without limitation the rights to use, copy, modify, merge, publish,
+
+ * distribute, sublicense, and/or sell copies of the Software, and to
+
+ * permit persons to whom the Software is furnished to do so, subject to
+
+ * the following conditions:
+
+ *
+
+ * The above copyright notice and this permission notice shall be
+
+ * included in all copies or substantial portions of the Software.
+
+ *
+
+ * THE SOFTWARE IS PROVIDED "AS-IS" AND WITHOUT WARRANTY OF ANY KIND,
+
+ * EXPRESS, IMPLIED OR OTHERWISE, INCLUDING WITHOUT LIMITATION, ANY
+
+ * WARRANTY OF MERCHANTABILITY OR FITNESS FOR A PARTICULAR PURPOSE.
+
+ *
+
+ * IN NO EVENT SHALL TOM WU BE LIABLE FOR ANY SPECIAL, INCIDENTAL,
+
+ * INDIRECT OR CONSEQUENTIAL DAMAGES OF ANY KIND, OR ANY DAMAGES WHATSOEVER
+
+ * RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER OR NOT ADVISED OF
+
+ * THE POSSIBILITY OF DAMAGE, AND ON ANY THEORY OF LIABILITY, ARISING OUT
+
+ * OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+
+ *
+
+ * In addition, the following condition applies:
+
+ *
+
+ * All redistributions must retain an intact copy of this copyright notice
+
+ * and disclaimer.
+
+ </span><span style="color: #008000;">*/</span>
+
+
+
+<span style="color: #008000;">//</span><span style="color: #008000;"> Basic JavaScript BN library - subset useful for RSA encryption.</span>
+
+
+
+<span style="color: #008000;">//</span><span style="color: #008000;"> Bits per digit</span>
+
+<span style="color: #0000ff;">var</span><span style="color: #000000;"> dbits;
+
+
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;"> JavaScript engine analysis</span>
+
+<span style="color: #0000ff;">var</span> canary = 0xdeadbeefcafe<span style="color: #000000;">;
+
+</span><span style="color: #0000ff;">var</span> j_lm = ((canary&amp;0xffffff)==0xefcafe<span style="color: #000000;">);
+
+
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;"> (public) Constructor</span>
+
+<span style="color: #0000ff;">function</span><span style="color: #000000;"> BigInteger(a,b,c) {
+
+  </span><span style="color: #0000ff;">if</span>(a != <span style="color: #0000ff;">null</span><span style="color: #000000;">)
+
+    </span><span style="color: #0000ff;">if</span>("number" == <span style="color: #0000ff;">typeof</span> a) <span style="color: #0000ff;">this</span><span style="color: #000000;">.fromNumber(a,b,c);
+
+    </span><span style="color: #0000ff;">else</span> <span style="color: #0000ff;">if</span>(b == <span style="color: #0000ff;">null</span> &amp;&amp; "string" != <span style="color: #0000ff;">typeof</span> a) <span style="color: #0000ff;">this</span>.fromString(a,256<span style="color: #000000;">);
+
+    </span><span style="color: #0000ff;">else</span> <span style="color: #0000ff;">this</span><span style="color: #000000;">.fromString(a,b);
+
+}
+
+
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;"> return new, unset BigInteger</span>
+
+<span style="color: #0000ff;">function</span> nbi() { <span style="color: #0000ff;">return</span> <span style="color: #0000ff;">new</span> BigInteger(<span style="color: #0000ff;">null</span><span style="color: #000000;">); }
+
+
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;"> am: Compute w_j += (x*this_i), propagate carries,</span><span style="color: #008000;">
+
+//</span><span style="color: #008000;"> c is initial carry, returns final carry.</span><span style="color: #008000;">
+
+//</span><span style="color: #008000;"> c &lt; 3*dvalue, x &lt; 2*dvalue, this_i &lt; dvalue</span><span style="color: #008000;">
+
+//</span><span style="color: #008000;"> We need to select the fastest one that works in this environment.</span>
+
+
+
+<span style="color: #008000;">//</span><span style="color: #008000;"> am1: use a single mult and divide to get the high bits,</span><span style="color: #008000;">
+
+//</span><span style="color: #008000;"> max digit bits should be 26 because</span><span style="color: #008000;">
+
+//</span><span style="color: #008000;"> max internal value = 2*dvalue^2-2*dvalue (&lt; 2^53)</span>
+
+<span style="color: #0000ff;">function</span><span style="color: #000000;"> am1(i,x,w,j,c,n) {
+
+  </span><span style="color: #0000ff;">while</span>(--n &gt;= 0<span style="color: #000000;">) {
+
+    </span><span style="color: #0000ff;">var</span> v = x*<span style="color: #0000ff;">this</span>[i++]+w[j]+<span style="color: #000000;">c;
+
+    c </span>= Math.floor(v/0x4000000);
+
+    w[j++] = v&amp;0x3ffffff<span style="color: #000000;">;
+
+  }
+
+  </span><span style="color: #0000ff;">return</span><span style="color: #000000;"> c;
+
+}
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;"> am2 avoids a big mult-and-extract completely.</span><span style="color: #008000;">
+
+//</span><span style="color: #008000;"> Max digit bits should be &lt;= 30 because we do bitwise ops</span><span style="color: #008000;">
+
+//</span><span style="color: #008000;"> on values up to 2*hdvalue^2-hdvalue-1 (&lt; 2^31)</span>
+
+<span style="color: #0000ff;">function</span><span style="color: #000000;"> am2(i,x,w,j,c,n) {
+
+  </span><span style="color: #0000ff;">var</span> xl = x&amp;0x7fff, xh = x&gt;&gt;15<span style="color: #000000;">;
+
+  </span><span style="color: #0000ff;">while</span>(--n &gt;= 0<span style="color: #000000;">) {
+
+    </span><span style="color: #0000ff;">var</span> l = <span style="color: #0000ff;">this</span>[i]&amp;0x7fff<span style="color: #000000;">;
+
+    </span><span style="color: #0000ff;">var</span> h = <span style="color: #0000ff;">this</span>[i++]&gt;&gt;15<span style="color: #000000;">;
+
+    </span><span style="color: #0000ff;">var</span> m = xh*l+h*<span style="color: #000000;">xl;
+
+    l </span>= xl*l+((m&amp;0x7fff)&lt;&lt;15)+w[j]+(c&amp;0x3fffffff<span style="color: #000000;">);
+
+    c </span>= (l&gt;&gt;&gt;30)+(m&gt;&gt;&gt;15)+xh*h+(c&gt;&gt;&gt;30<span style="color: #000000;">);
+
+    w[j</span>++] = l&amp;0x3fffffff<span style="color: #000000;">;
+
+  }
+
+  </span><span style="color: #0000ff;">return</span><span style="color: #000000;"> c;
+
+}
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;"> Alternately, set max digit bits to 28 since some</span><span style="color: #008000;">
+
+//</span><span style="color: #008000;"> browsers slow down when dealing with 32-bit numbers.</span>
+
+<span style="color: #0000ff;">function</span><span style="color: #000000;"> am3(i,x,w,j,c,n) {
+
+  </span><span style="color: #0000ff;">var</span> xl = x&amp;0x3fff, xh = x&gt;&gt;14<span style="color: #000000;">;
+
+  </span><span style="color: #0000ff;">while</span>(--n &gt;= 0<span style="color: #000000;">) {
+
+    </span><span style="color: #0000ff;">var</span> l = <span style="color: #0000ff;">this</span>[i]&amp;0x3fff<span style="color: #000000;">;
+
+    </span><span style="color: #0000ff;">var</span> h = <span style="color: #0000ff;">this</span>[i++]&gt;&gt;14<span style="color: #000000;">;
+
+    </span><span style="color: #0000ff;">var</span> m = xh*l+h*<span style="color: #000000;">xl;
+
+    l </span>= xl*l+((m&amp;0x3fff)&lt;&lt;14)+w[j]+<span style="color: #000000;">c;
+
+    c </span>= (l&gt;&gt;28)+(m&gt;&gt;14)+xh*<span style="color: #000000;">h;
+
+    w[j</span>++] = l&amp;0xfffffff<span style="color: #000000;">;
+
+  }
+
+  </span><span style="color: #0000ff;">return</span><span style="color: #000000;"> c;
+
+}
+
+</span><span style="color: #0000ff;">if</span>(j_lm &amp;&amp; (navigator.appName == "Microsoft Internet Explorer"<span style="color: #000000;">)) {
+
+  BigInteger.prototype.am </span>=<span style="color: #000000;"> am2;
+
+  dbits </span>= 30<span style="color: #000000;">;
+
+}
+
+</span><span style="color: #0000ff;">else</span> <span style="color: #0000ff;">if</span>(j_lm &amp;&amp; (navigator.appName != "Netscape"<span style="color: #000000;">)) {
+
+  BigInteger.prototype.am </span>=<span style="color: #000000;"> am1;
+
+  dbits </span>= 26<span style="color: #000000;">;
+
+}
+
+</span><span style="color: #0000ff;">else</span> { <span style="color: #008000;">//</span><span style="color: #008000;"> Mozilla/Netscape seems to prefer am3</span>
+
+  BigInteger.prototype.am =<span style="color: #000000;"> am3;
+
+  dbits </span>= 28<span style="color: #000000;">;
+
+}
+
+
+
+BigInteger.prototype.DB </span>=<span style="color: #000000;"> dbits;
+
+BigInteger.prototype.DM </span>= ((1&lt;&lt;dbits)-1<span style="color: #000000;">);
+
+BigInteger.prototype.DV </span>= (1&lt;&lt;<span style="color: #000000;">dbits);
+
+
+
+</span><span style="color: #0000ff;">var</span> BI_FP = 52<span style="color: #000000;">;
+
+BigInteger.prototype.FV </span>= Math.pow(2<span style="color: #000000;">,BI_FP);
+
+BigInteger.prototype.F1 </span>= BI_FP-<span style="color: #000000;">dbits;
+
+BigInteger.prototype.F2 </span>= 2*dbits-<span style="color: #000000;">BI_FP;
+
+
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;"> Digit conversions</span>
+
+<span style="color: #0000ff;">var</span> BI_RM = "0123456789abcdefghijklmnopqrstuvwxyz"<span style="color: #000000;">;
+
+</span><span style="color: #0000ff;">var</span> BI_RC = <span style="color: #0000ff;">new</span><span style="color: #000000;"> Array();
+
+</span><span style="color: #0000ff;">var</span><span style="color: #000000;"> rr,vv;
+
+rr </span>= "0".charCodeAt(0<span style="color: #000000;">);
+
+</span><span style="color: #0000ff;">for</span>(vv = 0; vv &lt;= 9; ++vv) BI_RC[rr++] =<span style="color: #000000;"> vv;
+
+rr </span>= "a".charCodeAt(0<span style="color: #000000;">);
+
+</span><span style="color: #0000ff;">for</span>(vv = 10; vv &lt; 36; ++vv) BI_RC[rr++] =<span style="color: #000000;"> vv;
+
+rr </span>= "A".charCodeAt(0<span style="color: #000000;">);
+
+</span><span style="color: #0000ff;">for</span>(vv = 10; vv &lt; 36; ++vv) BI_RC[rr++] =<span style="color: #000000;"> vv;
+
+
+
+</span><span style="color: #0000ff;">function</span> int2char(n) { <span style="color: #0000ff;">return</span><span style="color: #000000;"> BI_RM.charAt(n); }
+
+</span><span style="color: #0000ff;">function</span><span style="color: #000000;"> intAt(s,i) {
+
+  </span><span style="color: #0000ff;">var</span> c =<span style="color: #000000;"> BI_RC[s.charCodeAt(i)];
+
+  </span><span style="color: #0000ff;">return</span> (c==<span style="color: #0000ff;">null</span>)?-1<span style="color: #000000;">:c;
+
+}
+
+
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;"> (protected) copy this to r</span>
+
+<span style="color: #0000ff;">function</span><span style="color: #000000;"> bnpCopyTo(r) {
+
+  </span><span style="color: #0000ff;">for</span>(<span style="color: #0000ff;">var</span> i = <span style="color: #0000ff;">this</span>.t-1; i &gt;= 0; --i) r[i] = <span style="color: #0000ff;">this</span><span style="color: #000000;">[i];
+
+  r.t </span>= <span style="color: #0000ff;">this</span><span style="color: #000000;">.t;
+
+  r.s </span>= <span style="color: #0000ff;">this</span><span style="color: #000000;">.s;
+
+}
+
+
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;"> (protected) set from integer value x, -DV &lt;= x &lt; DV</span>
+
+<span style="color: #0000ff;">function</span><span style="color: #000000;"> bnpFromInt(x) {
+
+  </span><span style="color: #0000ff;">this</span>.t = 1<span style="color: #000000;">;
+
+  </span><span style="color: #0000ff;">this</span>.s = (x&lt;0)?-1:0<span style="color: #000000;">;
+
+  </span><span style="color: #0000ff;">if</span>(x &gt; 0) <span style="color: #0000ff;">this</span>[0] =<span style="color: #000000;"> x;
+
+  </span><span style="color: #0000ff;">else</span> <span style="color: #0000ff;">if</span>(x &lt; -1) <span style="color: #0000ff;">this</span>[0] = x+<span style="color: #000000;">DV;
+
+  </span><span style="color: #0000ff;">else</span> <span style="color: #0000ff;">this</span>.t = 0<span style="color: #000000;">;
+
+}
+
+
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;"> return bigint initialized to value</span>
+
+<span style="color: #0000ff;">function</span> nbv(i) { <span style="color: #0000ff;">var</span> r = nbi(); r.fromInt(i); <span style="color: #0000ff;">return</span><span style="color: #000000;"> r; }
+
+
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;"> (protected) set from string and radix</span>
+
+<span style="color: #0000ff;">function</span><span style="color: #000000;"> bnpFromString(s,b) {
+
+  </span><span style="color: #0000ff;">var</span><span style="color: #000000;"> k;
+
+  </span><span style="color: #0000ff;">if</span>(b == 16) k = 4<span style="color: #000000;">;
+
+  </span><span style="color: #0000ff;">else</span> <span style="color: #0000ff;">if</span>(b == 8) k = 3<span style="color: #000000;">;
+
+  </span><span style="color: #0000ff;">else</span> <span style="color: #0000ff;">if</span>(b == 256) k = 8; <span style="color: #008000;">//</span><span style="color: #008000;"> byte array</span>
+
+  <span style="color: #0000ff;">else</span> <span style="color: #0000ff;">if</span>(b == 2) k = 1<span style="color: #000000;">;
+
+  </span><span style="color: #0000ff;">else</span> <span style="color: #0000ff;">if</span>(b == 32) k = 5<span style="color: #000000;">;
+
+  </span><span style="color: #0000ff;">else</span> <span style="color: #0000ff;">if</span>(b == 4) k = 2<span style="color: #000000;">;
+
+  </span><span style="color: #0000ff;">else</span> { <span style="color: #0000ff;">this</span>.fromRadix(s,b); <span style="color: #0000ff;">return</span><span style="color: #000000;">; }
+
+  </span><span style="color: #0000ff;">this</span>.t = 0<span style="color: #000000;">;
+
+  </span><span style="color: #0000ff;">this</span>.s = 0<span style="color: #000000;">;
+
+  </span><span style="color: #0000ff;">var</span> i = s.length, mi = <span style="color: #0000ff;">false</span>, sh = 0<span style="color: #000000;">;
+
+  </span><span style="color: #0000ff;">while</span>(--i &gt;= 0<span style="color: #000000;">) {
+
+    </span><span style="color: #0000ff;">var</span> x = (k==8)?s.charCodeAt(i)&amp;0xff:intAt(s,i);   <span style="color: #008000;">/*</span><span style="color: #008000;">* MODIFIED *</span><span style="color: #008000;">*/</span>
+
+    <span style="color: #0000ff;">if</span>(x &lt; 0<span style="color: #000000;">) {
+
+      </span><span style="color: #0000ff;">if</span>(s.charAt(i) == "-") mi = <span style="color: #0000ff;">true</span><span style="color: #000000;">;
+
+      </span><span style="color: #0000ff;">continue</span><span style="color: #000000;">;
+
+    }
+
+    mi </span>= <span style="color: #0000ff;">false</span><span style="color: #000000;">;
+
+    </span><span style="color: #0000ff;">if</span>(sh == 0<span style="color: #000000;">)
+
+      </span><span style="color: #0000ff;">this</span>[<span style="color: #0000ff;">this</span>.t++] =<span style="color: #000000;"> x;
+
+    </span><span style="color: #0000ff;">else</span> <span style="color: #0000ff;">if</span>(sh+k &gt; <span style="color: #0000ff;">this</span><span style="color: #000000;">.DB) {
+
+      </span><span style="color: #0000ff;">this</span>[<span style="color: #0000ff;">this</span>.t-1] |= (x&amp;((1&lt;&lt;(<span style="color: #0000ff;">this</span>.DB-sh))-1))&lt;&lt;<span style="color: #000000;">sh;
+
+      </span><span style="color: #0000ff;">this</span>[<span style="color: #0000ff;">this</span>.t++] = (x&gt;&gt;(<span style="color: #0000ff;">this</span>.DB-<span style="color: #000000;">sh));
+
+    }
+
+    </span><span style="color: #0000ff;">else</span>
+
+      <span style="color: #0000ff;">this</span>[<span style="color: #0000ff;">this</span>.t-1] |= x&lt;&lt;<span style="color: #000000;">sh;
+
+    sh </span>+=<span style="color: #000000;"> k;
+
+    </span><span style="color: #0000ff;">if</span>(sh &gt;= <span style="color: #0000ff;">this</span>.DB) sh -= <span style="color: #0000ff;">this</span><span style="color: #000000;">.DB;
+
+  }
+
+  </span><span style="color: #0000ff;">if</span>(k == 8 &amp;&amp; (s[0]&amp;0x80) != 0<span style="color: #000000;">) {
+
+    </span><span style="color: #0000ff;">this</span>.s = -1<span style="color: #000000;">;
+
+    </span><span style="color: #0000ff;">if</span>(sh &gt; 0) <span style="color: #0000ff;">this</span>[<span style="color: #0000ff;">this</span>.t-1] |= ((1&lt;&lt;(<span style="color: #0000ff;">this</span>.DB-sh))-1)&lt;&lt;<span style="color: #000000;">sh;
+
+  }
+
+  </span><span style="color: #0000ff;">this</span><span style="color: #000000;">.clamp();
+
+  </span><span style="color: #0000ff;">if</span>(mi) BigInteger.ZERO.subTo(<span style="color: #0000ff;">this</span>,<span style="color: #0000ff;">this</span><span style="color: #000000;">);
+
+}
+
+
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;"> (protected) clamp off excess high words</span>
+
+<span style="color: #0000ff;">function</span><span style="color: #000000;"> bnpClamp() {
+
+  </span><span style="color: #0000ff;">var</span> c = <span style="color: #0000ff;">this</span>.s&amp;<span style="color: #0000ff;">this</span><span style="color: #000000;">.DM;
+
+  </span><span style="color: #0000ff;">while</span>(<span style="color: #0000ff;">this</span>.t &gt; 0 &amp;&amp; <span style="color: #0000ff;">this</span>[<span style="color: #0000ff;">this</span>.t-1] == c) --<span style="color: #0000ff;">this</span><span style="color: #000000;">.t;
+
+}
+
+
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;"> (public) return string representation in given radix</span>
+
+<span style="color: #0000ff;">function</span><span style="color: #000000;"> bnToString(b) {
+
+  </span><span style="color: #0000ff;">if</span>(<span style="color: #0000ff;">this</span>.s &lt; 0) <span style="color: #0000ff;">return</span> "-"+<span style="color: #0000ff;">this</span><span style="color: #000000;">.negate().toString(b);
+
+  </span><span style="color: #0000ff;">var</span><span style="color: #000000;"> k;
+
+  </span><span style="color: #0000ff;">if</span>(b == 16) k = 4<span style="color: #000000;">;
+
+  </span><span style="color: #0000ff;">else</span> <span style="color: #0000ff;">if</span>(b == 8) k = 3<span style="color: #000000;">;
+
+  </span><span style="color: #0000ff;">else</span> <span style="color: #0000ff;">if</span>(b == 256) k = 8; <span style="color: #008000;">//</span><span style="color: #008000;"> byte array      /** MODIFIED **/</span>
+
+  <span style="color: #0000ff;">else</span> <span style="color: #0000ff;">if</span>(b == 2) k = 1<span style="color: #000000;">;
+
+  </span><span style="color: #0000ff;">else</span> <span style="color: #0000ff;">if</span>(b == 32) k = 5<span style="color: #000000;">;
+
+  </span><span style="color: #0000ff;">else</span> <span style="color: #0000ff;">if</span>(b == 4) k = 2<span style="color: #000000;">;
+
+  </span><span style="color: #0000ff;">else</span> <span style="color: #0000ff;">return</span> <span style="color: #0000ff;">this</span><span style="color: #000000;">.toRadix(b);
+
+  </span><span style="color: #0000ff;">var</span> km = (1&lt;&lt;k)-1, d, m = <span style="color: #0000ff;">false</span>, r = "", i = <span style="color: #0000ff;">this</span><span style="color: #000000;">.t;
+
+  </span><span style="color: #0000ff;">var</span> p = <span style="color: #0000ff;">this</span>.DB-(i*<span style="color: #0000ff;">this</span>.DB)%<span style="color: #000000;">k;
+
+  </span><span style="color: #0000ff;">if</span>(i-- &gt; 0<span style="color: #000000;">) {
+
+    </span><span style="color: #0000ff;">if</span>(p &lt; <span style="color: #0000ff;">this</span>.DB &amp;&amp; (d = <span style="color: #0000ff;">this</span>[i]&gt;&gt;p) &gt; 0) { m = <span style="color: #0000ff;">true</span>; r = (k==8)?String.fromCharCode(d):int2char(d); }   <span style="color: #008000;">/*</span><span style="color: #008000;">* MODIFIED *</span><span style="color: #008000;">*/</span>
+
+    <span style="color: #0000ff;">while</span>(i &gt;= 0<span style="color: #000000;">) {
+
+      </span><span style="color: #0000ff;">if</span>(p &lt;<span style="color: #000000;"> k) {
+
+        d </span>= (<span style="color: #0000ff;">this</span>[i]&amp;((1&lt;&lt;p)-1))&lt;&lt;(k-<span style="color: #000000;">p);
+
+        d </span>|= <span style="color: #0000ff;">this</span>[--i]&gt;&gt;(p+=<span style="color: #0000ff;">this</span>.DB-<span style="color: #000000;">k);
+
+      }
+
+      </span><span style="color: #0000ff;">else</span><span style="color: #000000;"> {
+
+        d </span>= (<span style="color: #0000ff;">this</span>[i]&gt;&gt;(p-=k))&amp;<span style="color: #000000;">km;
+
+        </span><span style="color: #0000ff;">if</span>(p &lt;= 0) { p += <span style="color: #0000ff;">this</span>.DB; --<span style="color: #000000;">i; }
+
+      }
+
+      </span><span style="color: #0000ff;">if</span>(d &gt; 0) m = <span style="color: #0000ff;">true</span><span style="color: #000000;">;
+
+      </span><span style="color: #0000ff;">if</span>(m) r += (k==8)?String.fromCharCode(d):int2char(d);    <span style="color: #008000;">/*</span><span style="color: #008000;">* MODIFIED *</span><span style="color: #008000;">*/</span><span style="color: #000000;">
+
+    }
+
+  }
+
+  </span><span style="color: #0000ff;">return</span> m?r:"0"<span style="color: #000000;">;
+
+}
+
+
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;"> (public) -this</span>
+
+<span style="color: #0000ff;">function</span> bnNegate() { <span style="color: #0000ff;">var</span> r = nbi(); BigInteger.ZERO.subTo(<span style="color: #0000ff;">this</span>,r); <span style="color: #0000ff;">return</span><span style="color: #000000;"> r; }
+
+
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;"> (public) |this|</span>
+
+<span style="color: #0000ff;">function</span> bnAbs() { <span style="color: #0000ff;">return</span> (<span style="color: #0000ff;">this</span>.s&lt;0)?<span style="color: #0000ff;">this</span>.negate():<span style="color: #0000ff;">this</span><span style="color: #000000;">; }
+
+
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;"> (public) return + if this &gt; a, - if this &lt; a, 0 if equal</span>
+
+<span style="color: #0000ff;">function</span><span style="color: #000000;"> bnCompareTo(a) {
+
+  </span><span style="color: #0000ff;">var</span> r = <span style="color: #0000ff;">this</span>.s-<span style="color: #000000;">a.s;
+
+  </span><span style="color: #0000ff;">if</span>(r != 0) <span style="color: #0000ff;">return</span><span style="color: #000000;"> r;
+
+  </span><span style="color: #0000ff;">var</span> i = <span style="color: #0000ff;">this</span><span style="color: #000000;">.t;
+
+  r </span>= i-<span style="color: #000000;">a.t;
+
+  </span><span style="color: #0000ff;">if</span>(r != 0) <span style="color: #0000ff;">return</span><span style="color: #000000;"> r;
+
+  </span><span style="color: #0000ff;">while</span>(--i &gt;= 0) <span style="color: #0000ff;">if</span>((r=<span style="color: #0000ff;">this</span>[i]-a[i]) != 0) <span style="color: #0000ff;">return</span><span style="color: #000000;"> r;
+
+  </span><span style="color: #0000ff;">return</span> 0<span style="color: #000000;">;
+
+}
+
+
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;"> returns bit length of the integer x</span>
+
+<span style="color: #0000ff;">function</span><span style="color: #000000;"> nbits(x) {
+
+  </span><span style="color: #0000ff;">var</span> r = 1<span style="color: #000000;">, t;
+
+  </span><span style="color: #0000ff;">if</span>((t=x&gt;&gt;&gt;16) != 0) { x = t; r += 16<span style="color: #000000;">; }
+
+  </span><span style="color: #0000ff;">if</span>((t=x&gt;&gt;8) != 0) { x = t; r += 8<span style="color: #000000;">; }
+
+  </span><span style="color: #0000ff;">if</span>((t=x&gt;&gt;4) != 0) { x = t; r += 4<span style="color: #000000;">; }
+
+  </span><span style="color: #0000ff;">if</span>((t=x&gt;&gt;2) != 0) { x = t; r += 2<span style="color: #000000;">; }
+
+  </span><span style="color: #0000ff;">if</span>((t=x&gt;&gt;1) != 0) { x = t; r += 1<span style="color: #000000;">; }
+
+  </span><span style="color: #0000ff;">return</span><span style="color: #000000;"> r;
+
+}
+
+
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;"> (public) return the number of bits in "this"</span>
+
+<span style="color: #0000ff;">function</span><span style="color: #000000;"> bnBitLength() {
+
+  </span><span style="color: #0000ff;">if</span>(<span style="color: #0000ff;">this</span>.t &lt;= 0) <span style="color: #0000ff;">return</span> 0<span style="color: #000000;">;
+
+  </span><span style="color: #0000ff;">return</span> <span style="color: #0000ff;">this</span>.DB*(<span style="color: #0000ff;">this</span>.t-1)+nbits(<span style="color: #0000ff;">this</span>[<span style="color: #0000ff;">this</span>.t-1]^(<span style="color: #0000ff;">this</span>.s&amp;<span style="color: #0000ff;">this</span><span style="color: #000000;">.DM));
+
+}
+
+
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;"> (protected) r = this &lt;&lt; n*DB</span>
+
+<span style="color: #0000ff;">function</span><span style="color: #000000;"> bnpDLShiftTo(n,r) {
+
+  </span><span style="color: #0000ff;">var</span><span style="color: #000000;"> i;
+
+  </span><span style="color: #0000ff;">for</span>(i = <span style="color: #0000ff;">this</span>.t-1; i &gt;= 0; --i) r[i+n] = <span style="color: #0000ff;">this</span><span style="color: #000000;">[i];
+
+  </span><span style="color: #0000ff;">for</span>(i = n-1; i &gt;= 0; --i) r[i] = 0<span style="color: #000000;">;
+
+  r.t </span>= <span style="color: #0000ff;">this</span>.t+<span style="color: #000000;">n;
+
+  r.s </span>= <span style="color: #0000ff;">this</span><span style="color: #000000;">.s;
+
+}
+
+
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;"> (protected) r = this &gt;&gt; n*DB</span>
+
+<span style="color: #0000ff;">function</span><span style="color: #000000;"> bnpDRShiftTo(n,r) {
+
+  </span><span style="color: #0000ff;">for</span>(<span style="color: #0000ff;">var</span> i = n; i &lt; <span style="color: #0000ff;">this</span>.t; ++i) r[i-n] = <span style="color: #0000ff;">this</span><span style="color: #000000;">[i];
+
+  r.t </span>= Math.max(<span style="color: #0000ff;">this</span>.t-n,0<span style="color: #000000;">);
+
+  r.s </span>= <span style="color: #0000ff;">this</span><span style="color: #000000;">.s;
+
+}
+
+
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;"> (protected) r = this &lt;&lt; n</span>
+
+<span style="color: #0000ff;">function</span><span style="color: #000000;"> bnpLShiftTo(n,r) {
+
+  </span><span style="color: #0000ff;">var</span> bs = n%<span style="color: #0000ff;">this</span><span style="color: #000000;">.DB;
+
+  </span><span style="color: #0000ff;">var</span> cbs = <span style="color: #0000ff;">this</span>.DB-<span style="color: #000000;">bs;
+
+  </span><span style="color: #0000ff;">var</span> bm = (1&lt;&lt;cbs)-1<span style="color: #000000;">;
+
+  </span><span style="color: #0000ff;">var</span> ds = Math.floor(n/this.DB), c = (this.s&lt;&lt;bs)&amp;this.DM, i;
+
+  <span style="color: #0000ff;">for</span>(i = <span style="color: #0000ff;">this</span>.t-1; i &gt;= 0; --<span style="color: #000000;">i) {
+
+    r[i</span>+ds+1] = (<span style="color: #0000ff;">this</span>[i]&gt;&gt;cbs)|<span style="color: #000000;">c;
+
+    c </span>= (<span style="color: #0000ff;">this</span>[i]&amp;bm)&lt;&lt;<span style="color: #000000;">bs;
+
+  }
+
+  </span><span style="color: #0000ff;">for</span>(i = ds-1; i &gt;= 0; --i) r[i] = 0<span style="color: #000000;">;
+
+  r[ds] </span>=<span style="color: #000000;"> c;
+
+  r.t </span>= <span style="color: #0000ff;">this</span>.t+ds+1<span style="color: #000000;">;
+
+  r.s </span>= <span style="color: #0000ff;">this</span><span style="color: #000000;">.s;
+
+  r.clamp();
+
+}
+
+
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;"> (protected) r = this &gt;&gt; n</span>
+
+<span style="color: #0000ff;">function</span><span style="color: #000000;"> bnpRShiftTo(n,r) {
+
+  r.s </span>= <span style="color: #0000ff;">this</span><span style="color: #000000;">.s;
+
+  </span><span style="color: #0000ff;">var</span> ds = Math.floor(n/this.DB);
+
+  <span style="color: #0000ff;">if</span>(ds &gt;= <span style="color: #0000ff;">this</span>.t) { r.t = 0; <span style="color: #0000ff;">return</span><span style="color: #000000;">; }
+
+  </span><span style="color: #0000ff;">var</span> bs = n%<span style="color: #0000ff;">this</span><span style="color: #000000;">.DB;
+
+  </span><span style="color: #0000ff;">var</span> cbs = <span style="color: #0000ff;">this</span>.DB-<span style="color: #000000;">bs;
+
+  </span><span style="color: #0000ff;">var</span> bm = (1&lt;&lt;bs)-1<span style="color: #000000;">;
+
+  r[</span>0] = <span style="color: #0000ff;">this</span>[ds]&gt;&gt;<span style="color: #000000;">bs;
+
+  </span><span style="color: #0000ff;">for</span>(<span style="color: #0000ff;">var</span> i = ds+1; i &lt; <span style="color: #0000ff;">this</span>.t; ++<span style="color: #000000;">i) {
+
+    r[i</span>-ds-1] |= (<span style="color: #0000ff;">this</span>[i]&amp;bm)&lt;&lt;<span style="color: #000000;">cbs;
+
+    r[i</span>-ds] = <span style="color: #0000ff;">this</span>[i]&gt;&gt;<span style="color: #000000;">bs;
+
+  }
+
+  </span><span style="color: #0000ff;">if</span>(bs &gt; 0) r[<span style="color: #0000ff;">this</span>.t-ds-1] |= (<span style="color: #0000ff;">this</span>.s&amp;bm)&lt;&lt;<span style="color: #000000;">cbs;
+
+  r.t </span>= <span style="color: #0000ff;">this</span>.t-<span style="color: #000000;">ds;
+
+  r.clamp();
+
+}
+
+
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;"> (protected) r = this - a</span>
+
+<span style="color: #0000ff;">function</span><span style="color: #000000;"> bnpSubTo(a,r) {
+
+  </span><span style="color: #0000ff;">var</span> i = 0, c = 0, m = Math.min(a.t,<span style="color: #0000ff;">this</span><span style="color: #000000;">.t);
+
+  </span><span style="color: #0000ff;">while</span>(i &lt;<span style="color: #000000;"> m) {
+
+    c </span>+= <span style="color: #0000ff;">this</span>[i]-<span style="color: #000000;">a[i];
+
+    r[i</span>++] = c&amp;<span style="color: #0000ff;">this</span><span style="color: #000000;">.DM;
+
+    c </span>&gt;&gt;= <span style="color: #0000ff;">this</span><span style="color: #000000;">.DB;
+
+  }
+
+  </span><span style="color: #0000ff;">if</span>(a.t &lt; <span style="color: #0000ff;">this</span><span style="color: #000000;">.t) {
+
+    c </span>-=<span style="color: #000000;"> a.s;
+
+    </span><span style="color: #0000ff;">while</span>(i &lt; <span style="color: #0000ff;">this</span><span style="color: #000000;">.t) {
+
+      c </span>+= <span style="color: #0000ff;">this</span><span style="color: #000000;">[i];
+
+      r[i</span>++] = c&amp;<span style="color: #0000ff;">this</span><span style="color: #000000;">.DM;
+
+      c </span>&gt;&gt;= <span style="color: #0000ff;">this</span><span style="color: #000000;">.DB;
+
+    }
+
+    c </span>+= <span style="color: #0000ff;">this</span><span style="color: #000000;">.s;
+
+  }
+
+  </span><span style="color: #0000ff;">else</span><span style="color: #000000;"> {
+
+    c </span>+= <span style="color: #0000ff;">this</span><span style="color: #000000;">.s;
+
+    </span><span style="color: #0000ff;">while</span>(i &lt;<span style="color: #000000;"> a.t) {
+
+      c </span>-=<span style="color: #000000;"> a[i];
+
+      r[i</span>++] = c&amp;<span style="color: #0000ff;">this</span><span style="color: #000000;">.DM;
+
+      c </span>&gt;&gt;= <span style="color: #0000ff;">this</span><span style="color: #000000;">.DB;
+
+    }
+
+    c </span>-=<span style="color: #000000;"> a.s;
+
+  }
+
+  r.s </span>= (c&lt;0)?-1:0<span style="color: #000000;">;
+
+  </span><span style="color: #0000ff;">if</span>(c &lt; -1) r[i++] = <span style="color: #0000ff;">this</span>.DV+<span style="color: #000000;">c;
+
+  </span><span style="color: #0000ff;">else</span> <span style="color: #0000ff;">if</span>(c &gt; 0) r[i++] =<span style="color: #000000;"> c;
+
+  r.t </span>=<span style="color: #000000;"> i;
+
+  r.clamp();
+
+}
+
+
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;"> (protected) r = this * a, r != this,a (HAC 14.12)</span><span style="color: #008000;">
+
+//</span><span style="color: #008000;"> "this" should be the larger one if appropriate.</span>
+
+<span style="color: #0000ff;">function</span><span style="color: #000000;"> bnpMultiplyTo(a,r) {
+
+  </span><span style="color: #0000ff;">var</span> x = <span style="color: #0000ff;">this</span>.abs(), y =<span style="color: #000000;"> a.abs();
+
+  </span><span style="color: #0000ff;">var</span> i =<span style="color: #000000;"> x.t;
+
+  r.t </span>= i+<span style="color: #000000;">y.t;
+
+  </span><span style="color: #0000ff;">while</span>(--i &gt;= 0) r[i] = 0<span style="color: #000000;">;
+
+  </span><span style="color: #0000ff;">for</span>(i = 0; i &lt; y.t; ++i) r[i+x.t] = x.am(0,y[i],r,i,0<span style="color: #000000;">,x.t);
+
+  r.s </span>= 0<span style="color: #000000;">;
+
+  r.clamp();
+
+  </span><span style="color: #0000ff;">if</span>(<span style="color: #0000ff;">this</span>.s !=<span style="color: #000000;"> a.s) BigInteger.ZERO.subTo(r,r);
+
+}
+
+
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;"> (protected) r = this^2, r != this (HAC 14.16)</span>
+
+<span style="color: #0000ff;">function</span><span style="color: #000000;"> bnpSquareTo(r) {
+
+  </span><span style="color: #0000ff;">var</span> x = <span style="color: #0000ff;">this</span><span style="color: #000000;">.abs();
+
+  </span><span style="color: #0000ff;">var</span> i = r.t = 2*<span style="color: #000000;">x.t;
+
+  </span><span style="color: #0000ff;">while</span>(--i &gt;= 0) r[i] = 0<span style="color: #000000;">;
+
+  </span><span style="color: #0000ff;">for</span>(i = 0; i &lt; x.t-1; ++<span style="color: #000000;">i) {
+
+    </span><span style="color: #0000ff;">var</span> c = x.am(i,x[i],r,2*i,0,1<span style="color: #000000;">);
+
+    </span><span style="color: #0000ff;">if</span>((r[i+x.t]+=x.am(i+1,2*x[i],r,2*i+1,c,x.t-i-1)) &gt;=<span style="color: #000000;"> x.DV) {
+
+      r[i</span>+x.t] -=<span style="color: #000000;"> x.DV;
+
+      r[i</span>+x.t+1] = 1<span style="color: #000000;">;
+
+    }
+
+  }
+
+  </span><span style="color: #0000ff;">if</span>(r.t &gt; 0) r[r.t-1] += x.am(i,x[i],r,2*i,0,1<span style="color: #000000;">);
+
+  r.s </span>= 0<span style="color: #000000;">;
+
+  r.clamp();
+
+}
+
+
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;"> (protected) divide this by m, quotient and remainder to q, r (HAC 14.20)</span><span style="color: #008000;">
+
+//</span><span style="color: #008000;"> r != q, this != m.  q or r may be null.</span>
+
+<span style="color: #0000ff;">function</span><span style="color: #000000;"> bnpDivRemTo(m,q,r) {
+
+  </span><span style="color: #0000ff;">var</span> pm =<span style="color: #000000;"> m.abs();
+
+  </span><span style="color: #0000ff;">if</span>(pm.t &lt;= 0) <span style="color: #0000ff;">return</span><span style="color: #000000;">;
+
+  </span><span style="color: #0000ff;">var</span> pt = <span style="color: #0000ff;">this</span><span style="color: #000000;">.abs();
+
+  </span><span style="color: #0000ff;">if</span>(pt.t &lt;<span style="color: #000000;"> pm.t) {
+
+    </span><span style="color: #0000ff;">if</span>(q != <span style="color: #0000ff;">null</span>) q.fromInt(0<span style="color: #000000;">);
+
+    </span><span style="color: #0000ff;">if</span>(r != <span style="color: #0000ff;">null</span>) <span style="color: #0000ff;">this</span><span style="color: #000000;">.copyTo(r);
+
+    </span><span style="color: #0000ff;">return</span><span style="color: #000000;">;
+
+  }
+
+  </span><span style="color: #0000ff;">if</span>(r == <span style="color: #0000ff;">null</span>) r =<span style="color: #000000;"> nbi();
+
+  </span><span style="color: #0000ff;">var</span> y = nbi(), ts = <span style="color: #0000ff;">this</span>.s, ms =<span style="color: #000000;"> m.s;
+
+  </span><span style="color: #0000ff;">var</span> nsh = <span style="color: #0000ff;">this</span>.DB-nbits(pm[pm.t-1]);    <span style="color: #008000;">//</span><span style="color: #008000;"> normalize modulus</span>
+
+  <span style="color: #0000ff;">if</span>(nsh &gt; 0<span style="color: #000000;">) { pm.lShiftTo(nsh,y); pt.lShiftTo(nsh,r); }
+
+  </span><span style="color: #0000ff;">else</span><span style="color: #000000;"> { pm.copyTo(y); pt.copyTo(r); }
+
+  </span><span style="color: #0000ff;">var</span> ys =<span style="color: #000000;"> y.t;
+
+  </span><span style="color: #0000ff;">var</span> y0 = y[ys-1<span style="color: #000000;">];
+
+  </span><span style="color: #0000ff;">if</span>(y0 == 0) <span style="color: #0000ff;">return</span><span style="color: #000000;">;
+
+  </span><span style="color: #0000ff;">var</span> yt = y0*(1&lt;&lt;<span style="color: #0000ff;">this</span>.F1)+((ys&gt;1)?y[ys-2]&gt;&gt;<span style="color: #0000ff;">this</span>.F2:0<span style="color: #000000;">);
+
+  </span><span style="color: #0000ff;">var</span> d1 = <span style="color: #0000ff;">this</span>.FV/yt, d2 = (1&lt;&lt;this.F1)/yt, e = 1&lt;&lt;<span style="color: #0000ff;">this</span><span style="color: #000000;">.F2;
+
+  </span><span style="color: #0000ff;">var</span> i = r.t, j = i-ys, t = (q==<span style="color: #0000ff;">null</span>)?<span style="color: #000000;">nbi():q;
+
+  y.dlShiftTo(j,t);
+
+  </span><span style="color: #0000ff;">if</span>(r.compareTo(t) &gt;= 0<span style="color: #000000;">) {
+
+    r[r.t</span>++] = 1<span style="color: #000000;">;
+
+    r.subTo(t,r);
+
+  }
+
+  BigInteger.ONE.dlShiftTo(ys,t);
+
+  t.subTo(y,y);    </span><span style="color: #008000;">//</span><span style="color: #008000;"> "negative" y so we can replace sub with am later</span>
+
+  <span style="color: #0000ff;">while</span>(y.t &lt; ys) y[y.t++] = 0<span style="color: #000000;">;
+
+  </span><span style="color: #0000ff;">while</span>(--j &gt;= 0<span style="color: #000000;">) {
+
+    </span><span style="color: #008000;">//</span><span style="color: #008000;"> Estimate quotient digit</span>
+
+    <span style="color: #0000ff;">var</span> qd = (r[--i]==y0)?<span style="color: #0000ff;">this</span>.DM:Math.floor(r[i]*d1+(r[i-1]+e)*<span style="color: #000000;">d2);
+
+    </span><span style="color: #0000ff;">if</span>((r[i]+=y.am(0,qd,r,j,0,ys)) &lt; qd) {    <span style="color: #008000;">//</span><span style="color: #008000;"> Try it out</span>
+
+<span style="color: #000000;">      y.dlShiftTo(j,t);
+
+      r.subTo(t,r);
+
+      </span><span style="color: #0000ff;">while</span>(r[i] &lt; --<span style="color: #000000;">qd) r.subTo(t,r);
+
+    }
+
+  }
+
+  </span><span style="color: #0000ff;">if</span>(q != <span style="color: #0000ff;">null</span><span style="color: #000000;">) {
+
+    r.drShiftTo(ys,q);
+
+    </span><span style="color: #0000ff;">if</span>(ts !=<span style="color: #000000;"> ms) BigInteger.ZERO.subTo(q,q);
+
+  }
+
+  r.t </span>=<span style="color: #000000;"> ys;
+
+  r.clamp();
+
+  </span><span style="color: #0000ff;">if</span>(nsh &gt; 0) r.rShiftTo(nsh,r);    <span style="color: #008000;">//</span><span style="color: #008000;"> Denormalize remainder</span>
+
+  <span style="color: #0000ff;">if</span>(ts &lt; 0<span style="color: #000000;">) BigInteger.ZERO.subTo(r,r);
+
+}
+
+
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;"> (public) this mod a</span>
+
+<span style="color: #0000ff;">function</span><span style="color: #000000;"> bnMod(a) {
+
+  </span><span style="color: #0000ff;">var</span> r =<span style="color: #000000;"> nbi();
+
+  </span><span style="color: #0000ff;">this</span>.abs().divRemTo(a,<span style="color: #0000ff;">null</span><span style="color: #000000;">,r);
+
+  </span><span style="color: #0000ff;">if</span>(<span style="color: #0000ff;">this</span>.s &lt; 0 &amp;&amp; r.compareTo(BigInteger.ZERO) &gt; 0<span style="color: #000000;">) a.subTo(r,r);
+
+  </span><span style="color: #0000ff;">return</span><span style="color: #000000;"> r;
+
+}
+
+
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;"> Modular reduction using "classic" algorithm</span>
+
+<span style="color: #0000ff;">function</span> Classic(m) { <span style="color: #0000ff;">this</span>.m =<span style="color: #000000;"> m; }
+
+</span><span style="color: #0000ff;">function</span><span style="color: #000000;"> cConvert(x) {
+
+  </span><span style="color: #0000ff;">if</span>(x.s &lt; 0 || x.compareTo(<span style="color: #0000ff;">this</span>.m) &gt;= 0) <span style="color: #0000ff;">return</span> x.mod(<span style="color: #0000ff;">this</span><span style="color: #000000;">.m);
+
+  </span><span style="color: #0000ff;">else</span> <span style="color: #0000ff;">return</span><span style="color: #000000;"> x;
+
+}
+
+</span><span style="color: #0000ff;">function</span> cRevert(x) { <span style="color: #0000ff;">return</span><span style="color: #000000;"> x; }
+
+</span><span style="color: #0000ff;">function</span> cReduce(x) { x.divRemTo(<span style="color: #0000ff;">this</span>.m,<span style="color: #0000ff;">null</span><span style="color: #000000;">,x); }
+
+</span><span style="color: #0000ff;">function</span> cMulTo(x,y,r) { x.multiplyTo(y,r); <span style="color: #0000ff;">this</span><span style="color: #000000;">.reduce(r); }
+
+</span><span style="color: #0000ff;">function</span> cSqrTo(x,r) { x.squareTo(r); <span style="color: #0000ff;">this</span><span style="color: #000000;">.reduce(r); }
+
+
+
+Classic.prototype.convert </span>=<span style="color: #000000;"> cConvert;
+
+Classic.prototype.revert </span>=<span style="color: #000000;"> cRevert;
+
+Classic.prototype.reduce </span>=<span style="color: #000000;"> cReduce;
+
+Classic.prototype.mulTo </span>=<span style="color: #000000;"> cMulTo;
+
+Classic.prototype.sqrTo </span>=<span style="color: #000000;"> cSqrTo;
+
+
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;"> (protected) return "-1/this % 2^DB"; useful for Mont. reduction</span><span style="color: #008000;">
+
+//</span><span style="color: #008000;"> justification:</span><span style="color: #008000;">
+
+//</span><span style="color: #008000;">         xy == 1 (mod m)</span><span style="color: #008000;">
+
+//</span><span style="color: #008000;">         xy =  1+km</span><span style="color: #008000;">
+
+//</span><span style="color: #008000;">   xy(2-xy) = (1+km)(1-km)</span><span style="color: #008000;">
+
+//</span><span style="color: #008000;"> x[y(2-xy)] = 1-k^2m^2</span><span style="color: #008000;">
+
+//</span><span style="color: #008000;"> x[y(2-xy)] == 1 (mod m^2)</span><span style="color: #008000;">
+
+//</span><span style="color: #008000;"> if y is 1/x mod m, then y(2-xy) is 1/x mod m^2</span><span style="color: #008000;">
+
+//</span><span style="color: #008000;"> should reduce x and y(2-xy) by m^2 at each step to keep size bounded.</span><span style="color: #008000;">
+
+//</span><span style="color: #008000;"> JS multiply "overflows" differently from C/C++, so care is needed here.</span>
+
+<span style="color: #0000ff;">function</span><span style="color: #000000;"> bnpInvDigit() {
+
+  </span><span style="color: #0000ff;">if</span>(<span style="color: #0000ff;">this</span>.t &lt; 1) <span style="color: #0000ff;">return</span> 0<span style="color: #000000;">;
+
+  </span><span style="color: #0000ff;">var</span> x = <span style="color: #0000ff;">this</span>[0<span style="color: #000000;">];
+
+  </span><span style="color: #0000ff;">if</span>((x&amp;1) == 0) <span style="color: #0000ff;">return</span> 0<span style="color: #000000;">;
+
+  </span><span style="color: #0000ff;">var</span> y = x&amp;3;        <span style="color: #008000;">//</span><span style="color: #008000;"> y == 1/x mod 2^2</span>
+
+  y = (y*(2-(x&amp;0xf)*y))&amp;0xf;    <span style="color: #008000;">//</span><span style="color: #008000;"> y == 1/x mod 2^4</span>
+
+  y = (y*(2-(x&amp;0xff)*y))&amp;0xff;    <span style="color: #008000;">//</span><span style="color: #008000;"> y == 1/x mod 2^8</span>
+
+  y = (y*(2-(((x&amp;0xffff)*y)&amp;0xffff)))&amp;0xffff;    <span style="color: #008000;">//</span><span style="color: #008000;"> y == 1/x mod 2^16</span>
+
+  <span style="color: #008000;">//</span><span style="color: #008000;"> last step - calculate inverse mod DV directly;</span>
+
+  <span style="color: #008000;">//</span><span style="color: #008000;"> assumes 16 &lt; DB &lt;= 32 and assumes ability to handle 48-bit ints</span>
+
+  y = (y*(2-x*y%<span style="color: #0000ff;">this</span>.DV))%<span style="color: #0000ff;">this</span>.DV;        <span style="color: #008000;">//</span><span style="color: #008000;"> y == 1/x mod 2^dbits</span>
+
+  <span style="color: #008000;">//</span><span style="color: #008000;"> we really want the negative inverse, and -DV &lt; y &lt; DV</span>
+
+  <span style="color: #0000ff;">return</span> (y&gt;0)?<span style="color: #0000ff;">this</span>.DV-y:-<span style="color: #000000;">y;
+
+}
+
+
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;"> Montgomery reduction</span>
+
+<span style="color: #0000ff;">function</span><span style="color: #000000;"> Montgomery(m) {
+
+  </span><span style="color: #0000ff;">this</span>.m =<span style="color: #000000;"> m;
+
+  </span><span style="color: #0000ff;">this</span>.mp =<span style="color: #000000;"> m.invDigit();
+
+  </span><span style="color: #0000ff;">this</span>.mpl = <span style="color: #0000ff;">this</span>.mp&amp;0x7fff<span style="color: #000000;">;
+
+  </span><span style="color: #0000ff;">this</span>.mph = <span style="color: #0000ff;">this</span>.mp&gt;&gt;15<span style="color: #000000;">;
+
+  </span><span style="color: #0000ff;">this</span>.um = (1&lt;&lt;(m.DB-15))-1<span style="color: #000000;">;
+
+  </span><span style="color: #0000ff;">this</span>.mt2 = 2*<span style="color: #000000;">m.t;
+
+}
+
+
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;"> xR mod m</span>
+
+<span style="color: #0000ff;">function</span><span style="color: #000000;"> montConvert(x) {
+
+  </span><span style="color: #0000ff;">var</span> r =<span style="color: #000000;"> nbi();
+
+  x.abs().dlShiftTo(</span><span style="color: #0000ff;">this</span><span style="color: #000000;">.m.t,r);
+
+  r.divRemTo(</span><span style="color: #0000ff;">this</span>.m,<span style="color: #0000ff;">null</span><span style="color: #000000;">,r);
+
+  </span><span style="color: #0000ff;">if</span>(x.s &lt; 0 &amp;&amp; r.compareTo(BigInteger.ZERO) &gt; 0) <span style="color: #0000ff;">this</span><span style="color: #000000;">.m.subTo(r,r);
+
+  </span><span style="color: #0000ff;">return</span><span style="color: #000000;"> r;
+
+}
+
+
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;"> x/R mod m</span>
+
+<span style="color: #0000ff;">function</span><span style="color: #000000;"> montRevert(x) {
+
+  </span><span style="color: #0000ff;">var</span> r =<span style="color: #000000;"> nbi();
+
+  x.copyTo(r);
+
+  </span><span style="color: #0000ff;">this</span><span style="color: #000000;">.reduce(r);
+
+  </span><span style="color: #0000ff;">return</span><span style="color: #000000;"> r;
+
+}
+
+
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;"> x = x/R mod m (HAC 14.32)</span>
+
+<span style="color: #0000ff;">function</span><span style="color: #000000;"> montReduce(x) {
+
+  </span><span style="color: #0000ff;">while</span>(x.t &lt;= <span style="color: #0000ff;">this</span>.mt2)    <span style="color: #008000;">//</span><span style="color: #008000;"> pad x so am has enough room later</span>
+
+    x[x.t++] = 0<span style="color: #000000;">;
+
+  </span><span style="color: #0000ff;">for</span>(<span style="color: #0000ff;">var</span> i = 0; i &lt; <span style="color: #0000ff;">this</span>.m.t; ++<span style="color: #000000;">i) {
+
+    </span><span style="color: #008000;">//</span><span style="color: #008000;"> faster way of calculating u0 = x[i]*mp mod DV</span>
+
+    <span style="color: #0000ff;">var</span> j = x[i]&amp;0x7fff<span style="color: #000000;">;
+
+    </span><span style="color: #0000ff;">var</span> u0 = (j*<span style="color: #0000ff;">this</span>.mpl+(((j*<span style="color: #0000ff;">this</span>.mph+(x[i]&gt;&gt;15)*<span style="color: #0000ff;">this</span>.mpl)&amp;<span style="color: #0000ff;">this</span>.um)&lt;&lt;15))&amp;<span style="color: #000000;">x.DM;
+
+    </span><span style="color: #008000;">//</span><span style="color: #008000;"> use am to combine the multiply-shift-add into one call</span>
+
+    j = i+<span style="color: #0000ff;">this</span><span style="color: #000000;">.m.t;
+
+    x[j] </span>+= <span style="color: #0000ff;">this</span>.m.am(0,u0,x,i,0,<span style="color: #0000ff;">this</span><span style="color: #000000;">.m.t);
+
+    </span><span style="color: #008000;">//</span><span style="color: #008000;"> propagate carry</span>
+
+    <span style="color: #0000ff;">while</span>(x[j] &gt;= x.DV) { x[j] -= x.DV; x[++j]++<span style="color: #000000;">; }
+
+  }
+
+  x.clamp();
+
+  x.drShiftTo(</span><span style="color: #0000ff;">this</span><span style="color: #000000;">.m.t,x);
+
+  </span><span style="color: #0000ff;">if</span>(x.compareTo(<span style="color: #0000ff;">this</span>.m) &gt;= 0) x.subTo(<span style="color: #0000ff;">this</span><span style="color: #000000;">.m,x);
+
+}
+
+
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;"> r = "x^2/R mod m"; x != r</span>
+
+<span style="color: #0000ff;">function</span> montSqrTo(x,r) { x.squareTo(r); <span style="color: #0000ff;">this</span><span style="color: #000000;">.reduce(r); }
+
+
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;"> r = "xy/R mod m"; x,y != r</span>
+
+<span style="color: #0000ff;">function</span> montMulTo(x,y,r) { x.multiplyTo(y,r); <span style="color: #0000ff;">this</span><span style="color: #000000;">.reduce(r); }
+
+
+
+Montgomery.prototype.convert </span>=<span style="color: #000000;"> montConvert;
+
+Montgomery.prototype.revert </span>=<span style="color: #000000;"> montRevert;
+
+Montgomery.prototype.reduce </span>=<span style="color: #000000;"> montReduce;
+
+Montgomery.prototype.mulTo </span>=<span style="color: #000000;"> montMulTo;
+
+Montgomery.prototype.sqrTo </span>=<span style="color: #000000;"> montSqrTo;
+
+
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;"> (protected) true iff this is even</span>
+
+<span style="color: #0000ff;">function</span> bnpIsEven() { <span style="color: #0000ff;">return</span> ((<span style="color: #0000ff;">this</span>.t&gt;0)?(<span style="color: #0000ff;">this</span>[0]&amp;1):<span style="color: #0000ff;">this</span>.s) == 0<span style="color: #000000;">; }
+
+
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;"> (protected) this^e, e &lt; 2^32, doing sqr and mul with "r" (HAC 14.79)</span>
+
+<span style="color: #0000ff;">function</span><span style="color: #000000;"> bnpExp(e,z) {
+
+  </span><span style="color: #0000ff;">if</span>(e &gt; 0xffffffff || e &lt; 1) <span style="color: #0000ff;">return</span><span style="color: #000000;"> BigInteger.ONE;
+
+  </span><span style="color: #0000ff;">var</span> r = nbi(), r2 = nbi(), g = z.convert(<span style="color: #0000ff;">this</span>), i = nbits(e)-1<span style="color: #000000;">;
+
+  g.copyTo(r);
+
+  </span><span style="color: #0000ff;">while</span>(--i &gt;= 0<span style="color: #000000;">) {
+
+    z.sqrTo(r,r2);
+
+    </span><span style="color: #0000ff;">if</span>((e&amp;(1&lt;&lt;i)) &gt; 0<span style="color: #000000;">) z.mulTo(r2,g,r);
+
+    </span><span style="color: #0000ff;">else</span> { <span style="color: #0000ff;">var</span> t = r; r = r2; r2 =<span style="color: #000000;"> t; }
+
+  }
+
+  </span><span style="color: #0000ff;">return</span><span style="color: #000000;"> z.revert(r);
+
+}
+
+
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;"> (public) this^e % m, 0 &lt;= e &lt; 2^32</span>
+
+<span style="color: #0000ff;">function</span><span style="color: #000000;"> bnModPowInt(e,m) {
+
+  </span><span style="color: #0000ff;">var</span><span style="color: #000000;"> z;
+
+  </span><span style="color: #0000ff;">if</span>(e &lt; 256 || m.isEven()) z = <span style="color: #0000ff;">new</span> Classic(m); <span style="color: #0000ff;">else</span> z = <span style="color: #0000ff;">new</span><span style="color: #000000;"> Montgomery(m);
+
+  </span><span style="color: #0000ff;">return</span> <span style="color: #0000ff;">this</span><span style="color: #000000;">.exp(e,z);
+
+}
+
+
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;"> protected</span>
+
+BigInteger.prototype.copyTo =<span style="color: #000000;"> bnpCopyTo;
+
+BigInteger.prototype.fromInt </span>=<span style="color: #000000;"> bnpFromInt;
+
+BigInteger.prototype.fromString </span>=<span style="color: #000000;"> bnpFromString;
+
+BigInteger.prototype.clamp </span>=<span style="color: #000000;"> bnpClamp;
+
+BigInteger.prototype.dlShiftTo </span>=<span style="color: #000000;"> bnpDLShiftTo;
+
+BigInteger.prototype.drShiftTo </span>=<span style="color: #000000;"> bnpDRShiftTo;
+
+BigInteger.prototype.lShiftTo </span>=<span style="color: #000000;"> bnpLShiftTo;
+
+BigInteger.prototype.rShiftTo </span>=<span style="color: #000000;"> bnpRShiftTo;
+
+BigInteger.prototype.subTo </span>=<span style="color: #000000;"> bnpSubTo;
+
+BigInteger.prototype.multiplyTo </span>=<span style="color: #000000;"> bnpMultiplyTo;
+
+BigInteger.prototype.squareTo </span>=<span style="color: #000000;"> bnpSquareTo;
+
+BigInteger.prototype.divRemTo </span>=<span style="color: #000000;"> bnpDivRemTo;
+
+BigInteger.prototype.invDigit </span>=<span style="color: #000000;"> bnpInvDigit;
+
+BigInteger.prototype.isEven </span>=<span style="color: #000000;"> bnpIsEven;
+
+BigInteger.prototype.exp </span>=<span style="color: #000000;"> bnpExp;
+
+
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;"> public</span>
+
+BigInteger.prototype.toString =<span style="color: #000000;"> bnToString;
+
+BigInteger.prototype.negate </span>=<span style="color: #000000;"> bnNegate;
+
+BigInteger.prototype.abs </span>=<span style="color: #000000;"> bnAbs;
+
+BigInteger.prototype.compareTo </span>=<span style="color: #000000;"> bnCompareTo;
+
+BigInteger.prototype.bitLength </span>=<span style="color: #000000;"> bnBitLength;
+
+BigInteger.prototype.mod </span>=<span style="color: #000000;"> bnMod;
+
+BigInteger.prototype.modPowInt </span>=<span style="color: #000000;"> bnModPowInt;
+
+
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;"> "constants"</span>
+
+BigInteger.ZERO = nbv(0<span style="color: #000000;">);
+
+BigInteger.ONE </span>= nbv(1);</pre>
+
+</div>
+
+<p>sha1.js</p>
+
+<div class="cnblogs_code">
+
+<pre><span style="color: #008000;">/*</span><span style="color: #008000;">*
+
+ *
+
+ *  Secure Hash Algorithm (SHA1)
+
+ *  http://www.webtoolkit.info/
+
+ *
+
+ *</span><span style="color: #008000;">*/</span>
+
+
+
+<span style="color: #0000ff;">function</span><span style="color: #000000;"> SHA1(msg) {
+
+
+
+    </span><span style="color: #0000ff;">function</span><span style="color: #000000;"> rotate_left(n,s) {
+
+        </span><span style="color: #0000ff;">var</span> t4 = ( n&lt;&lt;s ) | (n&gt;&gt;&gt;(32-<span style="color: #000000;">s));
+
+        </span><span style="color: #0000ff;">return</span><span style="color: #000000;"> t4;
+
+    };
+
+
+
+    </span><span style="color: #0000ff;">function</span><span style="color: #000000;"> lsb_hex(val) {
+
+        </span><span style="color: #0000ff;">var</span> str=""<span style="color: #000000;">;
+
+        </span><span style="color: #0000ff;">var</span><span style="color: #000000;"> i;
+
+        </span><span style="color: #0000ff;">var</span><span style="color: #000000;"> vh;
+
+        </span><span style="color: #0000ff;">var</span><span style="color: #000000;"> vl;
+
+
+
+        </span><span style="color: #0000ff;">for</span>( i=0; i&lt;=6; i+=2<span style="color: #000000;"> ) {
+
+            vh </span>= (val&gt;&gt;&gt;(i*4+4))&amp;0x0f<span style="color: #000000;">;
+
+            vl </span>= (val&gt;&gt;&gt;(i*4))&amp;0x0f<span style="color: #000000;">;
+
+            str </span>+= vh.toString(16) + vl.toString(16<span style="color: #000000;">);
+
+        }
+
+        </span><span style="color: #0000ff;">return</span><span style="color: #000000;"> str;
+
+    };
+
+
+
+    </span><span style="color: #0000ff;">function</span><span style="color: #000000;"> cvt_hex(val) {
+
+        </span><span style="color: #0000ff;">var</span> str=""<span style="color: #000000;">;
+
+        </span><span style="color: #0000ff;">var</span><span style="color: #000000;"> i;
+
+        </span><span style="color: #0000ff;">var</span><span style="color: #000000;"> v;
+
+
+
+        </span><span style="color: #0000ff;">for</span>( i=7; i&gt;=0; i--<span style="color: #000000;"> ) {
+
+            v </span>= (val&gt;&gt;&gt;(i*4))&amp;0x0f<span style="color: #000000;">;
+
+            str </span>+= v.toString(16<span style="color: #000000;">);
+
+        }
+
+        </span><span style="color: #0000ff;">return</span><span style="color: #000000;"> str;
+
+    };
+
+
+
+
+
+    </span><span style="color: #0000ff;">function</span><span style="color: #000000;"> Utf8Encode(string) {
+
+        string </span>= string.replace(/\r\n/g,"\n"<span style="color: #000000;">);
+
+        </span><span style="color: #0000ff;">var</span> utftext = ""<span style="color: #000000;">;
+
+
+
+        </span><span style="color: #0000ff;">for</span> (<span style="color: #0000ff;">var</span> n = 0; n &lt; string.length; n++<span style="color: #000000;">) {
+
+
+
+            </span><span style="color: #0000ff;">var</span> c =<span style="color: #000000;"> string.charCodeAt(n);
+
+
+
+            </span><span style="color: #0000ff;">if</span> (c &lt; 128<span style="color: #000000;">) {
+
+                utftext </span>+=<span style="color: #000000;"> String.fromCharCode(c);
+
+            }
+
+            </span><span style="color: #0000ff;">else</span> <span style="color: #0000ff;">if</span>((c &gt; 127) &amp;&amp; (c &lt; 2048<span style="color: #000000;">)) {
+
+                utftext </span>+= String.fromCharCode((c &gt;&gt; 6) | 192<span style="color: #000000;">);
+
+                utftext </span>+= String.fromCharCode((c &amp; 63) | 128<span style="color: #000000;">);
+
+            }
+
+            </span><span style="color: #0000ff;">else</span><span style="color: #000000;"> {
+
+                utftext </span>+= String.fromCharCode((c &gt;&gt; 12) | 224<span style="color: #000000;">);
+
+                utftext </span>+= String.fromCharCode(((c &gt;&gt; 6) &amp; 63) | 128<span style="color: #000000;">);
+
+                utftext </span>+= String.fromCharCode((c &amp; 63) | 128<span style="color: #000000;">);
+
+            }
+
+
+
+        }
+
+
+
+        </span><span style="color: #0000ff;">return</span><span style="color: #000000;"> utftext;
+
+    };
+
+
+
+    </span><span style="color: #0000ff;">var</span><span style="color: #000000;"> blockstart;
+
+    </span><span style="color: #0000ff;">var</span><span style="color: #000000;"> i, j;
+
+    </span><span style="color: #0000ff;">var</span> W = <span style="color: #0000ff;">new</span> Array(80<span style="color: #000000;">);
+
+    </span><span style="color: #0000ff;">var</span> H0 = 0x67452301<span style="color: #000000;">;
+
+    </span><span style="color: #0000ff;">var</span> H1 = 0xEFCDAB89<span style="color: #000000;">;
+
+    </span><span style="color: #0000ff;">var</span> H2 = 0x98BADCFE<span style="color: #000000;">;
+
+    </span><span style="color: #0000ff;">var</span> H3 = 0x10325476<span style="color: #000000;">;
+
+    </span><span style="color: #0000ff;">var</span> H4 = 0xC3D2E1F0<span style="color: #000000;">;
+
+    </span><span style="color: #0000ff;">var</span><span style="color: #000000;"> A, B, C, D, E;
+
+    </span><span style="color: #0000ff;">var</span><span style="color: #000000;"> temp;
+
+
+
+    msg </span>=<span style="color: #000000;"> Utf8Encode(msg);
+
+
+
+    </span><span style="color: #0000ff;">var</span> msg_len =<span style="color: #000000;"> msg.length;
+
+
+
+    </span><span style="color: #0000ff;">var</span> word_array = <span style="color: #0000ff;">new</span><span style="color: #000000;"> Array();
+
+    </span><span style="color: #0000ff;">for</span>( i=0; i&lt;msg_len-3; i+=4<span style="color: #000000;"> ) {
+
+        j </span>= msg.charCodeAt(i)&lt;&lt;24 | msg.charCodeAt(i+1)&lt;&lt;16 |<span style="color: #000000;">
+
+        msg.charCodeAt(i</span>+2)&lt;&lt;8 | msg.charCodeAt(i+3<span style="color: #000000;">);
+
+        word_array.push( j );
+
+    }
+
+
+
+    </span><span style="color: #0000ff;">switch</span>( msg_len % 4<span style="color: #000000;"> ) {
+
+        </span><span style="color: #0000ff;">case</span> 0<span style="color: #000000;">:
+
+            i </span>= 0x080000000<span style="color: #000000;">;
+
+        </span><span style="color: #0000ff;">break</span><span style="color: #000000;">;
+
+        </span><span style="color: #0000ff;">case</span> 1<span style="color: #000000;">:
+
+            i </span>= msg.charCodeAt(msg_len-1)&lt;&lt;24 | 0x0800000<span style="color: #000000;">;
+
+        </span><span style="color: #0000ff;">break</span><span style="color: #000000;">;
+
+
+
+        </span><span style="color: #0000ff;">case</span> 2<span style="color: #000000;">:
+
+            i </span>= msg.charCodeAt(msg_len-2)&lt;&lt;24 | msg.charCodeAt(msg_len-1)&lt;&lt;16 | 0x08000<span style="color: #000000;">;
+
+        </span><span style="color: #0000ff;">break</span><span style="color: #000000;">;
+
+
+
+        </span><span style="color: #0000ff;">case</span> 3<span style="color: #000000;">:
+
+            i </span>= msg.charCodeAt(msg_len-3)&lt;&lt;24 | msg.charCodeAt(msg_len-2)&lt;&lt;16 | msg.charCodeAt(msg_len-1)&lt;&lt;8    | 0x80<span style="color: #000000;">;
+
+        </span><span style="color: #0000ff;">break</span><span style="color: #000000;">;
+
+    }
+
+
+
+    word_array.push( i );
+
+
+
+    </span><span style="color: #0000ff;">while</span>( (word_array.length % 16) != 14 ) word_array.push( 0<span style="color: #000000;"> );
+
+
+
+    word_array.push( msg_len</span>&gt;&gt;&gt;29<span style="color: #000000;"> );
+
+    word_array.push( (msg_len</span>&lt;&lt;3)&amp;0x0ffffffff<span style="color: #000000;"> );
+
+
+
+
+
+    </span><span style="color: #0000ff;">for</span> ( blockstart=0; blockstart&lt;word_array.length; blockstart+=16<span style="color: #000000;"> ) {
+
+
+
+        </span><span style="color: #0000ff;">for</span>( i=0; i&lt;16; i++ ) W[i] = word_array[blockstart+<span style="color: #000000;">i];
+
+        </span><span style="color: #0000ff;">for</span>( i=16; i&lt;=79; i++ ) W[i] = rotate_left(W[i-3] ^ W[i-8] ^ W[i-14] ^ W[i-16], 1<span style="color: #000000;">);
+
+
+
+        A </span>=<span style="color: #000000;"> H0;
+
+        B </span>=<span style="color: #000000;"> H1;
+
+        C </span>=<span style="color: #000000;"> H2;
+
+        D </span>=<span style="color: #000000;"> H3;
+
+        E </span>=<span style="color: #000000;"> H4;
+
+
+
+        </span><span style="color: #0000ff;">for</span>( i= 0; i&lt;=19; i++<span style="color: #000000;"> ) {
+
+            temp </span>= (rotate_left(A,5) + ((B&amp;C) | (~B&amp;D)) + E + W[i] + 0x5A827999) &amp; 0x0ffffffff<span style="color: #000000;">;
+
+            E </span>=<span style="color: #000000;"> D;
+
+            D </span>=<span style="color: #000000;"> C;
+
+            C </span>= rotate_left(B,30<span style="color: #000000;">);
+
+            B </span>=<span style="color: #000000;"> A;
+
+            A </span>=<span style="color: #000000;"> temp;
+
+        }
+
+
+
+        </span><span style="color: #0000ff;">for</span>( i=20; i&lt;=39; i++<span style="color: #000000;"> ) {
+
+            temp </span>= (rotate_left(A,5) + (B ^ C ^ D) + E + W[i] + 0x6ED9EBA1) &amp; 0x0ffffffff<span style="color: #000000;">;
+
+            E </span>=<span style="color: #000000;"> D;
+
+            D </span>=<span style="color: #000000;"> C;
+
+            C </span>= rotate_left(B,30<span style="color: #000000;">);
+
+            B </span>=<span style="color: #000000;"> A;
+
+            A </span>=<span style="color: #000000;"> temp;
+
+        }
+
+
+
+        </span><span style="color: #0000ff;">for</span>( i=40; i&lt;=59; i++<span style="color: #000000;"> ) {
+
+            temp </span>= (rotate_left(A,5) + ((B&amp;C) | (B&amp;D) | (C&amp;D)) + E + W[i] + 0x8F1BBCDC) &amp; 0x0ffffffff<span style="color: #000000;">;
+
+            E </span>=<span style="color: #000000;"> D;
+
+            D </span>=<span style="color: #000000;"> C;
+
+            C </span>= rotate_left(B,30<span style="color: #000000;">);
+
+            B </span>=<span style="color: #000000;"> A;
+
+            A </span>=<span style="color: #000000;"> temp;
+
+        }
+
+
+
+        </span><span style="color: #0000ff;">for</span>( i=60; i&lt;=79; i++<span style="color: #000000;"> ) {
+
+            temp </span>= (rotate_left(A,5) + (B ^ C ^ D) + E + W[i] + 0xCA62C1D6) &amp; 0x0ffffffff<span style="color: #000000;">;
+
+            E </span>=<span style="color: #000000;"> D;
+
+            D </span>=<span style="color: #000000;"> C;
+
+            C </span>= rotate_left(B,30<span style="color: #000000;">);
+
+            B </span>=<span style="color: #000000;"> A;
+
+            A </span>=<span style="color: #000000;"> temp;
+
+        }
+
+
+
+        H0 </span>= (H0 + A) &amp; 0x0ffffffff<span style="color: #000000;">;
+
+        H1 </span>= (H1 + B) &amp; 0x0ffffffff<span style="color: #000000;">;
+
+        H2 </span>= (H2 + C) &amp; 0x0ffffffff<span style="color: #000000;">;
+
+        H3 </span>= (H3 + D) &amp; 0x0ffffffff<span style="color: #000000;">;
+
+        H4 </span>= (H4 + E) &amp; 0x0ffffffff<span style="color: #000000;">;
+
+
+
+    }
+
+
+
+    </span><span style="color: #0000ff;">var</span> temp = cvt_hex(H0) + cvt_hex(H1) + cvt_hex(H2) + cvt_hex(H3) +<span style="color: #000000;"> cvt_hex(H4);
+
+
+
+    </span><span style="color: #0000ff;">return</span><span style="color: #000000;"> temp.toLowerCase();
+
+}</span></pre>
+
+</div>
+
+<p>rsa.js</p>
+
+<div class="cnblogs_code">
+
+<pre><span style="color: #008000;">/*</span><span style="color: #008000;">*
+
+ * This is a specialized RSA library meant only to verify SHA1-based signatures.
+
+ * It requires jsbn.js and sha1.js to work.
+
+ </span><span style="color: #008000;">*/</span><span style="color: #000000;">
+
+
+
+(</span><span style="color: #0000ff;">function</span><span style="color: #000000;">(globalObj)
+
+{
+
+  </span><span style="color: #008000;">//</span><span style="color: #008000;"> Define ASN.1 templates for the data structures used</span>
+
+  <span style="color: #0000ff;">function</span><span style="color: #000000;"> seq()
+
+  {
+
+    </span><span style="color: #0000ff;">return</span> {type: 0x30<span style="color: #000000;">, children: Array.prototype.slice.call(arguments)};
+
+  }
+
+  </span><span style="color: #0000ff;">function</span><span style="color: #000000;"> obj(id)
+
+  {
+
+    </span><span style="color: #0000ff;">return</span> {type: 0x06<span style="color: #000000;">, content: id};
+
+  }
+
+  </span><span style="color: #0000ff;">function</span><span style="color: #000000;"> bitStr(contents)
+
+  {
+
+    </span><span style="color: #0000ff;">return</span> {type: 0x03<span style="color: #000000;">, encapsulates: contents};
+
+  }
+
+  </span><span style="color: #0000ff;">function</span><span style="color: #000000;"> intResult(id)
+
+  {
+
+    </span><span style="color: #0000ff;">return</span> {type: 0x02<span style="color: #000000;">, out: id};
+
+  }
+
+  </span><span style="color: #0000ff;">function</span><span style="color: #000000;"> octetResult(id)
+
+  {
+
+    </span><span style="color: #0000ff;">return</span> {type: 0x04<span style="color: #000000;">, out: id};
+
+  }
+
+
+
+  </span><span style="color: #008000;">//</span><span style="color: #008000;"> See http://www.cryptopp.com/wiki/Keys_and_Formats#RSA_PublicKey</span>
+
+  <span style="color: #008000;">//</span><span style="color: #008000;"> 2A 86 48 86 F7 0D 01 01 01 means 1.2.840.113549.1.1.1</span>
+
+  <span style="color: #0000ff;">var</span> publicKeyTemplate = seq(seq(obj("\x2A\x86\x48\x86\xF7\x0D\x01\x01\x01"), {}), bitStr(seq(intResult("n"), intResult("e"<span style="color: #000000;">))));
+
+
+
+  </span><span style="color: #008000;">//</span><span style="color: #008000;"> See http://tools.ietf.org/html/rfc3447#section-9.2 step 2</span>
+
+  <span style="color: #008000;">//</span><span style="color: #008000;"> 2B 0E 03 02 1A means 1.3.14.3.2.26</span>
+
+  <span style="color: #0000ff;">var</span> signatureTemplate = seq(seq(obj("\x2B\x0E\x03\x02\x1A"), {}), octetResult("sha1"<span style="color: #000000;">));
+
+
+
+  </span><span style="color: #008000;">/*</span><span style="color: #008000;">*
+
+   * Reads ASN.1 data matching the template passed in. This will throw an
+
+   * exception if the data format doesn't match the template. On success an
+
+   * object containing result properties is returned.
+
+   *
+
+   * See http://luca.ntop.org/Teaching/Appunti/asn1.html for info on the format.
+
+   </span><span style="color: #008000;">*/</span>
+
+  <span style="color: #0000ff;">function</span><span style="color: #000000;"> readASN1(data, templ)
+
+  {
+
+    </span><span style="color: #0000ff;">var</span> pos = 0<span style="color: #000000;">;
+
+    </span><span style="color: #0000ff;">function</span><span style="color: #000000;"> next()
+
+    {
+
+      </span><span style="color: #0000ff;">return</span> data.charCodeAt(pos++<span style="color: #000000;">);
+
+    }
+
+
+
+    </span><span style="color: #0000ff;">function</span><span style="color: #000000;"> readLength()
+
+    {
+
+      </span><span style="color: #0000ff;">var</span> len =<span style="color: #000000;"> next();
+
+      </span><span style="color: #0000ff;">if</span> (len &amp; 0x80<span style="color: #000000;">)
+
+      {
+
+        </span><span style="color: #0000ff;">var</span> cnt = len &amp; 0x7F<span style="color: #000000;">;
+
+        </span><span style="color: #0000ff;">if</span> (cnt &gt; 2 || cnt == 0<span style="color: #000000;">)
+
+          </span><span style="color: #0000ff;">throw</span> "Unsupported length"<span style="color: #000000;">;
+
+
+
+        len </span>= 0<span style="color: #000000;">;
+
+        </span><span style="color: #0000ff;">for</span> (<span style="color: #0000ff;">var</span> i = 0; i &lt; cnt; i++<span style="color: #000000;">)
+
+          len </span>+= next() &lt;&lt; (cnt - 1 - i) * 8<span style="color: #000000;">;
+
+        </span><span style="color: #0000ff;">return</span><span style="color: #000000;"> len;
+
+      }
+
+      </span><span style="color: #0000ff;">else</span>
+
+        <span style="color: #0000ff;">return</span><span style="color: #000000;"> len;
+
+    }
+
+
+
+    </span><span style="color: #0000ff;">function</span><span style="color: #000000;"> readNode(curTempl)
+
+    {
+
+      </span><span style="color: #0000ff;">var</span> type =<span style="color: #000000;"> next();
+
+      </span><span style="color: #0000ff;">var</span> len =<span style="color: #000000;"> readLength();
+
+      </span><span style="color: #0000ff;">if</span> ("type" <span style="color: #0000ff;">in</span> curTempl &amp;&amp; curTempl.type !=<span style="color: #000000;"> type)
+
+        </span><span style="color: #0000ff;">throw</span> "Unexpected type"<span style="color: #000000;">;
+
+      </span><span style="color: #0000ff;">if</span> ("content" <span style="color: #0000ff;">in</span> curTempl &amp;&amp; curTempl.content !=<span style="color: #000000;"> data.substr(pos, len))
+
+        </span><span style="color: #0000ff;">throw</span> "Unexpected content"<span style="color: #000000;">;
+
+      </span><span style="color: #0000ff;">if</span> ("out" <span style="color: #0000ff;">in</span><span style="color: #000000;"> curTempl)
+
+        out[curTempl.out] </span>= <span style="color: #0000ff;">new</span> BigInteger(data.substr(pos, len), 256<span style="color: #000000;">);
+
+      </span><span style="color: #0000ff;">if</span> ("children" <span style="color: #0000ff;">in</span><span style="color: #000000;"> curTempl)
+
+      {
+
+        </span><span style="color: #0000ff;">var</span><span style="color: #000000;"> i, end;
+
+        </span><span style="color: #0000ff;">for</span> (i = 0, end = pos + len; pos &lt; end; i++<span style="color: #000000;">)
+
+        {
+
+          </span><span style="color: #0000ff;">if</span> (i &gt;=<span style="color: #000000;"> curTempl.children.length)
+
+            </span><span style="color: #0000ff;">throw</span> "Too many children"<span style="color: #000000;">;
+
+          readNode(curTempl.children[i]);
+
+        }
+
+        </span><span style="color: #0000ff;">if</span> (i &lt;<span style="color: #000000;"> curTempl.children.length)
+
+          </span><span style="color: #0000ff;">throw</span> "Too few children"<span style="color: #000000;">;
+
+        </span><span style="color: #0000ff;">if</span> (pos &gt;<span style="color: #000000;"> end)
+
+          </span><span style="color: #0000ff;">throw</span> "Children too large"<span style="color: #000000;">;
+
+      }
+
+      </span><span style="color: #0000ff;">else</span> <span style="color: #0000ff;">if</span> ("encapsulates" <span style="color: #0000ff;">in</span><span style="color: #000000;"> curTempl)
+
+      {
+
+        </span><span style="color: #0000ff;">if</span> (next() != 0<span style="color: #000000;">)
+
+          </span><span style="color: #0000ff;">throw</span> "Encapsulation expected"<span style="color: #000000;">;
+
+        readNode(curTempl.encapsulates);
+
+      }
+
+      </span><span style="color: #0000ff;">else</span><span style="color: #000000;">
+
+        pos </span>+=<span style="color: #000000;"> len;
+
+    }
+
+
+
+    </span><span style="color: #0000ff;">var</span> out =<span style="color: #000000;"> {};
+
+    readNode(templ);
+
+    </span><span style="color: #0000ff;">if</span> (pos !=<span style="color: #000000;"> data.length)
+
+      </span><span style="color: #0000ff;">throw</span> "Too much data"<span style="color: #000000;">;
+
+    </span><span style="color: #0000ff;">return</span><span style="color: #000000;"> out;
+
+  }
+
+
+
+  </span><span style="color: #008000;">/*</span><span style="color: #008000;">*
+
+   * Reads a BER-encoded RSA public key. On success returns an object with the
+
+   * properties n and e (the components of the key), otherwise null.
+
+   </span><span style="color: #008000;">*/</span>
+
+  <span style="color: #0000ff;">function</span><span style="color: #000000;"> readPublicKey(key)
+
+  {
+
+    </span><span style="color: #0000ff;">try</span><span style="color: #000000;">
+
+    {
+
+      </span><span style="color: #0000ff;">return</span><span style="color: #000000;"> readASN1(atob(key), publicKeyTemplate);
+
+    }
+
+    </span><span style="color: #0000ff;">catch</span><span style="color: #000000;"> (e)
+
+    {
+
+      console.log(</span>"Invalid RSA public key: " +<span style="color: #000000;"> e);
+
+      </span><span style="color: #0000ff;">return</span> <span style="color: #0000ff;">null</span><span style="color: #000000;">;
+
+    }
+
+  }
+
+
+
+  </span><span style="color: #008000;">/*</span><span style="color: #008000;">*
+
+   * Checks whether the signature is valid for the given public key and data.
+
+   </span><span style="color: #008000;">*/</span>
+
+  <span style="color: #0000ff;">function</span><span style="color: #000000;"> verifySignature(key, signature, data)
+
+  {
+
+    </span><span style="color: #0000ff;">var</span> keyData =<span style="color: #000000;"> readPublicKey(key);
+
+    </span><span style="color: #0000ff;">if</span> (!<span style="color: #000000;">keyData)
+
+      </span><span style="color: #0000ff;">return</span> <span style="color: #0000ff;">false</span><span style="color: #000000;">;
+
+
+
+    </span><span style="color: #008000;">//</span><span style="color: #008000;"> We need the exponent as regular number</span>
+
+    keyData.e = parseInt(keyData.e.toString(16), 16<span style="color: #000000;">);
+
+
+
+    </span><span style="color: #008000;">//</span><span style="color: #008000;"> Decrypt signature data using RSA algorithm</span>
+
+    <span style="color: #0000ff;">var</span> sigInt = <span style="color: #0000ff;">new</span> BigInteger(atob(signature), 256<span style="color: #000000;">);
+
+    </span><span style="color: #0000ff;">var</span> digest = sigInt.modPowInt(keyData.e, keyData.n).toString(256<span style="color: #000000;">);
+
+
+
+    </span><span style="color: #0000ff;">try</span><span style="color: #000000;">
+
+    {
+
+      </span><span style="color: #0000ff;">var</span> pos = 0<span style="color: #000000;">;
+
+      </span><span style="color: #0000ff;">function</span><span style="color: #000000;"> next()
+
+      {
+
+        </span><span style="color: #0000ff;">return</span> digest.charCodeAt(pos++<span style="color: #000000;">);
+
+      }
+
+
+
+      </span><span style="color: #008000;">//</span><span style="color: #008000;"> Skip padding, see http://tools.ietf.org/html/rfc3447#section-9.2 step 5</span>
+
+      <span style="color: #0000ff;">if</span> (next() != 1<span style="color: #000000;">)
+
+        </span><span style="color: #0000ff;">throw</span> "Wrong padding in signature digest"<span style="color: #000000;">;
+
+      </span><span style="color: #0000ff;">while</span> (next() == 255<span style="color: #000000;">) {}
+
+      </span><span style="color: #0000ff;">if</span> (digest.charCodeAt(pos - 1) != 0<span style="color: #000000;">)
+
+        </span><span style="color: #0000ff;">throw</span> "Wrong padding in signature digest"<span style="color: #000000;">;
+
+
+
+      </span><span style="color: #008000;">//</span><span style="color: #008000;"> Rest is an ASN.1 structure, get the SHA1 hash from it and compare to</span>
+
+      <span style="color: #008000;">//</span><span style="color: #008000;"> the real one</span>
+
+      <span style="color: #0000ff;">var</span> sha1 =<span style="color: #000000;"> readASN1(digest.substr(pos), signatureTemplate).sha1;
+
+      </span><span style="color: #0000ff;">var</span> expected = <span style="color: #0000ff;">new</span> BigInteger(SHA1(data), 16<span style="color: #000000;">);
+
+      </span><span style="color: #0000ff;">return</span> (sha1.compareTo(expected) == 0<span style="color: #000000;">);
+
+    }
+
+    </span><span style="color: #0000ff;">catch</span><span style="color: #000000;"> (e)
+
+    {
+
+      console.log(</span>"Invalid encrypted signature: " +<span style="color: #000000;"> e);
+
+      </span><span style="color: #0000ff;">return</span> <span style="color: #0000ff;">false</span><span style="color: #000000;">;
+
+    }
+
+  }
+
+
+
+  </span><span style="color: #008000;">//</span><span style="color: #008000;"> Export verifySignature function, everything else is private.</span>
+
+  globalObj.verifySignature =<span style="color: #000000;"> verifySignature;
+
+})(</span><span style="color: #0000ff;">this</span>);</pre>
+
+</div>
+
+<p>&nbsp;</p>
+    
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="followme">
+  <span>欢迎关注我的其它发布渠道</span>
+
+  <div class="social-list">
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="https://www.facebook.com/rise.worlds">
+            <span class="icon">
+              <i class="fab fa-facebook"></i>
+            </span>
+
+            <span class="label">FB Page</span>
+          </a>
+      </div>
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="https://twitter.com/riseworlds">
+            <span class="icon">
+              <i class="fab fa-twitter"></i>
+            </span>
+
+            <span class="label">Twitter</span>
+          </a>
+      </div>
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="https://t.me/riseworlds">
+            <span class="icon">
+              <i class="fab fa-telegram"></i>
+            </span>
+
+            <span class="label">Telegram</span>
+          </a>
+      </div>
+  </div>
+</div>
+
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2013/09/16/PHP%E5%AF%BC%E5%87%BA%E6%95%B0%E6%8D%AE%E5%BA%93%E6%96%B9%E6%B3%95/" rel="prev" title="PHP导出数据库方法">
+                  <i class="fa fa-angle-left"></i> PHP导出数据库方法
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2013/10/23/Visual%20Studio%202013%E4%B8%8B%E8%BD%BD/" rel="next" title="Visual Studio 2013下载">
+                  Visual Studio 2013下载 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  
+  <div class="comments giscus-container">
+  </div>
+  
+  
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">豫ICP备2021009490号 </a>
+  </div>
+  <div class="copyright">
+    &copy; 2004 – 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">rise</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="reading-progress-bar"></div>
+
+  <a href="https://github.com/rise-worlds" class="github-corner" title="在 GitHub 上关注我" aria-label="在 GitHub 上关注我" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://unpkg.com/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@next-theme/pjax@0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script><script src="/js/pjax.js"></script>
+
+  
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://unpkg.com/mermaid@10.9.0/dist/mermaid.min.js","integrity":"sha256-stuqcu2FrjYCXDOytWFA5SoUE/r3nkp6gTglzNSlavU="}}</script>
+  <script src="/js/third-party/tags/mermaid.js"></script>
+
+
+
+
+
+  
+
+
+
+
+  <script src="https://unpkg.com/quicklink@2.3.0/dist/quicklink.umd.js" integrity="sha256-yvJQOINiH9fWemHn0vCA5lsHWJaHs6/ZmO+1Ft04SvM=" crossorigin="anonymous"></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":true,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"https://rise-worlds.github.io/2013/10/10/rsa%20&&%20sha1%20js%20code/"}</script>
+  <script src="/js/third-party/quicklink.js"></script>
+<script class="next-config" data-name="giscus" type="application/json">{"enable":true,"repo":"rise-worlds/rise-worlds.github.io","repo_id":"MDEwOlJlcG9zaXRvcnk2MTAxMTA0MA==","category":"Announcements","category_id":"DIC_kwDOA6L0YM4CiXf9","mapping":"pathname","strict":0,"reactions_enabled":1,"emit_metadata":0,"theme":"transparent_dark","lang":"zh-CN","crossorigin":"anonymous","input_position":"top","loading":"lazy"}</script>
+
+<script>
+document.addEventListener('page:loaded', () => {
+  if (!CONFIG.page.comments) return;
+
+  NexT.utils.loadComments('.giscus-container')
+    .then(() => NexT.utils.getScript('https://giscus.app/client.js', {
+      attributes: {
+        async                   : true,
+        crossOrigin             : 'anonymous',
+        'data-repo'             : CONFIG.giscus.repo,
+        'data-repo-id'          : CONFIG.giscus.repo_id,
+        'data-category'         : CONFIG.giscus.category,
+        'data-category-id'      : CONFIG.giscus.category_id,
+        'data-mapping'          : CONFIG.giscus.mapping,
+        'data-strict'           : CONFIG.giscus.strict,
+        'data-reactions-enabled': CONFIG.giscus.reactions_enabled,
+        'data-emit-metadata'    : CONFIG.giscus.emit_metadata,
+        'data-theme'            : CONFIG.giscus.theme,
+        'data-lang'             : CONFIG.giscus.lang,
+        'data-input-position'   : CONFIG.giscus.input_position,
+        'data-loading'          : CONFIG.giscus.loading
+      },
+      parentNode: document.querySelector('.giscus-container')
+    }));
+});
+</script>
+
+</body>
+</html>

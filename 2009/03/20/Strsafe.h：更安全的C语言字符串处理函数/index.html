@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://unpkg.com/@fortawesome/fontawesome-free@6.5.2/css/all.min.css" integrity="sha256-XOqroi11tY4EFQMR9ZYwZWKj5ZXiftSx36RRuC3anlA=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://unpkg.com/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"rise-worlds.github.io","root":"/","images":"/images","scheme":"Mist","darkmode":true,"version":"8.20.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="作者：Michael Howard原文出处：Strsafe.h: Safer String Handling in C  　　在微软公司举行的Microsoft Windows Security Push 活动期间，一批测试者、程序管理经理和普通程序员共同决定要为 C 语言量身定制一套具有较高安全性的字符串处理函数，并且希望这些函数能被 Windows 程序员和微软公司内部的程序员所采用。简单说来">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Strsafe.h：更安全的C语言字符串处理函数">
+<meta property="og:url" content="https://rise-worlds.github.io/2009/03/20/Strsafe.h%EF%BC%9A%E6%9B%B4%E5%AE%89%E5%85%A8%E7%9A%84C%E8%AF%AD%E8%A8%80%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%A4%84%E7%90%86%E5%87%BD%E6%95%B0/index.html">
+<meta property="og:site_name" content="Rise&#39;blogs">
+<meta property="og:description" content="作者：Michael Howard原文出处：Strsafe.h: Safer String Handling in C  　　在微软公司举行的Microsoft Windows Security Push 活动期间，一批测试者、程序管理经理和普通程序员共同决定要为 C 语言量身定制一套具有较高安全性的字符串处理函数，并且希望这些函数能被 Windows 程序员和微软公司内部的程序员所采用。简单说来">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2009-03-20T10:58:00.000Z">
+<meta property="article:modified_time" content="2009-03-20T10:58:00.000Z">
+<meta property="article:author" content="rise">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://rise-worlds.github.io/2009/03/20/Strsafe.h%EF%BC%9A%E6%9B%B4%E5%AE%89%E5%85%A8%E7%9A%84C%E8%AF%AD%E8%A8%80%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%A4%84%E7%90%86%E5%87%BD%E6%95%B0/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://rise-worlds.github.io/2009/03/20/Strsafe.h%EF%BC%9A%E6%9B%B4%E5%AE%89%E5%85%A8%E7%9A%84C%E8%AF%AD%E8%A8%80%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%A4%84%E7%90%86%E5%87%BD%E6%95%B0/","path":"2009/03/20/Strsafe.h：更安全的C语言字符串处理函数/","title":"Strsafe.h：更安全的C语言字符串处理函数"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Strsafe.h：更安全的C语言字符串处理函数 | Rise'blogs</title>
+  
+
+  <script src="/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?266da4e90214887b507c0bb6baa84e3e"></script>
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Rise'blogs</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-message"><a href="/message/" rel="section"><i class="fa fa-comments fa-fw"></i>留言板</a></li><li class="menu-item menu-item-sitemap"><a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>站点地图</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="rise"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">rise</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">661</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">47</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">93</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="mailto:rise.worlds@outlook.com" title="E-Mail → mailto:rise.worlds@outlook.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://github.com/rise-worlds" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;rise-worlds" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://x.com/riseworlds" title="Twitter → https:&#x2F;&#x2F;x.com&#x2F;riseworlds" rel="noopener me" target="_blank"><i class="fab fa-twitter fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.facebook.com/rise.worlds" title="FB Page → https:&#x2F;&#x2F;www.facebook.com&#x2F;rise.worlds" rel="noopener me" target="_blank"><i class="fab fa-facebook fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.youtube.com/@YiXuan" title="YouTube → https:&#x2F;&#x2F;www.youtube.com&#x2F;@YiXuan" rel="noopener me" target="_blank"><i class="fab fa-youtube fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.instagram.com/rise.worlds/" title="Instagram → https:&#x2F;&#x2F;www.instagram.com&#x2F;rise.worlds&#x2F;" rel="noopener me" target="_blank"><i class="fab fa-instagram fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://t.me/riseworlds" title="Telegram → https:&#x2F;&#x2F;t.me&#x2F;riseworlds" rel="noopener me" target="_blank"><i class="fab fa-telegram fa-fw"></i></a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+          链接
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <a href="https://www.cnblogs.com/flying_bat" title="https:&#x2F;&#x2F;www.cnblogs.com&#x2F;flying_bat" rel="noopener" target="_blank">My Cnblogs</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://www.github.com/rise-worlds" title="https:&#x2F;&#x2F;www.github.com&#x2F;rise-worlds" rel="noopener" target="_blank">My Github</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://www.google.com/" title="https:&#x2F;&#x2F;www.google.com&#x2F;" rel="noopener" target="_blank">Google</a>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://rise-worlds.github.io/2009/03/20/Strsafe.h%EF%BC%9A%E6%9B%B4%E5%AE%89%E5%85%A8%E7%9A%84C%E8%AF%AD%E8%A8%80%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%A4%84%E7%90%86%E5%87%BD%E6%95%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="rise">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Rise'blogs">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Strsafe.h：更安全的C语言字符串处理函数 | Rise'blogs">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Strsafe.h：更安全的C语言字符串处理函数
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2009-03-20 10:58:00" itemprop="dateCreated datePublished" datetime="2009-03-20T10:58:00+00:00">2009-03-20</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/dev/" itemprop="url" rel="index"><span itemprop="name">dev</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/dev/Win32Dev/" itemprop="url" rel="index"><span itemprop="name">Win32Dev</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>作者：Michael Howard<br>原文出处：<a target="_blank" rel="noopener" href="http://msdn.microsoft.com/library/default.asp?url=/library/en-us/dnsecure/html/strsafe.asp">Strsafe.h: Safer String Handling in C</a>  <p>　　在微软公司举行的Microsoft Windows Security Push 活动期间，一批测试者、程序管理经理和普通程序员共同决定要为 C 语言量身定制一套具有较高安全性的字符串处理函数，并且希望这些函数能被 Windows 程序员和微软公司内部的程序员所采用。<br>简单说来，现有的 C 语言运行时函数实在难以在当今充斥着恶意攻击企图的大环境下立足。这些函数要么在返回值和参数上缺乏一致性，要么隐含着所谓的“截断误差”(truncation errors) 错误，要么无法提供足够强大的功能。坦言之，调用这些函数的代码太容易产生“内存溢出”问题了。<br>　　我们发现，面向 C++ 程序员的类足以应付各种安全处理字符串的编程需要；他们能够选择 MFC 的Cstring 类、ATL 的CComBSTR 类 或者STL 的string 类，等等。然而，经典的 C 语言程序仍然普遍地存在，何况许多人正在把 C++ 当作 “改良的 C 语言” 来用，却把丰富的 C++ 类束之高阁。<br>　　其实只需要添加一行代码，你就能在 C 语言代码中调用安全性良好的 strsafe 系列函数了，详细请参阅：<br><a target="_blank" rel="noopener" href="http://msdn.microsoft.com/en-us/library/ms647466.aspx">《Using the Strsafe.h Functions》</a><br>这些新函数包含在一个头文件和一个函数库(可选)中，而后两者能在新版的 Platform SDK 中找到。对，就这么简单：<pre>#include "strsafe.h"</pre>
+
+<p>还等什么呢！<br>再强调一次，对 strsafe 函数库的引用是可选的。<br>为了实现 strsafe 系列函数的目标，你的代码必须满足下列条件： 
+
+<ul>
+
+<li>始终以 NULL 字符结束字符串。 
+
+<li>始终检测目标缓冲区的长度。 
+
+<li>始终用 HRESULT 语句产生统一的返回值。 
+
+<li>兼顾 32 位与 64 位两种运行环境。 
+
+<li>具有灵活性。 </li></ul>
+
+<p>　　我们觉得，缺乏统一性是导致现有许多 C 语言字符串处理函数容易产生安全漏洞的根本原因，而 strsafe 系列函数所带来的高度统一性恰恰是解决此问题的一剂良药。然而，strsafe 也不是万能药。单纯依靠 strsafe 系列函数并不能保证代码的安全性和坚固性——你还必须开动你的大脑才行——然而这样对解决问题还是大有帮助的！<br>下面给出一段采用经典 C 语言运行时间函数的代码：<pre>void UnsafeFunc(LPTSTR szPath,DWORD cchPath) {
+
+<pre><code>TCHAR szCWD[MAX_PATH];
+
+
+
+GetCurrentDirectory(ARRAYSIZE(szCWD), szCWD);
+
+strncpy(szPath, szCWD, cchPath);
+
+strncat(szPath, TEXT(&quot;\\&quot;), cchPath);
+
+strncat(szPath, TEXT(&quot;desktop.ini&quot;),cchPath);
+</code></pre>
+<p>}</pre></p>
+<p>　　以上代码中的 bug 随处可见 —— 它没有检查任何一个返回值，而且在对 strncat 函数的调用中也没有正确地使用 cchPath (因为MAX_PATH 中保存的是目标缓冲区内剩余空间的长度，而不是目标缓冲区的总长度)。于是，“内存溢出” 问题将会快找上门来。然而，象这样的代码片段早已泛滥成灾了。如果改用 strsafe 系列函数，那么以上代码应该变成： <pre>bool SaferFunc(LPTSTR szPath,DWORD cchPath) {
+
+<pre><code>TCHAR szCWD[MAX_PATH];
+
+
+
+if (GetCurrentDirectory(ARRAYSIZE(szCWD), szCWD) &amp;amp;&amp;amp;
+
+        SUCCEEDED(StringCchCopy(szPath, cchPath, szCWD)) &amp;amp;&amp;amp;
+
+        SUCCEEDED(StringCchCat(szPath, cchPath, TEXT(&quot;\\&quot;))) &amp;amp;&amp;amp;
+
+        SUCCEEDED(StringCchCat(szPath, cchPath, TEXT(&quot;desktop.ini&quot;)))) &#123;
+
+
+
+        return true;
+
+&#125;
+
+
+
+return false;
+</code></pre>
+<p>}						</pre>　　这段代码不但检查了每一个返回值，还保证了适时传入同一目标缓冲区的总长度。你还可以采用 Ex 版本的 strsafe 系列函数来实现更加高级的功能，比如： </p>
+<ul>
+
+<li>获取目标缓冲区的当前指针。 
+
+<li>获取目标缓冲区的剩余空间长度。 
+
+<li>以某个特定字符填充空闲缓冲区。 
+
+<li>一旦字符串处理函数失败，就把用特定值填充字符串。 
+
+<li>一旦字符串处理函数失败，就把目标缓冲区设成 NULL 。 </li></ul>
+
+<p>　　如此改进后的代码性能又如何呢？告诉你一个好消息：它与原先的代码在性能上几乎没有差别。我曾在自己的 1.8 GHz 电脑上测试过混用经典 C 语言中各种字符串连接函数的代码、混用 strsafe 系列中各种字符串连接函数的代码和混用 Ex 版本 strsafe 系列中各种字符串连接函数的代码。它们各自独立运行一百万次(没错，就是 10,000,000 次)所消耗的时间分别为： 
+
+<ul>
+
+<li>经典 C 语言 —— 7.3 秒 
+
+<li>Strsafe 系列—— 8.3 秒 
+
+<li>Strsafe 系列 (Ex 版) —— 11.1 秒 </li></ul>
+
+<p>在测试中，调用 Ex 版本的 strsafe 系列函数的程序会在调用失败时把缓冲区设为 NULL ，并以 0xFE 作为填充字节，代码如下：<pre>DWORD dwFlags = STRSAFE_NULL_ON_FAILURE | STRSAFE_FILL_BYTE(0xFE);</pre>
+
+<p>　　其中设置填充字节的代码耗时较多。事实上，如果这里仅仅把缓冲区设置为 NULL 的话，则采用 Ex 版本的 strsafe 系列函数的代码将会与采用普通的 strsafe 系列函数的代码耗时相同。<br>　　由此可见，以上三种方案的性能差异极小。我相信你也不会经常在一个程序中数百万次地反复执行包含大量字符串处理函数的代码吧！<br>还有一点值得引起注意：当你引用 strsafe 系列函数时，原有的 C 语言字符串处理函数都将被自动进行 #undef 处理。这也没问题，因为调试过程中的出错信息将会告诉你哪些函数已经被相应的 strsafe 系列函数取代了。好了，请放心地使用 strsafe.h 吧！更多相关信息请参阅 <a target="_blank" rel="noopener" href="http://msdn.microsoft.com/en-us/library/ms647466.aspx">《Using the Strsafe.h Functions》</a>。</p>
+    
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="followme">
+  <span>欢迎关注我的其它发布渠道</span>
+
+  <div class="social-list">
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="https://www.facebook.com/rise.worlds">
+            <span class="icon">
+              <i class="fab fa-facebook"></i>
+            </span>
+
+            <span class="label">FB Page</span>
+          </a>
+      </div>
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="https://twitter.com/riseworlds">
+            <span class="icon">
+              <i class="fab fa-twitter"></i>
+            </span>
+
+            <span class="label">Twitter</span>
+          </a>
+      </div>
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="https://t.me/riseworlds">
+            <span class="icon">
+              <i class="fab fa-telegram"></i>
+            </span>
+
+            <span class="label">Telegram</span>
+          </a>
+      </div>
+  </div>
+</div>
+
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2009/03/17/%E5%88%86%E4%BA%AB%E5%BC%80%E5%BF%83%E5%87%86%E5%88%99/" rel="prev" title="分享开心准则">
+                  <i class="fa fa-angle-left"></i> 分享开心准则
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2009/03/25/%E9%A1%B9%E7%9B%AE%E7%BB%8F%E7%90%86%E6%88%90%E9%95%BF%E6%97%A5%E8%AE%B0%EF%BC%881%EF%BC%89%E2%80%94%E2%80%94%20%E5%90%AF%E8%A8%80/" rel="next" title="项目经理成长日记（1）—— 启言">
+                  项目经理成长日记（1）—— 启言 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  
+  <div class="comments giscus-container">
+  </div>
+  
+  
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">豫ICP备2021009490号 </a>
+  </div>
+  <div class="copyright">
+    &copy; 2004 – 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">rise</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="reading-progress-bar"></div>
+
+  <a href="https://github.com/rise-worlds" class="github-corner" title="在 GitHub 上关注我" aria-label="在 GitHub 上关注我" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://unpkg.com/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@next-theme/pjax@0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script><script src="/js/pjax.js"></script>
+
+  
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://unpkg.com/mermaid@10.9.0/dist/mermaid.min.js","integrity":"sha256-stuqcu2FrjYCXDOytWFA5SoUE/r3nkp6gTglzNSlavU="}}</script>
+  <script src="/js/third-party/tags/mermaid.js"></script>
+
+
+
+
+
+  
+
+
+
+
+  <script src="https://unpkg.com/quicklink@2.3.0/dist/quicklink.umd.js" integrity="sha256-yvJQOINiH9fWemHn0vCA5lsHWJaHs6/ZmO+1Ft04SvM=" crossorigin="anonymous"></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":true,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"https://rise-worlds.github.io/2009/03/20/Strsafe.h%EF%BC%9A%E6%9B%B4%E5%AE%89%E5%85%A8%E7%9A%84C%E8%AF%AD%E8%A8%80%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%A4%84%E7%90%86%E5%87%BD%E6%95%B0/"}</script>
+  <script src="/js/third-party/quicklink.js"></script>
+<script class="next-config" data-name="giscus" type="application/json">{"enable":true,"repo":"rise-worlds/rise-worlds.github.io","repo_id":"MDEwOlJlcG9zaXRvcnk2MTAxMTA0MA==","category":"Announcements","category_id":"DIC_kwDOA6L0YM4CiXf9","mapping":"pathname","strict":0,"reactions_enabled":1,"emit_metadata":0,"theme":"transparent_dark","lang":"zh-CN","crossorigin":"anonymous","input_position":"top","loading":"lazy"}</script>
+
+<script>
+document.addEventListener('page:loaded', () => {
+  if (!CONFIG.page.comments) return;
+
+  NexT.utils.loadComments('.giscus-container')
+    .then(() => NexT.utils.getScript('https://giscus.app/client.js', {
+      attributes: {
+        async                   : true,
+        crossOrigin             : 'anonymous',
+        'data-repo'             : CONFIG.giscus.repo,
+        'data-repo-id'          : CONFIG.giscus.repo_id,
+        'data-category'         : CONFIG.giscus.category,
+        'data-category-id'      : CONFIG.giscus.category_id,
+        'data-mapping'          : CONFIG.giscus.mapping,
+        'data-strict'           : CONFIG.giscus.strict,
+        'data-reactions-enabled': CONFIG.giscus.reactions_enabled,
+        'data-emit-metadata'    : CONFIG.giscus.emit_metadata,
+        'data-theme'            : CONFIG.giscus.theme,
+        'data-lang'             : CONFIG.giscus.lang,
+        'data-input-position'   : CONFIG.giscus.input_position,
+        'data-loading'          : CONFIG.giscus.loading
+      },
+      parentNode: document.querySelector('.giscus-container')
+    }));
+});
+</script>
+
+</body>
+</html>

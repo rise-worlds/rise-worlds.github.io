@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://unpkg.com/@fortawesome/fontawesome-free@6.5.2/css/all.min.css" integrity="sha256-XOqroi11tY4EFQMR9ZYwZWKj5ZXiftSx36RRuC3anlA=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://unpkg.com/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"rise-worlds.github.io","root":"/","images":"/images","scheme":"Mist","darkmode":true,"version":"8.20.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="以前驱动开发网悬赏挑战IceSword时写的，不过最后没公开。那时流氓软件势头正劲，我可不想火上浇油。现在反流氓软件日渐成熟，也就没关系了。知道了原理，防御是非常容易的。 原理很简单，实现的代码也很短，啥都不用说，各位直接看示例代码吧。    #include &lt;ntddk.h&gt;     #define GET_PTR(ptr, offset) ( *(PVOID*)( (UL">
+<meta property="og:type" content="article">
+<meta property="og:title" content="发一段隐藏注册表项的驱动代码，可以过目前最新的IceSword1.22">
+<meta property="og:url" content="https://rise-worlds.github.io/2008/03/29/%E5%8F%91%E4%B8%80%E6%AE%B5%E9%9A%90%E8%97%8F%E6%B3%A8%E5%86%8C%E8%A1%A8%E9%A1%B9%E7%9A%84%E9%A9%B1%E5%8A%A8%E4%BB%A3%E7%A0%81%EF%BC%8C%E5%8F%AF%E4%BB%A5%E8%BF%87%E7%9B%AE%E5%89%8D%E6%9C%80%E6%96%B0%E7%9A%84IceSword1.22/index.html">
+<meta property="og:site_name" content="Rise&#39;blogs">
+<meta property="og:description" content="以前驱动开发网悬赏挑战IceSword时写的，不过最后没公开。那时流氓软件势头正劲，我可不想火上浇油。现在反流氓软件日渐成熟，也就没关系了。知道了原理，防御是非常容易的。 原理很简单，实现的代码也很短，啥都不用说，各位直接看示例代码吧。    #include &lt;ntddk.h&gt;     #define GET_PTR(ptr, offset) ( *(PVOID*)( (UL">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2008-03-29T11:48:00.000Z">
+<meta property="article:modified_time" content="2008-03-29T11:50:00.000Z">
+<meta property="article:author" content="rise">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://rise-worlds.github.io/2008/03/29/%E5%8F%91%E4%B8%80%E6%AE%B5%E9%9A%90%E8%97%8F%E6%B3%A8%E5%86%8C%E8%A1%A8%E9%A1%B9%E7%9A%84%E9%A9%B1%E5%8A%A8%E4%BB%A3%E7%A0%81%EF%BC%8C%E5%8F%AF%E4%BB%A5%E8%BF%87%E7%9B%AE%E5%89%8D%E6%9C%80%E6%96%B0%E7%9A%84IceSword1.22/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://rise-worlds.github.io/2008/03/29/%E5%8F%91%E4%B8%80%E6%AE%B5%E9%9A%90%E8%97%8F%E6%B3%A8%E5%86%8C%E8%A1%A8%E9%A1%B9%E7%9A%84%E9%A9%B1%E5%8A%A8%E4%BB%A3%E7%A0%81%EF%BC%8C%E5%8F%AF%E4%BB%A5%E8%BF%87%E7%9B%AE%E5%89%8D%E6%9C%80%E6%96%B0%E7%9A%84IceSword1.22/","path":"2008/03/29/发一段隐藏注册表项的驱动代码，可以过目前最新的IceSword1.22/","title":"发一段隐藏注册表项的驱动代码，可以过目前最新的IceSword1.22"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>发一段隐藏注册表项的驱动代码，可以过目前最新的IceSword1.22 | Rise'blogs</title>
+  
+
+  <script src="/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?266da4e90214887b507c0bb6baa84e3e"></script>
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Rise'blogs</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-message"><a href="/message/" rel="section"><i class="fa fa-comments fa-fw"></i>留言板</a></li><li class="menu-item menu-item-sitemap"><a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>站点地图</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="rise"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">rise</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">661</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">47</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">93</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="mailto:rise.worlds@outlook.com" title="E-Mail → mailto:rise.worlds@outlook.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://github.com/rise-worlds" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;rise-worlds" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://x.com/riseworlds" title="Twitter → https:&#x2F;&#x2F;x.com&#x2F;riseworlds" rel="noopener me" target="_blank"><i class="fab fa-twitter fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.facebook.com/rise.worlds" title="FB Page → https:&#x2F;&#x2F;www.facebook.com&#x2F;rise.worlds" rel="noopener me" target="_blank"><i class="fab fa-facebook fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.youtube.com/@YiXuan" title="YouTube → https:&#x2F;&#x2F;www.youtube.com&#x2F;@YiXuan" rel="noopener me" target="_blank"><i class="fab fa-youtube fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.instagram.com/rise.worlds/" title="Instagram → https:&#x2F;&#x2F;www.instagram.com&#x2F;rise.worlds&#x2F;" rel="noopener me" target="_blank"><i class="fab fa-instagram fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://t.me/riseworlds" title="Telegram → https:&#x2F;&#x2F;t.me&#x2F;riseworlds" rel="noopener me" target="_blank"><i class="fab fa-telegram fa-fw"></i></a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+          链接
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <a href="https://www.cnblogs.com/flying_bat" title="https:&#x2F;&#x2F;www.cnblogs.com&#x2F;flying_bat" rel="noopener" target="_blank">My Cnblogs</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://www.github.com/rise-worlds" title="https:&#x2F;&#x2F;www.github.com&#x2F;rise-worlds" rel="noopener" target="_blank">My Github</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://www.google.com/" title="https:&#x2F;&#x2F;www.google.com&#x2F;" rel="noopener" target="_blank">Google</a>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://rise-worlds.github.io/2008/03/29/%E5%8F%91%E4%B8%80%E6%AE%B5%E9%9A%90%E8%97%8F%E6%B3%A8%E5%86%8C%E8%A1%A8%E9%A1%B9%E7%9A%84%E9%A9%B1%E5%8A%A8%E4%BB%A3%E7%A0%81%EF%BC%8C%E5%8F%AF%E4%BB%A5%E8%BF%87%E7%9B%AE%E5%89%8D%E6%9C%80%E6%96%B0%E7%9A%84IceSword1.22/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="rise">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Rise'blogs">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="发一段隐藏注册表项的驱动代码，可以过目前最新的IceSword1.22 | Rise'blogs">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          发一段隐藏注册表项的驱动代码，可以过目前最新的IceSword1.22
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2008-03-29 11:48:00 / 修改时间：11:50:00" itemprop="dateCreated datePublished" datetime="2008-03-29T11:48:00+00:00">2008-03-29</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/dev/" itemprop="url" rel="index"><span itemprop="name">dev</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/dev/Safe/" itemprop="url" rel="index"><span itemprop="name">Safe</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><div id="wrapper"> <div id="content"> <div class="post" id="post-184"> <div class="postentry"> <p>以前驱动开发网悬赏挑战IceSword时写的，不过最后没公开。那时流氓软件势头正劲，我可不想火上浇油。现在反流氓软件日渐成熟，也就没关系了。知道了原理，防御是非常容易的。</p> <p>原理很简单，实现的代码也很短，啥都不用说，各位直接看示例代码吧。 </p> <div class="hl-surround"> <ol class="hl-main ln-show" title="Double click to hide line number."> <li class="hl-firstline"><span style="color: #ffa500">#include &lt;ntddk.h&gt;</span>  <li><span style="color: gray"> </span>  <li><span style="color: #ffa500">#define GET_PTR(ptr, offset) ( *(PVOID*)( (ULONG)ptr + (offset##Offset) ) )</span>  <li><span style="color: gray"> </span>  <li><span style="color: #ffa500">#define CM_KEY_INDEX_ROOT      0x6972         // ir</span>  <li><span style="color: #ffa500">#define CM_KEY_INDEX_LEAF      0x696c         // il</span>  <li><span style="color: #ffa500">#define CM_KEY_FAST_LEAF       0x666c         // fl</span>  <li><span style="color: #ffa500">#define CM_KEY_HASH_LEAF       0x686c         // hl</span>  <li><span style="color: gray"> </span>  <li><span style="color: #ffa500">// 一些CM的数据结构，只列出用到的开头部分</span>  <li><span style="color: #ffa500">#pragma pack(1)</span>  <li><span style="color: blue">typedef</span><span style="color: gray"> </span><span style="color: blue">struct</span><span style="color: gray"> </span><span style="color: blue">_CM_KEY_NODE</span><span style="color: gray"> </span><span style="color: olive">{</span>  <li><span style="color: gray">       </span><span style="color: blue">USHORT</span><span style="color: gray"> </span><span style="color: blue">Signature</span><span style="color: gray">;</span>  <li><span style="color: gray">       </span><span style="color: blue">USHORT</span><span style="color: gray"> </span><span style="color: blue">Flags</span><span style="color: gray">;</span>  <li><span style="color: gray">       </span><span style="color: blue">LARGE_INTEGER</span><span style="color: gray"> </span><span style="color: blue">LastWriteTime</span><span style="color: gray">;</span>  <li><span style="color: gray">       </span><span style="color: blue">ULONG</span><span style="color: gray"> </span><span style="color: blue">Spare</span><span style="color: gray">;               </span><span style="color: #ffa500">// used to be TitleIndex</span>  <li><span style="color: gray">       </span><span style="color: blue">HANDLE</span><span style="color: gray"> </span><span style="color: blue">Parent</span><span style="color: gray">;</span>  <li><span style="color: gray">       </span><span style="color: blue">ULONG</span><span style="color: gray"> </span><span style="color: blue">SubKeyCounts</span><span style="color: olive">[</span><span style="color: maroon">2</span><span style="color: olive">]</span><span style="color: gray">;     </span><span style="color: #ffa500">// Stable and Volatile</span>  <li><span style="color: gray">       </span><span style="color: blue">HANDLE</span><span style="color: gray"> </span><span style="color: blue">SubKeyLists</span><span style="color: olive">[</span><span style="color: maroon">2</span><span style="color: olive">]</span><span style="color: gray">;     </span><span style="color: #ffa500">// Stable and Volatile</span>  <li><span style="color: gray">       </span><span style="color: #ffa500">// ...</span>  <li><span style="color: olive">}</span><span style="color: gray"> </span><span style="color: blue">CM_KEY_NODE</span><span style="color: gray">, *</span><span style="color: blue">PCM_KEY_NODE</span><span style="color: gray">;</span>  <li><span style="color: gray"> </span>  <li><span style="color: blue">typedef</span><span style="color: gray"> </span><span style="color: blue">struct</span><span style="color: gray"> </span><span style="color: blue">_CM_KEY_INDEX</span><span style="color: gray"> </span><span style="color: olive">{</span>  <li><span style="color: gray">       </span><span style="color: blue">USHORT</span><span style="color: gray"> </span><span style="color: blue">Signature</span><span style="color: gray">;</span>  <li><span style="color: gray">       </span><span style="color: blue">USHORT</span><span style="color: gray"> </span><span style="color: blue">Count</span><span style="color: gray">;</span>  <li><span style="color: gray">       </span><span style="color: blue">HANDLE</span><span style="color: gray"> </span><span style="color: green">List</span><span style="color: olive">[</span><span style="color: maroon">1</span><span style="color: olive">]</span><span style="color: gray">;</span>  <li><span style="color: olive">}</span><span style="color: gray"> </span><span style="color: blue">CM_KEY_INDEX</span><span style="color: gray">, *</span><span style="color: blue">PCM_KEY_INDEX</span><span style="color: gray">;</span>  <li><span style="color: gray"> </span>  <li><span style="color: blue">typedef</span><span style="color: gray"> </span><span style="color: blue">struct</span><span style="color: gray"> </span><span style="color: blue">_CM_KEY_BODY</span><span style="color: gray"> </span><span style="color: olive">{</span>  <li><span style="color: gray">       </span><span style="color: blue">ULONG</span><span style="color: gray"> </span><span style="color: blue">Type</span><span style="color: gray">;                </span><span style="color: #ffa500">// "ky02"</span>  <li><span style="color: gray">       </span><span style="color: blue">PVOID</span><span style="color: gray"> </span><span style="color: blue">KeyControlBlock</span><span style="color: gray">;</span>  <li><span style="color: gray">       </span><span style="color: blue">PVOID</span><span style="color: gray"> </span><span style="color: blue">NotifyBlock</span><span style="color: gray">;</span>  <li><span style="color: gray">       </span><span style="color: blue">PEPROCESS</span><span style="color: gray"> </span><span style="color: blue">Process</span><span style="color: gray">;         </span><span style="color: #ffa500">// the owner process</span>  <li><span style="color: gray">       </span><span style="color: blue">LIST_ENTRY</span><span style="color: gray"> </span><span style="color: blue">KeyBodyList</span><span style="color: gray">; </span><span style="color: #ffa500">// key_nodes using the same kcb</span>  <li><span style="color: olive">}</span><span style="color: gray"> </span><span style="color: blue">CM_KEY_BODY</span><span style="color: gray">, *</span><span style="color: blue">PCM_KEY_BODY</span><span style="color: gray">;</span>  <li><span style="color: gray"> </span>  <li><span style="color: blue">typedef</span><span style="color: gray"> </span><span style="color: blue">PVOID</span><span style="color: gray"> </span><span style="color: olive">(</span><span style="color: blue">__stdcall</span><span style="color: gray"> *</span><span style="color: blue">PGET_CELL_ROUTINE</span><span style="color: olive">)(</span><span style="color: blue">PVOID</span><span style="color: gray">, </span><span style="color: blue">HANDLE</span><span style="color: olive">)</span><span style="color: gray">;</span>  <li><span style="color: gray"> </span>  <li><span style="color: blue">typedef</span><span style="color: gray"> </span><span style="color: blue">struct</span><span style="color: gray"> </span><span style="color: blue">_HHIVE</span><span style="color: gray"> </span><span style="color: olive">{</span>  <li><span style="color: gray">       </span><span style="color: blue">ULONG</span><span style="color: gray"> </span><span style="color: blue">Signature</span><span style="color: gray">;</span>  <li><span style="color: gray">       </span><span style="color: blue">PGET_CELL_ROUTINE</span><span style="color: gray"> </span><span style="color: blue">GetCellRoutine</span><span style="color: gray">;</span>  <li><span style="color: gray">       </span><span style="color: #ffa500">// ...</span>  <li><span style="color: olive">}</span><span style="color: gray"> </span><span style="color: blue">HHIVE</span><span style="color: gray">, *</span><span style="color: blue">PHHIVE</span><span style="color: gray">;</span>  <li><span style="color: #ffa500">#pragma pack()</span>  <li><span style="color: gray"> </span>  <li><span style="color: #ffa500">// 需隐藏的主键名</span>  <li><span style="color: blue">WCHAR</span><span style="color: gray"> </span><span style="color: blue">g_HideKeyName</span><span style="color: olive">[]</span><span style="color: gray"> = </span><span style="color: blue">L</span><span style="color: #8b0000">"</span><span style="color: navy">\\</span><span style="color: red">Registry</span><span style="color: navy">\\</span><span style="color: red">Machine</span><span style="color: navy">\\</span><span style="color: red">SYSTEM</span><span style="color: navy">\\</span><span style="color: red">CurrentControlSet</span><span style="color: navy">\\</span><span style="color: red">Services</span><span style="color: navy">\\</span><span style="color: red">Beep</span><span style="color: #8b0000">"</span><span style="color: gray">;</span>  <li><span style="color: gray"> </span>  <li><span style="color: blue">PGET_CELL_ROUTINE</span><span style="color: gray"> </span><span style="color: blue">g_pGetCellRoutine</span><span style="color: gray"> = </span><span style="color: green">NULL</span><span style="color: gray">;</span>  <li><span style="color: blue">PGET_CELL_ROUTINE</span><span style="color: gray">* </span><span style="color: blue">g_ppGetCellRoutine</span><span style="color: gray"> = </span><span style="color: green">NULL</span><span style="color: gray">;</span>  <li><span style="color: gray"> </span>  <li><span style="color: blue">PCM_KEY_NODE</span><span style="color: gray"> </span><span style="color: blue">g_HideNode</span><span style="color: gray"> = </span><span style="color: green">NULL</span><span style="color: gray">;</span>  <li><span style="color: blue">PCM_KEY_NODE</span><span style="color: gray"> </span><span style="color: blue">g_LastNode</span><span style="color: gray"> = </span><span style="color: green">NULL</span><span style="color: gray">;</span>  <li><span style="color: gray"> </span>  <li><span style="color: #ffa500">// 打开指定名字的Key</span>  <li><span style="color: blue">HANDLE</span><span style="color: gray"> </span><span style="color: blue">OpenKeyByName</span><span style="color: olive">(</span><span style="color: blue">PCWSTR</span><span style="color: gray"> </span><span style="color: blue">pwcsKeyName</span><span style="color: olive">)</span>  <li><span style="color: olive">{</span>  <li><span style="color: gray">       </span><span style="color: blue">NTSTATUS</span><span style="color: gray"> </span><span style="color: blue">status</span><span style="color: gray">;</span>  <li><span style="color: gray">       </span><span style="color: blue">UNICODE_STRING</span><span style="color: gray"> </span><span style="color: blue">uKeyName</span><span style="color: gray">;</span>  <li><span style="color: gray">       </span><span style="color: blue">OBJECT_ATTRIBUTES</span><span style="color: gray"> </span><span style="color: blue">oa</span><span style="color: gray">;</span>  <li><span style="color: gray">       </span><span style="color: blue">HANDLE</span><span style="color: gray"> </span><span style="color: blue">hKey</span><span style="color: gray">;</span>  <li><span style="color: gray"> </span>  <li><span style="color: gray">       </span><span style="color: blue">RtlInitUnicodeString</span><span style="color: olive">(</span><span style="color: gray">&amp;</span><span style="color: blue">uKeyName</span><span style="color: gray">, </span><span style="color: blue">pwcsKeyName</span><span style="color: olive">)</span><span style="color: gray">;</span>  <li><span style="color: gray">       </span><span style="color: blue">InitializeObjectAttributes</span><span style="color: olive">(</span><span style="color: gray">&amp;</span><span style="color: blue">oa</span><span style="color: gray">, &amp;</span><span style="color: blue">uKeyName</span><span style="color: gray">, </span><span style="color: blue">OBJ_CASE_INSENSITIVE</span><span style="color: gray"> | </span><span style="color: blue">OBJ_KERNEL_HANDLE</span><span style="color: gray">, </span><span style="color: green">NULL</span><span style="color: gray">, </span><span style="color: green">NULL</span><span style="color: olive">)</span><span style="color: gray">;</span>  <li><span style="color: gray">       </span><span style="color: blue">status</span><span style="color: gray"> = </span><span style="color: blue">ZwOpenKey</span><span style="color: olive">(</span><span style="color: gray">&amp;</span><span style="color: blue">hKey</span><span style="color: gray">, </span><span style="color: blue">KEY_READ</span><span style="color: gray">, &amp;</span><span style="color: blue">oa</span><span style="color: olive">)</span><span style="color: gray">;</span>  <li><span style="color: gray">       </span><span style="color: green">if</span><span style="color: gray"> </span><span style="color: olive">(</span><span style="color: gray">!</span><span style="color: blue">NT_SUCCESS</span><span style="color: olive">(</span><span style="color: blue">status</span><span style="color: olive">))</span>  <li><span style="color: gray">       </span><span style="color: olive">{</span>  <li><span style="color: gray">           </span><span style="color: blue">DbgPrint</span><span style="color: olive">(</span><span style="color: #8b0000">"</span><span style="color: red">ZwOpenKey Failed: %lx</span><span style="color: navy">\n</span><span style="color: #8b0000">"</span><span style="color: gray">, </span><span style="color: blue">status</span><span style="color: olive">)</span><span style="color: gray">;</span>  <li><span style="color: gray">           </span><span style="color: green">return</span><span style="color: gray"> </span><span style="color: green">NULL</span><span style="color: gray">;</span>  <li><span style="color: gray">       </span><span style="color: olive">}</span>  <li><span style="color: gray"> </span>  <li><span style="color: gray">       </span><span style="color: green">return</span><span style="color: gray"> </span><span style="color: blue">hKey</span><span style="color: gray">;</span>  <li><span style="color: olive">}</span>  <li><span style="color: gray"> </span>  <li><span style="color: #ffa500">// 获取指定Key句柄的KeyControlBlock</span>  <li><span style="color: blue">PVOID</span><span style="color: gray"> </span><span style="color: blue">GetKeyControlBlock</span><span style="color: olive">(</span><span style="color: blue">HANDLE</span><span style="color: gray"> </span><span style="color: blue">hKey</span><span style="color: olive">)</span>  <li><span style="color: olive">{</span>  <li><span style="color: gray">       </span><span style="color: blue">NTSTATUS</span><span style="color: gray"> </span><span style="color: blue">status</span><span style="color: gray">;</span>  <li><span style="color: gray">       </span><span style="color: blue">PCM_KEY_BODY</span><span style="color: gray"> </span><span style="color: blue">KeyBody</span><span style="color: gray">;</span>  <li><span style="color: gray">       </span><span style="color: blue">PVOID</span><span style="color: gray"> </span><span style="color: blue">KCB</span><span style="color: gray">;</span>  <li><span style="color: gray"> </span>  <li><span style="color: gray">       </span><span style="color: green">if</span><span style="color: gray"> </span><span style="color: olive">(</span><span style="color: blue">hKey</span><span style="color: gray"> == </span><span style="color: green">NULL</span><span style="color: olive">)</span><span style="color: gray"> </span><span style="color: green">return</span><span style="color: gray"> </span><span style="color: green">NULL</span><span style="color: gray">;</span>  <li><span style="color: gray"> </span>  <li><span style="color: gray">       </span><span style="color: #ffa500">// 由Key句柄获取对象体</span>  <li><span style="color: gray">       </span><span style="color: blue">status</span><span style="color: gray"> = </span><span style="color: blue">ObReferenceObjectByHandle</span><span style="color: olive">(</span><span style="color: blue">hKey</span><span style="color: gray">, </span><span style="color: blue">KEY_READ</span><span style="color: gray">, </span><span style="color: green">NULL</span><span style="color: gray">, </span><span style="color: blue">KernelMode</span><span style="color: gray">, &amp;</span><span style="color: blue">KeyBody</span><span style="color: gray">, </span><span style="color: green">NULL</span><span style="color: olive">)</span><span style="color: gray">;</span>  <li><span style="color: gray">       </span><span style="color: green">if</span><span style="color: gray"> </span><span style="color: olive">(</span><span style="color: gray">!</span><span style="color: blue">NT_SUCCESS</span><span style="color: olive">(</span><span style="color: blue">status</span><span style="color: olive">))</span>  <li><span style="color: gray">       </span><span style="color: olive">{</span>  <li><span style="color: gray">           </span><span style="color: blue">DbgPrint</span><span style="color: olive">(</span><span style="color: #8b0000">"</span><span style="color: red">ObReferenceObjectByHandle Failed: %lx</span><span style="color: navy">\n</span><span style="color: #8b0000">"</span><span style="color: gray">, </span><span style="color: blue">status</span><span style="color: olive">)</span><span style="color: gray">;</span>  <li><span style="color: gray">           </span><span style="color: green">return</span><span style="color: gray"> </span><span style="color: green">NULL</span><span style="color: gray">;</span>  <li><span style="color: gray">       </span><span style="color: olive">}</span>  <li><span style="color: gray"> </span>  <li><span style="color: gray">       </span><span style="color: #ffa500">// 对象体中含有KeyControlBlock</span>  <li><span style="color: gray">       </span><span style="color: blue">KCB</span><span style="color: gray"> = </span><span style="color: blue">KeyBody</span><span style="color: gray">-&gt;</span><span style="color: blue">KeyControlBlock</span><span style="color: gray">;</span>  <li><span style="color: gray">       </span><span style="color: blue">DbgPrint</span><span style="color: olive">(</span><span style="color: #8b0000">"</span><span style="color: red">KeyControlBlock = %lx</span><span style="color: navy">\n</span><span style="color: #8b0000">"</span><span style="color: gray">, </span><span style="color: blue">KCB</span><span style="color: olive">)</span><span style="color: gray">;</span>  <li><span style="color: gray"> </span>  <li><span style="color: gray">       </span><span style="color: blue">ObDereferenceObject</span><span style="color: olive">(</span><span style="color: blue">KeyBody</span><span style="color: olive">)</span><span style="color: gray">;</span>  <li><span style="color: gray"> </span>  <li><span style="color: gray">       </span><span style="color: green">return</span><span style="color: gray"> </span><span style="color: blue">KCB</span><span style="color: gray">;</span>  <li><span style="color: olive">}</span>  <li><span style="color: gray"> </span>  <li><span style="color: #ffa500">// 获取父键的最后一个子键的节点</span>  <li><span style="color: blue">PVOID</span><span style="color: gray"> </span><span style="color: blue">GetLastKeyNode</span><span style="color: olive">(</span><span style="color: blue">PVOID</span><span style="color: gray"> </span><span style="color: blue">Hive</span><span style="color: gray">, </span><span style="color: blue">PCM_KEY_NODE</span><span style="color: gray"> </span><span style="color: blue">Node</span><span style="color: olive">)</span>  <li><span style="color: olive">{</span>  <li><span style="color: gray">       </span><span style="color: #ffa500">// 获取父键的节点</span>  <li><span style="color: gray">       </span><span style="color: blue">PCM_KEY_NODE</span><span style="color: gray"> </span><span style="color: blue">ParentNode</span><span style="color: gray"> = </span><span style="color: olive">(</span><span style="color: blue">PCM_KEY_NODE</span><span style="color: olive">)</span><span style="color: blue">g_pGetCellRoutine</span><span style="color: olive">(</span><span style="color: blue">Hive</span><span style="color: gray">, </span><span style="color: blue">Node</span><span style="color: gray">-&gt;</span><span style="color: blue">Parent</span><span style="color: olive">)</span><span style="color: gray">;</span>  <li><span style="color: gray">       </span><span style="color: #ffa500">// 获取子键的索引</span>  <li><span style="color: gray">       </span><span style="color: blue">PCM_KEY_INDEX</span><span style="color: gray"> </span><span style="color: blue">Index</span><span style="color: gray"> = </span><span style="color: olive">(</span><span style="color: blue">PCM_KEY_INDEX</span><span style="color: olive">)</span><span style="color: blue">g_pGetCellRoutine</span><span style="color: olive">(</span><span style="color: blue">Hive</span><span style="color: gray">, </span><span style="color: blue">ParentNode</span><span style="color: gray">-&gt;</span><span style="color: blue">SubKeyLists</span><span style="color: olive">[</span><span style="color: maroon">0</span><span style="color: olive">])</span><span style="color: gray">;</span>  <li><span style="color: gray"> </span>  <li><span style="color: gray">       </span><span style="color: blue">DbgPrint</span><span style="color: olive">(</span><span style="color: #8b0000">"</span><span style="color: red">ParentNode = %lx</span><span style="color: navy">\n</span><span style="color: red">Index = %lx</span><span style="color: navy">\n</span><span style="color: #8b0000">"</span><span style="color: gray">, </span><span style="color: blue">ParentNode</span><span style="color: gray">, </span><span style="color: blue">Index</span><span style="color: olive">)</span><span style="color: gray">;</span>  <li><span style="color: gray"> </span>  <li><span style="color: gray">       </span><span style="color: #ffa500">// 如果为根(二级)索引，获取最后一个索引</span>  <li><span style="color: gray">       </span><span style="color: green">if</span><span style="color: gray"> </span><span style="color: olive">(</span><span style="color: blue">Index</span><span style="color: gray">-&gt;</span><span style="color: blue">Signature</span><span style="color: gray"> == </span><span style="color: blue">CM_KEY_INDEX_ROOT</span><span style="color: olive">)</span>  <li><span style="color: gray">       </span><span style="color: olive">{</span>  <li><span style="color: gray">           </span><span style="color: blue">Index</span><span style="color: gray"> = </span><span style="color: olive">(</span><span style="color: blue">PCM_KEY_INDEX</span><span style="color: olive">)</span><span style="color: blue">g_pGetCellRoutine</span><span style="color: olive">(</span><span style="color: blue">Hive</span><span style="color: gray">, </span><span style="color: blue">Index</span><span style="color: gray">-&gt;</span><span style="color: green">List</span><span style="color: olive">[</span><span style="color: blue">Index</span><span style="color: gray">-&gt;</span><span style="color: blue">Count</span><span style="color: gray">-</span><span style="color: maroon">1</span><span style="color: olive">])</span><span style="color: gray">;</span>  <li><span style="color: gray">           </span><span style="color: blue">DbgPrint</span><span style="color: olive">(</span><span style="color: #8b0000">"</span><span style="color: red">Index = %lx</span><span style="color: navy">\n</span><span style="color: #8b0000">"</span><span style="color: gray">, </span><span style="color: blue">Index</span><span style="color: olive">)</span><span style="color: gray">;</span>  <li><span style="color: gray">       </span><span style="color: olive">}</span>  <li><span style="color: gray"> </span>  <li><span style="color: gray">       </span><span style="color: green">if</span><span style="color: gray"> </span><span style="color: olive">(</span><span style="color: blue">Index</span><span style="color: gray">-&gt;</span><span style="color: blue">Signature</span><span style="color: gray"> == </span><span style="color: blue">CM_KEY_FAST_LEAF</span><span style="color: gray"> || </span><span style="color: blue">Index</span><span style="color: gray">-&gt;</span><span style="color: blue">Signature</span><span style="color: gray"> == </span><span style="color: blue">CM_KEY_HASH_LEAF</span><span style="color: olive">)</span>  <li><span style="color: gray">       </span><span style="color: olive">{</span>  <li><span style="color: gray">           </span><span style="color: #ffa500">// 快速叶索引(2k)或散列叶索引(XP/2k3)，返回最后的节点</span>  <li><span style="color: gray">           </span><span style="color: green">return</span><span style="color: gray"> </span><span style="color: blue">g_pGetCellRoutine</span><span style="color: olive">(</span><span style="color: blue">Hive</span><span style="color: gray">, </span><span style="color: blue">Index</span><span style="color: gray">-&gt;</span><span style="color: green">List</span><span style="color: olive">[</span><span style="color: maroon">2</span><span style="color: gray">*</span><span style="color: olive">(</span><span style="color: blue">Index</span><span style="color: gray">-&gt;</span><span style="color: blue">Count</span><span style="color: gray">-</span><span style="color: maroon">1</span><span style="color: olive">)])</span><span style="color: gray">;</span>  <li><span style="color: gray">       </span><span style="color: olive">}</span>  <li><span style="color: gray">       </span><span style="color: green">else</span>  <li><span style="color: gray">       </span><span style="color: olive">{</span>  <li><span style="color: gray">           </span><span style="color: #ffa500">// 一般叶索引，返回最后的节点</span>  <li><span style="color: gray">           </span><span style="color: green">return</span><span style="color: gray"> </span><span style="color: blue">g_pGetCellRoutine</span><span style="color: olive">(</span><span style="color: blue">Hive</span><span style="color: gray">, </span><span style="color: blue">Index</span><span style="color: gray">-&gt;</span><span style="color: green">List</span><span style="color: olive">[</span><span style="color: blue">Index</span><span style="color: gray">-&gt;</span><span style="color: blue">Count</span><span style="color: gray">-</span><span style="color: maroon">1</span><span style="color: olive">])</span><span style="color: gray">;</span>  <li><span style="color: gray">       </span><span style="color: olive">}</span>  <li><span style="color: olive">}</span>  <li><span style="color: gray"> </span>  <li><span style="color: #ffa500">// GetCell例程的钩子函数</span>  <li><span style="color: blue">PVOID</span><span style="color: gray"> </span><span style="color: blue">MyGetCellRoutine</span><span style="color: olive">(</span><span style="color: blue">PVOID</span><span style="color: gray"> </span><span style="color: blue">Hive</span><span style="color: gray">, </span><span style="color: blue">HANDLE</span><span style="color: gray"> </span><span style="color: blue">Cell</span><span style="color: olive">)</span>  <li><span style="color: olive">{</span>  <li><span style="color: gray">       </span><span style="color: #ffa500">// 调用原函数</span>  <li><span style="color: gray">       </span><span style="color: blue">PVOID</span><span style="color: gray"> </span><span style="color: blue">pRet</span><span style="color: gray"> = </span><span style="color: blue">g_pGetCellRoutine</span><span style="color: olive">(</span><span style="color: blue">Hive</span><span style="color: gray">, </span><span style="color: blue">Cell</span><span style="color: olive">)</span><span style="color: gray">;</span>  <li><span style="color: gray">       </span><span style="color: green">if</span><span style="color: gray"> </span><span style="color: olive">(</span><span style="color: blue">pRet</span><span style="color: olive">)</span>  <li><span style="color: gray">       </span><span style="color: olive">{</span>  <li><span style="color: gray">           </span><span style="color: #ffa500">// 返回的是需要隐藏的节点</span>  <li><span style="color: gray">           </span><span style="color: green">if</span><span style="color: gray"> </span><span style="color: olive">(</span><span style="color: blue">pRet</span><span style="color: gray"> == </span><span style="color: blue">g_HideNode</span><span style="color: olive">)</span>  <li><span style="color: gray">           </span><span style="color: olive">{</span>  <li><span style="color: gray">               </span><span style="color: blue">DbgPrint</span><span style="color: olive">(</span><span style="color: #8b0000">"</span><span style="color: red">GetCellRoutine(%lx, %08lx) = %lx</span><span style="color: navy">\n</span><span style="color: #8b0000">"</span><span style="color: gray">, </span><span style="color: blue">Hive</span><span style="color: gray">, </span><span style="color: blue">Cell</span><span style="color: gray">, </span><span style="color: blue">pRet</span><span style="color: olive">)</span><span style="color: gray">;</span>  <li><span style="color: gray">               </span><span style="color: #ffa500">// 查询、保存并返回其父键的最后一个子键的节点</span>  <li><span style="color: gray">               </span><span style="color: blue">pRet</span><span style="color: gray"> = </span><span style="color: blue">g_LastNode</span><span style="color: gray"> = </span><span style="color: olive">(</span><span style="color: blue">PCM_KEY_NODE</span><span style="color: olive">)</span><span style="color: blue">GetLastKeyNode</span><span style="color: olive">(</span><span style="color: blue">Hive</span><span style="color: gray">, </span><span style="color: blue">g_HideNode</span><span style="color: olive">)</span><span style="color: gray">;</span>  <li><span style="color: gray">               </span><span style="color: blue">DbgPrint</span><span style="color: olive">(</span><span style="color: #8b0000">"</span><span style="color: red">g_LastNode = %lx</span><span style="color: navy">\n</span><span style="color: #8b0000">"</span><span style="color: gray">, </span><span style="color: blue">g_LastNode</span><span style="color: olive">)</span><span style="color: gray">;</span>  <li><span style="color: gray">               </span><span style="color: #ffa500">// 隐藏的正是最后一个节点，返回空值</span>  <li><span style="color: gray">               </span><span style="color: green">if</span><span style="color: gray"> </span><span style="color: olive">(</span><span style="color: blue">pRet</span><span style="color: gray"> == </span><span style="color: blue">g_HideNode</span><span style="color: olive">)</span><span style="color: gray"> </span><span style="color: blue">pRet</span><span style="color: gray"> = </span><span style="color: green">NULL</span><span style="color: gray">;</span>  <li><span style="color: gray">           </span><span style="color: olive">}</span>  <li><span style="color: gray">           </span><span style="color: #ffa500">// 返回的是先前保存的最后一个节点</span>  <li><span style="color: gray">           </span><span style="color: green">else</span><span style="color: gray"> </span><span style="color: green">if</span><span style="color: gray"> </span><span style="color: olive">(</span><span style="color: blue">pRet</span><span style="color: gray"> == </span><span style="color: blue">g_LastNode</span><span style="color: olive">)</span>  <li><span style="color: gray">           </span><span style="color: olive">{</span>  <li><span style="color: gray">               </span><span style="color: blue">DbgPrint</span><span style="color: olive">(</span><span style="color: #8b0000">"</span><span style="color: red">GetCellRoutine(%lx, %08lx) = %lx</span><span style="color: navy">\n</span><span style="color: #8b0000">"</span><span style="color: gray">, </span><span style="color: blue">Hive</span><span style="color: gray">, </span><span style="color: blue">Cell</span><span style="color: gray">, </span><span style="color: blue">pRet</span><span style="color: olive">)</span><span style="color: gray">;</span>  <li><span style="color: gray">               </span><span style="color: #ffa500">// 清空保存值，并返回空值</span>  <li><span style="color: gray">               </span><span style="color: blue">pRet</span><span style="color: gray"> = </span><span style="color: blue">g_LastNode</span><span style="color: gray"> = </span><span style="color: green">NULL</span><span style="color: gray">;</span>  <li><span style="color: gray">           </span><span style="color: olive">}</span>  <li><span style="color: gray">       </span><span style="color: olive">}</span>  <li><span style="color: gray">       </span><span style="color: green">return</span><span style="color: gray"> </span><span style="color: blue">pRet</span><span style="color: gray">;</span>  <li><span style="color: olive">}</span>  <li><span style="color: gray"> </span>  <li><span style="color: blue">NTSTATUS</span><span style="color: gray"> </span><span style="color: blue">DriverUnload</span><span style="color: olive">(</span><span style="color: blue">PDRIVER_OBJECT</span><span style="color: gray"> </span><span style="color: blue">pDrvObj</span><span style="color: olive">)</span>  <li><span style="color: olive">{</span>  <li><span style="color: gray">       </span><span style="color: blue">DbgPrint</span><span style="color: olive">(</span><span style="color: #8b0000">"</span><span style="color: red">DriverUnload()</span><span style="color: navy">\n</span><span style="color: #8b0000">"</span><span style="color: olive">)</span><span style="color: gray">;</span>  <li><span style="color: gray">       </span><span style="color: #ffa500">// 解除挂钩</span>  <li><span style="color: gray">       </span><span style="color: green">if</span><span style="color: gray"> </span><span style="color: olive">(</span><span style="color: blue">g_ppGetCellRoutine</span><span style="color: olive">)</span><span style="color: gray"> *</span><span style="color: blue">g_ppGetCellRoutine</span><span style="color: gray"> = </span><span style="color: blue">g_pGetCellRoutine</span><span style="color: gray">;</span>  <li><span style="color: gray">       </span><span style="color: green">return</span><span style="color: gray"> </span><span style="color: blue">STATUS_SUCCESS</span><span style="color: gray">;</span>  <li><span style="color: olive">}</span>  <li><span style="color: gray"> </span>  <li><span style="color: blue">NTSTATUS</span><span style="color: gray"> </span><span style="color: blue">DriverEntry</span><span style="color: olive">(</span><span style="color: blue">PDRIVER_OBJECT</span><span style="color: gray"> </span><span style="color: blue">pDrvObj</span><span style="color: gray">, </span><span style="color: blue">PUNICODE_STRING</span><span style="color: gray"> </span><span style="color: blue">pRegPath</span><span style="color: olive">)</span>  <li><span style="color: olive">{</span>  <li><span style="color: gray">       </span><span style="color: blue">ULONG</span><span style="color: gray"> </span><span style="color: blue">BuildNumber</span><span style="color: gray">;</span>  <li><span style="color: gray">       </span><span style="color: blue">ULONG</span><span style="color: gray"> </span><span style="color: blue">KeyHiveOffset</span><span style="color: gray">;       </span><span style="color: #ffa500">// KeyControlBlock-&gt;KeyHive</span>  <li><span style="color: gray">       </span><span style="color: blue">ULONG</span><span style="color: gray"> </span><span style="color: blue">KeyCellOffset</span><span style="color: gray">;       </span><span style="color: #ffa500">// KeyControlBlock-&gt;KeyCell</span>  <li><span style="color: gray">       </span><span style="color: blue">HANDLE</span><span style="color: gray"> </span><span style="color: blue">hKey</span><span style="color: gray">;</span>  <li><span style="color: gray">       </span><span style="color: blue">PVOID</span><span style="color: gray"> </span><span style="color: blue">KCB</span><span style="color: gray">, </span><span style="color: blue">Hive</span><span style="color: gray">;</span>  <li><span style="color: gray"> </span>  <li><span style="color: gray">       </span><span style="color: blue">DbgPrint</span><span style="color: olive">(</span><span style="color: #8b0000">"</span><span style="color: red">DriverEntry()</span><span style="color: navy">\n</span><span style="color: #8b0000">"</span><span style="color: olive">)</span><span style="color: gray">;</span>  <li><span style="color: gray"> </span>  <li><span style="color: gray">       </span><span style="color: blue">pDrvObj</span><span style="color: gray">-&gt;</span><span style="color: blue">DriverUnload</span><span style="color: gray"> = </span><span style="color: blue">DriverUnload</span><span style="color: gray">;</span>  <li><span style="color: gray"> </span>  <li><span style="color: gray">       </span><span style="color: #ffa500">// 查询BuildNumber</span>  <li><span style="color: gray">       </span><span style="color: green">if</span><span style="color: gray"> </span><span style="color: olive">(</span><span style="color: blue">PsGetVersion</span><span style="color: olive">(</span><span style="color: green">NULL</span><span style="color: gray">, </span><span style="color: green">NULL</span><span style="color: gray">, &amp;</span><span style="color: blue">BuildNumber</span><span style="color: gray">, </span><span style="color: green">NULL</span><span style="color: olive">))</span><span style="color: gray"> </span><span style="color: green">return</span><span style="color: gray"> </span><span style="color: blue">STATUS_NOT_SUPPORTED</span><span style="color: gray">;</span>  <li><span style="color: gray">       </span><span style="color: blue">DbgPrint</span><span style="color: olive">(</span><span style="color: #8b0000">"</span><span style="color: red">BuildNumber = %d</span><span style="color: navy">\n</span><span style="color: #8b0000">"</span><span style="color: gray">, </span><span style="color: blue">BuildNumber</span><span style="color: olive">)</span><span style="color: gray">;</span>  <li><span style="color: gray"> </span>  <li><span style="color: gray">       </span><span style="color: #ffa500">// KeyControlBlock结构各版本略有不同</span>  <li><span style="color: gray">       </span><span style="color: #ffa500">// Cell的值一般小于0x80000000，而Hive正相反，以此来判断也可以</span>  <li><span style="color: gray">       </span><span style="color: green">switch</span><span style="color: gray"> </span><span style="color: olive">(</span><span style="color: blue">BuildNumber</span><span style="color: olive">)</span>  <li><span style="color: gray">       </span><span style="color: olive">{</span>  <li><span style="color: gray">           </span><span style="color: green">case</span><span style="color: gray"> </span><span style="color: maroon">2195</span><span style="color: gray">:     </span><span style="color: #ffa500">// Win2000</span>  <li><span style="color: gray">               </span><span style="color: blue">KeyHiveOffset</span><span style="color: gray"> = </span><span style="color: maroon">0xc</span><span style="color: gray">;</span>  <li><span style="color: gray">               </span><span style="color: blue">KeyCellOffset</span><span style="color: gray"> = </span><span style="color: maroon">0x10</span><span style="color: gray">;</span>  <li><span style="color: gray">               </span><span style="color: green">break</span><span style="color: gray">;</span>  <li><span style="color: gray">           </span><span style="color: green">case</span><span style="color: gray"> </span><span style="color: maroon">2600</span><span style="color: gray">:     </span><span style="color: #ffa500">// WinXP</span>  <li><span style="color: gray">           </span><span style="color: green">case</span><span style="color: gray"> </span><span style="color: maroon">3790</span><span style="color: gray">:     </span><span style="color: #ffa500">// Win2003</span>  <li><span style="color: gray">               </span><span style="color: blue">KeyHiveOffset</span><span style="color: gray"> = </span><span style="color: maroon">0x10</span><span style="color: gray">;</span>  <li><span style="color: gray">               </span><span style="color: blue">KeyCellOffset</span><span style="color: gray"> = </span><span style="color: maroon">0x14</span><span style="color: gray">;</span>  <li><span style="color: gray">               </span><span style="color: green">break</span><span style="color: gray">;</span>  <li><span style="color: gray">           </span><span style="color: green">default</span><span style="color: gray">:</span>  <li><span style="color: gray">               </span><span style="color: green">return</span><span style="color: gray"> </span><span style="color: blue">STATUS_NOT_SUPPORTED</span><span style="color: gray">;</span>  <li><span style="color: gray">       </span><span style="color: olive">}</span>  <li><span style="color: gray"> </span>  <li><span style="color: gray">       </span><span style="color: #ffa500">// 打开需隐藏的键</span>  <li><span style="color: gray">       </span><span style="color: blue">hKey</span><span style="color: gray"> = </span><span style="color: blue">OpenKeyByName</span><span style="color: olive">(</span><span style="color: blue">g_HideKeyName</span><span style="color: olive">)</span><span style="color: gray">;</span>  <li><span style="color: gray">       </span><span style="color: #ffa500">// 获取该键的KeyControlBlock</span>  <li><span style="color: gray">       </span><span style="color: blue">KCB</span><span style="color: gray"> = </span><span style="color: blue">GetKeyControlBlock</span><span style="color: olive">(</span><span style="color: blue">hKey</span><span style="color: olive">)</span><span style="color: gray">;</span>  <li><span style="color: gray">       </span><span style="color: green">if</span><span style="color: gray"> </span><span style="color: olive">(</span><span style="color: blue">KCB</span><span style="color: olive">)</span>  <li><span style="color: gray">       </span><span style="color: olive">{</span>  <li><span style="color: gray">           </span><span style="color: #ffa500">// 由KCB得到Hive</span>  <li><span style="color: gray">           </span><span style="color: blue">PHHIVE</span><span style="color: gray"> </span><span style="color: blue">Hive</span><span style="color: gray"> = </span><span style="color: olive">(</span><span style="color: blue">PHHIVE</span><span style="color: olive">)</span><span style="color: blue">GET_PTR</span><span style="color: olive">(</span><span style="color: blue">KCB</span><span style="color: gray">, </span><span style="color: blue">KeyHive</span><span style="color: olive">)</span><span style="color: gray">;</span>  <li><span style="color: gray">           </span><span style="color: #ffa500">// GetCellRoutine在KCB中，保存原地址</span>  <li><span style="color: gray">           </span><span style="color: blue">g_ppGetCellRoutine</span><span style="color: gray"> = &amp;</span><span style="color: blue">Hive</span><span style="color: gray">-&gt;</span><span style="color: blue">GetCellRoutine</span><span style="color: gray">;</span>  <li><span style="color: gray">           </span><span style="color: blue">g_pGetCellRoutine</span><span style="color: gray"> = </span><span style="color: blue">Hive</span><span style="color: gray">-&gt;</span><span style="color: blue">GetCellRoutine</span><span style="color: gray">;</span>  <li><span style="color: gray">           </span><span style="color: blue">DbgPrint</span><span style="color: olive">(</span><span style="color: #8b0000">"</span><span style="color: red">GetCellRoutine = %lx</span><span style="color: navy">\n</span><span style="color: #8b0000">"</span><span style="color: gray">, </span><span style="color: blue">g_pGetCellRoutine</span><span style="color: olive">)</span><span style="color: gray">;</span>  <li><span style="color: gray">           </span><span style="color: #ffa500">// 获取需隐藏的节点并保存</span>  <li><span style="color: gray">           </span><span style="color: blue">g_HideNode</span><span style="color: gray"> = </span><span style="color: olive">(</span><span style="color: blue">PCM_KEY_NODE</span><span style="color: olive">)</span><span style="color: blue">g_pGetCellRoutine</span><span style="color: olive">(</span><span style="color: blue">Hive</span><span style="color: gray">, </span><span style="color: blue">GET_PTR</span><span style="color: olive">(</span><span style="color: blue">KCB</span><span style="color: gray">, </span><span style="color: blue">KeyCell</span><span style="color: olive">))</span><span style="color: gray">;</span>  <li><span style="color: gray">           </span><span style="color: #ffa500">// 挂钩GetCell例程</span>  <li><span style="color: gray">           </span><span style="color: blue">Hive</span><span style="color: gray">-&gt;</span><span style="color: blue">GetCellRoutine</span><span style="color: gray"> = </span><span style="color: blue">MyGetCellRoutine</span><span style="color: gray">;</span>  <li><span style="color: gray">       </span><span style="color: olive">}</span>  <li><span style="color: gray">       </span><span style="color: blue">ZwClose</span><span style="color: olive">(</span><span style="color: blue">hKey</span><span style="color: olive">)</span><span style="color: gray">;</span>  <li><span style="color: gray"> </span>  <li><span style="color: gray">       </span><span style="color: green">return</span><span style="color: gray"> </span><span style="color: blue">STATUS_SUCCESS</span><span style="color: gray">;</span>  <li><span style="color: olive">}</span> </li></ol></div></div></div></div></div> 
+    
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="followme">
+  <span>欢迎关注我的其它发布渠道</span>
+
+  <div class="social-list">
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="https://www.facebook.com/rise.worlds">
+            <span class="icon">
+              <i class="fab fa-facebook"></i>
+            </span>
+
+            <span class="label">FB Page</span>
+          </a>
+      </div>
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="https://twitter.com/riseworlds">
+            <span class="icon">
+              <i class="fab fa-twitter"></i>
+            </span>
+
+            <span class="label">Twitter</span>
+          </a>
+      </div>
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="https://t.me/riseworlds">
+            <span class="icon">
+              <i class="fab fa-telegram"></i>
+            </span>
+
+            <span class="label">Telegram</span>
+          </a>
+      </div>
+  </div>
+</div>
+
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2008/03/29/%E4%BB%8E%E6%96%87%E4%BB%B6%E5%8F%A5%E6%9F%84%E8%8E%B7%E5%BE%97%E5%85%A8%E8%B7%AF%E5%BE%84/" rel="prev" title="从文件句柄获得全路径">
+                  <i class="fa fa-angle-left"></i> 从文件句柄获得全路径
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2008/03/29/%E9%A9%B1%E5%8A%A8%E7%BA%A7%E9%9A%90%E8%97%8F%E6%96%87%E4%BB%B6,%E6%B3%A8%E5%86%8C%E8%A1%A8,%E8%BF%9B%E7%A8%8B/" rel="next" title="驱动级隐藏文件,注册表,进程">
+                  驱动级隐藏文件,注册表,进程 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  
+  <div class="comments giscus-container">
+  </div>
+  
+  
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">豫ICP备2021009490号 </a>
+  </div>
+  <div class="copyright">
+    &copy; 2004 – 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">rise</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="reading-progress-bar"></div>
+
+  <a href="https://github.com/rise-worlds" class="github-corner" title="在 GitHub 上关注我" aria-label="在 GitHub 上关注我" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://unpkg.com/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@next-theme/pjax@0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script><script src="/js/pjax.js"></script>
+
+  
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://unpkg.com/mermaid@10.9.0/dist/mermaid.min.js","integrity":"sha256-stuqcu2FrjYCXDOytWFA5SoUE/r3nkp6gTglzNSlavU="}}</script>
+  <script src="/js/third-party/tags/mermaid.js"></script>
+
+
+
+
+
+  
+
+
+
+
+  <script src="https://unpkg.com/quicklink@2.3.0/dist/quicklink.umd.js" integrity="sha256-yvJQOINiH9fWemHn0vCA5lsHWJaHs6/ZmO+1Ft04SvM=" crossorigin="anonymous"></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":true,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"https://rise-worlds.github.io/2008/03/29/%E5%8F%91%E4%B8%80%E6%AE%B5%E9%9A%90%E8%97%8F%E6%B3%A8%E5%86%8C%E8%A1%A8%E9%A1%B9%E7%9A%84%E9%A9%B1%E5%8A%A8%E4%BB%A3%E7%A0%81%EF%BC%8C%E5%8F%AF%E4%BB%A5%E8%BF%87%E7%9B%AE%E5%89%8D%E6%9C%80%E6%96%B0%E7%9A%84IceSword1.22/"}</script>
+  <script src="/js/third-party/quicklink.js"></script>
+<script class="next-config" data-name="giscus" type="application/json">{"enable":true,"repo":"rise-worlds/rise-worlds.github.io","repo_id":"MDEwOlJlcG9zaXRvcnk2MTAxMTA0MA==","category":"Announcements","category_id":"DIC_kwDOA6L0YM4CiXf9","mapping":"pathname","strict":0,"reactions_enabled":1,"emit_metadata":0,"theme":"transparent_dark","lang":"zh-CN","crossorigin":"anonymous","input_position":"top","loading":"lazy"}</script>
+
+<script>
+document.addEventListener('page:loaded', () => {
+  if (!CONFIG.page.comments) return;
+
+  NexT.utils.loadComments('.giscus-container')
+    .then(() => NexT.utils.getScript('https://giscus.app/client.js', {
+      attributes: {
+        async                   : true,
+        crossOrigin             : 'anonymous',
+        'data-repo'             : CONFIG.giscus.repo,
+        'data-repo-id'          : CONFIG.giscus.repo_id,
+        'data-category'         : CONFIG.giscus.category,
+        'data-category-id'      : CONFIG.giscus.category_id,
+        'data-mapping'          : CONFIG.giscus.mapping,
+        'data-strict'           : CONFIG.giscus.strict,
+        'data-reactions-enabled': CONFIG.giscus.reactions_enabled,
+        'data-emit-metadata'    : CONFIG.giscus.emit_metadata,
+        'data-theme'            : CONFIG.giscus.theme,
+        'data-lang'             : CONFIG.giscus.lang,
+        'data-input-position'   : CONFIG.giscus.input_position,
+        'data-loading'          : CONFIG.giscus.loading
+      },
+      parentNode: document.querySelector('.giscus-container')
+    }));
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://unpkg.com/@fortawesome/fontawesome-free@6.5.2/css/all.min.css" integrity="sha256-XOqroi11tY4EFQMR9ZYwZWKj5ZXiftSx36RRuC3anlA=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://unpkg.com/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"rise-worlds.github.io","root":"/","images":"/images","scheme":"Mist","darkmode":true,"version":"8.20.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="初始化DXUT 使用DXUT框架之前，首先需要初始化DXUT，初始化DXUT可以通过函数DXUTInit()完成： Initializes DXUT.HRESULT DXUTInit(  BOOL bParseCommandLine,  BOOL bShowMsgBoxOnError,  WCHAR * strExtraCommandLineParams,  bool bThreadSafeDXU">
+<meta property="og:type" content="article">
+<meta property="og:title" content="DXUT框架剖析（3）">
+<meta property="og:url" content="https://rise-worlds.github.io/2008/05/17/DXUT%E6%A1%86%E6%9E%B6%E5%89%96%E6%9E%90%EF%BC%883%EF%BC%89/index.html">
+<meta property="og:site_name" content="Rise&#39;blogs">
+<meta property="og:description" content="初始化DXUT 使用DXUT框架之前，首先需要初始化DXUT，初始化DXUT可以通过函数DXUTInit()完成： Initializes DXUT.HRESULT DXUTInit(  BOOL bParseCommandLine,  BOOL bShowMsgBoxOnError,  WCHAR * strExtraCommandLineParams,  bool bThreadSafeDXU">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2008-05-17T11:39:00.000Z">
+<meta property="article:modified_time" content="2008-05-17T11:39:00.000Z">
+<meta property="article:author" content="rise">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://rise-worlds.github.io/2008/05/17/DXUT%E6%A1%86%E6%9E%B6%E5%89%96%E6%9E%90%EF%BC%883%EF%BC%89/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://rise-worlds.github.io/2008/05/17/DXUT%E6%A1%86%E6%9E%B6%E5%89%96%E6%9E%90%EF%BC%883%EF%BC%89/","path":"2008/05/17/DXUT框架剖析（3）/","title":"DXUT框架剖析（3）"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>DXUT框架剖析（3） | Rise'blogs</title>
+  
+
+  <script src="/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?266da4e90214887b507c0bb6baa84e3e"></script>
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Rise'blogs</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-message"><a href="/message/" rel="section"><i class="fa fa-comments fa-fw"></i>留言板</a></li><li class="menu-item menu-item-sitemap"><a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>站点地图</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-6"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">Parameters</span></a></li><li class="nav-item nav-level-6"><a class="nav-link"><span class="nav-number">2.</span> <span class="nav-text">Return Values</span></a></li><li class="nav-item nav-level-6"><a class="nav-link"><span class="nav-number">3.</span> <span class="nav-text">Remarks</span></a></li><li class="nav-item nav-level-6"><a class="nav-link"><span class="nav-number">4.</span> <span class="nav-text">Parameters</span></a></li><li class="nav-item nav-level-6"><a class="nav-link"><span class="nav-number">5.</span> <span class="nav-text">Return Values</span></a></li><li class="nav-item nav-level-6"><a class="nav-link"><span class="nav-number">6.</span> <span class="nav-text">Remarks</span></a></li><li class="nav-item nav-level-6"><a class="nav-link"><span class="nav-number">7.</span> <span class="nav-text">DXUT框架创建的窗口的句柄可以通过DXUTGetHWND()函数来获取。</span></a></li><li class="nav-item nav-level-6"><a class="nav-link"><span class="nav-number">8.</span> <span class="nav-text">Parameters</span></a></li><li class="nav-item nav-level-6"><a class="nav-link"><span class="nav-number">9.</span> <span class="nav-text">Return Values</span></a></li><li class="nav-item nav-level-6"><a class="nav-link"><span class="nav-number">10.</span> <span class="nav-text">Remarks</span></a></li><li class="nav-item nav-level-6"><a class="nav-link"><span class="nav-number">11.</span> <span class="nav-text">Parameters</span></a></li><li class="nav-item nav-level-6"><a class="nav-link"><span class="nav-number">12.</span> <span class="nav-text">Return Values</span></a></li><li class="nav-item nav-level-6"><a class="nav-link"><span class="nav-number">13.</span> <span class="nav-text">Remarks</span></a></li><li class="nav-item nav-level-6"><a class="nav-link"><span class="nav-number">14.</span> <span class="nav-text">Parameters</span></a></li><li class="nav-item nav-level-6"><a class="nav-link"><span class="nav-number">15.</span> <span class="nav-text">Return Values</span></a></li><li class="nav-item nav-level-6"><a class="nav-link"><span class="nav-number">16.</span> <span class="nav-text">Remarks</span></a></li><li class="nav-item nav-level-6"><a class="nav-link"><span class="nav-number">17.</span> <span class="nav-text">Parameters</span></a></li><li class="nav-item nav-level-6"><a class="nav-link"><span class="nav-number">18.</span> <span class="nav-text">Return Values</span></a></li><li class="nav-item nav-level-6"><a class="nav-link"><span class="nav-number">19.</span> <span class="nav-text">Remarks</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="rise"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">rise</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">661</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">47</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">93</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="mailto:rise.worlds@outlook.com" title="E-Mail → mailto:rise.worlds@outlook.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://github.com/rise-worlds" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;rise-worlds" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://x.com/riseworlds" title="Twitter → https:&#x2F;&#x2F;x.com&#x2F;riseworlds" rel="noopener me" target="_blank"><i class="fab fa-twitter fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.facebook.com/rise.worlds" title="FB Page → https:&#x2F;&#x2F;www.facebook.com&#x2F;rise.worlds" rel="noopener me" target="_blank"><i class="fab fa-facebook fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.youtube.com/@YiXuan" title="YouTube → https:&#x2F;&#x2F;www.youtube.com&#x2F;@YiXuan" rel="noopener me" target="_blank"><i class="fab fa-youtube fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.instagram.com/rise.worlds/" title="Instagram → https:&#x2F;&#x2F;www.instagram.com&#x2F;rise.worlds&#x2F;" rel="noopener me" target="_blank"><i class="fab fa-instagram fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://t.me/riseworlds" title="Telegram → https:&#x2F;&#x2F;t.me&#x2F;riseworlds" rel="noopener me" target="_blank"><i class="fab fa-telegram fa-fw"></i></a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+          链接
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <a href="https://www.cnblogs.com/flying_bat" title="https:&#x2F;&#x2F;www.cnblogs.com&#x2F;flying_bat" rel="noopener" target="_blank">My Cnblogs</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://www.github.com/rise-worlds" title="https:&#x2F;&#x2F;www.github.com&#x2F;rise-worlds" rel="noopener" target="_blank">My Github</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://www.google.com/" title="https:&#x2F;&#x2F;www.google.com&#x2F;" rel="noopener" target="_blank">Google</a>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://rise-worlds.github.io/2008/05/17/DXUT%E6%A1%86%E6%9E%B6%E5%89%96%E6%9E%90%EF%BC%883%EF%BC%89/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="rise">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Rise'blogs">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="DXUT框架剖析（3） | Rise'blogs">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          DXUT框架剖析（3）
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2008-05-17 11:39:00" itemprop="dateCreated datePublished" datetime="2008-05-17T11:39:00+00:00">2008-05-17</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/dev/" itemprop="url" rel="index"><span itemprop="name">dev</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/dev/GameDev/" itemprop="url" rel="index"><span itemprop="name">GameDev</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p><strong>初始化DXUT</strong> <p>使用DXUT框架之前，首先需要初始化DXUT，初始化DXUT可以通过函数DXUTInit()完成： <p>Initializes DXUT.<pre><strong>HRESULT DXUTInit(</strong><br>  <strong>BOOL</strong> <em>bParseCommandLine</em><strong>,</strong><br>  <strong>BOOL</strong> <em>bShowMsgBoxOnError</em><strong>,</strong><br>  <strong>WCHAR *</strong> <em>strExtraCommandLineParams</em><strong>,</strong><br>  <strong>bool</strong> <em>bThreadSafeDXUT</em><br><strong>)</strong>;</pre>
+
+<h6>Parameters</h6>
+
+<dl>
+
+<dt><em>bParseCommandLine</em>
+
+<dd>[in] If TRUE, DXUT checks for command-line arguments. The application performs the following actions based upon the entered command-line arguments. 
+
+<p>Command-line Argument<br>Action
+
+<p>-forceapi:#<br>Forces the application to use the specified Direct3D API version. Fails if the application doesn't support this API or if no device is found.
+
+<p>-adapter:#<br>Forces the application to use this adapter ordinal. Fails if the adapter ordinal does not exist.
+
+<p>-output:#<br>Applies to Direct3D 10 only. Forces the application to use a particular output on the adapter. Fails if the output does not exist.
+
+<p>-windowed<br>Forces the application to start in windowed mode.
+
+<p>-fullscreen<br>Forces the application to start in full-screen mode.
+
+<p>-forcehal<br>Forces the application to use a HAL device type. Fails if a HAL device does not exist.
+
+<p>-forceref<br>Forces the application to use a reference device type. Fails if a reference device does not exist.
+
+<p>-forcehwvp<br>Applies to Direct3D 9 only. Forces the application to use hardware vertex processing. Fails if the device does not support this mode.
+
+<p>-forcepurehwvp<br>Applies to Direct3D 9 only. Forces the application to use pure hardware vertex processing. Fails if the device does not support this mode.
+
+<p>-forceswvp<br>Applies to Direct3D 9 only. Forces the application to use software vertex processing.
+
+<p>-forcevsync:#<br>If # is 0, then vertical sync is disabled. Otherwise, it is enabled.
+
+<p>-width:#<br>Forces the application to use the window width #. For full-screen mode, DXUT picks the closest possible supported mode.
+
+<p>-height:#<br>Forces the application to use the window height #. For full-screen mode, DXUT picks the closest possible supported mode.
+
+<p>-startx:#<br>For windowed mode, forces the application to use the x-coordinate of the window position to the value of #.
+
+<p>-starty:#<br>For windowed mode, forces the application to use the y-coordinate of the window position to the value of #.
+
+<p>-constantframetime<br>Forces the application to into a mode where DXUT reports that a constant amount of time has passed between each frame, where # is the time/frame in seconds. This is useful for such scenarios as rendering an movie that can not render in real time
+
+<p>-quitafterframe:#<br>Forces the application to quit after frame #.
+
+<p>-noerrormsgboxes<br>Prevents the display of message boxes generated by DXUT, allowing the application to be run without user interaction.
+
+<p>-nostats<br>Prevents the display of device and frame statistics by always returning blank strings for DXUTGetDeviceStats and DXUTGetFrameStats.
+
+<p>-automation<br>This is a simple hint to other components that automation is active. The DXUT GUI uses this to enable UI navigation with keyboard by default.
+
+<p>Command-line arguments take precedence over options set by the application when a Direct3D device is first created, but they are ignored afterward to allow the user to interactively change the settings. The default value of this parameter is TRUE. </p>
+
+<dt><em>bShowMsgBoxOnError</em>
+
+<dd>[in] If TRUE, DXUT displays a message box if there is an error condition. The default value of this parameter is TRUE. 
+
+<dt><em>strExtraCommandLineParams</em>
+
+<dd>[in] A string of extra command parameters that will be parsed in addition to the actual command line. It is recommended that be used sparingly. Most the command line options above can be implemented in the application's ModifyDeviceSettings callback or set by using one of DXUT functions. The default value is NULL. 
+
+<dt><em>bThreadSafeDXUT</em>
+
+<dd>[in] Controls if DXUT enters a critical section when retrieving or modify internal DXUT state. The default value is false. </dd></dl>
+
+<h6>Return Values</h6>
+
+<p>If the function succeeds, the return value is S_OK. If the function fails, the return value can be one of the error codes in DXUTERR.
+
+<h6>Remarks</h6>
+
+<p>If this function has not been called before DXUTCreateWindow or DXUTSetWindow, DXUT will automatically call this function using the default parameter values.
+
+<p>通常在WinMain()函数中调用DXUTInit()函数进行DXUT初始化工作，如果程序员没有调用DXUTInit()函数，则DXUT框架会自动使用默认参数调用该函数。
+
+<p>如果第一个参数<em>bParseCommandLine</em>设置为TRUE，则DXUT框架就会使用命令行参数，例如通过下面的命令运行上面的AppFrame.exe：
+
+<p>AppFrame.exe -windowed -width:640 -height:480
+
+<p>DXUT框架会尽量使用上面命令行中设置的窗口宽度和高度。
+
+<p><strong>创建一个窗口</strong>
+
+<p>在应用程序中使用Windows API函数创建窗口是一个比较复杂的过程，如果操作有误，就会导致bug。尽管这对于一个Direct3D程序员来说可能并不起眼，但在每个应用程序中却都是必须的。而DXUT框架通过函数DXUTCreateWindow()简化了这个过程，该函数的声明如下：
+
+<p>Creates the window for the application.<pre><strong>HRESULT DXUTCreateWindow(</strong><br>  <strong>CONST const WCHAR *</strong> <em>strWindowTitle</em><strong>,</strong><br>  <strong>HINSTANCE</strong> <em>hInstance</em><strong>,</strong><br>  <strong>HICON</strong> <em>hIcon</em><strong>,</strong><br>  <strong>HMENU</strong> <em>hMenu</em><strong>,</strong><br>  <strong>INT</strong> <em>x</em><strong>,</strong><br>  <strong>INT</strong> <em>y</em><br><strong>)</strong>;</pre>
+
+<h6>Parameters</h6>
+
+<dl>
+
+<dt><em>strWindowTitle</em>
+
+<dd>[in] Title bar caption for the window. The default value is L"Direct3D Window". 
+
+<dt><em>hInstance</em>
+
+<dd>[in] Handle of the application's instance, or NULL to retrieve the handle of the current module. The default value is NULL. 
+
+<dt><em>hIcon</em>
+
+<dd>[in] Handle to the application's icon, or NULL to use the first icon embedded in the application's executable. The default value is NULL. 
+
+<dt><em>hMenu</em>
+
+<dd>[in] Handle to the application's menu resource, or NULL to indicate no menu. The default value is NULL. 
+
+<dt><em>x</em>
+
+<dd>[in] Horizontal coordinate of the window's upper left corner, in screen coordinates. Using a value of CW_USEDEFAULT allows Windows to choose an appropriate location. The default value is CW_USEDEFAULT. 
+
+<dt><em>y</em>
+
+<dd>[in] Vertical coordinate of the window's upper left corner, in screen coordinates. Using a value of CW_USEDEFAULT allows Windows to choose an appropriate location. The default value is CW_USEDEFAULT. </dd></dl>
+
+<h6>Return Values</h6>
+
+<p>If the function succeeds, the return value is S_OK. If the function fails, the return value can be one of the error codes in DXUTERR.
+
+<h6>Remarks</h6>
+
+<p>This function creates a new window for the application; alternately, the application can handle window creation and pass the desired window handle to DXUT by using the DXUTSetWindow function. If neither <strong>DXUTCreateWindow</strong> nor <strong>DXUTSetWindow</strong> has been called before calling a device creation method, DXUT will call <strong>DXUTCreateWindow</strong> using the default parameter values. The window width and height are set later using the device settings.
+
+<p>All parameters are optional.
+
+<p>If both x and y are CW_USEDEFAULT and a windowed non-primary Direct3D device is created, the window will automatically be moved to the adapter's monitor to ensure maximum performance.
+
+<h6>DXUT框架创建的窗口的句柄可以通过DXUTGetHWND()函数来获取。</h6>
+
+<p>如果应用程序要对上面创建的窗口消息做出反应，那么需要使用DXUTSetCallbackMsgProc()来设置一个窗口消息处理函数，该函数声明如下：
+
+<p>Sets the window message callback function.<pre><strong>VOID DXUTSetCallbackMsgProc(</strong><br>  <strong>LPDXUTCALLBACKMSGPROC</strong> <em>pCallbackMsgProc</em><strong>,</strong><br>  <strong>void*</strong> <em>pUserContext</em><br><strong>)</strong>;</pre>
+
+<h6>Parameters</h6>
+
+<dl>
+
+<dt><em>pCallbackMsgProc</em>
+
+<dd>[in] Pointer to a LPDXUTCALLBACKMSGPROC callback function. If supplied, DXUT will call this function when it receives window messages. If NULL, DXUT will not notify the application about window messages. 
+
+<dt><em>pUserContext</em>
+
+<dd>[in] Pointer to a user-defined value which is passed to the callback function. Typically used by an application to pass a pointer to a data structure that provides context information for the callback function. The default value is NULL </dd></dl>
+
+<h6>Return Values</h6>
+
+<p>No return value.
+
+<h6>Remarks</h6>
+
+<p>The <strong>LPDXUTCALLBACKMSGPROC</strong> callback function allows the application to respond to any Windows messages as it sees fit.
+
+<p>With the use of the <strong>LPDXUTCALLBACKMSGPROC</strong> pbNoFurtherProcessing parameter, the application can contol the DXUT's level of involvement in processing window messages. If the application sets the pbNoFurtherProcessing parameter to TRUE in the call to <strong>LPDXUTCALLBACKMSGPROC</strong>, DXUT will not process the message and will immediately return with the value returned by <strong>LPDXUTCALLBACKMSGPROC</strong>. If the application sets pbNoFurtherProcessing to FALSE, DXUT will handle window management events.
+
+<p>参数<em>pCallbackMsgProc</em>指向一个消息处理回调函数，该回调函数声明如下：
+
+<p>Application-defined function that processes messages from DXUT message pump.<pre><strong>LRESULT LPDXUTCALLBACKMSGPROC(</strong><br>  <strong>HWND</strong> <em>hWnd</em><strong>,</strong><br>  <strong>UINT</strong> <em>uMsg</em><strong>,</strong><br>  <strong>WPARAM</strong> <em>wParam</em><strong>,</strong><br>  <strong>LPARAM</strong> <em>lParam</em><strong>,</strong><br>  <strong>bool *</strong> <em>pbNoFurtherProcessing</em><strong>,</strong><br>  <strong>void*</strong> <em>pUserContext</em><br><strong>)</strong>;</pre>
+
+<h6>Parameters</h6>
+
+<dl>
+
+<dt><em>hWnd</em>
+
+<dd>[in] Handle to the window. 
+
+<dt><em>uMsg</em>
+
+<dd>[in] Specifies the message. See WindowProc for details. 
+
+<dt><em>wParam</em>
+
+<dd>[in] Specifies additional message information. The contents of this parameter depend on the value of the uMsg parameter. 
+
+<dt><em>lParam</em>
+
+<dd>[in] Specifies additional message information. The contents of this parameter depend on the value of the uMsg parameter. 
+
+<dt><em>pbNoFurtherProcessing</em>
+
+<dd>[out] If TRUE, prevents DXUT from futher handling the message. 
+
+<dt><em>pUserContext</em>
+
+<dd>[in] Pointer to a user-defined value which is passed to the callback function. Typically used by an application to pass a pointer to a data structure that provides context information for the callback function. The default value is NULL </dd></dl>
+
+<h6>Return Values</h6>
+
+<p>Returns zero if the function has processed window messages successfully; otherwise, returns a nonzero value.
+
+<h6>Remarks</h6>
+
+<p>This function and its parameters are similar to to the Windows WindowProc function.
+
+<p>With the use of the pbNoFurtherProcessing parameter, the application can control DXUT's level of involvement in processing window messages. If the application sets pbNoFurtherProcessing to TRUE in the call to <strong>LPDXUTCALLBACKMSGPROC</strong>, DXUT will not process the message and will immediately return with the value returned by <strong>LPDXUTCALLBACKMSGPROC</strong>. If the application sets pbNoFurtherProcessing to FALSE, DXUT will handle window management events.
+
+<p>在这个回调函数中，因为所有的重要消息都被该框架处理了，所以应用程序可以无需对任何消息做出响应。如果想禁用DXUT框架的消息处理，应用程序可以将<em>pbNoFurtherProcessing</em>设为TRUE。但是，使用这个设置时要格外小心，因为它有可能使框架不能正确运行。
+
+<p><strong>使用自己的窗口</strong>
+
+<p>如果想要应用程序创建自己的窗口并同DXUT框架一起使用，那么可以创建一个窗口，然后使用函数DXUTSetWindow()为DXUT框架设置自己创建的窗口，该函数声明如下：
+
+<p>Sets a previously created window for use by DXUT.<pre><strong>HRESULT DXUTSetWindow(</strong><br>  <strong>HWND</strong> <em>hWndFocus</em><strong>,</strong><br>  <strong>HWND</strong> <em>hWndDeviceFullScreen</em><strong>,</strong><br>  <strong>HWND</strong> <em>hWndDeviceWindowed</em><strong>,</strong><br>  <strong>BOOL</strong> <em>bHandleMessages</em><br><strong>)</strong>;</pre>
+
+<h6>Parameters</h6>
+
+<dl>
+
+<dt><em>hWndFocus</em>
+
+<dd>[in] Handle of the Direct3D focus window. Must not be NULL. 
+
+<dt><em>hWndDeviceFullScreen</em>
+
+<dd>[in] Handle of the Direct3D device window when in full-screen mode. Must not be NULL. 
+
+<dt><em>hWndDeviceWindowed</em>
+
+<dd>[in] Handle of the Direct3D device window when in windowed mode. Must not be NULL. 
+
+<dt><em>bHandleMessages</em>
+
+<dd>[in] If TRUE, DXUT will handle and respond to messages for the window. If FALSE, DXUT will not handle messages for the window, giving the application full responsibility for responding to messages. The default value is TRUE. </dd></dl>
+
+<h6>Return Values</h6>
+
+<p>If the function succeeds, the return value is S_OK. If the function fails, the return value can be one of the error codes in DXUTERR.
+
+<h6>Remarks</h6>
+
+<p>This function relies on an existing window object created by the application. Alternately, the application can call DXUTCreateWindow to have DXUT create a window. If neither <strong>DXUTCreateWindow</strong> nor <strong>DXUTSetWindow</strong> has been called before calling a device creation method, DXUT will automatically call <strong>DXUTCreateWindow</strong> using the default parameter values.
+
+<p>The same Window handle may be used for more than one parameter.
+
+<p>这个函数使用了3个窗口句柄参数，但它们通常都设置为同一个窗口句柄。
+
+<p>如果框架创建了窗口，窗口消息将被自动处理，而要让DXUT框架使用自己创建的窗口，除了为DXUT框架设置窗口之外，还需要向DXUT框架通知窗口接收到的消息，才能使DXUT框架正常运行。应用程序可通过函数DXUTStaticWndProc()将窗口消息从窗口回调函数WindowProc的内部传递给框架，函数DXUTStaticWndProc()的声明如下：
+
+<p>Processes messages sent to a window.<pre><strong>LRESULT_CALLBACK DXUTStaticWndProc(</strong><br>  <strong>HWND</strong> <em>hWnd</em><strong>,</strong><br>  <strong>UINT</strong> <em>uMsg</em><strong>,</strong><br>  <strong>WPARAM</strong> <em>wParam</em><strong>,</strong><br>  <strong>LPARAM</strong> <em>lParam</em><br><strong>)</strong>;</pre>
+
+<h6>Parameters</h6>
+
+<dl>
+
+<dt><em>hWnd</em>
+
+<dd>[in] Handle to the window. 
+
+<dt><em>uMsg</em>
+
+<dd>[in] Specifies the message. 
+
+<dt><em>wParam</em>
+
+<dd>[in] Specifies additional message information. The contents of this parameter depend on the value of the uMsg parameter. 
+
+<dt><em>lParam</em>
+
+<dd>[in] Specifies additional message information. The contents of this parameter depend on the value of the uMsg parameter. </dd></dl>
+
+<h6>Return Values</h6>
+
+<p>If the function has processed window messages successfully, returns zero; otherwise, returns a nonzero value.
+
+<h6>Remarks</h6>
+
+<p>This method does not normally need to be called. It is useful only when the application use DXUTSetWindow with bHandleMessages set to FALSE but still wants DXUT to assist with handling Windows messages. If this is the case, this function can be called from inside the application's window procedure, or it can be used directly as the window procedure.</p>
+    
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="followme">
+  <span>欢迎关注我的其它发布渠道</span>
+
+  <div class="social-list">
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="https://www.facebook.com/rise.worlds">
+            <span class="icon">
+              <i class="fab fa-facebook"></i>
+            </span>
+
+            <span class="label">FB Page</span>
+          </a>
+      </div>
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="https://twitter.com/riseworlds">
+            <span class="icon">
+              <i class="fab fa-twitter"></i>
+            </span>
+
+            <span class="label">Twitter</span>
+          </a>
+      </div>
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="https://t.me/riseworlds">
+            <span class="icon">
+              <i class="fab fa-telegram"></i>
+            </span>
+
+            <span class="label">Telegram</span>
+          </a>
+      </div>
+  </div>
+</div>
+
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2008/05/17/DXUT%E6%A1%86%E6%9E%B6%E5%89%96%E6%9E%90%EF%BC%882%EF%BC%89/" rel="prev" title="DXUT框架剖析（2）">
+                  <i class="fa fa-angle-left"></i> DXUT框架剖析（2）
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2008/05/17/DXUT%E6%A1%86%E6%9E%B6%E5%89%96%E6%9E%90%EF%BC%884%EF%BC%89/" rel="next" title="DXUT框架剖析（4）">
+                  DXUT框架剖析（4） <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  
+  <div class="comments giscus-container">
+  </div>
+  
+  
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">豫ICP备2021009490号 </a>
+  </div>
+  <div class="copyright">
+    &copy; 2004 – 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">rise</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="reading-progress-bar"></div>
+
+  <a href="https://github.com/rise-worlds" class="github-corner" title="在 GitHub 上关注我" aria-label="在 GitHub 上关注我" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://unpkg.com/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@next-theme/pjax@0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script><script src="/js/pjax.js"></script>
+
+  
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://unpkg.com/mermaid@10.9.0/dist/mermaid.min.js","integrity":"sha256-stuqcu2FrjYCXDOytWFA5SoUE/r3nkp6gTglzNSlavU="}}</script>
+  <script src="/js/third-party/tags/mermaid.js"></script>
+
+
+
+
+
+  
+
+
+
+
+  <script src="https://unpkg.com/quicklink@2.3.0/dist/quicklink.umd.js" integrity="sha256-yvJQOINiH9fWemHn0vCA5lsHWJaHs6/ZmO+1Ft04SvM=" crossorigin="anonymous"></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":true,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"https://rise-worlds.github.io/2008/05/17/DXUT%E6%A1%86%E6%9E%B6%E5%89%96%E6%9E%90%EF%BC%883%EF%BC%89/"}</script>
+  <script src="/js/third-party/quicklink.js"></script>
+<script class="next-config" data-name="giscus" type="application/json">{"enable":true,"repo":"rise-worlds/rise-worlds.github.io","repo_id":"MDEwOlJlcG9zaXRvcnk2MTAxMTA0MA==","category":"Announcements","category_id":"DIC_kwDOA6L0YM4CiXf9","mapping":"pathname","strict":0,"reactions_enabled":1,"emit_metadata":0,"theme":"transparent_dark","lang":"zh-CN","crossorigin":"anonymous","input_position":"top","loading":"lazy"}</script>
+
+<script>
+document.addEventListener('page:loaded', () => {
+  if (!CONFIG.page.comments) return;
+
+  NexT.utils.loadComments('.giscus-container')
+    .then(() => NexT.utils.getScript('https://giscus.app/client.js', {
+      attributes: {
+        async                   : true,
+        crossOrigin             : 'anonymous',
+        'data-repo'             : CONFIG.giscus.repo,
+        'data-repo-id'          : CONFIG.giscus.repo_id,
+        'data-category'         : CONFIG.giscus.category,
+        'data-category-id'      : CONFIG.giscus.category_id,
+        'data-mapping'          : CONFIG.giscus.mapping,
+        'data-strict'           : CONFIG.giscus.strict,
+        'data-reactions-enabled': CONFIG.giscus.reactions_enabled,
+        'data-emit-metadata'    : CONFIG.giscus.emit_metadata,
+        'data-theme'            : CONFIG.giscus.theme,
+        'data-lang'             : CONFIG.giscus.lang,
+        'data-input-position'   : CONFIG.giscus.input_position,
+        'data-loading'          : CONFIG.giscus.loading
+      },
+      parentNode: document.querySelector('.giscus-container')
+    }));
+});
+</script>
+
+</body>
+</html>

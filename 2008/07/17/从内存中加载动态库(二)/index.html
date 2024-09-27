@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://unpkg.com/@fortawesome/fontawesome-free@6.5.2/css/all.min.css" integrity="sha256-XOqroi11tY4EFQMR9ZYwZWKj5ZXiftSx36RRuC3anlA=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://unpkg.com/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"rise-worlds.github.io","root":"/","images":"/images","scheme":"Mist","darkmode":true,"version":"8.20.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="五、加载类的源代码。（编译环境vc6,win98） typedef&nbsp;&nbsp; BOOL (__stdcall *ProcDllMain)(HINSTANCE, DWORD,&nbsp; LPVOID ); class CMemLoadDll{public: CMemLoadDll(); ~CMemLoadDll(); BOOL&nbsp;&nbsp;&nbsp; MemLoadLi">
+<meta property="og:type" content="article">
+<meta property="og:title" content="从内存中加载动态库(二)">
+<meta property="og:url" content="https://rise-worlds.github.io/2008/07/17/%E4%BB%8E%E5%86%85%E5%AD%98%E4%B8%AD%E5%8A%A0%E8%BD%BD%E5%8A%A8%E6%80%81%E5%BA%93(%E4%BA%8C)/index.html">
+<meta property="og:site_name" content="Rise&#39;blogs">
+<meta property="og:description" content="五、加载类的源代码。（编译环境vc6,win98） typedef&nbsp;&nbsp; BOOL (__stdcall *ProcDllMain)(HINSTANCE, DWORD,&nbsp; LPVOID ); class CMemLoadDll{public: CMemLoadDll(); ~CMemLoadDll(); BOOL&nbsp;&nbsp;&nbsp; MemLoadLi">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2008-07-17T18:43:00.000Z">
+<meta property="article:modified_time" content="2008-07-17T18:43:00.000Z">
+<meta property="article:author" content="rise">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://rise-worlds.github.io/2008/07/17/%E4%BB%8E%E5%86%85%E5%AD%98%E4%B8%AD%E5%8A%A0%E8%BD%BD%E5%8A%A8%E6%80%81%E5%BA%93(%E4%BA%8C)/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://rise-worlds.github.io/2008/07/17/%E4%BB%8E%E5%86%85%E5%AD%98%E4%B8%AD%E5%8A%A0%E8%BD%BD%E5%8A%A8%E6%80%81%E5%BA%93(%E4%BA%8C)/","path":"2008/07/17/从内存中加载动态库(二)/","title":"从内存中加载动态库(二)"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>从内存中加载动态库(二) | Rise'blogs</title>
+  
+
+  <script src="/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?266da4e90214887b507c0bb6baa84e3e"></script>
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Rise'blogs</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-message"><a href="/message/" rel="section"><i class="fa fa-comments fa-fw"></i>留言板</a></li><li class="menu-item menu-item-sitemap"><a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>站点地图</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="rise"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">rise</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">661</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">47</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">93</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="mailto:rise.worlds@outlook.com" title="E-Mail → mailto:rise.worlds@outlook.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://github.com/rise-worlds" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;rise-worlds" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://x.com/riseworlds" title="Twitter → https:&#x2F;&#x2F;x.com&#x2F;riseworlds" rel="noopener me" target="_blank"><i class="fab fa-twitter fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.facebook.com/rise.worlds" title="FB Page → https:&#x2F;&#x2F;www.facebook.com&#x2F;rise.worlds" rel="noopener me" target="_blank"><i class="fab fa-facebook fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.youtube.com/@YiXuan" title="YouTube → https:&#x2F;&#x2F;www.youtube.com&#x2F;@YiXuan" rel="noopener me" target="_blank"><i class="fab fa-youtube fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.instagram.com/rise.worlds/" title="Instagram → https:&#x2F;&#x2F;www.instagram.com&#x2F;rise.worlds&#x2F;" rel="noopener me" target="_blank"><i class="fab fa-instagram fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://t.me/riseworlds" title="Telegram → https:&#x2F;&#x2F;t.me&#x2F;riseworlds" rel="noopener me" target="_blank"><i class="fab fa-telegram fa-fw"></i></a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+          链接
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <a href="https://www.cnblogs.com/flying_bat" title="https:&#x2F;&#x2F;www.cnblogs.com&#x2F;flying_bat" rel="noopener" target="_blank">My Cnblogs</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://www.github.com/rise-worlds" title="https:&#x2F;&#x2F;www.github.com&#x2F;rise-worlds" rel="noopener" target="_blank">My Github</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://www.google.com/" title="https:&#x2F;&#x2F;www.google.com&#x2F;" rel="noopener" target="_blank">Google</a>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://rise-worlds.github.io/2008/07/17/%E4%BB%8E%E5%86%85%E5%AD%98%E4%B8%AD%E5%8A%A0%E8%BD%BD%E5%8A%A8%E6%80%81%E5%BA%93(%E4%BA%8C)/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="rise">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Rise'blogs">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="从内存中加载动态库(二) | Rise'blogs">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          从内存中加载动态库(二)
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2008-07-17 18:43:00" itemprop="dateCreated datePublished" datetime="2008-07-17T18:43:00+00:00">2008-07-17</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/dev/" itemprop="url" rel="index"><span itemprop="name">dev</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/dev/Safe/" itemprop="url" rel="index"><span itemprop="name">Safe</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p></p> <p>五、加载类的源代码。（编译环境vc6,win98） <p>typedef&nbsp;&nbsp; BOOL (__stdcall *ProcDllMain)(HINSTANCE, DWORD,&nbsp; LPVOID ); <p>class CMemLoadDll<br>{<br>public:<br> CMemLoadDll();<br> ~CMemLoadDll();<br> BOOL&nbsp;&nbsp;&nbsp; MemLoadLibrary( void* lpFileData , int DataLength);&nbsp; // Dll file data buffer<br> FARPROC MemGetProcAddress(LPCSTR lpProcName);<br>private:<br> BOOL isLoadOk;<br> BOOL CheckDataValide(void* lpFileData, int DataLength);<br> int&nbsp; CalcTotalImageSize();<br> void CopyDllDatas(void* pDest, void* pSrc);<br> BOOL FillRavAddress(void* pBase);<br> void DoRelocation(void* pNewBase);<br> int&nbsp; GetAlignedSize(int Origin, int Alignment); <br>private:<br> ProcDllMain pDllMain; <p>private:<br> DWORD&nbsp; pImageBase;<br> PIMAGE_DOS_HEADER pDosHeader;<br> PIMAGE_NT_HEADERS pNTHeader;<br> PIMAGE_SECTION_HEADER pSectionHeader;<br>}; <p>CMemLoadDll::CMemLoadDll()<br>{<br> isLoadOk = FALSE;<br> pImageBase = NULL;<br> pDllMain = NULL;<br>}<br>CMemLoadDll::~CMemLoadDll()<br>{<br> if(isLoadOk)<br> {<br>&nbsp; ASSERT(pImageBase != NULL);<br>&nbsp; ASSERT(pDllMain&nbsp;&nbsp; != NULL);<br>&nbsp; //脱钩，准备卸载dll<br>&nbsp; pDllMain((HINSTANCE)pImageBase,DLL_PROCESS_DETACH,0);<br>&nbsp; VirtualFree((LPVOID)pImageBase, 0, MEM_RELEASE);<br> }<br>} <p>//MemLoadLibrary函数从内存缓冲区数据中加载一个dll到当前进程的地址空间，缺省位置0x10000000<br>//返回值： 成功返回TRUE , 失败返回FALSE<br>//lpFileData: 存放dll文件数据的缓冲区<br>//DataLength: 缓冲区中数据的总长度<br>BOOL CMemLoadDll::MemLoadLibrary(void* lpFileData, int DataLength)<br>{<br> if(pImageBase != NULL)<br> {<br>&nbsp; return FALSE;&nbsp; //已经加载一个dll，还没有释放，不能加载新的dll<br> }<br> //检查数据有效性，并初始化<br> if(!CheckDataValide(lpFileData, DataLength))return FALSE;<br> //计算所需的加载空间<br> int ImageSize = CalcTotalImageSize();<br> if(ImageSize == 0) return FALSE; <p> // 分配虚拟内存<br> void *pMemoryAddress = VirtualAlloc((LPVOID)0x10000000, ImageSize,<br>&nbsp;&nbsp;&nbsp;&nbsp; MEM_COMMIT|MEM_RESERVE, PAGE_EXECUTE_READWRITE); <br> if(pMemoryAddress == NULL) return FALSE;<br> else<br> {<br>&nbsp; CopyDllDatas(pMemoryAddress, lpFileData); //复制dll数据，并对齐每个段<br>&nbsp; //重定位信息<br>&nbsp; if(pNTHeader-&gt;OptionalHeader.DataDirectory[IMAGE_DIRECTORY_ENTRY_BASERELOC].VirtualAddress &gt;0<br>&nbsp;&nbsp; &amp;&amp; pNTHeader-&gt;OptionalHeader.DataDirectory[IMAGE_DIRECTORY_ENTRY_BASERELOC].Size&gt;0)<br>&nbsp; {<br>&nbsp;&nbsp; DoRelocation(pMemoryAddress);<br>&nbsp; }<br>&nbsp; //填充引入地址表<br>&nbsp; if(!FillRavAddress(pMemoryAddress)) //修正引入地址表失败<br>&nbsp; {<br>&nbsp;&nbsp; VirtualFree(pMemoryAddress,0,MEM_RELEASE);<br>&nbsp;&nbsp; return FALSE;<br>&nbsp; }<br>&nbsp; //修改页属性。应该根据每个页的属性单独设置其对应内存页的属性。这里简化一下。<br>&nbsp; //统一设置成一个属性PAGE_EXECUTE_READWRITE<br>&nbsp; unsigned long old;<br>&nbsp; VirtualProtect(pMemoryAddress, ImageSize, PAGE_EXECUTE_READWRITE,&amp;old);<br> }<br> //修正基地址<br> pNTHeader-&gt;OptionalHeader.ImageBase = (DWORD)pMemoryAddress; <p> //接下来要调用一下dll的入口函数，做初始化工作。<br> pDllMain = (ProcDllMain)(pNTHeader-&gt;OptionalHeader.AddressOfEntryPoint +(DWORD) pMemoryAddress);<br> BOOL InitResult = pDllMain((HINSTANCE)pMemoryAddress,DLL_PROCESS_ATTACH,0);<br> if(!InitResult) //初始化失败<br> {<br>&nbsp; pDllMain((HINSTANCE)pMemoryAddress,DLL_PROCESS_DETACH,0);<br>&nbsp; VirtualFree(pMemoryAddress,0,MEM_RELEASE);<br>&nbsp; pDllMain = NULL;<br>&nbsp; return FALSE;<br> } <p> isLoadOk = TRUE;<br> pImageBase = (DWORD)pMemoryAddress;<br> return TRUE;<br>} <p>//MemGetProcAddress函数从dll中获取指定函数的地址<br>//返回值： 成功返回函数地址 , 失败返回NULL<br>//lpProcName: 要查找函数的名字或者序号<br>FARPROC&nbsp; CMemLoadDll::MemGetProcAddress(LPCSTR lpProcName)<br>{<br> if(pNTHeader-&gt;OptionalHeader.DataDirectory[IMAGE_DIRECTORY_ENTRY_EXPORT].VirtualAddress == 0 ||<br>&nbsp; pNTHeader-&gt;OptionalHeader.DataDirectory[IMAGE_DIRECTORY_ENTRY_EXPORT].Size == 0)<br>&nbsp; return NULL;<br> if(!isLoadOk) return NULL; <p> DWORD OffsetStart = pNTHeader-&gt;OptionalHeader.DataDirectory[IMAGE_DIRECTORY_ENTRY_EXPORT].VirtualAddress;<br> DWORD Size = pNTHeader-&gt;OptionalHeader.DataDirectory[IMAGE_DIRECTORY_ENTRY_EXPORT].Size; <p> PIMAGE_EXPORT_DIRECTORY pExport = (PIMAGE_EXPORT_DIRECTORY)((DWORD)pImageBase + pNTHeader-&gt;OptionalHeader.DataDirectory[IMAGE_DIRECTORY_ENTRY_EXPORT].VirtualAddress);<br> int iBase = pExport-&gt;Base;<br> int iNumberOfFunctions = pExport-&gt;NumberOfFunctions;<br> int iNumberOfNames = pExport-&gt;NumberOfNames; //&lt;= iNumberOfFunctions<br> LPDWORD pAddressOfFunctions = (LPDWORD)(pExport-&gt;AddressOfFunctions + pImageBase);<br> LPWORD&nbsp; pAddressOfOrdinals = (LPWORD)(pExport-&gt;AddressOfNameOrdinals + pImageBase);<br> LPDWORD pAddressOfNames&nbsp; = (LPDWORD)(pExport-&gt;AddressOfNames + pImageBase); <p> int iOrdinal = -1; <p> if(((DWORD)lpProcName &amp; 0xFFFF0000) == 0) //IT IS A ORDINAL!<br> {<br>&nbsp; iOrdinal = (DWORD)lpProcName &amp; 0x0000FFFF - iBase;<br> }<br> else&nbsp; //use name<br> {<br>&nbsp; int iFound = -1; <p>&nbsp; for(int i=0;i&lt;iNumberOfNames;i++)<br>&nbsp; {<br>&nbsp;&nbsp; char* pName= (char* )(pAddressOfNames[i] + pImageBase);<br>&nbsp;&nbsp; if(strcmp(pName, lpProcName) == 0)<br>&nbsp;&nbsp; {<br>&nbsp;&nbsp;&nbsp; iFound = i; break;<br>&nbsp;&nbsp; }<br>&nbsp; }<br>&nbsp; if(iFound &gt;= 0)<br>&nbsp; {<br>&nbsp;&nbsp; iOrdinal = (int)(pAddressOfOrdinals[iFound]);<br>&nbsp; }<br> } <p> if(iOrdinal &lt; 0 || iOrdinal &gt;= iNumberOfFunctions ) return NULL;<br> else<br> {<br>&nbsp; DWORD pFunctionOffset = pAddressOfFunctions[iOrdinal];<br>&nbsp; if(pFunctionOffset &gt; OffsetStart &amp;&amp; pFunctionOffset &lt; (OffsetStart+Size))//maybe Export Forwarding<br>&nbsp;&nbsp; return NULL;<br>&nbsp; else return (FARPROC)(pFunctionOffset + pImageBase);<br> } <p>} <p>// 重定向PE用到的地址<br>void CMemLoadDll::DoRelocation( void *NewBase)<br>{<br> /* 重定位表的结构：<br> // DWORD sectionAddress, DWORD size (包括本节需要重定位的数据)<br> // 例如 1000节需要修正5个重定位数据的话，重定位表的数据是<br> // 00 10 00 00&nbsp;&nbsp; 14 00 00 00&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; xxxx xxxx xxxx xxxx xxxx 0000<br> // -----------&nbsp;&nbsp; -----------&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ----<br> // 给出节的偏移&nbsp; 总尺寸=8+6*2&nbsp;&nbsp;&nbsp;&nbsp; 需要修正的地址&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 用于对齐4字节<br> // 重定位表是若干个相连，如果address 和 size都是0 表示结束<br> // 需要修正的地址是12位的，高4位是形态字，intel cpu下是3<br> */<br> //假设NewBase是0x600000,而文件中设置的缺省ImageBase是0x400000,则修正偏移量就是0x200000<br> DWORD Delta = (DWORD)NewBase - pNTHeader-&gt;OptionalHeader.ImageBase; <p> //注意重定位表的位置可能和硬盘文件中的偏移地址不同，应该使用加载后的地址<br> PIMAGE_BASE_RELOCATION pLoc = (PIMAGE_BASE_RELOCATION)((unsigned long)NewBase <br>&nbsp; + pNTHeader-&gt;OptionalHeader.DataDirectory[IMAGE_DIRECTORY_ENTRY_BASERELOC].VirtualAddress);<br> while((pLoc-&gt;VirtualAddress + pLoc-&gt;SizeOfBlock) != 0) //开始扫描重定位表<br> {<br>&nbsp; WORD *pLocData = (WORD *)((int)pLoc + sizeof(IMAGE_BASE_RELOCATION));<br>&nbsp; //计算本节需要修正的重定位项（地址）的数目<br>&nbsp; int NumberOfReloc = (pLoc-&gt;SizeOfBlock - sizeof(IMAGE_BASE_RELOCATION))/sizeof(WORD);<br>&nbsp; for( int i=0 ; i &lt; NumberOfReloc; i++)<br>&nbsp; {<br>&nbsp;&nbsp; if( (DWORD)(pLocData[i] &amp; 0xF000) == 0x00003000) //这是一个需要修正的地址<br>&nbsp;&nbsp; {<br>&nbsp;&nbsp;&nbsp; // 举例： <br>&nbsp;&nbsp;&nbsp; // pLoc-&gt;VirtualAddress = 0x1000; <br>&nbsp;&nbsp;&nbsp; // pLocData[i] = 0x313E; 表示本节偏移地址0x13E处需要修正<br>&nbsp;&nbsp;&nbsp; // 因此 pAddress = 基地址 + 0x113E<br>&nbsp;&nbsp;&nbsp; // 里面的内容是 A1 ( 0c d4 02 10)&nbsp; 汇编代码是： mov eax , [1002d40c]<br>&nbsp;&nbsp;&nbsp; // 需要修正1002d40c这个地址<br>&nbsp;&nbsp;&nbsp; DWORD * pAddress = (DWORD *)((unsigned long)NewBase + pLoc-&gt;VirtualAddress + (pLocData[i] &amp; 0x0FFF));<br>&nbsp;&nbsp;&nbsp; *pAddress += Delta;<br>&nbsp;&nbsp; }<br>&nbsp; }<br>&nbsp; //转移到下一个节进行处理<br>&nbsp; pLoc = (PIMAGE_BASE_RELOCATION)((DWORD)pLoc + pLoc-&gt;SizeOfBlock);<br> }<br>} <p>//填充引入地址表<br>BOOL CMemLoadDll::FillRavAddress(void *pImageBase)<br>{<br> // 引入表实际上是一个 IMAGE_IMPORT_DESCRIPTOR 结构数组，全部是0表示结束<br> // 数组定义如下：<br> // <br>&nbsp;&nbsp;&nbsp; // DWORD&nbsp;&nbsp; OriginalFirstThunk;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // 0表示结束，否则指向未绑定的IAT结构数组<br>&nbsp;&nbsp;&nbsp; // DWORD&nbsp;&nbsp; TimeDateStamp; <br>&nbsp;&nbsp;&nbsp; // DWORD&nbsp;&nbsp; ForwarderChain;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // -1 if no forwarders<br>&nbsp;&nbsp;&nbsp; // DWORD&nbsp;&nbsp; Name;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // 给出dll的名字<br>&nbsp;&nbsp;&nbsp; // DWORD&nbsp;&nbsp; FirstThunk;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // 指向IAT结构数组的地址(绑定后，这些IAT里面就是实际的函数地址)<br> unsigned long Offset = pNTHeader-&gt;OptionalHeader.DataDirectory[IMAGE_DIRECTORY_ENTRY_IMPORT].VirtualAddress ;<br> if(Offset == 0) return TRUE; //No Import Table<br> PIMAGE_IMPORT_DESCRIPTOR pID = (PIMAGE_IMPORT_DESCRIPTOR)((unsigned long) pImageBase + Offset);<br> while(pID-&gt;Characteristics != 0 )<br> {<br>&nbsp; PIMAGE_THUNK_DATA pRealIAT = (PIMAGE_THUNK_DATA)((unsigned long)pImageBase + pID-&gt;FirstThunk);<br>&nbsp; PIMAGE_THUNK_DATA pOriginalIAT = (PIMAGE_THUNK_DATA)((unsigned long)pImageBase + pID-&gt;OriginalFirstThunk);<br>&nbsp; //获取dll的名字<br>&nbsp; char buf[256]; //dll name;<br>&nbsp; BYTE* pName = (BYTE*)((unsigned long)pImageBase + pID-&gt;Name);<br>&nbsp; for(int i=0;i&lt;256;i++)<br>&nbsp; {<br>&nbsp;&nbsp; if(pName[i] == 0)break;<br>&nbsp;&nbsp; buf[i] = pName[i];<br>&nbsp; }<br>&nbsp; if(i&gt;=256) return FALSE;&nbsp; // bad dll name<br>&nbsp; else buf[i] = 0;<br>&nbsp; HMODULE hDll = GetModuleHandle(buf);<br>&nbsp; if(hDll == NULL)return FALSE; //NOT FOUND DLL<br>&nbsp; //获取DLL中每个导出函数的地址，填入IAT<br>&nbsp; //每个IAT结构是 ：<br>&nbsp; // union { PBYTE&nbsp; ForwarderString;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; //&nbsp;&nbsp; PDWORD Function;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; //&nbsp;&nbsp; DWORD Ordinal;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; //&nbsp;&nbsp; PIMAGE_IMPORT_BY_NAME&nbsp; AddressOfData;<br>&nbsp; // } u1;<br>&nbsp; // 长度是一个DWORD ，正好容纳一个地址。<br>&nbsp; for(i=0; ;i++)<br>&nbsp; {<br>&nbsp;&nbsp; if(pOriginalIAT[i].u1.Function == 0)break;<br>&nbsp;&nbsp; FARPROC lpFunction = NULL;<br>&nbsp;&nbsp; if(pOriginalIAT[i].u1.Ordinal &amp; IMAGE_ORDINAL_FLAG) //这里的值给出的是导出序号<br>&nbsp;&nbsp; {<br>&nbsp;&nbsp;&nbsp; lpFunction = GetProcAddress(hDll, (LPCSTR)(pOriginalIAT[i].u1.Ordinal &amp; 0x0000FFFF));<br>&nbsp;&nbsp; }<br>&nbsp;&nbsp; else //按照名字导入<br>&nbsp;&nbsp; {<br>&nbsp;&nbsp;&nbsp; //获取此IAT项所描述的函数名称<br>&nbsp;&nbsp;&nbsp; PIMAGE_IMPORT_BY_NAME pByName = (PIMAGE_IMPORT_BY_NAME)<br>&nbsp;&nbsp;&nbsp;&nbsp; ((DWORD)pImageBase + (DWORD)(pOriginalIAT[i].u1.AddressOfData));<br>//&nbsp;&nbsp;&nbsp; if(pByName-&gt;Hint !=0)<br>//&nbsp;&nbsp;&nbsp;&nbsp; lpFunction = GetProcAddress(hDll, (LPCSTR)pByName-&gt;Hint);<br>//&nbsp;&nbsp;&nbsp; else<br>&nbsp;&nbsp;&nbsp;&nbsp; lpFunction = GetProcAddress(hDll, (char *)pByName-&gt;Name);<br>&nbsp;&nbsp; }<br>&nbsp;&nbsp; if(lpFunction != NULL)&nbsp;&nbsp; //找到了！<br>&nbsp;&nbsp; {<br>&nbsp;&nbsp;&nbsp; pRealIAT[i].u1.Function = (PDWORD) lpFunction;<br>&nbsp;&nbsp; }<br>&nbsp;&nbsp; else return FALSE;<br>&nbsp; } <p>&nbsp; //move to next <br>&nbsp; pID = (PIMAGE_IMPORT_DESCRIPTOR)( (DWORD)pID + sizeof(IMAGE_IMPORT_DESCRIPTOR));<br> }<br> return TRUE;<br>} <p>//CheckDataValide函数用于检查缓冲区中的数据是否有效的dll文件<br>//返回值： 是一个可执行的dll则返回TRUE，否则返回FALSE。<br>//lpFileData: 存放dll数据的内存缓冲区<br>//DataLength: dll文件的长度<br>BOOL CMemLoadDll::CheckDataValide(void* lpFileData, int DataLength)<br>{<br> //检查长度<br> if(DataLength &lt; sizeof(IMAGE_DOS_HEADER)) return FALSE;<br> pDosHeader = (PIMAGE_DOS_HEADER)lpFileData;&nbsp; // DOS头<br> //检查dos头的标记<br> if(pDosHeader-&gt;e_magic != IMAGE_DOS_SIGNATURE) return FALSE;&nbsp; //0x5A4D : MZ <p> //检查长度<br> if((DWORD)DataLength &lt; (pDosHeader-&gt;e_lfanew + sizeof(IMAGE_NT_HEADERS)) ) return FALSE;<br> //取得pe头<br> pNTHeader = (PIMAGE_NT_HEADERS)( (unsigned long)lpFileData + pDosHeader-&gt;e_lfanew); // PE头<br> //检查pe头的合法性<br> if(pNTHeader-&gt;Signature != IMAGE_NT_SIGNATURE) return FALSE;&nbsp; //0x00004550 : PE00<br> if((pNTHeader-&gt;FileHeader.Characteristics &amp; IMAGE_FILE_DLL) == 0) //0x2000&nbsp; : File is a DLL<br>&nbsp; return FALSE;&nbsp; <br> if((pNTHeader-&gt;FileHeader.Characteristics &amp; IMAGE_FILE_EXECUTABLE_IMAGE) == 0) //0x0002 : 指出文件可以运行<br>&nbsp; return FALSE;<br> if(pNTHeader-&gt;FileHeader.SizeOfOptionalHeader != sizeof(IMAGE_OPTIONAL_HEADER)) return FALSE; <p> //取得节表（段表）<br> pSectionHeader = (PIMAGE_SECTION_HEADER)((int)pNTHeader + sizeof(IMAGE_NT_HEADERS));<br> //验证每个节表的空间<br> for(int i=0; i&lt; pNTHeader-&gt;FileHeader.NumberOfSections; i++)<br> {<br>&nbsp; if((pSectionHeader[i].PointerToRawData + pSectionHeader[i].SizeOfRawData) &gt; (DWORD)DataLength)return FALSE;<br> }<br> return TRUE;<br>} <p>//计算对齐边界<br>int CMemLoadDll::GetAlignedSize(int Origin, int Alignment)<br>{<br> return (Origin + Alignment - 1) / Alignment * Alignment;<br>}<br>//计算整个dll映像文件的尺寸<br>int CMemLoadDll::CalcTotalImageSize()<br>{<br> int Size;<br> if(pNTHeader == NULL)return 0;<br> int nAlign = pNTHeader-&gt;OptionalHeader.SectionAlignment; //段对齐字节数 <p> // 计算所有头的尺寸。包括dos, coff, pe头 和 段表的大小<br> Size = GetAlignedSize(pNTHeader-&gt;OptionalHeader.SizeOfHeaders, nAlign);<br> // 计算所有节的大小<br> for(int i=0; i &lt; pNTHeader-&gt;FileHeader.NumberOfSections; ++i)<br> {<br>&nbsp; //得到该节的大小<br>&nbsp; int CodeSize = pSectionHeader[i].Misc.VirtualSize ;<br>&nbsp; int LoadSize = pSectionHeader[i].SizeOfRawData;<br>&nbsp; int MaxSize = (LoadSize &gt; CodeSize)?(LoadSize):(CodeSize); <p>&nbsp; int SectionSize = GetAlignedSize(pSectionHeader[i].VirtualAddress + MaxSize, nAlign);<br>&nbsp; if(Size &lt; SectionSize) <br>&nbsp;&nbsp; Size = SectionSize;&nbsp; //Use the Max;<br> }<br> return Size;<br>}<br>//CopyDllDatas函数将dll数据复制到指定内存区域，并对齐所有节<br>//pSrc: 存放dll数据的原始缓冲区<br>//pDest:目标内存地址<br>void CMemLoadDll::CopyDllDatas(void* pDest, void* pSrc)<br>{<br> // 计算需要复制的PE头+段表字节数<br> int&nbsp; HeaderSize = pNTHeader-&gt;OptionalHeader.SizeOfHeaders;<br> int&nbsp; SectionSize = pNTHeader-&gt;FileHeader.NumberOfSections * sizeof(IMAGE_SECTION_HEADER);<br> int&nbsp; MoveSize = HeaderSize + SectionSize;<br> //复制头和段信息<br> memmove(pDest, pSrc, MoveSize); <p> //复制每个节<br> for(int i=0; i &lt; pNTHeader-&gt;FileHeader.NumberOfSections; ++i)<br> {<br>&nbsp; if(pSectionHeader[i].VirtualAddress == 0 || pSectionHeader[i].SizeOfRawData == 0)continue;<br>&nbsp; // 定位该节在内存中的位置<br>&nbsp; void *pSectionAddress = (void *)((unsigned long)pDest + pSectionHeader[i].VirtualAddress);<br>&nbsp; // 复制段数据到虚拟内存<br>&nbsp; memmove((void *)pSectionAddress,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (void *)((DWORD)pSrc + pSectionHeader[i].PointerToRawData),<br>&nbsp;&nbsp;&nbsp; pSectionHeader[i].SizeOfRawData);<br> } <p> //修正指针，指向新分配的内存<br> //新的dos头<br> pDosHeader = (PIMAGE_DOS_HEADER)pDest;<br> //新的pe头地址<br> pNTHeader = (PIMAGE_NT_HEADERS)((int)pDest + (pDosHeader-&gt;e_lfanew));<br> //新的节表地址<br> pSectionHeader = (PIMAGE_SECTION_HEADER)((int)pNTHeader + sizeof(IMAGE_NT_HEADERS));<br> return ;<br>}</p>
+    
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="followme">
+  <span>欢迎关注我的其它发布渠道</span>
+
+  <div class="social-list">
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="https://www.facebook.com/rise.worlds">
+            <span class="icon">
+              <i class="fab fa-facebook"></i>
+            </span>
+
+            <span class="label">FB Page</span>
+          </a>
+      </div>
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="https://twitter.com/riseworlds">
+            <span class="icon">
+              <i class="fab fa-twitter"></i>
+            </span>
+
+            <span class="label">Twitter</span>
+          </a>
+      </div>
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="https://t.me/riseworlds">
+            <span class="icon">
+              <i class="fab fa-telegram"></i>
+            </span>
+
+            <span class="label">Telegram</span>
+          </a>
+      </div>
+  </div>
+</div>
+
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2008/07/17/%E4%BB%8E%E5%86%85%E5%AD%98%E4%B8%AD%E5%8A%A0%E8%BD%BD%E5%8A%A8%E6%80%81%E5%BA%93(%E4%B8%80)/" rel="prev" title="从内存中加载动态库(一)">
+                  <i class="fa fa-angle-left"></i> 从内存中加载动态库(一)
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2008/07/28/%E6%B2%A1%E5%AE%9E%E5%8A%9B%EF%BC%8C%E5%8D%83%E4%B8%87%E5%88%AB%E8%A3%85B!%5BZZ%5D/" rel="next" title="没实力，千万别装B![ZZ]">
+                  没实力，千万别装B![ZZ] <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  
+  <div class="comments giscus-container">
+  </div>
+  
+  
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">豫ICP备2021009490号 </a>
+  </div>
+  <div class="copyright">
+    &copy; 2004 – 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">rise</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="reading-progress-bar"></div>
+
+  <a href="https://github.com/rise-worlds" class="github-corner" title="在 GitHub 上关注我" aria-label="在 GitHub 上关注我" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://unpkg.com/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@next-theme/pjax@0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script><script src="/js/pjax.js"></script>
+
+  
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://unpkg.com/mermaid@10.9.0/dist/mermaid.min.js","integrity":"sha256-stuqcu2FrjYCXDOytWFA5SoUE/r3nkp6gTglzNSlavU="}}</script>
+  <script src="/js/third-party/tags/mermaid.js"></script>
+
+
+
+
+
+  
+
+
+
+
+  <script src="https://unpkg.com/quicklink@2.3.0/dist/quicklink.umd.js" integrity="sha256-yvJQOINiH9fWemHn0vCA5lsHWJaHs6/ZmO+1Ft04SvM=" crossorigin="anonymous"></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":true,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"https://rise-worlds.github.io/2008/07/17/%E4%BB%8E%E5%86%85%E5%AD%98%E4%B8%AD%E5%8A%A0%E8%BD%BD%E5%8A%A8%E6%80%81%E5%BA%93(%E4%BA%8C)/"}</script>
+  <script src="/js/third-party/quicklink.js"></script>
+<script class="next-config" data-name="giscus" type="application/json">{"enable":true,"repo":"rise-worlds/rise-worlds.github.io","repo_id":"MDEwOlJlcG9zaXRvcnk2MTAxMTA0MA==","category":"Announcements","category_id":"DIC_kwDOA6L0YM4CiXf9","mapping":"pathname","strict":0,"reactions_enabled":1,"emit_metadata":0,"theme":"transparent_dark","lang":"zh-CN","crossorigin":"anonymous","input_position":"top","loading":"lazy"}</script>
+
+<script>
+document.addEventListener('page:loaded', () => {
+  if (!CONFIG.page.comments) return;
+
+  NexT.utils.loadComments('.giscus-container')
+    .then(() => NexT.utils.getScript('https://giscus.app/client.js', {
+      attributes: {
+        async                   : true,
+        crossOrigin             : 'anonymous',
+        'data-repo'             : CONFIG.giscus.repo,
+        'data-repo-id'          : CONFIG.giscus.repo_id,
+        'data-category'         : CONFIG.giscus.category,
+        'data-category-id'      : CONFIG.giscus.category_id,
+        'data-mapping'          : CONFIG.giscus.mapping,
+        'data-strict'           : CONFIG.giscus.strict,
+        'data-reactions-enabled': CONFIG.giscus.reactions_enabled,
+        'data-emit-metadata'    : CONFIG.giscus.emit_metadata,
+        'data-theme'            : CONFIG.giscus.theme,
+        'data-lang'             : CONFIG.giscus.lang,
+        'data-input-position'   : CONFIG.giscus.input_position,
+        'data-loading'          : CONFIG.giscus.loading
+      },
+      parentNode: document.querySelector('.giscus-container')
+    }));
+});
+</script>
+
+</body>
+</html>

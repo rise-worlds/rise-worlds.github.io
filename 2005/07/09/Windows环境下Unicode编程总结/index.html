@@ -1,0 +1,1317 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://unpkg.com/@fortawesome/fontawesome-free@6.5.2/css/all.min.css" integrity="sha256-XOqroi11tY4EFQMR9ZYwZWKj5ZXiftSx36RRuC3anlA=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://unpkg.com/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"rise-worlds.github.io","root":"/","images":"/images","scheme":"Mist","darkmode":true,"version":"8.20.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="&nbsp;  UNICODE环境设置       在安装Visual Studio时，在选择VC++时需要加入unicode选项，保证相关的库文件可以拷贝到system32下。         &nbsp;    UNICODE编译设置：       C&#x2F;C++, Preprocessor difinitions 去除_MBCS，加_UNICODE,UNICODE       在ProjectS">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Windows环境下Unicode编程总结">
+<meta property="og:url" content="https://rise-worlds.github.io/2005/07/09/Windows%E7%8E%AF%E5%A2%83%E4%B8%8BUnicode%E7%BC%96%E7%A8%8B%E6%80%BB%E7%BB%93/index.html">
+<meta property="og:site_name" content="Rise&#39;blogs">
+<meta property="og:description" content="&nbsp;  UNICODE环境设置       在安装Visual Studio时，在选择VC++时需要加入unicode选项，保证相关的库文件可以拷贝到system32下。         &nbsp;    UNICODE编译设置：       C&#x2F;C++, Preprocessor difinitions 去除_MBCS，加_UNICODE,UNICODE       在ProjectS">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2005-07-09T12:53:00.000Z">
+<meta property="article:modified_time" content="2005-07-09T12:53:00.000Z">
+<meta property="article:author" content="rise">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://rise-worlds.github.io/2005/07/09/Windows%E7%8E%AF%E5%A2%83%E4%B8%8BUnicode%E7%BC%96%E7%A8%8B%E6%80%BB%E7%BB%93/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://rise-worlds.github.io/2005/07/09/Windows%E7%8E%AF%E5%A2%83%E4%B8%8BUnicode%E7%BC%96%E7%A8%8B%E6%80%BB%E7%BB%93/","path":"2005/07/09/Windows环境下Unicode编程总结/","title":"Windows环境下Unicode编程总结"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Windows环境下Unicode编程总结 | Rise'blogs</title>
+  
+
+  <script src="/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?266da4e90214887b507c0bb6baa84e3e"></script>
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Rise'blogs</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-message"><a href="/message/" rel="section"><i class="fa fa-comments fa-fw"></i>留言板</a></li><li class="menu-item menu-item-sitemap"><a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>站点地图</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="rise"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">rise</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">661</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">47</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">93</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="mailto:rise.worlds@outlook.com" title="E-Mail → mailto:rise.worlds@outlook.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://github.com/rise-worlds" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;rise-worlds" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://x.com/riseworlds" title="Twitter → https:&#x2F;&#x2F;x.com&#x2F;riseworlds" rel="noopener me" target="_blank"><i class="fab fa-twitter fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.facebook.com/rise.worlds" title="FB Page → https:&#x2F;&#x2F;www.facebook.com&#x2F;rise.worlds" rel="noopener me" target="_blank"><i class="fab fa-facebook fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.youtube.com/@YiXuan" title="YouTube → https:&#x2F;&#x2F;www.youtube.com&#x2F;@YiXuan" rel="noopener me" target="_blank"><i class="fab fa-youtube fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.instagram.com/rise.worlds/" title="Instagram → https:&#x2F;&#x2F;www.instagram.com&#x2F;rise.worlds&#x2F;" rel="noopener me" target="_blank"><i class="fab fa-instagram fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://t.me/riseworlds" title="Telegram → https:&#x2F;&#x2F;t.me&#x2F;riseworlds" rel="noopener me" target="_blank"><i class="fab fa-telegram fa-fw"></i></a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+          链接
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <a href="https://www.cnblogs.com/flying_bat" title="https:&#x2F;&#x2F;www.cnblogs.com&#x2F;flying_bat" rel="noopener" target="_blank">My Cnblogs</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://www.github.com/rise-worlds" title="https:&#x2F;&#x2F;www.github.com&#x2F;rise-worlds" rel="noopener" target="_blank">My Github</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://www.google.com/" title="https:&#x2F;&#x2F;www.google.com&#x2F;" rel="noopener" target="_blank">Google</a>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://rise-worlds.github.io/2005/07/09/Windows%E7%8E%AF%E5%A2%83%E4%B8%8BUnicode%E7%BC%96%E7%A8%8B%E6%80%BB%E7%BB%93/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="rise">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Rise'blogs">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Windows环境下Unicode编程总结 | Rise'blogs">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Windows环境下Unicode编程总结
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2005-07-09 12:53:00" itemprop="dateCreated datePublished" datetime="2005-07-09T12:53:00+00:00">2005-07-09</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/dev/" itemprop="url" rel="index"><span itemprop="name">dev</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/dev/Win32Dev/" itemprop="url" rel="index"><span itemprop="name">Win32Dev</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p><SPAN id=ArticleContent1_ArticleContent1_lblContent style="FONT-SIZE: 10pt">&nbsp; </p>
+<P><FONT size=3><SPAN lang=EN-US>UNICODE</SPAN><SPAN>环境设置</SPAN><SPAN lang=EN-US> 
+
+<P></P></SPAN></FONT>
+
+<P></P>
+
+<P><FONT size=3><SPAN>在安装</SPAN><SPAN lang=EN-US>Visual Studio</SPAN><SPAN>时，在选择</SPAN><SPAN lang=EN-US>VC++</SPAN><SPAN>时需要加入</SPAN><SPAN lang=EN-US>unicode</SPAN><SPAN>选项，保证相关的库文件可以拷贝到</SPAN><SPAN lang=EN-US>system32</SPAN><SPAN>下。</SPAN><SPAN lang=EN-US> 
+
+<P></P></SPAN></FONT>
+
+<P></P>
+
+<P><SPAN lang=EN-US>
+
+<P><FONT size=3>&nbsp;</FONT></P></SPAN>
+
+<P></P>
+
+<P><FONT size=3><SPAN lang=EN-US>UNICODE</SPAN><SPAN>编译设置：</SPAN><SPAN lang=EN-US> 
+
+<P></P></SPAN></FONT>
+
+<P></P>
+
+<P><FONT size=3><SPAN lang=EN-US>C/C++, Preprocessor difinitions </SPAN><SPAN>去除</SPAN><SPAN lang=EN-US>_MBCS</SPAN><SPAN>，加</SPAN><SPAN lang=EN-US>_UNICODE,UNICODE 
+
+<P></P></SPAN></FONT>
+
+<P></P>
+
+<P><FONT size=3><SPAN>在</SPAN><SPAN lang=EN-US>ProjectSetting/link/output </SPAN><SPAN>中设置</SPAN><SPAN lang=EN-US>Entry</SPAN><SPAN>为</SPAN><SPAN lang=EN-US>wWinMainCRTStartup</SPAN><SPAN lang=EN-US> 
+
+<P></P></SPAN></FONT>
+
+<P></P>
+
+<P><FONT size=3><SPAN>反之为</SPAN><SPAN lang=EN-US>MBCS</SPAN><SPAN>（</SPAN><SPAN lang=EN-US>ANSI</SPAN><SPAN>）编译。</SPAN><SPAN lang=EN-US> 
+
+<P></P></SPAN></FONT>
+
+<P></P>
+
+<P><SPAN lang=EN-US>
+
+<P><FONT size=3>&nbsp;</FONT></P></SPAN>
+
+<P></P>
+
+<P><FONT size=3><SPAN lang=EN-US>Unicode </SPAN><SPAN>：宽字节字符集</SPAN><SPAN lang=EN-US> 
+
+<P></P></SPAN></FONT>
+
+<P></P>
+
+<P><SPAN lang=EN-US>
+
+<P><FONT size=3>&nbsp;</FONT></P></SPAN>
+
+<P></P>
+
+<P><FONT size=3><B><SPAN lang=EN-US>1. </SPAN></B><B><SPAN>如何取得一个既包含单字节字符又包含双字节字符的字符串的字符个数？</SPAN></B><B><SPAN lang=EN-US> 
+
+<P></P></SPAN></B></FONT>
+
+<P></P>
+
+<P><FONT size=3><SPAN>可以调用</SPAN><SPAN lang=EN-US>Microsoft Visual C++</SPAN><SPAN>的运行期库包含函数</SPAN><SPAN lang=EN-US>_mbslen</SPAN><SPAN>来操作多字节（既包括单字节也包括双字节）字符串。</SPAN><SPAN lang=EN-US> 
+
+<P></P></SPAN></FONT>
+
+<P></P>
+
+<P><FONT size=3><SPAN>调用</SPAN><SPAN lang=EN-US>strlen</SPAN><SPAN>函数，无法真正了解字符串中究竟有多少字符，它只能告诉你到达结尾的</SPAN><SPAN lang=EN-US>0</SPAN><SPAN>之前有多少个字节。</SPAN><SPAN lang=EN-US> 
+
+<P></P></SPAN></FONT>
+
+<P></P>
+
+<P><SPAN lang=EN-US>
+
+<P><FONT size=3>&nbsp;</FONT></P></SPAN>
+
+<P></P>
+
+<P><FONT size=3><B><SPAN lang=EN-US>2. </SPAN></B><B><SPAN>如何对</SPAN></B><B><SPAN lang=EN-US>DBCS</SPAN></B><B><SPAN>（双字节字符集）字符串进行操作？</SPAN></B><B><SPAN lang=EN-US> 
+
+<P></P></SPAN></B></FONT>
+
+<P></P>
+
+<P><FONT size=3><SPAN>函数</SPAN><SPAN> </SPAN><SPAN>描述</SPAN><SPAN lang=EN-US> 
+
+<P></P></SPAN></FONT>
+
+<P></P>
+
+<P><FONT size=3><SPAN lang=EN-US>PTSTR CharNext </SPAN><SPAN>（</SPAN><SPAN lang=EN-US> LPCTSTR </SPAN><SPAN>）</SPAN><SPAN lang=EN-US>; </SPAN><SPAN>返回字符串中下一个字符的地址</SPAN><SPAN lang=EN-US> 
+
+<P></P></SPAN></FONT>
+
+<P></P>
+
+<P><FONT size=3><SPAN lang=EN-US>PTSTR CharPrev </SPAN><SPAN>（</SPAN><SPAN lang=EN-US> LPCTSTR, LPCTSTR </SPAN><SPAN>）；</SPAN><SPAN> </SPAN><SPAN>返回字符串中上一个字符的地址</SPAN><SPAN lang=EN-US> 
+
+<P></P></SPAN></FONT>
+
+<P></P>
+
+<P><FONT size=3><SPAN lang=EN-US>BOOL IsDBCSLeadByte( BYTE )</SPAN><SPAN>；</SPAN><SPAN> </SPAN><SPAN>如果该字节是</SPAN><SPAN lang=EN-US>DBCS</SPAN><SPAN>字符的第一个字节，则返回非</SPAN><SPAN lang=EN-US>0</SPAN><SPAN>值</SPAN><SPAN lang=EN-US> 
+
+<P></P></SPAN></FONT>
+
+<P></P>
+
+<P><SPAN lang=EN-US>
+
+<P><FONT size=3>&nbsp;</FONT></P></SPAN>
+
+<P></P>
+
+<P><FONT size=3><B><SPAN lang=EN-US>3. </SPAN></B><B><SPAN>为什幺要使用</SPAN></B><B><SPAN lang=EN-US>Unicode</SPAN></B><B><SPAN>？</SPAN></B><B><SPAN lang=EN-US> 
+
+<P></P></SPAN></B></FONT>
+
+<P></P>
+
+<P><FONT size=3><SPAN>（</SPAN><SPAN lang=EN-US>1</SPAN><SPAN>）</SPAN><SPAN> </SPAN><SPAN>可以很容易地在不同语言之间进行数据交换。</SPAN><SPAN lang=EN-US> 
+
+<P></P></SPAN></FONT>
+
+<P></P>
+
+<P><FONT size=3><SPAN>（</SPAN><SPAN lang=EN-US>2</SPAN><SPAN>）</SPAN><SPAN> </SPAN><SPAN>使你能够分配支持所有语言的单个二进制</SPAN><SPAN lang=EN-US>.exe</SPAN><SPAN>文件或</SPAN><SPAN lang=EN-US>DLL</SPAN><SPAN>文件。</SPAN><SPAN lang=EN-US> 
+
+<P></P></SPAN></FONT>
+
+<P></P>
+
+<P><FONT size=3><SPAN>（</SPAN><SPAN lang=EN-US>3</SPAN><SPAN>）</SPAN><SPAN> </SPAN><SPAN>提高应用程序的运行效率。</SPAN><SPAN lang=EN-US> 
+
+<P></P></SPAN></FONT>
+
+<P></P>
+
+<P><FONT size=3><SPAN lang=EN-US>Windows 2000</SPAN><SPAN>是使用</SPAN><SPAN lang=EN-US>Unicode</SPAN><SPAN>从头进行开发的，如果调用任何一个</SPAN><SPAN lang=EN-US>Windows</SPAN><SPAN>函数并给它传递一个</SPAN><SPAN lang=EN-US>ANSI</SPAN><SPAN>字符串，那幺系统首先要将字符串转换成</SPAN><SPAN lang=EN-US>Unicode</SPAN><SPAN>，然后将</SPAN><SPAN lang=EN-US>Unicode</SPAN><SPAN>字符串传递给操作系统。如果希望函数返回</SPAN><SPAN lang=EN-US>ANSI</SPAN><SPAN>字符串，系统就会首先将</SPAN><SPAN lang=EN-US>Unicode</SPAN><SPAN>字符串转换成</SPAN><SPAN lang=EN-US>ANSI</SPAN><SPAN>字符串，然后将结果返回给你的应用程序。进行这些字符串的转换需要占用系统的时间和内存。通过从头开始用</SPAN><SPAN lang=EN-US>Unicode</SPAN><SPAN>来开发应用程序，就能够使你的应用程序更加有效地运行。</SPAN><SPAN lang=EN-US> 
+
+<P></P></SPAN></FONT>
+
+<P></P>
+
+<P><FONT size=3><SPAN lang=EN-US>Windows CE </SPAN><SPAN>本身就是使用</SPAN><SPAN lang=EN-US>Unicode</SPAN><SPAN>的一种操作系统，完全不支持</SPAN><SPAN lang=EN-US>ANSI Windows</SPAN><SPAN>函数</SPAN><SPAN lang=EN-US> 
+
+<P></P></SPAN></FONT>
+
+<P></P>
+
+<P><FONT size=3><SPAN lang=EN-US>Windows 98 </SPAN><SPAN>只支持</SPAN><SPAN lang=EN-US>ANSI</SPAN><SPAN>，只能为</SPAN><SPAN lang=EN-US>ANSI</SPAN><SPAN>开发应用程序。</SPAN><SPAN lang=EN-US> 
+
+<P></P></SPAN></FONT>
+
+<P></P>
+
+<P><FONT size=3><SPAN lang=EN-US>Microsoft</SPAN><SPAN>公司将</SPAN><SPAN lang=EN-US>COM</SPAN><SPAN>从</SPAN><SPAN lang=EN-US>16</SPAN><SPAN>位</SPAN><SPAN lang=EN-US>Windows</SPAN><SPAN>转换成</SPAN><SPAN lang=EN-US>Win32</SPAN><SPAN>时，公司决定需要字符串的所有</SPAN><SPAN lang=EN-US>COM</SPAN><SPAN>接口方法都只能接受</SPAN><SPAN lang=EN-US>Unicode</SPAN><SPAN>字符串。</SPAN><SPAN lang=EN-US> 
+
+<P></P></SPAN></FONT>
+
+<P></P>
+
+<P><SPAN lang=EN-US>
+
+<P><FONT size=3>&nbsp;</FONT></P></SPAN>
+
+<P></P>
+
+<P><FONT size=3><B><SPAN lang=EN-US>4. </SPAN></B><B><SPAN>如何编写</SPAN></B><B><SPAN lang=EN-US>Unicode</SPAN></B><B><SPAN>源代码？</SPAN></B><B><SPAN lang=EN-US> 
+
+<P></P></SPAN></B></FONT>
+
+<P></P>
+
+<P><FONT size=3><SPAN lang=EN-US>Microsoft</SPAN><SPAN>公司为</SPAN><SPAN lang=EN-US>Unicode</SPAN><SPAN>设计了</SPAN><SPAN lang=EN-US>WindowsAPI</SPAN><SPAN>，这样，可以尽量减少代码的影响。实际上，<U>可以编写单个源代码文件，以便使用或者不使用</U></SPAN><U><SPAN lang=EN-US>Unicode</SPAN></U><U><SPAN>来对它进行编译。只需要定义两个宏（</SPAN></U><U><SPAN lang=EN-US>UNICODE</SPAN></U><U><SPAN>和</SPAN></U><U><SPAN lang=EN-US>_UNICODE</SPAN></U><U><SPAN>），就可以修改然后重新编译该源文件。</SPAN></U><U><SPAN lang=EN-US> 
+
+<P></P></SPAN></U></FONT>
+
+<P></P>
+
+<P><FONT size=3><U><SPAN lang=EN-US>_UNICODE</SPAN></U><U><SPAN>宏用于</SPAN></U><U><SPAN lang=EN-US>C</SPAN></U><U><SPAN>运行期头文件，而</SPAN></U><U><SPAN lang=EN-US>UNICODE</SPAN></U><U><SPAN>宏则用于</SPAN></U><U><SPAN lang=EN-US>Windows</SPAN></U><U><SPAN>头文件。</SPAN></U><SPAN>当编译源代码模块时，通常必须同时定义这两个宏。</SPAN><SPAN lang=EN-US> 
+
+<P></P></SPAN></FONT>
+
+<P></P>
+
+<P><SPAN lang=EN-US>
+
+<P><FONT size=3>&nbsp;</FONT></P></SPAN>
+
+<P></P>
+
+<P><FONT size=3><B><SPAN lang=EN-US>5. Windows</SPAN></B><B><SPAN>定义的</SPAN></B><B><SPAN lang=EN-US>Unicode</SPAN></B><B><SPAN>数据类型有哪些？</SPAN></B><B><SPAN lang=EN-US> 
+
+<P></P></SPAN></B></FONT>
+
+<P></P>
+
+<P><FONT size=3><SPAN>数据类型</SPAN><SPAN> </SPAN><SPAN>说明</SPAN><SPAN lang=EN-US> 
+
+<P></P></SPAN></FONT>
+
+<P></P>
+
+<P><FONT size=3><SPAN lang=EN-US>WCHAR Unicode</SPAN><SPAN>字符</SPAN><SPAN lang=EN-US> 
+
+<P></P></SPAN></FONT>
+
+<P></P>
+
+<P><FONT size=3><SPAN lang=EN-US>PWSTR </SPAN><SPAN>指向</SPAN><SPAN lang=EN-US>Unicode</SPAN><SPAN>字符串的指针</SPAN><SPAN lang=EN-US> 
+
+<P></P></SPAN></FONT>
+
+<P></P>
+
+<P><FONT size=3><SPAN lang=EN-US>PCWSTR </SPAN><SPAN>指向一个恒定的</SPAN><SPAN lang=EN-US>Unicode</SPAN><SPAN>字符串的指针</SPAN><SPAN lang=EN-US> 
+
+<P></P></SPAN></FONT>
+
+<P></P>
+
+<P><FONT size=3><SPAN>对应的</SPAN><SPAN lang=EN-US>ANSI</SPAN><SPAN>数据类型为</SPAN><SPAN lang=EN-US>CHAR</SPAN><SPAN>，</SPAN><SPAN lang=EN-US>LPSTR</SPAN><SPAN>和</SPAN><SPAN lang=EN-US>LPCSTR</SPAN><SPAN>。</SPAN><SPAN lang=EN-US> 
+
+<P></P></SPAN></FONT>
+
+<P></P>
+
+<P><FONT size=3><SPAN lang=EN-US>ANSI/Unicode</SPAN><SPAN>通用数据类型为</SPAN><SPAN lang=EN-US>TCHAR</SPAN><SPAN>，</SPAN><SPAN lang=EN-US>PTSTR,LPCTSTR</SPAN><SPAN>。</SPAN><SPAN lang=EN-US> 
+
+<P></P></SPAN></FONT>
+
+<P></P>
+
+<P><SPAN lang=EN-US>
+
+<P><FONT size=3>&nbsp;</FONT></P></SPAN>
+
+<P></P>
+
+<P><FONT size=3><B><SPAN lang=EN-US>6. </SPAN></B><B><SPAN>如何对</SPAN></B><B><SPAN lang=EN-US>Unicode</SPAN></B><B><SPAN>进行操作？</SPAN></B><B><SPAN lang=EN-US> 
+
+<P></P></SPAN></B></FONT>
+
+<P></P>
+
+<P><FONT size=3><SPAN>字符集</SPAN><SPAN> </SPAN><SPAN>特性</SPAN><SPAN> </SPAN><SPAN>实例</SPAN><SPAN lang=EN-US> 
+
+<P></P></SPAN></FONT>
+
+<P></P>
+
+<P><FONT size=3><SPAN lang=EN-US>ANSI </SPAN><SPAN>操作函数以</SPAN><SPAN lang=EN-US>str</SPAN><SPAN>开头</SPAN><SPAN lang=EN-US> strcpy 
+
+<P></P></SPAN></FONT>
+
+<P></P>
+
+<P><FONT size=3><SPAN lang=EN-US>Unicode </SPAN><SPAN>操作函数以</SPAN><SPAN lang=EN-US>wcs</SPAN><SPAN>开头</SPAN><SPAN lang=EN-US> wcscpy 
+
+<P></P></SPAN></FONT>
+
+<P></P>
+
+<P><FONT size=3><SPAN lang=EN-US>MBCS </SPAN><SPAN>操作函数以</SPAN><SPAN lang=EN-US>_mbs</SPAN><SPAN>开头</SPAN><SPAN lang=EN-US> _mbscpy 
+
+<P></P></SPAN></FONT>
+
+<P></P>
+
+<P><FONT size=3><SPAN lang=EN-US>ANSI/Unicode </SPAN><SPAN>操作函数以</SPAN><SPAN lang=EN-US>_tcs</SPAN><SPAN>开头</SPAN><SPAN lang=EN-US> _tcscpy</SPAN><SPAN>（</SPAN><SPAN lang=EN-US>C</SPAN><SPAN>运行期库）</SPAN><SPAN lang=EN-US> 
+
+<P></P></SPAN></FONT>
+
+<P></P>
+
+<P><FONT size=3><SPAN lang=EN-US>ANSI/Unicode </SPAN><SPAN>操作函数以</SPAN><SPAN lang=EN-US>lstr</SPAN><SPAN>开头</SPAN><SPAN lang=EN-US> lstrcpy</SPAN><SPAN>（</SPAN><SPAN lang=EN-US>Windows</SPAN><SPAN>函数）</SPAN><SPAN lang=EN-US> 
+
+<P></P></SPAN></FONT>
+
+<P></P>
+
+<P><FONT size=3><SPAN>所有新的和未过时的函数在</SPAN><SPAN lang=EN-US>Windows2000</SPAN><SPAN>中都同时拥有</SPAN><SPAN lang=EN-US>ANSI</SPAN><SPAN>和</SPAN><SPAN lang=EN-US>Unicode</SPAN><SPAN>两个版本。</SPAN><SPAN lang=EN-US>ANSI</SPAN><SPAN>版本函数结尾以</SPAN><SPAN lang=EN-US>A</SPAN><SPAN>表示；</SPAN><SPAN lang=EN-US>Unicode</SPAN><SPAN>版本函数结尾以</SPAN><SPAN lang=EN-US>W</SPAN><SPAN>表示。</SPAN><SPAN lang=EN-US>Windows</SPAN><SPAN>会如下定义：</SPAN><SPAN lang=EN-US> 
+
+<P></P></SPAN></FONT>
+
+<P></P>
+
+<P><SPAN lang=EN-US><FONT size=3>#ifdef UNICODE 
+
+<P></P></FONT></SPAN>
+
+<P></P>
+
+<P><SPAN lang=EN-US><FONT size=3>#define CreateWindowEx CreateWindowExW 
+
+<P></P></FONT></SPAN>
+
+<P></P>
+
+<P><SPAN lang=EN-US><FONT size=3>#else 
+
+<P></P></FONT></SPAN>
+
+<P></P>
+
+<P><SPAN lang=EN-US><FONT size=3>#define CreateWindowEx CreateWindowExA 
+
+<P></P></FONT></SPAN>
+
+<P></P>
+
+<P><SPAN lang=EN-US><FONT size=3>#endif // !UNICODE 
+
+<P></P></FONT></SPAN>
+
+<P></P>
+
+<P><SPAN lang=EN-US>
+
+<P><FONT size=3>&nbsp;</FONT></P></SPAN>
+
+<P></P>
+
+<P><FONT size=3><B><SPAN lang=EN-US>7. </SPAN></B><B><SPAN>如何表示</SPAN></B><B><SPAN lang=EN-US>Unicode</SPAN></B><B><SPAN>字符串常量？</SPAN></B><B><SPAN lang=EN-US> 
+
+<P></P></SPAN></B></FONT>
+
+<P></P>
+
+<P><FONT size=3><SPAN>字符集</SPAN><SPAN> </SPAN><SPAN>实例</SPAN><SPAN lang=EN-US> 
+
+<P></P></SPAN></FONT>
+
+<P></P>
+
+<P><SPAN lang=EN-US><FONT size=3>ANSI &#8220;string&#8221; 
+
+<P></P></FONT></SPAN>
+
+<P></P>
+
+<P><SPAN lang=EN-US><FONT size=3>Unicode L&#8220;string&#8221; 
+
+<P></P></FONT></SPAN>
+
+<P></P>
+
+<P><FONT size=3><SPAN lang=EN-US>ANSI/Unicode T(</SPAN><SPAN>&#8220;</SPAN><SPAN lang=EN-US>string</SPAN><SPAN>&#8221;</SPAN><SPAN lang=EN-US>)</SPAN><SPAN>或</SPAN><SPAN lang=EN-US>_TEXT(</SPAN><SPAN>&#8220;</SPAN><SPAN lang=EN-US>string</SPAN><SPAN>&#8221;</SPAN><SPAN lang=EN-US>)if( szError[0] == _TEXT(</SPAN><SPAN>&#8216;</SPAN><SPAN lang=EN-US>J</SPAN><SPAN>&#8217;</SPAN><SPAN lang=EN-US>) ){ } 
+
+<P></P></SPAN></FONT>
+
+<P></P>
+
+<P><SPAN lang=EN-US>
+
+<P><FONT size=3>&nbsp;</FONT></P></SPAN>
+
+<P></P>
+
+<P><FONT size=3><B><SPAN lang=EN-US>8. </SPAN></B><B><SPAN>为什幺应当尽量使用操作系统函数？</SPAN></B><B><SPAN lang=EN-US> 
+
+<P></P></SPAN></B></FONT>
+
+<P></P>
+
+<P><FONT size=3><SPAN>这将有助于稍稍提高应用程序的运行性能，因为操作系统字符串函数常常被大型应用程序比如操作系统的外壳进程</SPAN><SPAN lang=EN-US>Explorer.exe</SPAN><SPAN>所使用。由于这些函数使用得很多，因此，在应用程序运行时，它们可能已经被装入</SPAN><SPAN lang=EN-US>RAM</SPAN><SPAN>。</SPAN><SPAN lang=EN-US> 
+
+<P></P></SPAN></FONT>
+
+<P></P>
+
+<P><FONT size=3><SPAN>如：</SPAN><SPAN lang=EN-US>StrCat</SPAN><SPAN>，</SPAN><SPAN lang=EN-US>StrChr</SPAN><SPAN>，</SPAN><SPAN lang=EN-US>StrCmp</SPAN><SPAN>和</SPAN><SPAN lang=EN-US>StrCpy</SPAN><SPAN>等。</SPAN><SPAN lang=EN-US> 
+
+<P></P></SPAN></FONT>
+
+<P></P>
+
+<P><SPAN lang=EN-US>
+
+<P><FONT size=3>&nbsp;</FONT></P></SPAN>
+
+<P></P>
+
+<P><FONT size=3><B><SPAN lang=EN-US>9. </SPAN></B><B><SPAN>如何编写符合</SPAN></B><B><SPAN lang=EN-US>ANSI</SPAN></B><B><SPAN>和</SPAN></B><B><SPAN lang=EN-US>Unicode</SPAN></B><B><SPAN>的应用程序？</SPAN></B><B><SPAN lang=EN-US> 
+
+<P></P></SPAN></B></FONT>
+
+<P></P>
+
+<P><FONT size=3><SPAN>（</SPAN><SPAN lang=EN-US>1</SPAN><SPAN>）</SPAN><SPAN> </SPAN><SPAN>将文本串视为字符数组，而不是</SPAN><SPAN lang=EN-US>chars</SPAN><SPAN>数组或字节数组。</SPAN><SPAN lang=EN-US> 
+
+<P></P></SPAN></FONT>
+
+<P></P>
+
+<P><FONT size=3><SPAN>（</SPAN><SPAN lang=EN-US>2</SPAN><SPAN>）</SPAN><SPAN> </SPAN><SPAN>将通用数据类型（如</SPAN><SPAN lang=EN-US>TCHAR</SPAN><SPAN>和</SPAN><SPAN lang=EN-US>PTSTR</SPAN><SPAN>）用于文本字符和字符串。</SPAN><SPAN lang=EN-US> 
+
+<P></P></SPAN></FONT>
+
+<P></P>
+
+<P><FONT size=3><SPAN>（</SPAN><SPAN lang=EN-US>3</SPAN><SPAN>）</SPAN><SPAN> </SPAN><SPAN>将显式数据类型（如</SPAN><SPAN lang=EN-US>BYTE</SPAN><SPAN>和</SPAN><SPAN lang=EN-US>PBYTE</SPAN><SPAN>）用于字节、字节指针和数据缓存。</SPAN><SPAN lang=EN-US> 
+
+<P></P></SPAN></FONT>
+
+<P></P>
+
+<P><FONT size=3><SPAN>（</SPAN><SPAN lang=EN-US>4</SPAN><SPAN>）</SPAN><SPAN> </SPAN><SPAN>将</SPAN><SPAN lang=EN-US>TEXT</SPAN><SPAN>宏用于原义字符和字符串。</SPAN><SPAN lang=EN-US> 
+
+<P></P></SPAN></FONT>
+
+<P></P>
+
+<P><FONT size=3><SPAN>（</SPAN><SPAN lang=EN-US>5</SPAN><SPAN>）</SPAN><SPAN> </SPAN><SPAN>执行全局性替换（例如用</SPAN><SPAN lang=EN-US>PTSTR</SPAN><SPAN>替换</SPAN><SPAN lang=EN-US>PSTR</SPAN><SPAN>）。</SPAN><SPAN lang=EN-US> 
+
+<P></P></SPAN></FONT>
+
+<P></P>
+
+<P><FONT size=3><SPAN>（</SPAN><SPAN lang=EN-US>6</SPAN><SPAN>）</SPAN><SPAN> </SPAN><SPAN>修改字符串运算问题。例如函数通常希望在字符中传递一个缓存的大小，而不是字节。这意味着不应该传递</SPAN><SPAN lang=EN-US>sizeof(szBuffer),</SPAN><SPAN>而应该传递（</SPAN><SPAN lang=EN-US>sizeof(szBuffer)/sizeof(TCHAR)</SPAN><SPAN>。另外，如果需要为字符串分配一个内存块，并且拥有该字符串中的字符数目，那幺请记住要按字节来分配内存。这就是说，应该调用</SPAN><SPAN lang=EN-US> 
+
+<P></P></SPAN></FONT>
+
+<P></P>
+
+<P><FONT size=3><SPAN lang=EN-US>malloc(nCharacters *sizeof(TCHAR)),</SPAN><SPAN>而不是调用</SPAN><SPAN lang=EN-US>malloc(nCharacters)</SPAN><SPAN>。</SPAN><SPAN lang=EN-US> 
+
+<P></P></SPAN></FONT>
+
+<P></P>
+
+<P><SPAN lang=EN-US>
+
+<P><FONT size=3>&nbsp;</FONT></P></SPAN>
+
+<P></P>
+
+<P><FONT size=3><B><SPAN lang=EN-US>10. </SPAN></B><B><SPAN>如何对字符串进行有选择的比较？</SPAN></B><B><SPAN lang=EN-US> 
+
+<P></P></SPAN></B></FONT>
+
+<P></P>
+
+<P><FONT size=3><SPAN>通过调用</SPAN><SPAN lang=EN-US>CompareString</SPAN><SPAN>来实现。</SPAN><SPAN lang=EN-US> 
+
+<P></P></SPAN></FONT>
+
+<P></P>
+
+<P><FONT size=3><SPAN>标志</SPAN><SPAN> </SPAN><SPAN>含义</SPAN><SPAN lang=EN-US> 
+
+<P></P></SPAN></FONT>
+
+<P></P>
+
+<P><FONT size=3><SPAN lang=EN-US>NORM_IGNORECASE </SPAN><SPAN>忽略字母的大小写</SPAN><SPAN lang=EN-US> 
+
+<P></P></SPAN></FONT>
+
+<P></P>
+
+<P><FONT size=3><SPAN lang=EN-US>NORM_IGNOREKANATYPE </SPAN><SPAN>不区分平假名与片假名字符</SPAN><SPAN lang=EN-US> 
+
+<P></P></SPAN></FONT>
+
+<P></P>
+
+<P><FONT size=3><SPAN lang=EN-US>NORM_IGNORENONSPACE </SPAN><SPAN>忽略无间隔字符</SPAN><SPAN lang=EN-US> 
+
+<P></P></SPAN></FONT>
+
+<P></P>
+
+<P><FONT size=3><SPAN lang=EN-US>NORM_IGNORESYMBOLS </SPAN><SPAN>忽略符号</SPAN><SPAN lang=EN-US> 
+
+<P></P></SPAN></FONT>
+
+<P></P>
+
+<P><FONT size=3><SPAN lang=EN-US>NORM_IGNOREWIDTH </SPAN><SPAN>不区分单字节字符与作为双字节字符的同一个字符</SPAN><SPAN lang=EN-US> 
+
+<P></P></SPAN></FONT>
+
+<P></P>
+
+<P><FONT size=3><SPAN lang=EN-US>SORT_STRINGSORT </SPAN><SPAN>将标点符号作为普通符号来处理</SPAN><SPAN lang=EN-US> 
+
+<P></P></SPAN></FONT>
+
+<P></P>
+
+<P><SPAN lang=EN-US>
+
+<P><FONT size=3>&nbsp;</FONT></P></SPAN>
+
+<P></P>
+
+<P><FONT size=3><B><SPAN lang=EN-US>11. </SPAN></B><B><SPAN>如何判断一个文本文件是</SPAN></B><B><SPAN lang=EN-US>ANSI</SPAN></B><B><SPAN>还是</SPAN></B><B><SPAN lang=EN-US>Unicode</SPAN></B><B><SPAN>？</SPAN></B><B><SPAN lang=EN-US> 
+
+<P></P></SPAN></B></FONT>
+
+<P></P>
+
+<P><FONT size=3><SPAN>判断如果文本文件的开头两个字节是</SPAN><SPAN lang=EN-US>0xFF</SPAN><SPAN>和</SPAN><SPAN lang=EN-US>0xFE</SPAN><SPAN>，那幺就是</SPAN><SPAN lang=EN-US>Unicode</SPAN><SPAN>，否则是</SPAN><SPAN lang=EN-US>ANSI</SPAN><SPAN>。</SPAN><SPAN lang=EN-US> 
+
+<P></P></SPAN></FONT>
+
+<P></P>
+
+<P><SPAN lang=EN-US>
+
+<P><FONT size=3>&nbsp;</FONT></P></SPAN>
+
+<P></P>
+
+<P><FONT size=3><B><SPAN lang=EN-US>12. </SPAN></B><B><SPAN>如何判断一段字符串是</SPAN></B><B><SPAN lang=EN-US>ANSI</SPAN></B><B><SPAN>还是</SPAN></B><B><SPAN lang=EN-US>Unicode</SPAN></B><B><SPAN>？</SPAN></B><B><SPAN lang=EN-US> 
+
+<P></P></SPAN></B></FONT>
+
+<P></P>
+
+<P><FONT size=3><SPAN>用</SPAN><SPAN lang=EN-US>IsTextUnicode</SPAN><SPAN>进行判断。</SPAN><SPAN lang=EN-US>IsTextUnicode</SPAN><SPAN>使用一系列统计方法和定性方法，以便猜测缓存的内容。由于这不是一种确切的科学方法，因此</SPAN><SPAN lang=EN-US> IsTextUnicode</SPAN><SPAN>有可能返回不正确的结果。</SPAN><SPAN lang=EN-US> 
+
+<P></P></SPAN></FONT>
+
+<P></P>
+
+<P><SPAN lang=EN-US>
+
+<P><FONT size=3>&nbsp;</FONT></P></SPAN>
+
+<P></P>
+
+<P><FONT size=3><B><SPAN lang=EN-US>13. </SPAN></B><B><SPAN>如何在</SPAN></B><B><SPAN lang=EN-US>Unicode</SPAN></B><B><SPAN>与</SPAN></B><B><SPAN lang=EN-US>ANSI</SPAN></B><B><SPAN>之间转换字符串？</SPAN></B><B><SPAN lang=EN-US> 
+
+<P></P></SPAN></B></FONT>
+
+<P></P>
+
+<P><FONT size=3><SPAN lang=EN-US>Windows</SPAN><SPAN>函数</SPAN><SPAN lang=EN-US>MultiByteToWideChar</SPAN><SPAN>用于将多字节字符串转换成宽字符串；函数</SPAN><SPAN lang=EN-US>WideCharToMultiByte</SPAN><SPAN>将宽字符串转换成等价的多字节字符串。</SPAN><SPAN lang=EN-US> 
+
+<P></P></SPAN></FONT>
+
+<P></P>
+
+<P><SPAN lang=EN-US>
+
+<P><FONT size=3>&nbsp;</FONT></P></SPAN>
+
+<P></P>
+
+<P><FONT size=3><B><SPAN lang=EN-US>14.</SPAN></B><B><SPAN lang=EN-US> Unicode</SPAN></B><B><SPAN>和</SPAN></B><B><SPAN lang=EN-US>DBCS</SPAN></B><B><SPAN>之间的区别</SPAN></B><B><SPAN lang=EN-US> 
+
+<P></P></SPAN></B></FONT>
+
+<P></P>
+
+<P><FONT size=3><SPAN lang=EN-US>Unicode</SPAN><SPAN>使用（特别在</SPAN><SPAN lang=EN-US>C</SPAN><SPAN>程序设计语言环境里）&#8220;宽字符集&#8221;。「</SPAN><SPAN lang=EN-US>Unicode</SPAN><SPAN>中的每个字符都是</SPAN><SPAN lang=EN-US>16</SPAN><SPAN>位宽而不是</SPAN><SPAN lang=EN-US>8</SPAN><SPAN>位宽。」在</SPAN><SPAN lang=EN-US>Unicode</SPAN><SPAN>中，没有单单使用</SPAN><SPAN lang=EN-US>8</SPAN><SPAN>位数值的意义存在。相比之下，在&#8220;双位组字符集&#8221;中我们仍然处理</SPAN><SPAN lang=EN-US>8</SPAN><SPAN>位数值。有些位组自身定义字符，而某些位组则显示需要和另一个位组共同定义一个字符。</SPAN><SPAN lang=EN-US> 
+
+<P></P></SPAN></FONT>
+
+<P></P>
+
+<P><FONT size=3><SPAN>处理</SPAN><SPAN lang=EN-US>DBCS</SPAN><SPAN>字符串非常杂乱，但是处理</SPAN><SPAN lang=EN-US>Unicode</SPAN><SPAN>文字则像处理有秩序的文字。您也许会高兴地知道前</SPAN><SPAN lang=EN-US>128</SPAN><SPAN>个</SPAN><SPAN lang=EN-US>Unicode</SPAN><SPAN>字符（</SPAN><SPAN lang=EN-US>16</SPAN><SPAN>位代码从</SPAN><SPAN lang=EN-US>0x0000</SPAN><SPAN>到</SPAN><SPAN lang=EN-US>0x007F</SPAN><SPAN>）就是</SPAN><SPAN lang=EN-US>ASCII</SPAN><SPAN>字符，而接下来的</SPAN><SPAN lang=EN-US>128</SPAN><SPAN>个</SPAN><SPAN lang=EN-US>Unicode</SPAN><SPAN>字符（代码从</SPAN><SPAN lang=EN-US>0x0080</SPAN><SPAN>到</SPAN><SPAN lang=EN-US>0x00FF</SPAN><SPAN>）是</SPAN><SPAN lang=EN-US>ISO 8859-1</SPAN><SPAN>对</SPAN><SPAN lang=EN-US>ASCII</SPAN><SPAN>的扩展。</SPAN><SPAN lang=EN-US>Unicode</SPAN><SPAN>中不同部分的字符都同样基于现有的标准。这是为了便于转换。希腊字母表使用从</SPAN><SPAN lang=EN-US>0x0370</SPAN><SPAN>到</SPAN><SPAN lang=EN-US>0x03FF</SPAN><SPAN>的代码，斯拉夫语使用从</SPAN><SPAN lang=EN-US>0x0400</SPAN><SPAN>到</SPAN><SPAN lang=EN-US>0x04FF</SPAN><SPAN>的代码，美国使用从</SPAN><SPAN lang=EN-US>0x0530</SPAN><SPAN>到</SPAN><SPAN lang=EN-US>0x058F</SPAN><SPAN>的代码，希伯来语使用从</SPAN><SPAN lang=EN-US>0x0590</SPAN><SPAN>到</SPAN><SPAN lang=EN-US>0x05FF</SPAN><SPAN>的代码。中国、日本和韩国的象形文字（总称为</SPAN><SPAN lang=EN-US>CJK</SPAN><SPAN>）占用了从</SPAN><SPAN lang=EN-US>0x3000</SPAN><SPAN>到</SPAN><SPAN lang=EN-US>0x9FFF</SPAN><SPAN>的代码。</SPAN><SPAN lang=EN-US>Unicode</SPAN><SPAN>的最大好处是这里只有一个字符集，没有一点含糊。</SPAN><SPAN lang=EN-US> 
+
+<P></P></SPAN></FONT>
+
+<P></P>
+
+<P><SPAN lang=EN-US>
+
+<P><FONT size=3>&nbsp;</FONT></P></SPAN>
+
+<P></P>
+
+<P><FONT size=3><B><SPAN lang=EN-US>15.</SPAN></B><B><SPAN>衍生标准</SPAN></B><B><SPAN lang=EN-US> 
+
+<P></P></SPAN></B></FONT>
+
+<P></P>
+
+<P><FONT size=3><SPAN lang=EN-US><FONT face="宋体, MS Song">Unicode</FONT></SPAN><SPAN>是一个标准。</SPAN><SPAN lang=EN-US><FONT face="宋体, MS Song">UTF-8</FONT></SPAN><SPAN>是其概念上的子集，</SPAN><SPAN lang=EN-US><FONT face="宋体, MS Song">UTF-8</FONT></SPAN><SPAN>是具体的编码标准。而ＵＮＩＣＯＤＥ是所有想达到世界统一编码标准的标准。</SPAN><SPAN lang=EN-US><FONT face="宋体, MS Song">UTF-8</FONT></SPAN><SPAN>标准就是</SPAN><SPAN lang=EN-US><FONT face="宋体, MS Song">Unicode</FONT></SPAN><SPAN>（</SPAN><SPAN lang=EN-US><FONT face="宋体, MS Song">ISO10646</FONT></SPAN><SPAN>）标准的一种变形方式，</SPAN><SPAN lang=EN-US><FONT face="宋体, MS Song"> </FONT></SPAN></FONT></P>
+
+<P><FONT size=3><SPAN lang=EN-US>UTF</SPAN><SPAN>的全称是：</SPAN><SPAN lang=EN-US>Unicode/UCS Transformation Format</SPAN><SPAN>，其实有两种</SPAN><SPAN lang=EN-US>UTF</SPAN><SPAN>，一种是</SPAN><SPAN lang=EN-US>UTF-8</SPAN><SPAN>，一种是</SPAN><SPAN lang=EN-US>UTF-16</SPAN><SPAN>，</SPAN><SPAN lang=EN-US> 
+
+<P></P></SPAN></FONT>
+
+<P></P>
+
+<P><FONT size=3><SPAN>不过</SPAN><SPAN lang=EN-US>UTF-16</SPAN><SPAN>使用较少，其对应关系如下：</SPAN><SPAN lang=EN-US> 
+
+<P></P></SPAN></FONT>
+
+<P></P>
+
+<P><FONT size=3><SPAN>在</SPAN><SPAN lang=EN-US>Unicode</SPAN><SPAN>中编码为</SPAN><SPAN lang=EN-US> 0000 - 007F </SPAN><SPAN>的</SPAN><SPAN lang=EN-US> UTF-8 </SPAN><SPAN>中编码形式为</SPAN><SPAN lang=EN-US>: 0xxxxxxx 
+
+<P></P></SPAN></FONT>
+
+<P></P>
+
+<P><FONT size=3><SPAN>在</SPAN><SPAN lang=EN-US>Unicode</SPAN><SPAN>中编码为</SPAN><SPAN lang=EN-US> 0080 - 07FF </SPAN><SPAN>的</SPAN><SPAN lang=EN-US> UTF-8 </SPAN><SPAN>中编码形式为</SPAN><SPAN lang=EN-US>: 110xxxxx 10xxxxxx 
+
+<P></P></SPAN></FONT>
+
+<P></P>
+
+<P><FONT size=3><SPAN>在</SPAN><SPAN lang=EN-US>Unicode</SPAN><SPAN>中编码为</SPAN><SPAN lang=EN-US> 0000 - 007F </SPAN><SPAN>的</SPAN><SPAN lang=EN-US> UTF-8 </SPAN><SPAN>中编码形式为</SPAN><SPAN lang=EN-US>: 1110xxxx 10xxxxxx 10xxxxxx 
+
+<P></P></SPAN></FONT>
+
+<P></P>
+
+<P><SPAN lang=EN-US>
+
+<P><FONT size=3>&nbsp;</FONT></P></SPAN>
+
+<P></P>
+
+<P><FONT size=3><SPAN lang=EN-US>utf-8</SPAN><SPAN>是</SPAN><SPAN lang=EN-US>unicode</SPAN><SPAN>的一个新的编码标准</SPAN><SPAN lang=EN-US>,</SPAN><SPAN>其实</SPAN><SPAN lang=EN-US>unicode</SPAN><SPAN>有过好几个标准</SPAN><SPAN lang=EN-US>.</SPAN><SPAN>我们知道一直以来使用的</SPAN><SPAN lang=EN-US>unicode</SPAN><SPAN>字符内码都是</SPAN><SPAN lang=EN-US>16</SPAN><SPAN>位</SPAN><SPAN lang=EN-US>,</SPAN><SPAN>它实际上还不能把全世界的所有字符编在一个平面系统</SPAN><SPAN lang=EN-US>,</SPAN><SPAN>比如中国的藏文等小语种</SPAN><SPAN lang=EN-US>,</SPAN><SPAN>所以</SPAN><SPAN lang=EN-US>utf-8</SPAN><SPAN>扩展到了</SPAN><SPAN lang=EN-US>32</SPAN><SPAN>位</SPAN><SPAN lang=EN-US>,</SPAN><SPAN>也就是说理论在</SPAN><SPAN lang=EN-US>utf-8</SPAN><SPAN>中可容纳二的三十二次方个字符</SPAN><SPAN lang=EN-US>. UNICODE</SPAN><SPAN>的思想就是想把所有的字符统一编码</SPAN><SPAN lang=EN-US>,</SPAN><SPAN>实现一个统一的标准</SPAN><SPAN lang=EN-US>.big5</SPAN><SPAN>、</SPAN><SPAN lang=EN-US>gb</SPAN><SPAN>都是独立的字符集</SPAN><SPAN lang=EN-US>,</SPAN><SPAN>这也叫做远东字符集</SPAN><SPAN lang=EN-US>,</SPAN><SPAN>把它拿到德文版的</SPAN><SPAN lang=EN-US>WINDOWS</SPAN><SPAN>上可能将会引起字符编码的冲突</SPAN><SPAN lang=EN-US>....</SPAN><SPAN>早期的</SPAN><SPAN lang=EN-US>WINDOWS</SPAN><SPAN>默认的字符集是</SPAN><SPAN lang=EN-US>ANSI.notepad</SPAN><SPAN>中输入的汉字是本地编码</SPAN><SPAN lang=EN-US>,</SPAN><SPAN>但在</SPAN><SPAN lang=EN-US>NT/2000</SPAN><SPAN>内部是可以直接支持</SPAN><SPAN lang=EN-US>UNICODE</SPAN><SPAN>的。</SPAN><SPAN lang=EN-US>notepad.exe</SPAN><SPAN>在</SPAN><SPAN lang=EN-US>WIN95</SPAN><SPAN>和</SPAN><SPAN lang=EN-US>98</SPAN><SPAN>中都是</SPAN><SPAN lang=EN-US>ANSI</SPAN><SPAN>字符</SPAN><SPAN lang=EN-US>,</SPAN><SPAN>在</SPAN><SPAN lang=EN-US>NT</SPAN><SPAN>中则是</SPAN><SPAN lang=EN-US>UNICODE.ANSI</SPAN><SPAN>和</SPAN><SPAN lang=EN-US>UNICODE</SPAN><SPAN>可以方便的实现对应映射</SPAN><SPAN lang=EN-US>,</SPAN><SPAN>也就是转换</SPAN><SPAN lang=EN-US> ASCII</SPAN><SPAN>是</SPAN><SPAN lang=EN-US>8</SPAN><SPAN>位范围内的字符集，对于范围之外的字符如汉字它是无法表达的。</SPAN><SPAN lang=EN-US>unicode</SPAN><SPAN>是</SPAN><SPAN lang=EN-US>16</SPAN><SPAN>位范围内的字符集，对于不同地区的字符分区分配，</SPAN><SPAN lang=EN-US>unicode</SPAN><SPAN>是多个</SPAN><SPAN lang=EN-US>IT</SPAN><SPAN>巨头共同制定的字符编码标准。如果在</SPAN><SPAN lang=EN-US>unicode</SPAN><SPAN>环境下比如</SPAN><SPAN lang=EN-US>WINDOWS NT</SPAN><SPAN>上，一个字符占两字节</SPAN><SPAN lang=EN-US>16</SPAN><SPAN>位，而在</SPAN><SPAN lang=EN-US>ANSI</SPAN><SPAN>环境下如</SPAN><SPAN lang=EN-US>WINDOWS98</SPAN><SPAN>下一个字符占一个字节</SPAN><SPAN lang=EN-US>8</SPAN><SPAN>位</SPAN><SPAN lang=EN-US>.Unicode</SPAN><SPAN>字符是</SPAN><SPAN lang=EN-US>16</SPAN><SPAN>位宽，最多允许</SPAN><SPAN lang=EN-US>65,535</SPAN><SPAN>字符，数据类型被称为</SPAN><SPAN lang=EN-US>WCHAR</SPAN><SPAN>。</SPAN><SPAN lang=EN-US> 
+
+<P></P></SPAN></FONT>
+
+<P></P>
+
+<P><FONT size=3><SPAN>对于已有的</SPAN><SPAN lang=EN-US>ANSI</SPAN><SPAN>字符，</SPAN><SPAN lang=EN-US>unicode</SPAN><SPAN>简单的将其扩展为</SPAN><SPAN lang=EN-US>16</SPAN><SPAN>位：比如</SPAN><SPAN lang=EN-US>ANSI"A"=0x43,</SPAN><SPAN>则对应的</SPAN><SPAN lang=EN-US>UNICODE</SPAN><SPAN>为</SPAN><SPAN lang=EN-US> 
+
+<P></P></SPAN></FONT>
+
+<P></P>
+
+<P><SPAN lang=EN-US><FONT size=3>"A"= 0x0043 
+
+<P></P></FONT></SPAN>
+
+<P></P>
+
+<P><FONT size=3><SPAN>而</SPAN><SPAN lang=EN-US>ASCII</SPAN><SPAN>用七存放</SPAN><SPAN lang=EN-US>128</SPAN><SPAN>个字符</SPAN><SPAN lang=EN-US>,ASCII</SPAN><SPAN>是一个真正的美国标准</SPAN><SPAN lang=EN-US>,</SPAN><SPAN>所以它不能满足其他国家的需要</SPAN><SPAN lang=EN-US>,</SPAN><SPAN>例如斯拉夫语的字母和汉字于是出现了</SPAN><SPAN lang=EN-US>Windows ANSI</SPAN><SPAN>字符集</SPAN><SPAN lang=EN-US>,</SPAN><SPAN>是一种扩展的</SPAN><SPAN lang=EN-US>ASCII</SPAN><SPAN>码</SPAN><SPAN lang=EN-US>,</SPAN><SPAN>用</SPAN><SPAN lang=EN-US>8</SPAN><SPAN>位存放字符</SPAN><SPAN lang=EN-US>,</SPAN><SPAN>低</SPAN><SPAN lang=EN-US>128</SPAN><SPAN>位仍然存放原来的</SPAN><SPAN lang=EN-US>ASCII</SPAN><SPAN>码</SPAN><SPAN lang=EN-US>, 
+
+<P></P></SPAN></FONT>
+
+<P></P>
+
+<P><FONT size=3><SPAN>而高</SPAN><SPAN lang=EN-US>128</SPAN><SPAN>位加入了希腊字母等</SPAN><SPAN lang=EN-US> 
+
+<P></P></SPAN></FONT>
+
+<P></P>
+
+<P><SPAN lang=EN-US><FONT size=3>if def UNICODE 
+
+<P></P></FONT></SPAN>
+
+<P></P>
+
+<P><SPAN lang=EN-US><FONT size=3><SPAN>&nbsp; </SPAN>TCHAR = wchar 
+
+<P></P></FONT></SPAN>
+
+<P></P>
+
+<P><SPAN lang=EN-US><FONT size=3>else 
+
+<P></P></FONT></SPAN>
+
+<P></P>
+
+<P><SPAN lang=EN-US><FONT size=3><SPAN>&nbsp; </SPAN>TCHAR = char 
+
+<P></P></FONT></SPAN>
+
+<P></P>
+
+<P><FONT size=3><SPAN>你需要在</SPAN><SPAN lang=EN-US>Project\Settings\C/C++\Preprocesser definitions</SPAN><SPAN>中添加</SPAN><SPAN lang=EN-US>UNICODE</SPAN><SPAN>和</SPAN><SPAN lang=EN-US>_UNICODE 
+
+<P></P></SPAN></FONT>
+
+<P></P>
+
+<P><FONT size=3><SPAN lang=EN-US>UINCODE,_UNICODE</SPAN><SPAN>都要定义。不定义</SPAN><SPAN lang=EN-US>_UNICODE</SPAN><SPAN>的话，用</SPAN><SPAN lang=EN-US>SetText(HWND,LPCTSTR),</SPAN><SPAN>将被解释为</SPAN><SPAN lang=EN-US>SetTextA(HWND,LPTSTR),</SPAN><SPAN>这时</SPAN><SPAN lang=EN-US>API</SPAN><SPAN>将把你给的</SPAN><SPAN lang=EN-US>Unicode</SPAN><SPAN>字符串看作</SPAN><SPAN lang=EN-US>ANSI</SPAN><SPAN>字符串，显示乱码。因为</SPAN><SPAN lang=EN-US>windows API</SPAN><SPAN>是已经编译好存在于</SPAN><SPAN lang=EN-US>dll</SPAN><SPAN>中的，由于不管</SPAN><SPAN lang=EN-US>UNICODE</SPAN><SPAN>还是</SPAN><SPAN lang=EN-US>ANSI</SPAN><SPAN>字符串，都被看作一段</SPAN><SPAN lang=EN-US>buffer,</SPAN><SPAN>如</SPAN><SPAN lang=EN-US>"0B A3 00 35 24 3C 00 00"</SPAN><SPAN>如果按</SPAN><SPAN lang=EN-US>ANSI</SPAN><SPAN>读，因为</SPAN><SPAN lang=EN-US>ANSI</SPAN><SPAN>字串是以</SPAN><SPAN lang=EN-US>'\0'</SPAN><SPAN>结束的，所以只能读到两字节</SPAN><SPAN lang=EN-US>"0B A3 \0"</SPAN><SPAN>，如果按</SPAN><SPAN lang=EN-US>UNICODE</SPAN><SPAN>读，将完整的读到</SPAN><SPAN lang=EN-US>'\0\0'</SPAN><SPAN>结束。</SPAN><SPAN lang=EN-US> 
+
+<P></P></SPAN></FONT>
+
+<P></P>
+
+<P><FONT size=3><SPAN>由于</SPAN><SPAN lang=EN-US>UNICODE</SPAN><SPAN>没有额外的指示位，所以系统必须知道你提供的字串是哪种格式。此外，</SPAN><SPAN lang=EN-US>UNICODE</SPAN><SPAN>好象是</SPAN><SPAN lang=EN-US>ANSI C++</SPAN><SPAN>规定的，</SPAN><SPAN lang=EN-US>_UNICODE</SPAN><SPAN>是</SPAN><SPAN lang=EN-US>windows SDK</SPAN><SPAN>提供的。如果不编写</SPAN><SPAN lang=EN-US>windows</SPAN><SPAN>程序，可以只定义</SPAN><SPAN lang=EN-US>UNICODE</SPAN><SPAN>。</SPAN><SPAN lang=EN-US> 
+
+<P></P></SPAN></FONT>
+
+<P></P>
+
+<P><SPAN lang=EN-US>
+
+<P><FONT size=3>&nbsp;</FONT></P></SPAN>
+
+<P></P>
+
+<P><SPAN lang=EN-US>
+
+<P><FONT size=3>&nbsp;</FONT></P></SPAN>
+
+<P></P>
+
+<P><SPAN lang=EN-US>
+
+<P><FONT size=3>&nbsp;</FONT></P></SPAN>
+
+<P></P>
+
+<P><FONT size=3><SPAN>开发过程：</SPAN><SPAN lang=EN-US> 
+
+<P></P></SPAN></FONT>
+
+<P></P>
+
+<P><FONT size=3><SPAN>围绕着文件读写、字符串处理展开。文件主要有两种：</SPAN><SPAN lang=EN-US>.txt</SPAN><SPAN>和</SPAN><SPAN lang=EN-US>.ini</SPAN><SPAN>文件</SPAN><SPAN lang=EN-US> 
+
+<P></P></SPAN></FONT>
+
+<P></P>
+
+<P><SPAN lang=EN-US><SPAN><FONT size=3>1.</FONT><SPAN>&nbsp;&nbsp;&nbsp; </SPAN></SPAN><FONT size=3><SPAN>在</SPAN><SPAN lang=EN-US>unicode</SPAN><SPAN>和非</SPAN><SPAN lang=EN-US>unicode</SPAN><SPAN>环境下字符串做不同处理的，那么需要参考以上</SPAN><SPAN lang=EN-US>9</SPAN><SPAN>，</SPAN><SPAN lang=EN-US>10</SPAN><SPAN>两条，以适应不同环境得字符串处理要求。</SPAN><SPAN lang=EN-US> 
+
+<P></P></SPAN></FONT>
+
+<P></P>
+
+<P><FONT size=3><SPAN>对文件读写也一样。只要调用相关接口函数时，参数中的字符串前都加上</SPAN><SPAN lang=EN-US>_TEXT</SPAN><SPAN>等相关宏。<SPAN>如果写成的那个文件需要是</SPAN><SPAN lang=EN-US>unicode</SPAN><SPAN>格式保存的，那么在创建文件时需要加入一个字节头。</SPAN><SPAN lang=EN-US> 
+
+<P></P></SPAN></FONT>
+
+<P></P>
+
+<P align=left><SPAN lang=EN-US>CFile</SPAN><SPAN lang=EN-US> </SPAN><SPAN lang=EN-US>file</SPAN><SPAN lang=EN-US>; 
+
+<P></P></SPAN>
+
+<P></P>
+
+<P align=left><SPAN lang=EN-US><SPAN>&nbsp;&nbsp;&nbsp; </SPAN><SPAN lang=EN-US>WCHAR</SPAN><SPAN lang=EN-US> </SPAN><SPAN lang=EN-US>szwBuffer</SPAN><SPAN lang=EN-US>[</SPAN><SPAN lang=EN-US>128</SPAN><SPAN lang=EN-US>]; 
+
+<P></P></SPAN>
+
+<P></P>
+
+<P align=left><SPAN lang=EN-US><SPAN>&nbsp;&nbsp;&nbsp; </SPAN>
+
+<P></P></SPAN>
+
+<P></P>
+
+<P align=left><SPAN lang=EN-US><SPAN>&nbsp;&nbsp;&nbsp; </SPAN><SPAN lang=EN-US>WCHAR</SPAN><SPAN lang=EN-US> *</SPAN><SPAN lang=EN-US>pszUnicode</SPAN><SPAN lang=EN-US> = L</SPAN><SPAN lang=EN-US>"Unicode string\n"</SPAN><SPAN lang=EN-US>; </SPAN><SPAN lang=EN-US>// unicode string</SPAN><SPAN lang=EN-US> 
+
+<P></P></SPAN>
+
+<P></P>
+
+<P align=left><SPAN lang=EN-US><SPAN>&nbsp;&nbsp;&nbsp; </SPAN><SPAN lang=EN-US>CHAR</SPAN><SPAN lang=EN-US> *</SPAN><SPAN lang=EN-US>pszAnsi</SPAN><SPAN lang=EN-US> = </SPAN><SPAN lang=EN-US>"Ansi string\n"</SPAN><SPAN lang=EN-US>; </SPAN><SPAN lang=EN-US>// ansi string</SPAN><SPAN lang=EN-US> 
+
+<P></P></SPAN>
+
+<P></P>
+
+<P align=left><SPAN lang=EN-US><SPAN>&nbsp;&nbsp;&nbsp; </SPAN><SPAN lang=EN-US>WORD</SPAN><SPAN lang=EN-US> </SPAN><SPAN lang=EN-US>wSignature</SPAN><SPAN lang=EN-US> = </SPAN><SPAN lang=EN-US>0xFEFF</SPAN><SPAN lang=EN-US>; 
+
+<P></P></SPAN>
+
+<P></P>
+
+<P align=left><SPAN lang=EN-US><SPAN>&nbsp;&nbsp;&nbsp; </SPAN>
+
+<P></P></SPAN>
+
+<P></P>
+
+<P align=left><SPAN lang=EN-US><SPAN>&nbsp;&nbsp;&nbsp; </SPAN><SPAN lang=EN-US>file</SPAN><SPAN lang=EN-US>.</SPAN><SPAN lang=EN-US>Open</SPAN><SPAN lang=EN-US>(</SPAN><SPAN lang=EN-US>TEXT</SPAN><SPAN lang=EN-US>(</SPAN><SPAN lang=EN-US>"Test.txt"</SPAN><SPAN lang=EN-US>), </SPAN><SPAN lang=EN-US>CFile</SPAN><SPAN lang=EN-US>::</SPAN><SPAN lang=EN-US>modeCreate</SPAN><SPAN lang=EN-US>|</SPAN><SPAN lang=EN-US>CFile</SPAN><SPAN lang=EN-US>::</SPAN><SPAN lang=EN-US>modeWrite</SPAN><SPAN lang=EN-US>); 
+
+<P></P></SPAN>
+
+<P></P>
+
+<P align=left><SPAN lang=EN-US><SPAN>&nbsp;&nbsp;&nbsp; </SPAN>
+
+<P></P></SPAN>
+
+<P></P>
+
+<P align=left><SPAN lang=EN-US><SPAN>&nbsp;&nbsp;&nbsp; </SPAN><SPAN lang=EN-US>file</SPAN><SPAN lang=EN-US>.</SPAN><SPAN lang=EN-US>Write</SPAN><SPAN lang=EN-US>(&amp;</SPAN><SPAN lang=EN-US>wSignature</SPAN><SPAN lang=EN-US>, </SPAN><SPAN lang=EN-US>2</SPAN><SPAN lang=EN-US>); 
+
+<P></P></SPAN>
+
+<P></P>
+
+<P align=left><SPAN lang=EN-US><SPAN>&nbsp;&nbsp;&nbsp; </SPAN>
+
+<P></P></SPAN>
+
+<P></P>
+
+<P align=left><SPAN lang=EN-US><SPAN>&nbsp;&nbsp;&nbsp; </SPAN><SPAN lang=EN-US>file</SPAN><SPAN lang=EN-US>.</SPAN><SPAN lang=EN-US>Write</SPAN><SPAN lang=EN-US>(</SPAN><SPAN lang=EN-US>pszUnicode</SPAN><SPAN lang=EN-US>, </SPAN><SPAN lang=EN-US>lstrlenW</SPAN><SPAN lang=EN-US>(</SPAN><SPAN lang=EN-US>pszUnicode</SPAN><SPAN lang=EN-US>) * </SPAN><SPAN lang=EN-US>sizeof</SPAN><SPAN lang=EN-US>(</SPAN><SPAN lang=EN-US>WCHAR</SPAN><SPAN lang=EN-US>)); 
+
+<P></P></SPAN>
+
+<P></P>
+
+<P align=left><SPAN lang=EN-US><SPAN>&nbsp;&nbsp;&nbsp; </SPAN><SPAN lang=EN-US>// explicitly use lstrlenW function</SPAN><SPAN lang=EN-US> 
+
+<P></P></SPAN>
+
+<P></P>
+
+<P align=left><SPAN lang=EN-US><SPAN>&nbsp;&nbsp;&nbsp; </SPAN>
+
+<P></P></SPAN>
+
+<P></P>
+
+<P align=left><SPAN lang=EN-US><SPAN>&nbsp;&nbsp;&nbsp; </SPAN><SPAN lang=EN-US>MultiByteToWideChar</SPAN><SPAN lang=EN-US>(</SPAN><SPAN lang=EN-US>CP_ACP</SPAN><SPAN lang=EN-US>, </SPAN><SPAN lang=EN-US>0</SPAN><SPAN lang=EN-US>, </SPAN><SPAN lang=EN-US>pszAnsi</SPAN><SPAN lang=EN-US>, -</SPAN><SPAN lang=EN-US>1</SPAN><SPAN lang=EN-US>, </SPAN><SPAN lang=EN-US>szwBuffer</SPAN><SPAN lang=EN-US>, </SPAN><SPAN lang=EN-US>128</SPAN><SPAN lang=EN-US>); 
+
+<P></P></SPAN>
+
+<P></P>
+
+<P align=left><SPAN lang=EN-US><SPAN>&nbsp;&nbsp;&nbsp; </SPAN>
+
+<P></P></SPAN>
+
+<P></P>
+
+<P align=left><SPAN lang=EN-US><SPAN>&nbsp;&nbsp;&nbsp; </SPAN><SPAN lang=EN-US>file</SPAN><SPAN lang=EN-US>.</SPAN><SPAN lang=EN-US>Write</SPAN><SPAN lang=EN-US>(</SPAN><SPAN lang=EN-US>szwBuffer</SPAN><SPAN lang=EN-US>, </SPAN><SPAN lang=EN-US>lstrlenW</SPAN><SPAN lang=EN-US>(</SPAN><SPAN lang=EN-US>szwBuffer</SPAN><SPAN lang=EN-US>) * </SPAN><SPAN lang=EN-US>sizeof</SPAN><SPAN lang=EN-US>(</SPAN><SPAN lang=EN-US>WCHAR</SPAN><SPAN lang=EN-US>)); 
+
+<P></P></SPAN>
+
+<P></P>
+
+<P align=left><SPAN lang=EN-US><SPAN>&nbsp;&nbsp;&nbsp; </SPAN>
+
+<P></P></SPAN>
+
+<P></P>
+
+<P><SPAN lang=EN-US>file</SPAN><SPAN lang=EN-US>.</SPAN><SPAN lang=EN-US>Close</SPAN><SPAN lang=EN-US>();</SPAN><SPAN lang=EN-US> 
+
+<P></P></SPAN>
+
+<P></P>
+
+<P><FONT size=3><SPAN lang=EN-US>//</SPAN><SPAN>以上这段代码在</SPAN><SPAN lang=EN-US>unicode</SPAN><SPAN>和非</SPAN><SPAN lang=EN-US>unicode</SPAN><SPAN>环境下都有效。这里显式的指明用</SPAN><SPAN lang=EN-US>Unicode</SPAN><SPAN>来进行操作。</SPAN><SPAN lang=EN-US> 
+
+<P></P></SPAN></FONT>
+
+<P></P>
+
+<P><SPAN lang=EN-US><SPAN><FONT size=3>2.</FONT><SPAN>&nbsp;&nbsp;&nbsp; </SPAN></SPAN><FONT size=3><SPAN>在非</SPAN><SPAN lang=EN-US>unicode</SPAN><SPAN>环境下，缺省调用的都是</SPAN><SPAN lang=EN-US>ANSI</SPAN><SPAN>格式的字符串，此时</SPAN><SPAN lang=EN-US>TCHAR</SPAN><SPAN>转换为</SPAN><SPAN lang=EN-US>CHAR</SPAN><SPAN>类型的，除非显式定义</SPAN><SPAN lang=EN-US>WCHAR</SPAN><SPAN>。所以在这个环境下，如果读取</SPAN><SPAN lang=EN-US>unicode</SPAN><SPAN>文件，那么首先需要移动</SPAN><SPAN lang=EN-US>2</SPAN><SPAN>个字节，然后读取得字符串需要用</SPAN><SPAN lang=EN-US>MultiByteToWideChar</SPAN><SPAN>来转换，转换后字符串信息才代表</SPAN><SPAN lang=EN-US>unicode</SPAN><SPAN>数据。</SPAN><SPAN lang=EN-US> 
+
+<P></P></SPAN></FONT>
+
+<P></P>
+
+<P><SPAN lang=EN-US><SPAN><FONT size=3>3.</FONT><SPAN>&nbsp;&nbsp;&nbsp; </SPAN></SPAN><FONT size=3><SPAN>在</SPAN><SPAN lang=EN-US>unicode</SPAN><SPAN>环境下，缺省调用得都是</SPAN><SPAN lang=EN-US>unicode</SPAN><SPAN>格式得字符串，也就是宽字符，此时</SPAN><SPAN lang=EN-US>TCHAR</SPAN><SPAN>转换为</SPAN><SPAN lang=EN-US>WCHAR</SPAN><SPAN>，相关得</SPAN><SPAN lang=EN-US>API</SPAN><SPAN>函数也都调用宽字符类型的函数。此时读取</SPAN><SPAN lang=EN-US>unicode</SPAN><SPAN>文件也和上面一样，但是读取得数据是</SPAN><SPAN lang=EN-US>WCHAR</SPAN><SPAN>的，如果要转换成</SPAN><SPAN lang=EN-US>ANSI</SPAN><SPAN>格式，需要调用</SPAN><SPAN lang=EN-US>WideCharToMultiByte</SPAN><SPAN>。如果读取</SPAN><SPAN lang=EN-US>ANSI</SPAN><SPAN>的，则不用移动两个字节，直接读取然后视需要转换即可。</SPAN><SPAN lang=EN-US> 
+
+<P></P></SPAN></FONT>
+
+<P></P>
+
+<P><SPAN lang=EN-US>
+
+<P><FONT size=3>&nbsp;</FONT></P></SPAN>
+
+<P></P>
+
+<P><FONT size=3><SPAN>某些语言（如韩语）必须在</SPAN><SPAN lang=EN-US>unicode</SPAN><SPAN>环境下才能显示，这种情况下，在非</SPAN><SPAN lang=EN-US>unicode</SPAN><SPAN>环境下开发，就算用字符串函数转换也不能达到显示文字的目的，因为此时调用得</SPAN><SPAN lang=EN-US>API</SPAN><SPAN>函数是用</SPAN><SPAN lang=EN-US>ANSI</SPAN><SPAN>的（虽然底层都是用</SPAN><SPAN lang=EN-US>UNICODE</SPAN><SPAN>处理但是处理结果是按照程序员调用的</SPAN><SPAN lang=EN-US>API</SPAN><SPAN>来显示的）。所以必须用</SPAN><SPAN lang=EN-US>unicode</SPAN><SPAN>来开发。</SPAN></FONT><SPAN lang=EN-US> 
+
+<P></P></SPAN>
+
+<P></P></SPAN><BR></SPAN></SPAN></SPAN></SPAN></SPAN></SPAN></SPAN></SPAN></SPAN></SPAN></SPAN></SPAN></SPAN></SPAN>
+    
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="followme">
+  <span>欢迎关注我的其它发布渠道</span>
+
+  <div class="social-list">
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="https://www.facebook.com/rise.worlds">
+            <span class="icon">
+              <i class="fab fa-facebook"></i>
+            </span>
+
+            <span class="label">FB Page</span>
+          </a>
+      </div>
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="https://twitter.com/riseworlds">
+            <span class="icon">
+              <i class="fab fa-twitter"></i>
+            </span>
+
+            <span class="label">Twitter</span>
+          </a>
+      </div>
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="https://t.me/riseworlds">
+            <span class="icon">
+              <i class="fab fa-telegram"></i>
+            </span>
+
+            <span class="label">Telegram</span>
+          </a>
+      </div>
+  </div>
+</div>
+
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2005/06/10/%E5%A6%82%E4%BD%95%E9%98%B2%E8%8C%83%E5%8A%A8%E6%80%81%E8%B0%83%E8%AF%95(Anti-Debug)(SoftICE%E7%AF%87)/" rel="prev" title="如何防范动态调试(Anti-Debug)(SoftICE篇)">
+                  <i class="fa fa-angle-left"></i> 如何防范动态调试(Anti-Debug)(SoftICE篇)
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2005/07/09/%E5%B0%86%E8%A7%86%E9%A2%91%E6%BC%94%E7%A4%BA%E4%BD%9C%E4%B8%BA%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%E7%9A%84%E5%90%AF%E5%8A%A8%E5%B0%81%E9%9D%A2/" rel="next" title="将视频演示作为应用程序的启动封面">
+                  将视频演示作为应用程序的启动封面 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  
+  <div class="comments giscus-container">
+  </div>
+  
+  
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">豫ICP备2021009490号 </a>
+  </div>
+  <div class="copyright">
+    &copy; 2004 – 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">rise</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="reading-progress-bar"></div>
+
+  <a href="https://github.com/rise-worlds" class="github-corner" title="在 GitHub 上关注我" aria-label="在 GitHub 上关注我" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://unpkg.com/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@next-theme/pjax@0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script><script src="/js/pjax.js"></script>
+
+  
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://unpkg.com/mermaid@10.9.0/dist/mermaid.min.js","integrity":"sha256-stuqcu2FrjYCXDOytWFA5SoUE/r3nkp6gTglzNSlavU="}}</script>
+  <script src="/js/third-party/tags/mermaid.js"></script>
+
+
+
+
+
+  
+
+
+
+
+  <script src="https://unpkg.com/quicklink@2.3.0/dist/quicklink.umd.js" integrity="sha256-yvJQOINiH9fWemHn0vCA5lsHWJaHs6/ZmO+1Ft04SvM=" crossorigin="anonymous"></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":true,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"https://rise-worlds.github.io/2005/07/09/Windows%E7%8E%AF%E5%A2%83%E4%B8%8BUnicode%E7%BC%96%E7%A8%8B%E6%80%BB%E7%BB%93/"}</script>
+  <script src="/js/third-party/quicklink.js"></script>
+<script class="next-config" data-name="giscus" type="application/json">{"enable":true,"repo":"rise-worlds/rise-worlds.github.io","repo_id":"MDEwOlJlcG9zaXRvcnk2MTAxMTA0MA==","category":"Announcements","category_id":"DIC_kwDOA6L0YM4CiXf9","mapping":"pathname","strict":0,"reactions_enabled":1,"emit_metadata":0,"theme":"transparent_dark","lang":"zh-CN","crossorigin":"anonymous","input_position":"top","loading":"lazy"}</script>
+
+<script>
+document.addEventListener('page:loaded', () => {
+  if (!CONFIG.page.comments) return;
+
+  NexT.utils.loadComments('.giscus-container')
+    .then(() => NexT.utils.getScript('https://giscus.app/client.js', {
+      attributes: {
+        async                   : true,
+        crossOrigin             : 'anonymous',
+        'data-repo'             : CONFIG.giscus.repo,
+        'data-repo-id'          : CONFIG.giscus.repo_id,
+        'data-category'         : CONFIG.giscus.category,
+        'data-category-id'      : CONFIG.giscus.category_id,
+        'data-mapping'          : CONFIG.giscus.mapping,
+        'data-strict'           : CONFIG.giscus.strict,
+        'data-reactions-enabled': CONFIG.giscus.reactions_enabled,
+        'data-emit-metadata'    : CONFIG.giscus.emit_metadata,
+        'data-theme'            : CONFIG.giscus.theme,
+        'data-lang'             : CONFIG.giscus.lang,
+        'data-input-position'   : CONFIG.giscus.input_position,
+        'data-loading'          : CONFIG.giscus.loading
+      },
+      parentNode: document.querySelector('.giscus-container')
+    }));
+});
+</script>
+
+</body>
+</html>
