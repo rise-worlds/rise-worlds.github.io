@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://unpkg.com/@fortawesome/fontawesome-free@6.5.2/css/all.min.css" integrity="sha256-XOqroi11tY4EFQMR9ZYwZWKj5ZXiftSx36RRuC3anlA=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://unpkg.com/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"rise-worlds.github.io","root":"/","images":"/images","scheme":"Mist","darkmode":true,"version":"8.20.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="在Direct3D中,实体模型中的一个点可能被 多个三角形面所共用,如下图,虽然只有4个顶点,却由4个三角形面组成.  屏幕剪辑的捕获时间: 2007-6-27, 9:46 如果把顶点数据按对应图元的格式,直接放进顶点缓存区,该棱锥使用三角形列,4个锥面其需要4*3&#x3D;12个顶点,也就是有8个顶点是重复的.如果实体比较复杂,重复的顶点会更多,造成资源浪费. 为些Direct3D引入了索引缓存的概念,">
+<meta property="og:type" content="article">
+<meta property="og:title" content="创建索引缓存">
+<meta property="og:url" content="https://rise-worlds.github.io/2007/10/13/%E5%88%9B%E5%BB%BA%E7%B4%A2%E5%BC%95%E7%BC%93%E5%AD%98/index.html">
+<meta property="og:site_name" content="Rise&#39;blogs">
+<meta property="og:description" content="在Direct3D中,实体模型中的一个点可能被 多个三角形面所共用,如下图,虽然只有4个顶点,却由4个三角形面组成.  屏幕剪辑的捕获时间: 2007-6-27, 9:46 如果把顶点数据按对应图元的格式,直接放进顶点缓存区,该棱锥使用三角形列,4个锥面其需要4*3&#x3D;12个顶点,也就是有8个顶点是重复的.如果实体比较复杂,重复的顶点会更多,造成资源浪费. 为些Direct3D引入了索引缓存的概念,">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://www.cnblogs.com/images/cnblogs_com/flying_bat/WindowsLiveWriter/436bcf9d477c_F26C/clip_image001_thumb.png">
+<meta property="article:published_time" content="2007-10-13T17:14:00.000Z">
+<meta property="article:modified_time" content="2007-10-13T17:15:00.000Z">
+<meta property="article:author" content="rise">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://www.cnblogs.com/images/cnblogs_com/flying_bat/WindowsLiveWriter/436bcf9d477c_F26C/clip_image001_thumb.png">
+
+
+<link rel="canonical" href="https://rise-worlds.github.io/2007/10/13/%E5%88%9B%E5%BB%BA%E7%B4%A2%E5%BC%95%E7%BC%93%E5%AD%98/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://rise-worlds.github.io/2007/10/13/%E5%88%9B%E5%BB%BA%E7%B4%A2%E5%BC%95%E7%BC%93%E5%AD%98/","path":"2007/10/13/创建索引缓存/","title":"创建索引缓存"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>创建索引缓存 | Rise'blogs</title>
+  
+
+  <script src="/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?266da4e90214887b507c0bb6baa84e3e"></script>
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Rise'blogs</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-message"><a href="/message/" rel="section"><i class="fa fa-comments fa-fw"></i>留言板</a></li><li class="menu-item menu-item-sitemap"><a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>站点地图</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="rise"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">rise</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">661</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">48</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">105</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="mailto:rise.worlds@outlook.com" title="E-Mail → mailto:rise.worlds@outlook.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://github.com/rise-worlds" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;rise-worlds" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://x.com/riseworlds" title="Twitter → https:&#x2F;&#x2F;x.com&#x2F;riseworlds" rel="noopener me" target="_blank"><i class="fab fa-twitter fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.facebook.com/rise.worlds" title="FB Page → https:&#x2F;&#x2F;www.facebook.com&#x2F;rise.worlds" rel="noopener me" target="_blank"><i class="fab fa-facebook fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.youtube.com/@YiXuan" title="YouTube → https:&#x2F;&#x2F;www.youtube.com&#x2F;@YiXuan" rel="noopener me" target="_blank"><i class="fab fa-youtube fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.instagram.com/rise.worlds/" title="Instagram → https:&#x2F;&#x2F;www.instagram.com&#x2F;rise.worlds&#x2F;" rel="noopener me" target="_blank"><i class="fab fa-instagram fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://t.me/riseworlds" title="Telegram → https:&#x2F;&#x2F;t.me&#x2F;riseworlds" rel="noopener me" target="_blank"><i class="fab fa-telegram fa-fw"></i></a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+          链接
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <a href="https://www.cnblogs.com/flying_bat" title="https:&#x2F;&#x2F;www.cnblogs.com&#x2F;flying_bat" rel="noopener" target="_blank">My Cnblogs</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://www.github.com/rise-worlds" title="https:&#x2F;&#x2F;www.github.com&#x2F;rise-worlds" rel="noopener" target="_blank">My Github</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://www.google.com/" title="https:&#x2F;&#x2F;www.google.com&#x2F;" rel="noopener" target="_blank">Google</a>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://rise-worlds.github.io/2007/10/13/%E5%88%9B%E5%BB%BA%E7%B4%A2%E5%BC%95%E7%BC%93%E5%AD%98/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="rise">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Rise'blogs">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="创建索引缓存 | Rise'blogs">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          创建索引缓存
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2007-10-13 17:14:00 / 修改时间：17:15:00" itemprop="dateCreated datePublished" datetime="2007-10-13T17:14:00+00:00">2007-10-13</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/dev/" itemprop="url" rel="index"><span itemprop="name">dev</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/dev/GameDev/" itemprop="url" rel="index"><span itemprop="name">GameDev</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>在Direct3D中,实体模型中的一个点可能被 多个三角形面所共用,如下图,虽然只有4个顶点,却由4个三角形面组成. <p><a target="_blank" rel="noopener" href="http://www.cnblogs.com/images/cnblogs_com/flying_bat/WindowsLiveWriter/436bcf9d477c_F26C/clip_image001_2.png"><img style="border-right: 0px; border-top: 0px; border-left: 0px; border-bottom: 0px" height="113" alt="clip_image001" src="http://www.cnblogs.com/images/cnblogs_com/flying_bat/WindowsLiveWriter/436bcf9d477c_F26C/clip_image001_thumb.png" width="244" border="0"></a> <p>屏幕剪辑的捕获时间: 2007-6-27, 9:46 <p>如果把顶点数据按对应图元的格式,直接放进顶点缓存区,该棱锥使用三角形列,4个锥面其需要4*3=12个顶点,也就是有8个顶点是重复的.如果实体比较复杂,重复的顶点会更多,造成资源浪费. <p>为些Direct3D引入了索引缓存的概念,把顶点的具体数据和代表图元格式的顶点顺序分开存储:顶点数据仍然放到顶点缓存区中,索引缓存区则按照图元格式,顺序存放顶点的索引. <p>以上图为例:头等在顶点缓存中保存A、B、C、D这4个顶点的FVF数据项，相应的索引为0、1、2、3；然后按照三角形列的组成顺序，把顶点索引值存入索引缓存区，4个三角形分别为△ACB、△ADC、△ADB、△BCD（注意顶点排列顺序和可视面的关系），则索引序列为0 2 1 0 3 2 0 1 3 1 2 3.这样原本要用12个顶点数据构建一个三棱锥，索引缓存后只需要4个。 <p>CUSTOMVERTEX vertices[]={&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // FVF顶点数据&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // 四方体 <p>{ 1.0f, 0.25f, 0.0f, D3DCOLOR_XRGB(0,255,255)},&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // 蓝白 <p>{ 1.0f, 0.75f, 0.0f, D3DCOLOR_XRGB(0,255,255)}, <p>{0.25f, 0.75f, 0.0f, D3DCOLOR_XRGB(255,0,255)},&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // 粉红 <p>{0.25f, 0.25f, 0.0f, D3DCOLOR_XRGB(255,0,255)}, <p>{ 1.0f, 0.25f, 1.0f, D3DCOLOR_XRGB(127,127,255)},&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // 蓝 <p>{ 1.0f, 0.75f, 1.0f, D3DCOLOR_XRGB(127,127,255)}, <p>{0.25f, 0.75f, 1.0f, D3DCOLOR_XRGB(255,255,0)},&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // 黄 <p>{0.25f, 0.25f, 1.0f, D3DCOLOR_XRGB(255,255,0)} <p>}; <p>//WORD indices[] = {0,1,2,2,1,3, 0,3,4,4,3,7, 1,2,5,5,2,6, 0,1,4,4,1,5, 3,2,7,7,2,6, 4,5,6,6,5,7}; <p>WORD indices[] = {0,1,3,1,3,2, 0,3,4,3,4,7, 5,1,6,6,1,2, 1,0,5,5,0,4, 3,2,7,2,7,6, 4,5,7,5,7,6}; <p>//创建顶点缓存区, 并获取接口IDirect3DVertexBuffer9的指针 <p>m_pDevice-&gt;CreateVertexBuffer( <p>sizeof(vertices),&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // 缓存区尺寸 <p>0,D3DFVF_CUSTOMVERTEX, <p>D3DPOOL_DEFAULT, &amp;m_pVB,NULL); <p>//把顶点数据填入顶点缓存区 <p>void* pVertices; <p>m_pVB-&gt;Lock(0, sizeof(vertices), (void**)&amp;pVertices, 0); <p>memcpy(pVertices, vertices, sizeof(vertices)); <p>m_pVB-&gt;Unlock(); <p>// 创建索引缓存区, 并获取接口 LPDIRECT3DINDEXBUFFR9 的指针 <p>m_pDevice-&gt;CreateIndexBuffer(sizeof(indices), <p>0,D3DFMT_INDEX16, <p>D3DPOOL_DEFAULT, &amp;m_pIB,NULL); <p>// 把索引值填入索引缓存区 <p>void* pIndices; <p>m_pIB-&gt;Lock(0,sizeof(indices),(void**)&amp;pIndices,0); <p>memcpy(pIndices,indices,sizeof(indices)); <p>m_pIB-&gt;Unlock(); <p>渲染： <p>// 设置自定义的FVF <p>m_pDevice-&gt;SetFVF(D3DFVF_CUSTOMVERTEX); <p>// 绑定顶点缓冲区至设备数据源 <p>m_pDevice-&gt;SetStreamSource(0, m_pVB, 0, sizeof(CUSTOMVERTEX)); <p>// 绑定索引缓存区 <p>m_pDevice-&gt;SetIndices(m_pIB); <p>// 从索引缓存区绘制图元,参数1为图元格式,参数4为顶点数,参数6为三角形数 <p>//m_pDevice-&gt;DrawIndexedPrimitive(D3DPT_TRIANGLELIST, 0, 0, 4, 0, 4);&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // 三角形 <p>m_pDevice-&gt;DrawIndexedPrimitive(D3DPT_TRIANGLELIST, 0, 0, 8, 0, 12); <p>// 绘制图元，其中参数1为图元格式，参数3为三角形数目 <p>//m_pDevice-&gt;DrawPrimitive(D3DPT_TRIANGLELIST, 0, 1);  
+    
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="followme">
+  <span>欢迎关注我的其它发布渠道</span>
+
+  <div class="social-list">
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="https://www.facebook.com/rise.worlds">
+            <span class="icon">
+              <i class="fab fa-facebook"></i>
+            </span>
+
+            <span class="label">FB Page</span>
+          </a>
+      </div>
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="https://twitter.com/riseworlds">
+            <span class="icon">
+              <i class="fab fa-twitter"></i>
+            </span>
+
+            <span class="label">Twitter</span>
+          </a>
+      </div>
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="https://t.me/riseworlds">
+            <span class="icon">
+              <i class="fab fa-telegram"></i>
+            </span>
+
+            <span class="label">Telegram</span>
+          </a>
+      </div>
+  </div>
+</div>
+
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2007/10/13/%E4%B8%89%E8%A7%92%E5%BD%A2%E3%80%81%E5%B9%B3%E9%9D%A2%E6%B3%95%E7%BA%BF%E3%80%81%E9%A1%B6%E7%82%B9%E6%B3%95%E7%BA%BF/" rel="prev" title="三角形、平面法线、顶点法线">
+                  <i class="fa fa-angle-left"></i> 三角形、平面法线、顶点法线
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2007/10/13/the-3d-coordinate-transform/" rel="next" title="3d坐标变换">
+                  3d坐标变换 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  
+  <div class="comments giscus-container">
+  </div>
+  
+  
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">豫ICP备2021009490号 </a>
+  </div>
+  <div class="copyright">
+    &copy; 2004 – 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">rise</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="reading-progress-bar"></div>
+
+  <a href="https://github.com/rise-worlds" class="github-corner" title="在 GitHub 上关注我" aria-label="在 GitHub 上关注我" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://unpkg.com/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@next-theme/pjax@0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script><script src="/js/pjax.js"></script>
+
+  
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://unpkg.com/mermaid@10.9.0/dist/mermaid.min.js","integrity":"sha256-stuqcu2FrjYCXDOytWFA5SoUE/r3nkp6gTglzNSlavU="}}</script>
+  <script src="/js/third-party/tags/mermaid.js"></script>
+
+
+
+
+
+  
+
+
+
+
+  <script src="https://unpkg.com/quicklink@2.3.0/dist/quicklink.umd.js" integrity="sha256-yvJQOINiH9fWemHn0vCA5lsHWJaHs6/ZmO+1Ft04SvM=" crossorigin="anonymous"></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":true,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"https://rise-worlds.github.io/2007/10/13/%E5%88%9B%E5%BB%BA%E7%B4%A2%E5%BC%95%E7%BC%93%E5%AD%98/"}</script>
+  <script src="/js/third-party/quicklink.js"></script>
+<script class="next-config" data-name="giscus" type="application/json">{"enable":true,"repo":"rise-worlds/rise-worlds.github.io","repo_id":"MDEwOlJlcG9zaXRvcnk2MTAxMTA0MA==","category":"Announcements","category_id":"DIC_kwDOA6L0YM4CiXf9","mapping":"pathname","strict":0,"reactions_enabled":1,"emit_metadata":0,"theme":"transparent_dark","lang":"zh-CN","crossorigin":"anonymous","input_position":"top","loading":"lazy"}</script>
+
+<script>
+document.addEventListener('page:loaded', () => {
+  if (!CONFIG.page.comments) return;
+
+  NexT.utils.loadComments('.giscus-container')
+    .then(() => NexT.utils.getScript('https://giscus.app/client.js', {
+      attributes: {
+        async                   : true,
+        crossOrigin             : 'anonymous',
+        'data-repo'             : CONFIG.giscus.repo,
+        'data-repo-id'          : CONFIG.giscus.repo_id,
+        'data-category'         : CONFIG.giscus.category,
+        'data-category-id'      : CONFIG.giscus.category_id,
+        'data-mapping'          : CONFIG.giscus.mapping,
+        'data-strict'           : CONFIG.giscus.strict,
+        'data-reactions-enabled': CONFIG.giscus.reactions_enabled,
+        'data-emit-metadata'    : CONFIG.giscus.emit_metadata,
+        'data-theme'            : CONFIG.giscus.theme,
+        'data-lang'             : CONFIG.giscus.lang,
+        'data-input-position'   : CONFIG.giscus.input_position,
+        'data-loading'          : CONFIG.giscus.loading
+      },
+      parentNode: document.querySelector('.giscus-container')
+    }));
+});
+</script>
+
+</body>
+</html>
