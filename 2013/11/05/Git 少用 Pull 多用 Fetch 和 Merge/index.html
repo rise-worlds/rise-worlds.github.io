@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://unpkg.com/@fortawesome/fontawesome-free@6.5.2/css/all.min.css" integrity="sha256-XOqroi11tY4EFQMR9ZYwZWKj5ZXiftSx36RRuC3anlA=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://unpkg.com/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"rise-worlds.github.io","root":"/","images":"/images","scheme":"Mist","darkmode":true,"version":"8.20.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="本文有点长而且有点乱，但就像_Mark Twain Blaise Pascal的_笑话里说的那样：我没有时间让它更短些。在Git的邮件列表里有很多关于本文的讨论，我会尽量把其中相关的观点列在下面。 我最常说的关于git使用的一个经验就是：  不要用git pull，用git fetch和git merge代替它。  git pull的问题是它把过程的细节都隐藏了起来，以至于你不用去了解git中各种">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Git 少用 Pull 多用 Fetch 和 Merge">
+<meta property="og:url" content="https://rise-worlds.github.io/2013/11/05/Git%20%E5%B0%91%E7%94%A8%20Pull%20%E5%A4%9A%E7%94%A8%20Fetch%20%E5%92%8C%20Merge/index.html">
+<meta property="og:site_name" content="Rise&#39;blogs">
+<meta property="og:description" content="本文有点长而且有点乱，但就像_Mark Twain Blaise Pascal的_笑话里说的那样：我没有时间让它更短些。在Git的邮件列表里有很多关于本文的讨论，我会尽量把其中相关的观点列在下面。 我最常说的关于git使用的一个经验就是：  不要用git pull，用git fetch和git merge代替它。  git pull的问题是它把过程的细节都隐藏了起来，以至于你不用去了解git中各种">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2013-11-05T15:23:00.000Z">
+<meta property="article:modified_time" content="2013-11-05T15:23:00.000Z">
+<meta property="article:author" content="rise">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://rise-worlds.github.io/2013/11/05/Git%20%E5%B0%91%E7%94%A8%20Pull%20%E5%A4%9A%E7%94%A8%20Fetch%20%E5%92%8C%20Merge/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://rise-worlds.github.io/2013/11/05/Git%20%E5%B0%91%E7%94%A8%20Pull%20%E5%A4%9A%E7%94%A8%20Fetch%20%E5%92%8C%20Merge/","path":"2013/11/05/Git 少用 Pull 多用 Fetch 和 Merge/","title":"Git 少用 Pull 多用 Fetch 和 Merge"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Git 少用 Pull 多用 Fetch 和 Merge | Rise'blogs</title>
+  
+
+  <script src="/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?266da4e90214887b507c0bb6baa84e3e"></script>
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Rise'blogs</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-message"><a href="/message/" rel="section"><i class="fa fa-comments fa-fw"></i>留言板</a></li><li class="menu-item menu-item-sitemap"><a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>站点地图</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9F%BA%E4%BA%8E%E8%BF%9C%E7%A8%8B%E8%B7%9F%E8%B8%AA%E5%88%86%E6%94%AF%E5%88%9B%E5%BB%BA%E6%9C%AC%E5%9C%B0%E5%88%86%E6%94%AF"><span class="nav-number">1.</span> <span class="nav-text">基于远程跟踪分支创建本地分支</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%8E%E8%BF%9C%E7%AB%AF%E4%BB%93%E5%BA%93%E8%BF%9B%E8%A1%8C%E6%9B%B4%E6%96%B0"><span class="nav-number">2.</span> <span class="nav-text">从远端仓库进行更新</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8A%8A%E4%BD%A0%E7%9A%84%E5%8F%98%E6%9B%B4%E6%8E%A8%E9%80%81%E5%88%B0%E4%B8%80%E4%B8%AA%E8%BF%9C%E7%A8%8B%E4%BB%93%E5%BA%93"><span class="nav-number">3.</span> <span class="nav-text">把你的变更推送到一个远程仓库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E4%B8%8D%E7%94%A8-git-%E7%9A%84-pull%EF%BC%9F"><span class="nav-number">4.</span> <span class="nav-text">为什么不用 git 的 pull？</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="rise"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">rise</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">661</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">48</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">106</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="mailto:rise.worlds@outlook.com" title="E-Mail → mailto:rise.worlds@outlook.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://github.com/rise-worlds" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;rise-worlds" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://x.com/riseworlds" title="Twitter → https:&#x2F;&#x2F;x.com&#x2F;riseworlds" rel="noopener me" target="_blank"><i class="fab fa-twitter fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.facebook.com/rise.worlds" title="FB Page → https:&#x2F;&#x2F;www.facebook.com&#x2F;rise.worlds" rel="noopener me" target="_blank"><i class="fab fa-facebook fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.youtube.com/@YiXuan" title="YouTube → https:&#x2F;&#x2F;www.youtube.com&#x2F;@YiXuan" rel="noopener me" target="_blank"><i class="fab fa-youtube fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.instagram.com/rise.worlds/" title="Instagram → https:&#x2F;&#x2F;www.instagram.com&#x2F;rise.worlds&#x2F;" rel="noopener me" target="_blank"><i class="fab fa-instagram fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://t.me/riseworlds" title="Telegram → https:&#x2F;&#x2F;t.me&#x2F;riseworlds" rel="noopener me" target="_blank"><i class="fab fa-telegram fa-fw"></i></a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+          链接
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <a href="https://www.cnblogs.com/flying_bat" title="https:&#x2F;&#x2F;www.cnblogs.com&#x2F;flying_bat" rel="noopener" target="_blank">My Cnblogs</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://www.github.com/rise-worlds" title="https:&#x2F;&#x2F;www.github.com&#x2F;rise-worlds" rel="noopener" target="_blank">My Github</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://www.google.com/" title="https:&#x2F;&#x2F;www.google.com&#x2F;" rel="noopener" target="_blank">Google</a>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://rise-worlds.github.io/2013/11/05/Git%20%E5%B0%91%E7%94%A8%20Pull%20%E5%A4%9A%E7%94%A8%20Fetch%20%E5%92%8C%20Merge/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="rise">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Rise'blogs">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Git 少用 Pull 多用 Fetch 和 Merge | Rise'blogs">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Git 少用 Pull 多用 Fetch 和 Merge
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2013-11-05 15:23:00" itemprop="dateCreated datePublished" datetime="2013-11-05T15:23:00+00:00">2013-11-05</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/dev/" itemprop="url" rel="index"><span itemprop="name">dev</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/dev/Git/" itemprop="url" rel="index"><span itemprop="name">Git</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>本文有点长而且有点乱，但就像_Mark Twain <a target="_blank" rel="noopener" href="http://en.wikiquote.org/wiki/Blaise_Pascal">Blaise Pascal</a>的_笑话里说的那样：我没有时间让它更短些。在Git的邮件列表里有很多<a target="_blank" rel="noopener" href="http://thread.gmane.org/gmane.comp.version-control.git/116903/">关于本文的讨论</a>，我会尽量把其中相关的观点列在下面。</p>
+<p>我最常说的关于git使用的一个经验就是：</p>
+<blockquote>
+<p>不要用git pull，用git fetch和git merge代替它。</p>
+</blockquote>
+<p>git pull的问题是它把过程的细节都隐藏了起来，以至于你不用去了解git中各种类型分支的区别和使用方法。当然，多数时候这是没问题的，但一旦代码有问题，你很难找到出错的地方。看起来git pull的用法会使你吃惊，简单看一下git的使用文档应该就能说服你。</p>
+<p>将下载（fetch）和合并（merge）放到一个命令里的另外一个弊端是，你的本地工作目录在未经确认的情况下就会被远程分支更新。当然，除非你关闭所有的安全选项，否则git pull在你本地工作目录还不至于造成不可挽回的损失，但很多时候我们宁愿做的慢一些，也不愿意返工重来。</p>
+<p><strong>分支(Branches)</strong></p>
+<p>在说_git pull_之前，我们需要先澄清分支的概念（branches）。很多人像写代码似的用一行话来描述分支是什么，例如:</p>
+<ul>
+<li>准确而言，分支的概念不是一条线，而类似于开发中的有向无环图</li>
+<li>分支类似于一个重量级的大对象集合。</li>
+</ul>
+<p>我认为你应该这样来理解分支的概念：它是用来标记特定的代码提交，每一个分支通过SHA1sum值来标识，所以对分支进行的操作是轻量级的–你改变的仅仅是SHA1sum值。</p>
+<p>这个定义或许会有意想不到的影响。比如，假设你有两个分支，“stable” 和 “new-idea”, 它们的顶端在版本 E 和 F:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">A-----C----E (<span class="string">&quot;stable&quot;</span>)</span><br><span class="line"> \</span><br><span class="line">  B-----D-----F (<span class="string">&quot;new-idea&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>所以提交(commits) A, C和 E 属于“stable”，而 A, B, D 和 F 属于 “new-idea”。如果之后你用下面的命令 将“new-idea” merge 到 “stable” ：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git checkout stable   <span class="comment"># Change to work on the branch &quot;stable&quot;</span></span><br><span class="line">git merge new-idea    <span class="comment"># Merge in &quot;new-idea&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>…那么你会得到这个：</p>
+<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">A-----C----E----G (&quot;stable&quot;)</span><br><span class="line"> \             /</span><br><span class="line">  B-----D-----F (&quot;new-idea&quot;)</span><br></pre></td></tr></table></figure>
+
+<p>要是你继续在“new idea” 和“stable”分支提交, 会得到：</p>
+<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">A-----C----E----G---H (&quot;stable&quot;)</span><br><span class="line"> \             /</span><br><span class="line">  B-----D-----F----I (&quot;new-idea&quot;)</span><br></pre></td></tr></table></figure>
+
+<p>因此现在A, B, C, D, E, F, G 和 H 属于 “stable”，而A, B, D, F 和 I 属于 “new-idea”。</p>
+<p>当然了，分支确实有些特殊的属性——其中最重要的是，如果你在一个分支进行作业并创建了一个新的提交(commits)，该分支的顶端将前进到那个提交(commits)。这正是你所希望的。当用_git merge_ 进行合并(merge)的时候，你只是指定了要合并到当前分支的那个并入分支，以及当前分支的当前进展。</p>
+<p>另一个表明使用分支会有很大帮助的观点的常见情形是：假设你直接工作在一个项目的主要分支（称为“主版本”），当你意识到你所做的可能是一个坏主意时已经晚了，这时你肯定宁愿自己是工作在一个主题分支上。如果提交图看起来像这样：</p>
+<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"> last version from another repository</span><br><span class="line">    |</span><br><span class="line">    v</span><br><span class="line">M---N-----O----P---Q (&quot;master&quot;)</span><br></pre></td></tr></table></figure>
+
+<p>那么你把你的工作用下面的一组命令分开做（如图显示的是执行它们之后所更改的状态）：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">git branch dubious-experiment</span><br><span class="line"></span><br><span class="line">M---N-----O----P---Q (<span class="string">&quot;master&quot;</span> and <span class="string">&quot;dubious-experiment&quot;</span>)</span><br><span class="line"></span><br><span class="line">git checkout master</span><br><span class="line"></span><br><span class="line"><span class="comment"># Be careful with this next command: make sure &quot;git status&quot; is</span></span><br><span class="line"><span class="comment"># clean, you&#x27;re definitely on &quot;master&quot; and the</span></span><br><span class="line"><span class="comment"># &quot;dubious-experiment&quot; branch has the commits you were working</span></span><br><span class="line"><span class="comment"># on first...</span></span><br><span class="line"></span><br><span class="line">git reset --hard &amp;lt;SHA1sum of commit N&amp;gt;</span><br><span class="line"></span><br><span class="line">     (<span class="string">&quot;master&quot;</span>)</span><br><span class="line">M---N-------------O----P---Q (<span class="string">&quot;dubious-experiment&quot;</span>)</span><br><span class="line"></span><br><span class="line">git pull <span class="comment"># Or something that updates &quot;master&quot; from</span></span><br><span class="line">         <span class="comment"># somewhere else...</span></span><br><span class="line"></span><br><span class="line">M--N----R---S (<span class="string">&quot;master&quot;</span>)</span><br><span class="line">    \</span><br><span class="line">     O---P---Q (<span class="string">&quot;dubious-experiment&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>这是个看起来我最终做了很多的事情。</p>
+<p><strong>分支类型</strong></p>
+<p>分支这个术语不太容易理解,而且在git的开发过程中发生了很多变化。但简单来说git的分支只有两种：</p>
+<p>a）“本地分支(local branches)” ，当你输入“git branch”时显示的。例如下面这个小例子：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">git branch</span><br><span class="line">debian</span><br><span class="line">server</span><br><span class="line">* master</span><br></pre></td></tr></table></figure>
+
+<p>b)“远程跟踪分支(Remote-tracking branches)” ，当你输入“git branch -r”是显示的，如:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">git branch -r</span><br><span class="line">cognac/master</span><br><span class="line">fruitfly/server</span><br><span class="line">origin/albert</span><br><span class="line">origin/ant</span><br><span class="line">origin/contrib</span><br><span class="line">origin/cross-compile</span><br></pre></td></tr></table></figure>
+
+<p>从上面的输出可以看到，跟踪分支的名称前有一个“远程的”标记名称（如 :origin, cognac, fruitfly）后面跟一个“／”，然后远程仓库里分支的真正名称。（“远程名称”是一个代码仓库别名，和本地目录或URL是一个含义，你可以通过”git remote”命令自由定义额外的“远程名称”。但“git clone”命令默认使用的是“origin”这个名称。）</p>
+<p>如果你对分支在本地是如何存储感兴趣的话，看看下面文件： </p>
+<ul>
+<li>  .git&#x2F;refs&#x2F;head&#x2F;[本地分支]</li>
+<li>  .git&#x2F;refs&#x2F;remotes&#x2F;[正在跟踪的分支]</li>
+</ul>
+<p>两种类型的分支在某些方面十分相似-它们都只是在本地存储一个表示提交的SHA1校验和。（我强调“本地”，因为许多人看到”origin&#x2F;master” 就认为这个分支在某种意义上说是不完整的，没有访问远端服务器的权限- 其实不是这种情况。） <br>不管如何相似，它们还是有一个特别重大的区别： </p>
+<ul>
+<li>  更改远端跟踪分支的安全方法是使用git fetch或者是作为git-push副产品，你不能直接对远端跟踪分支这么操作。相反，你总得切换到本地分支，然后创建可移动到分支顶端的新提交 。</li>
+</ul>
+<p>因此，你对远端跟踪分支最多能做的是下面事情中的一件： </p>
+<ul>
+<li> 使用git fetch 更新远端跟踪分支</li>
+<li> 合并远端跟踪分支到当前分支</li>
+<li> 根据远端跟踪分支创建本地分支</li>
+</ul>
+<h3 id="基于远程跟踪分支创建本地分支"><a href="#基于远程跟踪分支创建本地分支" class="headerlink" title="基于远程跟踪分支创建本地分支"></a><strong>基于远程跟踪分支创建本地分支</strong></h3><p>如果你想基于远程跟踪分支创建本地分支（在本地分支上工作）,你可以使用如下命令：_git branch –track_或_git checkout –track -b_，两个命令都可以让你切换到新创建的本地分支。例如你用_git branch -r命令_看到一个远程跟踪分支的名称为“origin&#x2F;refactored”是你所需要的，你可以使用下面的命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git checkout --track -b refactored origin/refactored</span><br></pre></td></tr></table></figure>
+
+<p>在上面的命令里，“refactored”是这个新分支的名称，“origin&#x2F;refactored”则是现存远程跟踪分支的名称。（在git最新的版本里，例子中‘-track’选项已经不需要了，如果最后一个参数是远程跟踪分支，这个参数会被默认加上。）</p>
+<p>“–track”选项会设置一些变量，来保持本地分支和远程跟踪分支的相关性。他们对下面的情况很有用：</p>
+<ul>
+<li>git pull命令下载新的远程跟踪分支之后，可以知道合并到哪个本地分支里</li>
+<li>使用git checkout检查本地分支时，可以输出一些有用的信息：</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Your branch and the tracked remote branch &#x27;origin/master&#x27;</span><br><span class="line">have diverged, and respectively have 3 and 384 different</span><br><span class="line">commit(s) each.</span><br></pre></td></tr></table></figure>
+
+<p>或者：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Your branch is behind the tracked remote branch</span><br><span class="line">&#x27;origin/master&#x27; by 3 commits, and can be fast-forwarded.</span><br></pre></td></tr></table></figure>
+
+<p>允许使用的配置变量是：“branch.<local-branch-name>.merge”和“branch.<local-branch-name>.remote”，但通常情况下你不用考虑他们的设置。</p>
+<p>当从远程代码仓库创建一个本地分支之后，你会注意到，“_git branch -r_”能列出很多远程跟踪分支，但你的电脑上只有一个本地分支，你需要给上面的命令设置一个参数，来指定本地分支和远程分支的对应。</p>
+<blockquote>
+<p>有一些术语上的说法容易混淆需要注意一下：“track”在当作参数”-track”使用时，意思指通过本地分支对应一个远程跟踪分支。在远程跟踪分支中则指远程代码仓库中的跟踪分支。有点绕口。。。</p>
+</blockquote>
+<p>下面我们来看一个例子，如何从远程分支中更新本地代码，以及如何把本地分支推送到一个新的远程仓库中。</p>
+<h3 id="从远端仓库进行更新"><a href="#从远端仓库进行更新" class="headerlink" title="从远端仓库进行更新"></a><strong>从远端仓库进行更新</strong></h3><p>如果我想从远端的源仓库更新到本地的代码仓库，可以输入“_git fetch origin_”的命令，该命令的输入类似如下格式：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">remote: Counting objects: 382, <span class="keyword">done</span>.</span><br><span class="line">remote: Compressing objects: 100% (203/203), <span class="keyword">done</span>.</span><br><span class="line">remote: Total 278 (delta 177), reused 103 (delta 59)</span><br><span class="line">Receiving objects: 100% (278/278), 4.89 MiB | 539 KiB/s, <span class="keyword">done</span>.</span><br><span class="line">Resolving deltas: 100% (177/177), completed with 40 <span class="built_in">local</span> objects.</span><br><span class="line">From ssh://longair@pacific.mpi-cbg.de/srv/git/fiji</span><br><span class="line">   3036acc..9eb5e40  debian-release-20081030 -&amp;gt; origin/debian-release-20081030</span><br><span class="line"> * [new branch]      debian-release-20081112 -&amp;gt; origin/debian-release-20081112</span><br><span class="line"> * [new branch]      debian-release-20081112.1 -&amp;gt; origin/debian-release-20081112.1</span><br><span class="line">   3d619e7..6260626  master     -&amp;gt; origin/master</span><br></pre></td></tr></table></figure>
+
+<p>最重要的是这两行：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">  3036acc..9eb5e40  debian-release-20081030 -&amp;gt; origin/debian-release-20081030</span><br><span class="line">* [new branch]      debian-release-20081112 -&amp;gt; origin/debian-release-20081112</span><br></pre></td></tr></table></figure>
+
+<p>第一行表明远端的origin&#x2F;debian-release-20081030分支的提交(commit)ID已经从3036acc更新为9eb5e40。箭头前的部分是远端分支的名称。第二行是我们采取的动作，创建远程跟踪分支（如果远程仓库有新的tags，git fetch也会一并下载到本地）。</p>
+<p>前面那些行显示出“git fetch”命令会将哪些文件下载到本地，这些文件一旦下载到本地之后，就可以在本地进行任意操作了。</p>
+<p>“git fetch”命令执行完毕之后，还不会立即将下载的文件合并到你当前工作目录里，这就给你了一个选择下一步操作的机会，要是想将从远程分支下载的文件更新到你的工作目录里，你需要执行一个“合并（merge）”操作。例如，我当前的本地分支为”master“（执行git checkout master后），这时我想执行合并操作：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git merge origin/master</span><br></pre></td></tr></table></figure>
+
+<p>( 几句题外话：合并的时候有可能你还没有对远程分支提交过任何的更改，或者可能是一个复杂的合并。)</p>
+<p>如果你只是想看看本地分支和远程分支的差异，你可以使用下面的命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git diff master origin/master</span><br></pre></td></tr></table></figure>
+
+<p>单独进行下载和合并是一个好的做法，你可以先看看下载的是什么，然后再决定是否和本地代码合并。而且分开来做，可以清晰的区别开本地分支和远程分支，方便选择使用。</p>
+<h3 id="把你的变更推送到一个远程仓库"><a href="#把你的变更推送到一个远程仓库" class="headerlink" title="把你的变更推送到一个远程仓库"></a>把你的变更推送到一个远程仓库</h3><p>如何通过其他的方式呢? 假设你对 “experimental”分支做了变更并且希望把他push到”origin”远程仓库中去. 你可以这样做:</p>
+<table><tbody><tr><td><code>1</code></td><td><code>git push origin experimental</code></td></tr></tbody></table>
+
+<p>你可能将会收到:远程仓库无法fast-forward该分支的错误信息, 这将意味着可能有别人push了不同的变更到了这个分支上.所以,你需要fetch和merge别人的变更并再次尝试push操作.</p>
+<blockquote>
+<p>扩展阅读： 如果这个分支在远程仓库里对应不同的名称（如:experiment-by-bob）,你应该这么做：   </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git push origin experimental:experiment-by-bob</span><br></pre></td></tr></table></figure>
+
+<p>在旧版本的git里，如果“experiment-by-bob”不存在，命令应该这么写：   </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git push origin experimental:refs/heads/experiment-by-bob</span><br></pre></td></tr></table></figure>
+
+<p>这样会首先创建远程分支。但git 1.6.1.2应该就不用这么做了。参加下面Sitaram’s的评论。 <br> 如果本地分支和远程分支名称相同，不需要特殊说明系统将会自动创建这个分支,就像常规的git push操作一样。 </p>
+<p>在实际应用中，保持名称相同可以减少混淆，因此“本地名称和远程名称”作为“refspec”参数，我们不会进行更多的讨论。</p>
+</blockquote>
+<p>_git push_的操作不会牵扯远程跟踪分支（origin&#x2F;experimental），只有在你下次进行git fetch时才会被更新。</p>
+<p>上面这个说法不对，根据_Deskin Miller_的评论纠正：当推送到对应的远程分支后，你的远程跟踪分支就会被更新。</p>
+<h3 id="为什么不用-git-的-pull？"><a href="#为什么不用-git-的-pull？" class="headerlink" title="为什么不用 git 的 pull？"></a>为什么不用 git 的 pull？</h3><p>虽然 <em>git pull</em> 大部分时候是好的，特别是如果你用CVS类型的方式使用Git时，它可能正适合你。然而，如果你想用一个更地道的方式（建立很多主题分支，当你需要时随时改写本地历史，等等）使用Git，那么习惯把 <em>git fetch</em> 和 <em>git merge</em> 分开做会有很大帮助。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="followme">
+  <span>欢迎关注我的其它发布渠道</span>
+
+  <div class="social-list">
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="https://www.facebook.com/rise.worlds">
+            <span class="icon">
+              <i class="fab fa-facebook"></i>
+            </span>
+
+            <span class="label">FB Page</span>
+          </a>
+      </div>
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="https://twitter.com/riseworlds">
+            <span class="icon">
+              <i class="fab fa-twitter"></i>
+            </span>
+
+            <span class="label">Twitter</span>
+          </a>
+      </div>
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="https://t.me/riseworlds">
+            <span class="icon">
+              <i class="fab fa-telegram"></i>
+            </span>
+
+            <span class="label">Telegram</span>
+          </a>
+      </div>
+  </div>
+</div>
+
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2013/10/27/hypervisor%E4%B8%8EVMware%E5%85%B1%E5%AD%98%E6%96%B9%E6%B3%95/" rel="prev" title="hypervisor与VMware共存方法">
+                  <i class="fa fa-angle-left"></i> hypervisor与VMware共存方法
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2013/11/18/%E2%80%9Cvmware%20tools%20%E5%8F%AA%E8%83%BD%E8%99%9A%E6%8B%9F%E6%9C%BA%E4%B8%AD%E5%AE%89%E8%A3%85%E2%80%9D%E7%9A%84%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/" rel="next" title="“vmware tools 只能虚拟机中安装”的解决方法">
+                  “vmware tools 只能虚拟机中安装”的解决方法 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  
+  <div class="comments giscus-container">
+  </div>
+  
+  
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">豫ICP备2021009490号 </a>
+  </div>
+  <div class="copyright">
+    &copy; 2004 – 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">rise</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="reading-progress-bar"></div>
+
+  <a href="https://github.com/rise-worlds" class="github-corner" title="在 GitHub 上关注我" aria-label="在 GitHub 上关注我" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://unpkg.com/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@next-theme/pjax@0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script><script src="/js/pjax.js"></script>
+
+  
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://unpkg.com/mermaid@10.9.0/dist/mermaid.min.js","integrity":"sha256-stuqcu2FrjYCXDOytWFA5SoUE/r3nkp6gTglzNSlavU="}}</script>
+  <script src="/js/third-party/tags/mermaid.js"></script>
+
+
+
+
+
+  
+
+
+
+
+  <script src="https://unpkg.com/quicklink@2.3.0/dist/quicklink.umd.js" integrity="sha256-yvJQOINiH9fWemHn0vCA5lsHWJaHs6/ZmO+1Ft04SvM=" crossorigin="anonymous"></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":true,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"https://rise-worlds.github.io/2013/11/05/Git%20%E5%B0%91%E7%94%A8%20Pull%20%E5%A4%9A%E7%94%A8%20Fetch%20%E5%92%8C%20Merge/"}</script>
+  <script src="/js/third-party/quicklink.js"></script>
+<script class="next-config" data-name="giscus" type="application/json">{"enable":true,"repo":"rise-worlds/rise-worlds.github.io","repo_id":"MDEwOlJlcG9zaXRvcnk2MTAxMTA0MA==","category":"Announcements","category_id":"DIC_kwDOA6L0YM4CiXf9","mapping":"pathname","strict":0,"reactions_enabled":1,"emit_metadata":0,"theme":"transparent_dark","lang":"zh-CN","crossorigin":"anonymous","input_position":"top","loading":"lazy"}</script>
+
+<script>
+document.addEventListener('page:loaded', () => {
+  if (!CONFIG.page.comments) return;
+
+  NexT.utils.loadComments('.giscus-container')
+    .then(() => NexT.utils.getScript('https://giscus.app/client.js', {
+      attributes: {
+        async                   : true,
+        crossOrigin             : 'anonymous',
+        'data-repo'             : CONFIG.giscus.repo,
+        'data-repo-id'          : CONFIG.giscus.repo_id,
+        'data-category'         : CONFIG.giscus.category,
+        'data-category-id'      : CONFIG.giscus.category_id,
+        'data-mapping'          : CONFIG.giscus.mapping,
+        'data-strict'           : CONFIG.giscus.strict,
+        'data-reactions-enabled': CONFIG.giscus.reactions_enabled,
+        'data-emit-metadata'    : CONFIG.giscus.emit_metadata,
+        'data-theme'            : CONFIG.giscus.theme,
+        'data-lang'             : CONFIG.giscus.lang,
+        'data-input-position'   : CONFIG.giscus.input_position,
+        'data-loading'          : CONFIG.giscus.loading
+      },
+      parentNode: document.querySelector('.giscus-container')
+    }));
+});
+</script>
+
+</body>
+</html>

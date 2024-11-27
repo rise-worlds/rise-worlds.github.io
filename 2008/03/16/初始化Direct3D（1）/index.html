@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://unpkg.com/@fortawesome/fontawesome-free@6.5.2/css/all.min.css" integrity="sha256-XOqroi11tY4EFQMR9ZYwZWKj5ZXiftSx36RRuC3anlA=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://unpkg.com/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"rise-worlds.github.io","root":"/","images":"/images","scheme":"Mist","darkmode":true,"version":"8.20.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="Direct3D是一种低层图形API，它能让我们利用3D硬件加速来渲染3D世界。我们可以把Direct3D看作是应用程序和图形设备之间的中介。例如通知图形设备清空屏幕，应用程序将调用Direct3D的IDirect3DDevice9::Clear方法。图1.1显示了应用程序、Direct3D和图形设备之间的关系。  图1.1中Direct3D所表示的是Direct3D中已定义的，供程序员使用的Di">
+<meta property="og:type" content="article">
+<meta property="og:title" content="初始化Direct3D（1）">
+<meta property="og:url" content="https://rise-worlds.github.io/2008/03/16/%E5%88%9D%E5%A7%8B%E5%8C%96Direct3D%EF%BC%881%EF%BC%89/index.html">
+<meta property="og:site_name" content="Rise&#39;blogs">
+<meta property="og:description" content="Direct3D是一种低层图形API，它能让我们利用3D硬件加速来渲染3D世界。我们可以把Direct3D看作是应用程序和图形设备之间的中介。例如通知图形设备清空屏幕，应用程序将调用Direct3D的IDirect3DDevice9::Clear方法。图1.1显示了应用程序、Direct3D和图形设备之间的关系。  图1.1中Direct3D所表示的是Direct3D中已定义的，供程序员使用的Di">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://www.cppblog.com/images/cppblog_com/lovedday/6306/o_figure11.jpg">
+<meta property="og:image" content="http://www.cppblog.com/images/cppblog_com/lovedday/6306/o_figure12.jpg">
+<meta property="article:published_time" content="2008-03-16T13:22:00.000Z">
+<meta property="article:modified_time" content="2008-03-16T13:22:00.000Z">
+<meta property="article:author" content="rise">
+<meta property="article:tag" content="direct3d">
+<meta property="article:tag" content="图形学">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://www.cppblog.com/images/cppblog_com/lovedday/6306/o_figure11.jpg">
+
+
+<link rel="canonical" href="https://rise-worlds.github.io/2008/03/16/%E5%88%9D%E5%A7%8B%E5%8C%96Direct3D%EF%BC%881%EF%BC%89/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://rise-worlds.github.io/2008/03/16/%E5%88%9D%E5%A7%8B%E5%8C%96Direct3D%EF%BC%881%EF%BC%89/","path":"2008/03/16/初始化Direct3D（1）/","title":"初始化Direct3D（1）"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>初始化Direct3D（1） | Rise'blogs</title>
+  
+
+  <script src="/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?266da4e90214887b507c0bb6baa84e3e"></script>
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Rise'blogs</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-message"><a href="/message/" rel="section"><i class="fa fa-comments fa-fw"></i>留言板</a></li><li class="menu-item menu-item-sitemap"><a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>站点地图</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">1.1.1 REF设备</span></a></li><li class="nav-item nav-level-5"><a class="nav-link"><span class="nav-number">2.</span> <span class="nav-text">1.1.2 D3DDEVTYPE</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link"><span class="nav-number">2.1.</span> <span class="nav-text">Constants</span></a></li><li class="nav-item nav-level-6"><a class="nav-link"><span class="nav-number">2.2.</span> <span class="nav-text">Remarks</span></a></li></ol></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link"><span class="nav-number"></span> <span class="nav-text">1.2 COM</span></a></li><li class="nav-item nav-level-4"><a class="nav-link"><span class="nav-number"></span> <span class="nav-text">1.3 一些准备工作</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">1.3.1 表面</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link"><span class="nav-number">1.1.</span> <span class="nav-text">Parameters</span></a></li><li class="nav-item nav-level-6"><a class="nav-link"><span class="nav-number">1.2.</span> <span class="nav-text">Return Values</span></a></li><li class="nav-item nav-level-6"><a class="nav-link"><span class="nav-number">1.3.</span> <span class="nav-text">Remarks</span></a></li><li class="nav-item nav-level-6"><a class="nav-link"><span class="nav-number">1.4.</span> <span class="nav-text">Parameters</span></a></li><li class="nav-item nav-level-6"><a class="nav-link"><span class="nav-number">1.5.</span> <span class="nav-text">Return Values</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number"></span> <span class="nav-text">D3DSURFACE_DESC</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link"><span class="nav-number">0.1.</span> <span class="nav-text">Members</span></a></li><li class="nav-item nav-level-6"><a class="nav-link"><span class="nav-number">0.2.</span> <span class="nav-text">Parameters</span></a></li><li class="nav-item nav-level-6"><a class="nav-link"><span class="nav-number">0.3.</span> <span class="nav-text">Return Values</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="rise"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">rise</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">661</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">48</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">106</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="mailto:rise.worlds@outlook.com" title="E-Mail → mailto:rise.worlds@outlook.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://github.com/rise-worlds" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;rise-worlds" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://x.com/riseworlds" title="Twitter → https:&#x2F;&#x2F;x.com&#x2F;riseworlds" rel="noopener me" target="_blank"><i class="fab fa-twitter fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.facebook.com/rise.worlds" title="FB Page → https:&#x2F;&#x2F;www.facebook.com&#x2F;rise.worlds" rel="noopener me" target="_blank"><i class="fab fa-facebook fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.youtube.com/@YiXuan" title="YouTube → https:&#x2F;&#x2F;www.youtube.com&#x2F;@YiXuan" rel="noopener me" target="_blank"><i class="fab fa-youtube fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.instagram.com/rise.worlds/" title="Instagram → https:&#x2F;&#x2F;www.instagram.com&#x2F;rise.worlds&#x2F;" rel="noopener me" target="_blank"><i class="fab fa-instagram fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://t.me/riseworlds" title="Telegram → https:&#x2F;&#x2F;t.me&#x2F;riseworlds" rel="noopener me" target="_blank"><i class="fab fa-telegram fa-fw"></i></a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+          链接
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <a href="https://www.cnblogs.com/flying_bat" title="https:&#x2F;&#x2F;www.cnblogs.com&#x2F;flying_bat" rel="noopener" target="_blank">My Cnblogs</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://www.github.com/rise-worlds" title="https:&#x2F;&#x2F;www.github.com&#x2F;rise-worlds" rel="noopener" target="_blank">My Github</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://www.google.com/" title="https:&#x2F;&#x2F;www.google.com&#x2F;" rel="noopener" target="_blank">Google</a>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://rise-worlds.github.io/2008/03/16/%E5%88%9D%E5%A7%8B%E5%8C%96Direct3D%EF%BC%881%EF%BC%89/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="rise">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Rise'blogs">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="初始化Direct3D（1） | Rise'blogs">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          初始化Direct3D（1）
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2008-03-16 13:22:00" itemprop="dateCreated datePublished" datetime="2008-03-16T13:22:00+00:00">2008-03-16</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/dev/" itemprop="url" rel="index"><span itemprop="name">dev</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/dev/GameDev/" itemprop="url" rel="index"><span itemprop="name">GameDev</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>Direct3D是一种低层图形API，它能让我们利用3D硬件加速来渲染3D世界。我们可以把Direct3D看作是应用程序和图形设备之间的中介。例如通知图形设备清空屏幕，应用程序将调用Direct3D的IDirect3DDevice9::Clear方法。图1.1显示了应用程序、Direct3D和图形设备之间的关系。 <p><img height="152" src="http://www.cppblog.com/images/cppblog_com/lovedday/6306/o_figure11.jpg" width="795" border="0"> <p>图1.1中Direct3D所表示的是Direct3D中已定义的，供程序员使用的Direct3D接口和函数的集合。这些接口和函数代表了当前版本的Direct3D所支持的全部特性。注意：仅仅因为Direct3D支持某种特性，并不意味着你所使用的图形硬件（显卡）也能支持它。 <p>如图1.1所示，在Direct3D和图形设备之间有一层中介——叫做硬件抽象层（HAL，Hardware Abstraction Layer）。Direct3D不能直接作用于图形设备，因为现在市面上的显卡种类实在是太多了并且每种显卡都有不同的性能和处理事件的方式。例如，两种不同的显卡实现清屏的方式也可能是不同的。因此，Direct3D要求设备制造商实现HAL。HAL是一组指示设备执行某种操作的特殊设备代码的集合。用这种方法，Direct3D避免了必须去了解某个设备的特殊细节，使它能够独立于硬件设备。 <p>设备制造商在HAL中实现他们的产品所支持的所有特性。HAL将不会实现那些Direct3D支持但硬件产品不支持的特性。调用一个HAL中没有实现的Direct3D的函数将会出错，除非它是顶点处理操作，因为这个功能可以由软件模拟来实现。因此当使用某些仅由市面上少数显卡所支持的高级特性时，必须检测一下设备是否支持。  <h5>1.1.1 REF设备</h5>你也许想把一些你的设备不支持的Direct3D函数写入程序。为了达到这个目的，Direct3D提供了REF设备,它用软件模拟了所有的Direct3D API。这允许你写并测试那些你的显卡不支持的Direct3D特性的代码。懂得REF设备仅仅用于开发阶段，这是很重要的。它只会和DirectX SDK一起被装载，而不会发布给最终用户。另外，REF设备实在是太慢了，除了测试以外它没有任何利用价值。  <h5>1.1.2 D3DDEVTYPE</h5> <p>在代码中，我们用D3DDEVTYPE_HAL来定义HAL设备，它是D3DDEVTYPE枚举类型的一个成员。同样的，REF设备则由D3DDEVTYPE_REF来定义，它也属于D3DDEVTYPE枚举类型。记住这些类型很重要，因为在创建设备的时候我们需要指定我们将要使用的类型。 <p>Defines device types.<pre>typedef enum D3DDEVTYPE<br>{<br>    D3DDEVTYPE_HAL = 1,<br>    D3DDEVTYPE_NULLREF = 4,<br>    D3DDEVTYPE_REF = 2,<br>    D3DDEVTYPE_SW = 3,<br>    D3DDEVTYPE_FORCE_DWORD = 0xffffffff,<br>} D3DDEVTYPE, *LPD3DDEVTYPE;</pre>
+
+<h6>Constants</h6>
+
+<dl>
+
+<dt>D3DDEVTYPE_HAL 
+
+<dd>Hardware rasterization. Shading is done with software, hardware, or mixed transform and lighting. 
+
+<dt>D3DDEVTYPE_NULLREF 
+
+<dd>Initialize Direct3D on a computer that has neither hardware nor reference rasterization available, and enable resources for 3D content creation. See Remarks. 
+
+<dt>D3DDEVTYPE_REF 
+
+<dd>Direct3D features are implemented in software; however, the reference rasterizer does make use of special CPU instructions whenever it can. 
+
+<dt>D3DDEVTYPE_SW 
+
+<dd>A pluggable software device that has been registered with IDirect3D9::RegisterSoftwareDevice. 
+
+<dt>D3DDEVTYPE_FORCE_DWORD 
+
+<dd>Forces this enumeration to compile to 32 bits in size. Without this value, some compilers would allow this enumeration to compile to a size other than 32 bits. This value is not used. </dd></dl>
+
+<h6>Remarks</h6>
+
+<p>All methods of the IDirect3D9 interface that take a <strong>D3DDEVTYPE</strong> device type will fail if D3DDEVTYPE_NULLREF is specified. To use these methods, substitute D3DDEVTYPE_REF in the method call.
+
+<p>A D3DDEVTYPE_REF device should be created in D3DPOOL_SCRATCH memory, unless vertex and index buffers are required. To support vertex and index buffers, create the device in D3DPOOL_SYSTEMMEM memory.
+
+<p>If D3dref9.dll is installed, Direct3D will use the reference rasterizer to create a D3DDEVTYPE_REF device type, even if D3DDEVTYPE_NULLREF is specified. If D3dref9.dll is not available and D3DDEVTYPE_NULLREF is specified, Direct3D will neither render nor present the scene.
+
+<h4><a name="_Toc138011473">1.2 COM</a></h4>
+
+<p>组件对象模型（COM, Component Object Model）是一种能使DirectX独立于编程语言和具有向下兼容性的技术。我们通常把COM对象作为一个接口，你可以把它当作达到某种目的的C++类来使用它。当使用C++写DirectX程序的时候，COM的大部分细节对我们来说是透明。但是有一件事，我们必须知道，那就是我们通过某个特殊的COM接口的函数或指针获得了另一个COM接口指针，而不是通过C++的新关键字来创建它。当我们使用完某个接口后，调用它的Release方法比直接Delete它更好。COM对象具有它们自己的内存管理。
+
+<p>对COM来说还有很多细节可以了解，但是掌握这些细节对于我们有效的使用DirectX不是必须的。
+
+<p>注意：COM接口都具有前缀大写字母“I”，例如表示一个表面的COM接口叫做IDirect3DSurface9。
+
+<h4><a name="_Toc138011474">1.3 </a>一些准备工作</h4>
+
+<p>Direct3D的初始化过程要求我们对图形学基础知识和Direct3D类型有一定了解。这里将介绍这些知识和类型，以确保以后能把焦点集中在讨论Direct3D的初始化上。
+
+<h5>1.3.1 表面</h5>
+
+<p>表面是一个像素点阵，在Direct3D中主要用来存储2D图形数据。图1.2指明了表面的一些成分。由图可以看出表面数据就像一个矩阵，像素数据实际上存储在线性数组里面。
+
+<p><img height="376" src="http://www.cppblog.com/images/cppblog_com/lovedday/6306/o_figure12.jpg" width="666" border="0">
+
+<p>表面的Width和Height是按像素计算的。Pitch以字节为单位。而且Pitch有可能比Width大且依赖于低层硬件，所以不能单纯的认为Pitch = Width * sizeof (pixelFormat)。
+
+<p>在代码中，我们可以使用IDirect3DSurface9接口来描述表面。这个接口提供若干方法来直接读写表面数据并且还有一个方法用来返回表面息。IDirect3DSurface9中最重要的方法是：
+
+<p>l&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; LockRect——使用这个方法，我们将获得一个指向表面内存的指针，然后，通过一系列指针运算，我们可以对表面上任一个像素点进行读、写操作。
+
+<p>Locks a rectangle on a surface.<pre><strong>HRESULT LockRect(</strong><br>  <strong>D3DLOCKED_RECT *</strong> <em>pLockedRect</em><strong>,</strong><br>  <strong>CONST RECT *</strong> <em>pRect</em><strong>,</strong><br>  <strong>DWORD</strong> <em>Flags</em><br><strong>);</strong></pre>
+
+<h6>Parameters</h6>
+
+<dl>
+
+<dt><em>pLockedRect</em>
+
+<dd>[out] Pointer to a D3DLOCKED_RECT structure that describes the locked region. 
+
+<dt><em>pRect</em>
+
+<dd>[in] Pointer to a rectangle to lock. Specified by a pointer to a RECT structure. Specifying NULL for this parameter expands the dirty region to cover the entire surface. 
+
+<dt><em>Flags</em>
+
+<dd>[in] Combination of zero or more locking flags that describe the type of lock to perform. For this method, the valid flags are: 
+
+<ul>
+
+<li>D3DLOCK_DISCARD 
+
+<li>D3DLOCK_DONOTWAIT 
+
+<li>D3DLOCK_NO_DIRTY_UPDATE 
+
+<li>D3DLOCK_NOSYSLOCK 
+
+<li>D3DLOCK_READONLY </li></ul>You may not specify a subrect when using D3DLOCK_DISCARD. For a description of the flags, see D3DLOCK. </dd></dl>
+
+<h6>Return Values</h6>
+
+<p>If the method succeeds, the return value is D3D_OK.
+
+<p>If the method fails, the return value can be D3DERR_INVALIDCALL or D3DERR_WASSTILLDRAWING.
+
+<h6>Remarks</h6>
+
+<p>If the <strong>D3DLOCK_DONOTWAIT</strong> flag is specified and the driver cannot lock the surface immediately, IDirect3DSurface9::LockRect will return D3DERR_WASSTILLDRAWING so that an application can use the CPU cycles while waiting for the driver to lock the surface.
+
+<p>The only lockable format for a depth-stencil surface is D3DFMT_D16_LOCKABLE. See D3DFORMAT.
+
+<p>For performance reasons, dirty regions are recorded only for level zero of a texture. Dirty regions are automatically recorded when <strong>IDirect3DSurface9::LockRect</strong> is called without <strong>D3DLOCK_NO_DIRTY_UPDATE</strong> or <strong>D3DLOCK_READONLY</strong>. See IDirect3DDevice9::UpdateTexture for more information.
+
+<p>A multisample back buffer cannot be locked.
+
+<p>This method cannot retrieve data from a surface that is is contained by a texture resource created with D3DUSAGE_RENDERTARGET because such a texture must be assigned to D3DPOOL_DEFAULT memory and is therefore not lockable. In this case, use instead IDirect3DDevice9::GetRenderTargetData to copy texture data from device memory to system memory.
+
+<p>l&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; UnlockRect——当你调用了LockRect和完成了对表面内存的访问后，你必须调用这个方法给表面解锁。
+
+<p>Unlocks a rectangle on a surface.<pre><strong>HRESULT UnlockRect();</strong></pre>
+
+<h6>Parameters</h6>
+
+<p>None.
+
+<h6>Return Values</h6>
+
+<p>If the method succeeds, the return value is D3D_OK. If the method fails, the return value can be D3DERR_INVALIDCALL. 
+
+<p>l&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; GetDesc——这个方法将通过填充D3DSURFACE_DESC结构来返回表面的描述信息。
+
+<h3>D3DSURFACE_DESC</h3>
+
+<p>Describes a surface.<pre>typedef struct D3DSURFACE_DESC {<br>    D3DFORMAT Format;<br>    D3DRESOURCETYPE Type;<br>    DWORD Usage;<br>    D3DPOOL Pool;<br>    D3DMULTISAMPLE_TYPE MultiSampleType;<br>    DWORD MultiSampleQuality;<br>    UINT Width;<br>    UINT Height;<br>} D3DSURFACE_DESC, *LPD3DSURFACE_DESC;</pre>
+
+<h6>Members</h6>
+
+<dl>
+
+<dt><strong>Format</strong>
+
+<dd>Member of the D3DFORMAT enumerated type, describing the surface format. 
+
+<dt><strong>Type</strong>
+
+<dd>Member of the D3DRESOURCETYPE enumerated type, identifying this resource as a surface. 
+
+<dt><strong>Usage</strong>
+
+<dd>Either the D3DUSAGE_DEPTHSTENCIL or D3DUSAGE_RENDERTARGET values. For more information, see D3DUSAGE. 
+
+<dt><strong>Pool</strong>
+
+<dd>Member of the D3DPOOL enumerated type, specifying the class of memory allocated for this surface. 
+
+<dt><strong>MultiSampleType</strong>
+
+<dd>Member of the D3DMULTISAMPLE_TYPE enumerated type, specifying the levels of full-scene multisampling supported by the surface. 
+
+<dt><strong>MultiSampleQuality</strong>
+
+<dd>Quality level. The valid range is between zero and one less than the level returned by pQualityLevels used by IDirect3D9::CheckDeviceMultiSampleType. Passing a larger value returns the error, D3DERR_INVALIDCALL. The MultisampleQuality values of paired render targets, depth stencil surfaces and the MultiSample type must all match. 
+
+<dt><strong>Width</strong>
+
+<dd>Width of the surface, in pixels. 
+
+<dt><strong>Height</strong>
+
+<dd>Height of the surface, in pixels. </dd></dl>
+
+<p>Retrieves a description of the surface.<pre><strong>HRESULT GetDesc(</strong><br>  <strong>D3DSURFACE_DESC *</strong> <em>pDesc</em><br><strong>);</strong></pre>
+
+<h6>Parameters</h6>
+
+<dl>
+
+<dt><em>pDesc</em>
+
+<dd>[out] Pointer to a D3DSURFACE_DESC structure, describing the surface. </dd></dl>
+
+<h6>Return Values</h6>
+
+<p>If the method succeeds, the return value is D3D_OK.
+
+<p>D3DERR_INVALIDCALL is returned if the argument is invalid.
+
+<p>最初锁定表面和改写每一像素看来稍微有点迷茫。下面的代码表示锁定表面并将每一像素染成红色：
+
+<p>// Assume _surface is a pointer to an IDirect3DSurface9 interface.<br>// Assumes a 32-bit pixel format for each pixel.<br>// Get the surface description.<br>D3DSURFACE_DESC surfaceDesc;<br>_surface-&gt;GetDesc(&amp;surfaceDesc);<br>// Get a pointer to the surface pixel data.<br>D3DLOCKED RECT lockedRect;<br>_surface-&gt;LockRect(<br>&amp;lockedRect,// pointer to receive locked data<br>0,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // lock entire surface<br>0);&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // no lock flags specified<br>// Iterate through each pixel in the surface and set it to red.<br>DWORD* imageData = (DWORD*)lockedRect.pBits;<br>for(int i = 0; i &lt; surfaceDesc.Height; i++)<br>{<br>for(int j = 0; j &lt; surfaceDesc.Width; j++)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {<br>// index into texture, note we use the pitch and divide by<br>// four since the pitch is given in bytes and there are 4 bytes per DWORD.<br>int index = i * lockedRect.Pitch / 4 + j;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; imageData[index] = 0xffff0000; // red<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>}<br>_surface-&gt;UnlockRect();
+
+<p>程序中D3DLOCKED_RECT结构的定义如下：
+
+<p>typedef struct _D3DLOCKED RECT {<br>&nbsp;&nbsp;&nbsp; INT Pitch;&nbsp;&nbsp; // the surface pitch<br>&nbsp;&nbsp;&nbsp; void *pBits; // pointer to the start of the surface memory<br>} D3DLOCKED_RECT;
+
+<p>在这里有一些关于表面锁定代码的一些说明。32-bit像素格式这个设定很重要，我们把bits转换成DWORD<strong>s</strong>。这让我们能把每一个DWORD视为表示一个像素。</p>
+    
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="followme">
+  <span>欢迎关注我的其它发布渠道</span>
+
+  <div class="social-list">
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="https://www.facebook.com/rise.worlds">
+            <span class="icon">
+              <i class="fab fa-facebook"></i>
+            </span>
+
+            <span class="label">FB Page</span>
+          </a>
+      </div>
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="https://twitter.com/riseworlds">
+            <span class="icon">
+              <i class="fab fa-twitter"></i>
+            </span>
+
+            <span class="label">Twitter</span>
+          </a>
+      </div>
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="https://t.me/riseworlds">
+            <span class="icon">
+              <i class="fab fa-telegram"></i>
+            </span>
+
+            <span class="label">Telegram</span>
+          </a>
+      </div>
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/direct3d/" rel="tag"># direct3d</a>
+              <a href="/tags/%E5%9B%BE%E5%BD%A2%E5%AD%A6/" rel="tag"># 图形学</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2008/03/16/D3D%E7%BC%96%E7%A8%8B%E5%BF%85%E5%A4%87%E7%9A%84%E6%95%B0%E5%AD%A6%E7%9F%A5%E8%AF%86%EF%BC%882%EF%BC%89/" rel="prev" title="D3D编程必备的数学知识（2）">
+                  <i class="fa fa-angle-left"></i> D3D编程必备的数学知识（2）
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2008/03/16/D3D%E7%BC%96%E7%A8%8B%E5%BF%85%E5%A4%87%E7%9A%84%E6%95%B0%E5%AD%A6%E7%9F%A5%E8%AF%86%EF%BC%885%EF%BC%89/" rel="next" title="D3D编程必备的数学知识（5）">
+                  D3D编程必备的数学知识（5） <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  
+  <div class="comments giscus-container">
+  </div>
+  
+  
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">豫ICP备2021009490号 </a>
+  </div>
+  <div class="copyright">
+    &copy; 2004 – 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">rise</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="reading-progress-bar"></div>
+
+  <a href="https://github.com/rise-worlds" class="github-corner" title="在 GitHub 上关注我" aria-label="在 GitHub 上关注我" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://unpkg.com/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@next-theme/pjax@0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script><script src="/js/pjax.js"></script>
+
+  
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://unpkg.com/mermaid@10.9.0/dist/mermaid.min.js","integrity":"sha256-stuqcu2FrjYCXDOytWFA5SoUE/r3nkp6gTglzNSlavU="}}</script>
+  <script src="/js/third-party/tags/mermaid.js"></script>
+
+
+
+
+
+  
+
+
+
+
+  <script src="https://unpkg.com/quicklink@2.3.0/dist/quicklink.umd.js" integrity="sha256-yvJQOINiH9fWemHn0vCA5lsHWJaHs6/ZmO+1Ft04SvM=" crossorigin="anonymous"></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":true,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"https://rise-worlds.github.io/2008/03/16/%E5%88%9D%E5%A7%8B%E5%8C%96Direct3D%EF%BC%881%EF%BC%89/"}</script>
+  <script src="/js/third-party/quicklink.js"></script>
+<script class="next-config" data-name="giscus" type="application/json">{"enable":true,"repo":"rise-worlds/rise-worlds.github.io","repo_id":"MDEwOlJlcG9zaXRvcnk2MTAxMTA0MA==","category":"Announcements","category_id":"DIC_kwDOA6L0YM4CiXf9","mapping":"pathname","strict":0,"reactions_enabled":1,"emit_metadata":0,"theme":"transparent_dark","lang":"zh-CN","crossorigin":"anonymous","input_position":"top","loading":"lazy"}</script>
+
+<script>
+document.addEventListener('page:loaded', () => {
+  if (!CONFIG.page.comments) return;
+
+  NexT.utils.loadComments('.giscus-container')
+    .then(() => NexT.utils.getScript('https://giscus.app/client.js', {
+      attributes: {
+        async                   : true,
+        crossOrigin             : 'anonymous',
+        'data-repo'             : CONFIG.giscus.repo,
+        'data-repo-id'          : CONFIG.giscus.repo_id,
+        'data-category'         : CONFIG.giscus.category,
+        'data-category-id'      : CONFIG.giscus.category_id,
+        'data-mapping'          : CONFIG.giscus.mapping,
+        'data-strict'           : CONFIG.giscus.strict,
+        'data-reactions-enabled': CONFIG.giscus.reactions_enabled,
+        'data-emit-metadata'    : CONFIG.giscus.emit_metadata,
+        'data-theme'            : CONFIG.giscus.theme,
+        'data-lang'             : CONFIG.giscus.lang,
+        'data-input-position'   : CONFIG.giscus.input_position,
+        'data-loading'          : CONFIG.giscus.loading
+      },
+      parentNode: document.querySelector('.giscus-container')
+    }));
+});
+</script>
+
+</body>
+</html>

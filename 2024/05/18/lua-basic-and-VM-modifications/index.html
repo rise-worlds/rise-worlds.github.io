@@ -1,0 +1,933 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://unpkg.com/@fortawesome/fontawesome-free@6.5.2/css/all.min.css" integrity="sha256-XOqroi11tY4EFQMR9ZYwZWKj5ZXiftSx36RRuC3anlA=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://unpkg.com/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"rise-worlds.github.io","root":"/","images":"/images","scheme":"Mist","darkmode":true,"version":"8.20.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="Lua是一个小巧的脚本语言，其设计目的是为了通过灵活嵌入应用程序中从而为应用程序提供灵活的扩展和定制功能。Lua由标准C编写而成，几乎在所有操作系统和平台上都可以编译，运行。Lua并没有提供强大的库，这是由它的定位决定的。 Lua脚本可以很容易的被C&#x2F;C++ 代码调用，也可以反过来调用C&#x2F;C++的函数，这使得Lua在应用程序中可以被广泛应用。不仅仅作为扩展脚本，也可以作为普通的">
+<meta property="og:type" content="article">
+<meta property="og:title" content="lua语言特性及用途">
+<meta property="og:url" content="https://rise-worlds.github.io/2024/05/18/lua-basic-and-VM-modifications/index.html">
+<meta property="og:site_name" content="Rise&#39;blogs">
+<meta property="og:description" content="Lua是一个小巧的脚本语言，其设计目的是为了通过灵活嵌入应用程序中从而为应用程序提供灵活的扩展和定制功能。Lua由标准C编写而成，几乎在所有操作系统和平台上都可以编译，运行。Lua并没有提供强大的库，这是由它的定位决定的。 Lua脚本可以很容易的被C&#x2F;C++ 代码调用，也可以反过来调用C&#x2F;C++的函数，这使得Lua在应用程序中可以被广泛应用。不仅仅作为扩展脚本，也可以作为普通的">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-05-18T18:44:05.000Z">
+<meta property="article:modified_time" content="2024-11-27T10:39:28.401Z">
+<meta property="article:author" content="rise">
+<meta property="article:tag" content="Safe">
+<meta property="article:tag" content="decompiler">
+<meta property="article:tag" content="lua">
+<meta property="article:tag" content="vm">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://rise-worlds.github.io/2024/05/18/lua-basic-and-VM-modifications/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://rise-worlds.github.io/2024/05/18/lua-basic-and-VM-modifications/","path":"2024/05/18/lua-basic-and-VM-modifications/","title":"lua语言特性及用途"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>lua语言特性及用途 | Rise'blogs</title>
+  
+
+  <script src="/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?266da4e90214887b507c0bb6baa84e3e"></script>
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Rise'blogs</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-message"><a href="/message/" rel="section"><i class="fa fa-comments fa-fw"></i>留言板</a></li><li class="menu-item menu-item-sitemap"><a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>站点地图</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%89%B9%E6%80%A7"><span class="nav-number">1.</span> <span class="nav-text">特性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%94%A8%E9%80%94"><span class="nav-number">2.</span> <span class="nav-text">用途</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E8%AF%AD%E6%B3%95"><span class="nav-number">3.</span> <span class="nav-text">基本语法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#lua%E3%80%81c%E4%BA%92%E8%B0%83%E4%BE%8B%E5%AD%90%EF%BC%8Clua%E8%B0%83%E7%94%A8so%E5%BA%93%E4%BE%8B%E5%AD%90"><span class="nav-number">4.</span> <span class="nav-text">lua、c互调例子，lua调用so库例子</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#lua%E8%B0%83%E7%94%A8c%E5%BA%93"><span class="nav-number">5.</span> <span class="nav-text">lua调用c库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#c%E8%B0%83%E7%94%A8lua"><span class="nav-number">6.</span> <span class="nav-text">c调用lua</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#lua%E6%96%87%E4%BB%B6%E6%A0%BC%E5%BC%8F%EF%BC%8C%E5%8F%8A%E6%BA%90%E7%A0%81%E4%BF%AE%E6%94%B9-%EF%BC%8Clua5-1%E5%AD%97%E8%8A%82%E7%A0%81%E4%BF%AE%E6%94%B9%E6%96%B9%E6%B3%95%EF%BC%8C%E4%BB%A5%E5%8F%8A%E5%87%A0%E4%B8%AA%E6%9C%89%E8%B6%A3%E7%9A%84%E8%87%AA%E5%AE%9A%E4%B9%89%E8%A7%A3%E9%87%8A%E5%99%A8%E7%9A%84%E4%BE%8B%E5%AD%90%EF%BC%8C%E4%BB%A5%E5%8F%8A%E7%9B%B8%E5%BA%94%E5%8F%8D%E7%BC%96%E8%AF%91%E5%B7%A5%E5%85%B7%E7%9A%84%E4%BF%AE%E6%94%B9%E9%87%8D%E6%89%93%E5%8C%85%E3%80%82"><span class="nav-number"></span> <span class="nav-text">lua文件格式，及源码修改 ，lua5.1字节码修改方法，以及几个有趣的自定义解释器的例子，以及相应反编译工具的修改重打包。</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#luac%E6%96%87%E4%BB%B6%E6%A0%BC%E5%BC%8F"><span class="nav-number">1.</span> <span class="nav-text">luac文件格式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%97%E8%8A%82%E7%A0%81%E4%BF%AE%E6%94%B9"><span class="nav-number">2.</span> <span class="nav-text">字节码修改</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%99%9A%E6%8B%9F%E6%9C%BA%E4%BF%AE%E6%94%B9-%E8%BF%90%E7%AE%97"><span class="nav-number">3.</span> <span class="nav-text">虚拟机修改-运算</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%99%9A%E6%8B%9F%E6%9C%BA%E4%BF%AE%E6%94%B9-%E5%87%BD%E6%95%B0"><span class="nav-number">4.</span> <span class="nav-text">虚拟机修改-函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%8D%E7%BC%96%E8%AF%91%E5%B7%A5%E5%85%B7%E4%BF%AE%E6%94%B9"><span class="nav-number">5.</span> <span class="nav-text">反编译工具修改</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9lua%E8%A7%A3%E9%87%8A%E5%99%A8%EF%BC%8C%E6%96%87%E4%BB%B6%E5%8A%A0%E5%AF%86%E8%90%BD%E5%9C%B0%EF%BC%8C%E9%98%B2%E6%AD%A2%E9%80%9A%E7%94%A8%E5%8F%8D%E7%BC%96%E8%AF%91%E5%B7%A5%E5%85%B7"><span class="nav-number">6.</span> <span class="nav-text">修改lua解释器，文件加密落地，防止通用反编译工具</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E5%90%8E%E7%9A%84opcode%E9%A1%BA%E5%BA%8F%E7%AE%80%E5%8D%95%E8%BF%98%E5%8E%9F"><span class="nav-number">7.</span> <span class="nav-text">修改后的opcode顺序简单还原</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="rise"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">rise</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">661</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">48</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">106</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="mailto:rise.worlds@outlook.com" title="E-Mail → mailto:rise.worlds@outlook.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://github.com/rise-worlds" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;rise-worlds" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://x.com/riseworlds" title="Twitter → https:&#x2F;&#x2F;x.com&#x2F;riseworlds" rel="noopener me" target="_blank"><i class="fab fa-twitter fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.facebook.com/rise.worlds" title="FB Page → https:&#x2F;&#x2F;www.facebook.com&#x2F;rise.worlds" rel="noopener me" target="_blank"><i class="fab fa-facebook fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.youtube.com/@YiXuan" title="YouTube → https:&#x2F;&#x2F;www.youtube.com&#x2F;@YiXuan" rel="noopener me" target="_blank"><i class="fab fa-youtube fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.instagram.com/rise.worlds/" title="Instagram → https:&#x2F;&#x2F;www.instagram.com&#x2F;rise.worlds&#x2F;" rel="noopener me" target="_blank"><i class="fab fa-instagram fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://t.me/riseworlds" title="Telegram → https:&#x2F;&#x2F;t.me&#x2F;riseworlds" rel="noopener me" target="_blank"><i class="fab fa-telegram fa-fw"></i></a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+          链接
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <a href="https://www.cnblogs.com/flying_bat" title="https:&#x2F;&#x2F;www.cnblogs.com&#x2F;flying_bat" rel="noopener" target="_blank">My Cnblogs</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://www.github.com/rise-worlds" title="https:&#x2F;&#x2F;www.github.com&#x2F;rise-worlds" rel="noopener" target="_blank">My Github</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://www.google.com/" title="https:&#x2F;&#x2F;www.google.com&#x2F;" rel="noopener" target="_blank">Google</a>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://rise-worlds.github.io/2024/05/18/lua-basic-and-VM-modifications/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="rise">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Rise'blogs">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="lua语言特性及用途 | Rise'blogs">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          lua语言特性及用途
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-05-18 18:44:05" itemprop="dateCreated datePublished" datetime="2024-05-18T18:44:05+00:00">2024-05-18</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-11-27 10:39:28" itemprop="dateModified" datetime="2024-11-27T10:39:28+00:00">2024-11-27</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/dev/" itemprop="url" rel="index"><span itemprop="name">dev</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/dev/Safe/" itemprop="url" rel="index"><span itemprop="name">Safe</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/dev/Safe/lua/" itemprop="url" rel="index"><span itemprop="name">lua</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/dev/Safe/lua/decompiler/" itemprop="url" rel="index"><span itemprop="name">decompiler</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>Lua是一个小巧的脚本语言，其设计目的是为了通过灵活嵌入应用程序中从而为应用程序提供灵活的扩展和定制功能。Lua由标准C编写而成，几乎在所有操作系统和平台上都可以编译，运行。Lua并没有提供强大的库，这是由它的定位决定的。</p>
+<p>Lua脚本可以很容易的被C&#x2F;C++ 代码调用，也可以反过来调用C&#x2F;C++的函数，这使得Lua在应用程序中可以被广泛应用。不仅仅作为扩展脚本，也可以作为普通的配置文件，代替XML,ini等文件格式，并且更容易理解和维护。</p>
+<p>运行可以通过 Lua 的交互模式，也可以用记事本编辑代码保存为 .lua 的格式,通过 Lua 编译器运行。也可以通过第三方工具，将 Lua 打包独立运行。</p>
+<h3 id="特性"><a href="#特性" class="headerlink" title="特性"></a>特性</h3><ul>
+<li>轻量级： Lua语言的官方版本只包括一个精简的核心和最基本的库。这使得Lua体积小、启动速度快。</li>
+</ul>
+<p>源码行数对比表</p>
+<table>
+<thead>
+<tr>
+<th>语言</th>
+<th>行数</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>python所有c源码</td>
+<td>54万行</td>
+</tr>
+<tr>
+<td>python核心c源码</td>
+<td>约17万行</td>
+</tr>
+<tr>
+<td>lua所有c源码</td>
+<td>约2.4万行</td>
+</tr>
+</tbody></table>
+<ul>
+<li>可扩展： Lua提供了非常易于使用的扩展接口和机制：由宿主语言(通常是C或C++)提供这些功能，Lua可以使用它们，就像是本来就内置的功能一样。</li>
+</ul>
+<h3 id="用途"><a href="#用途" class="headerlink" title="用途"></a>用途</h3><p>其设计目的是为了嵌入应用程序中，从而为应用程序提供灵活的扩展和定制功能。大多数游戏和一些应用都是用lua嵌入其他语言中使用。</p>
+<ol>
+<li>游戏开发</li>
+<li>独立应用脚本</li>
+<li>Web 应用脚本</li>
+<li>扩展和数据库插件如：MySQL Proxy 和 MySQL WorkBench</li>
+<li>安全系统，如入侵检测系统</li>
+</ol>
+<h3 id="基本语法"><a href="#基本语法" class="headerlink" title="基本语法"></a>基本语法</h3><ul>
+<li>交互式编程模式： lua -i 或 lua</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker lua -i</span><br><span class="line">Lua 5.1.5  Copyright (C) 1994-2012 Lua.org, PUC-Rio</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>脚本式编程： 类似于python脚本。lua test.lua或 加<code>#!/usr/local/bin/lua</code>直接运行test.lua</p>
+</li>
+<li><p>注释： 单行<code>-- </code>、多行<code>--[[ text --]]</code></p>
+</li>
+<li><p>标识符和关键词：<br>最好不要使用下划线+大写字母、不允许使用<code>@ $ %</code>定义标识符，区分大小写。</p>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>and</td>
+<td>break</td>
+<td>do</td>
+<td>else</td>
+</tr>
+<tr>
+<td>elseif</td>
+<td>end</td>
+<td>false</td>
+<td>for</td>
+</tr>
+<tr>
+<td>function</td>
+<td>if</td>
+<td>in</td>
+<td>local</td>
+</tr>
+<tr>
+<td>nil</td>
+<td>not</td>
+<td>or</td>
+<td>repeat</td>
+</tr>
+<tr>
+<td>return</td>
+<td>then</td>
+<td>true</td>
+<td>until</td>
+</tr>
+<tr>
+<td>while</td>
+<td>goto</td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<ul>
+<li>lua数据类型：</li>
+</ul>
+<p>Lua 中有 8 个基本类型分别为：nil、boolean、number、string、userdata、function、thread 和 table。</p>
+<table>
+<thead>
+<tr>
+<th>数据类型</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>nil</td>
+<td>这个最简单，只有值nil属于该类，表示一个无效值（在条件表达式中相当于false）。</td>
+</tr>
+<tr>
+<td>boolean</td>
+<td>包含两个值：false和true。</td>
+</tr>
+<tr>
+<td>number</td>
+<td>表示双精度类型的实浮点数</td>
+</tr>
+<tr>
+<td>string</td>
+<td>字符串由一对双引号或单引号来表示</td>
+</tr>
+<tr>
+<td>function</td>
+<td>由 C 或 Lua 编写的函数</td>
+</tr>
+<tr>
+<td>userdata</td>
+<td>表示任意存储在变量中的C数据结构</td>
+</tr>
+<tr>
+<td>thread</td>
+<td>表示执行的独立线路，用于执行协同程序</td>
+</tr>
+<tr>
+<td>table</td>
+<td>Lua 中的表（table）其实是一个”关联数组”（associative arrays），数组的索引可以是数字、字符串或表类型。在 Lua 里，table 的创建是通过”构造表达式”来完成，最简单构造表达式是{}，用来创建一个空表。</td>
+</tr>
+</tbody></table>
+<p>局部变量： local b &#x3D; 5，全局不需要</p>
+<ul>
+<li>函数：<br>格式：function … end，可多返回值，变参<code>...</code><figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span><span class="params">()</span></span></span><br><span class="line">    c = <span class="number">5</span></span><br><span class="line">    <span class="keyword">return</span> c</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<p>select(‘#’, …) 返回可变参数的长度。<br>select(n, …) 用于返回从起点 n 开始到结束位置的所有参数列表</p>
+<ul>
+<li>循环：<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span>(condition)</span><br><span class="line"><span class="keyword">do</span></span><br><span class="line">   statements</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> var=exp1,exp2,exp3 <span class="keyword">do</span>  </span><br><span class="line">    &lt;执行体&gt;  </span><br><span class="line"><span class="keyword">end</span>  </span><br><span class="line"><span class="comment">-- var 从 exp1 变化到 exp2，每次变化以 exp3 为步长递增 var，并执行一次 &quot;执行体&quot;。exp3 是可选的，如果不指定，默认为1。</span></span><br><span class="line"></span><br><span class="line"><span class="comment">--泛型for循环</span></span><br><span class="line"><span class="comment">--打印数组a的所有值  </span></span><br><span class="line">a = &#123;<span class="string">&quot;one&quot;</span>, <span class="string">&quot;two&quot;</span>, <span class="string">&quot;three&quot;</span>&#125;</span><br><span class="line"><span class="keyword">for</span> i, v <span class="keyword">in</span> <span class="built_in">ipairs</span>(a) <span class="keyword">do</span></span><br><span class="line">    <span class="built_in">print</span>(i, v)</span><br><span class="line"><span class="keyword">end</span> </span><br><span class="line"><span class="comment">-- i是数组索引值，v是对应索引的数组元素值。ipairs是Lua提供的一个迭代器函数，用来迭代数组。</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">repeat</span></span><br><span class="line">   statements</span><br><span class="line"><span class="keyword">until</span>( condition )</span><br></pre></td></tr></table></figure>
+各个循环可嵌套。</li>
+</ul>
+<p><strong>pairs 和 ipairs异同</strong><br>同：都是能遍历集合（表、数组）</p>
+<p>异：ipairs 仅仅遍历值，按照索引升序遍历，索引中断停止遍历。即不能返回 nil,只能返回数字 0，如果遇到 nil 则退出。它只能遍历到集合中出现的第一个不是整数的 key。</p>
+<p>pairs 能遍历集合的所有元素。即 pairs 可以遍历集合中所有的 key，并且除了迭代器本身以及遍历表本身还可以返回 nil。</p>
+<ul>
+<li>流程控制：<br>Lua认为false和nil为假，true和非nil为真。<br>要注意的是Lua中 0 为 true<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">--[ 0 为 true ]</span></span><br><span class="line"><span class="keyword">if</span>(<span class="number">0</span>)</span><br><span class="line"><span class="keyword">then</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;0 为 true&quot;</span>)</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure></li>
+<li>运算符：<br><strong>算术运算符:</strong></li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>操作符</th>
+<th>描述</th>
+<th>实例</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>+</td>
+<td>加法</td>
+<td>A + B 输出结果 30</td>
+</tr>
+<tr>
+<td>-</td>
+<td>减法</td>
+<td>A - B 输出结果 -10</td>
+</tr>
+<tr>
+<td>*</td>
+<td>乘法</td>
+<td>A * B 输出结果 200</td>
+</tr>
+<tr>
+<td>&#x2F;</td>
+<td>除法</td>
+<td>B &#x2F; A 输出结果 2</td>
+</tr>
+<tr>
+<td>%</td>
+<td>取余</td>
+<td>B % A 输出结果 0</td>
+</tr>
+<tr>
+<td>^</td>
+<td>乘幂</td>
+<td>A^2 输出结果 100</td>
+</tr>
+<tr>
+<td>-</td>
+<td>负号</td>
+<td>-A 输出结果 -10</td>
+</tr>
+</tbody></table>
+<p><strong>逻辑运算符：</strong></p>
+<table>
+<thead>
+<tr>
+<th>操作符</th>
+<th>描述</th>
+<th>实例</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>&#x3D;&#x3D;</td>
+<td>等于，检测两个值是否相等，相等返回 true，否则返回 false</td>
+<td>(A &#x3D;&#x3D; B) 为 false。</td>
+</tr>
+<tr>
+<td>~&#x3D;</td>
+<td>不等于，检测两个值是否相等，不相等返回 true，否则返回 false</td>
+<td>(A ~&#x3D; B) 为 true。</td>
+</tr>
+<tr>
+<td>&gt;</td>
+<td>大于，如果左边的值大于右边的值，返回 true，否则返回 false</td>
+<td>(A &gt; B) 为 false。</td>
+</tr>
+<tr>
+<td>&lt;</td>
+<td>小于，如果左边的值大于右边的值，返回 false，否则返回 true</td>
+<td>(A &lt; B) 为 true。</td>
+</tr>
+<tr>
+<td>&gt;&#x3D;</td>
+<td>大于等于，如果左边的值大于等于右边的值，返回 true，否则返回 false</td>
+<td>(A &gt;&#x3D; B) 返回 false。</td>
+</tr>
+<tr>
+<td>&lt;&#x3D;</td>
+<td>小于等于， 如果左边的值小于等于右边的值，返回 true，否则返回 false</td>
+<td>(A &lt;&#x3D; B) 返回 true。</td>
+</tr>
+</tbody></table>
+<p><strong>逻辑运算符：</strong></p>
+<table>
+<thead>
+<tr>
+<th>操作符</th>
+<th>描述</th>
+<th>实例</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>and</td>
+<td>逻辑与操作符。 若 A 为 false，则返回 A，否则返回 B。</td>
+<td>(A and B) 为 false。</td>
+</tr>
+<tr>
+<td>or</td>
+<td>逻辑或操作符。 若 A 为 true，则返回 A，否则返回 B。</td>
+<td>(A or B) 为 true。</td>
+</tr>
+<tr>
+<td>not</td>
+<td>逻辑非操作符。与逻辑运算结果相反，如果条件为 true，逻辑非为 false。</td>
+<td>not(A and B) 为 true。</td>
+</tr>
+<tr>
+<td><em><strong>lua5.1没有异或等位算数运算符。后面到5.3支持位运算，可以在opcodes中看到BXOR等操作指令。</strong></em></td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<p><strong>其他运算符：</strong></p>
+<table>
+<thead>
+<tr>
+<th>操作符</th>
+<th>描述</th>
+<th>实例</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>…</td>
+<td>连接两个字符串	a…b ，其中 a 为 “Hello “ ， b 为 “World”, 输出结果为 “Hello World”。</td>
+<td></td>
+</tr>
+<tr>
+<td>#</td>
+<td>一元运算符，返回字符串或表的长度。</td>
+<td>#“Hello” 返回 5</td>
+</tr>
+</tbody></table>
+<p><strong>运算符优先级：</strong> </p>
+<table>
+<thead>
+<tr>
+<th>由高到低</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>^</td>
+</tr>
+<tr>
+<td>not    - (unary)</td>
+</tr>
+<tr>
+<td>*      &#x2F;</td>
+</tr>
+<tr>
+<td>+      -</td>
+</tr>
+<tr>
+<td>..</td>
+</tr>
+<tr>
+<td>&lt;      &gt;      &lt;&#x3D;     &gt;&#x3D;     ~&#x3D;     &#x3D;&#x3D;</td>
+</tr>
+<tr>
+<td>and</td>
+</tr>
+<tr>
+<td>or</td>
+</tr>
+</tbody></table>
+<ul>
+<li>模块与包：<br>模块类似于一个封装库，从 Lua 5.1 开始，Lua 加入了标准的模块管理机制，可以把一些公用的代码放在一个文件里，以 API 接口的形式在其他地方调用，有利于代码的重用和降低代码耦合度。</li>
+</ul>
+<p>以下为创建自定义模块 module.lua，文件代码格式如下：</p>
+<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 文件名为 module.lua</span></span><br><span class="line"><span class="comment">-- 定义一个名为 module 的模块</span></span><br><span class="line"><span class="built_in">module</span> = &#123;&#125;</span><br><span class="line"> </span><br><span class="line"><span class="comment">-- 定义一个常量</span></span><br><span class="line"><span class="built_in">module</span>.constant = <span class="string">&quot;这是一个常量&quot;</span></span><br><span class="line"> </span><br><span class="line"><span class="comment">-- 定义一个函数</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">module.func1</span><span class="params">()</span></span></span><br><span class="line">    <span class="built_in">io</span>.<span class="built_in">write</span>(<span class="string">&quot;这是一个公有函数！\n&quot;</span>)</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"> </span><br><span class="line"><span class="keyword">local</span> <span class="function"><span class="keyword">function</span> <span class="title">func2</span><span class="params">()</span></span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;这是一个私有函数！&quot;</span>)</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">module.func3</span><span class="params">()</span></span></span><br><span class="line">    func2()</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"> </span><br><span class="line"><span class="keyword">return</span> <span class="built_in">module</span></span><br></pre></td></tr></table></figure>
+
+<p>使用require加载模块：</p>
+<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- test_module.lua 文件</span></span><br><span class="line"><span class="comment">-- module 模块为上文提到到 module.lua</span></span><br><span class="line"><span class="built_in">require</span>(<span class="string">&quot;module&quot;</span>)</span><br><span class="line"><span class="comment">-- 别名变量 m</span></span><br><span class="line"><span class="comment">-- local m = require(&quot;module&quot;)</span></span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">module</span>.constant)</span><br><span class="line"><span class="built_in">module</span>.func3()</span><br><span class="line"><span class="comment">--[[</span></span><br><span class="line"><span class="comment">    result:</span></span><br><span class="line"><span class="comment">        这是一个常量</span></span><br><span class="line"><span class="comment">        这是一个私有函数！</span></span><br><span class="line"><span class="comment">--[[</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="lua、c互调例子，lua调用so库例子"><a href="#lua、c互调例子，lua调用so库例子" class="headerlink" title="lua、c互调例子，lua调用so库例子"></a>lua、c互调例子，lua调用so库例子</h3><ul>
+<li>lua栈：<br>lua中的栈是一个很奇特的数据结构，普通的栈只有一排索引，但是在lua中有两排索引，正数1索引的位置在栈底，负数-1索引的位置在栈顶。如下图所示。</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">  _______________</span><br><span class="line">5 |____data5____| -1</span><br><span class="line">4 |____data4____| -2</span><br><span class="line">3 |____data3____| -3 </span><br><span class="line">2 |____data2____| -4</span><br><span class="line">1 |____data1____| -5</span><br></pre></td></tr></table></figure>
+<ul>
+<li>当索引是1的时候对应的是栈底</li>
+<li>当索引是-1的时候对于的是栈顶。</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">  _______________</span><br><span class="line">5 |____.....____| -1</span><br><span class="line">4 |____<span class="string">&quot;str&quot;</span>____| -2</span><br><span class="line">3 |____<span class="string">&quot;343&quot;</span>____| -3 </span><br><span class="line">2 |___<span class="string">&quot;table&quot;</span>___| -4</span><br><span class="line">1 |____<span class="string">&quot;func&quot;</span>___| -5</span><br></pre></td></tr></table></figure>
+<ul>
+<li>lua_pushcclosure(L, func, 0) &#x2F;&#x2F; 创建并压入一个闭包</li>
+<li>lua_createtable(L, 0, 0) &#x2F;&#x2F; 新建并压入一个表</li>
+<li>lua_pushnumber(L, 343) &#x2F;&#x2F; 压入一个数字</li>
+<li>lua_pushstring(L, “mystr”) &#x2F;&#x2F; 压入一个字符串<br>存入栈的数据类型包括数值, 字符串, 指针, talbe, 闭包等。<br>压入的值在C看来是不同类型的，在lua看来都是TValue结构。</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="keyword">struct</span> <span class="title class_">lua_TValue</span> &#123;</span><br><span class="line">  Value value; </span><br><span class="line">  <span class="type">int</span> tt</span><br><span class="line">&#125; TValue;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">** Union of all Lua values</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">union</span> &#123;</span><br><span class="line">  GCObject *gc;</span><br><span class="line">  <span class="type">void</span> *p;</span><br><span class="line">  lua_Number n;</span><br><span class="line">  <span class="type">int</span> b;</span><br><span class="line">&#125; Value;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">** Union of all collectable objects</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="keyword">union</span> <span class="title class_">GCObject</span> &#123;</span><br><span class="line">  GCheader gch;</span><br><span class="line">  <span class="keyword">union</span> <span class="title class_">TString</span> ts;</span><br><span class="line">  <span class="keyword">union</span> <span class="title class_">Udata</span> u;</span><br><span class="line">  <span class="keyword">union</span> <span class="title class_">Closure</span> cl;</span><br><span class="line">  <span class="keyword">struct</span> <span class="title class_">Table</span> h;</span><br><span class="line">  <span class="keyword">struct</span> <span class="title class_">Proto</span> p;</span><br><span class="line">  <span class="keyword">struct</span> <span class="title class_">UpVal</span> uv;</span><br><span class="line">  <span class="keyword">struct</span> <span class="title class_">lua_State</span> th;  <span class="comment">/* thread */</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>TValue结构对应于lua中的所有数据类型, 是一个{值, 类型} 结构, 这就lua中动态类型的实现, 它把值和类型绑在一起, 用tt记录value的类型, value是一个联合结构, 由Value定义, 可以看到这个联合有四个域, 先简单的说明：</p>
+<ul>
+<li><p>p –&gt; 可以存一个指针, 实际上是lua中的light userdata结构</p>
+</li>
+<li><p>n –&gt; 所有的数值存在这里, 不光是int , 还是float</p>
+</li>
+<li><p>b –&gt; Boolean值存在这里, 注意, lua_pushinteger不是存在这里, 而是存在n中, b只存布尔</p>
+</li>
+<li><p>gc –&gt; 其他诸如table, thread, closure, string需要内存管理垃圾回收的类型都存在这里<br>gc是一个指针, 它可以指向的类型由联合体GCObject定义, 从图中可以看出, 有string, userdata, closure, table, proto, upvalue, thread</p>
+</li>
+<li><p>lua中, number, boolean, nil, light userdata四种类型的值是直接存在栈上元素里的, 和垃圾回收无关.</p>
+</li>
+<li><p>lua中, string, table, closure, userdata, thread存在栈上元素里的只是指针, 他们都会在生命周期结束后被垃圾回收.</p>
+</li>
+</ul>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/sevenyuan/p/4511808.html">详见</a></p>
+<ul>
+<li>lua常用api<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">lua_State* L=luaL_newstate(); luaL_newstate()函数返回一个指向堆栈的指针</span><br><span class="line">lua_createtable(L,<span class="number">0</span>,<span class="number">0</span>);新建并压入一张表</span><br><span class="line">lua_pushstring(L,<span class="number">0</span>,<span class="number">0</span>);压入一个字符串</span><br><span class="line">lua_pushnumber(L,<span class="number">0</span>,<span class="number">0</span>);压入一个数字</span><br><span class="line">lua_tostring(L,<span class="number">1</span>);取出一个字符串   <span class="keyword">return</span> const <span class="built_in">char</span> *</span><br><span class="line">lua_tointeger(L,<span class="number">1</span>);取出数字  <span class="keyword">return</span> int</span><br><span class="line">double b=lua_tonumber();取出一个double类型的数字</span><br><span class="line">lua_load()函数 当这个函数返回<span class="number">0</span>时表示加载</span><br><span class="line">luaL_loadfile(filename) 这个函数也是只允许加载lua程序文件，不执行lua文件。它是在内部去用lua_load()去加载指定名为filename的lua程序文件。当返回<span class="number">0</span>表示没有错误。</span><br><span class="line">luaL_dofile 这个函数不仅仅加载了lua程序文件，还执行lua文件。返回<span class="number">0</span>表示没有错误。</span><br><span class="line">lua_push*(L,data)压栈，</span><br><span class="line">lua_to*(L,index)取值，</span><br><span class="line">lua_pop(L,count)出栈。</span><br><span class="line">lua_close(L);释放lua资源</span><br><span class="line">lua_getglobal(L, <span class="string">&quot;val&quot;</span>);//获取全局变量的val的值,并将其放入栈顶</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="lua调用c库"><a href="#lua调用c库" class="headerlink" title="lua调用c库"></a>lua调用c库</h3><p>lua为程序主题调用c库函数，lua用<code>require &quot;myLualib&quot;</code>来请求c库，之后可以调用c函数，例子：<br>c库代码,需要添加lua.h和lauxlib.h头文件：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;lua.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;lauxlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="comment">/*  库 open 函数的前置声明   */</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">luaopen_myLualib</span><span class="params">(lua_State *L)</span></span>;</span><br><span class="line"><span class="function"><span class="type">static</span> <span class="type">int</span> <span class="title">ltest1</span><span class="params">(lua_State *L)</span> </span>&#123;</span><br><span class="line">    <span class="type">int</span> num = <span class="built_in">luaL_checkinteger</span>(L, <span class="number">1</span>); <span class="comment">/*检查参数是否有误*/</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;--- ltest1, num:%d\n&quot;</span>, num);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;                          <span class="comment">/*如果有返回结果，则lua_pushnumber(L,op1 + op2);等回传结果，并return [返回的个数]*/</span></span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="type">static</span> <span class="type">int</span> <span class="title">ltest2</span><span class="params">(lua_State *L)</span> </span>&#123;</span><br><span class="line">    <span class="type">size_t</span> len = <span class="number">0</span>;</span><br><span class="line">    <span class="type">const</span> <span class="type">char</span> * msg = <span class="built_in">luaL_checklstring</span>(L, <span class="number">1</span>, &amp;len); <span class="comment">/*checklstring计算string长度给第三个参数*/</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;--- ltest2, msg:%s, len:%d\n&quot;</span>, msg, len);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="type">static</span> <span class="type">int</span> <span class="title">ltest3</span><span class="params">(lua_State *L)</span> </span>&#123;</span><br><span class="line">    <span class="type">size_t</span> len = <span class="number">0</span>;</span><br><span class="line">    <span class="type">int</span> num = <span class="built_in">luaL_checkinteger</span>(L, <span class="number">1</span>);</span><br><span class="line">    <span class="type">const</span> <span class="type">char</span> * msg = <span class="built_in">luaL_checklstring</span>(L, <span class="number">2</span>, &amp;len);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;--- ltest3, num:%d, msg:%s, len:%d\n&quot;</span>, num, msg, len);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/*  将定义的函数名集成到一个结构数组中去，建立 lua 中使用的方法名与 C 的函数名的对应关系   */</span></span><br><span class="line"><span class="type">static</span> <span class="type">const</span> luaL_reg myLualib_lib[] = &#123;</span><br><span class="line">	&#123; <span class="string">&quot;test1&quot;</span>, ltest1 &#125;,</span><br><span class="line">	&#123; <span class="string">&quot;test2&quot;</span>, ltest2 &#125;,</span><br><span class="line">	&#123; <span class="string">&quot;test3&quot;</span>, ltest3 &#125;,</span><br><span class="line">	&#123; <span class="literal">NULL</span>, <span class="literal">NULL</span> &#125;,</span><br><span class="line">&#125;;</span><br><span class="line"> </span><br><span class="line"><span class="comment">/*  库打开时的执行函数（相当于这个库的 main 函数），执行完这个函数后， lua 中就可以加载这个 so 库了   */</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">luaopen_myLualib</span><span class="params">(lua_State *L)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">   <span class="comment">/*  把那个结构体数组注册到 mt （名字可自己取）库中去 */</span></span><br><span class="line">   <span class="built_in">luaL_register</span>(L, <span class="string">&quot;myLualib&quot;</span>, myLualib_lib);</span><br><span class="line">   <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/*5.4.x</span></span><br><span class="line"><span class="comment">int luaopen_myLualib(lua_State *L) &#123;</span></span><br><span class="line"><span class="comment"> </span></span><br><span class="line"><span class="comment">    luaL_Reg l[] = &#123;</span></span><br><span class="line"><span class="comment">        &#123; &quot;test1&quot;, ltest1 &#125;,</span></span><br><span class="line"><span class="comment">        &#123; &quot;test2&quot;, ltest2 &#125;,</span></span><br><span class="line"><span class="comment">        &#123; &quot;test3&quot;, ltest3 &#125;,</span></span><br><span class="line"><span class="comment">        &#123; NULL, NULL &#125;,</span></span><br><span class="line"><span class="comment">    &#125;;</span></span><br><span class="line"><span class="comment">    luaL_newlib(L, l);</span></span><br><span class="line"><span class="comment"> </span></span><br><span class="line"><span class="comment">    return 1;</span></span><br><span class="line"><span class="comment">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>luaL_register现在已经弃用，取而代之的是luaL_newlib<br>lua主程序：</p>
+<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">test3</span><span class="params">( ... )</span></span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;----- test myCustomLib&quot;</span>)</span><br><span class="line">    <span class="built_in">package</span>.<span class="built_in">cpath</span> = <span class="string">&quot;./?.so&quot;</span> <span class="comment">--so搜寻路径</span></span><br><span class="line">    <span class="keyword">local</span> f = <span class="built_in">require</span> <span class="string">&quot;myLualib&quot;</span> <span class="comment">-- 对应luaopen_myLualib中的myLualib</span></span><br><span class="line"> </span><br><span class="line">    f.test1(<span class="number">123</span>)</span><br><span class="line">    f.test2(<span class="string">&quot;hello world&quot;</span>)</span><br><span class="line">    f.test3(<span class="number">456</span>, <span class="string">&quot;yangx&quot;</span>)</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"> </span><br><span class="line">test3()</span><br><span class="line"><span class="comment">--[[</span></span><br><span class="line"><span class="comment">    ----- test myCustomLib</span></span><br><span class="line"><span class="comment">--- ltest1, num:123</span></span><br><span class="line"><span class="comment">--- ltest2, msg:hello world, len:11</span></span><br><span class="line"><span class="comment">--- ltest3, num:456, msg:yangx, len:5</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">--]]</span></span><br></pre></td></tr></table></figure>
+
+<p>lua调用c还可以是先在c中注册好函数供lua调用，详见pwnsky调用流程。</p>
+<h3 id="c调用lua"><a href="#c调用lua" class="headerlink" title="c调用lua"></a>c调用lua</h3><p>C++ C调lua遵守的原则</p>
+<ol>
+<li>所有lua中的值由lua自己管理 C++&#x2F;C并不知道 并且他们其中的值Lua也不知道 如果C++&#x2F;C要lua中的东西 由lua产生放到栈上 C++&#x2F;C通过API接口获取这个值</li>
+<li>凡是lua的变量 lua负责这些变量的生命周期和垃圾回收</li>
+</ol>
+<p>main.lua文件：</p>
+<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">name = <span class="string">&quot;bob&quot;</span></span><br><span class="line">age= <span class="number">20</span></span><br><span class="line">mystr=<span class="string">&quot;hello lua&quot;</span></span><br><span class="line">mytable=&#123;name=<span class="string">&quot;tom&quot;</span>,id=<span class="number">123456</span>&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">add</span><span class="params">(x,y)</span></span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">2</span>*x+y</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+<p>test.c:</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;lua.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;lualib.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;lauxlib.h&quot;</span></span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">gettable</span><span class="params">(lua_State *L)</span></span>&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;读取lua table中对应的值\n&quot;</span>);</span><br><span class="line">    <span class="comment">//将全局变量mytable压入栈</span></span><br><span class="line">    <span class="built_in">lua_getglobal</span>(L, <span class="string">&quot;mytable&quot;</span>); <span class="comment">//获取table对象</span></span><br><span class="line">    <span class="comment">/*//压入表中的key</span></span><br><span class="line"><span class="comment">    lua_pushstring(L, &quot;name&quot;);</span></span><br><span class="line"><span class="comment">    </span></span><br><span class="line"><span class="comment">    //lua_gettable会在栈顶取出一个元素并且返回把查找到的值压入栈顶</span></span><br><span class="line"><span class="comment">    lua_gettable(L, 1);</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">    <span class="built_in">lua_getfield</span>(L,<span class="number">-1</span>,<span class="string">&quot;name&quot;</span>); <span class="comment">//lua_getfield(L,-1,&quot;name&quot;)的作用等价于 lua_pushstring(L,&quot;name&quot;) + lua_gettable(L,1)</span></span><br><span class="line">    <span class="type">const</span> <span class="type">char</span> *name = <span class="built_in">lua_tostring</span>(L, <span class="number">-1</span>); <span class="comment">//在栈顶取出数据</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;name:%s\n&quot;</span>, name);</span><br><span class="line">    </span><br><span class="line">    <span class="built_in">lua_pushstring</span>(L,<span class="string">&quot;id&quot;</span>);<span class="comment">//压入id</span></span><br><span class="line">    <span class="built_in">lua_gettable</span>(L, <span class="number">1</span>);<span class="comment">//在lua mytable表中取值返回到栈顶</span></span><br><span class="line">    <span class="type">int</span> id = <span class="built_in">lua_tonumber</span>(L, <span class="number">-1</span>); <span class="comment">//在栈顶取出数据</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;id:%d\n&quot;</span>, id);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">add</span><span class="params">(lua_State *L)</span></span>&#123;</span><br><span class="line">    <span class="comment">//调用函数,依次压入参数</span></span><br><span class="line">    <span class="built_in">lua_getglobal</span>(L, <span class="string">&quot;add&quot;</span>);</span><br><span class="line">    <span class="built_in">lua_pushnumber</span>(L, <span class="number">10</span>);</span><br><span class="line">    <span class="built_in">lua_pushnumber</span>(L, <span class="number">20</span>);</span><br><span class="line">    <span class="comment">//查看压入栈的元素</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i=<span class="number">1</span>;i&lt;<span class="number">3</span>;i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;number:%f\n&quot;</span>,<span class="built_in">lua_tonumber</span>(L, -i));</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//lua_pcall(L,2,1,0):传入两个参数 期望得到一个返回值，0表示错误处理函数在栈中的索引值，压入结果前会弹出函数和参数</span></span><br><span class="line">    <span class="type">int</span> pcallRet = <span class="built_in">lua_pcall</span>(L, <span class="number">2</span>, <span class="number">1</span>, <span class="number">0</span>); <span class="comment">//lua_pcall将计算好的值压入栈顶,并返回状态值</span></span><br><span class="line">    <span class="keyword">if</span> (pcallRet != <span class="number">0</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;error %s\n&quot;</span>, <span class="built_in">lua_tostring</span>(L, <span class="number">-1</span>));</span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;pcallRet:%d\n&quot;</span>, pcallRet);</span><br><span class="line">    <span class="type">int</span> val = <span class="built_in">lua_tonumber</span>(L, <span class="number">-1</span>); <span class="comment">//在栈顶取出数据</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;val:%d\n&quot;</span>, val);</span><br><span class="line">    <span class="built_in">lua_pop</span>(L, <span class="number">-1</span>); <span class="comment">//弹出栈顶</span></span><br><span class="line">    <span class="comment">//再次查看栈内元素，发现什么都没有，因为lua在返回函数计算值后会清空栈,只保留返回值 </span></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i=<span class="number">1</span>;i&lt;<span class="number">3</span>;i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;number:%f\n&quot;</span>,<span class="built_in">lua_tonumber</span>(L, -i));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    lua_State *L = <span class="built_in">luaL_newstate</span>();</span><br><span class="line">    <span class="built_in">luaL_openlibs</span>(L);</span><br><span class="line">    <span class="type">int</span> retLoad = <span class="built_in">luaL_loadfile</span>(L, <span class="string">&quot;main.lua&quot;</span>);</span><br><span class="line">    <span class="keyword">if</span> (retLoad == <span class="number">0</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;load file success retLoad:%d\n&quot;</span>, retLoad);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (retLoad || <span class="built_in">lua_pcall</span>(L, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>))</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;error %s\n&quot;</span>, <span class="built_in">lua_tostring</span>(L, <span class="number">-1</span>));</span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">lua_getglobal</span>(L, <span class="string">&quot;name&quot;</span>); <span class="comment">//lua获取全局变量name的值并且返回到栈顶</span></span><br><span class="line">    <span class="built_in">lua_getglobal</span>(L, <span class="string">&quot;age&quot;</span>);  <span class="comment">//lua获取全局变量age的值并且返回到栈顶,这个时候length对应的值将代替width的值成为新栈顶</span></span><br><span class="line">    <span class="comment">//注意读取顺序</span></span><br><span class="line">    <span class="type">int</span> age = <span class="built_in">lua_tointeger</span>(L, <span class="number">-1</span>); <span class="comment">//栈顶</span></span><br><span class="line">    <span class="type">const</span> <span class="type">char</span> *name = <span class="built_in">lua_tostring</span>(L, <span class="number">-2</span>);<span class="comment">//次栈顶</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;name = %s\n&quot;</span>, name); </span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;age = %d\n&quot;</span>, age);   </span><br><span class="line">    <span class="built_in">add</span>(L);</span><br><span class="line">    <span class="built_in">gettable</span>(L);</span><br><span class="line">    <span class="built_in">lua_close</span>(L);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>注意：这个时候我们修改一下lua中的add函数:把2改为4</p>
+<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">add</span><span class="params">(x,y)</span></span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">4</span>*x+y</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+<p>这时不进行编译，直接再运行一下.&#x2F;main，可以看到这个结果改变了从40变成了60，这是在我们没有进行重复编译的情况下直接产生的变化。<br>漂亮的证明了lua在c语言里的嵌入特性，lua中的函数就像是文本一样被读取，但是又确实是作为程序被执行。当我们的项目很大的时候，每次编译都需要几十分钟，这个时候如果合理的利用lua特性，仅仅是需要修改lua文件就可以避免这十几分钟的空白时间。</p>
+<h2 id="lua文件格式，及源码修改-，lua5-1字节码修改方法，以及几个有趣的自定义解释器的例子，以及相应反编译工具的修改重打包。"><a href="#lua文件格式，及源码修改-，lua5-1字节码修改方法，以及几个有趣的自定义解释器的例子，以及相应反编译工具的修改重打包。" class="headerlink" title="lua文件格式，及源码修改 ，lua5.1字节码修改方法，以及几个有趣的自定义解释器的例子，以及相应反编译工具的修改重打包。"></a>lua文件格式，及源码修改 ，lua5.1字节码修改方法，以及几个有趣的自定义解释器的例子，以及相应反编译工具的修改重打包。</h2><h3 id="luac文件格式"><a href="#luac文件格式" class="headerlink" title="luac文件格式"></a>luac文件格式</h3><p>lua头文件有12字节：<br><code>1b 4c 75 61 51 00 01 04 08 04 08 00</code><br>源码定义：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">* make header  src/lundump.c</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="type">void</span> <span class="title function_">luaU_header</span> <span class="params">(<span class="type">char</span>* h)</span></span><br><span class="line">&#123;</span><br><span class="line"> <span class="type">int</span> x=<span class="number">1</span>;</span><br><span class="line"> <span class="built_in">memcpy</span>(h,LUA_SIGNATURE,<span class="keyword">sizeof</span>(LUA_SIGNATURE)<span class="number">-1</span>);    <span class="comment">//4bytes</span></span><br><span class="line"> h+=<span class="keyword">sizeof</span>(LUA_SIGNATURE)<span class="number">-1</span>; <span class="comment">//移动指针</span></span><br><span class="line"> *h++=(<span class="type">char</span>)LUAC_VERSION; <span class="comment">//1</span></span><br><span class="line"> *h++=(<span class="type">char</span>)LUAC_FORMAT; <span class="comment">//1</span></span><br><span class="line"> *h++=(<span class="type">char</span>)*(<span class="type">char</span>*)&amp;x;				<span class="comment">/* endianness */</span> <span class="number">1</span></span><br><span class="line"> *h++=(<span class="type">char</span>)<span class="keyword">sizeof</span>(<span class="type">int</span>);  <span class="comment">//1</span></span><br><span class="line"> *h++=(<span class="type">char</span>)<span class="keyword">sizeof</span>(<span class="type">size_t</span>); <span class="comment">//1</span></span><br><span class="line"> *h++=(<span class="type">char</span>)<span class="keyword">sizeof</span>(Instruction); <span class="comment">//1</span></span><br><span class="line"> *h++=(<span class="type">char</span>)<span class="keyword">sizeof</span>(lua_Number); <span class="comment">//1</span></span><br><span class="line"> *h++=(<span class="type">char</span>)(((lua_Number)<span class="number">0.5</span>)==<span class="number">0</span>);		<span class="comment">/* is lua_Number integral? */</span> <span class="number">1</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>其中第1-4字节为：“\033Lua”；<br>第5字节标识lua的版本号，lua5.1为 0x51；<br>第6字节为官方中保留，lua5.1中为 0x0；<br>第7字节标识字节序，little-endian为0x01，big-endian为0x00；<br>第8字节为sizeof(int)；<br>第9字节为sizeof(size_t)；<br>第10字节为sizeof(Instruction)，Instruction为lua内的指令类型，在32位以上的机器上为unsigned int；<br>第11字节为sizeof(lua_Number)，lua_Number即为double;<br>第12字节是判断lua_Number类型起否有效，一般为 0x00;</p>
+<p>不同版本的字节码头文件有些许差别。<br>文件头后面就是函数体部分。函数都被解释成Proto结构体进行解析，函数体涉及结构体太多，先掠过。</p>
+<h3 id="字节码修改"><a href="#字节码修改" class="headerlink" title="字节码修改"></a>字节码修改</h3><p>如今灰产横行，而lua对嵌入式支持很好，有很强的可配置性被广泛应用到游戏等，一些嵌入式设备也会用到，但是由于lua这一特性，很容易被人修改，所以各大厂商会对lua进行自己的修改，来防止使用反编译工具直接得到源码。修改方法有以下几种：</p>
+<ol>
+<li>普通的对称加密，在加载脚本之前解密</li>
+<li>修改lua虚拟机中opcode的顺序</li>
+<li>交叉使用</li>
+</ol>
+<p>这里简单说下字节码修改过程：<br>一共涉及到两个文件的修改：<code>lopcodes.h</code> 、 <code>lopcodes.c</code><br>lopcodes.h：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">** grep &quot;ORDER OP&quot; if you change these enums 老外留的提示</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">enum</span> &#123;</span></span><br><span class="line"><span class="comment">/*----------------------------------------------------------------------</span></span><br><span class="line"><span class="comment">name		args	description</span></span><br><span class="line"><span class="comment">------------------------------------------------------------------------*/</span></span><br><span class="line">OP_MOVE,<span class="comment">/*	A B	R(A) := R(B)					*/</span></span><br><span class="line">OP_LOADK,<span class="comment">/*	A Bx	R(A) := Kst(Bx)					*/</span></span><br><span class="line">OP_LOADBOOL,<span class="comment">/*	A B C	R(A) := (Bool)B; if (C) pc++			*/</span></span><br><span class="line">OP_LOADNIL,<span class="comment">/*	A B	R(A) := ... := R(B) := nil			*/</span></span><br><span class="line">OP_GETUPVAL,<span class="comment">/*	A B	R(A) := UpValue[B]				*/</span></span><br><span class="line">*</span><br><span class="line">*</span><br><span class="line">*</span><br><span class="line">OP_CLOSE,<span class="comment">/*	A 	close all variables in the stack up to (&gt;=) R(A)*/</span></span><br><span class="line">OP_CLOSURE,<span class="comment">/*	A Bx	R(A) := closure(KPROTO[Bx], R(A), ... ,R(A+n))	*/</span></span><br><span class="line"></span><br><span class="line">OP_VARARG<span class="comment">/*	A B	R(A), R(A+1), ..., R(A+B-1) = vararg		*/</span></span><br><span class="line">&#125; OpCode;</span><br></pre></td></tr></table></figure>
+<p>作者提示了如果修改enum要更改<code>ORDER OP</code>。<br>lopcodes.c:</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* ORDER OP */</span></span><br><span class="line"></span><br><span class="line"><span class="type">const</span> <span class="type">char</span> *<span class="type">const</span> luaP_opnames[NUM_OPCODES+<span class="number">1</span>] = &#123;</span><br><span class="line">  <span class="string">&quot;MOVE&quot;</span>,</span><br><span class="line">  <span class="string">&quot;LOADK&quot;</span>,</span><br><span class="line">  <span class="string">&quot;LOADBOOL&quot;</span>,</span><br><span class="line">  <span class="string">&quot;LOADNIL&quot;</span>,</span><br><span class="line">  <span class="string">&quot;GETUPVAL&quot;</span>,</span><br><span class="line">*</span><br><span class="line">*</span><br><span class="line">*</span><br><span class="line">  <span class="string">&quot;CLOSE&quot;</span>,</span><br><span class="line">  <span class="string">&quot;CLOSURE&quot;</span>,</span><br><span class="line">  <span class="string">&quot;VARARG&quot;</span>,</span><br><span class="line">  <span class="literal">NULL</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> opmode(t,a,b,c,m) (((t)&lt;&lt;7) | ((a)&lt;&lt;6) | ((b)&lt;&lt;4) | ((c)&lt;&lt;2) | (m))</span></span><br><span class="line"></span><br><span class="line"><span class="type">const</span> lu_byte luaP_opmodes[NUM_OPCODES] = &#123;</span><br><span class="line"><span class="comment">/*       T  A    B       C     mode		   opcode	*/</span></span><br><span class="line">  opmode(<span class="number">0</span>, <span class="number">1</span>, OpArgR, OpArgN, iABC) 		<span class="comment">/* OP_MOVE */</span></span><br><span class="line"> ,opmode(<span class="number">0</span>, <span class="number">1</span>, OpArgK, OpArgN, iABx)		<span class="comment">/* OP_LOADK */</span></span><br><span class="line"> ,opmode(<span class="number">0</span>, <span class="number">1</span>, OpArgU, OpArgU, iABC)		<span class="comment">/* OP_LOADBOOL */</span></span><br><span class="line"> ,opmode(<span class="number">0</span>, <span class="number">1</span>, OpArgR, OpArgN, iABC)		<span class="comment">/* OP_LOADNIL */</span></span><br><span class="line">*</span><br><span class="line">*</span><br><span class="line">*</span><br><span class="line"> ,opmode(<span class="number">0</span>, <span class="number">0</span>, OpArgU, OpArgU, iABC)		<span class="comment">/* OP_SETLIST */</span></span><br><span class="line"> ,opmode(<span class="number">0</span>, <span class="number">0</span>, OpArgN, OpArgN, iABC)		<span class="comment">/* OP_CLOSE */</span></span><br><span class="line"> ,opmode(<span class="number">0</span>, <span class="number">1</span>, OpArgU, OpArgN, iABx)		<span class="comment">/* OP_CLOSURE */</span></span><br><span class="line"> ,opmode(<span class="number">0</span>, <span class="number">1</span>, OpArgU, OpArgN, iABC)		<span class="comment">/* OP_VARARG */</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>这三处顺序可以随意修改。</p>
+<p>Luac指令完整由：OpCode、OpMode操作模式，以及不同模式下使用的不同的操作数组成。</p>
+<p>官方5.1版本的Lua使用的指令有3种格式，使用OpMode表示，它的定义如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">enum</span> <span class="title">OpMode</span> &#123;</span>iABC, iABx, iAsBx&#125;;  <span class="comment">/* basic instruction format */</span></span><br></pre></td></tr></table></figure>
+<p>其中，i表示6位的OpCode；A表示一个8位的数据；B表示一个9位的数据，C表示一个9位的无符号数据；后面跟的x表示数据组合，如Bx表示B与C组合成18位的无符号数据。sBx前的s表示是有符号数，即sBx是一个18位的有符号数。OpMode的表格luaP_opmodes指出了每个opcode属于哪种opmode。<br>定义如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*===========================================================================</span></span><br><span class="line"><span class="comment">  We assume that instructions are unsigned numbers.</span></span><br><span class="line"><span class="comment">  All instructions have an opcode in the first 6 bits.</span></span><br><span class="line"><span class="comment">  Instructions can have the following fields:</span></span><br><span class="line"><span class="comment">	`A&#x27; : 8 bits</span></span><br><span class="line"><span class="comment">	`B&#x27; : 9 bits</span></span><br><span class="line"><span class="comment">	`C&#x27; : 9 bits</span></span><br><span class="line"><span class="comment">	`Bx&#x27; : 18 bits (`B&#x27; and `C&#x27; together)</span></span><br><span class="line"><span class="comment">	`sBx&#x27; : signed Bx</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">  A signed argument is represented in excess K; that is, the number</span></span><br><span class="line"><span class="comment">  value is the unsigned value minus K. K is exactly the maximum value</span></span><br><span class="line"><span class="comment">  for that argument (so that -max is represented by 0, and +max is</span></span><br><span class="line"><span class="comment">  represented by 2*max), which is half the maximum for the corresponding</span></span><br><span class="line"><span class="comment">  unsigned argument.</span></span><br><span class="line"><span class="comment">===========================================================================*/</span></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">** size and position of opcode arguments.</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> SIZE_C		9</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> SIZE_B		9</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> SIZE_Bx		(SIZE_C + SIZE_B)</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> SIZE_A		8</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> SIZE_OP		6</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> POS_OP		0</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> POS_A		(POS_OP + SIZE_OP)</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> POS_C		(POS_A + SIZE_A)</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> POS_B		(POS_C + SIZE_C)</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> POS_Bx		POS_C</span></span><br></pre></td></tr></table></figure>
+<p>以小端序为例，完整的指令格式定义如下表所示：</p>
+<table>
+<thead>
+<tr>
+<th>OpMode</th>
+<th>B</th>
+<th>C</th>
+<th>A</th>
+<th>OpCode</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>iABC</td>
+<td>B(23~31)</td>
+<td>C(14~22)</td>
+<td>A(6~13)</td>
+<td>opcode(0~5)</td>
+</tr>
+<tr>
+<td>iABx</td>
+<td>Bx</td>
+<td>(14~31)</td>
+<td>A(6~13)</td>
+<td>opcode(0~5)</td>
+</tr>
+<tr>
+<td>iAsBx</td>
+<td>sBx</td>
+<td>(14~31)</td>
+<td>A(6~13)</td>
+<td>opcode(0~5)</td>
+</tr>
+</tbody></table>
+<h3 id="虚拟机修改-运算"><a href="#虚拟机修改-运算" class="headerlink" title="虚拟机修改-运算"></a>虚拟机修改-运算</h3><p>lparser.c：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">static</span> BinOpr <span class="title function_">getbinopr</span> <span class="params">(<span class="type">int</span> op)</span> &#123;</span><br><span class="line">  <span class="keyword">switch</span> (op) &#123;</span><br><span class="line">    <span class="keyword">case</span> <span class="string">&#x27;+&#x27;</span>: <span class="keyword">return</span> OPR_ADD;</span><br><span class="line">    <span class="keyword">case</span> <span class="string">&#x27;-&#x27;</span>: <span class="keyword">return</span> OPR_SUB;</span><br><span class="line">    <span class="keyword">case</span> <span class="string">&#x27;*&#x27;</span>: <span class="keyword">return</span> OPR_MUL;</span><br><span class="line">    <span class="keyword">case</span> <span class="string">&#x27;/&#x27;</span>: <span class="keyword">return</span> OPR_DIV;</span><br><span class="line">    <span class="keyword">case</span> <span class="string">&#x27;%&#x27;</span>: <span class="keyword">return</span> OPR_MOD;</span><br><span class="line">    <span class="keyword">case</span> <span class="string">&#x27;^&#x27;</span>: <span class="keyword">return</span> OPR_POW;</span><br><span class="line">    <span class="keyword">case</span> TK_CONCAT: <span class="keyword">return</span> OPR_CONCAT;</span><br><span class="line">    <span class="keyword">case</span> TK_NE: <span class="keyword">return</span> OPR_NE;</span><br><span class="line">    <span class="keyword">case</span> TK_EQ: <span class="keyword">return</span> OPR_EQ;</span><br><span class="line">    <span class="keyword">case</span> <span class="string">&#x27;&lt;&#x27;</span>: <span class="keyword">return</span> OPR_LT;</span><br><span class="line">    <span class="keyword">case</span> TK_LE: <span class="keyword">return</span> OPR_LE;</span><br><span class="line">    <span class="keyword">case</span> <span class="string">&#x27;&gt;&#x27;</span>: <span class="keyword">return</span> OPR_GT;</span><br><span class="line">    <span class="keyword">case</span> TK_GE: <span class="keyword">return</span> OPR_GE;</span><br><span class="line">    <span class="keyword">case</span> TK_AND: <span class="keyword">return</span> OPR_AND;</span><br><span class="line">    <span class="keyword">case</span> TK_OR: <span class="keyword">return</span> OPR_OR;</span><br><span class="line">    <span class="keyword">default</span>: <span class="keyword">return</span> OPR_NOBINOPR;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>+</code>、<code>-</code>操作交换。可以达到另一种混淆效果。</p>
+<h3 id="虚拟机修改-函数"><a href="#虚拟机修改-函数" class="headerlink" title="虚拟机修改-函数"></a>虚拟机修改-函数</h3><p>修改了 function 关键字，llex.h、llex.c：<br>llex.c:</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* ORDER RESERVED */</span></span><br><span class="line"><span class="type">const</span> <span class="type">char</span> *<span class="type">const</span> luaX_tokens [] = &#123;</span><br><span class="line">    <span class="string">&quot;and&quot;</span>, <span class="string">&quot;break&quot;</span>, <span class="string">&quot;do&quot;</span>, <span class="string">&quot;else&quot;</span>, <span class="string">&quot;elseif&quot;</span>,</span><br><span class="line">    <span class="string">&quot;end&quot;</span>, <span class="string">&quot;false&quot;</span>, <span class="string">&quot;for&quot;</span>, <span class="string">&quot;function&quot;</span>, <span class="string">&quot;if&quot;</span>,</span><br><span class="line">    <span class="string">&quot;in&quot;</span>, <span class="string">&quot;local&quot;</span>, <span class="string">&quot;nil&quot;</span>, <span class="string">&quot;not&quot;</span>, <span class="string">&quot;or&quot;</span>, <span class="string">&quot;repeat&quot;</span>,</span><br><span class="line">    <span class="string">&quot;return&quot;</span>, <span class="string">&quot;then&quot;</span>, <span class="string">&quot;true&quot;</span>, <span class="string">&quot;until&quot;</span>, <span class="string">&quot;while&quot;</span>,</span><br><span class="line">    <span class="string">&quot;..&quot;</span>, <span class="string">&quot;...&quot;</span>, <span class="string">&quot;==&quot;</span>, <span class="string">&quot;&gt;=&quot;</span>, <span class="string">&quot;&lt;=&quot;</span>, <span class="string">&quot;~=&quot;</span>,</span><br><span class="line">    <span class="string">&quot;&lt;number&gt;&quot;</span>, <span class="string">&quot;&lt;name&gt;&quot;</span>, <span class="string">&quot;&lt;string&gt;&quot;</span>, <span class="string">&quot;&lt;eof&gt;&quot;</span>,</span><br><span class="line">    <span class="literal">NULL</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>llex.h:</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">define</span> FIRST_RESERVED	257</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/* maximum length of a reserved word */</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> TOKEN_LEN	(sizeof(<span class="string">&quot;function&quot;</span>)/sizeof(char))</span></span><br></pre></td></tr></table></figure>
+<p>可以将上述两个funtion字段改成其他你想改的字段，如funtion -&gt; cyber,代码可写成：</p>
+<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">cyber foo(a,b)</span><br><span class="line">    <span class="keyword">return</span> a+b</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;a+b=&#x27;</span>,foo(<span class="number">3</span>,<span class="number">5</span>))</span><br></pre></td></tr></table></figure>
+<p>修改建议本地install，以免覆盖原始文件。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">make linux <span class="built_in">test</span> &amp;&amp; make <span class="built_in">local</span></span><br></pre></td></tr></table></figure>
+<p>lua各个版本之间的区别还是很大的，最新的版本5.4已经有80多条指令。</p>
+<h3 id="反编译工具修改"><a href="#反编译工具修改" class="headerlink" title="反编译工具修改"></a>反编译工具修改</h3><p>对应的修改反编译工具就行，对于opcode修改只变换反编译工具opcode顺序：<br>unluac：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="title function_">OpcodeMap</span><span class="params">(Version.OpcodeMapType type)</span> &#123;</span><br><span class="line">    <span class="keyword">switch</span> (type) &#123;</span><br><span class="line">        <span class="keyword">case</span> LUA50:</span><br><span class="line">            map = <span class="keyword">new</span> <span class="title class_">Op</span>[<span class="number">35</span>];</span><br><span class="line">            map[<span class="number">0</span>] = Op.MOVE;</span><br><span class="line">            map[<span class="number">1</span>] = Op.LOADK;</span><br><span class="line">            map[<span class="number">2</span>] = Op.LOADBOOL;</span><br><span class="line">            map[<span class="number">3</span>] = Op.LOADNIL;</span><br><span class="line">            map[<span class="number">4</span>] = Op.GETUPVAL;</span><br><span class="line">            map[<span class="number">5</span>] = Op.GETGLOBAL;</span><br><span class="line">            map[<span class="number">6</span>] = Op.GETTABLE;</span><br><span class="line">            .</span><br><span class="line">            .</span><br></pre></td></tr></table></figure>
+<p>重新编译jar包。<br><a target="_blank" rel="noopener" href="https://github.com/viruscamp/unluac">源码</a><br><a target="_blank" rel="noopener" href="https://sourceforge.net/projects/unluac/">release</a></p>
+<p>luadec：<br>将修改好的lua官方源码替换掉原始源码，重新编译，注意确认好源码是官方来源。</p>
+<h3 id="修改lua解释器，文件加密落地，防止通用反编译工具"><a href="#修改lua解释器，文件加密落地，防止通用反编译工具" class="headerlink" title="修改lua解释器，文件加密落地，防止通用反编译工具"></a>修改lua解释器，文件加密落地，防止通用反编译工具</h3><p>dump前加密：<br><code>wb+</code>可读写方式打开，位置&#x2F;src&#x2F;luac.c：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"> FILE* D= (output==<span class="literal">NULL</span>) ? <span class="built_in">stdout</span> : fopen(output,<span class="string">&quot;wb+&quot;</span>); &lt;-------</span><br><span class="line"> <span class="comment">//   printf(&quot;%s\n&quot;,output);</span></span><br><span class="line"> <span class="keyword">if</span> (D==<span class="literal">NULL</span>) cannot(<span class="string">&quot;open&quot;</span>);</span><br><span class="line"> lua_lock(L);</span><br><span class="line"> luaU_dump(L,f,writer,D,stripping);</span><br><span class="line"> lua_unlock(L);</span><br><span class="line"> D = GetFileSizeAndDump(D);   &lt;------</span><br><span class="line"> <span class="keyword">if</span> (ferror(D)) cannot(<span class="string">&quot;write&quot;</span>);</span><br><span class="line"> <span class="keyword">if</span> (fclose(D)) cannot(<span class="string">&quot;close&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>load后解密：<br><code>rb+</code>可读写方式打开,位置&#x2F;src&#x2F;lauxlib.c：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (c == LUA_SIGNATURE[<span class="number">0</span>] &amp;&amp; filename) &#123;  <span class="comment">/* binary file? */</span></span><br><span class="line">  lf.f = freopen(filename, <span class="string">&quot;rb+&quot;</span>, lf.f);  <span class="comment">/* reopen in binary mode */</span></span><br><span class="line">  lf = GetFileSizeAndLoad(c,lf);         &lt;-----------</span><br><span class="line">  <span class="keyword">if</span> (lf.f == <span class="literal">NULL</span>) <span class="keyword">return</span> errfile(L, <span class="string">&quot;reopen&quot;</span>, fnameindex);</span><br><span class="line">  <span class="comment">/* skip eventual `#!...&#x27; */</span></span><br><span class="line"> <span class="keyword">while</span> ((c = getc(lf.f)) != EOF &amp;&amp; c != LUA_SIGNATURE[<span class="number">0</span>]) ;</span><br><span class="line">  lf.extraline = <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line">ungetc(c, lf.f);</span><br><span class="line">status = lua_load(L, getF, &amp;lf, lua_tostring(L, <span class="number">-1</span>));</span><br><span class="line">lf = GetFileSizeAndLoad(c,lf); &lt;---------</span><br><span class="line">readstatus = ferror(lf.f);</span><br><span class="line"><span class="keyword">if</span> (filename) fclose(lf.f);  <span class="comment">/* close file (even in case of errors) */</span></span><br></pre></td></tr></table></figure>
+<p><strong>修改遇到的问题：</strong><br>加载流程和定位合适的处理点搞了好久：<br>文件dump是通过DumpBlock函数调用writer函数来dump，而且是根据文件格式分段dump，dump的size跟前面的还有依赖，所以在writer里直接加密不合适。往上找，找到所有的dump操作完成后，fclose之前讲文件流改写。</p>
+<p>load是根据文件头第一个字符来判断文件类型（binary or src），修改要注意lua加载的两种文件类型都用到了 <code>status = lua_load(L, getF, &amp;lf, lua_tostring(L, -1)); getF()</code>,为了不影响源码文件执行，必修在此之前修改文件流，还有一个点是在解密完文件流后，fclose时会将解密的内容重新写回文件，所以在fclose时，要重新加密文件流，注意此时要判断一下文件类型。</p>
+<p>最终实现效果：lua文件头不变（也可以加密），luac生成字节码是加密的，lua执行时解密执行。</p>
+<p>加密方式可以自行决定，这里仅仅是亦或了一下。</p>
+<h3 id="修改后的opcode顺序简单还原"><a href="#修改后的opcode顺序简单还原" class="headerlink" title="修改后的opcode顺序简单还原"></a>修改后的opcode顺序简单还原</h3><p><strong>准备</strong></p>
+<ol>
+<li>被修改opcode顺序后的lua虚拟机生成的luac字节码</li>
+<li>同版本原始lua虚拟机生成的luac字节码</li>
+<li>一个尽可能多的覆盖所有操作指令的lua脚本<br><strong>思路</strong></li>
+<li>来自于同一个lua脚本修改前后的luac字节码进行对比，不同的就是opcode部分。</li>
+<li>用正长的字节码去校队修改后的字节码<br>通常经过luac编译的字节码<code>*.luac</code> 文件其中的数据是由 luaU_dump 函数产生，在 luac.c 文件中被调用，而 luaU_dump 的另一个入口在 lapi.c 的 lua_dump，被绑定到 Lua 的 string.dump 函数。<br>通过在 Lua 脚本中对需要 dump 的函数用 string.dump，可以得到对应的字节码。<br>对于只修改了opcode顺序luac文件，对比正常文件之后也是只有6bit操作码不同，数据是相同的，所以只要对比出二者不同就是opcode的位置，即可还原出修改后的顺序。<br>当然这个只针对仅仅修改了opcode顺序的情况，如果还修改了其他的地方就需要甄别转换了。<br>源码lvm.c中的luaV_execute函数进行了opcode识别，可知是由GET_OPCODE(i)来获取opcode的，看源码知道他是在lopcodes.h中的宏定义：<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">define</span> cast(t, exp)	((t)(exp))</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> SIZE_OP		6</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> POS_OP		0</span></span><br><span class="line"><span class="comment">/* creates a mask with `n&#x27; 1 bits at position `p&#x27; */</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> MASK1(n,p)	((~((~(Instruction)0)&lt;&lt;n))&lt;&lt;p)</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> GET_OPCODE(i)	(cast(OpCode, ((i)&gt;&gt;POS_OP) &amp; MASK1(SIZE_OP,0)))</span></span><br></pre></td></tr></table></figure>
+可知i就是OpCode枚举类的元素，<code>MASK1(SIZE_OP,0)</code>经过计算是0x3f，经过&amp;0x3f后得到opcode。<br>尝试写lua脚本，实现对opcode还原：<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">local</span> bit = <span class="built_in">require</span>(<span class="string">&#x27;bit&#x27;</span>) <span class="comment">-- lua 位操作脚本</span></span><br><span class="line"><span class="keyword">local</span> test = <span class="built_in">require</span>(<span class="string">&quot;test&quot;</span>) <span class="comment">-- 测试的lua脚本，尽可能多的覆盖所有指令</span></span><br><span class="line"></span><br><span class="line"><span class="comment">-- 加载用正常 lua 的 dump 文件</span></span><br><span class="line"><span class="keyword">local</span> fp = <span class="built_in">io</span>.<span class="built_in">open</span>(<span class="string">&quot;test.luac&quot;</span>,<span class="string">&quot;rb&quot;</span>)</span><br><span class="line"><span class="keyword">local</span> ori_data = fp:<span class="built_in">read</span>(<span class="string">&quot;*all&quot;</span>)</span><br><span class="line">fp:<span class="built_in">close</span>()</span><br><span class="line"></span><br><span class="line"><span class="comment">-- print(&#x27;data len &#x27;.. #data)</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;ori_data len &#x27;</span> .. #ori_data)</span><br><span class="line"></span><br><span class="line"><span class="keyword">local</span> ori_op_name = &#123;</span><br><span class="line">    <span class="string">&quot;MOVE&quot;</span>,</span><br><span class="line">    <span class="string">&quot;LOADK&quot;</span>,</span><br><span class="line">    <span class="string">&quot;LOADBOOL&quot;</span>,</span><br><span class="line">    <span class="string">&quot;LOADNIL&quot;</span>,</span><br><span class="line">    <span class="string">&quot;GETUPVAL&quot;</span>,</span><br><span class="line">    <span class="string">&quot;GETGLOBAL&quot;</span>,</span><br><span class="line">    <span class="string">&quot;GETTABLE&quot;</span>,</span><br><span class="line">    <span class="string">&quot;SETGLOBAL&quot;</span>,</span><br><span class="line">    <span class="string">&quot;SETUPVAL&quot;</span>,</span><br><span class="line">    <span class="string">&quot;SETTABLE&quot;</span>,</span><br><span class="line">    <span class="string">&quot;NEWTABLE&quot;</span>,</span><br><span class="line">    <span class="string">&quot;SELF&quot;</span>,</span><br><span class="line">    <span class="string">&quot;ADD&quot;</span>,</span><br><span class="line">    <span class="string">&quot;SUB&quot;</span>,</span><br><span class="line">    <span class="string">&quot;MUL&quot;</span>,</span><br><span class="line">    <span class="string">&quot;DIV&quot;</span>,</span><br><span class="line">    <span class="string">&quot;MOD&quot;</span>,</span><br><span class="line">    <span class="string">&quot;POW&quot;</span>,</span><br><span class="line">    <span class="string">&quot;UNM&quot;</span>,</span><br><span class="line">    <span class="string">&quot;NOT&quot;</span>,</span><br><span class="line">    <span class="string">&quot;LEN&quot;</span>,</span><br><span class="line">    <span class="string">&quot;CONCAT&quot;</span>,</span><br><span class="line">    <span class="string">&quot;JMP&quot;</span>,</span><br><span class="line">    <span class="string">&quot;EQ&quot;</span>,</span><br><span class="line">    <span class="string">&quot;LT&quot;</span>,</span><br><span class="line">    <span class="string">&quot;LE&quot;</span>,</span><br><span class="line">    <span class="string">&quot;TEST&quot;</span>,</span><br><span class="line">    <span class="string">&quot;TESTSET&quot;</span>,</span><br><span class="line">    <span class="string">&quot;CALL&quot;</span>,</span><br><span class="line">    <span class="string">&quot;TAILCALL&quot;</span>,</span><br><span class="line">    <span class="string">&quot;RETURN&quot;</span>,</span><br><span class="line">    <span class="string">&quot;FORLOOP&quot;</span>,</span><br><span class="line">    <span class="string">&quot;FORPREP&quot;</span>,</span><br><span class="line">    <span class="string">&quot;TFORLOOP&quot;</span>,</span><br><span class="line">    <span class="string">&quot;SETLIST&quot;</span>,</span><br><span class="line">    <span class="string">&quot;CLOSE&quot;</span>,</span><br><span class="line">    <span class="string">&quot;CLOSURE&quot;</span>,</span><br><span class="line">    <span class="string">&quot;VARARG&quot;</span>,</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">local</span> data = <span class="built_in">string</span>.<span class="built_in">dump</span>(test)	<span class="comment">-- dump</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;modify_data len &#x27;</span> .. #data)</span><br><span class="line"></span><br><span class="line"><span class="keyword">local</span> new_op = &#123;&#125;</span><br><span class="line"><span class="comment">-- 用目标 lua 和正常 lua 的 dump 数据对比</span></span><br><span class="line"><span class="keyword">for</span> i = <span class="number">1</span>, #data <span class="keyword">do</span></span><br><span class="line">    <span class="keyword">local</span> by_ori = <span class="built_in">string</span>.<span class="built_in">byte</span>(ori_data,i)</span><br><span class="line">    <span class="keyword">local</span> by_new = <span class="built_in">string</span>.<span class="built_in">byte</span>(data,i)</span><br><span class="line">    <span class="keyword">if</span> by_ori ~= by_new <span class="keyword">then</span></span><br><span class="line">        <span class="keyword">local</span> op_name = ori_op_name[bit:_and(<span class="number">0x3F</span>,by_ori) + <span class="number">1</span>] <span class="comment">-- enum第0元素为nil</span></span><br><span class="line">        <span class="keyword">local</span> op_idx = bit:_and(<span class="number">0x3F</span>,by_new)</span><br><span class="line">        new_op[op_name] = op_idx</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"><span class="comment">-- print(ori_op_name[1])</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;old \t new \t name&quot;</span>)</span><br><span class="line"><span class="keyword">for</span> idx, op_name <span class="keyword">in</span> <span class="built_in">pairs</span>(ori_op_name) <span class="keyword">do</span></span><br><span class="line">    <span class="keyword">local</span> tmp = <span class="string">&#x27;&#x27;</span></span><br><span class="line">    <span class="keyword">if</span> new_op[op_name] ~= <span class="literal">nil</span> <span class="keyword">then</span></span><br><span class="line">        tmp = new_op[op_name]</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line">    <span class="built_in">print</span>((idx - <span class="number">1</span>) .. <span class="string">&quot;\t&quot;</span> .. tmp .. <span class="string">&quot;\t&quot;</span> .. op_name )</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+bindiff对操作指令敏感，对指令的操作数是识别不了的。对源码进行修改可以根据bindiff对比异同，快速定位，比如+、-换位，opcode换位等，可以通过分析加载流程确定。</li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="followme">
+  <span>欢迎关注我的其它发布渠道</span>
+
+  <div class="social-list">
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="https://www.facebook.com/rise.worlds">
+            <span class="icon">
+              <i class="fab fa-facebook"></i>
+            </span>
+
+            <span class="label">FB Page</span>
+          </a>
+      </div>
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="https://twitter.com/riseworlds">
+            <span class="icon">
+              <i class="fab fa-twitter"></i>
+            </span>
+
+            <span class="label">Twitter</span>
+          </a>
+      </div>
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="https://t.me/riseworlds">
+            <span class="icon">
+              <i class="fab fa-telegram"></i>
+            </span>
+
+            <span class="label">Telegram</span>
+          </a>
+      </div>
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/Safe/" rel="tag"># Safe</a>
+              <a href="/tags/decompiler/" rel="tag"># decompiler</a>
+              <a href="/tags/lua/" rel="tag"># lua</a>
+              <a href="/tags/vm/" rel="tag"># vm</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2024/04/28/In-depth-understanding-OF-ZF-OF-SF-flag-bits-and-conditional-jumps-in-assembly/" rel="prev" title="深入理解汇编中的ZF、OF、SF标志位和条件跳转">
+                  <i class="fa fa-angle-left"></i> 深入理解汇编中的ZF、OF、SF标志位和条件跳转
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2024/05/20/the-goron-framework-is-compiled-and-used/" rel="next" title="Ollvm混淆与反混淆： Goron框架编译与使用">
+                  Ollvm混淆与反混淆： Goron框架编译与使用 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  
+  <div class="comments giscus-container">
+  </div>
+  
+  
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">豫ICP备2021009490号 </a>
+  </div>
+  <div class="copyright">
+    &copy; 2004 – 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">rise</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="reading-progress-bar"></div>
+
+  <a href="https://github.com/rise-worlds" class="github-corner" title="在 GitHub 上关注我" aria-label="在 GitHub 上关注我" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://unpkg.com/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@next-theme/pjax@0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script><script src="/js/pjax.js"></script>
+
+  
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://unpkg.com/mermaid@10.9.0/dist/mermaid.min.js","integrity":"sha256-stuqcu2FrjYCXDOytWFA5SoUE/r3nkp6gTglzNSlavU="}}</script>
+  <script src="/js/third-party/tags/mermaid.js"></script>
+
+
+
+
+
+  
+
+
+
+
+  <script src="https://unpkg.com/quicklink@2.3.0/dist/quicklink.umd.js" integrity="sha256-yvJQOINiH9fWemHn0vCA5lsHWJaHs6/ZmO+1Ft04SvM=" crossorigin="anonymous"></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":true,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"https://rise-worlds.github.io/2024/05/18/lua-basic-and-VM-modifications/"}</script>
+  <script src="/js/third-party/quicklink.js"></script>
+<script class="next-config" data-name="giscus" type="application/json">{"enable":true,"repo":"rise-worlds/rise-worlds.github.io","repo_id":"MDEwOlJlcG9zaXRvcnk2MTAxMTA0MA==","category":"Announcements","category_id":"DIC_kwDOA6L0YM4CiXf9","mapping":"pathname","strict":0,"reactions_enabled":1,"emit_metadata":0,"theme":"transparent_dark","lang":"zh-CN","crossorigin":"anonymous","input_position":"top","loading":"lazy"}</script>
+
+<script>
+document.addEventListener('page:loaded', () => {
+  if (!CONFIG.page.comments) return;
+
+  NexT.utils.loadComments('.giscus-container')
+    .then(() => NexT.utils.getScript('https://giscus.app/client.js', {
+      attributes: {
+        async                   : true,
+        crossOrigin             : 'anonymous',
+        'data-repo'             : CONFIG.giscus.repo,
+        'data-repo-id'          : CONFIG.giscus.repo_id,
+        'data-category'         : CONFIG.giscus.category,
+        'data-category-id'      : CONFIG.giscus.category_id,
+        'data-mapping'          : CONFIG.giscus.mapping,
+        'data-strict'           : CONFIG.giscus.strict,
+        'data-reactions-enabled': CONFIG.giscus.reactions_enabled,
+        'data-emit-metadata'    : CONFIG.giscus.emit_metadata,
+        'data-theme'            : CONFIG.giscus.theme,
+        'data-lang'             : CONFIG.giscus.lang,
+        'data-input-position'   : CONFIG.giscus.input_position,
+        'data-loading'          : CONFIG.giscus.loading
+      },
+      parentNode: document.querySelector('.giscus-container')
+    }));
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,951 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://unpkg.com/@fortawesome/fontawesome-free@6.5.2/css/all.min.css" integrity="sha256-XOqroi11tY4EFQMR9ZYwZWKj5ZXiftSx36RRuC3anlA=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://unpkg.com/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"rise-worlds.github.io","root":"/","images":"/images","scheme":"Mist","darkmode":true,"version":"8.20.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="译注：本文是TinyXML 2.5.2版本Document的中文文档，经原作者Lee Thomason同意由hansen翻译，如有误译或者错漏，欢迎指正。版权：版权归原作者所有，翻译文档版权归本人hansen所有，转载请注明出处。原文：http:&#x2F;&#x2F;www.grinninglizard.com&#x2F;tinyxmldocs&#x2F;index.html    &nbsp;    TinyXml 文档    2.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="TinyXML中文文档">
+<meta property="og:url" content="https://rise-worlds.github.io/2007/11/10/TinyXML%E4%B8%AD%E6%96%87%E6%96%87%E6%A1%A3/index.html">
+<meta property="og:site_name" content="Rise&#39;blogs">
+<meta property="og:description" content="译注：本文是TinyXML 2.5.2版本Document的中文文档，经原作者Lee Thomason同意由hansen翻译，如有误译或者错漏，欢迎指正。版权：版权归原作者所有，翻译文档版权归本人hansen所有，转载请注明出处。原文：http:&#x2F;&#x2F;www.grinninglizard.com&#x2F;tinyxmldocs&#x2F;index.html    &nbsp;    TinyXml 文档    2.">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2007-11-10T17:35:00.000Z">
+<meta property="article:modified_time" content="2008-03-24T16:25:00.000Z">
+<meta property="article:author" content="rise">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://rise-worlds.github.io/2007/11/10/TinyXML%E4%B8%AD%E6%96%87%E6%96%87%E6%A1%A3/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://rise-worlds.github.io/2007/11/10/TinyXML%E4%B8%AD%E6%96%87%E6%96%87%E6%A1%A3/","path":"2007/11/10/TinyXML中文文档/","title":"TinyXML中文文档"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>TinyXML中文文档 | Rise'blogs</title>
+  
+
+  <script src="/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?266da4e90214887b507c0bb6baa84e3e"></script>
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Rise'blogs</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-message"><a href="/message/" rel="section"><i class="fa fa-comments fa-fw"></i>留言板</a></li><li class="menu-item menu-item-sitemap"><a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>站点地图</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="rise"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">rise</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">661</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">48</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">106</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="mailto:rise.worlds@outlook.com" title="E-Mail → mailto:rise.worlds@outlook.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://github.com/rise-worlds" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;rise-worlds" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://x.com/riseworlds" title="Twitter → https:&#x2F;&#x2F;x.com&#x2F;riseworlds" rel="noopener me" target="_blank"><i class="fab fa-twitter fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.facebook.com/rise.worlds" title="FB Page → https:&#x2F;&#x2F;www.facebook.com&#x2F;rise.worlds" rel="noopener me" target="_blank"><i class="fab fa-facebook fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.youtube.com/@YiXuan" title="YouTube → https:&#x2F;&#x2F;www.youtube.com&#x2F;@YiXuan" rel="noopener me" target="_blank"><i class="fab fa-youtube fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.instagram.com/rise.worlds/" title="Instagram → https:&#x2F;&#x2F;www.instagram.com&#x2F;rise.worlds&#x2F;" rel="noopener me" target="_blank"><i class="fab fa-instagram fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://t.me/riseworlds" title="Telegram → https:&#x2F;&#x2F;t.me&#x2F;riseworlds" rel="noopener me" target="_blank"><i class="fab fa-telegram fa-fw"></i></a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+          链接
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <a href="https://www.cnblogs.com/flying_bat" title="https:&#x2F;&#x2F;www.cnblogs.com&#x2F;flying_bat" rel="noopener" target="_blank">My Cnblogs</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://www.github.com/rise-worlds" title="https:&#x2F;&#x2F;www.github.com&#x2F;rise-worlds" rel="noopener" target="_blank">My Github</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://www.google.com/" title="https:&#x2F;&#x2F;www.google.com&#x2F;" rel="noopener" target="_blank">Google</a>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://rise-worlds.github.io/2007/11/10/TinyXML%E4%B8%AD%E6%96%87%E6%96%87%E6%A1%A3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="rise">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Rise'blogs">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="TinyXML中文文档 | Rise'blogs">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          TinyXML中文文档
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2007-11-10 17:35:00" itemprop="dateCreated datePublished" datetime="2007-11-10T17:35:00+00:00">2007-11-10</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2008-03-24 16:25:00" itemprop="dateModified" datetime="2008-03-24T16:25:00+00:00">2008-03-24</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/dev/" itemprop="url" rel="index"><span itemprop="name">dev</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/dev/c/" itemprop="url" rel="index"><span itemprop="name">c++</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><P class=code>译注：本文是TinyXML 2.5.2版本Document的中文文档，经原作者<A target="_blank" rel="noopener" href="http://www.grinninglizard.com/lee.html">Lee Thomason</A>同意由hansen翻译，如有误译或者错漏，欢迎指正。<BR>版权：版权归原作者所有，翻译文档版权归本人hansen所有，转载请注明出处。<BR>原文：<A target="_blank" rel="noopener" href="http://www.grinninglizard.com/tinyxmldocs/index.html">http://www.grinninglizard.com/tinyxmldocs/index.html</A></P><BR>
+
+
+
+<p>&nbsp;</p>
+
+
+
+<DIV align=center><STRONG><FONT size=3>TinyXml 文档</FONT><BR></STRONG></DIV>
+
+
+
+<P align=center>2.5.2</P>
+
+
+
+<P align=center><STRONG>TinyXML</STRONG> </P>
+
+
+
+<P>TinyXML是一个简单小巧，可以很容易集成到其它程序中的C++ XML解析器。 </P>
+
+
+
+<P><STRONG>它能做些什么</STRONG></P>
+
+
+
+<P>简单地说，TinyXML解析一个XML文档并由此生成一个可读可修改可保存的文档对象模型（DOM）。 </P>
+
+
+
+<P>XML的意思是&#8220;可扩展标记语言&#8220;（eXtensible Markup Language）。它允许你创建你自己的文档标记。在为浏览器标记文档方面HTML做得很好，然而XML允许你定义任何文档标记，比如可以为一个组织者应用程序定义一个描述&#8220;to do&#8221;列表的文档。 XML拥有一个结构化并且方便的格式，所有为存储应用程序数据而创建的随机文件格式都可以用XML代替，而这一切只需要一个解析器。 </P>
+
+
+
+<P>最全面正确的说明可以在<A target="_blank" rel="noopener" href="http://www.w3.org/TR/2004/REC-xml-20040204/">http://www.w3.org/TR/2004/REC-xml-20040204/</A>找到，但坦白地说，它很晦涩难懂。事实上我喜欢<A target="_blank" rel="noopener" href="http://skew.org/xml/tutorial/">http://skew.org/xml/tutorial</A>上关于XML的介绍。 </P>
+
+
+
+<P>有不同的方法可以访问和与XML数据进行交互。TinyXML使用文档对象模型（DOM），这意味着XML数据被解析成一个可被浏览和操作的C++对象，然后它可以被写到磁盘或者另一个输出流中。你也可以把C++对象构造成一个XML文档然后把它写到磁盘或者另一个输出流中。 </P>
+
+
+
+<P>TinyXML被设计得容易快速上手。它只有两个头文件和四个cpp文件。只需要把它们简单地加到你的项目中就行了。有一个例子文件——xmltest.cpp来引导你该怎么做。 </P>
+
+
+
+<P>TinyXML以Zlib许可来发布，所以你可以在开源或者商业软件中使用它。许可证更具体的描述在每个源代码文件的顶部可以找到。 </P>
+
+
+
+<P>TinyXML在保证正确和恰当的XML输出的基础上尝试成为一个灵活的解析器。TinyXML可以在任何合理的C++适用系统上编译。它不依赖于异常或者运行时类型信息，有没有STL支持都可以编译。TinyXML完全支持UTF-8编码和前64k个字符实体（&lt;i&gt;译注：如果你不明白这句译文，可能你需要了解一下Unicode编码&lt;/i&gt;）。 </P>
+
+
+
+<P><STRONG>它无法做些什么</STRONG></P>
+
+
+
+<P>TinyXML不解析不使用DTDs（文档类型定义）或者XSLs（可扩展样式表语言）。有其它解析器（到www.sourceforge.org搜索一下XML）具有更加全面的特性，但它们也就更大，需要花更长的时间来建立你的项目，有更陡的学习曲线，而且经常有一个更严格的许可协议。如果你是用于浏览器或者有更复杂的XML需要，那么TinyXML不适合你。 </P>
+
+
+
+<P>下面的DTD语法在TinyXML里是不做解析的： </P>
+
+
+
+<p>&nbsp;</p>
+
+
+
+<P class=code>&lt;!DOCTYPE Archiv [<BR>&lt;!ELEMENT Comment (#PCDATA)&gt;<BR>]&gt;</P>
+
+
+
+<P>因为TinyXML把它看成是一个带着非法嵌入!ELEMENT结点的!DOCTYPE结点。或许这在将来会得到支持。 </P>
+
+
+
+<P><STRONG>指南</STRONG></P>
+
+
+
+<P>有耐性些，这是一份能很好地指导你怎么开始的指南，它（非常短小精悍）值得你花时间完整地读上一遍。 </P>
+
+
+
+<UL>
+
+
+
+<LI><A target="_blank" rel="noopener" href="http://www.hansencode.cn/2007/06/tinyxml-chinese-tutorial.html">TinyXML指南</A></LI></UL>
+
+
+
+<P><STRONG>代码状况</STRONG></P>
+
+
+
+<P>TinyXML是成熟且经过测试的代码，非常健壮。如果你发现了漏洞，请提交漏洞报告到sourcefore网站上 （www.sourceforge.net/projects/tinyxml）。 我们会尽快修正。 </P>
+
+
+
+<P>有些地方可以让你得到提高，如果你对TinyXML的工作感兴趣的话可以上sourceforge查找一下。 </P>
+
+
+
+<P><STRONG>相关项目</STRONG></P>
+
+
+
+<P>你也许会觉得TinyXML很有用！（简介由项目提供） </P>
+
+
+
+<UL>
+
+
+
+<LI>TinyXPath (<A target="_blank" rel="noopener" href="http://tinyxpath.sourceforge.net/">http://tinyxpath.sourceforge.net</A>). TinyXPath是一个小巧的XPath语法译码器脚本，用C++写成。</LI>
+
+
+
+<LI>TinyXML++ (<A target="_blank" rel="noopener" href="http://code.google.com/p/ticpp/">http://code.google.com/p/ticpp/</A>). TinyXML++是一个全新的TinyXML接口，使用了许多诸如模板，异常处理和更好的错误处理这些C++强项技术。</LI></UL>
+
+
+
+<P><STRONG>特性</STRONG></P>
+
+
+
+<P><STRONG>使用STL </STRONG></P>
+
+
+
+<P>TinyXML可以被编译成使用或不使用STL。如果使用STL，TinyXML会使用std::string类，而且完全支持std::istream，std::ostream，operator&lt;&lt;和operator&gt;&gt;。许多API方法都有 &#8216;const char*&#8217;和&#8217;const std::string&amp;&#8217;两个版本。 </P>
+
+
+
+<P>如果被编译成不使用STL，则任何STL都不会被包含。所有string类都由TinyXML它自己实现。所有API方法都只提供&#8217;const char*&#8217;传入参数。 </P>
+
+
+
+<P>使用运行时定义： </P>
+
+
+
+<P>TIXML_USE_STL </P>
+
+
+
+<P>来编译成不同的版本。这可以作为参数传给编译器或者在&#8220;tinyxml.h&#8221;文件的第一行进行设置。 </P>
+
+
+
+<P>注意：如果在Linux上编译测试代码，设置环境变量TINYXML_USE_STL=YES/NO可以控制STL的编译。而在Windows上，项目文件提供了STL和非STL两种目标文件。在你的项目中，在tinyxml.h的第一行添加"#define TIXML_USE_STL"应该是最简单的。 </P>
+
+
+
+<P><STRONG>UTF-8 </STRONG></P>
+
+
+
+<P>TinyXML支持UTF-8，所以可以处理任何语言的XML文件，而且TinyXML也支持&#8220;legacy模式&#8221;——一种在支持UTF-8之前使用的编码方式，可能最好的解释是&#8220;扩展的ascii&#8221;。 </P>
+
+
+
+<P>正常情况下，TinyXML会检测出正确的编码并使用它，然而，通过设置头文件中的TIXML_DEFAULT_ENCODING值，TinyXML可以被强制成总是使用某一种编码。 </P>
+
+
+
+<P>除非以下情况发生，否则TinyXML会默认使用Legacy模式： </P>
+
+
+
+<OL>
+
+
+
+<LI>如果文件或者数据流以非标准但普遍的"UTF-8引导字节" (0xef 0xbb 0xbf)开始，TinyXML会以UTF-8的方式来读取它。</LI>
+
+
+
+<LI>如果包含有encoding="UTF-8"的声明被读取，那么TinyXML会以UTF-8的方式来读取它。</LI>
+
+
+
+<LI>如果读取到没有指定编码方式的声明，那么TinyXML会以UTF-8的方式来读取它。</LI>
+
+
+
+<LI>如果包含有encoding=&#8220;其它编码&#8221;的声明被读取，那么TinyXML会以Legacy模式来读取它。在Legacy模式下，TinyXML会像以前那样工作，虽然已经不是很清楚这种模式是如何工作的了，但旧的内容还得保持能够运行。</LI>
+
+
+
+<LI>除了上面提到的情况，TinyXML会默认运行在Legacy模式下。</LI></OL>
+
+
+
+<P>如果编码设置错误或者检测到错误会发生什么事呢？TinyXML会尝试跳过这些看似不正确的编码，你可能会得到一些奇怪的结果或者乱码，你可以强制TinyXML使用正确的编码模式。 </P>
+
+
+
+<P>通过使用LoadFile( TIXML_ENCODING_LEGACY )或者LoadFile( filename, TIXML_ENCODING_LEGACY )， 你可以强制TinyXML使用Legacy模式。你也可以通过设置TIXML_DEFAULT_ENCODING = TIXML_ENCODING_LEGACY来强制一直使用Legacy模式。同样的，你也可以通过相同的方法来强制设置成TIXML_ENCODING_UTF8。 </P>
+
+
+
+<P>对于使用英文XML的英语用户来说，UTF-8跟low-ASCII是一样的。你不需要知道UTF-8或者一点也不需要修改你的代码。你可以把UTF-8当作是ASCII的超集。 </P>
+
+
+
+<P>UTF-8并不是一种双字节格式，但它是一种标准的Unicode编码！TinyXML当前不使用或者直接支持wchar，TCHAR，或者微软的_UNICODE。"Unicode"这个术语被普遍地认为指的是UTF-16（一种unicode的宽字节编码）是不适当的，这是混淆的来源。 </P>
+
+
+
+<P>对于&#8220;high-ascii&#8221;语言来说——几乎所有非英语语言，只要XML被编码成UTF-8， TinyXML就能够处理。说起来可能有点微妙，比较旧的程序和操作系统趋向于使用&#8220;默认&#8221;或者&#8220;传统&#8221;的编码方式。许多应用程序（和几乎所有现在的应用程序）都能够输出UTF-8，但是那些比较旧或者难处理的（或者干脆不能使用的）系统还是只能以默认编码来输出文本。 </P>
+
+
+
+<P>比如说，日本的系统传统上使用SHIFT-JIS编码，这种情况下TinyXML就无法读取了。但是一个好的文本编辑器可以导入SHIFT-JIS的文本然后保存成UTF-8编码格式的。 </P>
+
+
+
+<P><A target="_blank" rel="noopener" href="http://skew.org/xml/tutorial/">Skew.org link</A>上关于转换编码的话题做得很好。 </P>
+
+
+
+<P>测试文件&#8220;utf8test.xml&#8221;包含了英文、西班牙文、俄文和简体中文（希望它们都能够被正确地转化）。&#8220;utf8test.gif&#8221;文件是从IE上截取的XML文件快照。请注意如果你的系统上没有正确的字体（简体中文或者俄文），那么即使你正确地解析了也看不到与GIF文件上一样的输出。同时要注意在一个西方编码的控制台上（至少我的Windows机器是这样），Print()或者printf()也无法正确地显示这个文件，这不关TinyXML的事——这只是操作系统的问题。TinyXML没有丢掉或者损坏数据，只是控制台无法显示UTF-8而已。 </P>
+
+
+
+<P><STRONG>实体</STRONG></P>
+
+
+
+<P>TinyXML认得预定义的特殊&#8220;字符实体&#8221;，即： </P>
+
+
+
+<p>&nbsp;</p>
+
+
+
+<P class=code>&amp;amp; &amp;<BR>&amp;lt; &lt;<BR>&amp;gt; &gt;<BR>&amp;quot; "<BR>&amp;apos; &#8216; </P>
+
+<P>这些在XML文档读取时都会被辨认出来，并会被转化成等价的UTF-8字符。比如下面的XML文本： </P>
+
+<p>&nbsp;</p>
+
+<P class=code>Far &amp;amp; Away </P>
+
+<P>从TiXmlText 对象查询出来时会变成"Far &amp; Away"这样的值，而写回XML流/文件时会以&#8220;&amp;amp;&#8221;的方式写回。老版本的TinyXML&#8220;保留&#8221;了字符实体，而在新版本中它们会被转化成字符串。 </P>
+
+<P>另外，所有字符都可以用它的Unicode编码数字来指定， "&#xA0;"和"&#160;"都表示不可分的空格字符。 </P>
+
+<P><STRONG>打印</STRONG></P>
+
+<P>TinyXML有几种不同的方式来打印输出，当然它们各有各的优缺点。 </P>
+
+<UL>
+
+<LI>Print( FILE* )：输出到一个标准C流中，包括所有的C文件和标准输出。</LI>
+
+<UL>
+
+<LI>"相当漂亮的打印", 但你没法控制打印选项。</LI>
+
+<LI>输出数据直接写到FILE对象中，所以TinyXML代码没有内存负担。</LI>
+
+<LI>被Print()和SaveFile()调用。</LI></UL>
+
+<p>&nbsp;</p>
+
+<LI>operator&lt;&lt;：输出到一个c++流中。</LI>
+
+<UL>
+
+<LI>与C++ iostreams集成在一起。</LI>
+
+<LI>在"network printing"模式下输出没有换行符，这对于网络传输和C++对象之间的XML交换有好处，但人很难阅读。</LI></UL>
+
+<LI>TiXmlPrinter：输出到一个std::string或者内存缓冲区中。</LI>
+
+<UL>
+
+<LI>API还不是很简练。</LI>
+
+<LI>将来会增加打印选项。</LI>
+
+<LI>在将来的版本中可能有些细微的变化，因为它会被改进和扩展。</LI></UL></UL>
+
+<P><STRONG>流</STRONG></P>
+
+<P>设置了TIXML_USE_STL，TinyXML就能支持C++流（operator &lt;&lt;，&gt;&gt;）和C（FILE*）流。但它们之间有些差异你需要知道： </P>
+
+<P>C风格输出： </P>
+
+<UL>
+
+<LI>基于FILE*</LI>
+
+<LI>用Print()和SaveFile()方法</LI></UL>
+
+<P>生成具有很多空格的格式化过的输出，这是为了尽可能让人看得明白。它们非常快，而且能够容忍XML文档中的格式错误。例如一个XML文档包含两个根元素和两个声明仍然能被打印出来。 </P>
+
+<P>C风格输入：</P>
+
+<UL>
+
+<LI>基于FILE*</LI>
+
+<LI>用Parse()和LoadFile()方法</LI></UL>
+
+<P>速度快，容错性好。当你不需要C++流时就可以使用它。 </P>
+
+<P>C++风格输出： </P>
+
+<UL>
+
+<LI>基于std::ostream</LI>
+
+<LI>operator&lt;&lt;</LI></UL>
+
+<P>生成压缩过的输出，目的是为了便于网络传输而不是为了可读性。它可能有些慢（可能不会），这主要跟你系统上ostream类的实现有关。无法容忍格式错误的XML：此文档只能包含一个根元素。另外根级别的元素无法以流形式输出。 </P>
+
+<P>C++风格输入： </P>
+
+<UL>
+
+<LI>基于std::istream</LI>
+
+<LI>operator&gt;&gt;</LI></UL>
+
+<P>从流中读取XML使其可用于网络传输。通过些小技巧，它知道当XML文档读取完毕时，流后面的就一定是其它数据了。TinyXML总假定当它读取到根结点后XML数据就结束了。换句话说，那些具有不止一个根元素的文档是无法被正确读取的。另外还要注意由于STL的实现和TinyXML的限制，operator&gt;&gt;会比Parse慢一些。 </P>
+
+<P><STRONG>空格</STRONG></P>
+
+<P>对是保留还是压缩空格这一问题人们还没达成共识。举个例子，假设&#8216;_&#8217;代表一个空格，对于"Hello____world"，HTML和某些XML解析器会解释成"Hello_world"，它们压缩掉了一些空格。而有些XML解析器却不会这样，它们会保留空格，于是就是&#8220;Hello____world&#8221;（记住_表示一个空格）。其它的还建议__Hello___world__应该变成Hello___world 。 </P>
+
+<P>这是一个解决得不能让我满意的问题。TinyXML一开始就两种方式都支持。调用TiXmlBase::SetCondenseWhiteSpace( bool )来设置你想要的结果，默认是压缩掉多余的空格。 </P>
+
+<P>如果想要改变默认行为，你应该在解析任何XML数据之前调用TiXmlBase::SetCondenseWhiteSpace( bool ) ，而且我不建议设置之后再去改动它。 </P>
+
+<P><STRONG>句柄</STRONG></P>
+
+<P>想要健壮地读取一个XML文档，检查方法调用后的返回值是否为null是很重要的。一种安全的检错实现可能会产生像这样的代码： </P>
+
+<p>&nbsp;</p>
+
+<P class=code>TiXmlElement*&nbsp;root&nbsp;=&nbsp;document.FirstChildElement(&nbsp;<FONT color=#ff00ff>"Document"</FONT>&nbsp;);<BR><FONT color=#0000ff>if</FONT>&nbsp;(&nbsp;root&nbsp;)<BR>{<BR>&nbsp;&nbsp;&nbsp;&nbsp;TiXmlElement*&nbsp;element&nbsp;=&nbsp;root-&gt;FirstChildElement(&nbsp;<FONT color=#ff00ff>"Element"</FONT>&nbsp;);<BR>&nbsp;&nbsp;&nbsp;&nbsp;<FONT color=#0000ff>if</FONT>&nbsp;(&nbsp;element&nbsp;)<BR>&nbsp;&nbsp;&nbsp;&nbsp;{<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TiXmlElement*&nbsp;child&nbsp;=&nbsp;element-&gt;FirstChildElement(&nbsp;<FONT color=#ff00ff>"Child"</FONT>&nbsp;);<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<FONT color=#0000ff>if</FONT>&nbsp;(&nbsp;child&nbsp;)<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TiXmlElement*&nbsp;child2&nbsp;=&nbsp;child-&gt;NextSiblingElement(&nbsp;<FONT color=#ff00ff>"Child"</FONT>&nbsp;);<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<FONT color=#0000ff>if</FONT>&nbsp;(&nbsp;child2&nbsp;)<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<FONT color=#008000>//&nbsp;Finally&nbsp;do&nbsp;something&nbsp;useful.</FONT> </P>
+
+<P>用句柄的话就不会这么冗长了，使用TiXmlHandle类，前面的代码就会变成这样： </P>
+
+<p>&nbsp;</p>
+
+<P class=code>TiXmlHandle&nbsp;docHandle(&nbsp;&amp;document&nbsp;);<BR>TiXmlElement*&nbsp;child2&nbsp;=&nbsp;docHandle.FirstChild(&nbsp;<FONT color=#ff00ff>"Document"</FONT>&nbsp;).FirstChild(&nbsp;<FONT color=#ff00ff>"Element"</FONT>&nbsp;).Child(&nbsp;<FONT color=#ff00ff>"Child"</FONT>,&nbsp;1&nbsp;).ToElement();<BR><FONT color=#0000ff>if</FONT>&nbsp;(&nbsp;child2&nbsp;)<BR>{<BR>&nbsp;&nbsp;&nbsp;&nbsp;<FONT color=#008000>//&nbsp;do&nbsp;something&nbsp;useful</FONT> </P>
+
+<P>这处理起来容易多了。 查阅TiXmlHandle可以得到更多的信息。 </P>
+
+<P><STRONG>行列追踪</STRONG></P>
+
+<P>对于某些应用程序来说，能够追踪节点和属性在它们源文件中的原始位置是很重要的。另外，知道解析错误在源文件中的发生位置可以节省大量时间。 </P>
+
+<P>TinyXML能够追踪所有结点和属性在文本文件中的行列原始位置。TiXmlBase::Row() 和 TiXmlBase::Column() 方法返回结点在源文件中的原始位置。正确的制表符号可以经由TiXmlDocument::SetTabSize() 来配置。 </P>
+
+<P><STRONG>使用与安装</STRONG></P>
+
+<P>编译与运行xmltest： </P>
+
+<P>提供了一个Linux Makefile和一个Windows Visual C++ .dsw 文件。只需要简单地编译和运行，它就会在你的磁盘上生成demotest.xml文件并在屏幕上输出。它还尝试用不同的方法遍历DOM并打印出结点数。 </P>
+
+<P>那个Linux makefile很通用，可以运行在很多系统上——它目前已经在mingw和MacOSX上测试过。你不需要运行 &#8216;make depend&#8217;，因为那些依赖关系已经硬编码在文件里了。 </P>
+
+<P><STRONG>用于VC6的Windows项目文件</STRONG></P>
+
+<UL>
+
+<LI>tinyxml： tinyxml 库，非STL</LI>
+
+<LI>tinyxmlSTL： tinyxml 库，STL</LI>
+
+<LI>tinyXmlTest： 用于测试的应用程序，非STL</LI>
+
+<LI>tinyXmlTestSTL： 用于测试的应用程序，STL</LI></UL>
+
+<P><STRONG>Makefile</STRONG></P>
+
+<P>在makefile的顶部你可以设置： </P>
+
+<P>PROFILE，DEBUG，和TINYXML_USE_STL。makefile里有具体描述。 </P>
+
+<P>在tinyxml目录输入&#8220;make clean&#8221;然后&#8220;make&#8221;，就可以生成可执行的&#8220;xmltest&#8221;文件。 </P>
+
+<P><STRONG>在某一应用程序中使用：</STRONG></P>
+
+<P>把tinyxml.cpp，tinyxml.h， tinyxmlerror.cpp， tinyxmlparser.cpp， tinystr.cpp， 和 tinystr.h 添加到你的项目和makefile中。就这么简单，它可以在任何合理的C++适用系统上编译。不需要为TinyXML打开异常或者运行时类型信息支持。 </P>
+
+<P><STRONG>TinyXML怎么工作</STRONG></P>
+
+<P>举个例子可能是最好的办法，理解一下： </P>
+
+<p>&nbsp;</p>
+
+<P class=code>&lt;?xml version="1.0" standalone=no&gt;<BR>&lt;!&#8211; Our to do list data &#8211;&gt;<BR>&lt;ToDo&gt;<BR>&lt;Item priority="1"&gt; Go to the &lt;bold&gt;Toy store!&lt;/bold&gt;&lt;/Item&gt;<BR>&lt;Item priority="2"&gt; Do bills&lt;/Item&gt;<BR>&lt;/ToDo&gt; </P>
+
+<P>它称不上是一个To Do列表，但它已经足够了。像下面这样读取并解析这个文件（叫&#8220;demo.xml&#8221;）你就能创建一个文档： </P>
+
+<P>TiXmlDocument&nbsp;doc(&nbsp;<FONT color=#ff00ff>"demo.xml"</FONT>&nbsp;);<BR>doc.LoadFile();</P>
+
+<P>现在它准备好了，让我们看看其中的某些行和它们怎么与DOM联系起来。 </P>
+
+<p>&nbsp;</p>
+
+<P class=code>&lt;?xml version="1.0" standalone=no&gt; </P>
+
+<P>第一行是一个声明，它会转化成TiXmlDeclaration 类，同时也是文档结点的第一个子结点。 </P>
+
+<P>这是TinyXML唯一能够解析的指令/特殊标签。一般来说指令标签会保存在TiXmlUnknown 以保证在它保存回磁盘时不会丢失这些命令。 </P>
+
+<p>&nbsp;</p>
+
+<P class=code>&lt;!&#8211; Our to do list data &#8211;&gt; </P>
+
+<P>这是一个注释，会成为一个TiXmlComment对象。 </P>
+
+<p>&nbsp;</p>
+
+<P class=code>&lt;ToDo&gt; </P>
+
+<P>"ToDo"标签定义了一个TiXmlElement 对象。它没有任何属性，但包含另外的两个元素。 </P>
+
+<p>&nbsp;</p>
+
+<P class=code>&lt;Item priority="1"&gt; </P>
+
+<P>生成另一个TiXmlElement对象，它是&#8220;ToDo&#8221;元素的子结点。此元素有一个名为&#8220;priority&#8221;和值为&#8220;1&#8221;的属性。 </P>
+
+<p>&nbsp;</p>
+
+<P class=code>Go to the </P>
+
+<P>TiXmlText ，这是一个叶子结点，它不能再包含其它结点，是"Item" TiXmlElement的子结点。 </P>
+
+<p>&nbsp;</p>
+
+<P class=code>&lt;bold&gt; </P>
+
+<P>另一个TiXmlElement, 这也是&#8220;Item&#8221;元素的子结点。 </P>
+
+<P>等等 </P>
+
+<P>最后，看看整个对象树： </P>
+
+<p>&nbsp;</p>
+
+<P class=code>TiXmlDocument "demo.xml"<BR>TiXmlDeclaration "version=&#8217;1.0&#8242;" "standalone=no"<BR>TiXmlComment " Our to do list data"<BR>TiXmlElement "ToDo"<BR>TiXmlElement "Item" Attribtutes: priority = 1<BR>TiXmlText "Go to the "<BR>TiXmlElement "bold"<BR>TiXmlText "Toy store!"<BR>TiXmlElement "Item" Attributes: priority=2<BR>TiXmlText "Do bills" </P>
+
+<p>&nbsp;</p>
+
+<P><STRONG>文档</STRONG></P>
+
+<P>本文档由Doxygen使用&#8216;dox&#8217;配置文件生成。 </P>
+
+<P><STRONG>许可证</STRONG></P>
+
+<P>TinyXML基于zlib许可证来发布： </P>
+
+<P>本软件按&#8220;现状&#8221;提供（即现在你看到的样子），不做任何明确或隐晦的保证。由使用此软件所引起的任何损失都决不可能由作者承担。 </P>
+
+<P>只要遵循下面的限制，就允许任何人把这软件用于任何目的，包括商业软件，也允许修改它并自由地重新发布： </P>
+
+<P>1. 决不能虚报软件的来源；你决不能声称是你是软件的第一作者。如果你在某个产品中使用了这个软件，那么在产品文档中加入一个致谢辞我们会很感激，但这并非必要。 </P>
+
+<P>2. 修改了源版本就应该清楚地标记出来，决不能虚报说这是原始软件。 </P>
+
+<P>3. 本通告不能从源发布版本中移除或做修改。 </P>
+
+<P><STRONG>参考书目</STRONG></P>
+
+<P>万维网联盟是定制XML的权威标准机构，它的网页上有大量的信息。 </P>
+
+<P>权威指南：<A target="_blank" rel="noopener" href="http://www.w3.org/TR/2004/REC-xml-20040204/">http://www.w3.org/TR/2004/REC-xml-20040204/</A> </P>
+
+<P>我还要推荐由OReilly出版由Robert Eckstein撰写的"XML Pocket Reference"&#8230;&#8230;这本书囊括了入门所需要的一切。 </P>
+
+<P><STRONG>捐助者，联系人，还有简史</STRONG></P>
+
+<P>非常感谢给我们建议，漏洞报告，意见和鼓励的所有人。它们很有用，并且使得这个项目变得有趣。特别感谢那些捐助者，是他们让这个网站页面生机勃勃。 </P>
+
+<P>有很多人发来漏洞报告和意见，与其在这里一一列出来不如我们试着把它们写到&#8220;changes.txt&#8221;文件中加以赞扬。 </P>
+
+<P>TinyXML的原作者是Lee Thomason(文档中还经常出现&#8220;我&#8221;这个词) 。在Yves Berquin，Andrew Ellerton，和tinyXml社区的帮助下，Lee查阅修改和发布新版本。 </P>
+
+<P>我们会很感激你的建议，还有我们想知道你是否在使用TinyXML。希望你喜欢它并觉得它很有用。请邮寄问题，评论，漏洞报告给我们，或者你也可登录网站与我们取得联系： </P>
+
+<P><A target="_blank" rel="noopener" href="http://www.sourceforge.net/projects/tinyxml/">www.sourceforge.net/projects/tinyxml</A> </P>
+
+<P>Lee Thomason， Yves Berquin， Andrew Ellerton </P>
+
+
+
+<style type="text/css">
+
+.code {
+
+BORDER-RIGHT: #0099cc 1px solid; PADDING-RIGHT: 5px; BORDER-TOP: #0099cc 1px solid; PADDING-LEFT: 5px; FONT-SIZE: 12px; PADDING-BOTTOM: 5px; MARGIN: 5px; BORDER-LEFT: #0099cc 1px solid; WIDTH: 470px; COLOR: #000000; LINE-HEIGHT: 18px; PADDING-TOP: 5px; BORDER-BOTTOM: #0099cc 1px solid; FONT-FAMILY: monospace, fixed; BACKGROUND-COLOR: #ddedfb; Verdana: ; quot: ; Courier: ; mono:
+
+}
+
+</style> 
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="followme">
+  <span>欢迎关注我的其它发布渠道</span>
+
+  <div class="social-list">
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="https://www.facebook.com/rise.worlds">
+            <span class="icon">
+              <i class="fab fa-facebook"></i>
+            </span>
+
+            <span class="label">FB Page</span>
+          </a>
+      </div>
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="https://twitter.com/riseworlds">
+            <span class="icon">
+              <i class="fab fa-twitter"></i>
+            </span>
+
+            <span class="label">Twitter</span>
+          </a>
+      </div>
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="https://t.me/riseworlds">
+            <span class="icon">
+              <i class="fab fa-telegram"></i>
+            </span>
+
+            <span class="label">Telegram</span>
+          </a>
+      </div>
+  </div>
+</div>
+
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2007/11/10/TinyXML%E5%BA%94%E7%94%A8%E4%BE%8B%E5%AD%90/" rel="prev" title="TinyXML应用例子">
+                  <i class="fa fa-angle-left"></i> TinyXML应用例子
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2007/11/10/TinyXML%E4%B8%AD%E6%96%87%E6%8C%87%E5%8D%97/" rel="next" title="TinyXML中文指南">
+                  TinyXML中文指南 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  
+  <div class="comments giscus-container">
+  </div>
+  
+  
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">豫ICP备2021009490号 </a>
+  </div>
+  <div class="copyright">
+    &copy; 2004 – 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">rise</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="reading-progress-bar"></div>
+
+  <a href="https://github.com/rise-worlds" class="github-corner" title="在 GitHub 上关注我" aria-label="在 GitHub 上关注我" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://unpkg.com/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@next-theme/pjax@0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script><script src="/js/pjax.js"></script>
+
+  
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://unpkg.com/mermaid@10.9.0/dist/mermaid.min.js","integrity":"sha256-stuqcu2FrjYCXDOytWFA5SoUE/r3nkp6gTglzNSlavU="}}</script>
+  <script src="/js/third-party/tags/mermaid.js"></script>
+
+
+
+
+
+  
+
+
+
+
+  <script src="https://unpkg.com/quicklink@2.3.0/dist/quicklink.umd.js" integrity="sha256-yvJQOINiH9fWemHn0vCA5lsHWJaHs6/ZmO+1Ft04SvM=" crossorigin="anonymous"></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":true,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"https://rise-worlds.github.io/2007/11/10/TinyXML%E4%B8%AD%E6%96%87%E6%96%87%E6%A1%A3/"}</script>
+  <script src="/js/third-party/quicklink.js"></script>
+<script class="next-config" data-name="giscus" type="application/json">{"enable":true,"repo":"rise-worlds/rise-worlds.github.io","repo_id":"MDEwOlJlcG9zaXRvcnk2MTAxMTA0MA==","category":"Announcements","category_id":"DIC_kwDOA6L0YM4CiXf9","mapping":"pathname","strict":0,"reactions_enabled":1,"emit_metadata":0,"theme":"transparent_dark","lang":"zh-CN","crossorigin":"anonymous","input_position":"top","loading":"lazy"}</script>
+
+<script>
+document.addEventListener('page:loaded', () => {
+  if (!CONFIG.page.comments) return;
+
+  NexT.utils.loadComments('.giscus-container')
+    .then(() => NexT.utils.getScript('https://giscus.app/client.js', {
+      attributes: {
+        async                   : true,
+        crossOrigin             : 'anonymous',
+        'data-repo'             : CONFIG.giscus.repo,
+        'data-repo-id'          : CONFIG.giscus.repo_id,
+        'data-category'         : CONFIG.giscus.category,
+        'data-category-id'      : CONFIG.giscus.category_id,
+        'data-mapping'          : CONFIG.giscus.mapping,
+        'data-strict'           : CONFIG.giscus.strict,
+        'data-reactions-enabled': CONFIG.giscus.reactions_enabled,
+        'data-emit-metadata'    : CONFIG.giscus.emit_metadata,
+        'data-theme'            : CONFIG.giscus.theme,
+        'data-lang'             : CONFIG.giscus.lang,
+        'data-input-position'   : CONFIG.giscus.input_position,
+        'data-loading'          : CONFIG.giscus.loading
+      },
+      parentNode: document.querySelector('.giscus-container')
+    }));
+});
+</script>
+
+</body>
+</html>
