@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://unpkg.com/@fortawesome/fontawesome-free@6.5.2/css/all.min.css" integrity="sha256-XOqroi11tY4EFQMR9ZYwZWKj5ZXiftSx36RRuC3anlA=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://unpkg.com/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"rise-worlds.github.io","root":"/","images":"/images","scheme":"Mist","darkmode":true,"version":"8.20.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="纵览,国内比较大的软件公司(以下统一简称&quot;国软&quot;),清一色都是做政府项目的(他们能做大的原因我就不用说了吧),真正能做大的国软又有几家呢?更何况开源企业，这是为什么呢?     今天风吹就给大家简单分析下:     1.&quot;作坊&quot;式管理     &quot;作坊&quot;往往是效率最高的, 国软几乎都是从作坊走过来的,但把作坊式的管理模式套用到一个不断壮大">
+<meta property="og:type" content="article">
+<meta property="og:title" content="浅谈：国内软件公司为何无法做大做强?">
+<meta property="og:url" content="https://rise-worlds.github.io/2010/05/04/%E6%B5%85%E8%B0%88_%E5%9B%BD%E5%86%85%E8%BD%AF%E4%BB%B6%E5%85%AC%E5%8F%B8%E4%B8%BA%E4%BD%95%E6%97%A0%E6%B3%95%E5%81%9A%E5%A4%A7%E5%81%9A%E5%BC%BA_/index.html">
+<meta property="og:site_name" content="Rise&#39;blogs">
+<meta property="og:description" content="纵览,国内比较大的软件公司(以下统一简称&quot;国软&quot;),清一色都是做政府项目的(他们能做大的原因我就不用说了吧),真正能做大的国软又有几家呢?更何况开源企业，这是为什么呢?     今天风吹就给大家简单分析下:     1.&quot;作坊&quot;式管理     &quot;作坊&quot;往往是效率最高的, 国软几乎都是从作坊走过来的,但把作坊式的管理模式套用到一个不断壮大">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2010-05-04T16:30:00.000Z">
+<meta property="article:modified_time" content="2010-05-04T16:30:00.000Z">
+<meta property="article:author" content="rise">
+<meta property="article:tag" content="Reprint">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://rise-worlds.github.io/2010/05/04/%E6%B5%85%E8%B0%88_%E5%9B%BD%E5%86%85%E8%BD%AF%E4%BB%B6%E5%85%AC%E5%8F%B8%E4%B8%BA%E4%BD%95%E6%97%A0%E6%B3%95%E5%81%9A%E5%A4%A7%E5%81%9A%E5%BC%BA_/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://rise-worlds.github.io/2010/05/04/%E6%B5%85%E8%B0%88_%E5%9B%BD%E5%86%85%E8%BD%AF%E4%BB%B6%E5%85%AC%E5%8F%B8%E4%B8%BA%E4%BD%95%E6%97%A0%E6%B3%95%E5%81%9A%E5%A4%A7%E5%81%9A%E5%BC%BA_/","path":"2010/05/04/浅谈_国内软件公司为何无法做大做强_/","title":"浅谈：国内软件公司为何无法做大做强?"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>浅谈：国内软件公司为何无法做大做强? | Rise'blogs</title>
+  
+
+  <script src="/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?266da4e90214887b507c0bb6baa84e3e"></script>
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Rise'blogs</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-message"><a href="/message/" rel="section"><i class="fa fa-comments fa-fw"></i>留言板</a></li><li class="menu-item menu-item-sitemap"><a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>站点地图</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="rise"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">rise</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">663</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">49</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">109</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="mailto:rise.worlds@outlook.com" title="E-Mail → mailto:rise.worlds@outlook.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://github.com/rise-worlds" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;rise-worlds" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://x.com/riseworlds" title="Twitter → https:&#x2F;&#x2F;x.com&#x2F;riseworlds" rel="noopener me" target="_blank"><i class="fab fa-twitter fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.facebook.com/rise.worlds" title="FB Page → https:&#x2F;&#x2F;www.facebook.com&#x2F;rise.worlds" rel="noopener me" target="_blank"><i class="fab fa-facebook fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.youtube.com/@YiXuan" title="YouTube → https:&#x2F;&#x2F;www.youtube.com&#x2F;@YiXuan" rel="noopener me" target="_blank"><i class="fab fa-youtube fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.instagram.com/rise.worlds/" title="Instagram → https:&#x2F;&#x2F;www.instagram.com&#x2F;rise.worlds&#x2F;" rel="noopener me" target="_blank"><i class="fab fa-instagram fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://t.me/riseworlds" title="Telegram → https:&#x2F;&#x2F;t.me&#x2F;riseworlds" rel="noopener me" target="_blank"><i class="fab fa-telegram fa-fw"></i></a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+          链接
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <a href="https://www.cnblogs.com/flying_bat" title="https:&#x2F;&#x2F;www.cnblogs.com&#x2F;flying_bat" rel="noopener" target="_blank">My Cnblogs</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://www.github.com/rise-worlds" title="https:&#x2F;&#x2F;www.github.com&#x2F;rise-worlds" rel="noopener" target="_blank">My Github</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://www.google.com/" title="https:&#x2F;&#x2F;www.google.com&#x2F;" rel="noopener" target="_blank">Google</a>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://rise-worlds.github.io/2010/05/04/%E6%B5%85%E8%B0%88_%E5%9B%BD%E5%86%85%E8%BD%AF%E4%BB%B6%E5%85%AC%E5%8F%B8%E4%B8%BA%E4%BD%95%E6%97%A0%E6%B3%95%E5%81%9A%E5%A4%A7%E5%81%9A%E5%BC%BA_/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="rise">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Rise'blogs">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="浅谈：国内软件公司为何无法做大做强? | Rise'blogs">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          浅谈：国内软件公司为何无法做大做强?
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2010-05-04 16:30:00" itemprop="dateCreated datePublished" datetime="2010-05-04T16:30:00+00:00">2010-05-04</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p> 纵览,国内比较大的软件公司(以下统一简称&quot;国软&quot;),清一色都是做政府项目的(他们能做大的原因我就不用说了吧),真正能做大的国软又有几家呢?更何况<a target="_blank" rel="noopener" href="http://www.lupaworld.com/">开源</a>企业，这是为什么呢?    <br /> 今天风吹就给大家简单分析下:    <br /> 1.&quot;作坊&quot;式管理    <br /> &quot;作坊&quot;往往是效率最高的, 国软几乎都是从作坊走过来的,但把作坊式的管理模式套用到一个不断壮大的公司中显然是不行的.组织架构到达一定程度后就必然要进行分工的细化,依靠作坊式的&quot;暴力开发&quot;是行不通的.    <br /> 2.&quot;法制社会&quot;    <br /> 上班必须打卡,迟到要扣钱,还一次比一次多,加班没有加班费,反正算下来就是,只有扣钱的项目,没有加钱的项目.比起外企,人家上班不打卡,迟到不扣钱,加班有加班费,这样宽松点的环境不好吗?    <br /> 3. 自身自灭    <br /> 国软一般没有师徒制,有的话也只是形式上的,公司基本没人管你,你也不用去管别人,新进的员工,不管会不会,先丢个东西给你做,自己研究,不懂的google去.这也是为什么国软喜欢招有经验的人,因为没经验的人熬不住,跑了几个以后,国软就不招了.    <br /> 4. 销售-开发-维护脱节    <br /> 这点是非常严重的,会直接导致项目流产的.国软的典型的做法是,销售为了业绩,在没有调研的情况下就签了合同 (这里主要是指项目型的,产品型的一般可以控制),而且合同的范围也非常模糊,可大可小,接下来就是调研人员上场,调研后发现,10w块钱的合同,调研出来了100w的需求,接下来就是和客户扯皮,最后直接导致项目流产,甚至打上官司.项目或产品上线后,维护人员对系统不了解(一方面是没有文档,另外一方面维护人员一般没有参与到开发中),接下来往往就会发生两种情况:    <br /> a.维护人员在不了解系统的情况下擅自修改,结果导致系统越改问题 越多.    <br /> b.维护人员一不做二不休,所有客户反馈的问题全部打回给开发人员,于是开发人员就生不如死,在做别的项目的同时还要维护以前的项目,结果就是导致几个项目都失败.    <br /> 5.缺乏规划    <br /> 今天要用这个,明天想用那个(笔者就经历了公司在半年的时间内对框架进行了两次大的变动,导致开发人员都必须重新学习框架)产品也接,项目也接,大的也接,小的也接.今天领导说往左走,明天说往右走,也不能怪领导,他也没经验,我们就是他的DEMO.公司没有一个明确的目标,要做成什么样,只是一味的提出做大做强,但是没有规划出如何做大做强.(和我的标题一样哦)    <br /> 6.三无-无需求,无设计,无测试.    <br /> a.没有文档是国软的通病,曾几何时,产品经理丢过来的那一句话:&quot; 喂,**,给我做一个**模块来&quot;,然后开发人员就开始埋头苦写了.    <br /> b.当然如果你天资聪慧,可以轻易理解出产品经理的意思,那有没有设计都无所谓了,但是,当有一天别人要维护你的程序的时候问题就出现了,没有文档,代码又那么天马行空,怎么维护?改了这个地方,又影响了那个地方...    <br /> c.其实程序员都懂得测试的意义,可以工时安排的那么紧,哪来的时间测试?测试又没有算工时.所以几乎所有的程序员的做法就是,直接丢给用户测试    <br /> 这时候有人肯定要问:那项目经理呢?他不是可以测试吗?请记住这是国软,刚才写代码的那个人就是项目经理,还是售前,还是设计人员,还是维护,还是...归结还是成本问题,在外资软件公司中,做文档的工时是比做开发的工时更多的,国软为了节省成本,这块当然要 CUT掉了.不必去追去文档有多么详细多么美观,需要做的就是找到一个平衡点,一份适合自己的文档.    <br /> 7.员工都是&quot;十项全能&quot;    <br /> 在国软里面的员工各个都是十项全能(笔者就是一个鲜明的例子,从系统调研分析设计,到进度管理,开发,测试,验收,实施,维护,甚至拉给客户拉网线都需要我去.)直接导致的结果就是这些员工每过多久就直接出来自己开公司了...嘿嘿又一家作坊诞生了...这样做对员工个人其实是有好处的,但是对于企业本上来说是没有好处的,并不是说员工成立了作坊,成为了你的竞争对手,而是让员工各个都是十项全能的结果就是    <br /> a.员工都是&quot;十项全不 能&quot;.    <br /> b.员工一旦离职,他手头的项目必定流产.    <br /> c.对公司的发展是不利的(细化分工).    <br /> 8.莫不关心    <br /> 老板并不知道员工在做什么,员工也不知道老板在做什么.上级很少去关心下级的工作,更别说去关心下级的生活,一个东西丢给你,一个月后交差,中间不管你任何事情,交不了差就唯你是问.下级也不知道能为上级分担什么,只有等着上级分配任务.甚至还有些老板都不不知道员工的名字,在这样的国软的,每个人都是孤立的,又怎么能做大做强呢?    <br /> 9.企业文化    <br /> 所谓十年树木,百年树人.国软的企业文化表面功夫算是做的很好的了,什么&quot;为客户创造价值&quot;,&quot;做最好的行业解决方案&quot;,&quot;软件公司的最大资源就是人才&quot;等等,要多华丽有多华丽,重复体现了&quot;口号文化&quot;.真正做到企业文化又有多少呢?有多少仅仅是为了做给客户看的呢?    <br /> 10.盲目跟风    <br /> 很多国软看到人家外企软件公司最近在搞什么推进活动,就跟风,效仿外企做,可是无法领悟精髓,纯粹只是在模仿.(外企集体笑:&quot;一直被模仿,从未被超越&quot;)做完了也不知道这么做的意义,劳民伤财.    <br /> 11.缺乏&quot;执行力&quot;    <br /> 国软的通病,就是&quot;执行力&quot;,国软的学习劲头很足,今天提出要完善测试标准,明天提出要每周写工作报告,可是又有哪些东西能真正的去执行呢?    <br /> 导致这个问题的主要原因有两个:    <br /> a.提出来的东西到底有没必要做,还是只是应付领导走个过场.    <br /> b.谁来跟踪这些东西?员工写了工作报告,领导没有去查看,去反馈,员 工觉得写的也没意义,自然不会继续执行下去.    <br /> 12.管理混乱    <br /> 没有划分清楚员工的归属组织,员工并不明确他的上级领导是谁,导致有的员工处于游离状态,有的是员工又是多个领导,不懂要听谁的,有些人忙的要死,有些人又闲的要命,最后搞的最痛苦的就是员工,导致员工离职.    <br /> 13.缺乏团队精神    <br /> 为什么会缺乏团队精神呢?并不是国软没有这方面的概念,国软也很希望培养员工的团队观念 和精神,    <br /> 无奈因为国软,一般都是一个人负责一个或者多个项目,连团队都没有,何来的团队精神?    <br /> 14.无法做到补 足    <br /> 一个项目一旦中途有人辞职,这个项目就会流产.一个员工一旦辞职,会有N个项目没人维护.A组的员工无法胜任B组的工作,归根结底就是组织上根本没有考虑过组织变动对项目的影响,没有提前培养人员.    <br /> 15.一成不变和随心所欲    <br /> 有两类人一种是把前辈的东西COPY过来,不作任何修改,因为他深信,前辈的一定是对的,还有一类是不管前人怎么做的,一律不要,全凭自己的&quot;经验&quot;,随心所欲,天马行空的进行自主研发,造成的结果就是错的还是错的,乱的更乱了.    <br /> 16.人才育成    <br /> 成本,还是成本,培养一个人要多少成 本?这就是国软做不大的原因,永远只能停留在&quot;作坊&quot;的原因.    <br /> 17.向心力.    <br /> 老板做的是事业,员工做的是事情, 这是国软员工的一致观点.    <br /> 18.恶性循环    <br /> a.人员力量不足 -&gt; 接不了项目 -&gt; 收入少 -&gt; 人员流失.    <br /> b.人员力量不足 -&gt; 强行接项目 -&gt; 亏本 -&gt; 破产.    <br /> 最后 我想说一句的是:成也国软,败也国软.    <br /> 说的不对的地方请大家指出,或者补充下没说到的地方.</p>
+    
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="followme">
+  <span>欢迎关注我的其它发布渠道</span>
+
+  <div class="social-list">
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="https://www.facebook.com/rise.worlds">
+            <span class="icon">
+              <i class="fab fa-facebook"></i>
+            </span>
+
+            <span class="label">FB Page</span>
+          </a>
+      </div>
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="https://twitter.com/riseworlds">
+            <span class="icon">
+              <i class="fab fa-twitter"></i>
+            </span>
+
+            <span class="label">Twitter</span>
+          </a>
+      </div>
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="https://t.me/riseworlds">
+            <span class="icon">
+              <i class="fab fa-telegram"></i>
+            </span>
+
+            <span class="label">Telegram</span>
+          </a>
+      </div>
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/Reprint/" rel="tag"># Reprint</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2010/05/04/%E4%B8%8D%E4%BC%9A%E2%80%9C%E6%80%9D%E7%BB%B4%E2%80%9D%E5%8F%AA%E4%BC%9A%E2%80%9C%E6%89%B9%E5%88%A4%E2%80%9D%EF%BC%8C%E8%B0%A8%E9%98%B2%E7%BD%91%E7%BB%9C%E8%88%86%E8%AE%BA%E2%80%9C%E6%80%A8%E5%A6%87%E5%8C%96%E2%80%9D/" rel="prev" title="不会“思维”只会“批判”，谨防网络舆论“怨妇化”">
+                  <i class="fa fa-angle-left"></i> 不会“思维”只会“批判”，谨防网络舆论“怨妇化”
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2010/05/08/%E8%AE%BE%E7%BD%AE%E7%BA%BF%E7%A8%8B%E5%90%8D%E7%A7%B0/" rel="next" title="设置线程名称">
+                  设置线程名称 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  
+  <div class="comments giscus-container">
+  </div>
+  
+  
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">豫ICP备2021009490号 </a>
+  </div>
+  <div class="copyright">
+    &copy; 2004 – 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">rise</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="reading-progress-bar"></div>
+
+  <a href="https://github.com/rise-worlds" class="github-corner" title="在 GitHub 上关注我" aria-label="在 GitHub 上关注我" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://unpkg.com/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@next-theme/pjax@0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script><script src="/js/pjax.js"></script>
+
+  
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://unpkg.com/mermaid@10.9.0/dist/mermaid.min.js","integrity":"sha256-stuqcu2FrjYCXDOytWFA5SoUE/r3nkp6gTglzNSlavU="}}</script>
+  <script src="/js/third-party/tags/mermaid.js"></script>
+
+
+
+
+
+  
+
+
+
+
+  <script src="https://unpkg.com/quicklink@2.3.0/dist/quicklink.umd.js" integrity="sha256-yvJQOINiH9fWemHn0vCA5lsHWJaHs6/ZmO+1Ft04SvM=" crossorigin="anonymous"></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":true,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"https://rise-worlds.github.io/2010/05/04/%E6%B5%85%E8%B0%88_%E5%9B%BD%E5%86%85%E8%BD%AF%E4%BB%B6%E5%85%AC%E5%8F%B8%E4%B8%BA%E4%BD%95%E6%97%A0%E6%B3%95%E5%81%9A%E5%A4%A7%E5%81%9A%E5%BC%BA_/"}</script>
+  <script src="/js/third-party/quicklink.js"></script>
+<script class="next-config" data-name="giscus" type="application/json">{"enable":true,"repo":"rise-worlds/rise-worlds.github.io","repo_id":"MDEwOlJlcG9zaXRvcnk2MTAxMTA0MA==","category":"Announcements","category_id":"DIC_kwDOA6L0YM4CiXf9","mapping":"pathname","strict":0,"reactions_enabled":1,"emit_metadata":0,"theme":"transparent_dark","lang":"zh-CN","crossorigin":"anonymous","input_position":"top","loading":"lazy"}</script>
+
+<script>
+document.addEventListener('page:loaded', () => {
+  if (!CONFIG.page.comments) return;
+
+  NexT.utils.loadComments('.giscus-container')
+    .then(() => NexT.utils.getScript('https://giscus.app/client.js', {
+      attributes: {
+        async                   : true,
+        crossOrigin             : 'anonymous',
+        'data-repo'             : CONFIG.giscus.repo,
+        'data-repo-id'          : CONFIG.giscus.repo_id,
+        'data-category'         : CONFIG.giscus.category,
+        'data-category-id'      : CONFIG.giscus.category_id,
+        'data-mapping'          : CONFIG.giscus.mapping,
+        'data-strict'           : CONFIG.giscus.strict,
+        'data-reactions-enabled': CONFIG.giscus.reactions_enabled,
+        'data-emit-metadata'    : CONFIG.giscus.emit_metadata,
+        'data-theme'            : CONFIG.giscus.theme,
+        'data-lang'             : CONFIG.giscus.lang,
+        'data-input-position'   : CONFIG.giscus.input_position,
+        'data-loading'          : CONFIG.giscus.loading
+      },
+      parentNode: document.querySelector('.giscus-container')
+    }));
+});
+</script>
+
+</body>
+</html>
