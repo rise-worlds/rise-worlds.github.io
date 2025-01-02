@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://unpkg.com/@fortawesome/fontawesome-free@6.5.2/css/all.min.css" integrity="sha256-XOqroi11tY4EFQMR9ZYwZWKj5ZXiftSx36RRuC3anlA=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://unpkg.com/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"blogs.qipai360.cn","root":"/","images":"/images","scheme":"Mist","darkmode":true,"version":"8.20.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="写作目的：（此段可跳过)&nbsp;&nbsp;&nbsp; 同步Internet时间，即通过Internet的校时网站传来的数据校准本机时间。但是现在网络上查到的相关编程资料并不多，且其中多是VB和Delphi的代码，VC的代码我还没找到过。是这个东西太难了？应该不是；是太简单了？那也总该有人写吧。&nbsp;&nbsp; 我认为，自己懂和让别人懂压根不是一回事，我写这篇文章，目的当然是后者。当">
+<meta property="og:type" content="article">
+<meta property="og:title" content="在VC++中实现同步Internet时间">
+<meta property="og:url" content="https://blogs.qipai360.cn/2007/10/11/%E5%9C%A8VC++%E4%B8%AD%E5%AE%9E%E7%8E%B0%E5%90%8C%E6%AD%A5Internet%E6%97%B6%E9%97%B4/index.html">
+<meta property="og:site_name" content="Rise&#39;blogs">
+<meta property="og:description" content="写作目的：（此段可跳过)&nbsp;&nbsp;&nbsp; 同步Internet时间，即通过Internet的校时网站传来的数据校准本机时间。但是现在网络上查到的相关编程资料并不多，且其中多是VB和Delphi的代码，VC的代码我还没找到过。是这个东西太难了？应该不是；是太简单了？那也总该有人写吧。&nbsp;&nbsp; 我认为，自己懂和让别人懂压根不是一回事，我写这篇文章，目的当然是后者。当">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://blog.vckbase.com/images/vckbase_com/hatemath/synctime_order.jpg">
+<meta property="og:image" content="http://blog.vckbase.com/images/vckbase_com/hatemath/SyncTime.JPG">
+<meta property="og:image" content="http://blog.vckbase.com/Images/OutliningIndicators/None.gif">
+<meta property="og:image" content="http://blog.vckbase.com/Images/OutliningIndicators/None.gif">
+<meta property="og:image" content="http://blog.vckbase.com/Images/OutliningIndicators/None.gif">
+<meta property="og:image" content="http://blog.vckbase.com/Images/OutliningIndicators/None.gif">
+<meta property="og:image" content="http://blog.vckbase.com/Images/OutliningIndicators/None.gif">
+<meta property="og:image" content="http://blog.vckbase.com/Images/dot.gif">
+<meta property="og:image" content="http://blog.vckbase.com/Images/OutliningIndicators/None.gif">
+<meta property="og:image" content="http://blog.vckbase.com/Images/OutliningIndicators/None.gif">
+<meta property="og:image" content="http://blog.vckbase.com/Images/OutliningIndicators/None.gif">
+<meta property="og:image" content="http://blog.vckbase.com/Images/OutliningIndicators/None.gif">
+<meta property="og:image" content="http://blog.vckbase.com/Images/OutliningIndicators/None.gif">
+<meta property="og:image" content="http://blog.vckbase.com/Images/OutliningIndicators/None.gif">
+<meta property="og:image" content="http://blog.vckbase.com/Images/OutliningIndicators/None.gif">
+<meta property="og:image" content="http://blog.vckbase.com/Images/OutliningIndicators/None.gif">
+<meta property="og:image" content="http://blog.vckbase.com/Images/OutliningIndicators/None.gif">
+<meta property="og:image" content="http://blog.vckbase.com/Images/OutliningIndicators/None.gif">
+<meta property="og:image" content="http://blog.vckbase.com/Images/OutliningIndicators/None.gif">
+<meta property="og:image" content="http://blog.vckbase.com/Images/OutliningIndicators/None.gif">
+<meta property="og:image" content="http://blog.vckbase.com/Images/OutliningIndicators/None.gif">
+<meta property="og:image" content="http://blog.vckbase.com/Images/OutliningIndicators/None.gif">
+<meta property="og:image" content="http://blog.vckbase.com/Images/OutliningIndicators/None.gif">
+<meta property="og:image" content="http://blog.vckbase.com/Images/OutliningIndicators/None.gif">
+<meta property="og:image" content="http://blog.vckbase.com/Images/OutliningIndicators/None.gif">
+<meta property="og:image" content="http://blog.vckbase.com/Images/OutliningIndicators/None.gif">
+<meta property="og:image" content="http://blog.vckbase.com/Images/OutliningIndicators/None.gif">
+<meta property="og:image" content="http://blog.vckbase.com/Images/OutliningIndicators/None.gif">
+<meta property="og:image" content="http://blog.vckbase.com/Images/OutliningIndicators/None.gif">
+<meta property="og:image" content="http://blog.vckbase.com/Images/OutliningIndicators/None.gif">
+<meta property="og:image" content="http://blog.vckbase.com/Images/OutliningIndicators/None.gif">
+<meta property="og:image" content="http://blog.vckbase.com/Images/OutliningIndicators/None.gif">
+<meta property="og:image" content="http://blog.vckbase.com/Images/OutliningIndicators/None.gif">
+<meta property="og:image" content="http://blog.vckbase.com/Images/OutliningIndicators/None.gif">
+<meta property="og:image" content="http://blog.vckbase.com/Images/OutliningIndicators/None.gif">
+<meta property="og:image" content="http://blog.vckbase.com/Images/OutliningIndicators/None.gif">
+<meta property="og:image" content="http://blog.vckbase.com/Images/OutliningIndicators/None.gif">
+<meta property="og:image" content="http://blog.vckbase.com/Images/OutliningIndicators/None.gif">
+<meta property="og:image" content="http://blog.vckbase.com/Images/OutliningIndicators/None.gif">
+<meta property="og:image" content="http://blog.vckbase.com/Images/OutliningIndicators/None.gif">
+<meta property="og:image" content="http://blog.vckbase.com/Images/OutliningIndicators/None.gif">
+<meta property="og:image" content="http://blog.vckbase.com/Images/OutliningIndicators/None.gif">
+<meta property="og:image" content="http://blog.vckbase.com/Images/OutliningIndicators/None.gif">
+<meta property="og:image" content="http://blog.vckbase.com/Images/OutliningIndicators/None.gif">
+<meta property="og:image" content="http://blog.vckbase.com/Images/OutliningIndicators/None.gif">
+<meta property="og:image" content="http://blog.vckbase.com/Images/OutliningIndicators/None.gif">
+<meta property="og:image" content="http://blog.vckbase.com/Images/OutliningIndicators/None.gif">
+<meta property="og:image" content="http://blog.vckbase.com/Images/OutliningIndicators/None.gif">
+<meta property="og:image" content="http://blog.vckbase.com/Images/OutliningIndicators/None.gif">
+<meta property="og:image" content="http://blog.vckbase.com/Images/OutliningIndicators/None.gif">
+<meta property="og:image" content="http://blog.vckbase.com/Images/OutliningIndicators/None.gif">
+<meta property="article:published_time" content="2007-10-11T14:47:00.000Z">
+<meta property="article:modified_time" content="2007-10-11T14:49:00.000Z">
+<meta property="article:author" content="rise">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://blog.vckbase.com/images/vckbase_com/hatemath/synctime_order.jpg">
+
+
+<link rel="canonical" href="https://blogs.qipai360.cn/2007/10/11/%E5%9C%A8VC++%E4%B8%AD%E5%AE%9E%E7%8E%B0%E5%90%8C%E6%AD%A5Internet%E6%97%B6%E9%97%B4/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://blogs.qipai360.cn/2007/10/11/%E5%9C%A8VC++%E4%B8%AD%E5%AE%9E%E7%8E%B0%E5%90%8C%E6%AD%A5Internet%E6%97%B6%E9%97%B4/","path":"2007/10/11/在VC++中实现同步Internet时间/","title":"在VC++中实现同步Internet时间"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>在VC++中实现同步Internet时间 | Rise'blogs</title>
+  
+
+  <script src="/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?266da4e90214887b507c0bb6baa84e3e"></script>
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Rise'blogs</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-message"><a href="/message/" rel="section"><i class="fa fa-comments fa-fw"></i>留言板</a></li><li class="menu-item menu-item-sitemap"><a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>站点地图</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="rise"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">rise</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">664</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">49</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">109</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="mailto:rise.worlds@outlook.com" title="E-Mail → mailto:rise.worlds@outlook.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://github.com/rise-worlds" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;rise-worlds" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://x.com/riseworlds" title="Twitter → https:&#x2F;&#x2F;x.com&#x2F;riseworlds" rel="noopener me" target="_blank"><i class="fab fa-twitter fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.facebook.com/rise.worlds" title="FB Page → https:&#x2F;&#x2F;www.facebook.com&#x2F;rise.worlds" rel="noopener me" target="_blank"><i class="fab fa-facebook fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.youtube.com/@YiXuan" title="YouTube → https:&#x2F;&#x2F;www.youtube.com&#x2F;@YiXuan" rel="noopener me" target="_blank"><i class="fab fa-youtube fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.instagram.com/rise.worlds/" title="Instagram → https:&#x2F;&#x2F;www.instagram.com&#x2F;rise.worlds&#x2F;" rel="noopener me" target="_blank"><i class="fab fa-instagram fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://t.me/riseworlds" title="Telegram → https:&#x2F;&#x2F;t.me&#x2F;riseworlds" rel="noopener me" target="_blank"><i class="fab fa-telegram fa-fw"></i></a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+          链接
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <a href="https://www.cnblogs.com/flying_bat" title="https:&#x2F;&#x2F;www.cnblogs.com&#x2F;flying_bat" rel="noopener" target="_blank">My Cnblogs</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://www.github.com/rise-worlds" title="https:&#x2F;&#x2F;www.github.com&#x2F;rise-worlds" rel="noopener" target="_blank">My Github</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://www.google.com/" title="https:&#x2F;&#x2F;www.google.com&#x2F;" rel="noopener" target="_blank">Google</a>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://blogs.qipai360.cn/2007/10/11/%E5%9C%A8VC++%E4%B8%AD%E5%AE%9E%E7%8E%B0%E5%90%8C%E6%AD%A5Internet%E6%97%B6%E9%97%B4/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="rise">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Rise'blogs">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="在VC++中实现同步Internet时间 | Rise'blogs">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          在VC++中实现同步Internet时间
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2007-10-11 14:47:00 / 修改时间：14:49:00" itemprop="dateCreated datePublished" datetime="2007-10-11T14:47:00+00:00">2007-10-11</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/dev/" itemprop="url" rel="index"><span itemprop="name">dev</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/dev/Win32Dev/" itemprop="url" rel="index"><span itemprop="name">Win32Dev</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p><b>写作目的：</b>（此段可跳过)<br>&nbsp;&nbsp;&nbsp; 同步Internet时间，即通过Internet的校时网站传来的数据校准本机时间。但是现在网络上查到的相关编程资料并不多，且其中多是VB和Delphi的代码，VC的代码我还没找到过。是这个东西太难了？应该不是；是太简单了？那也总该有人写吧。<br>&nbsp;&nbsp; 我认为，自己懂和让别人懂压根不是一回事，我写这篇文章，目的当然是后者。当然，理工科出身的河蚌不大可能像文科出身的河蚌那样修出光彩夺目的珍珠来，所以，行文有不妥之处，欢迎指正。<br><strong>校时原理：<br></strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 互联网上有很多时间服务器能够提供准确的时间，我们通过连接到这样的服务器来获取时间值。这里向大家介绍一下服务器传来的数据格式先。数据一共四个字节（4 Byte），我们可以在接收数据后对它进行&#8220;重新组装&#8221;，把组装所得的值放在一个32位的整数里，这个值的意义是：自1900年1月1日0时0分0秒 至 服务器发送这个时间数据时 所经历的秒数。显然，任何一个时刻到1900年所经历的秒数是唯一的，因此，由服务器传来的时间数据即可推出现在的时间，然后用API函数调整系统的时间即可。 <p>流程图如下：<br><img height="115" src="http://blog.vckbase.com/images/vckbase_com/hatemath/synctime_order.jpg" width="475" border="0"><br><strong>设计目标：</strong> <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 好了，我们的目标是：（没有蛀牙～）<br>&nbsp;&nbsp;&nbsp; -_-!! <br>&nbsp;&nbsp;&nbsp; 常言说一图千言，我们还是看图吧： <p><img height="313" src="http://blog.vckbase.com/images/vckbase_com/hatemath/SyncTime.JPG" width="387" border="0"> <p><b>程序的实现：</b> <p>从技术角度来看，解决三个问题即可：<br><b>1． 通过网络通信从服务器获取时间数据。<br>2． 处理基于1900年的时间数据，转化为我们常见的时间形式。<br>3． 解决网络造成的延时问题。<br>下面分条讲述：<br>1． </b><b>通过网络通信从服务器获取时间数据。</b> <p>至于接收数据，没什么可说的，这里用CSocket就可以了。 <p>代码片断： <p><img src="http://blog.vckbase.com/Images/OutliningIndicators/None.gif" align="top">&nbsp;&nbsp;&nbsp; CSocket sockClient;<br><img src="http://blog.vckbase.com/Images/OutliningIndicators/None.gif" align="top">&nbsp;&nbsp;&nbsp; sockClient.Create();&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; //创建socket<br><img src="http://blog.vckbase.com/Images/OutliningIndicators/None.gif" align="top"><br><img src="http://blog.vckbase.com/Images/OutliningIndicators/None.gif" align="top"> //for debug<br><img src="http://blog.vckbase.com/Images/OutliningIndicators/None.gif" align="top">&nbsp;&nbsp;&nbsp; m_info += "Connect server: " + strServer + "<img src="http://blog.vckbase.com/Images/dot.gif"> ";<br><img src="http://blog.vckbase.com/Images/OutliningIndicators/None.gif" align="top">&nbsp;&nbsp;&nbsp; UpdateData(FALSE);<br><img src="http://blog.vckbase.com/Images/OutliningIndicators/None.gif" align="top"> //for debug<br><img src="http://blog.vckbase.com/Images/OutliningIndicators/None.gif" align="top"><br><img src="http://blog.vckbase.com/Images/OutliningIndicators/None.gif" align="top">&nbsp;&nbsp;&nbsp; sockClient.Connect((LPCTSTR)strServer, 37); // strServer：时间服务器网址； 37：端口号<br><img src="http://blog.vckbase.com/Images/OutliningIndicators/None.gif" align="top"><br><img src="http://blog.vckbase.com/Images/OutliningIndicators/None.gif" align="top">&nbsp;&nbsp;&nbsp; DWORD dwTime = 0;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; //用来存放服务器传来的标准时间数据<br><img src="http://blog.vckbase.com/Images/OutliningIndicators/None.gif" align="top">&nbsp;&nbsp;&nbsp; unsigned char nTime[8];&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; //临时接收数据<br><img src="http://blog.vckbase.com/Images/OutliningIndicators/None.gif" align="top">&nbsp;&nbsp;&nbsp; memset(nTime, 0, sizeof(nTime));<br><img src="http://blog.vckbase.com/Images/OutliningIndicators/None.gif" align="top"><br><img src="http://blog.vckbase.com/Images/OutliningIndicators/None.gif" align="top">&nbsp;&nbsp;&nbsp; sockClient.Receive(nTime, sizeof(nTime));&nbsp;&nbsp;&nbsp; //接收服务器发送来得4个字节的数据<br><img src="http://blog.vckbase.com/Images/OutliningIndicators/None.gif" align="top">&nbsp;&nbsp;&nbsp; sockClient.Close();&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; //关闭socket<br><img src="http://blog.vckbase.com/Images/OutliningIndicators/None.gif" align="top"><br><img src="http://blog.vckbase.com/Images/OutliningIndicators/None.gif" align="top"> //for debug<br><img src="http://blog.vckbase.com/Images/OutliningIndicators/None.gif" align="top">&nbsp;&nbsp;&nbsp; m_info += "Connect shut down. ";<br><img src="http://blog.vckbase.com/Images/OutliningIndicators/None.gif" align="top">&nbsp;&nbsp;&nbsp; UpdateData(FALSE);<br><img src="http://blog.vckbase.com/Images/OutliningIndicators/None.gif" align="top"> //for debug<br><img src="http://blog.vckbase.com/Images/OutliningIndicators/None.gif" align="top"><br><img src="http://blog.vckbase.com/Images/OutliningIndicators/None.gif" align="top">&nbsp;&nbsp;&nbsp; dwTime += nTime[0] &lt;&lt; 24;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; //整合数据&nbsp;&nbsp;&nbsp; <br><img src="http://blog.vckbase.com/Images/OutliningIndicators/None.gif" align="top">&nbsp;&nbsp;&nbsp; dwTime += nTime[1] &lt;&lt; 16;<br><img src="http://blog.vckbase.com/Images/OutliningIndicators/None.gif" align="top">&nbsp;&nbsp;&nbsp; dwTime += nTime[2] &lt;&lt; 8;<br><img src="http://blog.vckbase.com/Images/OutliningIndicators/None.gif" align="top">&nbsp;&nbsp;&nbsp; dwTime += nTime[3];&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br><img src="http://blog.vckbase.com/Images/OutliningIndicators/None.gif" align="top"><br><img src="http://blog.vckbase.com/Images/OutliningIndicators/None.gif" align="top"> if(0 == dwTime)&nbsp;&nbsp;&nbsp; return FALSE; <p>到此为止，服务器传来的时间数据经过&#8220;重新组装&#8221;已经正确放置到DWORD类型的变量 dwTime 里面了。下面我们接着对其进行必要的处理。 <p><b><br>2． </b><b>处理基于1900</b><b>年的时间数据，转化为我们常见的时间形式。</b> <p>在前面我们提到，时间数据已经正确放置到变量 dwTime 里面了。那么，怎样由它得到现在的时间呢？ <p>微软已经给我们提供了一个很好用的时间类：CTime。不过，MFC的CTime类的时间起点是基于1970年的，而dwTime 里面的秒数是从1900年计时的。 <p>用CTime？无法由 dwTime 中的数据直接构造CTime类的对象。 <p>用C的函数库？我尝试了多次，N次碰壁。 <p> <p><a target="_blank" rel="noopener" href="http://www.vckbase.com/bbs"></a></p>说起最终敲定的实现方法，其实很简单－ 改变计时基准。 <p>时间转换的方法如下： <p>1．&nbsp; 用 COleDateTime 和 COleDateTimeSpan 算出1900年1月1日0时0分0秒 到 1970年1月1日0时0分0秒 所经历的秒数 dwSec00to70。 <p>2． 从 dwTime 中减去 dwSec00to70。此后，dwTime 所代表的就是自1970年1月1日0时0分0秒以来逝去的秒数――显然，dwTime 已经被我们转变为基于1970年的时间值了，这回可以用CTime进行处理了。 <p> 怎么样？不复杂吧。（想起了近几天屡试屡败的经历和查阅的N多资料，自己吐血先）<br>代码片断： <p><img src="http://blog.vckbase.com/Images/OutliningIndicators/None.gif" align="top"> //服务器传来的数据是自从1900年以来的秒数<br><img src="http://blog.vckbase.com/Images/OutliningIndicators/None.gif" align="top"> //取得 1900~1970 的时间差(以秒数计算) ，放在dwSpan里面<br><img src="http://blog.vckbase.com/Images/OutliningIndicators/None.gif" align="top">&nbsp;&nbsp;&nbsp; COleDateTime t00( 1900, 1, 1, 0, 0, 0 ); // 1900.1.1 00:00:00 <br><img src="http://blog.vckbase.com/Images/OutliningIndicators/None.gif" align="top">&nbsp;&nbsp;&nbsp; COleDateTime t70( 1970, 1, 1, 0, 0, 0 ); // 1970.1.1 00:00:00 <br><img src="http://blog.vckbase.com/Images/OutliningIndicators/None.gif" align="top"><br><img src="http://blog.vckbase.com/Images/OutliningIndicators/None.gif" align="top">&nbsp;&nbsp;&nbsp; COleDateTimeSpan ts70to00 = t70 - t00; <br><img src="http://blog.vckbase.com/Images/OutliningIndicators/None.gif" align="top">&nbsp;&nbsp;&nbsp; DWORD dwSpan = (DWORD)ts70to00.GetTotalSeconds(); <br><img src="http://blog.vckbase.com/Images/OutliningIndicators/None.gif" align="top">&nbsp;&nbsp;&nbsp; ASSERT( dwSpan == 2208988800L ); <br><img src="http://blog.vckbase.com/Images/OutliningIndicators/None.gif" align="top"><br><img src="http://blog.vckbase.com/Images/OutliningIndicators/None.gif" align="top"> //把时间变为基于1970年的，便于用CTime处理<br><img src="http://blog.vckbase.com/Images/OutliningIndicators/None.gif" align="top">&nbsp;&nbsp;&nbsp; dwTime -= dwSpan;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br><img src="http://blog.vckbase.com/Images/OutliningIndicators/None.gif" align="top"> //考虑网络延迟因素<br><img src="http://blog.vckbase.com/Images/OutliningIndicators/None.gif" align="top">&nbsp;&nbsp;&nbsp; dwTime += dwDely;<br><img src="http://blog.vckbase.com/Images/OutliningIndicators/None.gif" align="top"> //构造当前时间的CTime对象<br><img src="http://blog.vckbase.com/Images/OutliningIndicators/None.gif" align="top">&nbsp;&nbsp;&nbsp; CTime timeNow = (CTime)dwTime;<br><img src="http://blog.vckbase.com/Images/OutliningIndicators/None.gif" align="top"><br><img src="http://blog.vckbase.com/Images/OutliningIndicators/None.gif" align="top"> //for debug<br><img src="http://blog.vckbase.com/Images/OutliningIndicators/None.gif" align="top">&nbsp;&nbsp;&nbsp; m_info += timeNow.Format("%Y.%m.%d&nbsp; %H:%M:%S&nbsp; ");<br><img src="http://blog.vckbase.com/Images/OutliningIndicators/None.gif" align="top">&nbsp;&nbsp;&nbsp; UpdateData(FALSE);<br><img src="http://blog.vckbase.com/Images/OutliningIndicators/None.gif" align="top"> //for debug <p><b> <p>3． </b><b>解决网络造成的延时问题。</b> <p>&nbsp;&nbsp;&nbsp; 在从服务器获取时间数据时，由于网络本身的不稳定性，一般会有时间上的延迟（几秒以内），这样一来，从服务器接收到的数据总早于的真实时间。解决的办法是设定一个计时器，计算出本机从开始网络连接到接收完数据所耗费的时间dwDelay，然后加到 dwTime 上进行补偿。这样一来误差就可以控制在1秒以内（如果你不用你的爱机控制导弹飞行或者航天发射，应该够用了），详见源码。</p> 
+    
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="followme">
+  <span>欢迎关注我的其它发布渠道</span>
+
+  <div class="social-list">
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="https://www.facebook.com/rise.worlds">
+            <span class="icon">
+              <i class="fab fa-facebook"></i>
+            </span>
+
+            <span class="label">FB Page</span>
+          </a>
+      </div>
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="https://twitter.com/riseworlds">
+            <span class="icon">
+              <i class="fab fa-twitter"></i>
+            </span>
+
+            <span class="label">Twitter</span>
+          </a>
+      </div>
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="https://t.me/riseworlds">
+            <span class="icon">
+              <i class="fab fa-telegram"></i>
+            </span>
+
+            <span class="label">Telegram</span>
+          </a>
+      </div>
+  </div>
+</div>
+
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2007/10/11/Direct3D%E5%87%A0%E4%BD%95%E6%B5%81%E6%B0%B4%E7%BA%BF/" rel="prev" title="Direct3D几何流水线">
+                  <i class="fa fa-angle-left"></i> Direct3D几何流水线
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2007/10/11/Lua%E4%B8%AD%E5%AE%9E%E7%8E%B0%E7%B1%BB%E4%BC%BCC#%E7%9A%84%E4%BA%8B%E4%BB%B6%E6%9C%BA%E5%88%B6/" rel="next" title="Lua中实现类似C#的事件机制">
+                  Lua中实现类似C#的事件机制 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  
+  <div class="comments giscus-container">
+  </div>
+  
+  
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">豫ICP备2021009490号 </a>
+  </div>
+  <div class="copyright">
+    &copy; 2004 – 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">rise</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="reading-progress-bar"></div>
+
+  <a href="https://github.com/rise-worlds" class="github-corner" title="在 GitHub 上关注我" aria-label="在 GitHub 上关注我" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://unpkg.com/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@next-theme/pjax@0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script><script src="/js/pjax.js"></script>
+
+  
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://unpkg.com/mermaid@10.9.0/dist/mermaid.min.js","integrity":"sha256-stuqcu2FrjYCXDOytWFA5SoUE/r3nkp6gTglzNSlavU="}}</script>
+  <script src="/js/third-party/tags/mermaid.js"></script>
+
+
+
+
+
+  
+
+
+
+
+  <script src="https://unpkg.com/quicklink@2.3.0/dist/quicklink.umd.js" integrity="sha256-yvJQOINiH9fWemHn0vCA5lsHWJaHs6/ZmO+1Ft04SvM=" crossorigin="anonymous"></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":true,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"https://blogs.qipai360.cn/2007/10/11/%E5%9C%A8VC++%E4%B8%AD%E5%AE%9E%E7%8E%B0%E5%90%8C%E6%AD%A5Internet%E6%97%B6%E9%97%B4/"}</script>
+  <script src="/js/third-party/quicklink.js"></script>
+<script class="next-config" data-name="giscus" type="application/json">{"enable":true,"repo":"rise-worlds/rise-worlds.github.io","repo_id":"MDEwOlJlcG9zaXRvcnk2MTAxMTA0MA==","category":"Announcements","category_id":"DIC_kwDOA6L0YM4CiXf9","mapping":"pathname","strict":0,"reactions_enabled":1,"emit_metadata":0,"theme":"transparent_dark","lang":"zh-CN","crossorigin":"anonymous","input_position":"top","loading":"lazy"}</script>
+
+<script>
+document.addEventListener('page:loaded', () => {
+  if (!CONFIG.page.comments) return;
+
+  NexT.utils.loadComments('.giscus-container')
+    .then(() => NexT.utils.getScript('https://giscus.app/client.js', {
+      attributes: {
+        async                   : true,
+        crossOrigin             : 'anonymous',
+        'data-repo'             : CONFIG.giscus.repo,
+        'data-repo-id'          : CONFIG.giscus.repo_id,
+        'data-category'         : CONFIG.giscus.category,
+        'data-category-id'      : CONFIG.giscus.category_id,
+        'data-mapping'          : CONFIG.giscus.mapping,
+        'data-strict'           : CONFIG.giscus.strict,
+        'data-reactions-enabled': CONFIG.giscus.reactions_enabled,
+        'data-emit-metadata'    : CONFIG.giscus.emit_metadata,
+        'data-theme'            : CONFIG.giscus.theme,
+        'data-lang'             : CONFIG.giscus.lang,
+        'data-input-position'   : CONFIG.giscus.input_position,
+        'data-loading'          : CONFIG.giscus.loading
+      },
+      parentNode: document.querySelector('.giscus-container')
+    }));
+});
+</script>
+
+</body>
+</html>

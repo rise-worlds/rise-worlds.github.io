@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://unpkg.com/@fortawesome/fontawesome-free@6.5.2/css/all.min.css" integrity="sha256-XOqroi11tY4EFQMR9ZYwZWKj5ZXiftSx36RRuC3anlA=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://unpkg.com/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"blogs.qipai360.cn","root":"/","images":"/images","scheme":"Mist","darkmode":true,"version":"8.20.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="就在SIGGRAPH大会刚结束之后，AMD和暴雪在AMD官方网站上放出了《星际争霸II》的官方技术文档，通过游戏引擎技术的展示让星际迷们感受到越来越多的惊喜。画面优化给CPU带来考验着色方面，在使用原型的基础上利用3D Studio MAX让程序员对整体效果做最大的优化，反复的提炼使得整个作品就像被艺术家精心雕琢一样，配合上8000个独特的、不重复的线性着色渲染代码，使得Starcraft II">
+<meta property="og:type" content="article">
+<meta property="og:title" content="《星际争霸2》引擎技术解析">
+<meta property="og:url" content="https://blogs.qipai360.cn/2008/09/02/%E3%80%8A%E6%98%9F%E9%99%85%E4%BA%89%E9%9C%B82%E3%80%8B%E5%BC%95%E6%93%8E%E6%8A%80%E6%9C%AF%E8%A7%A3%E6%9E%90/index.html">
+<meta property="og:site_name" content="Rise&#39;blogs">
+<meta property="og:description" content="就在SIGGRAPH大会刚结束之后，AMD和暴雪在AMD官方网站上放出了《星际争霸II》的官方技术文档，通过游戏引擎技术的展示让星际迷们感受到越来越多的惊喜。画面优化给CPU带来考验着色方面，在使用原型的基础上利用3D Studio MAX让程序员对整体效果做最大的优化，反复的提炼使得整个作品就像被艺术家精心雕琢一样，配合上8000个独特的、不重复的线性着色渲染代码，使得Starcraft II">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://file.sgamer.com/Albums/0/321/98815.jpg">
+<meta property="og:image" content="http://file.sgamer.com/Albums/0/321/E75E7.jpg">
+<meta property="og:image" content="http://file.sgamer.com/Albums/0/321/81D8E.jpg">
+<meta property="og:image" content="http://file.sgamer.com/Albums/0/321/3DA63.jpg">
+<meta property="og:image" content="http://file.sgamer.com/Albums/0/321/5E4E8.jpg">
+<meta property="og:image" content="http://file.sgamer.com/Albums/0/321/511CE.jpg">
+<meta property="og:image" content="http://file.sgamer.com/Albums/0/321/24F29.jpg">
+<meta property="og:image" content="http://file.sgamer.com/Albums/0/321/4BF78.jpg">
+<meta property="og:image" content="http://file.sgamer.com/Albums/0/321/D5CE8.jpg">
+<meta property="og:image" content="http://file.sgamer.com/Albums/0/321/25A7F.jpg">
+<meta property="og:image" content="http://file.sgamer.com/Albums/0/321/A7AA3.jpg">
+<meta property="og:image" content="http://file.sgamer.com/Albums/0/321/F1400.jpg">
+<meta property="og:image" content="http://file.sgamer.com/Albums/0/321/41DC4.jpg">
+<meta property="og:image" content="http://file.sgamer.com/Albums/0/321/D2F78.jpg">
+<meta property="og:image" content="http://file.sgamer.com/Albums/0/321/3B2CF.jpg">
+<meta property="og:image" content="http://file.sgamer.com/Albums/0/321/9BE3A.jpg">
+<meta property="og:image" content="http://file.sgamer.com/Albums/0/321/3A738.jpg">
+<meta property="og:image" content="http://file.sgamer.com/Albums/0/321/0D9F3.jpg">
+<meta property="og:image" content="http://file.sgamer.com/Albums/0/321/AE027.jpg">
+<meta property="og:image" content="http://file.sgamer.com/Albums/0/321/A6F7C.jpg">
+<meta property="og:image" content="http://file.sgamer.com/Albums/0/321/DD894.jpg">
+<meta property="og:image" content="http://file.sgamer.com/Albums/0/321/DB7B6.jpg">
+<meta property="og:image" content="http://file.sgamer.com/Albums/0/321/D9A61.jpg">
+<meta property="article:published_time" content="2008-09-02T17:25:00.000Z">
+<meta property="article:modified_time" content="2008-09-02T17:25:00.000Z">
+<meta property="article:author" content="rise">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://file.sgamer.com/Albums/0/321/98815.jpg">
+
+
+<link rel="canonical" href="https://blogs.qipai360.cn/2008/09/02/%E3%80%8A%E6%98%9F%E9%99%85%E4%BA%89%E9%9C%B82%E3%80%8B%E5%BC%95%E6%93%8E%E6%8A%80%E6%9C%AF%E8%A7%A3%E6%9E%90/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://blogs.qipai360.cn/2008/09/02/%E3%80%8A%E6%98%9F%E9%99%85%E4%BA%89%E9%9C%B82%E3%80%8B%E5%BC%95%E6%93%8E%E6%8A%80%E6%9C%AF%E8%A7%A3%E6%9E%90/","path":"2008/09/02/《星际争霸2》引擎技术解析/","title":"《星际争霸2》引擎技术解析"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>《星际争霸2》引擎技术解析 | Rise'blogs</title>
+  
+
+  <script src="/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?266da4e90214887b507c0bb6baa84e3e"></script>
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Rise'blogs</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-message"><a href="/message/" rel="section"><i class="fa fa-comments fa-fw"></i>留言板</a></li><li class="menu-item menu-item-sitemap"><a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>站点地图</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="rise"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">rise</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">664</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">49</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">109</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="mailto:rise.worlds@outlook.com" title="E-Mail → mailto:rise.worlds@outlook.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://github.com/rise-worlds" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;rise-worlds" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://x.com/riseworlds" title="Twitter → https:&#x2F;&#x2F;x.com&#x2F;riseworlds" rel="noopener me" target="_blank"><i class="fab fa-twitter fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.facebook.com/rise.worlds" title="FB Page → https:&#x2F;&#x2F;www.facebook.com&#x2F;rise.worlds" rel="noopener me" target="_blank"><i class="fab fa-facebook fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.youtube.com/@YiXuan" title="YouTube → https:&#x2F;&#x2F;www.youtube.com&#x2F;@YiXuan" rel="noopener me" target="_blank"><i class="fab fa-youtube fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.instagram.com/rise.worlds/" title="Instagram → https:&#x2F;&#x2F;www.instagram.com&#x2F;rise.worlds&#x2F;" rel="noopener me" target="_blank"><i class="fab fa-instagram fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://t.me/riseworlds" title="Telegram → https:&#x2F;&#x2F;t.me&#x2F;riseworlds" rel="noopener me" target="_blank"><i class="fab fa-telegram fa-fw"></i></a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+          链接
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <a href="https://www.cnblogs.com/flying_bat" title="https:&#x2F;&#x2F;www.cnblogs.com&#x2F;flying_bat" rel="noopener" target="_blank">My Cnblogs</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://www.github.com/rise-worlds" title="https:&#x2F;&#x2F;www.github.com&#x2F;rise-worlds" rel="noopener" target="_blank">My Github</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://www.google.com/" title="https:&#x2F;&#x2F;www.google.com&#x2F;" rel="noopener" target="_blank">Google</a>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://blogs.qipai360.cn/2008/09/02/%E3%80%8A%E6%98%9F%E9%99%85%E4%BA%89%E9%9C%B82%E3%80%8B%E5%BC%95%E6%93%8E%E6%8A%80%E6%9C%AF%E8%A7%A3%E6%9E%90/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="rise">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Rise'blogs">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="《星际争霸2》引擎技术解析 | Rise'blogs">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          《星际争霸2》引擎技术解析
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2008-09-02 17:25:00" itemprop="dateCreated datePublished" datetime="2008-09-02T17:25:00+00:00">2008-09-02</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p></p> <p>就在SIGGRAPH大会刚结束之后，AMD和暴雪在AMD官方网站上放出了《星际争霸II》的官方技术文档，通过游戏引擎技术的展示让星际迷们感受到越来越多的惊喜。<br><img border="0" src="http://file.sgamer.com/Albums/0/321/98815.jpg"><br>画面优化给CPU带来考验<br>着色方面，在使用原型的基础上利用3D Studio MAX让程序员对整体效果做最大的优化，反复的提炼使得整个作品就像被艺术家精心雕琢一样，配合上8000个独特的、不重复的线性着色渲染代码，使得Starcraft II与早期的游戏代码相比增加了N倍。<br><img border="0" src="http://file.sgamer.com/Albums/0/321/E75E7.jpg"><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 在游戏制作初期，暴雪就认识到GPU的强大性能，因此在设计的时候就采用了以GPU为主的优化和大幅度图像质量增加。<br><img border="0" src="http://file.sgamer.com/Albums/0/321/81D8E.jpg"><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 由于使用大量像素渲染操作，如果在游戏中当你选择了控制成百上千的zerglings或者marines等作战单位集体行动，势必造成CPU超负荷，即便是强大的GPU这也是一个考验。<br><b>大量的视觉特效（Based Effects）</b><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 包括FP16 HDR、光线散射/反射效果（Diffuse and specular for lighting）、景深效果（depth of field）、体积雾（fog volumes）、动态环境遮蔽（dynamic ambient occlusion）、智能贴图置换（smart displacement）等等，这些都是Starcraft II的“BT”之处。<br><img border="0" src="http://file.sgamer.com/Albums/0/321/3DA63.jpg"><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 然而，作为一个即时战略游戏，暴雪依然在“故事情节”的设定上下足了功夫，在游戏引擎的影响下，延迟缓冲器的深度和平均值，包括着色组建都完全为了效果而服务。而照明管道和阴影的利用也让深景效果等一些特效表现得淋漓尽致。不过，这些特效都还在讨论中。<br>在早期的开发过程中，图形引擎也作为一个重点中的重点进行设计：<br><b>可扩展性第一</b><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 对于游戏引擎来说，一个主要的设计目标是扩展的引擎。暴雪的游戏质量是人所共知的，不光是他们的能力，更重要的是经验，从以前的一系列游戏开发经验来说，整个游戏各种族之间能力的平衡问题非常重要，而且图像效果之间的兼容性也必须考虑到，这样也是为了各种不同平台硬件之间搭配的玩家都能体验这个游戏的魅力所在，以确保游戏有足够的竞争力，因而从ATI Radeon 9800/NVIDIA GeForce FXs系列到ATI Radeon HD 4800s和NVIDIA GeForce G200s都可以轻松的进行游戏。<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 相比之下，GPU的负载才是重点，像素着色单元往往会因为大量的单位同时出现而使得GPU难以承受，顶点着色单元的运用也必须合理，而先进的GPU才能体验到最大限度的特效，而对于普通的GPU只能尽量减少使用率来保证游戏的流畅度。<br><b>一个引擎，两个“世界”（Dual Nature of the Engine）</b><br><img border="0" src="http://file.sgamer.com/Albums/0/321/5E4E8.jpg"><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 这个双重性质的引擎使得整个游戏有更完美的体验，其实就是说SC2具有两个视角模式，一个是普通的RTS视角、一个是单人模式的RPG视角，当然在这两个模式下呈现的画面效果是有所不同的。具备两个视觉模式的原因正是我们之前提到的故事模式，当切换到单人模式的RPG视角时，玩家将会体验到暴雪对于整个游戏设定的精妙之处，通过一系列互动，包括对话等手段，其实从某种感觉上来说更像是第一人称射击游戏（FPS）。<br>&nbsp;&nbsp;&nbsp; 暴雪还将对这些不同的设定做更为细致的讨论，这样才能让玩家体验到不同的技术效果的运用。<br><b>屏幕基础效果</b><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 作为Starcraft II的另一个设计目标，照明环境模式让游戏的互动更多，之前在魔兽争霸三中，每个单位有一个硬性限制，有多少亮度，可能会影响它在任何特定时间。出于这个原因，使用动态照明是相当微不足道的，但是在Starcraft II中每个单位有一个照明设备，当其中一个开启之后其他也会开启，这样效果非常好，但是由此带来的地图的设计和绘制，包括地图地形切片就成了相当复杂的问题。而即便是解决了这些，给GPU带来的负荷也是巨大的。<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 针对于此，暴雪也做了很多限定 ：<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ◆ 颜色组成部分，并不受当地照明，如发射、环境地图和点燃前期的彩色组成部分； <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ◆ 深度；<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ◆ 每像素正常；<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ◆ 如果使用静止环境闭塞，出口的环境闭塞的纹理被忽略，如果屏幕空间环境闭塞启用；<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ◆ 亮灯的弥漫物质的颜色；<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ◆ 亮灯的镜面材料的颜色。<br><img border="0" src="http://file.sgamer.com/Albums/0/321/511CE.jpg"><br><b>解码缓冲器</b><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 所有的缓冲器应该都使用相同的深度，不幸的是似乎这些缓冲器远远不能满足暴雪的需要，这些缓冲器以24字节每像素推动输出带宽，这样使得整个带宽明显不足，因此在安置光源的时候必须牺牲一些。<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 为了向MRTs提供每像素值以保证用于各种的效果，因而以下必不可少：<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ◆ 深度值为照明、雾卷、动态环境闭塞和智能景深，预测，边缘检测和厚度测量； <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ◆ 平均值为动态环境闭塞；<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ◆ 弥漫性及镜面照明。<br><b>延迟渲染</b><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 在Starcraft II中延迟渲染只适用与当前的渲染，包括灯光的点和散射出去的面都要再渲染，但是由于游戏中会出现很多的照明设备，如果都使用这样的方法渲染的话一定会造成画面过于缓慢，因此延迟缓冲器的出现也解决了这一难题。在延迟渲染和着色方程式的帮助下计算机能很快的绘制出不同形式或者更为复杂的光源，这样也为其他的计算提供了一个后处理的过程。<br><b>像素坐标重建</b><br><img border="0" src="http://file.sgamer.com/Albums/0/321/24F29.jpg"><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 受益于早期的样板，暴雪在设计新的形状和色彩的时候轻松了不少，而且同时还释放了CPU。<br><img border="0" src="http://file.sgamer.com/Albums/0/321/4BF78.jpg"><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 相机原理我们都知道了，就通过这样的模式使得暴雪在视觉上更了解该如何设计。<br><img border="0" src="http://file.sgamer.com/Albums/0/321/D5CE8.jpg"><br><b>屏幕空间环境光遮蔽</b><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 屏幕空间环境光遮蔽（Space Ambient Occlusion，简称SSAO）。如果对这个名词感到陌生，那提及到让大家记忆犹深的《Crysis》逼真的光照效果时，一切就很简单了，这就是SSAO技术的独到之处。<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 暴雪在这使用这方案的时候考虑到了整个空间的效果和质感，也许从某写方面上来看，没这个必要，但是基于暴雪的理念，一点点瑕疵都是不被允许的。<br><img border="0" src="http://file.sgamer.com/Albums/0/321/25A7F.jpg"><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 在任何可见的点和表面在屏幕上，采取多个样本（8至32），这些样本，表现了在三维空间中从目前的点计算，到预计回屏幕空间所需的时间和深度。<br><img border="0" src="http://file.sgamer.com/Albums/0/321/A7AA3.jpg"><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 现在的目的是检查是否深入采样点，如果接近这个更远的采样点本身能获取信息的话就这么做下去，这是一个函数问题，因此需要复杂的计算。<br><img border="0" src="http://file.sgamer.com/Albums/0/321/F1400.jpg"><br><img border="0" src="http://file.sgamer.com/Albums/0/321/41DC4.jpg"><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 不过在对地图的计算时不会采用这样的方法，这仅仅是为了形成一个空间的效果而已。<br><b>模糊效果</b><br><img border="0" src="http://file.sgamer.com/Albums/0/321/D2F78.jpg"><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 前面的一切都是为了更加细致的描绘出所有的场景，但是，有时候游戏还是需要一些模糊的图形图像，如果一直使用SSAO技术的话，必然导致不真实。<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 对于SSAO来说，虽然是一种优势，但是高智能的判断在这时也显得尤为重要，何时需要高精度的细致图像，何时需要动态模糊效果，无论是着色还是渲染都需要大量的资源的计算才能显现这些复杂的效果。<br><b>自我闭塞</b><br><img border="0" src="http://file.sgamer.com/Albums/0/321/3B2CF.jpg"><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 这也是一个相当复杂的效果，就像一个围绕着一个半球体产生偏移向量，这一点上在屏幕上（这意味着需要使用大量的延迟缓冲器），由一个矩阵转化每个偏移向量和正常向量来抵销矢量。<br><b>边缘处理</b><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 偏移向量在空间中并不像在屏幕空间中一样，由于镜头的不断移动使得SSAO不断变化，这样就需要在移动的过程中对镜头的边缘进行处理，以保证完美的视觉效果，但是纹处理包装上并不是一件简单的事。<br><b>SSAO的表现</b><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; SSAO提供的效果是让人相当满意的，视觉图像质量的处理近乎完美，但是成本过高，而且大量使用还是会造成系统性能瓶颈，这样得不偿失，因此合理的使用这个技术也是讨论的问题之一。<br><b>SSAO和整体光线效果</b><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 从图中很明显的发现了SSAO的精妙之处，如此逼真的效果让人赞叹不已，其实更多的还是其后面的技术支撑。<br><img border="0" src="http://file.sgamer.com/Albums/0/321/9BE3A.jpg"><br><img border="0" src="http://file.sgamer.com/Albums/0/321/3A738.jpg"><br><img border="0" src="http://file.sgamer.com/Albums/0/321/0D9F3.jpg"><br>&nbsp;&nbsp;&nbsp; 我们可以把一切制约因素一起使用以下过程表示：<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ◆为每个像素在源的形象和存储执行一个全屏幕通过计算混乱循环结果，在Alpha通道的每边缩减一个CoC图像缓冲区的四分之一大小；<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ◆产生中等模糊图像通过应用的RGB高斯模糊与每个样本对源图像加权CoC；<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ◆产生的最大模糊图像只有缩小的RGB的图像缓冲区源图像的四分之一，每一个CoC和大型模糊缓冲器可以同时使用不同的通道；<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ◆最高模糊图像与RGB样本加权由缩减CoC执行，Alpha通道中载有CoC，也有模糊，但其样本不加权本身； <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ◆缩小和模糊一张深度地图成为一个缩减深度图像，重用深入SSAO缩减（SSAO不模糊深度 ）； <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ◆然后开始最后的景深着色，有一定的形象来源，中等和大型模糊、模糊CoC的形象，非模糊深入地图和缩减深入形象的渲染。<br><img border="0" src="http://file.sgamer.com/Albums/0/321/AE027.jpg"><br><img border="0" src="http://file.sgamer.com/Albums/0/321/A6F7C.jpg"><br><img border="0" src="http://file.sgamer.com/Albums/0/321/DD894.jpg"><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 景深渲染包括：<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ◇计算小模糊价值，直接使用小样本着色四近邻像素；<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ◇计算CoC的像素（缩减CoC将不匹配）； <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ◇样本非模糊，使用模糊的深入比较——计算机CoC，如果是模糊的深入，比非模糊的深入更远，否则使用CoC价值样本，模糊CoC的形象；<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ◇计算贡献，从每一个可能的模糊图象，计算小模糊的颜色，中型和大型的图像模糊的基础上，CoC的因素；<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ◇小型，中型和大型模糊；<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ◇输出Alpha包括的源（无模糊）形象。<br><b>处理透明物体渲染</b><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 透明度是一个值得深入研究的问题，当涉及到开发时暴雪的董事会认为延迟渲染技术不支持透明度的话就应该在其他地方加上这个功能，而事实证明这是一个正确的选择。<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 作为是典型的就是延迟绘制技术，透明度的问题还设计到树荫等一系列问题，因此必须选择一些有代表性的物体来标记之后再做探讨。光线的问题在透明度的谈论中再一次被提及，因为这是个相辅相成的东西，因此暴雪在制作这一切的时候都努力的寻找解决方案。<br><b>半透明阴影</b>（Translucent Shadows）<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 这种技术能令烟雾、爆炸也能投射出阴影效果。<br><img border="0" src="http://file.sgamer.com/Albums/0/321/DB7B6.jpg"><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 早期在建模的时候影子系统都是成功地利用屏幕空间信息解决跟踪问题，否则将会困难很多，但这次暴雪将显示如何延长阴影地图的每像素信息与一些额外的信息通道，可以用来容易的充实阴影，地图上实现半透明的阴影支持。 <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 阴影地图算法是延长与第二地图的阴影信息形成半透明的阴影，大部分地图的影子仍然会包含不透明信息的阴影，此外还需要做到在颜色的缓冲区发现颜色半透明的阴影。不过，这一切都需要硬件的支持，如果硬件不支持将会有一个空的颜色，因此在考虑到深景等特效的时候暴雪依然在处理阴影效果。<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 首先是清理，以白色调和，然后填补渲染透明物体的阴影，就这样形成一个透明的阴影色彩缓冲区，再加上测试，处理这些透明光过滤器，最后形成需要的效果。<br><b>光过滤</b><b>处理器</b><br><img border="0" src="http://file.sgamer.com/Albums/0/321/D9A61.jpg"><br><b>总结：</b><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 从上面简短的一份官方技术文档（因为AMD只放出这一部分），我们已经可以了解到暴雪在SC2这个游戏上所付出的努力和贡献了，其效果之华丽恐怕也是惊人的。作为暴雪十多年磨一剑的大作，《星际争霸II》可是包含了现在最尖端的技术和效果，无论是暴雪的质量还是技术相信都是世界顶级的水平，这样的游戏公司确实在为自己的的作品留芳百世而努力！不过，至于还要等多久，至今仍是一个谜。</p>
+    
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="followme">
+  <span>欢迎关注我的其它发布渠道</span>
+
+  <div class="social-list">
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="https://www.facebook.com/rise.worlds">
+            <span class="icon">
+              <i class="fab fa-facebook"></i>
+            </span>
+
+            <span class="label">FB Page</span>
+          </a>
+      </div>
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="https://twitter.com/riseworlds">
+            <span class="icon">
+              <i class="fab fa-twitter"></i>
+            </span>
+
+            <span class="label">Twitter</span>
+          </a>
+      </div>
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="https://t.me/riseworlds">
+            <span class="icon">
+              <i class="fab fa-telegram"></i>
+            </span>
+
+            <span class="label">Telegram</span>
+          </a>
+      </div>
+  </div>
+</div>
+
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2008/08/30/%E6%8E%A2%E7%B4%A2NDIS%20HOOK%E6%96%B0%E7%9A%84%E5%AE%9E%E7%8E%B0%E6%96%B9%E6%B3%95(1)/" rel="prev" title="探索NDIS HOOK新的实现方法(1)">
+                  <i class="fa fa-angle-left"></i> 探索NDIS HOOK新的实现方法(1)
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2008/09/04/%E6%B2%B3%E5%8D%97_%E7%99%8C%E7%97%87%E6%9D%91_%E9%87%8C%E7%9A%84%E6%AD%BB%E4%BA%A1_%E6%9C%89%E4%B8%80%E7%A7%8D%E5%88%A9%E6%B6%A6%E8%94%91%E8%A7%86%E7%94%9F%E5%91%BD%5Bzt%5D/" rel="next" title="河南"癌症村"里的死亡:有一种利润蔑视生命[zt]">
+                  河南"癌症村"里的死亡:有一种利润蔑视生命[zt] <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  
+  <div class="comments giscus-container">
+  </div>
+  
+  
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">豫ICP备2021009490号 </a>
+  </div>
+  <div class="copyright">
+    &copy; 2004 – 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">rise</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="reading-progress-bar"></div>
+
+  <a href="https://github.com/rise-worlds" class="github-corner" title="在 GitHub 上关注我" aria-label="在 GitHub 上关注我" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://unpkg.com/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@next-theme/pjax@0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script><script src="/js/pjax.js"></script>
+
+  
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://unpkg.com/mermaid@10.9.0/dist/mermaid.min.js","integrity":"sha256-stuqcu2FrjYCXDOytWFA5SoUE/r3nkp6gTglzNSlavU="}}</script>
+  <script src="/js/third-party/tags/mermaid.js"></script>
+
+
+
+
+
+  
+
+
+
+
+  <script src="https://unpkg.com/quicklink@2.3.0/dist/quicklink.umd.js" integrity="sha256-yvJQOINiH9fWemHn0vCA5lsHWJaHs6/ZmO+1Ft04SvM=" crossorigin="anonymous"></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":true,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"https://blogs.qipai360.cn/2008/09/02/%E3%80%8A%E6%98%9F%E9%99%85%E4%BA%89%E9%9C%B82%E3%80%8B%E5%BC%95%E6%93%8E%E6%8A%80%E6%9C%AF%E8%A7%A3%E6%9E%90/"}</script>
+  <script src="/js/third-party/quicklink.js"></script>
+<script class="next-config" data-name="giscus" type="application/json">{"enable":true,"repo":"rise-worlds/rise-worlds.github.io","repo_id":"MDEwOlJlcG9zaXRvcnk2MTAxMTA0MA==","category":"Announcements","category_id":"DIC_kwDOA6L0YM4CiXf9","mapping":"pathname","strict":0,"reactions_enabled":1,"emit_metadata":0,"theme":"transparent_dark","lang":"zh-CN","crossorigin":"anonymous","input_position":"top","loading":"lazy"}</script>
+
+<script>
+document.addEventListener('page:loaded', () => {
+  if (!CONFIG.page.comments) return;
+
+  NexT.utils.loadComments('.giscus-container')
+    .then(() => NexT.utils.getScript('https://giscus.app/client.js', {
+      attributes: {
+        async                   : true,
+        crossOrigin             : 'anonymous',
+        'data-repo'             : CONFIG.giscus.repo,
+        'data-repo-id'          : CONFIG.giscus.repo_id,
+        'data-category'         : CONFIG.giscus.category,
+        'data-category-id'      : CONFIG.giscus.category_id,
+        'data-mapping'          : CONFIG.giscus.mapping,
+        'data-strict'           : CONFIG.giscus.strict,
+        'data-reactions-enabled': CONFIG.giscus.reactions_enabled,
+        'data-emit-metadata'    : CONFIG.giscus.emit_metadata,
+        'data-theme'            : CONFIG.giscus.theme,
+        'data-lang'             : CONFIG.giscus.lang,
+        'data-input-position'   : CONFIG.giscus.input_position,
+        'data-loading'          : CONFIG.giscus.loading
+      },
+      parentNode: document.querySelector('.giscus-container')
+    }));
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://unpkg.com/@fortawesome/fontawesome-free@6.5.2/css/all.min.css" integrity="sha256-XOqroi11tY4EFQMR9ZYwZWKj5ZXiftSx36RRuC3anlA=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://unpkg.com/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"blogs.qipai360.cn","root":"/","images":"/images","scheme":"Mist","darkmode":true,"version":"8.20.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="3.2 渲染状态 Direct3D提供了多种渲染状态，它影响几何物体怎样被渲染。渲染状态有默认值，因此假如你的应用程序需要不同于默认设置的渲染时，你仅仅改变它即可。一种渲染效果会一直起作用，直到你下一次改变渲染状态为止。为了设置一个渲染状态，我们使用下面的方法： Sets a single device render-state parameter.HRESULT SetRenderState(">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Direct3D中的绘制（2）">
+<meta property="og:url" content="https://blogs.qipai360.cn/2008/03/20/Direct3D%E4%B8%AD%E7%9A%84%E7%BB%98%E5%88%B6%EF%BC%882%EF%BC%89/index.html">
+<meta property="og:site_name" content="Rise&#39;blogs">
+<meta property="og:description" content="3.2 渲染状态 Direct3D提供了多种渲染状态，它影响几何物体怎样被渲染。渲染状态有默认值，因此假如你的应用程序需要不同于默认设置的渲染时，你仅仅改变它即可。一种渲染效果会一直起作用，直到你下一次改变渲染状态为止。为了设置一个渲染状态，我们使用下面的方法： Sets a single device render-state parameter.HRESULT SetRenderState(">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://www.cppblog.com/images/cppblog_com/lovedday/6306/o_figure32.jpg">
+<meta property="og:image" content="http://www.cppblog.com/images/cppblog_com/lovedday/6306/o_figure33.jpg">
+<meta property="og:image" content="http://www.cppblog.com/images/cppblog_com/lovedday/6306/o_triangle_demo.jpg">
+<meta property="article:published_time" content="2008-03-20T21:27:00.000Z">
+<meta property="article:modified_time" content="2008-03-20T21:27:00.000Z">
+<meta property="article:author" content="rise">
+<meta property="article:tag" content="graphics">
+<meta property="article:tag" content="direct3d">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://www.cppblog.com/images/cppblog_com/lovedday/6306/o_figure32.jpg">
+
+
+<link rel="canonical" href="https://blogs.qipai360.cn/2008/03/20/Direct3D%E4%B8%AD%E7%9A%84%E7%BB%98%E5%88%B6%EF%BC%882%EF%BC%89/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://blogs.qipai360.cn/2008/03/20/Direct3D%E4%B8%AD%E7%9A%84%E7%BB%98%E5%88%B6%EF%BC%882%EF%BC%89/","path":"2008/03/20/Direct3D中的绘制（2）/","title":"Direct3D中的绘制（2）"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Direct3D中的绘制（2） | Rise'blogs</title>
+  
+
+  <script src="/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?266da4e90214887b507c0bb6baa84e3e"></script>
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Rise'blogs</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-message"><a href="/message/" rel="section"><i class="fa fa-comments fa-fw"></i>留言板</a></li><li class="menu-item menu-item-sitemap"><a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>站点地图</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">3.2 渲染状态</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link"><span class="nav-number">1.0.1.</span> <span class="nav-text">Parameters</span></a></li><li class="nav-item nav-level-6"><a class="nav-link"><span class="nav-number">1.0.2.</span> <span class="nav-text">Return Values</span></a></li></ol></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link"><span class="nav-number">2.</span> <span class="nav-text">3.3 绘制准备</span></a></li><li class="nav-item nav-level-4"><a class="nav-link"><span class="nav-number">3.</span> <span class="nav-text">3.4用顶点&#x2F;索引缓存绘制</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link"><span class="nav-number">3.1.</span> <span class="nav-text">3.4.1 IDirect3DDevice9::DrawPrimitive</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link"><span class="nav-number">3.1.1.</span> <span class="nav-text">Parameters</span></a></li><li class="nav-item nav-level-6"><a class="nav-link"><span class="nav-number">3.1.2.</span> <span class="nav-text">Return Values</span></a></li><li class="nav-item nav-level-6"><a class="nav-link"><span class="nav-number">3.1.3.</span> <span class="nav-text">Remarks</span></a></li><li class="nav-item nav-level-6"><a class="nav-link"><span class="nav-number">3.1.4.</span> <span class="nav-text">Constants</span></a></li><li class="nav-item nav-level-6"><a class="nav-link"><span class="nav-number">3.1.5.</span> <span class="nav-text">Remarks</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link"><span class="nav-number">3.2.</span> <span class="nav-text">3.4.2 IDirect3DDevice9::DrawIndexedPrimitive</span></a></li><li class="nav-item nav-level-5"><a class="nav-link"><span class="nav-number">3.3.</span> <span class="nav-text">3.4.3 开始&#x2F;结束场景</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link"><span class="nav-number">4.</span> <span class="nav-text">3.5 D3DX几何物体</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="rise"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">rise</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">664</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">49</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">109</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="mailto:rise.worlds@outlook.com" title="E-Mail → mailto:rise.worlds@outlook.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://github.com/rise-worlds" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;rise-worlds" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://x.com/riseworlds" title="Twitter → https:&#x2F;&#x2F;x.com&#x2F;riseworlds" rel="noopener me" target="_blank"><i class="fab fa-twitter fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.facebook.com/rise.worlds" title="FB Page → https:&#x2F;&#x2F;www.facebook.com&#x2F;rise.worlds" rel="noopener me" target="_blank"><i class="fab fa-facebook fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.youtube.com/@YiXuan" title="YouTube → https:&#x2F;&#x2F;www.youtube.com&#x2F;@YiXuan" rel="noopener me" target="_blank"><i class="fab fa-youtube fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.instagram.com/rise.worlds/" title="Instagram → https:&#x2F;&#x2F;www.instagram.com&#x2F;rise.worlds&#x2F;" rel="noopener me" target="_blank"><i class="fab fa-instagram fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://t.me/riseworlds" title="Telegram → https:&#x2F;&#x2F;t.me&#x2F;riseworlds" rel="noopener me" target="_blank"><i class="fab fa-telegram fa-fw"></i></a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+          链接
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <a href="https://www.cnblogs.com/flying_bat" title="https:&#x2F;&#x2F;www.cnblogs.com&#x2F;flying_bat" rel="noopener" target="_blank">My Cnblogs</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://www.github.com/rise-worlds" title="https:&#x2F;&#x2F;www.github.com&#x2F;rise-worlds" rel="noopener" target="_blank">My Github</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://www.google.com/" title="https:&#x2F;&#x2F;www.google.com&#x2F;" rel="noopener" target="_blank">Google</a>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://blogs.qipai360.cn/2008/03/20/Direct3D%E4%B8%AD%E7%9A%84%E7%BB%98%E5%88%B6%EF%BC%882%EF%BC%89/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="rise">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Rise'blogs">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Direct3D中的绘制（2） | Rise'blogs">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Direct3D中的绘制（2）
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2008-03-20 21:27:00" itemprop="dateCreated datePublished" datetime="2008-03-20T21:27:00+00:00">2008-03-20</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/dev/" itemprop="url" rel="index"><span itemprop="name">dev</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/dev/GameDev/" itemprop="url" rel="index"><span itemprop="name">GameDev</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h4><a name="_Toc138011517">3.2 </a>渲染状态</h4> <p>Direct3D提供了多种渲染状态，它影响几何物体怎样被渲染。渲染状态有默认值，因此假如你的应用程序需要不同于默认设置的渲染时，你仅仅改变它即可。一种渲染效果会一直起作用，直到你下一次改变渲染状态为止。为了设置一个渲染状态，我们使用下面的方法： <p>Sets a single device render-state parameter.<pre><strong>HRESULT SetRenderState(</strong><br>  <strong>D3DRENDERSTATETYPE</strong> <em>State</em><strong>,</strong><br>  <strong>DWORD</strong> <em>Value</em><br><strong>);</strong></pre>
+
+<h6>Parameters</h6>
+
+<dl>
+
+<dt><em>State</em>
+
+<dd>[in] Device state variable that is being modified. This parameter can be any member of the D3DRENDERSTATETYPE enumerated type. 
+
+<dt><em>Value</em>
+
+<dd>[in] New value for the device render state to be set. The meaning of this parameter is dependent on the value specified for <em>State</em>. For example, if <em>State</em> were D3DRS_SHADEMODE, the second parameter would be one member of the D3DSHADEMODE enumerated type. </dd></dl>
+
+<h6>Return Values</h6>
+
+<p>If the method succeeds, the return value is D3D_OK. D3DERR_INVALIDCALL is returned if one of the arguments is invalid. 
+
+<p>例如，在下面的例子中我们将使用线框模式渲染我们的物体。因此，我们设置如下的渲染状态：
+
+<p>_device-&gt;SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
+
+<p>注意：查看DirectX SDK中关于D3DRENDERSTATETYPE的信息。其中详细介绍了所有的渲染状态。
+
+<h4><a name="_Toc138011518">3.3 </a>绘制准备</h4>
+
+<p>一旦我们创建好一个顶点缓存以及一个索引缓存（可选的）后，我们就为渲染其中的内容准备得差不多了，但是在渲染前我们还有3个步骤必须先做。
+
+<p>1、 <strong>设置资源流</strong>。设置资源流与一个顶点缓存挂钩，此流就是一个流入渲染管线的几何信息的流。
+
+<p>下面的方法是用于设置一个资源流：
+
+<p>HRESULT IDirect3DDevice9::SetStreamSource(
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; UINT StreamNumber,
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; IDirect3DVertexBuffer9* pStreamData,
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; UINT OffsetInBytes,
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; UINT Stride
+
+<p>);
+
+<p>StreamNumber——确定我们的顶点缓存与哪一个资源流挂钩。我们不使用多重流；因此我们总是使用0号流。
+
+<p>pStreamData——一个指向我们想与流挂钩的那个顶点缓存的指针。
+
+<p>OffsetInBytes——相对流开始处的偏移量。以字节为单位，它指定被填入渲染管线的顶点数据的开始位置。通过检查D3DCAPS9结构中的D3DDEVCAPS2_STREAMOFFSET标志，假如你的设备支持，那么这个参数就有一些非0值。
+
+<p>Stride——我们在顶点缓存中操作的每个部分的流的字节大小。
+
+<p>例如，假设vb是一个已经填充了顶点信息的顶点缓存：
+
+<p>_device-&gt;SetStreamSource( 0, vb, 0, sizeof( Vertex ) );
+
+<p>2、 <strong>设置索引缓存</strong>。假如我们使用了索引缓存，我们必须设置后面要用于绘制操作的索引缓存。每次我们只能使用一个索引缓存；因此假如你需要用一个不同的索引缓存绘制一个物体时，你必须转换到另一个上。下面的代码设置一个索引缓存：
+
+<p>_device-&gt;SetIndices( _ib ); // 传递一个索引缓存指针的拷贝
+
+<h4><a name="_Toc138011519">3.4</a>用顶点/索引缓存绘制</h4>
+
+<p>在我们创建好顶点/索引缓存以及做好准备工作以后，我们就能绘制我们的几何物体了。这是通过使用DrawPrimitive或者DrawIndexedPrimitive传送几何信息到达渲染管线。这些方法从顶点流中获得顶点信息以及从索引缓存中获得索引信息。
+
+<h5>3.4.1 IDirect3DDevice9::DrawPrimitive</h5>
+
+<p>这个方法不使用索引信息绘制图元。
+
+<p>HRESULT IDirect3DDevice9::DrawPrimitive(
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; D3DPRIMITIVETYPE PrimitiveType,
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; UINT StartVertex,
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; UINT PrimitiveCount
+
+<p>);
+
+<p>PrimitiveType——我们绘制的图元类型。比如，我们能绘制点和线以及三角形。以后我们使用三角形，用D3DPT_TRIANGLELIST参数。
+
+<p>StartVertex——索引到在顶点流中的一个元素。设置渲染顶点中的开始点。这个参数给予我们一定的机动性，可以绘制一个顶点缓存中的某部分。
+
+<p>PrimitiveCount——绘制图元的个数。
+
+<p>例子：
+
+<p>// 绘制4个三角形
+
+<p>_device-&gt;DrawPrimitive( D3DPT_TRIANGLELIST, 0, 4);
+
+<p>Renders a sequence of nonindexed, geometric primitives of the specified type from the current set of data input streams.<pre><strong>HRESULT DrawPrimitive(</strong><br>  <strong>D3DPRIMITIVETYPE</strong> <em>PrimitiveType</em><strong>,</strong><br>  <strong>UINT</strong> <em>StartVertex</em><strong>,</strong><br>  <strong>UINT</strong> <em>PrimitiveCount</em><br><strong>);</strong></pre>
+
+<h6>Parameters</h6>
+
+<dl>
+
+<dt><em>PrimitiveType</em>
+
+<dd>[in] Member of the D3DPRIMITIVETYPE enumerated type, describing the type of primitive to render. 
+
+<dt><em>StartVertex</em>
+
+<dd>[in] Index of the first vertex to load. Beginning at StartVertex the correct number of vertices will be read out of the vertex buffer. 
+
+<dt><em>PrimitiveCount</em>
+
+<dd>[in] Number of primitives to render. The maximum number of primitives allowed is determined by checking the MaxPrimitiveCount member of the D3DCAPS9 structure. PrimitiveCount is the number of primitives as determined by the primitive type. If it is a line list, each primitive has two vertices. If it is a triangle list, each primitive has three vertices. </dd></dl>
+
+<h6>Return Values</h6>
+
+<p>If the method succeeds, the return value is D3D_OK. If the method fails, the return value can be D3DERR_INVALIDCALL.
+
+<h6>Remarks</h6>
+
+<p>When converting a legacy application to Direct3D 9, you must add a call to either IDirect3DDevice9::SetFVF to use the fixed function pipeline, or IDirect3DDevice9::SetVertexDeclaration to use a vertex shader before you make any Draw calls.
+
+<p>Defines the primitives supported by Direct3D.<pre>typedef enum D3DPRIMITIVETYPE<br>{<br>    D3DPT_POINTLIST = 1,<br>    D3DPT_LINELIST = 2,<br>    D3DPT_LINESTRIP = 3,<br>    D3DPT_TRIANGLELIST = 4,<br>    D3DPT_TRIANGLESTRIP = 5,<br>    D3DPT_TRIANGLEFAN = 6,<br>    D3DPT_FORCE_DWORD = 0x7fffffff,<br>} D3DPRIMITIVETYPE, *LPD3DPRIMITIVETYPE;</pre>
+
+<h6>Constants</h6>
+
+<dl>
+
+<dt>D3DPT_POINTLIST 
+
+<dd>Renders the vertices as a collection of isolated points. This value is unsupported for indexed primitives. 
+
+<dt>D3DPT_LINELIST 
+
+<dd>Renders the vertices as a list of isolated straight line segments. 
+
+<dt>D3DPT_LINESTRIP 
+
+<dd>Renders the vertices as a single polyline. 
+
+<dt>D3DPT_TRIANGLELIST 
+
+<p>Renders the specified vertices as a sequence of isolated triangles. Each group of three vertices defines a separate triangle. </p>
+
+<dd>Back-face culling is affected by the current winding-order render state. 
+
+<p></p>
+
+<dt>D3DPT_TRIANGLESTRIP 
+
+<dd>Renders the vertices as a triangle strip. The backface-culling flag is automatically flipped on even-numbered triangles. 
+
+<dt>D3DPT_TRIANGLEFAN 
+
+<dd>Renders the vertices as a triangle fan. 
+
+<dt>D3DPT_FORCE_DWORD 
+
+<dd>Forces this enumeration to compile to 32 bits in size. Without this value, some compilers would allow this enumeration to compile to a size other than 32 bits. This value is not used. </dd></dl>
+
+<h6>Remarks</h6>
+
+<p>Using Triangle Strips (Direct3D 9) or Triangle Fans (Direct3D 9) is often more efficient than using triangle lists because fewer vertices are duplicated.
+
+<h5>3.4.2 IDirect3DDevice9::DrawIndexedPrimitive</h5>
+
+<p>这个方法使用索引信息来绘制图元。
+
+<p>HRESULT IDirect3DDevice9::DrawIndexedPrimitive(
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; D3DPRIMITIVETYPE Type,
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; INT BaseVertexIndex,
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; UINT MinIndex,
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; UINT NumVertices,
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; UINT StartIndex,
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; UINT PrimitiveCount
+
+<p>);
+
+<p>Type——我们绘制的图元类型。比如，我们能绘制点和线以及三角形。以后我们使用三角形，用D3DPT_TRIANGLELIST参数。
+
+<p>BaseVertexIndex——一个基本数字，在调用中用它去加上索引。参看下面的说明。
+
+<p>MinIndex——将被引用的最小索引值。
+
+<p>NumVertices——在此调用中将被引用的顶点数。
+
+<p>StartIndex——索引到索引缓存中的某个位置，它标记开始渲染的开始索引点。
+
+<p>PrimitiveCount——绘制图元的个数。
+
+<p>例子：
+
+<p>_device-&gt;DrawIndexedPrimitive(D3DPT_TRIANGLELIST, 0, 0, 8, 0, 12);
+
+<p>注意：BaseVertexIndex参数需要一些特别的解释。在解释过程中将会用到的图3.2。
+
+<p><img height="457" src="http://www.cppblog.com/images/cppblog_com/lovedday/6306/o_figure32.jpg" width="755" border="0">
+
+<p>在索引缓存中定位顶点相应的也就在顶点缓存中定位了。然而，假设我们想将球，盒子，圆柱体的顶点放置到一个公共的顶点缓存中。对于每一个物体，我们将不得不再计算在公共顶点缓存中的索引。这个新的索引值是通过与一个偏移量相加得到。注意这个偏移量是标准的顶点，而不是字节。
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 我们需要计算物体在公共顶点缓存中的索引值。Direct3D允许我们通过设置BaseVertexIndex参数得到一个顶点偏移量，随后Direct3D就能利用顶点自身的索引重新计算新的索引。
+
+<h5>3.4.3 开始/结束场景</h5>
+
+<p>最后一点就是所有绘制方法都必须在IDirect3DDevice9::BeginScene和IDirect3DDevice9::EndScene方法之间被调用。例如，我们将这样写：
+
+<p>_device-&gt;BeginScene();
+
+<p>// 绘制场景
+
+<p>_device-&gt;DrawPrimitive(...);
+
+<p>_device-&gt;EndScene();
+
+<h4><a name="_Toc138011523">3.5 D3DX</a>几何物体</h4>
+
+<p>通过在代码中建造每个三角形来建造3D物体是一件非常枯燥的事。幸运的是，D3DX库已经为我们提供了一些方法来产生简单3D物体的网格数据。
+
+<p>D3DX库提供如下6种网格生成函数。
+
+<p>D3DXCreateBox
+
+<p>D3DXCreateSphere
+
+<p>D3DXCreateCylinder
+
+<p>D3DXCreateTeapot
+
+<p>D3DXCreatePolygon
+
+<p>D3DXCreateTorus
+
+<p><img height="327" src="http://www.cppblog.com/images/cppblog_com/lovedday/6306/o_figure33.jpg" width="751" border="0">
+
+<p>这6种函数的使用都很类似，并且使用D3DX网格数据结构ID3DXMesh就象使用ID3DXBuffer接口一样。现在，我们忽视它们的详细信息，只需简单使用它们即可。
+
+<p>HRESULT D3DXCreateTeapot(
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; LPDIRECT3DDEVICE9 pDevice, // 与mesh关联的设备
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; LPD3DXMESH* ppMesh, // 返回的mesh
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; LPD3DXBUFFER* ppAdjacency // 现在设成0
+
+<p>);
+
+<p>一个使用D3DXCreateTeapot函数的例子：
+
+<p>ID3DXMesh* mesh = 0;
+
+<p>D3DXCreateTeapot(_device, &amp;mesh, 0);
+
+<p>一旦生成了网格数据，我们就能使用ID3DXMesh::DrawSubset方法绘制图形了。这个方法有一个参数，它用来识别网格的一个子集。这个网格是通过上面的D3DXCreate*函数中的一个子集创建的，因此可以给这个参数指定0值。一个渲染网格的例子：
+
+<p>_device-&gt;BeginScene();
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; mesh-&gt;DrawSubset(0);
+
+<p>_device-&gt;EndScene();
+
+<p>使用了网格以后，必须释放（release）它：
+
+<p>mesh-&gt;Release();
+
+<p>_mesh = 0;
+
+<p> 实例程序：三角形
+
+<p>这是非常简单的应用程序，它示范了在线框模式下怎样创建并渲染一个三角形。
+
+<p>/**************************************************************************************<br>&nbsp; Renders a triangle in wireframe mode.&nbsp; <br>&nbsp; Demonstrates vertex buffers, render states, and drawing commands.<br> **************************************************************************************/<br>#include "d3dUtility.h"<br>#pragma warning(disable : 4100)<br>const int WIDTH&nbsp; = 640;<br>const int HEIGHT = 480;<br>IDirect3DDevice9*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; g_d3d_device&nbsp; = NULL;<br>IDirect3DVertexBuffer9*&nbsp;&nbsp;&nbsp; g_triangle_vb = NULL;<br>class cVertex<br>{<br>public:<br>float m_x, m_y, m_z;<br>&nbsp;&nbsp;&nbsp; cVertex() {}<br>&nbsp;&nbsp;&nbsp; cVertex(float x, float y, float z)<br>&nbsp;&nbsp;&nbsp; {<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; m_x = x;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; m_y = y;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; m_z = z;<br>&nbsp;&nbsp;&nbsp; }<br>};<br>const DWORD VERTEX_FVF = D3DFVF_XYZ;<br>////////////////////////////////////////////////////////////////////////////////////////////////////<br>bool setup()<br>{&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp; g_d3d_device-&gt;CreateVertexBuffer(3 * sizeof(cVertex), D3DUSAGE_WRITEONLY, VERTEX_FVF, <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; D3DPOOL_MANAGED, &amp;g_triangle_vb, NULL);<br>// fill the buffers with the triangle data<br>&nbsp;&nbsp;&nbsp; cVertex* vertices;<br>&nbsp;&nbsp;&nbsp; g_triangle_vb-&gt;Lock(0, 0, (void**)&amp;vertices, 0);<br>&nbsp;&nbsp;&nbsp; vertices[0] = cVertex(-1.0f, 0.0f, 2.0f);<br>&nbsp;&nbsp;&nbsp; vertices[1] = cVertex( 0.0f, 1.0f, 2.0f);<br>&nbsp;&nbsp;&nbsp; vertices[2] = cVertex( 1.0f, 0.0f, 2.0f);<br>&nbsp;&nbsp;&nbsp; g_triangle_vb-&gt;Unlock();<br>// set the projection matrix<br>&nbsp;&nbsp;&nbsp; D3DXMATRIX proj;<br>&nbsp;&nbsp;&nbsp; D3DXMatrixPerspectiveFovLH(&amp;proj, D3DX_PI * 0.5f, (float)WIDTH/HEIGHT, 1.0f, 1000.0f);<br>&nbsp;&nbsp;&nbsp; g_d3d_device-&gt;SetTransform(D3DTS_PROJECTION, &amp;proj);<br>// set wireframe mode render state<br>&nbsp;&nbsp;&nbsp; g_d3d_device-&gt;SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);<br>return true;<br>}<br>void cleanup()<br>{<br>&nbsp;&nbsp;&nbsp; safe_release&lt;IDirect3DVertexBuffer9*&gt;(g_triangle_vb);<br>}<br>bool display(float time_delta)<br>{<br>&nbsp;&nbsp;&nbsp; g_d3d_device-&gt;Clear(0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, 0xffffffff, 1.0f, 0);<br>&nbsp;&nbsp;&nbsp; g_d3d_device-&gt;BeginScene();<br>&nbsp;&nbsp;&nbsp; g_d3d_device-&gt;SetStreamSource(0, g_triangle_vb, 0, sizeof(cVertex));<br>&nbsp;&nbsp;&nbsp; g_d3d_device-&gt;SetFVF(VERTEX_FVF);<br>// draw one triangle<br>&nbsp;&nbsp;&nbsp; g_d3d_device-&gt;DrawPrimitive(D3DPT_TRIANGLELIST, 0, 1);<br>&nbsp;&nbsp;&nbsp; g_d3d_device-&gt;EndScene();<br>&nbsp;&nbsp;&nbsp; g_d3d_device-&gt;Present(NULL, NULL, NULL, NULL);<br>return true;<br>}<br>LRESULT CALLBACK wnd_proc(HWND hwnd, UINT msg, WPARAM word_param, LPARAM long_param)<br>{<br>switch(msg)<br>&nbsp;&nbsp;&nbsp; {<br>case WM_DESTROY:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; PostQuitMessage(0);<br>break;<br>case WM_KEYDOWN:<br>if(word_param == VK_ESCAPE)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; DestroyWindow(hwnd);<br>break;<br>&nbsp;&nbsp;&nbsp; }<br>return DefWindowProc(hwnd, msg, word_param, long_param);<br>}<br>int WINAPI WinMain(HINSTANCE inst, HINSTANCE, PSTR cmd_line, int cmd_show)<br>{<br>if(! init_d3d(inst, WIDTH, HEIGHT, true, D3DDEVTYPE_HAL, &amp;g_d3d_device))<br>&nbsp;&nbsp;&nbsp; {<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; MessageBox(NULL, "init_d3d() - failed.", 0, MB_OK);<br>return 0;<br>&nbsp;&nbsp;&nbsp; }<br>if(! setup())<br>&nbsp;&nbsp;&nbsp; {<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; MessageBox(NULL, "Steup() - failed.", 0, MB_OK);<br>return 0;<br>&nbsp;&nbsp;&nbsp; }<br>&nbsp;&nbsp;&nbsp; enter_msg_loop(display);<br>&nbsp;&nbsp;&nbsp; cleanup();<br>&nbsp;&nbsp;&nbsp; g_d3d_device-&gt;Release();<br>return 0;<br>}
+
+<p>截图：
+
+<p><img height="478" src="http://www.cppblog.com/images/cppblog_com/lovedday/6306/o_triangle_demo.jpg" width="640" border="0">
+
+<p><strong><a target="_blank" rel="noopener" href="http://www.cppblog.com/Files/lovedday/triangle_demo.rar">下载三角形源程序</a></strong></p>
+    
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="followme">
+  <span>欢迎关注我的其它发布渠道</span>
+
+  <div class="social-list">
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="https://www.facebook.com/rise.worlds">
+            <span class="icon">
+              <i class="fab fa-facebook"></i>
+            </span>
+
+            <span class="label">FB Page</span>
+          </a>
+      </div>
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="https://twitter.com/riseworlds">
+            <span class="icon">
+              <i class="fab fa-twitter"></i>
+            </span>
+
+            <span class="label">Twitter</span>
+          </a>
+      </div>
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="https://t.me/riseworlds">
+            <span class="icon">
+              <i class="fab fa-telegram"></i>
+            </span>
+
+            <span class="label">Telegram</span>
+          </a>
+      </div>
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/graphics/" rel="tag"># graphics</a>
+              <a href="/tags/direct3d/" rel="tag"># direct3d</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2008/03/20/Direct3D%E4%B8%AD%E7%9A%84%E7%BB%98%E5%88%B6%EF%BC%883%EF%BC%89/" rel="prev" title="Direct3D中的绘制（3）">
+                  <i class="fa fa-angle-left"></i> Direct3D中的绘制（3）
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2008/03/20/Direct3D%E4%B8%AD%E7%9A%84%E7%BB%98%E5%88%B6%EF%BC%885%EF%BC%89/" rel="next" title="Direct3D中的绘制（5）">
+                  Direct3D中的绘制（5） <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  
+  <div class="comments giscus-container">
+  </div>
+  
+  
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">豫ICP备2021009490号 </a>
+  </div>
+  <div class="copyright">
+    &copy; 2004 – 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">rise</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="reading-progress-bar"></div>
+
+  <a href="https://github.com/rise-worlds" class="github-corner" title="在 GitHub 上关注我" aria-label="在 GitHub 上关注我" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://unpkg.com/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@next-theme/pjax@0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script><script src="/js/pjax.js"></script>
+
+  
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://unpkg.com/mermaid@10.9.0/dist/mermaid.min.js","integrity":"sha256-stuqcu2FrjYCXDOytWFA5SoUE/r3nkp6gTglzNSlavU="}}</script>
+  <script src="/js/third-party/tags/mermaid.js"></script>
+
+
+
+
+
+  
+
+
+
+
+  <script src="https://unpkg.com/quicklink@2.3.0/dist/quicklink.umd.js" integrity="sha256-yvJQOINiH9fWemHn0vCA5lsHWJaHs6/ZmO+1Ft04SvM=" crossorigin="anonymous"></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":true,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"https://blogs.qipai360.cn/2008/03/20/Direct3D%E4%B8%AD%E7%9A%84%E7%BB%98%E5%88%B6%EF%BC%882%EF%BC%89/"}</script>
+  <script src="/js/third-party/quicklink.js"></script>
+<script class="next-config" data-name="giscus" type="application/json">{"enable":true,"repo":"rise-worlds/rise-worlds.github.io","repo_id":"MDEwOlJlcG9zaXRvcnk2MTAxMTA0MA==","category":"Announcements","category_id":"DIC_kwDOA6L0YM4CiXf9","mapping":"pathname","strict":0,"reactions_enabled":1,"emit_metadata":0,"theme":"transparent_dark","lang":"zh-CN","crossorigin":"anonymous","input_position":"top","loading":"lazy"}</script>
+
+<script>
+document.addEventListener('page:loaded', () => {
+  if (!CONFIG.page.comments) return;
+
+  NexT.utils.loadComments('.giscus-container')
+    .then(() => NexT.utils.getScript('https://giscus.app/client.js', {
+      attributes: {
+        async                   : true,
+        crossOrigin             : 'anonymous',
+        'data-repo'             : CONFIG.giscus.repo,
+        'data-repo-id'          : CONFIG.giscus.repo_id,
+        'data-category'         : CONFIG.giscus.category,
+        'data-category-id'      : CONFIG.giscus.category_id,
+        'data-mapping'          : CONFIG.giscus.mapping,
+        'data-strict'           : CONFIG.giscus.strict,
+        'data-reactions-enabled': CONFIG.giscus.reactions_enabled,
+        'data-emit-metadata'    : CONFIG.giscus.emit_metadata,
+        'data-theme'            : CONFIG.giscus.theme,
+        'data-lang'             : CONFIG.giscus.lang,
+        'data-input-position'   : CONFIG.giscus.input_position,
+        'data-loading'          : CONFIG.giscus.loading
+      },
+      parentNode: document.querySelector('.giscus-container')
+    }));
+});
+</script>
+
+</body>
+</html>
