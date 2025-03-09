@@ -1,0 +1,335 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Android on Rise'blogs</title><link>https://blogs.qipai360.cn/categories/android/</link><description>Recent content in Android on Rise'blogs</description><generator>Hugo</generator><language>zh-CN</language><lastBuildDate>Fri, 14 Aug 2020 16:22:00 +0800</lastBuildDate><atom:link href="https://blogs.qipai360.cn/categories/android/rss.xml" rel="self" type="application/rss+xml"/><item><title>Mac编译Android 8.1</title><link>https://blogs.qipai360.cn/post/mac%E7%BC%96%E8%AF%91android-8.1/</link><pubDate>Fri, 14 Aug 2020 16:22:00 +0800</pubDate><guid>https://blogs.qipai360.cn/post/mac%E7%BC%96%E8%AF%91android-8.1/</guid><description>&lt;p>一、配置环境
+• 安装XCode
+
+&lt;a href="https://developer.apple.com/xcode/" title="https://developer.apple.com/xcode/" rel="noopener external nofollow noreferrer" target="_blank" class=" exturl">
+ https://developer.apple.com/xcode/
+ 
+&lt;/a>
+&lt;code>xcode-select --install&lt;/code>
+• 安装JDK
+
+&lt;a href="https://docs.oracle.com/javase/8/docs/technotes/guides/install/mac_jdk.html" title="https://docs.oracle.com/javase/8/docs/technotes/guides/install/mac_jdk.html" rel="noopener external nofollow noreferrer" target="_blank" class=" exturl">
+ https://docs.oracle.com/javase/8/docs/technotes/guides/install/mac_jdk.html
+ 
+&lt;/a>
+• 安装Homebrew
+&lt;code>/usr/bin/ruby -e &amp;quot;$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)&amp;quot;&lt;/code>
+• 安装工具
+&lt;code>brew install git python make curl&lt;/code>
+• 安装MacPort
+
+&lt;a href="https://www.macports.org/install.php" title="https://www.macports.org/install.php" rel="noopener external nofollow noreferrer" target="_blank" class=" exturl">
+ https://www.macports.org/install.php
+ 
+&lt;/a>
+• 安装工具
+&lt;code>POSIXLY_CORRECT=1 sudo port install gmake libsdl git gnupg&lt;/code>
+二、创建磁盘镜像&lt;/p></description></item><item><title>Ubuntu 20.04编译Android 8.1</title><link>https://blogs.qipai360.cn/post/ubuntu-20.04-build-android-8.1/</link><pubDate>Fri, 14 Aug 2020 16:12:00 +0800</pubDate><guid>https://blogs.qipai360.cn/post/ubuntu-20.04-build-android-8.1/</guid><description>&lt;p>一、配置环境&lt;/p>
+
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt" id="hl-0-1">&lt;a class="lnlinks" href="#hl-0-1">1&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-2">&lt;a class="lnlinks" href="#hl-0-2">2&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-3">&lt;a class="lnlinks" href="#hl-0-3">3&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-4">&lt;a class="lnlinks" href="#hl-0-4">4&lt;/a>
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">sudo apt install git-core gnupg flex bison gperf build-essential &lt;span class="se">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="se">&lt;/span> zip curl zlib1g-dev gcc-multilib g++-multilib libc6-dev-i386 &lt;span class="se">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="se">&lt;/span> lib32ncurses5-dev x11proto-core-dev libx11-dev lib32z-dev libgl1-mesa-dev &lt;span class="se">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="se">&lt;/span> libncurses5 libxml2-utils python xsltproc unzip&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>
+
+&lt;p>二、配置环境变量&lt;code>.bash_profile&lt;/code>&lt;/p>
+
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt" id="hl-1-1">&lt;a class="lnlinks" href="#hl-1-1">1&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-1-2">&lt;a class="lnlinks" href="#hl-1-2">2&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-1-3">&lt;a class="lnlinks" href="#hl-1-3">3&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-1-4">&lt;a class="lnlinks" href="#hl-1-4">4&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-1-5">&lt;a class="lnlinks" href="#hl-1-5">5&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-1-6">&lt;a class="lnlinks" href="#hl-1-6">6&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-1-7">&lt;a class="lnlinks" href="#hl-1-7">7&lt;/a>
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Compiler cache&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">export&lt;/span> &lt;span class="nv">USE_CCACHE&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="m">1&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">export&lt;/span> &lt;span class="nv">PATH&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;/opt/local/bin:/opt/local/sbin:&lt;/span>&lt;span class="nv">$PATH&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">export&lt;/span> &lt;span class="nv">PATH&lt;/span>&lt;span class="o">=&lt;/span>~/Documents/android/bin:&lt;span class="nv">$PATH&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">export&lt;/span> &lt;span class="nv">ANDROID_JAVA_HOME&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="k">$(&lt;/span>/usr/libexec/java_home -v 1.8&lt;span class="k">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">export&lt;/span> &lt;span class="nv">PATH&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="nv">$ANDROID_JAVA_HOME&lt;/span>/bin:&lt;span class="nv">$PATH&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">export&lt;/span> &lt;span class="nv">REPO_URL&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s1">&amp;#39;https://mirrors.tuna.tsinghua.edu.cn/git/git-repo/&amp;#39;&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>
+
+&lt;p>四、下载AOSP源代码
+• 下载repo并设置权限&lt;/p></description></item><item><title>Android预编译调用第三方库</title><link>https://blogs.qipai360.cn/post/android%E9%A2%84%E7%BC%96%E8%AF%91%E8%B0%83%E7%94%A8%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/</link><pubDate>Wed, 12 Aug 2020 00:07:00 +0800</pubDate><guid>https://blogs.qipai360.cn/post/android%E9%A2%84%E7%BC%96%E8%AF%91%E8%B0%83%E7%94%A8%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/</guid><description>&lt;p>在同一个&lt;code>Android.mk&lt;/code>中编写就行：&lt;/p>
+
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt" id="hl-0-1">&lt;a class="lnlinks" href="#hl-0-1"> 1&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-2">&lt;a class="lnlinks" href="#hl-0-2"> 2&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-3">&lt;a class="lnlinks" href="#hl-0-3"> 3&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-4">&lt;a class="lnlinks" href="#hl-0-4"> 4&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-5">&lt;a class="lnlinks" href="#hl-0-5"> 5&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-6">&lt;a class="lnlinks" href="#hl-0-6"> 6&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-7">&lt;a class="lnlinks" href="#hl-0-7"> 7&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-8">&lt;a class="lnlinks" href="#hl-0-8"> 8&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-9">&lt;a class="lnlinks" href="#hl-0-9"> 9&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-10">&lt;a class="lnlinks" href="#hl-0-10">10&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-11">&lt;a class="lnlinks" href="#hl-0-11">11&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-12">&lt;a class="lnlinks" href="#hl-0-12">12&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-13">&lt;a class="lnlinks" href="#hl-0-13">13&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-14">&lt;a class="lnlinks" href="#hl-0-14">14&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-15">&lt;a class="lnlinks" href="#hl-0-15">15&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-16">&lt;a class="lnlinks" href="#hl-0-16">16&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-17">&lt;a class="lnlinks" href="#hl-0-17">17&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-18">&lt;a class="lnlinks" href="#hl-0-18">18&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-19">&lt;a class="lnlinks" href="#hl-0-19">19&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-20">&lt;a class="lnlinks" href="#hl-0-20">20&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-21">&lt;a class="lnlinks" href="#hl-0-21">21&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-22">&lt;a class="lnlinks" href="#hl-0-22">22&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-23">&lt;a class="lnlinks" href="#hl-0-23">23&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-24">&lt;a class="lnlinks" href="#hl-0-24">24&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-25">&lt;a class="lnlinks" href="#hl-0-25">25&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-26">&lt;a class="lnlinks" href="#hl-0-26">26&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-27">&lt;a class="lnlinks" href="#hl-0-27">27&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-28">&lt;a class="lnlinks" href="#hl-0-28">28&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-29">&lt;a class="lnlinks" href="#hl-0-29">29&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-30">&lt;a class="lnlinks" href="#hl-0-30">30&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-31">&lt;a class="lnlinks" href="#hl-0-31">31&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-32">&lt;a class="lnlinks" href="#hl-0-32">32&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-33">&lt;a class="lnlinks" href="#hl-0-33">33&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-34">&lt;a class="lnlinks" href="#hl-0-34">34&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-35">&lt;a class="lnlinks" href="#hl-0-35">35&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-36">&lt;a class="lnlinks" href="#hl-0-36">36&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-37">&lt;a class="lnlinks" href="#hl-0-37">37&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-38">&lt;a class="lnlinks" href="#hl-0-38">38&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-39">&lt;a class="lnlinks" href="#hl-0-39">39&lt;/a>
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-Makefile" data-lang="Makefile">&lt;span class="line">&lt;span class="cl">&lt;span class="nv">LOCAL_PATH&lt;/span>&lt;span class="o">:=&lt;/span> &lt;span class="k">$(&lt;/span>call my-dir&lt;span class="k">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c">#此段是预编译第三方库部分
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c">&lt;/span>&lt;span class="err">include&lt;/span> &lt;span class="k">$(&lt;/span>&lt;span class="nv">CLEAR_VARS&lt;/span>&lt;span class="k">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">LOCAL_MODULE&lt;/span> &lt;span class="o">:=&lt;/span> libaspmodule
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">LOCAL_MODULE_TAGS&lt;/span> &lt;span class="o">:=&lt;/span> optional
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c">#LOCAL_SRC_FILES := libaspmodule.so
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c">#32位、64位两者都编译
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c">&lt;/span>&lt;span class="nv">LOCAL_MULTILIB&lt;/span> &lt;span class="o">:=&lt;/span> both 
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">LOCAL_SRC_FILES_arm&lt;/span>&lt;span class="o">:=&lt;/span> armeabi-v7a/libaspmodule.so
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">LOCAL_SRC_FILES_arm64&lt;/span>&lt;span class="o">:=&lt;/span> arm64-v8a/libaspmodule.so
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">LOCAL_EXPORT_C_INCLUDES&lt;/span> &lt;span class="o">:=&lt;/span> &lt;span class="k">$(&lt;/span>LOCAL_PATH&lt;span class="k">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">LOCAL_MODULE_STEM&lt;/span> &lt;span class="o">:=&lt;/span>&lt;span class="k">$(&lt;/span>LOCAL_MODULE&lt;span class="k">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">LOCAL_MODULE_SUFFIX&lt;/span> &lt;span class="o">:=&lt;/span> &lt;span class="k">$(&lt;/span>suffix &lt;span class="k">$(&lt;/span>LOCAL_SRC_FILES&lt;span class="k">))&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">LOCAL_MODULE_CLASS&lt;/span> &lt;span class="o">:=&lt;/span> SHARED_LIBRARIES
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">include&lt;/span> &lt;span class="k">$(&lt;/span>&lt;span class="nv">BUILD_PREBUILT&lt;/span>&lt;span class="k">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c">#此段是预编译第三方静态库部分
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c">&lt;/span>&lt;span class="err">include&lt;/span> &lt;span class="k">$(&lt;/span>&lt;span class="nv">CLEAR_VARS&lt;/span>&lt;span class="k">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">LOCAL_MODULE&lt;/span> &lt;span class="o">:=&lt;/span> libnexsound
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c">#LOCAL_SRC_FILES := libnexsound.a
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c">#32位、64位两者都编译
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c">&lt;/span>&lt;span class="nv">LOCAL_MULTILIB&lt;/span> &lt;span class="o">:=&lt;/span> both 
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">LOCAL_SRC_FILES_arm&lt;/span>&lt;span class="o">:=&lt;/span> armeabi-v7a/libnexsound.a
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">LOCAL_SRC_FILES_arm64&lt;/span>&lt;span class="o">:=&lt;/span> arm64-v8a/libnexsound.a
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">LOCAL_EXPORT_C_INCLUDES&lt;/span> &lt;span class="o">:=&lt;/span> &lt;span class="k">$(&lt;/span>LOCAL_PATH&lt;span class="k">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">LOCAL_MODULE_CLASS&lt;/span> &lt;span class="o">:=&lt;/span> STATIC_LIBRARIES
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">LOCAL_MODULE_SUFFIX&lt;/span>&lt;span class="o">:=&lt;/span>.a
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">include&lt;/span> &lt;span class="k">$(&lt;/span>&lt;span class="nv">BUILD_PREBUILT&lt;/span>&lt;span class="k">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c">#此段是调用前面第三方库编译JNI生成a和so部分
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c">&lt;/span>&lt;span class="err">include&lt;/span> &lt;span class="k">$(&lt;/span>&lt;span class="nv">CLEAR_VARS&lt;/span>&lt;span class="k">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">LOCAL_C_INCLUDES&lt;/span>&lt;span class="o">:=&lt;/span> external/tinyalsa/include
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">LOCAL_SRC_FILES&lt;/span>&lt;span class="o">:=&lt;/span> com_ecovacs_lib_digmic_DigMic.c
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">LOCAL_MODULE&lt;/span> &lt;span class="o">:=&lt;/span> libdigmic
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">LOCAL_SHARED_LIBRARIES&lt;/span>&lt;span class="o">:=&lt;/span> libcutils libutils libtinyalsa libaspmodule
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">LOCAL_STATIC_LIBRARIES&lt;/span> &lt;span class="o">:=&lt;/span> libnexsound
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">LOCAL_MODULE_TAGS&lt;/span> &lt;span class="o">:=&lt;/span> optional
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">include&lt;/span> &lt;span class="k">$(&lt;/span>&lt;span class="nv">BUILD_SHARED_LIBRARY&lt;/span>&lt;span class="k">)&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div></description></item><item><title>android gradle使用阿里源</title><link>https://blogs.qipai360.cn/post/android-gradle%E4%BD%BF%E7%94%A8%E9%98%BF%E9%87%8C%E6%BA%90/</link><pubDate>Fri, 11 Oct 2019 12:09:00 +0800</pubDate><guid>https://blogs.qipai360.cn/post/android-gradle%E4%BD%BF%E7%94%A8%E9%98%BF%E9%87%8C%E6%BA%90/</guid><description>&lt;h2 id="使用阿里源">使用阿里源
+&lt;a class="header-anchor" href="#%e4%bd%bf%e7%94%a8%e9%98%bf%e9%87%8c%e6%ba%90">&lt;/a>
+&lt;/h2>&lt;p>新建一个&lt;code>init.gradle&lt;/code> 文件到&lt;code>$USER_HOME/.gradle/&lt;/code>目录下，这们就省的翻墙了。&lt;/p>
+&lt;p>&lt;code>init.gradle&lt;/code> 文件内容如下:&lt;/p>
+
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt" id="hl-0-1">&lt;a class="lnlinks" href="#hl-0-1"> 1&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-2">&lt;a class="lnlinks" href="#hl-0-2"> 2&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-3">&lt;a class="lnlinks" href="#hl-0-3"> 3&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-4">&lt;a class="lnlinks" href="#hl-0-4"> 4&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-5">&lt;a class="lnlinks" href="#hl-0-5"> 5&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-6">&lt;a class="lnlinks" href="#hl-0-6"> 6&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-7">&lt;a class="lnlinks" href="#hl-0-7"> 7&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-8">&lt;a class="lnlinks" href="#hl-0-8"> 8&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-9">&lt;a class="lnlinks" href="#hl-0-9"> 9&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-10">&lt;a class="lnlinks" href="#hl-0-10">10&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-11">&lt;a class="lnlinks" href="#hl-0-11">11&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-12">&lt;a class="lnlinks" href="#hl-0-12">12&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-13">&lt;a class="lnlinks" href="#hl-0-13">13&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-14">&lt;a class="lnlinks" href="#hl-0-14">14&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-15">&lt;a class="lnlinks" href="#hl-0-15">15&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-16">&lt;a class="lnlinks" href="#hl-0-16">16&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-17">&lt;a class="lnlinks" href="#hl-0-17">17&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-18">&lt;a class="lnlinks" href="#hl-0-18">18&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-19">&lt;a class="lnlinks" href="#hl-0-19">19&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-20">&lt;a class="lnlinks" href="#hl-0-20">20&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-21">&lt;a class="lnlinks" href="#hl-0-21">21&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-22">&lt;a class="lnlinks" href="#hl-0-22">22&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-23">&lt;a class="lnlinks" href="#hl-0-23">23&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-24">&lt;a class="lnlinks" href="#hl-0-24">24&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-25">&lt;a class="lnlinks" href="#hl-0-25">25&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-26">&lt;a class="lnlinks" href="#hl-0-26">26&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-27">&lt;a class="lnlinks" href="#hl-0-27">27&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-28">&lt;a class="lnlinks" href="#hl-0-28">28&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-29">&lt;a class="lnlinks" href="#hl-0-29">29&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-30">&lt;a class="lnlinks" href="#hl-0-30">30&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-31">&lt;a class="lnlinks" href="#hl-0-31">31&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-32">&lt;a class="lnlinks" href="#hl-0-32">32&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-33">&lt;a class="lnlinks" href="#hl-0-33">33&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-34">&lt;a class="lnlinks" href="#hl-0-34">34&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-35">&lt;a class="lnlinks" href="#hl-0-35">35&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-36">&lt;a class="lnlinks" href="#hl-0-36">36&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-37">&lt;a class="lnlinks" href="#hl-0-37">37&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-38">&lt;a class="lnlinks" href="#hl-0-38">38&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-39">&lt;a class="lnlinks" href="#hl-0-39">39&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-40">&lt;a class="lnlinks" href="#hl-0-40">40&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-41">&lt;a class="lnlinks" href="#hl-0-41">41&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-42">&lt;a class="lnlinks" href="#hl-0-42">42&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-43">&lt;a class="lnlinks" href="#hl-0-43">43&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-44">&lt;a class="lnlinks" href="#hl-0-44">44&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-45">&lt;a class="lnlinks" href="#hl-0-45">45&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-46">&lt;a class="lnlinks" href="#hl-0-46">46&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-47">&lt;a class="lnlinks" href="#hl-0-47">47&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-48">&lt;a class="lnlinks" href="#hl-0-48">48&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-49">&lt;a class="lnlinks" href="#hl-0-49">49&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-50">&lt;a class="lnlinks" href="#hl-0-50">50&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-51">&lt;a class="lnlinks" href="#hl-0-51">51&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-52">&lt;a class="lnlinks" href="#hl-0-52">52&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-53">&lt;a class="lnlinks" href="#hl-0-53">53&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-54">&lt;a class="lnlinks" href="#hl-0-54">54&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-55">&lt;a class="lnlinks" href="#hl-0-55">55&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-56">&lt;a class="lnlinks" href="#hl-0-56">56&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-57">&lt;a class="lnlinks" href="#hl-0-57">57&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-58">&lt;a class="lnlinks" href="#hl-0-58">58&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-59">&lt;a class="lnlinks" href="#hl-0-59">59&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-60">&lt;a class="lnlinks" href="#hl-0-60">60&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-61">&lt;a class="lnlinks" href="#hl-0-61">61&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-62">&lt;a class="lnlinks" href="#hl-0-62">62&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-63">&lt;a class="lnlinks" href="#hl-0-63">63&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-64">&lt;a class="lnlinks" href="#hl-0-64">64&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-65">&lt;a class="lnlinks" href="#hl-0-65">65&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-66">&lt;a class="lnlinks" href="#hl-0-66">66&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-67">&lt;a class="lnlinks" href="#hl-0-67">67&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-68">&lt;a class="lnlinks" href="#hl-0-68">68&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-69">&lt;a class="lnlinks" href="#hl-0-69">69&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-70">&lt;a class="lnlinks" href="#hl-0-70">70&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-71">&lt;a class="lnlinks" href="#hl-0-71">71&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-72">&lt;a class="lnlinks" href="#hl-0-72">72&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-73">&lt;a class="lnlinks" href="#hl-0-73">73&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-74">&lt;a class="lnlinks" href="#hl-0-74">74&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-75">&lt;a class="lnlinks" href="#hl-0-75">75&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-76">&lt;a class="lnlinks" href="#hl-0-76">76&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-77">&lt;a class="lnlinks" href="#hl-0-77">77&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-78">&lt;a class="lnlinks" href="#hl-0-78">78&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-79">&lt;a class="lnlinks" href="#hl-0-79">79&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-80">&lt;a class="lnlinks" href="#hl-0-80">80&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-81">&lt;a class="lnlinks" href="#hl-0-81">81&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-82">&lt;a class="lnlinks" href="#hl-0-82">82&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-83">&lt;a class="lnlinks" href="#hl-0-83">83&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-84">&lt;a class="lnlinks" href="#hl-0-84">84&lt;/a>
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-gradle" data-lang="gradle">&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">allprojects&lt;/span> &lt;span class="o">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">repositories&lt;/span> &lt;span class="o">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">maven&lt;/span> &lt;span class="o">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">url&lt;/span> &lt;span class="s1">&amp;#39;https://maven.aliyun.com/repository/public/&amp;#39;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="o">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">maven&lt;/span> &lt;span class="o">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">url&lt;/span> &lt;span class="s1">&amp;#39;https://maven.aliyun.com/repository/google/&amp;#39;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="o">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">all&lt;/span> &lt;span class="o">{&lt;/span> &lt;span class="n">ArtifactRepository&lt;/span> &lt;span class="n">repo&lt;/span> &lt;span class="o">-&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">if&lt;/span> &lt;span class="o">(&lt;/span>&lt;span class="n">repo&lt;/span> &lt;span class="k">instanceof&lt;/span> &lt;span class="n">MavenArtifactRepository&lt;/span>&lt;span class="o">)&lt;/span> &lt;span class="o">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kt">def&lt;/span> &lt;span class="n">url&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">repo&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="na">url&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="na">toString&lt;/span>&lt;span class="o">()&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">if&lt;/span> &lt;span class="o">(&lt;/span>&lt;span class="n">url&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="na">startsWith&lt;/span>&lt;span class="o">(&lt;/span>&lt;span class="s1">&amp;#39;https://repo.maven.apache.org/maven2/&amp;#39;&lt;/span>&lt;span class="o">)&lt;/span> &lt;span class="o">||&lt;/span> &lt;span class="n">url&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="na">startsWith&lt;/span>&lt;span class="o">(&lt;/span>&lt;span class="s1">&amp;#39;https://repo.maven.org/maven2&amp;#39;&lt;/span>&lt;span class="o">)&lt;/span> 
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="o">||&lt;/span> &lt;span class="n">url&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="na">startsWith&lt;/span>&lt;span class="o">(&lt;/span>&lt;span class="s1">&amp;#39;https://repo1.maven.org/maven2&amp;#39;&lt;/span>&lt;span class="o">)&lt;/span> &lt;span class="o">||&lt;/span> &lt;span class="n">url&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="na">startsWith&lt;/span>&lt;span class="o">(&lt;/span>&lt;span class="s1">&amp;#39;https://jcenter.bintray.com/&amp;#39;&lt;/span>&lt;span class="o">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="o">||&lt;/span> &lt;span class="n">url&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="na">startsWith&lt;/span>&lt;span class="o">(&lt;/span>&lt;span class="s1">&amp;#39;https://maven.google.com/&amp;#39;&lt;/span>&lt;span class="o">)&lt;/span> &lt;span class="o">||&lt;/span> &lt;span class="n">url&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="na">startsWith&lt;/span>&lt;span class="o">(&lt;/span>&lt;span class="s1">&amp;#39;https://dl.google.com/dl/android/maven2/&amp;#39;&lt;/span>&lt;span class="o">))&lt;/span> &lt;span class="o">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1">//project.logger.lifecycle &amp;#34;Repository ${repo.url} replaced by $REPOSITORY_URL.&amp;#34;
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">remove&lt;/span> &lt;span class="n">repo&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="o">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="o">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="o">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="o">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">buildscript&lt;/span> &lt;span class="o">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">repositories&lt;/span> &lt;span class="o">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">maven&lt;/span>&lt;span class="o">{&lt;/span> &lt;span class="n">url&lt;/span> &lt;span class="s1">&amp;#39;https://maven.aliyun.com/repository/public/&amp;#39;&lt;/span>&lt;span class="o">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">maven&lt;/span>&lt;span class="o">{&lt;/span> &lt;span class="n">url&lt;/span> &lt;span class="s1">&amp;#39;https://maven.aliyun.com/repository/google/&amp;#39;&lt;/span>&lt;span class="o">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">all&lt;/span> &lt;span class="o">{&lt;/span> &lt;span class="n">ArtifactRepository&lt;/span> &lt;span class="n">repo&lt;/span> &lt;span class="o">-&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">if&lt;/span> &lt;span class="o">(&lt;/span>&lt;span class="n">repo&lt;/span> &lt;span class="k">instanceof&lt;/span> &lt;span class="n">MavenArtifactRepository&lt;/span>&lt;span class="o">)&lt;/span> &lt;span class="o">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kt">def&lt;/span> &lt;span class="n">url&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">repo&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="na">url&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="na">toString&lt;/span>&lt;span class="o">()&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">if&lt;/span> &lt;span class="o">(&lt;/span>&lt;span class="n">url&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="na">startsWith&lt;/span>&lt;span class="o">(&lt;/span>&lt;span class="s1">&amp;#39;https://repo1.maven.org/maven2&amp;#39;&lt;/span>&lt;span class="o">)&lt;/span> &lt;span class="o">||&lt;/span> &lt;span class="n">url&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="na">startsWith&lt;/span>&lt;span class="o">(&lt;/span>&lt;span class="s1">&amp;#39;https://jcenter.bintray.com/&amp;#39;&lt;/span>&lt;span class="o">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="o">||&lt;/span> &lt;span class="n">url&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="na">startsWith&lt;/span>&lt;span class="o">(&lt;/span>&lt;span class="s1">&amp;#39;https://dl.google.com/dl/android/maven2/&amp;#39;&lt;/span>&lt;span class="o">))&lt;/span> &lt;span class="o">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1">//project.logger.lifecycle &amp;#34;Repository ${repo.url} replaced by $REPOSITORY_URL.&amp;#34;
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">remove&lt;/span> &lt;span class="n">repo&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="o">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="o">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="o">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="o">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="o">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="o">}&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>
+
+&lt;h2 id="全局翻墙代理配置">全局翻墙代理配置
+&lt;a class="header-anchor" href="#%e5%85%a8%e5%b1%80%e7%bf%bb%e5%a2%99%e4%bb%a3%e7%90%86%e9%85%8d%e7%bd%ae">&lt;/a>
+&lt;/h2>&lt;p>同样新建一个&lt;code>gradle.properties&lt;/code> 文件到&lt;code>$USER_HOME/.gradle/&lt;/code>目录下，如果放在项目目录下，则只对当前项目生效。&lt;/p></description></item></channel></rss>

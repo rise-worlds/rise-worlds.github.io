@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Ollvm on Rise'blogs</title><link>https://blogs.qipai360.cn/tags/ollvm/</link><description>Recent content in Ollvm on Rise'blogs</description><generator>Hugo</generator><language>zh-CN</language><atom:link href="https://blogs.qipai360.cn/tags/ollvm/rss.xml" rel="self" type="application/rss+xml"/><item><title>Ollvm混淆与反混淆： Goron框架编译与使用</title><link>https://blogs.qipai360.cn/post/the-goron-framework-is-compiled-and-used/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://blogs.qipai360.cn/post/the-goron-framework-is-compiled-and-used/</guid><description>&lt;p>很多App实现的定制ollvm框架中都有goron框架的影子，或多或少的借鉴了它的功能，包括&lt;/p>
+&lt;p>间接跳转,并加密跳转目标(-mllvm -irobf-indbr)
+间接函数调用,并加密目标函数地址(-mllvm -irobf-icall)
+间接全局变量引用,并加密变量地址(-mllvm -irobf-indgv)
+字符串(c string)加密功能(-mllvm -irobf-cse)
+过程相关控制流平坦混淆(-mllvm -irobf-cff)
+想要了解怎么针对这些混淆功能完成去混淆，势必要先对其混淆过程有所了解，那么第一步就是对goron框架的编译使用&lt;/p></description></item><item><title>Ollvm混淆与反混淆： goron框架字符串加密的实现原理</title><link>https://blogs.qipai360.cn/post/the-goron-framework-string-encryption-implementation-principle/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://blogs.qipai360.cn/post/the-goron-framework-string-encryption-implementation-principle/</guid><description>&lt;p>函数实现逻辑在llvm/lib/Transforms/Obfuscation/StringEncryption.cpp文件中，IndirectBranch，集成自类ModulePass，实现了runOnModule函数&lt;/p></description></item><item><title>安卓使用OLLVM混淆.so</title><link>https://blogs.qipai360.cn/post/android-using-ollvm-confused-so/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://blogs.qipai360.cn/post/android-using-ollvm-confused-so/</guid><description>&lt;h3 id="编译ollvm">编译OLLVM
+&lt;a class="header-anchor" href="#%e7%bc%96%e8%af%91ollvm">&lt;/a>
+&lt;/h3>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt" id="hl-0-1">&lt;a class="lnlinks" href="#hl-0-1">1&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-2">&lt;a class="lnlinks" href="#hl-0-2">2&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-3">&lt;a class="lnlinks" href="#hl-0-3">3&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-4">&lt;a class="lnlinks" href="#hl-0-4">4&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-5">&lt;a class="lnlinks" href="#hl-0-5">5&lt;/a>
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">git clone https://github.com/heroims/obfuscator.git -b llvm-9.0.1 --depth &lt;span class="m">1&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">cd&lt;/span> obfuscator
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">mkdir build &lt;span class="o">&amp;amp;&amp;amp;&lt;/span> &lt;span class="nb">cd&lt;/span> build
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">cmake .. -DCMAKE_BUILD_TYPE&lt;span class="o">=&lt;/span>Release
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">make -j4&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>
+
+&lt;p>编译好后从&lt;code>build/bin/&lt;/code>目录把下面几个文件拷贝到&lt;code>/toolchains/llvm/prebuilt/linux-x86_64/bin/&lt;/code>
+&lt;code>clang&lt;/code>，&lt;code>clang++&lt;/code>，&lt;code>clang-9.0&lt;/code>，&lt;code>clang-format&lt;/code>
+把以下几个文件从&lt;code>build/include/&lt;/code>拷贝到&lt;code>/sysroot/usr/include/&lt;/code>
+&lt;code>Stdarg.h&lt;/code>，&lt;code>Stddef.h&lt;/code>，&lt;code>__stddef_max_align_t.h&lt;/code>，&lt;code>float.h&lt;/code>，&lt;code>stdbool.h&lt;/code>&lt;/p></description></item></channel></rss>
