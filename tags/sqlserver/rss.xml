@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Sqlserver on Rise'blogs</title><link>https://blogs.qipai360.cn/tags/sqlserver/</link><description>Recent content in Sqlserver on Rise'blogs</description><generator>Hugo</generator><language>zh-CN</language><lastBuildDate>Tue, 03 Mar 2020 17:45:00 +0800</lastBuildDate><atom:link href="https://blogs.qipai360.cn/tags/sqlserver/rss.xml" rel="self" type="application/rss+xml"/><item><title>网狐SQL SERVER 数据库日志已满时清理日志的方法</title><link>https://blogs.qipai360.cn/post/foxuc-clearing-sql-server-database-logs-when-the-logs-are-full/</link><pubDate>Tue, 03 Mar 2020 17:35:00 +0800</pubDate><guid>https://blogs.qipai360.cn/post/foxuc-clearing-sql-server-database-logs-when-the-logs-are-full/</guid><description>&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt" id="hl-0-1">&lt;a class="lnlinks" href="#hl-0-1"> 1&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-2">&lt;a class="lnlinks" href="#hl-0-2"> 2&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-3">&lt;a class="lnlinks" href="#hl-0-3"> 3&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-4">&lt;a class="lnlinks" href="#hl-0-4"> 4&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-5">&lt;a class="lnlinks" href="#hl-0-5"> 5&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-6">&lt;a class="lnlinks" href="#hl-0-6"> 6&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-7">&lt;a class="lnlinks" href="#hl-0-7"> 7&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-8">&lt;a class="lnlinks" href="#hl-0-8"> 8&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-9">&lt;a class="lnlinks" href="#hl-0-9"> 9&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-10">&lt;a class="lnlinks" href="#hl-0-10">10&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-11">&lt;a class="lnlinks" href="#hl-0-11">11&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-12">&lt;a class="lnlinks" href="#hl-0-12">12&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-13">&lt;a class="lnlinks" href="#hl-0-13">13&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-14">&lt;a class="lnlinks" href="#hl-0-14">14&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-15">&lt;a class="lnlinks" href="#hl-0-15">15&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-16">&lt;a class="lnlinks" href="#hl-0-16">16&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-17">&lt;a class="lnlinks" href="#hl-0-17">17&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-18">&lt;a class="lnlinks" href="#hl-0-18">18&lt;/a>
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-sql" data-lang="sql">&lt;span class="line">&lt;span class="cl">&lt;span class="c1">--QPTreasureDB为需要清除日志的数据库名称
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span>&lt;span class="n">USE&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="n">master&lt;/span>&lt;span class="p">]&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="k">GO&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="k">ALTER&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="k">DATABASE&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">QPTreasureDB&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="k">SET&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">RECOVERY&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="k">SIMPLE&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="k">WITH&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">NO_WAIT&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="k">GO&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="k">ALTER&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="k">DATABASE&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">QPTreasureDB&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="k">SET&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">RECOVERY&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="k">SIMPLE&lt;/span>&lt;span class="w">   &lt;/span>&lt;span class="c1">--简单模式
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span>&lt;span class="k">GO&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="n">USE&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">QPTreasureDB&lt;/span>&lt;span class="w"> 
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="k">GO&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="n">DBCC&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">SHRINKFILE&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">N&lt;/span>&lt;span class="s1">&amp;#39;QPTreasureDB_Log&amp;#39;&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="mi">11&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">TRUNCATEONLY&lt;/span>&lt;span class="p">)&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="c1">--设置压缩后的日志大小为11M，可以自行指定
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span>&lt;span class="k">GO&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="n">USE&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="n">master&lt;/span>&lt;span class="p">]&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="k">GO&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="k">ALTER&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="k">DATABASE&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">QPTreasureDB&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="k">SET&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">RECOVERY&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="k">FULL&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="k">WITH&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">NO_WAIT&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="k">GO&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="k">ALTER&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="k">DATABASE&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">QPTreasureDB&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="k">SET&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">RECOVERY&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="k">FULL&lt;/span>&lt;span class="w">  &lt;/span>&lt;span class="c1">--还原为完全模式
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span>&lt;span class="k">GO&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div></description></item></channel></rss>
