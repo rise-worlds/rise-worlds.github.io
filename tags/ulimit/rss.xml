@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Ulimit on Rise'blogs</title><link>https://blogs.qipai360.cn/tags/ulimit/</link><description>Recent content in Ulimit on Rise'blogs</description><generator>Hugo</generator><language>zh-CN</language><lastBuildDate>Fri, 27 Nov 2020 11:03:57 +0800</lastBuildDate><atom:link href="https://blogs.qipai360.cn/tags/ulimit/rss.xml" rel="self" type="application/rss+xml"/><item><title>崩溃文件生成及调试</title><link>https://blogs.qipai360.cn/post/crash-dump-file-generation-and-debugging/</link><pubDate>Fri, 27 Nov 2020 11:03:57 +0800</pubDate><guid>https://blogs.qipai360.cn/post/crash-dump-file-generation-and-debugging/</guid><description>&lt;h3 id="linux--mac">linux &amp;amp; mac
+&lt;a class="header-anchor" href="#linux--mac">&lt;/a>
+&lt;/h3>&lt;ol>
+&lt;li>产生core文件方法&lt;/li>
+&lt;/ol>
+&lt;ul>
+&lt;li>在当前环境下生成coredump文件，运行 &lt;code>ulimit -c unlimited&lt;/code>&lt;/li>
+&lt;li>永久生成coredump文件，在 &lt;code>/etc/profile&lt;/code> 文件中追加一行 &lt;code>ulimit-c unlimited&lt;/code>&lt;/li>
+&lt;/ul>
+&lt;ol start="2">
+&lt;li>默认coredump文件生成在当前工作目录，修改文件 &lt;code>/proc/sys/kernel/core_pattern&lt;/code> 为 &lt;code>/data/coredump/core.%e.%p&lt;/code>
+其中%e表示程序名，%p表示进程id，路径为/data/coredump目录&lt;/li>
+&lt;li>编译时要加上&lt;code>-g&lt;/code>选项，这个才能用gdb调试的coredump&lt;/li>
+&lt;li>&lt;code>linux&lt;/code>使用加载&lt;code>gdb&lt;/code>加载coredump文件进行调试&lt;/li>
+&lt;/ol>
+
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt" id="hl-0-1">&lt;a class="lnlinks" href="#hl-0-1">1&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-2">&lt;a class="lnlinks" href="#hl-0-2">2&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-3">&lt;a class="lnlinks" href="#hl-0-3">3&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-4">&lt;a class="lnlinks" href="#hl-0-4">4&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-5">&lt;a class="lnlinks" href="#hl-0-5">5&lt;/a>
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">gdb coredumpfile
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">#或者&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">gdb execfile
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">#加载完成后再输入&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">core-file coredumpfile&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>
+
+&lt;ol start="5">
+&lt;li>&lt;code>mac&lt;/code>使用&lt;code>lldb&lt;/code>加载coredump文件进行调试
+
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt" id="hl-1-1">&lt;a class="lnlinks" href="#hl-1-1">1&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-1-2">&lt;a class="lnlinks" href="#hl-1-2">2&lt;/a>
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="nb">cd&lt;/span> /cores
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">lldb -c coredumpfile&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>
+
+&lt;/li>
+&lt;/ol>
+&lt;ul>
+&lt;li>ulimit -c 显示核心转储文件大小的最大值，如果这里是零：禁止核心转储（对于本进程和它的子进程）。&lt;/li>
+&lt;li>默认情况下，&lt;code>mac&lt;/code> core文件均存在/cores目录下，&lt;code>linux&lt;/code> core文件存在当前工作目录。
+&lt;ul>
+&lt;li>可以通过&lt;code>ulimit -c unlimited&lt;/code>来设置core文件生成路径。&lt;/li>
+&lt;li>可以通过&lt;code>ulimit -c size&lt;/code>来设置core文件大小。&lt;/li>
+&lt;li>可以通过&lt;code>ulimit -c 0&lt;/code>来禁止生成core文件。&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;h3 id="windows">windows
+&lt;a class="header-anchor" href="#windows">&lt;/a>
+&lt;/h3>&lt;p>windows 请查看这篇文章
+&lt;a href="https://github.com/rise-worlds/game/blob/master/tools/PostMortem/README.md" title="Windows C&amp;#43;&amp;#43; 程序崩溃收集工具" rel="noopener external nofollow noreferrer" target="_blank" class=" exturl">
+ Windows C++ 程序崩溃收集工具
+ 
+&lt;/a>&lt;/p></description></item></channel></rss>
