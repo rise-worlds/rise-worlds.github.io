@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Xlua on Rise的自留地</title><link>https://blogs.qipai360.cn/categories/xlua/</link><description>Recent content in Xlua on Rise的自留地</description><generator>Hugo</generator><language>zh-CN</language><lastBuildDate>Sat, 10 May 2025 14:37:27 +0800</lastBuildDate><atom:link href="https://blogs.qipai360.cn/categories/xlua/rss.xml" rel="self" type="application/rss+xml"/><item><title>xlua</title><link>https://blogs.qipai360.cn/post/xlua/</link><pubDate>Sat, 10 May 2025 14:37:27 +0800</pubDate><guid>https://blogs.qipai360.cn/post/xlua/</guid><description>&lt;h2 id="lua解析器">Lua解析器
+&lt;a class="header-anchor" href="#lua%e8%a7%a3%e6%9e%90%e5%99%a8">&lt;/a>
+&lt;/h2>&lt;p>Lua解析器能够让我们在Unity中执行Lua&lt;/p>
+&lt;p>默认的Lua脚本放在&lt;code>Resources&lt;/code>文件夹下，并且要加上&lt;code>.txt&lt;/code>后缀 才能被执行&lt;/p>
+
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt" id="hl-0-1">&lt;a class="lnlinks" href="#hl-0-1">1&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-2">&lt;a class="lnlinks" href="#hl-0-2">2&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-3">&lt;a class="lnlinks" href="#hl-0-3">3&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-4">&lt;a class="lnlinks" href="#hl-0-4">4&lt;/a>
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-c#" data-lang="c#">&lt;span class="line">&lt;span class="cl">&lt;span class="n">LuaEnv&lt;/span> &lt;span class="n">env&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="k">new&lt;/span> &lt;span class="n">LuaEnv&lt;/span>&lt;span class="p">();&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">env&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">DoString&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s">&amp;#34;print(&amp;#39;你好世界&amp;#39;)&amp;#34;&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">//执行一个lua脚本&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">env&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">DoString&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s">&amp;#34;require(&amp;#39;Main&amp;#39;)&amp;#34;&lt;/span>&lt;span class="p">);&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>
+
+&lt;p>&lt;strong>垃圾回收&lt;/strong>&lt;/p></description></item></channel></rss>

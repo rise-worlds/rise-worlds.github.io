@@ -1,0 +1,397 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Blockchain on Rise的自留地</title><link>https://blogs.qipai360.cn/categories/blockchain/</link><description>Recent content in Blockchain on Rise的自留地</description><generator>Hugo</generator><language>zh-CN</language><lastBuildDate>Wed, 09 Nov 2022 10:21:00 +0800</lastBuildDate><atom:link href="https://blogs.qipai360.cn/categories/blockchain/rss.xml" rel="self" type="application/rss+xml"/><item><title>配置ETH 2.0 同步节点 Nethermind 和 Prysm</title><link>https://blogs.qipai360.cn/post/config-eth-2.0-sync-node-nethermind-and-prysm/</link><pubDate>Tue, 08 Nov 2022 15:59:00 +0800</pubDate><guid>https://blogs.qipai360.cn/post/config-eth-2.0-sync-node-nethermind-and-prysm/</guid><description>&lt;p>ETH 2.0 节点分为&lt;code>执行客户端&lt;/code>、&lt;code>共识客户端&lt;/code>、&lt;code>验证软件&lt;/code>，同步数据节点无论是&lt;code>快照同步&lt;/code>还是&lt;code>完整存档&lt;/code>，都需要同步启动&lt;code>执行客户端&lt;/code>和&lt;code>共识客户端&lt;/code>。&lt;/p>
+&lt;ol>
+&lt;li>安装配置执行客户端&lt;code>Nethermind&lt;/code>&lt;/li>
+&lt;/ol>
+
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt" id="hl-0-1">&lt;a class="lnlinks" href="#hl-0-1">1&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-2">&lt;a class="lnlinks" href="#hl-0-2">2&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-3">&lt;a class="lnlinks" href="#hl-0-3">3&lt;/a>
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">sudo apt-get update &lt;span class="o">&amp;amp;&amp;amp;&lt;/span> sudo apt-get install libsnappy-dev libc6-dev libc6 unzip
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">wget https://github.com/NethermindEth/nethermind/releases/download/1.14.5/nethermind-linux-amd64-1.14.5-380bf9c-20221029.zip
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">unzip nethermind-linux-amd64-1.14.5-380bf9c-20221029.zip -d nethermind&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>
+
+&lt;p>添加下面配置到&lt;code>nethermind/configs/mainnet.cfg&lt;/code>&lt;/p></description></item><item><title>eosio 编译与部署</title><link>https://blogs.qipai360.cn/post/eosio-compile-and-deployment/</link><pubDate>Thu, 09 Jan 2020 23:09:00 +0800</pubDate><guid>https://blogs.qipai360.cn/post/eosio-compile-and-deployment/</guid><description>&lt;h2 id="1-名词解释">1. 名词解释
+&lt;a class="header-anchor" href="#1-%e5%90%8d%e8%af%8d%e8%a7%a3%e9%87%8a">&lt;/a>
+&lt;/h2>&lt;ol>
+&lt;li>创世节点(BIOS) 用于创建初始区块，加载基础合约，供其它节点同步连接。&lt;/li>
+&lt;li>矿工节点(BP) 主要用于生产同步区块，计算合约产生的费用归矿工账号所有。&lt;/li>
+&lt;li>查询节点 不产生区块，同步区块信息，提供区块信息查询功能。&lt;/li>
+&lt;li>私钥 用来进行签名操作，私钥可以生成唯一对应公钥。&lt;/li>
+&lt;li>公钥 用来对私钥的签名进行验证。&lt;/li>
+&lt;li>钱包 生成和保存私钥的地方，当需要进行签名操作时，会从钱包读取私钥列表，进行签名。&lt;/li>
+&lt;li>带宽 带宽分为cpu带宽和net带宽两种，每次执行合约都会消耗一定的带宽（从账号中扣取）。&lt;/li>
+&lt;li>合约 一段在链上可执行代码，绑定在账号上，每个账号只能绑定一份合约。&lt;/li>
+&lt;li>账号 存储用户信息，包括余额、带宽、合约（如果有）等。&lt;/li>
+&lt;li>总票数 总票数=总发行的货币数量。&lt;/li>
+&lt;li>投票 投票者抵押货币投票给矿工，当矿工投票数大于总票数的15%时创世节点停止产生区块，转由矿工生产区块。
+&lt;em>所谓的矿工节点与查询节点，只是为了区分是否生产区块的不同配置。&lt;/em>&lt;/li>
+&lt;/ol>
+&lt;h2 id="2-节点代码编译程序安装">2. 节点代码编译、程序安装
+&lt;a class="header-anchor" href="#2-%e8%8a%82%e7%82%b9%e4%bb%a3%e7%a0%81%e7%bc%96%e8%af%91%e7%a8%8b%e5%ba%8f%e5%ae%89%e8%a3%85">&lt;/a>
+&lt;/h2>&lt;p>注意：后面编译依赖GIT，所以务必保证代码根目录的.git完整，以及系统安装有git。
+以下以ubuntu系统为例，其它系统步骤类似。&lt;/p></description></item><item><title>手动计算UTXO</title><link>https://blogs.qipai360.cn/post/%E6%89%8B%E5%8A%A8%E8%AE%A1%E7%AE%97utxo/</link><pubDate>Thu, 17 Oct 2019 11:44:00 +0800</pubDate><guid>https://blogs.qipai360.cn/post/%E6%89%8B%E5%8A%A8%E8%AE%A1%E7%AE%97utxo/</guid><description>&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt" id="hl-0-1">&lt;a class="lnlinks" href="#hl-0-1"> 1&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-2">&lt;a class="lnlinks" href="#hl-0-2"> 2&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-3">&lt;a class="lnlinks" href="#hl-0-3"> 3&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-4">&lt;a class="lnlinks" href="#hl-0-4"> 4&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-5">&lt;a class="lnlinks" href="#hl-0-5"> 5&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-6">&lt;a class="lnlinks" href="#hl-0-6"> 6&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-7">&lt;a class="lnlinks" href="#hl-0-7"> 7&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-8">&lt;a class="lnlinks" href="#hl-0-8"> 8&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-9">&lt;a class="lnlinks" href="#hl-0-9"> 9&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-10">&lt;a class="lnlinks" href="#hl-0-10"> 10&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-11">&lt;a class="lnlinks" href="#hl-0-11"> 11&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-12">&lt;a class="lnlinks" href="#hl-0-12"> 12&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-13">&lt;a class="lnlinks" href="#hl-0-13"> 13&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-14">&lt;a class="lnlinks" href="#hl-0-14"> 14&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-15">&lt;a class="lnlinks" href="#hl-0-15"> 15&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-16">&lt;a class="lnlinks" href="#hl-0-16"> 16&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-17">&lt;a class="lnlinks" href="#hl-0-17"> 17&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-18">&lt;a class="lnlinks" href="#hl-0-18"> 18&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-19">&lt;a class="lnlinks" href="#hl-0-19"> 19&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-20">&lt;a class="lnlinks" href="#hl-0-20"> 20&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-21">&lt;a class="lnlinks" href="#hl-0-21"> 21&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-22">&lt;a class="lnlinks" href="#hl-0-22"> 22&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-23">&lt;a class="lnlinks" href="#hl-0-23"> 23&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-24">&lt;a class="lnlinks" href="#hl-0-24"> 24&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-25">&lt;a class="lnlinks" href="#hl-0-25"> 25&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-26">&lt;a class="lnlinks" href="#hl-0-26"> 26&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-27">&lt;a class="lnlinks" href="#hl-0-27"> 27&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-28">&lt;a class="lnlinks" href="#hl-0-28"> 28&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-29">&lt;a class="lnlinks" href="#hl-0-29"> 29&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-30">&lt;a class="lnlinks" href="#hl-0-30"> 30&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-31">&lt;a class="lnlinks" href="#hl-0-31"> 31&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-32">&lt;a class="lnlinks" href="#hl-0-32"> 32&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-33">&lt;a class="lnlinks" href="#hl-0-33"> 33&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-34">&lt;a class="lnlinks" href="#hl-0-34"> 34&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-35">&lt;a class="lnlinks" href="#hl-0-35"> 35&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-36">&lt;a class="lnlinks" href="#hl-0-36"> 36&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-37">&lt;a class="lnlinks" href="#hl-0-37"> 37&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-38">&lt;a class="lnlinks" href="#hl-0-38"> 38&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-39">&lt;a class="lnlinks" href="#hl-0-39"> 39&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-40">&lt;a class="lnlinks" href="#hl-0-40"> 40&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-41">&lt;a class="lnlinks" href="#hl-0-41"> 41&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-42">&lt;a class="lnlinks" href="#hl-0-42"> 42&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-43">&lt;a class="lnlinks" href="#hl-0-43"> 43&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-44">&lt;a class="lnlinks" href="#hl-0-44"> 44&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-45">&lt;a class="lnlinks" href="#hl-0-45"> 45&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-46">&lt;a class="lnlinks" href="#hl-0-46"> 46&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-47">&lt;a class="lnlinks" href="#hl-0-47"> 47&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-48">&lt;a class="lnlinks" href="#hl-0-48"> 48&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-49">&lt;a class="lnlinks" href="#hl-0-49"> 49&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-50">&lt;a class="lnlinks" href="#hl-0-50"> 50&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-51">&lt;a class="lnlinks" href="#hl-0-51"> 51&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-52">&lt;a class="lnlinks" href="#hl-0-52"> 52&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-53">&lt;a class="lnlinks" href="#hl-0-53"> 53&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-54">&lt;a class="lnlinks" href="#hl-0-54"> 54&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-55">&lt;a class="lnlinks" href="#hl-0-55"> 55&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-56">&lt;a class="lnlinks" href="#hl-0-56"> 56&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-57">&lt;a class="lnlinks" href="#hl-0-57"> 57&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-58">&lt;a class="lnlinks" href="#hl-0-58"> 58&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-59">&lt;a class="lnlinks" href="#hl-0-59"> 59&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-60">&lt;a class="lnlinks" href="#hl-0-60"> 60&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-61">&lt;a class="lnlinks" href="#hl-0-61"> 61&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-62">&lt;a class="lnlinks" href="#hl-0-62"> 62&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-63">&lt;a class="lnlinks" href="#hl-0-63"> 63&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-64">&lt;a class="lnlinks" href="#hl-0-64"> 64&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-65">&lt;a class="lnlinks" href="#hl-0-65"> 65&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-66">&lt;a class="lnlinks" href="#hl-0-66"> 66&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-67">&lt;a class="lnlinks" href="#hl-0-67"> 67&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-68">&lt;a class="lnlinks" href="#hl-0-68"> 68&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-69">&lt;a class="lnlinks" href="#hl-0-69"> 69&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-70">&lt;a class="lnlinks" href="#hl-0-70"> 70&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-71">&lt;a class="lnlinks" href="#hl-0-71"> 71&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-72">&lt;a class="lnlinks" href="#hl-0-72"> 72&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-73">&lt;a class="lnlinks" href="#hl-0-73"> 73&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-74">&lt;a class="lnlinks" href="#hl-0-74"> 74&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-75">&lt;a class="lnlinks" href="#hl-0-75"> 75&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-76">&lt;a class="lnlinks" href="#hl-0-76"> 76&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-77">&lt;a class="lnlinks" href="#hl-0-77"> 77&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-78">&lt;a class="lnlinks" href="#hl-0-78"> 78&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-79">&lt;a class="lnlinks" href="#hl-0-79"> 79&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-80">&lt;a class="lnlinks" href="#hl-0-80"> 80&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-81">&lt;a class="lnlinks" href="#hl-0-81"> 81&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-82">&lt;a class="lnlinks" href="#hl-0-82"> 82&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-83">&lt;a class="lnlinks" href="#hl-0-83"> 83&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-84">&lt;a class="lnlinks" href="#hl-0-84"> 84&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-85">&lt;a class="lnlinks" href="#hl-0-85"> 85&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-86">&lt;a class="lnlinks" href="#hl-0-86"> 86&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-87">&lt;a class="lnlinks" href="#hl-0-87"> 87&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-88">&lt;a class="lnlinks" href="#hl-0-88"> 88&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-89">&lt;a class="lnlinks" href="#hl-0-89"> 89&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-90">&lt;a class="lnlinks" href="#hl-0-90"> 90&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-91">&lt;a class="lnlinks" href="#hl-0-91"> 91&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-92">&lt;a class="lnlinks" href="#hl-0-92"> 92&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-93">&lt;a class="lnlinks" href="#hl-0-93"> 93&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-94">&lt;a class="lnlinks" href="#hl-0-94"> 94&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-95">&lt;a class="lnlinks" href="#hl-0-95"> 95&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-96">&lt;a class="lnlinks" href="#hl-0-96"> 96&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-97">&lt;a class="lnlinks" href="#hl-0-97"> 97&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-98">&lt;a class="lnlinks" href="#hl-0-98"> 98&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-99">&lt;a class="lnlinks" href="#hl-0-99"> 99&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-100">&lt;a class="lnlinks" href="#hl-0-100">100&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-101">&lt;a class="lnlinks" href="#hl-0-101">101&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-102">&lt;a class="lnlinks" href="#hl-0-102">102&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-103">&lt;a class="lnlinks" href="#hl-0-103">103&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-104">&lt;a class="lnlinks" href="#hl-0-104">104&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-105">&lt;a class="lnlinks" href="#hl-0-105">105&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-106">&lt;a class="lnlinks" href="#hl-0-106">106&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-107">&lt;a class="lnlinks" href="#hl-0-107">107&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-108">&lt;a class="lnlinks" href="#hl-0-108">108&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-109">&lt;a class="lnlinks" href="#hl-0-109">109&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-110">&lt;a class="lnlinks" href="#hl-0-110">110&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-111">&lt;a class="lnlinks" href="#hl-0-111">111&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-112">&lt;a class="lnlinks" href="#hl-0-112">112&lt;/a>
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-javascript" data-lang="javascript">&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kr">const&lt;/span> &lt;span class="nx">TX_TYPE_IN&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="mi">1&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kr">const&lt;/span> &lt;span class="nx">TX_TYPE_OUT&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="mi">2&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kr">export&lt;/span> &lt;span class="kr">const&lt;/span> &lt;span class="nx">CreateUtxos&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="kr">async&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="nx">address&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="nx">string&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">data&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="nx">any&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">=&amp;gt;&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kd">let&lt;/span> &lt;span class="nx">mapData&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="k">new&lt;/span> &lt;span class="nx">Map&lt;/span>&lt;span class="p">();&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kd">let&lt;/span> &lt;span class="nx">temp&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="k">new&lt;/span> &lt;span class="nx">Map&lt;/span>&lt;span class="p">();&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">for&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="kr">const&lt;/span> &lt;span class="nx">iter&lt;/span> &lt;span class="k">of&lt;/span> &lt;span class="nx">data&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">mapData&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">set&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">iter&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">hash&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">iter&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1">// console.log(iter.hash);
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kd">let&lt;/span> &lt;span class="nx">type&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nx">TX_TYPE_IN&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">for&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="kr">const&lt;/span> &lt;span class="nx">input&lt;/span> &lt;span class="k">of&lt;/span> &lt;span class="nx">iter&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">inputs&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">if&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="nx">input&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">coin&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">coinbase&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="k">continue&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">if&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="nx">address&lt;/span> &lt;span class="o">==&lt;/span> &lt;span class="nx">input&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">coin&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">address&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">type&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nx">TX_TYPE_OUT&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kd">let&lt;/span> &lt;span class="nx">out&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="o">-&lt;/span>&lt;span class="mi">1&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kd">let&lt;/span> &lt;span class="nx">balance&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="mi">0&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">for&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="kr">const&lt;/span> &lt;span class="nx">output&lt;/span> &lt;span class="k">of&lt;/span> &lt;span class="nx">iter&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">outputs&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">out&lt;/span>&lt;span class="o">++&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">if&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="nx">address&lt;/span> &lt;span class="o">==&lt;/span> &lt;span class="nx">output&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">address&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">balance&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nx">output&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">value&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">break&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">temp&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">set&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">iter&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">hash&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="p">{&lt;/span> &lt;span class="nx">type&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">out&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">balance&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">spentTxid&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="kc">null&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">spentHeight&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="mi">0&lt;/span> &lt;span class="p">});&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">for&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="kr">const&lt;/span> &lt;span class="p">[&lt;/span>&lt;span class="nx">key&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">value&lt;/span>&lt;span class="p">]&lt;/span> &lt;span class="k">of&lt;/span> &lt;span class="nx">mapData&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">for&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="kr">const&lt;/span> &lt;span class="nx">input&lt;/span> &lt;span class="k">of&lt;/span> &lt;span class="nx">value&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">inputs&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">if&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="nx">input&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">coinbase&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="k">continue&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">if&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="nx">temp&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">has&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">input&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">prevout&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">hash&lt;/span>&lt;span class="p">))&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kr">const&lt;/span> &lt;span class="nx">pre&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nx">temp&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">get&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">input&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">prevout&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">hash&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kr">const&lt;/span> &lt;span class="nx">local&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nx">temp&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">get&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">key&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">if&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="nx">pre&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">spentHeight&lt;/span> &lt;span class="o">&amp;lt;=&lt;/span> &lt;span class="mi">0&lt;/span> &lt;span class="o">&amp;amp;&amp;amp;&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="nx">pre&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">type&lt;/span> &lt;span class="o">!=&lt;/span> &lt;span class="nx">local&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">type&lt;/span> &lt;span class="o">||&lt;/span> &lt;span class="nx">local&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">type&lt;/span> &lt;span class="o">==&lt;/span> &lt;span class="nx">TX_TYPE_OUT&lt;/span>&lt;span class="p">))&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">pre&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">spentTxid&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nx">value&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">hash&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">pre&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">spentHeight&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nx">value&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">height&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kd">let&lt;/span> &lt;span class="nx">balance&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="mi">0&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kd">let&lt;/span> &lt;span class="nx">unspentList&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="nb">Array&lt;/span>&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="nx">any&lt;/span>&lt;span class="o">&amp;gt;&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="p">[];&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">for&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="kr">const&lt;/span> &lt;span class="p">[&lt;/span>&lt;span class="nx">key&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">value&lt;/span>&lt;span class="p">]&lt;/span> &lt;span class="k">of&lt;/span> &lt;span class="nx">temp&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">if&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="nx">value&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">spentHeight&lt;/span> &lt;span class="o">===&lt;/span> &lt;span class="mi">0&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">balance&lt;/span> &lt;span class="o">+=&lt;/span> &lt;span class="nx">value&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">balance&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1">// console.info(key, value.out);
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">unspentList&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">push&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">value&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span> &lt;span class="cm">/*else {
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="cm">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="cm"> temp.delete(key);
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="cm">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="cm"> }*/&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1">// return {balance, unspentList: Array.from(temp.values())}
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">return&lt;/span> &lt;span class="p">{&lt;/span> &lt;span class="nx">balance&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">unspentList&lt;/span> &lt;span class="p">};&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div></description></item><item><title>bitcoinjs-lib 哈希交易之多笔交易合并。</title><link>https://blogs.qipai360.cn/post/bitcoinjs-lib-%E5%93%88%E5%B8%8C%E4%BA%A4%E6%98%93%E4%B9%8B%E5%A4%9A%E7%AC%94%E4%BA%A4%E6%98%93%E5%90%88%E5%B9%B6/</link><pubDate>Wed, 25 Sep 2019 20:18:00 +0800</pubDate><guid>https://blogs.qipai360.cn/post/bitcoinjs-lib-%E5%93%88%E5%B8%8C%E4%BA%A4%E6%98%93%E4%B9%8B%E5%A4%9A%E7%AC%94%E4%BA%A4%E6%98%93%E5%90%88%E5%B9%B6/</guid><description>&lt;ul>
+&lt;li>
+&lt;p>转账的时候需要手动寻找每一笔未花费记录实在太费时。&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>比特币转账需要提取或合并所有未花费的交易中的比特币，才能实现交易。&lt;/p>
+&lt;/li>
+&lt;/ul>
+
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt" id="hl-0-1">&lt;a class="lnlinks" href="#hl-0-1"> 1&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-2">&lt;a class="lnlinks" href="#hl-0-2"> 2&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-3">&lt;a class="lnlinks" href="#hl-0-3"> 3&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-4">&lt;a class="lnlinks" href="#hl-0-4"> 4&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-5">&lt;a class="lnlinks" href="#hl-0-5"> 5&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-6">&lt;a class="lnlinks" href="#hl-0-6"> 6&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-7">&lt;a class="lnlinks" href="#hl-0-7"> 7&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-8">&lt;a class="lnlinks" href="#hl-0-8"> 8&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-9">&lt;a class="lnlinks" href="#hl-0-9"> 9&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-10">&lt;a class="lnlinks" href="#hl-0-10">10&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-11">&lt;a class="lnlinks" href="#hl-0-11">11&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-12">&lt;a class="lnlinks" href="#hl-0-12">12&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-13">&lt;a class="lnlinks" href="#hl-0-13">13&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-14">&lt;a class="lnlinks" href="#hl-0-14">14&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-15">&lt;a class="lnlinks" href="#hl-0-15">15&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-16">&lt;a class="lnlinks" href="#hl-0-16">16&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-17">&lt;a class="lnlinks" href="#hl-0-17">17&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-18">&lt;a class="lnlinks" href="#hl-0-18">18&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-19">&lt;a class="lnlinks" href="#hl-0-19">19&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-20">&lt;a class="lnlinks" href="#hl-0-20">20&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-21">&lt;a class="lnlinks" href="#hl-0-21">21&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-22">&lt;a class="lnlinks" href="#hl-0-22">22&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-23">&lt;a class="lnlinks" href="#hl-0-23">23&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-24">&lt;a class="lnlinks" href="#hl-0-24">24&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-25">&lt;a class="lnlinks" href="#hl-0-25">25&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-26">&lt;a class="lnlinks" href="#hl-0-26">26&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-27">&lt;a class="lnlinks" href="#hl-0-27">27&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-28">&lt;a class="lnlinks" href="#hl-0-28">28&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-29">&lt;a class="lnlinks" href="#hl-0-29">29&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-30">&lt;a class="lnlinks" href="#hl-0-30">30&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-31">&lt;a class="lnlinks" href="#hl-0-31">31&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-32">&lt;a class="lnlinks" href="#hl-0-32">32&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-33">&lt;a class="lnlinks" href="#hl-0-33">33&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-34">&lt;a class="lnlinks" href="#hl-0-34">34&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-35">&lt;a class="lnlinks" href="#hl-0-35">35&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-36">&lt;a class="lnlinks" href="#hl-0-36">36&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-37">&lt;a class="lnlinks" href="#hl-0-37">37&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-38">&lt;a class="lnlinks" href="#hl-0-38">38&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-39">&lt;a class="lnlinks" href="#hl-0-39">39&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-40">&lt;a class="lnlinks" href="#hl-0-40">40&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-41">&lt;a class="lnlinks" href="#hl-0-41">41&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-42">&lt;a class="lnlinks" href="#hl-0-42">42&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-43">&lt;a class="lnlinks" href="#hl-0-43">43&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-44">&lt;a class="lnlinks" href="#hl-0-44">44&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-45">&lt;a class="lnlinks" href="#hl-0-45">45&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-46">&lt;a class="lnlinks" href="#hl-0-46">46&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-47">&lt;a class="lnlinks" href="#hl-0-47">47&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-48">&lt;a class="lnlinks" href="#hl-0-48">48&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-49">&lt;a class="lnlinks" href="#hl-0-49">49&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-50">&lt;a class="lnlinks" href="#hl-0-50">50&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-51">&lt;a class="lnlinks" href="#hl-0-51">51&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-52">&lt;a class="lnlinks" href="#hl-0-52">52&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-53">&lt;a class="lnlinks" href="#hl-0-53">53&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-54">&lt;a class="lnlinks" href="#hl-0-54">54&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-55">&lt;a class="lnlinks" href="#hl-0-55">55&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-56">&lt;a class="lnlinks" href="#hl-0-56">56&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-57">&lt;a class="lnlinks" href="#hl-0-57">57&lt;/a>
+&lt;/span>&lt;span class="lnt" id="hl-0-58">&lt;a class="lnlinks" href="#hl-0-58">58&lt;/a>
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-typescript" data-lang="typescript">&lt;span class="line">&lt;span class="cl">&lt;span class="kr">import&lt;/span> &lt;span class="o">*&lt;/span> &lt;span class="kr">as&lt;/span> &lt;span class="nx">bitcoin&lt;/span> &lt;span class="kr">from&lt;/span> &lt;span class="s1">&amp;#39;bitcoinjs-lib&amp;#39;&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kr">import&lt;/span> &lt;span class="nx">fetch&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="p">{&lt;/span> &lt;span class="nx">Response&lt;/span> &lt;span class="p">}&lt;/span> &lt;span class="kr">from&lt;/span> &lt;span class="s1">&amp;#39;node-fetch&amp;#39;&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kr">const&lt;/span> &lt;span class="nx">quantitySat&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="mf">0.0001&lt;/span> &lt;span class="o">*&lt;/span> &lt;span class="mi">1&lt;/span>&lt;span class="nx">e8&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kr">const&lt;/span> &lt;span class="nx">feeSat&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="mf">0.0001&lt;/span> &lt;span class="o">*&lt;/span> &lt;span class="mi">1&lt;/span>&lt;span class="nx">e8&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">(&lt;/span>&lt;span class="kr">async&lt;/span> &lt;span class="p">()&lt;/span> &lt;span class="o">=&amp;gt;&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">try&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kd">let&lt;/span> &lt;span class="nx">NETWORK&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nx">bitcoin&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">networks&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">testnet&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kr">const&lt;/span> &lt;span class="nx">keyPair&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nx">bitcoin&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">ECPair&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">fromWIF&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">from_pvtkey&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">NETWORK&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kr">const&lt;/span> &lt;span class="nx">p2pkh&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nx">bitcoin&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">payments&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">p2pkh&lt;/span>&lt;span class="p">({&lt;/span> &lt;span class="nx">pubkey&lt;/span>: &lt;span class="kt">keyPair.publicKey&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">network&lt;/span>: &lt;span class="kt">NETWORK&lt;/span> &lt;span class="p">});&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kd">let&lt;/span> &lt;span class="kr">from&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nx">p2pkh&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">address&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kr">const&lt;/span> &lt;span class="nx">utxoResponse&lt;/span>: &lt;span class="kt">Response&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="k">await&lt;/span> &lt;span class="nx">fetch&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="sb">`https://api.blockcypher.com/v1/btc/test3/addrs/&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="kr">from&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="sb">`&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kr">const&lt;/span> &lt;span class="nx">json&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="k">await&lt;/span> &lt;span class="nx">utxoResponse&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">json&lt;/span>&lt;span class="p">();&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">console&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">log&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">json&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kd">let&lt;/span> &lt;span class="nx">balance&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nx">json&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">balance&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kd">let&lt;/span> &lt;span class="nx">unspentList&lt;/span>: &lt;span class="kt">Array&lt;/span>&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">any&lt;/span>&lt;span class="p">&amp;gt;&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="p">[];&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1">// 过滤掉已经被花费了的交易和未确认的交易，以及自己不在接收列表的交易
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span> &lt;span class="kr">const&lt;/span> &lt;span class="nx">txrefs&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nx">json&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">txrefs&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kr">const&lt;/span> &lt;span class="nx">unconfirmed_txrefs&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nx">json&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">unconfirmed_txrefs&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">if&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="nx">unconfirmed_txrefs&lt;/span> &lt;span class="o">&amp;amp;&amp;amp;&lt;/span> &lt;span class="nx">unconfirmed_txrefs&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">length&lt;/span> &lt;span class="o">&amp;gt;&lt;/span> &lt;span class="mi">0&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1">// 要把未确认的余额给去掉
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span> &lt;span class="nx">balance&lt;/span> &lt;span class="o">+=&lt;/span> &lt;span class="nx">json&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">unconfirmed_balance&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">unspentList&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nx">unspentList&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">concat&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">unconfirmed_txrefs&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">filter&lt;/span>&lt;span class="p">((&lt;/span>&lt;span class="nx">item&lt;/span>: &lt;span class="kt">any&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="o">=&amp;gt;&lt;/span> &lt;span class="o">!&lt;/span>&lt;span class="nx">item&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">spent_by&lt;/span> &lt;span class="o">&amp;amp;&amp;amp;&lt;/span> &lt;span class="nx">item&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">tx_output_n&lt;/span> &lt;span class="o">!==&lt;/span> &lt;span class="o">-&lt;/span>&lt;span class="mi">1&lt;/span>&lt;span class="p">));&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">if&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="nx">txrefs&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">length&lt;/span> &lt;span class="o">&amp;gt;&lt;/span> &lt;span class="mi">0&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">unspentList&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nx">unspentList&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">concat&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">txrefs&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">filter&lt;/span>&lt;span class="p">((&lt;/span>&lt;span class="nx">item&lt;/span>: &lt;span class="kt">any&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="o">=&amp;gt;&lt;/span> &lt;span class="o">!&lt;/span>&lt;span class="nx">item&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">spent_by&lt;/span> &lt;span class="o">&amp;amp;&amp;amp;&lt;/span> &lt;span class="nx">item&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">tx_output_n&lt;/span> &lt;span class="o">!==&lt;/span> &lt;span class="o">-&lt;/span>&lt;span class="mi">1&lt;/span>&lt;span class="p">));&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1">// 构建交易对象
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span> &lt;span class="kd">let&lt;/span> &lt;span class="nx">txb&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="k">new&lt;/span> &lt;span class="nx">bitcoin&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">TransactionBuilder&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">NETWORK&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1">// 批量插入未花费交易
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span> &lt;span class="nx">unspentList&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">forEach&lt;/span>&lt;span class="p">((&lt;/span>&lt;span class="nx">item&lt;/span>: &lt;span class="kt">any&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="o">=&amp;gt;&lt;/span> &lt;span class="nx">txb&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">addInput&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">item&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">tx_hash&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">item&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">tx_output_n&lt;/span>&lt;span class="p">));&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1">// 转出账户
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span> &lt;span class="nx">txb&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">addOutput&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">to&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">quantitySat&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1">// 预留手续费
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span> &lt;span class="nx">txb&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">addOutput&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="kr">from&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">balance&lt;/span> &lt;span class="o">-&lt;/span> &lt;span class="nx">quantitySat&lt;/span> &lt;span class="o">-&lt;/span> &lt;span class="nx">feeSat&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1">// 批量签名，根据索引即可
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span> &lt;span class="nx">unspentList&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">forEach&lt;/span>&lt;span class="p">((&lt;/span>&lt;span class="nx">item&lt;/span>: &lt;span class="kt">any&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">index&lt;/span>: &lt;span class="kt">any&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="o">=&amp;gt;&lt;/span> &lt;span class="p">{&lt;/span> &lt;span class="nx">txb&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">sign&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">index&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">keyPair&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">});&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1">// 序列化交易
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span> &lt;span class="kd">let&lt;/span> &lt;span class="nx">tx&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nx">txb&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">build&lt;/span>&lt;span class="p">();&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">console&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">log&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">tx&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">getHash&lt;/span>&lt;span class="p">().&lt;/span>&lt;span class="nx">toString&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;hex&amp;#39;&lt;/span>&lt;span class="p">));&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1">// 在一个测试链的节点把交易广布出去
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span> &lt;span class="kr">const&lt;/span> &lt;span class="nx">result&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="k">await&lt;/span> &lt;span class="nx">fetch&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;https://api.blockcypher.com/v1/btc/test3/txs/push&amp;#39;&lt;/span>&lt;span class="p">,{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">method&lt;/span>&lt;span class="o">:&lt;/span>&lt;span class="s1">&amp;#39;post&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">headers&lt;/span>&lt;span class="o">:&lt;/span>&lt;span class="p">{&lt;/span>&lt;span class="s1">&amp;#39;Content-Type&amp;#39;&lt;/span>&lt;span class="o">:&lt;/span>&lt;span class="s1">&amp;#39;application/json&amp;#39;&lt;/span>&lt;span class="p">},&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">body&lt;/span>:&lt;span class="kt">JSON.stringify&lt;/span>&lt;span class="p">({&lt;/span>&lt;span class="nx">tx&lt;/span>: &lt;span class="kt">tx.toHex&lt;/span>&lt;span class="p">()})&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">});&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span> &lt;span class="k">catch&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="nx">error&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">console&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">error&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">error&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">})();&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div></description></item></channel></rss>
