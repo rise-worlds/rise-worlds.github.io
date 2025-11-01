@@ -1,0 +1,253 @@
+<!doctype html><html lang=zh-CN data-theme=dark><head><meta charset=UTF-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=theme-color content="#222" media="(prefers-color-scheme: dark)"><meta name=generator content="Hugo 0.152.2"><link rel="shortcut icon" type=image/x-icon href=/imgs/icons/favicon.ico><link rel=icon type=image/x-icon href=/imgs/icons/favicon.ico><link rel=icon type=image/png sizes=16x16 href=/imgs/icons/favicon_32_32_next.png><link rel=icon type=image/png sizes=32x32 href=/imgs/icons/favicon_128_128_next.png><link rel=apple-touch-icon sizes=180x180 href=/imgs/icons/apple_touch_icon_next.png><meta itemprop=name content="常用 GDB 命令中文速览"><meta itemprop=description content="福兮祸兮，焉知所依？冬去冰泮，春来萌荣。朝生暮死，亦可惊鸿。知足者富，自足者强。"><meta name=description content="福兮祸兮，焉知所依？冬去冰泮，春来萌荣。朝生暮死，亦可惊鸿。知足者富，自足者强。"><meta itemprop=datePublished zgotmplz><meta itemprop=dateModified zgotmplz><meta itemprop=image content="https://blogs.qipai360.cn/imgs/avatar.jpg"><meta itemprop=keywords content="gdb"><meta property="og:type" content="article"><meta property="og:title" content="常用 GDB 命令中文速览"><meta property="og:description" content="福兮祸兮，焉知所依？冬去冰泮，春来萌荣。朝生暮死，亦可惊鸿。知足者富，自足者强。"><meta property="og:image" content="/imgs/avatar.jpg"><meta property="og:image:width" content="312"><meta property="og:image:height" content="312"><meta property="og:image:type" content="image/jpeg/png/svg/jpg"><meta property="og:url" content="https://blogs.qipai360.cn/post/commonly-used-gdb-command-chinese-quick-view/"><meta property="og:site_name" content="Rise的自留地"><meta property="og:locale" content="zh-CN"><meta property="article:author" content="Rise"><meta property="article:published_time" content="2020-12-03 04:08:47 +0800 +0800"><meta property="article:modified_time" content="2020-12-03 04:08:47 +0800 +0800"><link type=text/css rel=stylesheet href=https://blogs.qipai360.cn/js/3rd/font-awesome/6.7.2/css/all.min.css><link type=text/css rel=stylesheet href=https://blogs.qipai360.cn/js/3rd/animate.css/3.1.1/animate.min.css><link type=text/css rel=stylesheet href=https://blogs.qipai360.cn/js/3rd/viewerjs/1.11.6/viewer.min.css><link rel=stylesheet href="/css/main.min.css?=1761990627"><style type=text/css>.post-footer hr:after{content:"~ 我可是有底线的哟 ~"}.flinks-list-footer hr:after{content:"~ 我可是有底线的哟 ~"}</style><script type=text/javascript>(function(){localDB={set:function(e,t,n){if(n===0)return;const s=new Date,o=n*864e5,i={value:t,expiry:s.getTime()+o};localStorage.setItem(e,JSON.stringify(i))},get:function(e){const t=localStorage.getItem(e);if(!t)return 0[0];const n=JSON.parse(t),s=new Date;return s.getTime()>n.expiry?(localStorage.removeItem(e),0[0]):n.value}},theme={active:function(){const e=localDB.get("theme");if(e==null)return;theme.toggle(e),window.matchMedia("(prefers-color-scheme: dark)").addListener(function(e){theme.toggle(e.matches?"dark":"light")})},toggle:function(e){document.documentElement.setAttribute("data-theme",e),localDB.set("theme",e,2);const t=document.querySelector("iframe.giscus-frame");if(t){const n={setConfig:{theme:e}};t.contentWindow.postMessage({giscus:n},"https://giscus.app")}}},theme.active()})(window)</script><script type=text/javascript>document.addEventListener("DOMContentLoaded",()=>{var e=document.createElement("script");e.charset="UTF-8",e.src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js",e.async=!1,e.defer=!0,document.head.appendChild(e),e.onload=function(){NexT.utils.fmtBusuanzi()}})</script><script defer src=https://static.cloudflareinsights.com/beacon.min.js data-cf-beacon='{"token": "2b23669184fc49269e400525ac2447d9"}'></script><title>常用 GDB 命令中文速览 - Rise的自留地</title><noscript><link rel=stylesheet href=/css/noscript.css></noscript></head><body itemscope itemtype=http://schema.org/WebPage class=use-motion><div class=headband></div><main class=main><header class=header itemscope itemtype=http://schema.org/WPHeader><div class=header-inner><div class=site-brand-container><div class=site-nav-toggle><div class=toggle aria-label role=button><span class=toggle-line></span>
+<span class=toggle-line></span>
+<span class=toggle-line></span></div></div><div class=site-meta><a href=/ class=brand rel=start><i class=logo-line></i><h1 class=site-title>Rise的自留地</h1><i class=logo-line></i></a><p class=site-subtitle itemprop=description>记录生活中的点滴，分享编程技术和游戏开发经验。</p></div><div class=site-nav-right><div class="toggle popup-trigger"></div></div></div><nav class=site-nav><ul class="main-menu menu"><li class="menu-item menu-item-home"><a href=/ class=hvr-icon-pulse rel=section><i class="fa fa-home hvr-icon"></i>首页</a></li><li class="menu-item menu-item-about"><a href=/about.html class=hvr-icon-pulse rel=section><i class="fa fa-user hvr-icon"></i>关于</a></li><li class="menu-item menu-item-archives"><a href=/archives/ class=hvr-icon-pulse rel=section><i class="fa fa-archive hvr-icon"></i>归档
+<span class=badge>678</span></a></li><li class="menu-item menu-item-tags"><a href=/tags/ class=hvr-icon-pulse rel=section><i class="fa fa-tags hvr-icon"></i>标签</a></li><li class="menu-item menu-item-message"><a href=/message/ class=hvr-icon-pulse rel=section><i class="fa fa-comments hvr-icon"></i>留言板</a></li><li class="menu-item menu-item-commonweal"><a href=/404.html class=hvr-icon-pulse rel=section><i class="fa fa-heartbeat hvr-icon"></i>公益 404</a></li></ul></nav></div><div class="toggle sidebar-toggle" role=button><span class=toggle-line></span>
+<span class=toggle-line></span>
+<span class=toggle-line></span></div><aside class=sidebar><div class="sidebar-inner sidebar-overview-active"><ul class=sidebar-nav><li class=sidebar-nav-toc>文章目录</li><li class=sidebar-nav-overview>站点概览</li></ul><div class=sidebar-panel-container><div class="post-toc-wrap sidebar-panel"><div class="post-toc animated"><nav id=TableOfContents><ul><li><ul><li><a href=#break>break</a></li><li><a href=#info-breakpoints>info breakpoints</a></li><li><a href=#disable>disable</a></li><li><a href=#enable>enable</a></li><li><a href=#clear>clear</a></li><li><a href=#delete>delete</a></li><li><a href=#tbreak>tbreak</a></li><li><a href=#watch>watch</a></li><li><a href=#step>step</a></li><li><a href=#reverse-step>reverse-step</a></li><li><a href=#next>next</a></li><li><a href=#reverse-next>reverse-next</a></li><li><a href=#return>return</a></li><li><a href=#finish>finish</a></li><li><a href=#until>until</a></li><li><a href=#continue>continue</a></li><li><a href=#print>print</a></li><li><a href=#x>x</a></li><li><a href=#display>display</a></li><li><a href=#info-display>info display</a></li><li><a href=#undisplay>undisplay</a></li><li><a href=#disable-display>disable display</a></li><li><a href=#enable-display>enable display</a></li><li><a href=#help>help</a></li><li><a href=#attach>attach</a></li><li><a href=#run>run</a></li><li><a href=#backtrace>backtrace</a></li><li><a href=#ptype>ptype</a></li></ul></li></ul></nav></div></div><div class="site-overview-wrap sidebar-panel"><div class="site-author site-overview-item animated" itemprop=author itemscope itemtype=http://schema.org/Person><img class=site-author-image itemprop=image alt=Rise src=/imgs/img-lazy-loading.gif data-src=/imgs/avatar.jpg><p class=site-author-name itemprop=name>Rise</p><div class=site-description itemprop=description>福兮祸兮，焉知所依？冬去冰泮，春来萌荣。朝生暮死，亦可惊鸿。知足者富，自足者强。</div></div><div class="site-state-wrap site-overview-item animated"><nav class=site-state><div class="site-state-item site-state-posts"><a href=/archives/><span class=site-state-item-count>678</span>
+<span class=site-state-item-name>日志</span></a></div><div class="site-state-item site-state-categories"><a href=/categories/><span class=site-state-item-count>34</span>
+<span class=site-state-item-name>分类</span></a></div><div class="site-state-item site-state-tags"><a href=/tags/><span class=site-state-item-count>117</span>
+<span class=site-state-item-name>标签</span></a></div></nav></div><div class="links-of-social site-overview-item animated"><span class=links-of-social-item><a href=https://github.com/rise-worlds title="Github → https://github.com/rise-worlds" rel=noopener class=hvr-icon-pulse target=_blank><i class="fab fa-github fa-fw hvr-icon"></i>
+Github
+</a></span><span class=links-of-social-item><a href=mailto:rise.worlds@outlook.com title="E-Mail → mailto:rise.worlds@outlook.com" rel=noopener class=hvr-icon-pulse target=_blank><i class="fa fa-envelope fa-fw hvr-icon"></i>
+E-Mail
+</a></span><span class=links-of-social-item><a href=https://www.zhihu.com/people/rise-worlds title="知乎 → https://www.zhihu.com/people/rise-worlds" rel=noopener class=hvr-icon-pulse target=_blank><i class="fa fa-book fa-fw hvr-icon"></i>
+知乎
+</a></span><span class=links-of-social-item><a href=https://twitter.com/riseworlds title="Twitter → https://twitter.com/riseworlds" rel=noopener class=hvr-icon-pulse target=_blank><i class="fab fa-twitter fa-fw hvr-icon"></i>
+Twitter
+</a></span><span class=links-of-social-item><a href=https://www.facebook.com/rise.worlds title="facebook → https://www.facebook.com/rise.worlds" rel=noopener class=hvr-icon-pulse target=_blank><i class="fab fa-facebook fa-fw hvr-icon"></i>
+facebook
+</a></span><span class=links-of-social-item><a href=https://youtube.com/@YiXuan title="YouTube → https://youtube.com/@YiXuan" rel=noopener class=hvr-icon-pulse target=_blank><i class="fab fa-youtube fa-fw hvr-icon"></i>
+YouTube
+</a></span><span class=links-of-social-item><a href=https://instagram.com/rise.worlds title="Instagram → https://instagram.com/rise.worlds" rel=noopener class=hvr-icon-pulse target=_blank><i class="fab fa-instagram fa-fw hvr-icon"></i>
+Instagram
+</a></span><span class=links-of-social-item><a href=https://t.me/riseworlds title="Telegram → https://t.me/riseworlds" rel=noopener class=hvr-icon-pulse target=_blank><i class="fab fa-telegram fa-fw hvr-icon"></i>
+Telegram</a></span></div><div class="links-of-blogroll site-overview-item animated"><div class=links-of-blogroll-title><i class="fa fa-globe fa-fw"></i>
+友情链接</div><ul class=links-of-blogroll-list><li class=links-of-blogroll-item><a href=https://www.qipai360.cn title=https://www.qipai360.cn target=_blank>Qipai360</a></li><li class=links-of-blogroll-item><a href=https://www.cnblogs.com/flying_bat title=https://www.cnblogs.com/flying_bat target=_blank>博客园</a></li><li class=links-of-blogroll-item><a href=https://zishu.me title=https://zishu.me target=_blank>子舒的博客</a></li><li class=links-of-blogroll-item><a href=https://gitee.com/hugo-next/hugo-theme-next title=https://gitee.com/hugo-next/hugo-theme-next target=_blank>Hugo-NexT</a></li></ul></div></div></div></div><div id=siteinfo-card-widget class=sidebar-card-widget><div class=item-headline><i class="fas fa-chart-line"></i>
+<span>网站资讯</span></div><div class=siteinfo><div class=siteinfo-item><div class=item-name><i class="fa-solid fa-calendar-check"></i>已运行：</div><div class=item-count id=runTimes data-publishdate="2004-10-06 15:24:00 +0800 +0800"></div></div><div class=siteinfo-item><div class=item-name><i class="fas fa fa-user"></i>总访客数：</div><div class=item-count id=busuanzi_value_site_uv><i class="fa fa-sync fa-spin"></i></div></div><div class=siteinfo-item><div class=item-name><i class="fas fa fa-eye"></i>页面浏览：</div><div class=item-count id=busuanzi_value_site_pv><i class="fa fa-sync fa-spin"></i></div></div><div class=siteinfo-item><div class=item-name><i class="fa fa-font"></i>总字数：</div><div class=item-count id=wordsCount data-count=2418817></div></div><div class=siteinfo-item><div class=item-name><i class="fa fa-mug-hot"></i>阅读约：</div><div class=item-count id=readTimes data-times=5198></div></div><div class=siteinfo-item><div class=item-name><i class="fa fa-clock-rotate-left"></i>最后更新于：</div><div class=item-count id=last-push-date data-lastpushdate="2025-11-01 14:55:00 +0800 +0800"></div></div></div></div></aside><div class=sidebar-dimmer></div></header><div class=tool-buttons><div id=goto-comments class="button goto-comments" title=直达评论><i class="fas fa-comments"></i></div><div id=toggle-theme class=button title=深浅模式切换><i class="fas fa-adjust"></i></div><div class=back-to-top role=button title=返回顶部><i class="fa fa-arrow-up"></i>
+<span>0%</span></div></div><div class=reading-progress-bar></div><a role=button class="book-mark-link book-mark-link-fixed"></a><a href=https://github.com/rise-worlds rel="noopener external nofollow noreferrer" target=_blank title="Follow me on GitHub" class="exturl github-corner"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0 0 115 115h15l12 27L250 250V0z"/><path d="M128.3 109C113.8 99.7 119 89.6 119 89.6 122 82.7 120.5 78.6 120.5 78.6 119.2 72 123.4 76.3 123.4 76.3 127.3 80.9 125.5 87.3 125.5 87.3 122.9 97.6 130.6 101.9 134.4 103.2" fill="currentColor" style="transform-origin:130px 106px" class="octo-arm"/><path d="M115 115C114.9 115.1 118.7 116.5 119.8 115.4l13.9-13.8C136.9 99.2 139.9 98.4 142.2 98.6 133.8 88 127.5 74.4 143.8 58 148.5 53.4 154 51.2 159.7 51 160.3 49.4 163.2 43.6 171.4 40.1 171.4 40.1 176.1 42.5 178.8 56.2 183.1 58.6 187.2 61.8 190.9 65.4 194.5 69 197.7 73.2 200.1 77.6 213.8 80.2 216.3 84.9 216.3 84.9 212.7 93.1 206.9 96 205.4 96.6 205.1 102.4 203 107.8 198.3 112.5 181.9 128.9 168.3 122.5 157.7 114.1 157.9 116.9 156.7 120.9 152.7 124.9L141 136.5C139.8 137.7 141.6 141.9 141.8 141.8z" fill="currentColor" class="octo-body"/></svg></a><noscript><div class=noscript-warning>Theme NexT works best with JavaScript enabled</div></noscript><div class="main-inner post posts-expand"><div class=post-block><article itemscope itemtype=http://schema.org/Article class=post-content lang><link itemprop=mainEntityOfPage href=https://blogs.qipai360.cn/post/commonly-used-gdb-command-chinese-quick-view/><span hidden itemprop=author itemscope itemtype=http://schema.org/Person><meta itemprop=image content="/imgs/avatar.jpg"><meta itemprop=name content="Rise"></span><span hidden itemprop=publisher itemscope itemtype=http://schema.org/Organization><meta itemprop=name content="Rise"><meta itemprop=description content="福兮祸兮，焉知所依？冬去冰泮，春来萌荣。朝生暮死，亦可惊鸿。知足者富，自足者强。"></span><span hidden itemprop=post itemscope itemtype=http://schema.org/CreativeWork><meta itemprop=name content="常用 GDB 命令中文速览"><meta itemprop=description content="英文：Fsf，翻译：Linux中国/robot527
+
+
+    原始地址
+    
+
+• break — 在指定的行或函数处设置断点，缩写为 b
+• info breakpoints — 打印未删除的所有断点，观察点和捕获点的列表，缩写为 i b
+• disable — 禁用断点，缩写为 dis
+• enable — 启用断点
+• clear — 清除指定行或函数处的断点
+• delete — 删除断点，缩写为 d
+• tbreak — 设置临时断点，参数同 break，但在程序第一次停住后会被自动删除
+• watch — 为表达式（或变量）设置观察点，当表达式（或变量）的值有变化时，暂停程序执行
+• step — 单步跟踪，如果有函数调用，会进入该函数，缩写为 s
+• reverse-step — 反向单步跟踪，如果有函数调用，会进入该函数
+• next — 单步跟踪，如果有函数调用，不会进入该函数，缩写为 n
+• reverse-next — 反向单步跟踪，如果有函数调用，不会进入该函数
+• return — 使选定的栈帧返回到其调用者
+• finish — 执行直到选择的栈帧返回，缩写为 fin
+• until — 执行直到达到当前栈帧中当前行后的某一行（用于跳过循环、递归函数调用），缩写为 u
+• continue — 恢复程序执行，缩写为 c
+• print — 打印表达式 EXP 的值，缩写为 p
+• x — 查看内存
+• display — 每次程序停止时打印表达式 EXP 的值（自动显示）
+• info display — 打印早先设置为自动显示的表达式列表
+• disable display — 禁用自动显示
+• enable display — 启用自动显示
+• undisplay — 删除自动显示项
+• help — 打印命令列表（带参数时查找命令的帮助），缩写为 h
+• attach — 挂接到已在运行的进程来调试
+• run — 启动被调试的程序，缩写为 r
+• backtrace — 查看程序调用栈的信息，缩写为 bt
+• ptype — 打印类型 TYPE 的定义
+
+break
+
+使用 break 命令（缩写 b）来设置断点。"></span><header class=post-header><h1 class=post-title itemprop="name headline">常用 GDB 命令中文速览</h1><div class=post-meta-container><div class=post-meta-items><span class=post-meta-item><span class=post-meta-item-icon><i class="fas fa-solid fa-calendar"></i>
+</span><span class=post-meta-item-text title=发表于>发表于：
+</span><time title="创建时间：2020年12月03日 04:08:47 CST" itemprop="dateCreated datePublished" datetime="2020-12-03 04:08:47 +0800 +0800">2020年12月03日</time></span></div><div class=post-meta-items><span class=post-meta-item title=字数><span class=post-meta-item-icon><i class="fas fa-solid fa-file-word"></i>
+</span><span class=post-meta-item-text>字数：</span>
+<span>3946</span>
+</span><span class=post-meta-item title=阅读><span class=post-meta-item-icon><i class="fas fa-solid fa-clock"></i>
+</span><span class=post-meta-item-text>阅读：&ap;</span>
+<span>8分钟</span>
+</span><span class=post-meta-item title=浏览><span class=post-meta-item-icon><i class="fas fa-solid fa-eye"></i>
+</span><span class=post-meta-item-text>浏览：
+</span><span id=pageview-count data-path=/post/commonly-used-gdb-command-chinese-quick-view/><i class="fa fa-sync fa-spin"></i></span></span></div></div></header><div class=post-body itemprop=articleBody><p>英文：Fsf，翻译：Linux中国/robot527
+<a href=linux.cn/article-8900-1.html title=原始地址>原始地址</a></p><pre><code>• break — 在指定的行或函数处设置断点，缩写为 b
+• info breakpoints — 打印未删除的所有断点，观察点和捕获点的列表，缩写为 i b
+• disable — 禁用断点，缩写为 dis
+• enable — 启用断点
+• clear — 清除指定行或函数处的断点
+• delete — 删除断点，缩写为 d
+• tbreak — 设置临时断点，参数同 break，但在程序第一次停住后会被自动删除
+• watch — 为表达式（或变量）设置观察点，当表达式（或变量）的值有变化时，暂停程序执行
+• step — 单步跟踪，如果有函数调用，会进入该函数，缩写为 s
+• reverse-step — 反向单步跟踪，如果有函数调用，会进入该函数
+• next — 单步跟踪，如果有函数调用，不会进入该函数，缩写为 n
+• reverse-next — 反向单步跟踪，如果有函数调用，不会进入该函数
+• return — 使选定的栈帧返回到其调用者
+• finish — 执行直到选择的栈帧返回，缩写为 fin
+• until — 执行直到达到当前栈帧中当前行后的某一行（用于跳过循环、递归函数调用），缩写为 u
+• continue — 恢复程序执行，缩写为 c
+• print — 打印表达式 EXP 的值，缩写为 p
+• x — 查看内存
+• display — 每次程序停止时打印表达式 EXP 的值（自动显示）
+• info display — 打印早先设置为自动显示的表达式列表
+• disable display — 禁用自动显示
+• enable display — 启用自动显示
+• undisplay — 删除自动显示项
+• help — 打印命令列表（带参数时查找命令的帮助），缩写为 h
+• attach — 挂接到已在运行的进程来调试
+• run — 启动被调试的程序，缩写为 r
+• backtrace — 查看程序调用栈的信息，缩写为 bt
+• ptype — 打印类型 TYPE 的定义
+</code></pre><h3 id=break>break
+<a class=header-anchor href=#break></a></h3><p>使用 break 命令（缩写 b）来设置断点。</p><a id=more></a><p>用法：
+• break 当不带参数时，在所选栈帧中执行的下一条指令处设置断点。
+• break <function-name> 在函数体入口处打断点，在 C++ 中可以使用 class::function 或 function(type, &mldr;) 格式来指定函数名。
+• break <line-number> 在当前源码文件指定行的开始处打断点。
+• break -N break +N 在当前源码行前面或后面的 N 行开始处打断点，N 为正整数。
+• break
+<a href=filename:linenum title=filename:linenum>filename:linenum
+</a>  在源码文件 filename 的 linenum 行处打断点。
+• break
+<a href=filename:function title=filename:function>filename:function
+</a>  在源码文件 filename 的 function 函数入口处打断点。
+• break <address> 在程序指令的地址处打断点。
+• break &mldr; if <cond>  设置条件断点，&mldr; 代表上述参数之一（或无参数），cond为条件表达式，仅在 cond 值非零时暂停程序执行。</p><h3 id=info-breakpoints>info breakpoints
+<a class=header-anchor href=#info-breakpoints></a></h3><p>查看断点，观察点和捕获点的列表。</p><p>用法：</p><pre><code>• info breakpoints [list...]
+• info break [list...]
+• list... 用来指定若干个断点的编号（可省略），可以是 2， 1-3， 2 5 等。
+</code></pre><h3 id=disable>disable
+<a class=header-anchor href=#disable></a></h3><p>禁用一些断点。参数是用空格分隔的断点编号。要禁用所有断点，不加参数。
+禁用的断点不会被忘记，但直到重新启用才有效。</p><p>用法：</p><pre><code>• disable [breakpoints] [list...]
+• breakpoints 是 disable 的子命令（可省略），list... 同 info breakpoints 中的描述。
+</code></pre><h3 id=enable>enable
+<a class=header-anchor href=#enable></a></h3><p>启用一些断点。给出断点编号（以空格分隔）作为参数。没有参数时，所有断点被启用。</p><p>用法：</p><pre><code>• enable [breakpoints] [list...] 启用指定的断点（或所有定义的断点）。
+• enable [breakpoints] once list... 临时启用指定的断点。GDB 在停止您的程序后立即禁用这些断点。
+• enable [breakpoints] delete list... 使指定的断点启用一次，然后删除。一旦您的程序停止，GDB 就会删除这些断点。等效于用 tbreak 设置的断点。
+</code></pre><p>breakpoints 同 disable 中的描述。</p><h3 id=clear>clear
+<a class=header-anchor href=#clear></a></h3><p>在指定行或函数处清除断点。参数可以是行号，函数名称或 * 跟一个地址。</p><p>用法：</p><pre><code>• clear 当不带参数时，清除所选栈帧在执行的源码行中的所有断点。
+• clear &lt;function&gt;, clear &lt;filename:function&gt;  删除在命名函数的入口处设置的任何断点。
+• clear &lt;linenum&gt;, clear &lt;filename:linenum&gt;  删除在指定的文件指定的行号的代码中设置的任何断点。
+• clear &lt;address&gt; 清除指定程序指令的地址处的断点。
+</code></pre><h3 id=delete>delete
+<a class=header-anchor href=#delete></a></h3><p>删除一些断点或自动显示表达式。参数是用空格分隔的断点编号。要删除所有断点，不加参数。</p><p>用法： delete [breakpoints] [list&mldr;]</p><h3 id=tbreak>tbreak
+<a class=header-anchor href=#tbreak></a></h3><p>设置临时断点。参数形式同 break 一样。</p><p>除了断点是临时的之外，其他同 break 一样，所以在命中时会被删除。</p><h3 id=watch>watch
+<a class=header-anchor href=#watch></a></h3><p>为表达式设置观察点。</p><p>用法： watch [-l|-location] <expr>  每当一个表达式的值改变时，观察点就会暂停程序执行。</p><p>如果给出了 -l 或者 -location，则它会对 expr 求值并观察它所指向的内存。例如，watch *(int *)0x12345678 将在指定的地址处观察一个 4 字节的区域（假设 int 占用 4 个字节）。</p><h3 id=step>step
+<a class=header-anchor href=#step></a></h3><p>单步执行程序，直到到达不同的源码行。</p><p>用法： step [N] 参数 N 表示执行 N 次（或由于另一个原因直到程序停止）。</p><p>警告：如果当控制在没有调试信息的情况下编译的函数中使用 step 命令，则执行将继续进行，直到控制到达具有调试信息的函数。 同样，它不会进入没有调试信息编译的函数。</p><p>要执行没有调试信息的函数，请使用 stepi 命令，详见后文。</p><h3 id=reverse-step>reverse-step
+<a class=header-anchor href=#reverse-step></a></h3><p>反向单步执行程序，直到到达另一个源码行的开头。</p><p>用法： reverse-step [N] 参数 N 表示执行 N 次（或由于另一个原因直到程序停止）。</p><h3 id=next>next
+<a class=header-anchor href=#next></a></h3><p>单步执行程序，执行完子程序调用。</p><p>用法： next [N]</p><p>与 step 不同，如果当前的源代码行调用子程序，则此命令不会进入子程序，而是将其视为单个源代码行，继续执行。</p><h3 id=reverse-next>reverse-next
+<a class=header-anchor href=#reverse-next></a></h3><p>反向步进程序，执行完子程序调用。</p><p>用法： reverse-next [N]</p><p>如果要执行的源代码行调用子程序，则此命令不会进入子程序，调用被视为一个指令。</p><p>参数 N 表示执行 N 次（或由于另一个原因直到程序停止）。</p><h3 id=return>return
+<a class=header-anchor href=#return></a></h3><p>您可以使用 return 命令取消函数调用的执行。如果你给出一个表达式参数，它的值被用作函数的返回值。</p><p>用法： return <expression>  将 expression 的值作为函数的返回值并使函数直接返回。</p><h3 id=finish>finish
+<a class=header-anchor href=#finish></a></h3><p>执行直到选定的栈帧返回。</p><p>用法： finish 返回后，返回的值将被打印并放入到值历史记录中。</p><h3 id=until>until
+<a class=header-anchor href=#until></a></h3><p>执行直到程序到达当前栈帧中当前行之后（与 break 命令相同的参数）的源码行。此命令用于通过一个多次的循环，以避免单步执行。</p><p>用法：until <location>  或 u <location>  继续运行程序，直到达到指定的位置，或者当前栈帧返回。</p><h3 id=continue>continue
+<a class=header-anchor href=#continue></a></h3><p>在信号或断点之后，继续运行被调试的程序。</p><p>用法： continue [N] 如果从断点开始，可以使用数字 N 作为参数，这意味着将该断点的忽略计数设置为 N - 1(以便断点在第 N 次到达之前不会中断)。如果启用了非停止模式（使用 show non-stop 查看），则仅继续当前线程，否则程序中的所有线程都将继续。</p><h3 id=print>print
+<a class=header-anchor href=#print></a></h3><p>求值并打印表达式 EXP 的值。可访问的变量是所选栈帧的词法环境，以及范围为全局或整个文件的所有变量。</p><p>用法：</p><pre><code>• print [expr] 或 print /f [expr] expr 是一个（在源代码语言中的）表达式。
+</code></pre><p>默认情况下，expr 的值以适合其数据类型的格式打印；您可以通过指定 /f 来选择不同的格式，其中 f 是一个指定格式的字母；详见输出格式。</p><p>如果省略 expr，GDB 再次显示最后一个值。</p><p>要以每行一个成员带缩进的格式打印结构体变量请使用命令 set print pretty on，取消则使用命令 set print pretty off。</p><p>可使用命令 show print 查看所有打印的设置。</p><h3 id=x>x
+<a class=header-anchor href=#x></a></h3><p>检查内存。</p><p>用法： x/nfu <addr>  或 x <addr> n、f 和 u 都是可选参数，用于指定要显示的内存以及如何格式化。addr 是要开始显示内存的地址的表达式。</p><p>n 重复次数（默认值是 1），指定要显示多少个单位（由 u 指定）的内存值。</p><p>f 显示格式（初始默认值是 x），显示格式是 print(&lsquo;x&rsquo;，&rsquo;d&rsquo;，&lsquo;u&rsquo;，&lsquo;o&rsquo;，&rsquo;t&rsquo;，&lsquo;a&rsquo;，&lsquo;c&rsquo;，&lsquo;f&rsquo;，&rsquo;s&rsquo;) 使用的格式之一，再加 i（机器指令）。</p><p>u 单位大小，b 表示单字节，h 表示双字节，w 表示四字节，g 表示八字节。</p><p>例如：</p><p>x/3uh 0x54320 表示从地址 0x54320 开始以无符号十进制整数的格式，双字节为单位来显示 3 个内存值。</p><p>x/16xb 0x7f95b7d18870 表示从地址 0x7f95b7d18870 开始以十六进制整数的格式，单字节为单位显示 16 个内存值。</p><h3 id=display>display
+<a class=header-anchor href=#display></a></h3><p>每次程序暂停时，打印表达式 EXP 的值。</p><p>用法： display <expr>,  display/fmt <expr>  或 display/fmt <addr>  fmt 用于指定显示格式。像 print 命令里的 /f 一样。</p><p>对于格式 i 或 s，或者包括单位大小或单位数量，将表达式 addr 添加为每次程序停止时要检查的内存地址。</p><h3 id=info-display>info display
+<a class=header-anchor href=#info-display></a></h3><p>打印自动显示的表达式列表，每个表达式都带有项目编号，但不显示其值。</p><p>包括被禁用的表达式和不能立即显示的表达式（当前不可用的自动变量）。</p><h3 id=undisplay>undisplay
+<a class=header-anchor href=#undisplay></a></h3><p>取消某些表达式在程序暂停时的自动显示。参数是表达式的编号（使用 info display 查询编号）。不带参数表示取消所有自动显示表达式。</p><p>delete display 具有与此命令相同的效果。</p><h3 id=disable-display>disable display
+<a class=header-anchor href=#disable-display></a></h3><p>禁用某些表达式在程序暂停时的自动显示。禁用的显示项目不会被自动打印，但不会被忘记。 它可能稍后再次被启用。</p><p>参数是表达式的编号（使用 info display 查询编号）。不带参数表示禁用所有自动显示表达式。</p><h3 id=enable-display>enable display
+<a class=header-anchor href=#enable-display></a></h3><p>启用某些表达式在程序暂停时的自动显示。</p><p>参数是重新显示的表达式的编号（使用 info display 查询编号）。不带参数表示启用所有自动显示表达式。</p><h3 id=help>help
+<a class=header-anchor href=#help></a></h3><p>打印命令列表。</p><p>您可以使用不带参数的 help（缩写为 h）来显示命令的类别名的简短列表。</p><p>使用 help <class>  您可以获取该类中的各个命令的列表。使用 help <command>  显示如何使用该命令。</p><h3 id=attach>attach
+<a class=header-anchor href=#attach></a></h3><p>挂接到 GDB 之外的进程或文件。该命令可以将进程 ID 或设备文件作为参数。</p><p>对于进程 ID，您必须具有向进程发送信号的权限，并且必须具有与调试器相同的有效的 uid。</p><p>用法： attach <process-id>  GDB 在安排调试指定的进程之后做的第一件事是暂停该进程。</p><p>无论是通过 attach 命令挂接的进程还是通过 run 命令启动的进程，您都可以使用的 GDB 命令来检查和修改挂接的进程。</p><h3 id=run>run
+<a class=header-anchor href=#run></a></h3><p>启动被调试的程序。</p><p>可以直接指定参数，也可以用 set args 设置（启动所需的）参数。</p><p>例如： run arg1 arg2 &mldr; 等效于</p><p>set args arg1 arg2 &mldr;
+run</p><p>还允许使用 >、 &lt; 或 &#187; 进行输入和输出重定向。</p><h3 id=backtrace>backtrace
+<a class=header-anchor href=#backtrace></a></h3><p>打印整体栈帧信息。</p><pre><code>• bt 打印整体栈帧信息，每个栈帧一行。
+• bt n 类似于上，但只打印最内层的 n 个栈帧。
+• bt -n 类似于上，但只打印最外层的 n 个栈帧。
+• bt full n 类似于 bt n，还打印局部变量的值。
+</code></pre><p>where 和 info stack(缩写 info s) 是 backtrace 的别名。调用栈信息类似如下：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt id=hl-0-1><a class=lnlinks href=#hl-0-1>1</a>
+</span><span class=lnt id=hl-0-2><a class=lnlinks href=#hl-0-2>2</a>
+</span><span class=lnt id=hl-0-3><a class=lnlinks href=#hl-0-3>3</a>
+</span><span class=lnt id=hl-0-4><a class=lnlinks href=#hl-0-4>4</a>
+</span><span class=lnt id=hl-0-5><a class=lnlinks href=#hl-0-5>5</a>
+</span><span class=lnt id=hl-0-6><a class=lnlinks href=#hl-0-6>6</a>
+</span><span class=lnt id=hl-0-7><a class=lnlinks href=#hl-0-7>7</a>
+</span><span class=lnt id=hl-0-8><a class=lnlinks href=#hl-0-8>8</a>
+</span><span class=lnt id=hl-0-9><a class=lnlinks href=#hl-0-9>9</a>
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>(gdb) where
+</span></span><span class=line><span class=cl>#0  vconn_stream_run (vconn=0x99e5e38) at lib/vconn-stream.c:232
+</span></span><span class=line><span class=cl>#1  0x080ed68a in vconn_run (vconn=0x99e5e38) at lib/vconn.c:276
+</span></span><span class=line><span class=cl>#2  0x080dc6c8 in rconn_run (rc=0x99dbbe0) at lib/rconn.c:513
+</span></span><span class=line><span class=cl>#3  0x08077b83 in ofconn_run (ofconn=0x99e8070, handle_openflow=0x805e274 &lt;handle_openflow&gt;) at ofproto/connmgr.c:1234
+</span></span><span class=line><span class=cl>#4  0x08075f92 in connmgr_run (mgr=0x99dc878, handle_openflow=0x805e274 &lt;handle_openflow&gt;) at ofproto/connmgr.c:286
+</span></span><span class=line><span class=cl>#5  0x08057d58 in ofproto_run (p=0x99d9ba0) at ofproto/ofproto.c:1159
+</span></span><span class=line><span class=cl>#6  0x0804f96b in bridge_run () at vswitchd/bridge.c:2248
+</span></span><span class=line><span class=cl>#7  0x08054168 in main (argc=4, argv=0xbf8333e4) at vswitchd/ovs-vswitchd.c:125</span></span></code></pre></td></tr></table></div></div><h3 id=ptype>ptype
+<a class=header-anchor href=#ptype></a></h3><p>打印类型 TYPE 的定义。</p><p>用法： ptype[/FLAGS] TYPE-NAME | EXPRESSION</p><p>参数可以是由 typedef 定义的类型名， 或者 struct STRUCT-TAG 或者 class CLASS-NAME 或者 union UNION-TAG 或者 enum ENUM-TAG。</p><p>根据所选的栈帧的词法上下文来查找该名字。</p><p>类似的命令是 whatis，区别在于 whatis 不展开由 typedef 定义的数据类型，而 ptype 会展开，举例如下：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt id=hl-1-1><a class=lnlinks href=#hl-1-1> 1</a>
+</span><span class=lnt id=hl-1-2><a class=lnlinks href=#hl-1-2> 2</a>
+</span><span class=lnt id=hl-1-3><a class=lnlinks href=#hl-1-3> 3</a>
+</span><span class=lnt id=hl-1-4><a class=lnlinks href=#hl-1-4> 4</a>
+</span><span class=lnt id=hl-1-5><a class=lnlinks href=#hl-1-5> 5</a>
+</span><span class=lnt id=hl-1-6><a class=lnlinks href=#hl-1-6> 6</a>
+</span><span class=lnt id=hl-1-7><a class=lnlinks href=#hl-1-7> 7</a>
+</span><span class=lnt id=hl-1-8><a class=lnlinks href=#hl-1-8> 8</a>
+</span><span class=lnt id=hl-1-9><a class=lnlinks href=#hl-1-9> 9</a>
+</span><span class=lnt id=hl-1-10><a class=lnlinks href=#hl-1-10>10</a>
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=line><span class=cl><span class=cm>/* 类型声明与变量定义 */</span>
+</span></span><span class=line><span class=cl><span class=k>typedef</span> <span class=kt>double</span> <span class=kt>real_t</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=k>struct</span> <span class=n>complex</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=kt>real_t</span> <span class=n>real</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=kt>double</span> <span class=n>imag</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>};</span>
+</span></span><span class=line><span class=cl><span class=k>typedef</span> <span class=k>struct</span> <span class=n>complex</span> <span class=kt>complex_t</span><span class=p>;</span>
+</span></span><span class=line><span class=cl> 
+</span></span><span class=line><span class=cl><span class=kt>complex_t</span> <span class=n>var</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=kt>real_t</span> <span class=o>*</span><span class=n>real_pointer_var</span><span class=p>;</span></span></span></code></pre></td></tr></table></div></div><p>这两个命令给出了如下输出：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt id=hl-2-1><a class=lnlinks href=#hl-2-1> 1</a>
+</span><span class=lnt id=hl-2-2><a class=lnlinks href=#hl-2-2> 2</a>
+</span><span class=lnt id=hl-2-3><a class=lnlinks href=#hl-2-3> 3</a>
+</span><span class=lnt id=hl-2-4><a class=lnlinks href=#hl-2-4> 4</a>
+</span><span class=lnt id=hl-2-5><a class=lnlinks href=#hl-2-5> 5</a>
+</span><span class=lnt id=hl-2-6><a class=lnlinks href=#hl-2-6> 6</a>
+</span><span class=lnt id=hl-2-7><a class=lnlinks href=#hl-2-7> 7</a>
+</span><span class=lnt id=hl-2-8><a class=lnlinks href=#hl-2-8> 8</a>
+</span><span class=lnt id=hl-2-9><a class=lnlinks href=#hl-2-9> 9</a>
+</span><span class=lnt id=hl-2-10><a class=lnlinks href=#hl-2-10>10</a>
+</span><span class=lnt id=hl-2-11><a class=lnlinks href=#hl-2-11>11</a>
+</span><span class=lnt id=hl-2-12><a class=lnlinks href=#hl-2-12>12</a>
+</span><span class=lnt id=hl-2-13><a class=lnlinks href=#hl-2-13>13</a>
+</span><span class=lnt id=hl-2-14><a class=lnlinks href=#hl-2-14>14</a>
+</span><span class=lnt id=hl-2-15><a class=lnlinks href=#hl-2-15>15</a>
+</span><span class=lnt id=hl-2-16><a class=lnlinks href=#hl-2-16>16</a>
+</span><span class=lnt id=hl-2-17><a class=lnlinks href=#hl-2-17>17</a>
+</span><span class=lnt id=hl-2-18><a class=lnlinks href=#hl-2-18>18</a>
+</span><span class=lnt id=hl-2-19><a class=lnlinks href=#hl-2-19>19</a>
+</span><span class=lnt id=hl-2-20><a class=lnlinks href=#hl-2-20>20</a>
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-gdscript3 data-lang=gdscript3><span class=line><span class=cl><span class=p>(</span><span class=n>gdb</span><span class=p>)</span> <span class=n>whatis</span> <span class=k>var</span>
+</span></span><span class=line><span class=cl><span class=n>type</span> <span class=o>=</span> <span class=n>complex_t</span>
+</span></span><span class=line><span class=cl><span class=p>(</span><span class=n>gdb</span><span class=p>)</span> <span class=n>ptype</span> <span class=k>var</span>
+</span></span><span class=line><span class=cl><span class=n>type</span> <span class=o>=</span> <span class=n>struct</span> <span class=n>complex</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=n>real_t</span> <span class=n>real</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=n>double</span> <span class=n>imag</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>(</span><span class=n>gdb</span><span class=p>)</span> <span class=n>whatis</span> <span class=n>complex_t</span>
+</span></span><span class=line><span class=cl><span class=n>type</span> <span class=o>=</span> <span class=n>struct</span> <span class=n>complex</span>
+</span></span><span class=line><span class=cl><span class=p>(</span><span class=n>gdb</span><span class=p>)</span> <span class=n>whatis</span> <span class=n>struct</span> <span class=n>complex</span>
+</span></span><span class=line><span class=cl><span class=n>type</span> <span class=o>=</span> <span class=n>struct</span> <span class=n>complex</span>
+</span></span><span class=line><span class=cl><span class=p>(</span><span class=n>gdb</span><span class=p>)</span> <span class=n>ptype</span> <span class=n>struct</span> <span class=n>complex</span>
+</span></span><span class=line><span class=cl><span class=n>type</span> <span class=o>=</span> <span class=n>struct</span> <span class=n>complex</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=n>real_t</span> <span class=n>real</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=n>double</span> <span class=n>imag</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>(</span><span class=n>gdb</span><span class=p>)</span> <span class=n>whatis</span> <span class=n>real_pointer_var</span>
+</span></span><span class=line><span class=cl><span class=n>type</span> <span class=o>=</span> <span class=n>real_t</span> <span class=o>*</span>
+</span></span><span class=line><span class=cl><span class=p>(</span><span class=n>gdb</span><span class=p>)</span> <span class=n>ptype</span> <span class=n>real_pointer_var</span>
+</span></span><span class=line><span class=cl><span class=n>type</span> <span class=o>=</span> <span class=n>double</span> <span class=o>*</span></span></span></code></pre></td></tr></table></div></div></div><footer class=post-footer><div class=post-tags><a href=/tags/gdb/>gdb</a></div><hr><div class=post-copyright><img src=/imgs/cc/cc.svg class=cc-icon width=75 height=75 align=right alt=共享知识 title=共享知识><ul><li class=post-copyright-title><strong>文章标题：</strong>
+常用 GDB 命令中文速览</li><li class=post-copyright-author><strong>本文作者： </strong>Rise</li><li class=post-copyright-link><strong>本文链接：</strong>
+<a id=post-cr-link href=https://blogs.qipai360.cn/post/commonly-used-gdb-command-chinese-quick-view/ title="常用 GDB 命令中文速览">https://blogs.qipai360.cn/post/commonly-used-gdb-command-chinese-quick-view/</a></li><li class=post-copyright-license><strong>版权声明： </strong>本作品采用 <i class="fab fa-fw fa-creative-commons"></i><a target=_blank href=https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh-hans>BY-NC-SA</a> 许可协议。转载请注明出处！</li><li><div class=license-icons><a href=https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh-hans target=_blank><img src=/imgs/cc/big/by_nc_sa.svg alt=BY-NC-SA title=BY-NC-SA>
+</a><a href=https://notbyai.fyi target=_blank><img src=/imgs/notbyai/zh-hans/black.svg title="Not By AI"></a></div></li></ul></div><div class=followme><span>欢迎关注我的其它发布渠道</span><div class=social-list><div class=social-item><a target=_blank class=social-link href=https://www.zhihu.com/people/rise-worlds><span class=icon><i class="fa fa-book"></i>
+</span><span class=label>知乎</span></a></div><div class=social-item><a target=_blank class=social-link href=https://twitter.com/riseworlds><span class=icon><i class="fab fa-twitter"></i>
+</span><span class=label>Twitter</span></a></div><div class=social-item><a target=_blank class=social-link href=https://www.facebook.com/rise.worlds><span class=icon><i class="fab fa-facebook"></i>
+</span><span class=label>facebook</span></a></div><div class=social-item><a target=_blank class=social-link href=https://youtube.com/@YiXuan><span class=icon><i class="fab fa-youtube"></i>
+</span><span class=label>YouTube</span></a></div><div class=social-item><a target=_blank class=social-link href=https://instagram.com/rise.worlds><span class=icon><i class="fab fa-instagram"></i>
+</span><span class=label>Instagram</span></a></div><div class=social-item><a target=_blank class=social-link href=https://t.me/riseworlds><span class=icon><i class="fab fa-telegram"></i>
+</span><span class=label>Telegram</span></a></div></div></div><div class=post-nav><div class="post-nav-next post-nav-item"><a href=/post/understand-c-11-rvalue-references-and-std-move/ rel=next title="理解 C++ 11 右值引用和std::move"><i class="fa fa-chevron-left"></i> 理解 C++ 11 右值引用和std::move</a></div><div class="post-nav-prev post-nav-item"><a href=/post/c++-default-constructor-debug-vs-release-differences-across-compilers/ rel=prev title="c++ 默认构造函数 不同编译器debug和release的区别">c++ 默认构造函数 不同编译器debug和release的区别
+<i class="fa fa-chevron-right"></i></a></div></div></footer></article></div><div id=comments class=post-comments><div class=comment-head><div class=comment-headline><i class="fas fa-comments fa-fw"></i>
+<span>评论交流</span></div></div><div class=comment-wrap><div><div class=comment-loading><i class="fa fa-sync fa-spin"></i></div><div class=giscus-container></div></div></div></div></div></main><footer class=footer><div class=footer-inner><div class=copyright>&copy;
+<span itemprop=copyrightYear>2004 - 2025
+</span><span class=with-love><i class="fa fa-heart"></i>
+</span><span class=author itemprop=copyrightHolder>Rise</span></div><div class=powered-by>由 <a href=https://gohugo.io title=0.152.2 target=_blank>Hugo</a> & <a href=https://github.com/hugo-next/hugo-theme-next title=4.8.3 target=_blank>Hugo NexT.Gemini</a> 强力驱动</div><div class=beian><a href=https://beian.miit.gov.cn target=_blank>豫ICP备2021009490号</a>
+<img src=/imgs/gongan.png alt=豫公网安备>
+<a href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=41162302000074" target=_blank>豫公网安备 41162302000074 号</a></div></div></footer><script class=next-config data-name=page type=application/json>{"clipboard":{"js":{"alias":"clipboard","file":"dist/clipboard.min.js","name":"clipboard.js","version":"2.0.11"}},"comments":true,"expired":false,"isHome":false,"isPage":true,"path":"commonly-used-gdb-command-chinese-quick-view","permalink":"https://blogs.qipai360.cn/post/commonly-used-gdb-command-chinese-quick-view/","title":"常用 GDB 命令中文速览","toc":false,"waline3":{"pagecnt":{"alias":"@waline/client","alias_name":"waline","file":"dist/pageview.js","name":"pageview","version":"3.5.7"}}}</script><script type=text/javascript src=https://blogs.qipai360.cn/js/3rd/animejs/3.2.2/anime.min.js crossorigin=anonymous defer></script><script type=text/javascript src=https://blogs.qipai360.cn/js/3rd/viewerjs/1.11.6/viewer.min.js crossorigin=anonymous defer></script><script class=next-config data-name=main type=application/json>{"bookmark":{"color":"#222","enable":true,"save":"manual"},"copybtn":true,"darkmode":true,"giscus":{"cfg":{"category":"Announcements","categoryid":"DIC_kwDOA6L0YM4CiXf9","emit":false,"inputposition":"top","mapping":"title","reactions":false,"repo":"rise-worlds/rise-worlds.github.io","repoid":"MDEwOlJlcG9zaXRvcnk2MTAxMTA0MA==","theme":"transparent_dark"},"js":"https://giscus.app/client.js"},"hostname":"https://blogs.qipai360.cn/","i18n":{"ds_day":" 天前","ds_days":" 天 ","ds_hour":" 小时前","ds_hours":" 小时 ","ds_just":"刚刚","ds_min":" 分钟前","ds_mins":" 分钟","ds_month":" 个月前","ds_years":" 年 ","empty":"没有找到任何搜索结果：${query}","hits":"找到 ${hits} 个搜索结果","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","placeholder":"搜索..."},"isMultiLang":false,"lang":"zh-CN","lazyload":false,"motion":{"async":true,"enable":true,"transition":{"collheader":"fadeInLeft","postblock":"fadeIn","postbody":"fadeInDown","postheader":"fadeInDown","sidebar":"fadeInUp"}},"postmeta":{"comments":{"enable":false,"plugin":"waline3"},"views":{"enable":true,"plugin":"waline3"}},"root":"/","scheme":"Gemini","share":{"addtoany":{"js":"https://static.addtoany.com/menu/page.js","locale":"zh-CN","num":8},"enable":false},"sidebar":{"display":"post","offset":12,"padding":18,"position":"left","width":256},"vendor":{"plugins":"local","router":{"name":"local","type":"modern","url":"https://blogs.qipai360.cn/js/3rd"}},"version":"4.8.3","waline3":{"cfg":{"emoji":false,"imguploader":false,"placeholder":"请文明发言哟 ヾ(≧▽≦*)o 可用快捷键选取表情符号：😀😄😁🥳👻👽👀🚄 (Window系统：Win+.，Mac系统：Control+Command+Space)","reaction":true,"reactiontext":["点赞","踩一下","得意","不屑","尴尬","睡觉"],"reactiontitle":"你认为这篇文章怎么样？","requiredmeta":["nick","mail"],"search":true,"serverurl":"https://walinejs.comment.lithub.cc","sofa":"快来发表你的意见吧 (≧∀≦)ゞ","wordlimit":200},"css":{"alias":"@waline/client","file":"dist/waline.css","name":"waline","version":"3.5.7"},"js":{"alias":"@waline/client","file":"dist/waline.js","name":"waline","version":"3.5.7"}}}</script><script type=text/javascript src="/js/main.min.js?=1761990624" defer></script><script type=text/javascript src="/js/clipboard.min.js?=1761990627" defer></script></body></html>

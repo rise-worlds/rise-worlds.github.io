@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Coredump on Rise的自留地</title><link>https://blogs.qipai360.cn/tags/coredump/</link><description>Recent content in Coredump on Rise的自留地</description><generator>Hugo</generator><language>zh-CN</language><lastBuildDate>Fri, 27 Nov 2020 11:03:57 +0800</lastBuildDate><atom:link href="https://blogs.qipai360.cn/tags/coredump/rss.xml" rel="self" type="application/rss+xml"/><item><title>崩溃文件生成及调试</title><link>https://blogs.qipai360.cn/post/crash-dump-file-generation-and-debugging/</link><pubDate>Fri, 27 Nov 2020 11:03:57 +0800</pubDate><guid>https://blogs.qipai360.cn/post/crash-dump-file-generation-and-debugging/</guid><description>&lt;h3 id="linux--mac"&gt;linux &amp;amp; mac
+&lt;a class="header-anchor" href="#linux--mac"&gt;&lt;/a&gt;
+&lt;/h3&gt;&lt;ol&gt;
+&lt;li&gt;产生core文件方法&lt;/li&gt;
+&lt;/ol&gt;
+&lt;ul&gt;
+&lt;li&gt;在当前环境下生成coredump文件，运行 &lt;code&gt;ulimit -c unlimited&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;永久生成coredump文件，在 &lt;code&gt;/etc/profile&lt;/code&gt; 文件中追加一行 &lt;code&gt;ulimit-c unlimited&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;ol start="2"&gt;
+&lt;li&gt;默认coredump文件生成在当前工作目录，修改文件 &lt;code&gt;/proc/sys/kernel/core_pattern&lt;/code&gt; 为 &lt;code&gt;/data/coredump/core.%e.%p&lt;/code&gt;
+其中%e表示程序名，%p表示进程id，路径为/data/coredump目录&lt;/li&gt;
+&lt;li&gt;编译时要加上&lt;code&gt;-g&lt;/code&gt;选项，这个才能用gdb调试的coredump&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;linux&lt;/code&gt;使用加载&lt;code&gt;gdb&lt;/code&gt;加载coredump文件进行调试&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt" id="hl-0-1"&gt;&lt;a class="lnlinks" href="#hl-0-1"&gt;1&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-2"&gt;&lt;a class="lnlinks" href="#hl-0-2"&gt;2&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-3"&gt;&lt;a class="lnlinks" href="#hl-0-3"&gt;3&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-4"&gt;&lt;a class="lnlinks" href="#hl-0-4"&gt;4&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-5"&gt;&lt;a class="lnlinks" href="#hl-0-5"&gt;5&lt;/a&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;gdb coredumpfile
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;#或者&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;gdb execfile
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;#加载完成后再输入&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;core-file coredumpfile&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;ol start="5"&gt;
+&lt;li&gt;&lt;code&gt;mac&lt;/code&gt;使用&lt;code&gt;lldb&lt;/code&gt;加载coredump文件进行调试
+
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt" id="hl-1-1"&gt;&lt;a class="lnlinks" href="#hl-1-1"&gt;1&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-1-2"&gt;&lt;a class="lnlinks" href="#hl-1-2"&gt;2&lt;/a&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nb"&gt;cd&lt;/span&gt; /cores
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;lldb -c coredumpfile&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;ul&gt;
+&lt;li&gt;ulimit -c 显示核心转储文件大小的最大值，如果这里是零：禁止核心转储（对于本进程和它的子进程）。&lt;/li&gt;
+&lt;li&gt;默认情况下，&lt;code&gt;mac&lt;/code&gt; core文件均存在/cores目录下，&lt;code&gt;linux&lt;/code&gt; core文件存在当前工作目录。
+&lt;ul&gt;
+&lt;li&gt;可以通过&lt;code&gt;ulimit -c unlimited&lt;/code&gt;来设置core文件生成路径。&lt;/li&gt;
+&lt;li&gt;可以通过&lt;code&gt;ulimit -c size&lt;/code&gt;来设置core文件大小。&lt;/li&gt;
+&lt;li&gt;可以通过&lt;code&gt;ulimit -c 0&lt;/code&gt;来禁止生成core文件。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="windows"&gt;windows
+&lt;a class="header-anchor" href="#windows"&gt;&lt;/a&gt;
+&lt;/h3&gt;&lt;p&gt;windows 请查看这篇文章
+&lt;a href="https://github.com/rise-worlds/game/blob/master/tools/PostMortem/README.md" title="Windows C&amp;#43;&amp;#43; 程序崩溃收集工具" rel="noopener external nofollow noreferrer" target="_blank" class=" exturl"&gt;
+ Windows C++ 程序崩溃收集工具
+ 
+&lt;/a&gt;&lt;/p&gt;</description></item></channel></rss>

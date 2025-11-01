@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Kotlin on Rise的自留地</title><link>https://blogs.qipai360.cn/tags/kotlin/</link><description>Recent content in Kotlin on Rise的自留地</description><generator>Hugo</generator><language>zh-CN</language><lastBuildDate>Sat, 03 Jun 2023 14:51:54 +0800</lastBuildDate><atom:link href="https://blogs.qipai360.cn/tags/kotlin/rss.xml" rel="self" type="application/rss+xml"/><item><title>Kotlin知识点汇总</title><link>https://blogs.qipai360.cn/post/kotlin-knowledge-points/</link><pubDate>Sat, 03 Jun 2023 14:51:54 +0800</pubDate><guid>https://blogs.qipai360.cn/post/kotlin-knowledge-points/</guid><description>&lt;ul&gt;
+&lt;li&gt;
+&lt;a href="#%e5%af%b9%e8%b1%a1" title="对象" &gt;
+ 对象
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e7%b1%bb" title="类" &gt;
+ 类
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e7%bb%a7%e6%89%bf" title="继承" &gt;
+ 继承
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e5%8f%98%e9%87%8f" title="变量" &gt;
+ 变量
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e5%b8%b8%e9%87%8f" title="常量" &gt;
+ 常量
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e9%9d%99%e6%80%81%e5%b8%b8%e9%87%8f" title="静态常量" &gt;
+ 静态常量
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e5%ae%9a%e4%b9%89%e6%96%b9%e6%b3%95" title="定义方法" &gt;
+ 定义方法
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e9%87%8d%e8%bd%bd%e6%96%b9%e6%b3%95" title="重载方法" &gt;
+ 重载方法
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e5%9f%ba%e6%9c%ac%e6%95%b0%e6%8d%ae%e7%b1%bb%e5%9e%8b" title="基本数据类型" &gt;
+ 基本数据类型
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e6%af%94%e8%be%83%e7%b1%bb%e5%9e%8b" title="比较类型" &gt;
+ 比较类型
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e8%bd%ac%e6%8d%a2%e7%ac%a6" title="转换符" &gt;
+ 转换符
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e5%ad%97%e7%ac%a6%e4%b8%b2%e6%af%94%e8%be%83" title="字符串比较" &gt;
+ 字符串比较
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e6%95%b0%e7%bb%84" title="数组" &gt;
+ 数组
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e5%be%aa%e7%8e%af" title="循环" &gt;
+ 循环
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e8%a7%92%e6%a0%87%e5%be%aa%e7%8e%af" title="角标循环" &gt;
+ 角标循环
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e9%ab%98%e7%ba%a7%e5%be%aa%e7%8e%af" title="高级循环" &gt;
+ 高级循环
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e5%88%a4%e6%96%ad%e5%99%a8" title="判断器" &gt;
+ 判断器
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e6%9e%84%e9%80%a0%e5%87%bd%e6%95%b0" title="构造函数" &gt;
+ 构造函数
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e7%b1%bb%e5%88%9b%e5%bb%ba" title="类创建" &gt;
+ 类创建
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e7%a7%81%e6%9c%89%e5%8c%96-set-%e6%96%b9%e6%b3%95" title="私有化 set 方法" &gt;
+ 私有化 set 方法
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e7%a7%81%e6%9c%89%e5%8c%96-get-%e6%96%b9%e6%b3%95" title="私有化 get 方法" &gt;
+ 私有化 get 方法
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e6%9e%9a%e4%b8%be" title="枚举" &gt;
+ 枚举
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e6%8e%a5%e5%8f%a3" title="接口" &gt;
+ 接口
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e5%8c%bf%e5%90%8d%e5%86%85%e9%83%a8%e7%b1%bb" title="匿名内部类" &gt;
+ 匿名内部类
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e5%86%85%e9%83%a8%e7%b1%bb" title="内部类" &gt;
+ 内部类
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e5%86%85%e9%83%a8%e7%b1%bb%e8%ae%bf%e9%97%ae%e5%a4%96%e9%83%a8%e7%b1%bb%e5%90%8c%e5%90%8d%e5%8f%98%e9%87%8f" title="内部类访问外部类同名变量" &gt;
+ 内部类访问外部类同名变量
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e6%8a%bd%e8%b1%a1%e7%b1%bb" title="抽象类" &gt;
+ 抽象类
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e9%9d%99%e6%80%81%e5%8f%98%e9%87%8f%e5%92%8c%e6%96%b9%e6%b3%95" title="静态变量和方法" &gt;
+ 静态变量和方法
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e5%8f%af%e5%8f%98%e5%8f%82%e6%95%b0" title="可变参数" &gt;
+ 可变参数
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e6%b3%9b%e5%9e%8b" title="泛型" &gt;
+ 泛型
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e6%9e%84%e9%80%a0%e4%bb%a3%e7%a0%81%e5%9d%97" title="构造代码块" &gt;
+ 构造代码块
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e9%9d%99%e6%80%81%e4%bb%a3%e7%a0%81%e5%9d%97" title="静态代码块" &gt;
+ 静态代码块
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e6%96%b9%e6%b3%95%e4%bb%a3%e7%a0%81%e5%9d%97" title="方法代码块" &gt;
+ 方法代码块
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e5%8f%af%e8%a7%81%e4%bf%ae%e9%a5%b0%e7%ac%a6" title="可见修饰符" &gt;
+ 可见修饰符
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e6%97%a0%e9%9c%80-findviewbyid" title="无需 findViewById" &gt;
+ 无需 findViewById
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#lambda" title="Lambda" &gt;
+ Lambda
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e5%87%bd%e6%95%b0%e5%8f%98%e9%87%8f" title="函数变量" &gt;
+ 函数变量
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e7%a9%ba%e5%ae%89%e5%85%a8" title="空安全" &gt;
+ 空安全
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e6%96%b9%e6%b3%95%e6%94%af%e6%8c%81%e6%b7%bb%e5%8a%a0%e9%bb%98%e8%ae%a4%e5%8f%82%e6%95%b0" title="方法支持添加默认参数" &gt;
+ 方法支持添加默认参数
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e7%b1%bb%e6%96%b9%e6%b3%95%e6%89%a9%e5%b1%95" title="类方法扩展" &gt;
+ 类方法扩展
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e8%bf%90%e7%ae%97%e7%ac%a6%e9%87%8d%e8%bd%bd" title="运算符重载" &gt;
+ 运算符重载
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e6%89%a9%e5%b1%95%e5%87%bd%e6%95%b0" title="扩展函数" &gt;
+ 扩展函数
+ 
+&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href="#let-%e5%87%bd%e6%95%b0" title="let 函数" &gt;
+ let 函数
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#with-%e5%87%bd%e6%95%b0" title="with 函数" &gt;
+ with 函数
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#run-%e5%87%bd%e6%95%b0" title="run 函数" &gt;
+ run 函数
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#apply-%e5%87%bd%e6%95%b0" title="apply 函数" &gt;
+ apply 函数
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#also-%e5%87%bd%e6%95%b0" title="also 函数" &gt;
+ also 函数
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e6%80%bb%e7%bb%93" title="总结" &gt;
+ 总结
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e5%8d%8f%e7%a8%8b" title="协程" &gt;
+ 协程
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id="对象"&gt;对象
+&lt;a class="header-anchor" href="#%e5%af%b9%e8%b1%a1"&gt;&lt;/a&gt;
+&lt;/h1&gt;
+ &lt;blockquote&gt;
+ &lt;p&gt;Java 的写法&lt;/p&gt;</description></item></channel></rss>

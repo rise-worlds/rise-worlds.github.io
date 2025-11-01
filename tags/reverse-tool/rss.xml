@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Reverse Tool on Rise的自留地</title><link>https://blogs.qipai360.cn/tags/reverse-tool/</link><description>Recent content in Reverse Tool on Rise的自留地</description><generator>Hugo</generator><language>zh-CN</language><lastBuildDate>Thu, 18 Jul 2024 10:46:46 +0800</lastBuildDate><atom:link href="https://blogs.qipai360.cn/tags/reverse-tool/rss.xml" rel="self" type="application/rss+xml"/><item><title>IDA 自动分析</title><link>https://blogs.qipai360.cn/post/ida-auto-analysis/</link><pubDate>Thu, 18 Jul 2024 10:46:46 +0800</pubDate><guid>https://blogs.qipai360.cn/post/ida-auto-analysis/</guid><description>&lt;p&gt;在逆向领域，有款很功能强大且好用的工具=利器是：&lt;code&gt;IDA&lt;/code&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;常用于&lt;/li&gt;
+&lt;li&gt;iOS逆向
+&lt;ul&gt;
+&lt;li&gt;静态分析：逆向二进制，研究代码逻辑&lt;/li&gt;
+&lt;li&gt;常用功能：函数、F5伪代码、字符串、类的结构体定义等等&lt;/li&gt;
+&lt;li&gt;动态调试：调试iOS的app&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Android逆向
+&lt;ul&gt;
+&lt;li&gt;支持对Android的静态分析与动态调试&lt;/li&gt;
+&lt;li&gt;包括：动态调试so文件&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;特点&lt;/li&gt;
+&lt;li&gt;支持多平台运行：&lt;code&gt;Windows&lt;/code&gt;、&lt;code&gt;Mac&lt;/code&gt;、&lt;code&gt;Linux&lt;/code&gt;(&lt;code&gt;CentOS&lt;/code&gt;、&lt;code&gt;Ubuntu&lt;/code&gt;等)等&lt;/li&gt;
+&lt;li&gt;支持多种CPU架构：&lt;code&gt;x86/x64&lt;/code&gt;、&lt;code&gt;ARM/ARM64&lt;/code&gt;、&lt;code&gt;MIPS/MIPS64&lt;/code&gt;、&lt;code&gt;PowerPC/PPC64&lt;/code&gt;、&lt;code&gt;Motorola 68K/Coldfire&lt;/code&gt;等共&lt;strong&gt;68&lt;/strong&gt;种&lt;/li&gt;
+&lt;li&gt;支持插件，可以扩展各种功能&lt;/li&gt;
+&lt;li&gt;可编程=支持API接口调用，写脚本，实现各种功能&lt;/li&gt;
+&lt;li&gt;主页&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="https://hex-rays.com/" title="https://hex-rays.com/" rel="noopener external nofollow noreferrer" target="_blank" class=" exturl"&gt;
+ https://hex-rays.com/
+ 
+&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;关于&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="https://www.hex-rays.com/products/ida/index.shtml" title="IDA: About" rel="noopener external nofollow noreferrer" target="_blank" class=" exturl"&gt;
+ IDA: About
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;下载&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="https://www.hex-rays.com/products/ida/support/download.shtml" title="IDA Support: Download Center" rel="noopener external nofollow noreferrer" target="_blank" class=" exturl"&gt;
+ IDA Support: Download Center
+ 
+&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;注：&lt;code&gt;IDA Pro&lt;/code&gt;是商业收费软件，请支持和购买正版&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;ida 自动分析的典型过程：把二进制文件拖动到IDA后，就开始自动分析`了。&lt;/p&gt;</description></item></channel></rss>

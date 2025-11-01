@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Ndk on Rise的自留地</title><link>https://blogs.qipai360.cn/tags/ndk/</link><description>Recent content in Ndk on Rise的自留地</description><generator>Hugo</generator><language>zh-CN</language><lastBuildDate>Tue, 02 Apr 2024 15:00:57 +0800</lastBuildDate><atom:link href="https://blogs.qipai360.cn/tags/ndk/rss.xml" rel="self" type="application/rss+xml"/><item><title>安卓使用OLLVM混淆.so</title><link>https://blogs.qipai360.cn/post/android-using-ollvm-confused-so/</link><pubDate>Tue, 02 Apr 2024 15:00:57 +0800</pubDate><guid>https://blogs.qipai360.cn/post/android-using-ollvm-confused-so/</guid><description>&lt;h3 id="编译ollvm"&gt;编译OLLVM
+&lt;a class="header-anchor" href="#%e7%bc%96%e8%af%91ollvm"&gt;&lt;/a&gt;
+&lt;/h3&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt" id="hl-0-1"&gt;&lt;a class="lnlinks" href="#hl-0-1"&gt;1&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-2"&gt;&lt;a class="lnlinks" href="#hl-0-2"&gt;2&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-3"&gt;&lt;a class="lnlinks" href="#hl-0-3"&gt;3&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-4"&gt;&lt;a class="lnlinks" href="#hl-0-4"&gt;4&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-5"&gt;&lt;a class="lnlinks" href="#hl-0-5"&gt;5&lt;/a&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;git clone https://github.com/heroims/obfuscator.git -b llvm-9.0.1 --depth &lt;span class="m"&gt;1&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nb"&gt;cd&lt;/span&gt; obfuscator
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;mkdir build &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class="nb"&gt;cd&lt;/span&gt; build
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;cmake .. -DCMAKE_BUILD_TYPE&lt;span class="o"&gt;=&lt;/span&gt;Release
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;make -j4&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;p&gt;编译好后从&lt;code&gt;build/bin/&lt;/code&gt;目录把下面几个文件拷贝到&lt;code&gt;/toolchains/llvm/prebuilt/linux-x86_64/bin/&lt;/code&gt;
+&lt;code&gt;clang&lt;/code&gt;，&lt;code&gt;clang++&lt;/code&gt;，&lt;code&gt;clang-9.0&lt;/code&gt;，&lt;code&gt;clang-format&lt;/code&gt;
+把以下几个文件从&lt;code&gt;build/include/&lt;/code&gt;拷贝到&lt;code&gt;/sysroot/usr/include/&lt;/code&gt;
+&lt;code&gt;Stdarg.h&lt;/code&gt;，&lt;code&gt;Stddef.h&lt;/code&gt;，&lt;code&gt;__stddef_max_align_t.h&lt;/code&gt;，&lt;code&gt;float.h&lt;/code&gt;，&lt;code&gt;stdbool.h&lt;/code&gt;&lt;/p&gt;</description></item></channel></rss>
