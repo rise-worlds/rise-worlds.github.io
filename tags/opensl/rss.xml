@@ -1,0 +1,2560 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Opensl on Rise的自留地</title><link>https://blogs.qipai360.cn/tags/opensl/</link><description>Recent content in Opensl on Rise的自留地</description><generator>Hugo</generator><language>zh-CN</language><lastBuildDate>Sat, 03 Jun 2023 14:54:48 +0800</lastBuildDate><atom:link href="https://blogs.qipai360.cn/tags/opensl/rss.xml" rel="self" type="application/rss+xml"/><item><title>Android音视频知识点汇总</title><link>https://blogs.qipai360.cn/post/android-audio-and-video-knowledge-points/</link><pubDate>Sat, 03 Jun 2023 14:54:48 +0800</pubDate><guid>https://blogs.qipai360.cn/post/android-audio-and-video-knowledge-points/</guid><description>&lt;ul&gt;
+&lt;li&gt;
+&lt;a href="#android%e9%9f%b3%e8%a7%86%e9%a2%91%e5%bc%80%e5%8f%91%e5%88%9d%e7%ba%a7%e5%85%a5%e9%97%a8%e7%af%87" title="Android音视频开发初级入门篇" &gt;
+ Android音视频开发初级入门篇
+ 
+&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href="#android-%e9%9f%b3%e8%a7%86%e9%a2%91%e5%bc%80%e5%8f%91%e4%b8%80--%e9%80%9a%e8%bf%87%e4%b8%89%e7%a7%8d%e6%96%b9%e5%bc%8f%e7%bb%98%e5%88%b6%e5%9b%be%e7%89%87" title="Android 音视频开发(一) : 通过三种方式绘制图片" &gt;
+ Android 音视频开发(一) : 通过三种方式绘制图片
+ 
+&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href="#imageview-%e7%bb%98%e5%88%b6%e5%9b%be%e7%89%87" title="ImageView 绘制图片" &gt;
+ ImageView 绘制图片
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#surfaceview-%e7%bb%98%e5%88%b6%e5%9b%be%e7%89%87" title="SurfaceView 绘制图片" &gt;
+ SurfaceView 绘制图片
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e8%87%aa%e5%ae%9a%e4%b9%89-view-%e7%bb%98%e5%88%b6%e5%9b%be%e7%89%87" title="自定义 View 绘制图片" &gt;
+ 自定义 View 绘制图片
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#android-%e9%9f%b3%e8%a7%86%e9%a2%91%e5%bc%80%e5%8f%91%e4%ba%8c%e4%bd%bf%e7%94%a8-audiorecord-%e9%87%87%e9%9b%86%e9%9f%b3%e9%a2%91pcm%e5%b9%b6%e4%bf%9d%e5%ad%98%e5%88%b0%e6%96%87%e4%bb%b6" title="Android 音视频开发(二)：使用 AudioRecord 采集音频PCM并保存到文件" &gt;
+ Android 音视频开发(二)：使用 AudioRecord 采集音频PCM并保存到文件
+ 
+&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href="#audiorecord-api%e8%af%a6%e8%a7%a3" title="AudioRecord API详解" &gt;
+ AudioRecord API详解
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e4%bd%bf%e7%94%a8-audiorecord-%e5%ae%9e%e7%8e%b0%e5%bd%95%e9%9f%b3%e5%b9%b6%e7%94%9f%e6%88%90wav" title="使用 AudioRecord 实现录音，并生成wav" &gt;
+ 使用 AudioRecord 实现录音，并生成wav
+ 
+&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href="#%e5%88%9b%e5%bb%ba%e4%b8%80%e4%b8%aaaudiorecord%e5%af%b9%e8%b1%a1" title="创建一个AudioRecord对象" &gt;
+ 创建一个AudioRecord对象
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e5%88%9d%e5%a7%8b%e5%8c%96%e4%b8%80%e4%b8%aabuffer" title="初始化一个buffer" &gt;
+ 初始化一个buffer
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e5%bc%80%e5%a7%8b%e5%bd%95%e9%9f%b3" title="开始录音" &gt;
+ 开始录音
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e5%88%9b%e5%bb%ba%e4%b8%80%e4%b8%aa%e6%95%b0%e6%8d%ae%e6%b5%81%e4%b8%80%e8%be%b9%e4%bb%8eaudiorecord%e4%b8%ad%e8%af%bb%e5%8f%96%e5%a3%b0%e9%9f%b3%e6%95%b0%e6%8d%ae%e5%88%b0%e5%88%9d%e5%a7%8b%e5%8c%96%e7%9a%84buffer%e4%b8%80%e8%be%b9%e5%b0%86buffer%e4%b8%ad%e6%95%b0%e6%8d%ae%e5%af%bc%e5%85%a5%e6%95%b0%e6%8d%ae%e6%b5%81" title="创建一个数据流，一边从AudioRecord中读取声音数据到初始化的buffer，一边将buffer中数据导入数据流。" &gt;
+ 创建一个数据流，一边从AudioRecord中读取声音数据到初始化的buffer，一边将buffer中数据导入数据流。
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e5%85%b3%e9%97%ad%e6%95%b0%e6%8d%ae%e6%b5%81" title="关闭数据流" &gt;
+ 关闭数据流
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e5%81%9c%e6%ad%a2%e5%bd%95%e9%9f%b3" title="停止录音" &gt;
+ 停止录音
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e9%99%84%e8%a8%80" title="附言" &gt;
+ 附言
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e6%ba%90%e7%a0%81" title="源码" &gt;
+ 源码
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#android-%e9%9f%b3%e8%a7%86%e9%a2%91%e5%bc%80%e5%8f%91%e4%b8%89%e4%bd%bf%e7%94%a8-audiotrack-%e6%92%ad%e6%94%bepcm%e9%9f%b3%e9%a2%91" title="Android 音视频开发(三)：使用 AudioTrack 播放PCM音频" &gt;
+ Android 音视频开发(三)：使用 AudioTrack 播放PCM音频
+ 
+&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href="#audiotrack-%e5%9f%ba%e6%9c%ac%e4%bd%bf%e7%94%a8" title="AudioTrack 基本使用" &gt;
+ AudioTrack 基本使用
+ 
+&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href="#mode_static%e6%a8%a1%e5%bc%8f" title="MODE_STATIC模式" &gt;
+ MODE_STATIC模式
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#mode_stream%e6%a8%a1%e5%bc%8f" title="MODE_STREAM模式" &gt;
+ MODE_STREAM模式
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#audiotrack-%e8%af%a6%e8%a7%a3" title="AudioTrack 详解" &gt;
+ AudioTrack 详解
+ 
+&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href="#%e9%9f%b3%e9%a2%91%e6%b5%81%e7%9a%84%e7%b1%bb%e5%9e%8b" title="音频流的类型" &gt;
+ 音频流的类型
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#buffer%e5%88%86%e9%85%8d%e5%92%8cframe%e7%9a%84%e6%a6%82%e5%bf%b5" title="Buffer分配和Frame的概念" &gt;
+ Buffer分配和Frame的概念
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#audiotrack%e6%9e%84%e9%80%a0%e8%bf%87%e7%a8%8b" title="AudioTrack构造过程" &gt;
+ AudioTrack构造过程
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#audiotrack-%e4%b8%8e-mediaplayer-%e7%9a%84%e5%af%b9%e6%af%94" title="AudioTrack 与 MediaPlayer 的对比" &gt;
+ AudioTrack 与 MediaPlayer 的对比
+ 
+&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href="#%e5%8c%ba%e5%88%ab" title="区别" &gt;
+ 区别
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e8%81%94%e7%b3%bb" title="联系" &gt;
+ 联系
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#soundpool" title="SoundPool" &gt;
+ SoundPool
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e6%ba%90%e7%a0%81-1" title="源码" &gt;
+ 源码
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#android-%e9%9f%b3%e8%a7%86%e9%a2%91%e5%bc%80%e5%8f%91%e5%9b%9b%e4%bd%bf%e7%94%a8-camera-api-%e9%87%87%e9%9b%86%e8%a7%86%e9%a2%91%e6%95%b0%e6%8d%ae" title="Android 音视频开发(四)：使用 Camera API 采集视频数据" &gt;
+ Android 音视频开发(四)：使用 Camera API 采集视频数据
+ 
+&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href="#%e9%a2%84%e8%a7%88-camera-%e6%95%b0%e6%8d%ae" title="预览 Camera 数据" &gt;
+ 预览 Camera 数据
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e5%8f%96%e5%88%b0-nv21-%e7%9a%84%e6%95%b0%e6%8d%ae%e5%9b%9e%e8%b0%83" title="取到 NV21 的数据回调" &gt;
+ 取到 NV21 的数据回调
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#android-%e9%9f%b3%e8%a7%86%e9%a2%91%e5%bc%80%e5%8f%91%e4%ba%94%e4%bd%bf%e7%94%a8-mediaextractor-%e5%92%8c-mediamuxer-api-%e8%a7%a3%e6%9e%90%e5%92%8c%e5%b0%81%e8%a3%85-mp4-%e6%96%87%e4%bb%b6" title="Android 音视频开发(五)：使用 MediaExtractor 和 MediaMuxer API 解析和封装 mp4 文件" &gt;
+ Android 音视频开发(五)：使用 MediaExtractor 和 MediaMuxer API 解析和封装 mp4 文件
+ 
+&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href="#mediaextractor-api%e4%bb%8b%e7%bb%8d" title="MediaExtractor API介绍" &gt;
+ MediaExtractor API介绍
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#mediamuxer-api%e4%bb%8b%e7%bb%8d" title="MediaMuxer API介绍" &gt;
+ MediaMuxer API介绍
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e4%bd%bf%e7%94%a8%e6%83%85%e5%a2%83" title="使用情境" &gt;
+ 使用情境
+ 
+&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href="#%e4%bb%8emp4%e6%96%87%e4%bb%b6%e4%b8%ad%e6%8f%90%e5%8f%96%e8%a7%86%e9%a2%91%e5%b9%b6%e7%94%9f%e6%88%90%e6%96%b0%e7%9a%84%e8%a7%86%e9%a2%91%e6%96%87%e4%bb%b6" title="从MP4文件中提取视频并生成新的视频文件" &gt;
+ 从MP4文件中提取视频并生成新的视频文件
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#android-%e9%9f%b3%e8%a7%86%e9%a2%91%e5%bc%80%e5%8f%91%e5%85%ad-mediacodec-api-%e8%af%a6%e8%a7%a3" title="Android 音视频开发(六)： MediaCodec API 详解" &gt;
+ Android 音视频开发(六)： MediaCodec API 详解
+ 
+&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href="#mediacodec-%e4%bb%8b%e7%bb%8d" title="MediaCodec 介绍" &gt;
+ MediaCodec 介绍
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#mediacodec-api-%e8%af%b4%e6%98%8e" title="MediaCodec API 说明" &gt;
+ MediaCodec API 说明
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#mediacodec-%e6%b5%81%e6%8e%a7" title="MediaCodec 流控" &gt;
+ MediaCodec 流控
+ 
+&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href="#%e6%b5%81%e6%8e%a7%e5%9f%ba%e6%9c%ac%e6%a6%82%e5%bf%b5" title="流控基本概念" &gt;
+ 流控基本概念
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#android-%e7%a1%ac%e7%bc%96%e7%a0%81%e6%b5%81%e6%8e%a7" title="Android 硬编码流控" &gt;
+ Android 硬编码流控
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#android-%e6%b5%81%e6%8e%a7%e7%ad%96%e7%95%a5%e9%80%89%e6%8b%a9" title="Android 流控策略选择" &gt;
+ Android 流控策略选择
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#android-%e9%9f%b3%e8%a7%86%e9%a2%91%e5%bc%80%e5%8f%91%e4%b8%83-%e9%9f%b3%e8%a7%86%e9%a2%91%e5%bd%95%e5%88%b6%e6%b5%81%e7%a8%8b%e6%80%bb%e7%bb%93" title="Android 音视频开发(七)： 音视频录制流程总结" &gt;
+ Android 音视频开发(七)： 音视频录制流程总结
+ 
+&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href="#%e6%b5%81%e7%a8%8b%e5%88%86%e6%9e%90" title="流程分析" &gt;
+ 流程分析
+ 
+&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href="#%e9%9c%80%e6%b1%82%e8%af%b4%e6%98%8e" title="需求说明" &gt;
+ 需求说明
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e5%ae%9e%e7%8e%b0%e6%96%b9%e5%bc%8f" title="实现方式" &gt;
+ 实现方式
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e6%95%b0%e6%8d%ae%e5%a4%84%e7%90%86%e6%80%9d%e8%b7%af" title="数据处理思路" &gt;
+ 数据处理思路
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e5%ae%9e%e7%8e%b0%e8%bf%87%e7%a8%8b" title="实现过程" &gt;
+ 实现过程
+ 
+&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href="#%e6%94%b6%e9%9b%86camera%e6%95%b0%e6%8d%ae%e5%b9%b6%e8%bd%ac%e7%a0%81%e4%b8%bah264%e5%ad%98%e5%82%a8%e5%88%b0%e6%96%87%e4%bb%b6" title="收集Camera数据，并转码为H264存储到文件" &gt;
+ 收集Camera数据，并转码为H264存储到文件
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e9%9f%b3%e8%a7%86%e9%a2%91%e9%87%87%e9%9b%86%e6%b7%b7%e5%90%88%e5%ad%98%e5%82%a8%e5%88%b0%e6%96%87%e4%bb%b6" title="音视频采集&amp;#43;混合，存储到文件" &gt;
+ 音视频采集+混合，存储到文件
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#android%e9%9f%b3%e8%a7%86%e9%a2%91%e5%bc%80%e5%8f%91%e4%b8%ad%e7%ba%a7%e8%bf%9b%e9%98%b6%e7%af%87" title="Android音视频开发中级进阶篇" &gt;
+ Android音视频开发中级进阶篇
+ 
+&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href="#opengl-es" title="OpenGL ES" &gt;
+ OpenGL ES
+ 
+&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href="#android-opengl-es-%e5%bc%80%e5%8f%91%e4%b8%80-opengl-es-%e4%bb%8b%e7%bb%8d" title="Android OpenGL ES 开发（一）: OpenGL ES 介绍" &gt;
+ Android OpenGL ES 开发（一）: OpenGL ES 介绍
+ 
+&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href="#%e7%ae%80%e4%bb%8bopengl-es" title="简介OpenGL ES" &gt;
+ 简介OpenGL ES
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e5%9f%ba%e6%9c%ac%e4%bb%8b%e7%bb%8d" title="基本介绍" &gt;
+ 基本介绍
+ 
+&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href="#glsurfaceview" title="GLSurfaceView" &gt;
+ GLSurfaceView
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#glsurfaceviewrenderer" title="GLSurfaceView.Renderer" &gt;
+ GLSurfaceView.Renderer
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#android-opengl-es%e5%bc%80%e5%8f%91%e4%ba%8c--opengl-es-%e7%8e%af%e5%a2%83%e6%90%ad%e5%bb%ba" title="Android OpenGL ES开发(二) : OpenGL ES 环境搭建" &gt;
+ Android OpenGL ES开发(二) : OpenGL ES 环境搭建
+ 
+&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href="#%e7%8e%af%e5%a2%83%e6%90%ad%e5%bb%ba%e7%9b%ae%e7%9a%84" title="环境搭建目的" &gt;
+ 环境搭建目的
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e5%9c%a8manifest%e4%b8%ad%e5%a3%b0%e6%98%8eopengl-es%e4%bd%bf%e7%94%a8" title="在Manifest中声明OpenGL ES使用" &gt;
+ 在Manifest中声明OpenGL ES使用
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e5%88%9b%e5%bb%ba%e4%b8%80%e4%b8%aaactivity-%e7%94%a8%e4%ba%8e%e5%b1%95%e7%a4%baopengl-es-%e5%9b%be%e5%bd%a2" title="创建一个Activity 用于展示OpenGL ES 图形" &gt;
+ 创建一个Activity 用于展示OpenGL ES 图形
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e5%88%9b%e5%bb%baglsurfaceview%e5%af%b9%e8%b1%a1" title="创建GLSurfaceView对象" &gt;
+ 创建GLSurfaceView对象
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e5%88%9b%e5%bb%ba%e4%b8%80%e4%b8%aarenderer%e7%b1%bb" title="创建一个Renderer类" &gt;
+ 创建一个Renderer类
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e6%80%bb%e7%bb%93" title="总结" &gt;
+ 总结
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#android-opengl-es-%e5%bc%80%e5%8f%91%e4%b8%89opengl-es%e5%ae%9a%e4%b9%89%e5%bd%a2%e7%8a%b6" title="Android OpenGL ES 开发(三):OpenGL ES定义形状" &gt;
+ Android OpenGL ES 开发(三):OpenGL ES定义形状
+ 
+&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href="#%e5%ae%9a%e4%b9%89%e4%b8%89%e8%a7%92%e5%bd%a2" title="定义三角形" &gt;
+ 定义三角形
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e5%ae%9a%e4%b9%89%e6%ad%a3%e6%96%b9%e5%bd%a2" title="定义正方形" &gt;
+ 定义正方形
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#android-opengl-es%e5%bc%80%e5%8f%91%e5%9b%9b--opengl-es%e7%bb%98%e5%88%b6%e5%bd%a2%e7%8a%b6" title="Android OpenGL ES开发(四) : OpenGL ES绘制形状" &gt;
+ Android OpenGL ES开发(四) : OpenGL ES绘制形状
+ 
+&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href="#%e5%88%9d%e5%a7%8b%e5%8c%96%e5%bd%a2%e7%8a%b6" title="初始化形状" &gt;
+ 初始化形状
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e7%bb%98%e5%88%b6%e5%bd%a2%e7%8a%b6" title="绘制形状" &gt;
+ 绘制形状
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#android-opengl-es%e5%bc%80%e5%8f%91%e4%ba%94--opengl-es%e4%bd%bf%e7%94%a8%e6%8a%95%e5%bd%b1%e5%92%8c%e7%9b%b8%e6%9c%ba%e8%a7%86%e5%9b%be" title="Android OpenGL ES开发(五) : OpenGL ES使用投影和相机视图" &gt;
+ Android OpenGL ES开发(五) : OpenGL ES使用投影和相机视图
+ 
+&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href="#%e5%ae%9a%e4%b9%89%e6%8a%95%e5%bd%b1" title="定义投影" &gt;
+ 定义投影
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e5%ae%9a%e4%b9%89%e7%9b%b8%e6%9c%ba%e8%a7%86%e5%9b%be" title="定义相机视图" &gt;
+ 定义相机视图
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e5%ba%94%e7%94%a8%e6%8a%95%e5%bd%b1%e5%92%8c%e7%9b%b8%e6%9c%ba%e5%8f%98%e6%8d%a2" title="应用投影和相机变换" &gt;
+ 应用投影和相机变换
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#android-opengl-es%e5%bc%80%e5%8f%91%e5%85%ad-opengl-es%e6%b7%bb%e5%8a%a0%e8%bf%90%e5%8a%a8%e6%95%88%e6%9e%9c" title="Android openGL ES开发(六): OpenGL ES添加运动效果" &gt;
+ Android openGL ES开发(六): OpenGL ES添加运动效果
+ 
+&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href="#%e6%97%8b%e8%bd%ac%e4%b8%80%e4%b8%aa%e5%9b%be%e5%bd%a2" title="旋转一个图形" &gt;
+ 旋转一个图形
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e5%85%81%e8%ae%b8%e8%bf%9e%e7%bb%ad%e6%b8%b2%e6%9f%93" title="允许连续渲染" &gt;
+ 允许连续渲染
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#android-opengl-es%e5%bc%80%e5%8f%91%e4%b8%83--opengl-es-%e5%93%8d%e5%ba%94%e8%a7%a6%e6%91%b8%e4%ba%8b%e4%bb%b6" title="Android openGL ES开发(七) : OpenGL ES 响应触摸事件" &gt;
+ Android openGL ES开发(七) : OpenGL ES 响应触摸事件
+ 
+&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href="#%e8%ae%be%e7%bd%ae%e8%a7%a6%e6%91%b8%e4%ba%8b%e4%bb%b6" title="设置触摸事件" &gt;
+ 设置触摸事件
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e6%9a%b4%e9%9c%b2%e6%97%8b%e8%bd%ac%e8%a7%92%e5%ba%a6" title="暴露旋转角度" &gt;
+ 暴露旋转角度
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e5%ba%94%e7%94%a8%e6%97%8b%e8%bd%ac" title="应用旋转" &gt;
+ 应用旋转
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#android-opengl-es%e5%bc%80%e5%8f%91%e5%85%ab-opengl-es-%e7%9d%80%e8%89%b2%e5%99%a8%e8%af%ad%e8%a8%80glsl" title="Android OpenGL ES开发(八) :OpenGL ES 着色器语言GLSL" &gt;
+ Android OpenGL ES开发(八) :OpenGL ES 着色器语言GLSL
+ 
+&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href="#glsl-%e7%ae%80%e4%bb%8b" title="GLSL 简介" &gt;
+ GLSL 简介
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#glsl-%e5%9f%ba%e7%a1%80" title="GLSL 基础" &gt;
+ GLSL 基础
+ 
+&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href="#%e5%9f%ba%e6%9c%ac%e6%95%b0%e6%8d%ae%e7%b1%bb%e5%9e%8b" title="基本数据类型" &gt;
+ 基本数据类型
+ 
+&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href="#%e6%a0%87%e9%87%8f" title="标量：" &gt;
+ 标量：
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e5%90%91%e9%87%8f" title="向量：" &gt;
+ 向量：
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e7%9f%a9%e9%98%b5" title="矩阵：" &gt;
+ 矩阵：
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e9%87%87%e6%a0%b7%e5%99%a8" title="采样器：" &gt;
+ 采样器：
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e7%bb%93%e6%9e%84%e4%bd%93" title="结构体：" &gt;
+ 结构体：
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e6%95%b0%e7%bb%84" title="数组：" &gt;
+ 数组：
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e7%a9%ba%e7%b1%bb%e5%9e%8b" title="空类型：" &gt;
+ 空类型：
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e8%bf%90%e7%ae%97%e7%ac%a6" title="运算符" &gt;
+ 运算符
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e7%b1%bb%e5%9e%8b%e8%bd%ac%e6%8d%a2" title="类型转换" &gt;
+ 类型转换
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e9%99%90%e5%ae%9a%e7%ac%a6" title="限定符" &gt;
+ 限定符
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e6%b5%81%e7%a8%8b%e6%8e%a7%e5%88%b6" title="流程控制" &gt;
+ 流程控制
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e5%87%bd%e6%95%b0" title="函数" &gt;
+ 函数
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e6%b5%ae%e7%82%b9%e7%b2%be%e5%ba%a6" title="浮点精度" &gt;
+ 浮点精度
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e7%a8%8b%e5%ba%8f%e7%bb%93%e6%9e%84" title="程序结构" &gt;
+ 程序结构
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#glsl-%e5%86%85%e5%bb%ba%e5%8f%98%e9%87%8f" title="GLSL 内建变量" &gt;
+ GLSL 内建变量
+ 
+&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href="#%e9%a1%b6%e7%82%b9%e7%9d%80%e8%89%b2%e5%99%a8%e7%9a%84%e5%86%85%e5%bb%ba%e5%8f%98%e9%87%8f" title="顶点着色器的内建变量" &gt;
+ 顶点着色器的内建变量
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e7%89%87%e5%85%83%e7%9d%80%e8%89%b2%e5%99%a8%e7%9a%84%e5%86%85%e5%bb%ba%e5%8f%98%e9%87%8f" title="片元着色器的内建变量" &gt;
+ 片元着色器的内建变量
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e5%b8%b8%e7%94%a8%e5%86%85%e7%bd%ae%e5%87%bd%e6%95%b0" title="常用内置函数" &gt;
+ 常用内置函数
+ 
+&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href="#%e5%b8%b8%e8%a7%81%e5%87%bd%e6%95%b0" title="常见函数" &gt;
+ 常见函数
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e5%87%a0%e4%bd%95%e5%87%bd%e6%95%b0" title="几何函数" &gt;
+ 几何函数
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e7%9f%a9%e9%98%b5%e5%87%bd%e6%95%b0" title="矩阵函数" &gt;
+ 矩阵函数
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e7%ba%b9%e7%90%86%e9%87%87%e6%a0%b7%e5%87%bd%e6%95%b0" title="纹理采样函数" &gt;
+ 纹理采样函数
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#android-opengl-es%e5%bc%80%e5%8f%91%e4%b9%9d-opengl-es%e7%ba%b9%e7%90%86%e8%b4%b4%e5%9b%be" title="Android OpenGL ES开发(九): OpenGL ES纹理贴图" &gt;
+ Android OpenGL ES开发(九): OpenGL ES纹理贴图
+ 
+&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href="#%e6%a6%82%e5%bf%b5" title="概念" &gt;
+ 概念
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e5%8e%9f%e7%90%86" title="原理" &gt;
+ 原理
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e6%98%be%e7%a4%ba%e7%ba%b9%e7%90%86%e5%9b%be%e7%89%87" title="显示纹理图片" &gt;
+ 显示纹理图片
+ 
+&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href="#%e4%bf%ae%e6%94%b9%e7%9d%80%e8%89%b2%e5%99%a8" title="修改着色器" &gt;
+ 修改着色器
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e8%ae%be%e7%bd%ae%e9%a1%b6%e7%82%b9%e5%9d%90%e6%a0%87%e5%92%8c%e7%ba%b9%e7%90%86%e5%9d%90%e6%a0%87" title="设置顶点坐标和纹理坐标" &gt;
+ 设置顶点坐标和纹理坐标
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e8%ae%a1%e7%ae%97%e5%8f%98%e6%8d%a2%e7%9f%a9%e9%98%b5" title="计算变换矩阵" &gt;
+ 计算变换矩阵
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e6%98%be%e7%a4%ba%e5%9b%be%e7%89%87" title="显示图片" &gt;
+ 显示图片
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#android-opengl-es-%e5%bc%80%e5%8f%91%e5%8d%81%e9%80%9a%e8%bf%87gles20%e4%b8%8e%e7%9d%80%e8%89%b2%e5%99%a8%e4%ba%a4%e4%ba%92" title="Android OpenGL ES 开发(十):通过GLES20与着色器交互" &gt;
+ Android OpenGL ES 开发(十):通过GLES20与着色器交互
+ 
+&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href="#%e8%8e%b7%e5%8f%96%e7%9d%80%e8%89%b2%e5%99%a8%e7%a8%8b%e5%ba%8f%e5%86%85%e6%88%90%e5%91%98%e5%8f%98%e9%87%8f%e7%9a%84id%e5%8f%a5%e6%9f%84%e6%8c%87%e9%92%88" title="获取着色器程序内成员变量的id（句柄、指针）" &gt;
+ 获取着色器程序内成员变量的id（句柄、指针）
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e5%90%91%e7%9d%80%e8%89%b2%e5%99%a8%e4%bc%a0%e9%80%92%e6%95%b0%e6%8d%ae" title="向着色器传递数据" &gt;
+ 向着色器传递数据
+ 
+&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href="#%e5%ae%9a%e4%b9%89%e9%a1%b6%e7%82%b9%e5%b1%9e%e6%80%a7%e6%95%b0%e7%bb%84" title="定义顶点属性数组" &gt;
+ 定义顶点属性数组
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e5%90%af%e7%94%a8%e6%88%96%e8%80%85%e7%a6%81%e7%94%a8%e9%a1%b6%e7%82%b9%e5%b1%9e%e6%80%a7%e6%95%b0%e7%bb%84" title="启用或者禁用顶点属性数组" &gt;
+ 启用或者禁用顶点属性数组
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e9%80%89%e6%8b%a9%e6%b4%bb%e5%8a%a8%e7%ba%b9%e7%90%86%e5%8d%95%e5%85%83" title="选择活动纹理单元。" &gt;
+ 选择活动纹理单元。
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#opensl-es" title="OpenSL ES" &gt;
+ OpenSL ES
+ 
+&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href="#android-opensl-es-%e5%bc%80%e5%8f%91android-opensl-%e4%bb%8b%e7%bb%8d%e5%92%8c%e5%bc%80%e5%8f%91%e6%b5%81%e7%a8%8b%e8%af%b4%e6%98%8e" title="Android OpenSL ES 开发：Android OpenSL 介绍和开发流程说明" &gt;
+ Android OpenSL ES 开发：Android OpenSL 介绍和开发流程说明
+ 
+&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href="#android-opensl-es-%e4%bb%8b%e7%bb%8d" title="Android OpenSL ES 介绍" &gt;
+ Android OpenSL ES 介绍
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#android-opensl-es-%e5%bc%80%e5%8f%91%e6%b5%81%e7%a8%8b" title="Android OpenSL ES 开发流程" &gt;
+ Android OpenSL ES 开发流程
+ 
+&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href="#opensl-es-%e5%bc%80%e5%8f%91%e6%9c%80%e9%87%8d%e8%a6%81%e7%9a%84%e6%8e%a5%e5%8f%a3%e7%b1%bb-slobjectitf" title="OpenSL ES 开发最重要的接口类 SLObjectItf" &gt;
+ OpenSL ES 开发最重要的接口类 SLObjectItf
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#slobjectitf-%e5%88%9b%e5%bb%ba%e7%9a%84%e5%85%b7%e4%bd%93%e7%9a%84%e6%8e%a5%e5%8f%a3%e5%af%b9%e8%b1%a1%e5%ae%9e%e4%be%8b" title="SLObjectItf 创建的具体的接口对象实例" &gt;
+ SLObjectItf 创建的具体的接口对象实例
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e5%88%9b%e5%bb%ba%e5%bc%95%e6%93%8e%e5%b9%b6%e5%ae%9e%e7%8e%b0" title="创建引擎并实现" &gt;
+ 创建引擎并实现
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e5%88%a9%e7%94%a8%e5%bc%95%e6%93%8e%e5%af%b9%e8%b1%a1%e5%88%9b%e5%bb%ba%e5%85%b6%e4%bb%96%e6%8e%a5%e5%8f%a3%e5%af%b9%e8%b1%a1" title="利用引擎对象创建其他接口对象" &gt;
+ 利用引擎对象创建其他接口对象
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#opensl-es-%e4%bd%bf%e7%94%a8%e7%a4%ba%e4%be%8b" title="OpenSL ES 使用示例" &gt;
+ OpenSL ES 使用示例
+ 
+&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href="#%e6%92%ad%e6%94%beassets%e6%96%87%e4%bb%b6" title="播放assets文件" &gt;
+ 播放assets文件
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e6%92%ad%e6%94%bepcm%e6%96%87%e4%bb%b6" title="播放pcm文件" &gt;
+ 播放pcm文件
+ 
+&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href="#%e5%88%9b%e5%bb%ba%e6%92%ad%e6%94%be%e5%99%a8%e5%92%8c%e6%b7%b7%e9%9f%b3%e5%99%a8" title="创建播放器和混音器" &gt;
+ 创建播放器和混音器
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e8%ae%be%e7%bd%aepcm%e6%a0%bc%e5%bc%8f%e7%9a%84%e9%a2%91%e7%8e%87%e4%bd%8d%e6%95%b0%e7%ad%89%e4%bf%a1%e6%81%af%e5%b9%b6%e5%88%9b%e5%bb%ba%e6%92%ad%e6%94%be%e5%99%a8" title="设置pcm格式的频率位数等信息并创建播放器" &gt;
+ 设置pcm格式的频率位数等信息并创建播放器
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e8%ae%be%e7%bd%ae%e7%bc%93%e5%86%b2%e9%98%9f%e5%88%97%e5%92%8c%e5%9b%9e%e8%b0%83%e5%87%bd%e6%95%b0" title="设置缓冲队列和回调函数" &gt;
+ 设置缓冲队列和回调函数
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e8%ae%be%e7%bd%ae%e6%92%ad%e6%94%be%e7%8a%b6%e6%80%81%e5%b9%b6%e6%89%8b%e5%8a%a8%e5%bc%80%e5%a7%8b%e8%b0%83%e7%94%a8%e5%9b%9e%e8%b0%83%e5%87%bd%e6%95%b0" title="设置播放状态并手动开始调用回调函数" &gt;
+ 设置播放状态并手动开始调用回调函数
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#android-opensl-es-%e5%bc%80%e5%8f%91%e4%bd%bf%e7%94%a8-opensl-%e6%92%ad%e6%94%be-pcm-%e6%95%b0%e6%8d%ae" title="Android OpenSL ES 开发：使用 OpenSL 播放 PCM 数据" &gt;
+ Android OpenSL ES 开发：使用 OpenSL 播放 PCM 数据
+ 
+&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href="#%e5%88%9b%e5%bb%ba%e5%a3%b0%e9%9f%b3%e5%bc%95%e6%93%8e" title="创建声音引擎" &gt;
+ 创建声音引擎
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e5%88%9b%e5%bb%ba%e5%a3%b0%e9%9f%b3%e6%92%ad%e6%94%be%e5%99%a8" title="创建声音播放器" &gt;
+ 创建声音播放器
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e8%ae%be%e7%bd%ae%e6%92%ad%e6%94%be%e7%bc%93%e5%86%b2" title="设置播放缓冲" &gt;
+ 设置播放缓冲
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e8%8e%b7%e5%be%97%e5%85%b6%e4%bb%96%e6%8e%a5%e5%8f%a3%e7%94%a8%e6%9d%a5%e6%8e%a7%e5%88%b6%e6%92%ad%e6%94%be" title="获得其他接口用来控制播放" &gt;
+ 获得其他接口用来控制播放
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e6%8f%90%e4%be%9b%e6%92%ad%e6%94%be%e6%95%b0%e6%8d%ae" title="提供播放数据" &gt;
+ 提供播放数据
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e6%92%ad%e6%94%be%e9%9f%b3%e4%b9%90" title="播放音乐" &gt;
+ 播放音乐
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e8%b0%83%e8%a7%a3%e9%9f%b3%e9%87%8f" title="调解音量" &gt;
+ 调解音量
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e9%87%8a%e6%94%be%e8%b5%84%e6%ba%90" title="释放资源" &gt;
+ 释放资源
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e5%8f%82%e8%80%83%e6%ba%90%e7%a0%81" title="参考源码" &gt;
+ 参考源码
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#android-opensl-es-%e5%bc%80%e5%8f%91android-opensl-%e5%bd%95%e5%88%b6-pcm-%e9%9f%b3%e9%a2%91%e6%95%b0%e6%8d%ae" title="Android OpenSL ES 开发：Android OpenSL 录制 PCM 音频数据" &gt;
+ Android OpenSL ES 开发：Android OpenSL 录制 PCM 音频数据
+ 
+&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href="#%e5%ae%9e%e7%8e%b0%e8%af%b4%e6%98%8e" title="实现说明" &gt;
+ 实现说明
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e7%bc%96%e7%a0%81%e5%ae%9e%e7%8e%b0" title="编码实现" &gt;
+ 编码实现
+ 
+&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href="#%e7%bc%96%e5%86%99%e7%bc%93%e5%ad%98buffer%e9%98%9f%e5%88%97recordbufferhrecordbuffercpp" title="编写缓存buffer队列：RecordBuffer.h、RecordBuffer.cpp" &gt;
+ 编写缓存buffer队列：RecordBuffer.h、RecordBuffer.cpp
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e4%bd%bf%e7%94%a8opensl-es%e5%bd%95%e5%88%b6pcm%e6%95%b0%e6%8d%ae" title="使用OpenSL ES录制PCM数据" &gt;
+ 使用OpenSL ES录制PCM数据
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e9%aa%8c%e8%af%81%e5%bd%95%e5%88%b6%e6%88%90%e6%9e%9c" title="验证录制成果" &gt;
+ 验证录制成果
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e5%8f%82%e8%80%83%e6%ba%90%e7%a0%81-1" title="参考源码" &gt;
+ 参考源码
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#android-opensl-es-%e5%bc%80%e5%8f%91opensl-es%e5%88%a9%e7%94%a8soundtouch%e5%ae%9e%e7%8e%b0pcm%e9%9f%b3%e9%a2%91%e7%9a%84%e5%8f%98%e9%80%9f%e5%92%8c%e5%8f%98%e8%b0%83" title="Android OpenSL ES 开发：OpenSL ES利用SoundTouch实现PCM音频的变速和变调" &gt;
+ Android OpenSL ES 开发：OpenSL ES利用SoundTouch实现PCM音频的变速和变调
+ 
+&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href="#%e7%bc%98%e7%94%b1" title="缘由" &gt;
+ 缘由
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e5%ae%9e%e7%8e%b0" title="实现" &gt;
+ 实现
+ 
+&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href="#%e7%a7%bb%e6%a4%8dsoundtouchandroid" title="移植SoundTouch（Android）" &gt;
+ 移植SoundTouch（Android）
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e7%94%a8soundtouch%e8%bd%ac%e7%a0%81pcm%e6%ba%90%e6%96%87%e4%bb%b6" title="用SoundTouch转码PCM源文件" &gt;
+ 用SoundTouch转码PCM源文件
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#soundtouch%e4%bd%bf%e7%94%a8%e6%b5%81%e7%a8%8b" title="SoundTouch使用流程" &gt;
+ SoundTouch使用流程
+ 
+&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href="#%e6%b7%bb%e5%8a%a0%e5%91%bd%e5%90%8d%e7%a9%ba%e9%97%b4%e5%b9%b6%e5%88%9b%e5%bb%basoundtouch%e6%8c%87%e9%92%88%e5%8f%98%e9%87%8f" title="添加命名空间，并创建SoundTouch指针变量" &gt;
+ 添加命名空间，并创建SoundTouch指针变量
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e8%ae%be%e7%bd%aesoundtouch%e5%8f%82%e6%95%b0" title="设置SoundTouch参数" &gt;
+ 设置SoundTouch参数
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e5%90%91soundtouch%e4%b8%ad%e4%bc%a0%e5%85%a5%e8%8e%b7%e5%8f%96%e5%88%b0%e7%9a%84pcm%e6%95%b0%e6%8d%ae%e4%bd%bf%e7%94%a8putsamples%e5%87%bd%e6%95%b0" title="向SoundTouch中传入获取到的PCM数据，使用：putSamples函数" &gt;
+ 向SoundTouch中传入获取到的PCM数据，使用：putSamples函数
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e8%8e%b7%e5%8f%96soundtouch%e8%be%93%e5%87%ba%e7%9a%84pcm%e6%95%b0%e6%8d%ae%e4%bd%bf%e7%94%a8receivesamples%e5%87%bd%e6%95%b0" title="获取SoundTouch输出的PCM数据：使用receiveSamples函数" &gt;
+ 获取SoundTouch输出的PCM数据：使用receiveSamples函数
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#opensl-es%e6%92%ad%e6%94%besoundtouch%e5%a4%84%e7%90%86%e5%90%8e%e7%9a%84pcm%e9%9f%b3%e9%a2%91%e6%95%b0%e6%8d%ae" title="OpenSL ES播放SoundTouch处理后的PCM音频数据" &gt;
+ OpenSL ES播放SoundTouch处理后的PCM音频数据
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e6%80%9d%e7%bb%b4%e5%8f%91%e6%95%a3" title="思维发散" &gt;
+ 思维发散
+ 
+&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href="#ffmpeg%e8%a7%a3%e7%a0%81%e5%be%97%e5%88%b0%e7%9a%84pcm%e6%95%b0%e6%8d%aeuint_8-%e5%88%a9%e7%94%a8soundtouch%e8%bd%ac%e7%a0%81" title="FFmpeg解码得到的PCM数据（uint_8 *）利用SoundTouch转码" &gt;
+ FFmpeg解码得到的PCM数据（uint_8 *）利用SoundTouch转码
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e6%80%bb%e7%bb%93-1" title="总结" &gt;
+ 总结
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e5%8f%82%e8%80%83%e6%ba%90%e7%a0%81-2" title="参考源码" &gt;
+ 参考源码
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#android%e9%9f%b3%e8%a7%86%e9%a2%91%e5%bc%80%e5%8f%91%e9%ab%98%e7%ba%a7%e6%8e%a2%e7%a9%b6%e7%af%87" title="Android音视频开发高级探究篇" &gt;
+ Android音视频开发高级探究篇
+ 
+&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href="#%e9%9f%b3%e8%a7%86%e9%a2%91%e7%bc%96%e8%a7%a3%e7%a0%81%e6%8a%80%e6%9c%af" title="音视频编解码技术" &gt;
+ 音视频编解码技术
+ 
+&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href="#%e9%9f%b3%e8%a7%86%e9%a2%91%e7%bc%96%e8%a7%a3%e7%a0%81%e6%8a%80%e6%9c%af%e4%b8%80mpeg-4h264-avc-%e7%bc%96%e8%a7%a3%e7%a0%81%e6%a0%87%e5%87%86" title="音视频编解码技术（一）：MPEG-4/H.264 AVC 编解码标准" &gt;
+ 音视频编解码技术（一）：MPEG-4/H.264 AVC 编解码标准
+ 
+&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href="#h264-%e6%a6%82%e8%bf%b0" title="H264 概述" &gt;
+ H264 概述
+ 
+&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href="#h264%e8%a7%86%e9%a2%91%e7%bc%96%e8%a7%a3%e7%a0%81%e7%9a%84%e6%84%8f%e4%b9%89" title="H.264视频编解码的意义" &gt;
+ H.264视频编解码的意义
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#h264%e7%bc%96%e8%a7%a3%e7%a0%81%e7%9a%84%e7%90%86%e8%ae%ba%e4%be%9d%e6%8d%ae" title="H.264编解码的理论依据" &gt;
+ H.264编解码的理论依据
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#h264%e7%9b%b8%e5%85%b3%e6%a6%82%e5%bf%b5" title="H.264相关概念" &gt;
+ H.264相关概念
+ 
+&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href="#h264-%e7%9a%84%e5%9f%ba%e6%9c%ac%e5%8d%95%e4%bd%8d" title="H.264 的基本单位" &gt;
+ H.264 的基本单位
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e5%b8%a7%e7%b1%bb%e5%9e%8b" title="帧类型" &gt;
+ 帧类型
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#gop%e7%94%bb%e9%9d%a2%e7%bb%84" title="GOP（画面组）" &gt;
+ GOP（画面组）
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#idr-%e5%b8%a7" title="IDR 帧" &gt;
+ IDR 帧
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#h264-%e5%8e%8b%e7%bc%a9%e6%96%b9%e5%bc%8f" title="H.264 压缩方式" &gt;
+ H.264 压缩方式
+ 
+&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href="#h264-%e5%8e%8b%e7%bc%a9%e7%ae%97%e6%b3%95" title="H.264 压缩算法" &gt;
+ H.264 压缩算法
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#h264%e5%8e%8b%e7%bc%a9%e6%96%b9%e5%bc%8f%e8%af%b4%e6%98%8e" title="H.264压缩方式说明" &gt;
+ H.264压缩方式说明
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#h264-%e5%88%86%e5%b1%82%e7%bb%93%e6%9e%84" title="H.264 分层结构" &gt;
+ H.264 分层结构
+ 
+&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href="#vlc%e5%b1%82video-coding-layer" title="VLC层（Video Coding Layer）" &gt;
+ VLC层（Video Coding Layer）
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#nal%e5%b1%82network-abstraction-layer" title="NAL层（Network Abstraction Layer）" &gt;
+ NAL层（Network Abstraction Layer）
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#nalu-nal-unit" title="NALU （NAL Unit）" &gt;
+ NALU （NAL Unit）
+ 
+&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href="#start-code" title="Start Code" &gt;
+ Start Code
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#nal-header" title="NAL Header" &gt;
+ NAL Header
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#rbspraw-byte-sequence-payload" title="RBSP（Raw Byte Sequence Payload)）" &gt;
+ RBSP（Raw Byte Sequence Payload)）
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#h264-%e5%b1%80%e9%99%90%e6%80%a7" title="H.264 局限性" &gt;
+ H.264 局限性
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e9%9f%b3%e8%a7%86%e9%a2%91%e7%bc%96%e8%a7%a3%e7%a0%81%e6%8a%80%e6%9c%af%e4%ba%8caac-%e9%9f%b3%e9%a2%91%e7%bc%96%e7%a0%81%e6%8a%80%e6%9c%af" title="音视频编解码技术（二）：AAC 音频编码技术" &gt;
+ 音视频编解码技术（二）：AAC 音频编码技术
+ 
+&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href="#aac%e7%bc%96%e7%a0%81%e6%a6%82%e8%bf%b0" title="AAC编码概述" &gt;
+ AAC编码概述
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#aac%e7%bc%96%e7%a0%81%e8%a7%84%e6%a0%bc%e7%ae%80%e8%bf%b0" title="AAC编码规格简述" &gt;
+ AAC编码规格简述
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#aac%e7%bc%96%e7%a0%81%e7%9a%84%e7%89%b9%e7%82%b9" title="AAC编码的特点" &gt;
+ AAC编码的特点
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#aac%e9%9f%b3%e9%a2%91%e6%96%87%e4%bb%b6%e6%a0%bc%e5%bc%8f" title="AAC音频文件格式" &gt;
+ AAC音频文件格式
+ 
+&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href="#acc-%e9%9f%b3%e9%a2%91%e6%96%87%e4%bb%b6%e6%a0%bc%e5%bc%8f%e7%b1%bb%e5%9e%8b" title="ACC 音频文件格式类型" &gt;
+ ACC 音频文件格式类型
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#adif-%e7%9a%84-header-%e7%bb%93%e6%9e%84" title="ADIF 的 Header 结构" &gt;
+ ADIF 的 Header 结构
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#adts-%e7%9a%84-header-%e5%a4%b4%e7%bb%93%e6%9e%84" title="ADTS 的 Header 头结构" &gt;
+ ADTS 的 Header 头结构
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#aac%e6%96%87%e4%bb%b6%e5%a4%84%e7%90%86%e6%b5%81%e7%a8%8b" title="AAC文件处理流程" &gt;
+ AAC文件处理流程
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e5%bc%80%e6%ba%90aac%e8%a7%a3%e7%a0%81%e5%99%a8" title="开源AAC解码器" &gt;
+ 开源AAC解码器
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e6%b5%81%e5%aa%92%e4%bd%93%e5%8d%8f%e8%ae%ae" title="流媒体协议" &gt;
+ 流媒体协议
+ 
+&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href="#%e6%b5%81%e5%aa%92%e4%bd%93%e5%8d%8f%e8%ae%ae%e4%b8%80hls-%e5%8d%8f%e8%ae%ae" title="流媒体协议（一）：HLS 协议" &gt;
+ 流媒体协议（一）：HLS 协议
+ 
+&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href="#hls-%e6%a6%82%e8%bf%b0" title="HLS 概述" &gt;
+ HLS 概述
+ 
+&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href="#%e5%8e%9f%e7%90%86%e4%bb%8b%e7%bb%8d" title="原理介绍：" &gt;
+ 原理介绍：
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e6%95%b4%e4%bd%93%e6%9e%b6%e6%9e%84" title="整体架构" &gt;
+ 整体架构
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#hls-%e6%92%ad%e6%94%be" title="HLS 播放" &gt;
+ HLS 播放
+ 
+&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href="#%e6%92%ad%e6%94%be%e6%9c%aa%e5%8a%a0%e5%af%86hls" title="播放未加密HLS" &gt;
+ 播放未加密HLS
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e6%92%ad%e6%94%be%e5%8a%a0%e5%af%86hls" title="播放加密HLS" &gt;
+ 播放加密HLS
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#hls-%e5%8d%8f%e8%ae%ae%e6%80%bb%e7%bb%93" title="HLS 协议总结" &gt;
+ HLS 协议总结
+ 
+&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href="#%e4%bc%98%e7%82%b9" title="优点：" &gt;
+ 优点：
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e7%bc%ba%e7%82%b9" title="缺点：" &gt;
+ 缺点：
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e6%94%b9%e8%bf%9b" title="改进" &gt;
+ 改进
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e6%b5%81%e5%aa%92%e4%bd%93%e5%8d%8f%e8%ae%ae%e4%ba%8crtmp%e5%8d%8f%e8%ae%ae" title="流媒体协议（二）：RTMP协议" &gt;
+ 流媒体协议（二）：RTMP协议
+ 
+&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href="#%e6%a6%82%e5%bf%b5%e4%b8%8e%e6%91%98%e8%a6%81" title="概念与摘要" &gt;
+ 概念与摘要
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#rtmp%e5%9d%97%e6%b5%81" title="RTMP块流" &gt;
+ RTMP块流
+ 
+&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href="#%e6%b6%88%e6%81%af%e6%a0%bc%e5%bc%8f" title="消息格式" &gt;
+ 消息格式
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e6%8f%a1%e6%89%8b" title="握手" &gt;
+ 握手
+ 
+&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href="#%e6%8f%a1%e6%89%8b%e5%ba%8f%e5%88%97" title="握手序列" &gt;
+ 握手序列
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#c0%e5%92%8cs0%e6%a0%bc%e5%bc%8f" title="C0和S0格式" &gt;
+ C0和S0格式
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#c1%e5%92%8cs1%e6%a0%bc%e5%bc%8f" title="C1和S1格式" &gt;
+ C1和S1格式
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#c2%e5%92%8cs2%e6%a0%bc%e5%bc%8f" title="C2和S2格式" &gt;
+ C2和S2格式
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#rmtp%e6%8f%a1%e6%89%8b" title="RMTP握手" &gt;
+ RMTP握手
+ 
+&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href="#%e6%8f%a1%e6%89%8b%e8%bf%87%e7%a8%8b%e7%a4%ba%e6%84%8f%e5%9b%be" title="握手过程示意图" &gt;
+ 握手过程示意图
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e5%a4%9a%e5%aa%92%e4%bd%93%e6%96%87%e4%bb%b6%e6%a0%bc%e5%bc%8f" title="多媒体文件格式" &gt;
+ 多媒体文件格式
+ 
+&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href="#%e5%a4%9a%e5%aa%92%e4%bd%93%e6%96%87%e4%bb%b6%e6%a0%bc%e5%bc%8f%e4%b8%80mp4-%e6%a0%bc%e5%bc%8f" title="多媒体文件格式（一）：MP4 格式" &gt;
+ 多媒体文件格式（一）：MP4 格式
+ 
+&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href="#mp4-%e6%a0%bc%e5%bc%8f%e6%a0%87%e5%87%86%e4%bb%8b%e7%bb%8d" title="MP4 格式标准介绍" &gt;
+ MP4 格式标准介绍
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#mp4%e5%88%86%e6%9e%90%e5%b7%a5%e5%85%b7" title="MP4分析工具" &gt;
+ MP4分析工具
+ 
+&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href="#elecard-streameye" title="Elecard StreamEye" &gt;
+ Elecard StreamEye
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#mp4box" title="mp4box" &gt;
+ mp4box
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#mp4info" title="mp4info" &gt;
+ mp4info
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#mp4%e6%a0%bc%e5%bc%8f%e9%87%8d%e8%a6%81box" title="MP4格式重要Box" &gt;
+ MP4格式重要Box
+ 
+&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href="#ftypfile-type-box" title="ftyp（File Type Box）" &gt;
+ ftyp（File Type Box）
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#moovmovie-box" title="moov（Movie Box）" &gt;
+ moov（Movie Box）
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#traktrack-box" title="trak（Track Box）" &gt;
+ trak（Track Box）
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#mdatmeida-data-box" title="mdat（Meida Data Box）" &gt;
+ mdat（Meida Data Box）
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#free%e6%88%96skipfree-space-box" title="free或skip（Free Space Box）" &gt;
+ free或skip（Free Space Box）
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#stblsample-table-box" title="stbl（Sample Table Box）" &gt;
+ stbl（Sample Table Box）
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#mp4%e6%a0%bc%e5%bc%8f-%e4%b8%8e-ffmpeg%e5%ae%9e%e6%88%98" title="MP4格式 与 FFmpeg实战" &gt;
+ MP4格式 与 FFmpeg实战
+ 
+&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href="#%e5%9c%a8ffmpeg%e4%b8%ad%e7%9a%84%e8%be%93%e5%87%bamp4%e7%9a%84demuxer%e4%bf%a1%e6%81%af" title="在FFmpeg中的输出MP4的Demuxer信息" &gt;
+ 在FFmpeg中的输出MP4的Demuxer信息
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e9%80%9a%e8%bf%87ffmepg-faststart%e5%8f%82%e6%95%b0%e7%9a%84%e4%bd%bf%e7%94%a8%e6%9d%a5%e7%90%86%e8%a7%a3mdat%e5%92%8cmoov%e7%9a%84%e9%a1%ba%e5%ba%8f%e7%9a%84%e6%84%8f%e4%b9%89" title="通过FFmepg faststart参数的使用，来理解mdat和moov的顺序的意义" &gt;
+ 通过FFmepg faststart参数的使用，来理解mdat和moov的顺序的意义
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e5%a4%9a%e5%aa%92%e4%bd%93%e6%96%87%e4%bb%b6%e6%a0%bc%e5%bc%8f%e4%ba%8cflv-%e6%a0%bc%e5%bc%8f" title="多媒体文件格式（二）：FLV 格式" &gt;
+ 多媒体文件格式（二）：FLV 格式
+ 
+&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href="#flv-%e6%a0%bc%e5%bc%8f%e6%a0%87%e5%87%86%e4%bb%8b%e7%bb%8d" title="FLV 格式标准介绍" &gt;
+ FLV 格式标准介绍
+ 
+&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href="#%e6%96%87%e4%bb%b6%e5%a4%b4-header" title="文件头 Header" &gt;
+ 文件头 Header
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e6%96%87%e4%bb%b6%e4%bd%93-flv-body" title="文件体 FLV Body" &gt;
+ 文件体 FLV Body
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#tag" title="Tag" &gt;
+ Tag
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#flv-%e5%88%86%e6%9e%90%e5%b7%a5%e5%85%b7" title="FLV 分析工具" &gt;
+ FLV 分析工具
+ 
+&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href="#flvanalyzer" title="FlvAnalyzer" &gt;
+ FlvAnalyzer
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#flv-format-analysis-%e5%b7%a5%e5%85%b7" title="FLV Format Analysis 工具" &gt;
+ FLV Format Analysis 工具
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#flv%e6%a0%bc%e5%bc%8f-%e4%b8%8e-ffmpeg-%e5%ae%9e%e6%88%98" title="FLV格式 与 FFmpeg 实战" &gt;
+ FLV格式 与 FFmpeg 实战
+ 
+&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href="#%e4%bd%bf%e7%94%a8ffmpeg%e7%94%9f%e6%88%90%e5%b8%a6%e5%85%b3%e9%94%ae%e7%b4%a2%e5%bc%95%e4%bf%a1%e6%81%af%e7%9a%84flv" title="使用FFmpeg生成带关键索引信息的FLV" &gt;
+ 使用FFmpeg生成带关键索引信息的FLV
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e4%bd%bf%e7%94%a8ffprobe%e6%9f%a5%e7%9c%8bflv%e5%85%b3%e9%94%ae%e5%b8%a7%e7%b4%a2%e5%bc%95%e7%9b%b8%e5%85%b3%e4%bf%a1%e6%81%af" title="使用ffprobe查看FLV关键帧索引相关信息" &gt;
+ 使用ffprobe查看FLV关键帧索引相关信息
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e5%a4%9a%e5%aa%92%e4%bd%93%e6%96%87%e4%bb%b6%e6%a0%bc%e5%bc%8f%e4%b8%89m3u8-%e6%a0%bc%e5%bc%8f" title="多媒体文件格式（三）：M3U8 格式" &gt;
+ 多媒体文件格式（三）：M3U8 格式
+ 
+&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href="#m3u8-%e6%a0%bc%e5%bc%8f%e6%a0%87%e5%87%86%e4%bb%8b%e7%bb%8d" title="M3U8 格式标准介绍" &gt;
+ M3U8 格式标准介绍
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#hls-%e4%b8%8e-m3u8" title="HLS 与 M3U8" &gt;
+ HLS 与 M3U8
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#ffmpeg%e8%bd%achls%e6%96%87%e4%bb%b6m3u8%e5%ae%9e%e6%88%98" title="FFmpeg转HLS文件(M3U8)实战" &gt;
+ FFmpeg转HLS文件(M3U8)实战
+ 
+&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href="#ffmpeg%e8%bd%acmp4%e4%b8%bahlsm3u8%e6%96%87%e4%bb%b6" title="FFmpeg转MP4为HLS(M3U8)文件" &gt;
+ FFmpeg转MP4为HLS(M3U8)文件
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#ffmpeg-%e8%bd%ac-hls-m3u8-%e6%96%87%e4%bb%b6%e5%91%bd%e4%bb%a4%e5%8f%82%e6%95%b0" title="FFmpeg 转 HLS (M3U8) 文件命令参数" &gt;
+ FFmpeg 转 HLS (M3U8) 文件命令参数
+ 
+&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href="#start_number-%e5%8f%82%e6%95%b0" title="start_number 参数" &gt;
+ start_number 参数
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#hls_time-%e5%8f%82%e6%95%b0" title="hls_time 参数" &gt;
+ hls_time 参数
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#hls_list_size-%e5%8f%82%e6%95%b0" title="hls_list_size 参数" &gt;
+ hls_list_size 参数
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#hls_base_url%e5%8f%82%e6%95%b0" title="hls_base_url参数" &gt;
+ hls_base_url参数
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e5%a4%9a%e5%aa%92%e4%bd%93%e6%96%87%e4%bb%b6%e6%a0%bc%e5%bc%8f%e5%9b%9bts-%e6%a0%bc%e5%bc%8f" title="多媒体文件格式（四）：TS 格式" &gt;
+ 多媒体文件格式（四）：TS 格式
+ 
+&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href="#ts-%e6%a0%bc%e5%bc%8f%e6%a0%87%e5%87%86%e4%bb%8b%e7%bb%8d" title="TS 格式标准介绍" &gt;
+ TS 格式标准介绍
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#ts-%e6%a0%bc%e5%bc%8f%e8%af%a6%e8%a7%a3" title="TS 格式详解" &gt;
+ TS 格式详解
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#ts%e5%b1%82" title="TS层" &gt;
+ TS层
+ 
+&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href="#ts-header" title="TS Header" &gt;
+ TS Header
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#ts-adaptation-field" title="TS Adaptation Field" &gt;
+ TS Adaptation Field
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#ts-payload" title="TS Payload" &gt;
+ TS Payload
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#pes%e5%b1%82--es-%e5%b1%82" title="PES层 &amp;amp; ES 层" &gt;
+ PES层 &amp;amp; ES 层
+ 
+&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href="#pes%e5%b1%82" title="PES层" &gt;
+ PES层
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#es-%e5%b1%82" title="ES 层" &gt;
+ ES 层
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#ts%e6%b5%81%e7%94%9f%e6%88%90%e5%8f%8a%e8%a7%a3%e6%9e%90%e6%b5%81%e7%a8%8b" title="TS流生成及解析流程" &gt;
+ TS流生成及解析流程
+ 
+&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href="#ts-%e6%b5%81%e7%94%9f%e6%88%90%e6%b5%81%e7%a8%8b" title="TS 流生成流程" &gt;
+ TS 流生成流程
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#ts-%e6%b5%81%e8%a7%a3%e6%9e%90%e6%b5%81%e7%a8%8b" title="TS 流解析流程" &gt;
+ TS 流解析流程
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e5%a4%9a%e5%aa%92%e4%bd%93%e6%96%87%e4%bb%b6%e6%a0%bc%e5%bc%8f%e4%ba%94pcm--wav-%e6%a0%bc%e5%bc%8f" title="多媒体文件格式（五）：PCM / WAV 格式" &gt;
+ 多媒体文件格式（五）：PCM / WAV 格式
+ 
+&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href="#%e5%90%8d%e8%af%8d%e8%a7%a3%e6%9e%90" title="名词解析" &gt;
+ 名词解析
+ 
+&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href="#%e9%87%87%e6%a0%b7%e7%8e%87" title="采样率" &gt;
+ 采样率
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e4%bd%8d%e6%b7%b1%e5%ba%a6" title="位深度" &gt;
+ 位深度
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#pcm" title="PCM" &gt;
+ PCM
+ 
+&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href="#pcm%e9%9f%b3%e9%a2%91%e6%95%b0%e6%8d%ae%e5%ad%98%e5%82%a8%e6%96%b9%e5%bc%8f" title="PCM音频数据存储方式" &gt;
+ PCM音频数据存储方式
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#pcm-%e9%9f%b3%e9%a2%91%e6%95%b0%e6%8d%ae%e7%9a%84%e5%8f%82%e6%95%b0" title="PCM 音频数据的参数" &gt;
+ PCM 音频数据的参数
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#wav" title="WAV" &gt;
+ WAV
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#pcm--wav-%e5%bc%80%e5%8f%91%e5%ae%9e%e8%b7%b5" title="PCM &amp;amp; WAV 开发实践" &gt;
+ PCM &amp;amp; WAV 开发实践
+ 
+&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href="#pcm%e6%a0%bc%e5%bc%8f%e8%bd%ac%e4%b8%bawav%e6%a0%bc%e5%bc%8f%e5%9f%ba%e4%ba%8ec%e8%af%ad%e8%a8%80" title="PCM格式转为WAV格式（基于C语言）" &gt;
+ PCM格式转为WAV格式（基于C语言）
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#pcm%e9%99%8d%e4%bd%8e%e6%9f%90%e4%b8%aa%e5%a3%b0%e9%81%93%e7%9a%84%e9%9f%b3%e9%87%8f%e5%9f%ba%e4%ba%8ec%e8%af%ad%e8%a8%80" title="PCM降低某个声道的音量（基于C语言）" &gt;
+ PCM降低某个声道的音量（基于C语言）
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e5%88%86%e7%a6%bbpcm%e9%9f%b3%e9%a2%91%e6%95%b0%e6%8d%ae%e5%b7%a6%e5%8f%b3%e5%a3%b0%e9%81%93%e7%9a%84%e6%95%b0%e6%8d%ae" title="分离PCM音频数据左右声道的数据" &gt;
+ 分离PCM音频数据左右声道的数据
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e4%bb%8epcm16le%e5%8d%95%e5%a3%b0%e9%81%93%e9%9f%b3%e9%a2%91%e9%87%87%e6%a0%b7%e6%95%b0%e6%8d%ae%e4%b8%ad%e6%88%aa%e5%8f%96%e4%b8%80%e9%83%a8%e5%88%86%e6%95%b0%e6%8d%ae" title="从PCM16LE单声道音频采样数据中截取一部分数据" &gt;
+ 从PCM16LE单声道音频采样数据中截取一部分数据
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e5%b0%86pcm16le%e5%8f%8c%e5%a3%b0%e9%81%93%e9%9f%b3%e9%a2%91%e9%87%87%e6%a0%b7%e6%95%b0%e6%8d%ae%e8%bd%ac%e6%8d%a2%e4%b8%bapcm8%e9%9f%b3%e9%a2%91%e9%87%87%e6%a0%b7%e6%95%b0%e6%8d%ae" title="将PCM16LE双声道音频采样数据转换为PCM8音频采样数据" &gt;
+ 将PCM16LE双声道音频采样数据转换为PCM8音频采样数据
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e5%b0%86pcm16le%e5%8f%8c%e5%a3%b0%e9%81%93%e9%9f%b3%e9%a2%91%e9%87%87%e6%a0%b7%e6%95%b0%e6%8d%ae%e7%9a%84%e5%a3%b0%e9%9f%b3%e9%80%9f%e5%ba%a6%e6%8f%90%e9%ab%98%e4%b8%80%e5%80%8d" title="将PCM16LE双声道音频采样数据的声音速度提高一倍" &gt;
+ 将PCM16LE双声道音频采样数据的声音速度提高一倍
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#ffmpeg" title="FFmpeg" &gt;
+ FFmpeg
+ 
+&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href="#ffmpeg%e5%91%bd%e4%bb%a4%e8%a1%8c%e5%b7%a5%e5%85%b7%e4%b8%80%e6%9f%a5%e7%9c%8b%e5%aa%92%e4%bd%93%e6%96%87%e4%bb%b6%e5%a4%b4%e4%bf%a1%e6%81%af%e5%b7%a5%e5%85%b7ffprobe" title="FFmpeg命令行工具(一)：查看媒体文件头信息工具ffprobe" &gt;
+ FFmpeg命令行工具(一)：查看媒体文件头信息工具ffprobe
+ 
+&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href="#%e7%ae%80%e8%bf%b0" title="简述" &gt;
+ 简述
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e5%91%bd%e4%bb%a4%e6%a0%bc%e5%bc%8f" title="命令格式" &gt;
+ 命令格式
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e4%bd%bf%e7%94%a8ffprobe%e6%9f%a5%e7%9c%8bmp3%e6%a0%bc%e5%bc%8f%e7%9a%84%e6%96%87%e4%bb%b6" title="使用ffprobe查看mp3格式的文件" &gt;
+ 使用ffprobe查看mp3格式的文件
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e4%bd%bf%e7%94%a8ffprobe%e6%9f%a5%e7%9c%8bmp4%e6%a0%bc%e5%bc%8f%e7%9a%84%e6%96%87%e4%bb%b6" title="使用ffprobe查看mp4格式的文件" &gt;
+ 使用ffprobe查看mp4格式的文件
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#ffprobe%e9%ab%98%e7%ba%a7%e4%bd%bf%e7%94%a8%e6%96%b9%e5%bc%8f" title="ffprobe高级使用方式" &gt;
+ ffprobe高级使用方式
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#ffmpeg%e5%91%bd%e4%bb%a4%e8%a1%8c%e5%b7%a5%e5%85%b7%e4%ba%8c%e6%92%ad%e6%94%be%e5%aa%92%e4%bd%93%e6%96%87%e4%bb%b6%e7%9a%84%e5%b7%a5%e5%85%b7ffplay" title="FFmpeg命令行工具(二)：播放媒体文件的工具ffplay" &gt;
+ FFmpeg命令行工具(二)：播放媒体文件的工具ffplay
+ 
+&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href="#%e7%ae%80%e8%bf%b0-1" title="简述" &gt;
+ 简述
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e5%91%bd%e4%bb%a4%e6%a0%bc%e5%bc%8f-1" title="命令格式" &gt;
+ 命令格式
+ 
+&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href="#%e4%b8%bb%e8%a6%81%e9%80%89%e9%a1%b9" title="主要选项" &gt;
+ 主要选项
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e4%b8%80%e4%ba%9b%e9%ab%98%e7%ba%a7%e9%80%89%e9%a1%b9" title="一些高级选项" &gt;
+ 一些高级选项
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e4%b8%80%e4%ba%9b%e5%bf%ab%e6%8d%b7%e9%94%ae" title="一些快捷键" &gt;
+ 一些快捷键
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#ffplay-%e6%92%ad%e6%94%be%e9%9f%b3%e9%a2%91" title="ffplay 播放音频" &gt;
+ ffplay 播放音频
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#ffplay-%e6%92%ad%e6%94%be%e8%a7%86%e9%a2%91" title="ffplay 播放视频" &gt;
+ ffplay 播放视频
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#ffplay-%e9%ab%98%e7%ba%a7%e4%bd%bf%e7%94%a8%e6%96%b9%e5%bc%8f" title="ffplay 高级使用方式" &gt;
+ ffplay 高级使用方式
+ 
+&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href="#%e5%be%aa%e7%8e%af%e6%92%ad%e6%94%be" title="循环播放" &gt;
+ 循环播放
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e6%92%ad%e6%94%be-pmmp4-%e6%92%ad%e6%94%be%e5%ae%8c%e6%88%90%e5%90%8e%e8%87%aa%e5%8a%a8%e9%80%80%e5%87%ba" title="播放 pm.mp4 ，播放完成后自动退出" &gt;
+ 播放 pm.mp4 ，播放完成后自动退出
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e4%bb%a5-320-x-240-%e7%9a%84%e5%a4%a7%e5%b0%8f%e6%92%ad%e6%94%be-testmp4" title="以 320 x 240 的大小播放 test.mp4" &gt;
+ 以 320 x 240 的大小播放 test.mp4
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e5%b0%86%e7%aa%97%e5%8f%a3%e6%a0%87%e9%a2%98%e8%ae%be%e7%bd%ae%e4%b8%ba-myplayer%e5%be%aa%e7%8e%af%e6%92%ad%e6%94%be-2-%e6%ac%a1" title="将窗口标题设置为 &amp;ldquo;myplayer&amp;rdquo;，循环播放 2 次" &gt;
+ 将窗口标题设置为 &amp;ldquo;myplayer&amp;rdquo;，循环播放 2 次
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e6%92%ad%e6%94%be-%e5%8f%8c%e9%80%9a%e9%81%93-32k-%e7%9a%84-pcm-%e9%9f%b3%e9%a2%91%e6%95%b0%e6%8d%ae" title="播放 双通道 32K 的 PCM 音频数据" &gt;
+ 播放 双通道 32K 的 PCM 音频数据
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#ffplay%e9%9f%b3%e7%94%bb%e5%90%8c%e6%ad%a5" title="ffplay音画同步" &gt;
+ ffplay音画同步
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#ffmpeg%e5%91%bd%e4%bb%a4%e8%a1%8c%e5%b7%a5%e5%85%b7%e4%b8%89%e5%aa%92%e4%bd%93%e6%96%87%e4%bb%b6%e8%bd%ac%e6%8d%a2%e5%b7%a5%e5%85%b7ffmpeg" title="FFmpeg命令行工具(三)：媒体文件转换工具ffmpeg" &gt;
+ FFmpeg命令行工具(三)：媒体文件转换工具ffmpeg
+ 
+&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href="#%e7%ae%80%e8%bf%b0-2" title="简述" &gt;
+ 简述
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e5%91%bd%e4%bb%a4%e8%a1%8c%e5%8f%82%e6%95%b0" title="命令行参数" &gt;
+ 命令行参数
+ 
+&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href="#%e9%80%9a%e7%94%a8%e5%8f%82%e6%95%b0" title="通用参数" &gt;
+ 通用参数
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e8%a7%86%e9%a2%91%e5%8f%82%e6%95%b0" title="视频参数" &gt;
+ 视频参数
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e9%9f%b3%e9%a2%91%e5%8f%82%e6%95%b0" title="音频参数" &gt;
+ 音频参数
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e5%ae%9e%e8%b7%b5%e5%ad%a6%e4%b9%a0" title="实践学习" &gt;
+ 实践学习
+ 
+&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href="#%e5%88%97%e5%87%baffmpeg%e6%94%af%e6%8c%81%e7%9a%84%e6%89%80%e6%9c%89%e6%a0%bc%e5%bc%8f" title="列出ffmpeg支持的所有格式" &gt;
+ 列出ffmpeg支持的所有格式
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e5%89%aa%e5%88%87%e4%b8%80%e6%ae%b5%e5%aa%92%e4%bd%93%e6%96%87%e4%bb%b6%e5%8f%af%e4%bb%a5%e6%98%af%e9%9f%b3%e9%a2%91%e6%88%96%e8%80%85%e8%a7%86%e9%a2%91%e6%96%87%e4%bb%b6" title="剪切一段媒体文件，可以是音频或者视频文件" &gt;
+ 剪切一段媒体文件，可以是音频或者视频文件
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e6%8f%90%e5%8f%96%e8%a7%86%e9%a2%91%e6%96%87%e4%bb%b6%e4%b8%ad%e7%9a%84%e9%9f%b3%e9%a2%91%e6%95%b0%e6%8d%ae%e5%b9%b6%e4%bf%9d%e5%ad%98%e4%b8%ba%e6%96%87%e4%bb%b6" title="提取视频文件中的音频数据，并保存为文件" &gt;
+ 提取视频文件中的音频数据，并保存为文件
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e5%b0%86%e8%a7%86%e9%a2%91%e4%b8%ad%e7%9a%84%e9%9f%b3%e9%a2%91%e9%9d%99%e9%9f%b3%e5%8f%aa%e4%bf%9d%e7%95%99%e8%a7%86%e9%a2%91" title="将视频中的音频静音，只保留视频" &gt;
+ 将视频中的音频静音，只保留视频
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e4%bb%8emp4%e6%96%87%e4%bb%b6%e4%b8%ad%e6%8a%bd%e5%8f%96%e8%a7%86%e9%a2%91%e6%b5%81%e5%af%bc%e5%87%ba%e4%b8%ba%e8%a3%b8h264%e6%95%b0%e6%8d%ae" title="从mp4文件中抽取视频流导出为裸H264数据：" &gt;
+ 从mp4文件中抽取视频流导出为裸H264数据：
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e5%b0%86%e8%a7%86%e9%a2%91%e6%8e%a8%e9%80%81%e5%88%b0%e6%b5%81%e5%aa%92%e4%bd%93%e6%9c%8d%e5%8a%a1%e5%99%a8%e4%b8%8a" title="将视频推送到流媒体服务器上：" &gt;
+ 将视频推送到流媒体服务器上：
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e5%b0%86%e6%b5%81%e5%aa%92%e4%bd%93%e6%9c%8d%e5%8a%a1%e5%99%a8%e4%b8%8a%e7%9a%84%e6%b5%81dump%e5%88%b0%e6%9c%ac%e5%9c%b0" title="将流媒体服务器上的流dump到本地：" &gt;
+ 将流媒体服务器上的流dump到本地：
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e7%bb%99%e8%a7%86%e9%a2%91%e6%b7%bb%e5%8a%a0%e6%b0%b4%e5%8d%b0" title="给视频添加水印" &gt;
+ 给视频添加水印
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e5%80%92%e6%94%be%e9%9f%b3%e8%a7%86%e9%a2%91" title="倒放音视频" &gt;
+ 倒放音视频
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e5%b0%86%e5%87%a0%e4%b8%aamp4%e8%a7%86%e9%a2%91%e6%96%87%e4%bb%b6%e5%90%88%e5%b9%b6%e4%b8%ba1%e4%b8%aa%e8%a7%86%e9%a2%91" title="将几个MP4视频文件合并为1个视频." &gt;
+ 将几个MP4视频文件合并为1个视频.
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#ffmpeg%e5%91%bd%e4%bb%a4%e8%a1%8c%e5%b7%a5%e5%85%b7%e5%9b%9bffmpeg-%e8%b0%83%e6%95%b4%e9%9f%b3%e8%a7%86%e9%a2%91%e6%92%ad%e6%94%be%e9%80%9f%e5%ba%a6" title="FFmpeg命令行工具(四)：FFmpeg 调整音视频播放速度" &gt;
+ FFmpeg命令行工具(四)：FFmpeg 调整音视频播放速度
+ 
+&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href="#%e8%b0%83%e6%95%b4%e8%a7%86%e9%a2%91%e9%80%9f%e7%8e%87" title="调整视频速率" &gt;
+ 调整视频速率
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e8%b0%83%e6%95%b4%e9%9f%b3%e9%a2%91%e9%80%9f%e7%8e%87" title="调整音频速率" &gt;
+ 调整音频速率
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e5%8f%82%e8%80%83%e6%96%87%e7%8c%ae" title="参考文献" &gt;
+ 参考文献
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#ffmpeg%e4%b8%80ffmpeg-%e7%ae%80%e4%bb%8b" title="FFmpeg(一)：FFmpeg 简介" &gt;
+ FFmpeg(一)：FFmpeg 简介
+ 
+&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href="#ffmpeg-%e4%bb%8b%e7%bb%8d" title="FFmpeg 介绍" &gt;
+ FFmpeg 介绍
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#ffmpeg-%e7%bb%84%e6%88%90" title="FFmpeg 组成" &gt;
+ FFmpeg 组成
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#ffmpeg%e5%8c%85%e5%90%ab%e7%b1%bb%e5%ba%93%e8%af%b4%e6%98%8e" title="FFmpeg包含类库说明" &gt;
+ FFmpeg包含类库说明
+ 
+&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href="#%e7%b1%bb%e5%ba%93%e8%af%b4%e6%98%8e" title="类库说明" &gt;
+ 类库说明
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e5%b8%b8%e7%94%a8%e7%bb%93%e6%9e%84" title="常用结构" &gt;
+ 常用结构
+ 
+&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href="#%e5%b0%81%e8%a3%85%e6%a0%bc%e5%bc%8f" title="封装格式" &gt;
+ 封装格式
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e7%bc%96%e8%a7%a3%e7%a0%81" title="编解码" &gt;
+ 编解码
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e7%bd%91%e7%bb%9c%e5%8d%8f%e8%ae%ae" title="网络协议" &gt;
+ 网络协议
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e6%95%b0%e6%8d%ae%e5%ad%98%e6%94%be" title="数据存放" &gt;
+ 数据存放
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#ffmpeg%e4%ba%8cmac%e4%b8%8b%e5%ae%89%e8%a3%85ffmpeg" title="FFmpeg(二)：Mac下安装FFmpeg" &gt;
+ FFmpeg(二)：Mac下安装FFmpeg
+ 
+&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href="#%e5%ae%89%e8%a3%85ffmpeg" title="安装ffmpeg" &gt;
+ 安装ffmpeg
+ 
+&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href="#%e5%91%bd%e4%bb%a4%e8%a1%8c%e5%ae%89%e8%a3%85" title="命令行安装" &gt;
+ 命令行安装
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e4%b8%8b%e8%bd%bd%e5%8e%8b%e7%bc%a9%e5%8c%85%e5%ae%89%e8%a3%85" title="下载压缩包安装" &gt;
+ 下载压缩包安装
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e5%ae%89%e8%a3%85ffplay" title="安装ffplay" &gt;
+ 安装ffplay
+ 
+&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href="#%e5%91%bd%e4%bb%a4%e8%a1%8c%e5%ae%89%e8%a3%85-1" title="命令行安装" &gt;
+ 命令行安装
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e4%b8%8b%e8%bd%bd%e5%8e%8b%e7%bc%a9%e5%8c%85%e5%ae%89%e8%a3%85-1" title="下载压缩包安装" &gt;
+ 下载压缩包安装
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e9%99%84%e8%a8%80-1" title="附言" &gt;
+ 附言
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#ffmpeg%e4%b8%89%e5%b0%86-ffmpeg-%e7%a7%bb%e6%a4%8d%e5%88%b0-android%e5%b9%b3%e5%8f%b0" title="FFmpeg(三)：将 FFmpeg 移植到 Android平台" &gt;
+ FFmpeg(三)：将 FFmpeg 移植到 Android平台
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#ffmpeg%e5%9b%9bffmpeg-api-%e4%bb%8b%e7%bb%8d%e4%b8%8e%e9%80%9a%e7%94%a8-api-%e5%88%86%e6%9e%90" title="FFmpeg(四)：FFmpeg API 介绍与通用 API 分析" &gt;
+ FFmpeg(四)：FFmpeg API 介绍与通用 API 分析
+ 
+&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href="#ffmpeg-%e7%bc%96%e8%a7%a3%e7%a0%81%e6%b5%81%e7%a8%8b" title="FFmpeg 编解码流程" &gt;
+ FFmpeg 编解码流程
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#ffmpeg-%e7%9b%b8%e5%85%b3%e6%9c%af%e8%af%ad" title="FFmpeg 相关术语" &gt;
+ FFmpeg 相关术语
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#ffmpeg-%e9%80%9a%e7%94%a8-api-%e5%88%86%e6%9e%90" title="FFmpeg 通用 API 分析" &gt;
+ FFmpeg 通用 API 分析
+ 
+&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href="#av_register_all-%e5%88%86%e6%9e%90" title="av_register_all 分析" &gt;
+ av_register_all 分析
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#av_find_codec-%e5%88%86%e6%9e%90" title="av_find_codec 分析" &gt;
+ av_find_codec 分析
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#avcodec_open2-%e5%88%86%e6%9e%90" title="avcodec_open2 分析" &gt;
+ avcodec_open2 分析
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#avcodec_close-%e5%88%86%e6%9e%90" title="avcodec_close 分析" &gt;
+ avcodec_close 分析
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e6%80%bb%e7%bb%93-2" title="总结" &gt;
+ 总结
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#ffmpeg%e4%ba%94ffmpeg-%e7%bc%96%e8%a7%a3%e7%a0%81-api-%e5%88%86%e6%9e%90" title="FFmpeg(五)：FFmpeg 编解码 API 分析" &gt;
+ FFmpeg(五)：FFmpeg 编解码 API 分析
+ 
+&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href="#ffmpeg-%e8%a7%a3%e7%a0%81-api-%e5%88%86%e6%9e%90" title="FFmpeg 解码 API 分析" &gt;
+ FFmpeg 解码 API 分析
+ 
+&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href="#avformat_open_input-%e5%88%86%e6%9e%90" title="avformat_open_input 分析" &gt;
+ avformat_open_input 分析
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#avformat_find_stream_info-%e5%88%86%e6%9e%90" title="avformat_find_stream_info 分析" &gt;
+ avformat_find_stream_info 分析
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#av_read_frame-%e5%88%86%e6%9e%90" title="av_read_frame 分析" &gt;
+ av_read_frame 分析
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#avcodec_decode%e5%88%86%e6%9e%90" title="avcodec_decode分析" &gt;
+ avcodec_decode分析
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#avformat_close_input-%e5%88%86%e6%9e%90" title="avformat_close_input 分析" &gt;
+ avformat_close_input 分析
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#ffmpeg-%e7%bc%96%e7%a0%81-api-%e5%88%86%e6%9e%90" title="FFmpeg 编码 API 分析" &gt;
+ FFmpeg 编码 API 分析
+ 
+&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href="#avformat_alloc_output_context2-%e5%88%86%e6%9e%90" title="avformat_alloc_output_context2 分析" &gt;
+ avformat_alloc_output_context2 分析
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#avio_open2-%e5%88%86%e6%9e%90" title="avio_open2 分析" &gt;
+ avio_open2 分析
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e7%bc%96%e7%a0%81%e5%85%b6%e4%bb%96api%e6%ad%a5%e9%aa%a4%e5%88%86%e6%9e%90" title="编码其他API（步骤）分析" &gt;
+ 编码其他API（步骤）分析
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#ffmpeg-%e8%a7%a3%e7%a0%81-api-%e8%b6%85%e6%97%b6%e8%ae%be%e7%bd%ae" title="FFmpeg 解码 API 超时设置" &gt;
+ FFmpeg 解码 API 超时设置
+ 
+&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href="#%e8%ae%be%e7%bd%ae%e5%bc%80%e6%b5%81%e7%9a%84%e8%b6%85%e6%97%b6%e6%97%b6%e9%97%b4" title="设置开流的超时时间" &gt;
+ 设置开流的超时时间
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e8%ae%be%e7%bd%aeinterrupt_callback%e5%ae%9a%e4%b9%89%e8%bf%94%e5%9b%9e%e6%9c%ba%e5%88%b6" title="设置interrupt_callback定义返回机制" &gt;
+ 设置interrupt_callback定义返回机制
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#ffmpeg%e5%85%adffmpeg-%e6%a0%b8%e5%bf%83%e6%a8%a1%e5%9d%97-libavformat-%e4%b8%8e-libavcodec-%e5%88%86%e6%9e%90" title="FFmpeg(六)：FFmpeg 核心模块 libavformat 与 libavcodec 分析" &gt;
+ FFmpeg(六)：FFmpeg 核心模块 libavformat 与 libavcodec 分析
+ 
+&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href="#libavformat%e4%bb%8b%e7%bb%8d" title="libavformat介绍" &gt;
+ libavformat介绍
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#libavcodec%e4%bb%8b%e7%bb%8d" title="libavcodec介绍" &gt;
+ libavcodec介绍
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#ffmpeg-%e7%bb%93%e6%9e%84%e4%bd%93%e4%b8%80-avformatcontext-%e5%88%86%e6%9e%90" title="FFmpeg 结构体(一)： AVFormatContext 分析" &gt;
+ FFmpeg 结构体(一)： AVFormatContext 分析
+ 
+&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href="#%e6%ba%90%e7%a0%81%e6%95%b4%e7%90%86" title="源码整理" &gt;
+ 源码整理
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#avforamtcontext-%e9%87%8d%e7%82%b9%e5%ad%97%e6%ae%b5" title="AVForamtContext 重点字段" &gt;
+ AVForamtContext 重点字段
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#ffmpeg-%e7%bb%93%e6%9e%84%e4%bd%93%e4%ba%8c-avstream-%e5%88%86%e6%9e%90" title="FFmpeg 结构体(二)： AVStream 分析" &gt;
+ FFmpeg 结构体(二)： AVStream 分析
+ 
+&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href="#%e6%ba%90%e7%a0%81%e6%95%b4%e7%90%86-1" title="源码整理" &gt;
+ 源码整理
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#avstream-%e9%87%8d%e7%82%b9%e5%ad%97%e6%ae%b5" title="AVStream 重点字段" &gt;
+ AVStream 重点字段
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#ffmpeg-%e7%bb%93%e6%9e%84%e4%bd%93%e4%b8%89-avpacket-%e5%88%86%e6%9e%90" title="FFmpeg 结构体(三)： AVPacket 分析" &gt;
+ FFmpeg 结构体(三)： AVPacket 分析
+ 
+&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href="#%e6%ba%90%e7%a0%81%e6%95%b4%e7%90%86-2" title="源码整理" &gt;
+ 源码整理
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#avpacket-%e9%87%8d%e7%82%b9%e5%ad%97%e6%ae%b5" title="AVPacket 重点字段" &gt;
+ AVPacket 重点字段
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#ffmpeg-%e7%bb%93%e6%9e%84%e4%bd%93%e5%9b%9b-avframe-%e5%88%86%e6%9e%90" title="FFmpeg 结构体(四)： AVFrame 分析" &gt;
+ FFmpeg 结构体(四)： AVFrame 分析
+ 
+&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href="#%e6%ba%90%e7%a0%81%e6%95%b4%e7%90%86-3" title="源码整理" &gt;
+ 源码整理
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#avframe-%e9%87%8d%e7%82%b9%e5%ad%97%e6%ae%b5" title="AVFrame 重点字段" &gt;
+ AVFrame 重点字段
+ 
+&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href="#data" title="data[]" &gt;
+ data[]
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#pict_type" title="pict_type" &gt;
+ pict_type
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#sample_aspect_ratio" title="sample_aspect_ratio" &gt;
+ sample_aspect_ratio
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#qscale_table" title="qscale_table" &gt;
+ qscale_table
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#ffmpeg-%e7%bb%93%e6%9e%84%e4%bd%93%e4%ba%94-avcodec-%e5%88%86%e6%9e%90" title="FFmpeg 结构体(五)： AVCodec 分析" &gt;
+ FFmpeg 结构体(五)： AVCodec 分析
+ 
+&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href="#%e6%ba%90%e7%a0%81%e6%95%b4%e7%90%86-4" title="源码整理" &gt;
+ 源码整理
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#avcodec-%e9%87%8d%e7%82%b9%e5%ad%97%e6%ae%b5" title="AVCodec 重点字段" &gt;
+ AVCodec 重点字段
+ 
+&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href="#enum-avmediatype-type" title="enum AVMediaType type" &gt;
+ enum AVMediaType type
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#enum-avcodecid-id" title="enum AVCodecID id" &gt;
+ enum AVCodecID id
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#const-enum-avpixelformat-pix_fmts" title="const enum AVPixelFormat *pix_fmts" &gt;
+ const enum AVPixelFormat *pix_fmts
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#const-enum-avsampleformat-sample_fmts" title="const enum AVSampleFormat *sample_fmts" &gt;
+ const enum AVSampleFormat *sample_fmts
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#ffmpeg-%e7%bb%93%e6%9e%84%e4%bd%93%e5%85%ad-avcodeccontext-%e5%88%86%e6%9e%90" title="FFmpeg 结构体(六)： AVCodecContext 分析" &gt;
+ FFmpeg 结构体(六)： AVCodecContext 分析
+ 
+&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href="#%e6%ba%90%e7%a0%81%e6%95%b4%e7%90%86-5" title="源码整理" &gt;
+ 源码整理
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#avcodeccontext-%e9%87%8d%e7%82%b9%e5%ad%97%e6%ae%b5" title="AVCodecContext 重点字段" &gt;
+ AVCodecContext 重点字段
+ 
+&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href="#codec_type" title="codec_type" &gt;
+ codec_type
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#sample_fmt" title="sample_fmt" &gt;
+ sample_fmt
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#profile" title="profile" &gt;
+ profile
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#ffmpeg-%e7%bb%93%e6%9e%84%e4%bd%93%e4%b8%83-aviocontext-%e5%88%86%e6%9e%90" title="FFmpeg 结构体(七)： AVIOContext 分析" &gt;
+ FFmpeg 结构体(七)： AVIOContext 分析
+ 
+&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href="#%e6%ba%90%e7%a0%81%e6%95%b4%e7%90%86-6" title="源码整理" &gt;
+ 源码整理
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#aviocontext-%e9%87%8d%e7%82%b9%e5%ad%97%e6%ae%b5" title="AVIOContext 重点字段" &gt;
+ AVIOContext 重点字段
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#ffmpeg-%e7%bb%93%e6%9e%84%e4%bd%93%e5%85%abffmpeg%e4%b8%ad%e9%87%8d%e8%a6%81%e7%bb%93%e6%9e%84%e4%bd%93%e4%b9%8b%e9%97%b4%e7%9a%84%e5%85%b3%e7%b3%bb" title="FFmpeg 结构体(八)：FFMPEG中重要结构体之间的关系" &gt;
+ FFmpeg 结构体(八)：FFMPEG中重要结构体之间的关系
+ 
+&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href="#%e8%a7%a3%e5%8d%8f%e8%ae%aehttprtsprtmpmms" title="解协议（http,rtsp,rtmp,mms）" &gt;
+ 解协议（http,rtsp,rtmp,mms）
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e8%a7%a3%e5%b0%81%e8%a3%85flvavirmvbmp4" title="解封装（flv,avi,rmvb,mp4）" &gt;
+ 解封装（flv,avi,rmvb,mp4）
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e8%a7%a3%e7%a0%81h264mpeg2aacmp3" title="解码（h264,mpeg2,aac,mp3）" &gt;
+ 解码（h264,mpeg2,aac,mp3）
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e5%ad%98%e6%95%b0%e6%8d%ae" title="存数据" &gt;
+ 存数据
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#ffmpeg-%e5%bc%80%e5%8f%91%e4%b9%8b-avfilter-%e4%bd%bf%e7%94%a8%e6%b5%81%e7%a8%8b%e6%80%bb%e7%bb%93" title="FFmpeg 开发之 AVFilter 使用流程总结" &gt;
+ FFmpeg 开发之 AVFilter 使用流程总结
+ 
+&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href="#avfiltergraph-avfiltercontextavfilter" title="AVFilterGraph 、AVFilterContext、AVFilter" &gt;
+ AVFilterGraph 、AVFilterContext、AVFilter
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#avfilter-%e7%9b%b8%e5%85%b3api%e4%bd%bf%e7%94%a8%e6%96%b9%e6%b3%95%e6%95%b4%e7%90%86" title="AVFilter 相关Api使用方法整理" &gt;
+ AVFilter 相关Api使用方法整理
+ 
+&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href="#avfiltercontext-%e5%88%9d%e5%a7%8b%e5%8c%96%e6%96%b9%e6%b3%95" title="AVFilterContext 初始化方法" &gt;
+ AVFilterContext 初始化方法
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#avfiltergraph-%e7%9b%b8%e5%85%b3%e7%9a%84api" title="AVFilterGraph 相关的Api" &gt;
+ AVFilterGraph 相关的Api
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#ffmpeg-filter-buffer-%e5%92%8c-buffersink-%e7%9b%b8%e5%85%b3api%e7%9a%84%e4%bd%bf%e7%94%a8%e6%96%b9%e6%b3%95%e6%95%b4%e7%90%86" title="FFmpeg Filter Buffer 和 BufferSink 相关APi的使用方法整理" &gt;
+ FFmpeg Filter Buffer 和 BufferSink 相关APi的使用方法整理
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#ffmpeg-avfilter-%e4%bd%bf%e7%94%a8%e6%95%b4%e4%bd%93%e6%b5%81%e7%a8%8b" title="FFmpeg AVFilter 使用整体流程" &gt;
+ FFmpeg AVFilter 使用整体流程
+ 
+&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href="#%e8%bf%87%e6%bb%a4%e5%99%a8%e6%9e%84%e5%bb%ba" title="过滤器构建：" &gt;
+ 过滤器构建：
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e6%95%b0%e6%8d%ae%e5%8a%a0%e5%b7%a5" title="数据加工" &gt;
+ 数据加工
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e8%b5%84%e6%ba%90%e9%87%8a%e6%94%be" title="资源释放" &gt;
+ 资源释放
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#ffmpeg-%e8%bf%87%e6%97%b6-api-%e6%b1%87%e6%80%bb%e6%95%b4%e7%90%86" title="FFmpeg 过时 Api 汇总整理" &gt;
+ FFmpeg 过时 Api 汇总整理
+ 
+&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href="#avstreamcodec-%e8%a2%ab%e5%a3%b0%e6%98%8e%e4%b8%ba%e5%b7%b2%e5%90%a6%e5%86%b3" title="AVStream::codec: 被声明为已否决" &gt;
+ AVStream::codec: 被声明为已否决
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#avcodec_encode_audio2%e8%a2%ab%e5%a3%b0%e6%98%8e%e4%b8%ba%e5%b7%b2%e5%90%a6%e5%86%b3" title="avcodec_encode_audio2：被声明为已否决" &gt;
+ avcodec_encode_audio2：被声明为已否决
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#avpicture_get_size-%e8%a2%ab%e5%a3%b0%e6%98%8e%e4%b8%ba%e5%b7%b2%e5%90%a6%e5%86%b3" title="&amp;lsquo;avpicture_get_size&amp;rsquo;: 被声明为已否决" &gt;
+ &amp;lsquo;avpicture_get_size&amp;rsquo;: 被声明为已否决
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#avpicture_fill-%e8%a2%ab%e5%a3%b0%e6%98%8e%e4%b8%ba%e5%b7%b2%e5%90%a6%e5%86%b3" title="&amp;lsquo;avpicture_fill&amp;rsquo;: 被声明为已否决" &gt;
+ &amp;lsquo;avpicture_fill&amp;rsquo;: 被声明为已否决
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#avcodec_decode_video2-%e8%a2%ab%e5%a3%b0%e6%98%8e%e4%b8%ba%e5%b7%b2%e5%90%a6%e5%86%b3" title="&amp;lsquo;avcodec_decode_video2&amp;rsquo;: 被声明为已否决" &gt;
+ &amp;lsquo;avcodec_decode_video2&amp;rsquo;: 被声明为已否决
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#-avcodec_alloc_frame-%e8%a2%ab%e5%a3%b0%e6%98%8e%e4%b8%ba%e5%b7%b2%e5%90%a6%e5%86%b3" title="&amp;rsquo; avcodec_alloc_frame&amp;rsquo;: 被声明为已否决" &gt;
+ &amp;rsquo; avcodec_alloc_frame&amp;rsquo;: 被声明为已否决
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#av_free_packet-%e8%a2%ab%e5%a3%b0%e6%98%8e%e4%b8%ba%e5%b7%b2%e5%90%a6%e5%86%b3" title="&amp;lsquo;av_free_packet&amp;rsquo;: 被声明为已否决" &gt;
+ &amp;lsquo;av_free_packet&amp;rsquo;: 被声明为已否决
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#avcodec_decode_audio4%e8%a2%ab%e5%a3%b0%e6%98%8e%e4%b8%ba%e5%b7%b2%e5%90%a6%e5%86%b3" title="avcodec_decode_audio4：被声明为已否决" &gt;
+ avcodec_decode_audio4：被声明为已否决
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#avcodec_encode_video2%e8%a2%ab%e5%a3%b0%e6%98%8e%e4%b8%ba%e5%b7%b2%e5%90%a6%e5%86%b3" title="avcodec_encode_video2：被声明为已否决" &gt;
+ avcodec_encode_video2：被声明为已否决
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id="android音视频开发初级入门篇"&gt;Android音视频开发初级入门篇
+&lt;a class="header-anchor" href="#android%e9%9f%b3%e8%a7%86%e9%a2%91%e5%bc%80%e5%8f%91%e5%88%9d%e7%ba%a7%e5%85%a5%e9%97%a8%e7%af%87"&gt;&lt;/a&gt;
+&lt;/h1&gt;&lt;h2 id="android-音视频开发一--通过三种方式绘制图片"&gt;Android 音视频开发(一) : 通过三种方式绘制图片
+&lt;a class="header-anchor" href="#android-%e9%9f%b3%e8%a7%86%e9%a2%91%e5%bc%80%e5%8f%91%e4%b8%80--%e9%80%9a%e8%bf%87%e4%b8%89%e7%a7%8d%e6%96%b9%e5%bc%8f%e7%bb%98%e5%88%b6%e5%9b%be%e7%89%87"&gt;&lt;/a&gt;
+&lt;/h2&gt;&lt;p&gt;在 
+&lt;a href="http://www.cnblogs.com/renhui/p/7452572.html" title="Android 音视频开发学习思路" rel="noopener external nofollow noreferrer" target="_blank" class=" exturl"&gt;
+ Android 音视频开发学习思路
+ 
+&lt;/a&gt; 里面，我们写到了，想要逐步入门音视频开发，就需要一步步的去学习整理，并积累。本文是音视频开发积累的第一篇。 对应的要学习的内容是：在 Android 平台绘制一张图片，使用至少 3 种不同的 API，ImageView，SurfaceView，自定义 View。&lt;/p&gt;</description></item></channel></rss>

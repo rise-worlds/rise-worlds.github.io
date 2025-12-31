@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Std::move on Rise的自留地</title><link>https://blogs.qipai360.cn/tags/stdmove/</link><description>Recent content in Std::move on Rise的自留地</description><generator>Hugo</generator><language>zh-CN</language><lastBuildDate>Wed, 23 Dec 2020 12:35:25 +0800</lastBuildDate><atom:link href="https://blogs.qipai360.cn/tags/stdmove/rss.xml" rel="self" type="application/rss+xml"/><item><title>理解 C++ 11 右值引用和std::move</title><link>https://blogs.qipai360.cn/post/understand-c-11-rvalue-references-and-std-move/</link><pubDate>Wed, 23 Dec 2020 12:35:25 +0800</pubDate><guid>https://blogs.qipai360.cn/post/understand-c-11-rvalue-references-and-std-move/</guid><description>&lt;pre&gt;&lt;code&gt;凡有名者，皆为左值
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id="1-什么是左值右值"&gt;1. 什么是左值、右值
+&lt;a class="header-anchor" href="#1-%e4%bb%80%e4%b9%88%e6%98%af%e5%b7%a6%e5%80%bc%e5%8f%b3%e5%80%bc"&gt;&lt;/a&gt;
+&lt;/h3&gt;&lt;p&gt;首先不考虑引用以减少干扰，可以从2个角度判断：左值&lt;strong&gt;可以取地址、位于等号左边&lt;/strong&gt;；而右值&lt;strong&gt;没法取地址，位于等号右边&lt;/strong&gt;。&lt;/p&gt;</description></item></channel></rss>

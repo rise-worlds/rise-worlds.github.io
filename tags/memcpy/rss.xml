@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Memcpy on Rise的自留地</title><link>https://blogs.qipai360.cn/tags/memcpy/</link><description>Recent content in Memcpy on Rise的自留地</description><generator>Hugo</generator><language>zh-CN</language><lastBuildDate>Sat, 28 Nov 2020 11:00:35 +0800</lastBuildDate><atom:link href="https://blogs.qipai360.cn/tags/memcpy/rss.xml" rel="self" type="application/rss+xml"/><item><title>memcpy和memmove的区别</title><link>https://blogs.qipai360.cn/post/difference-between-memcpy-and-memmove/</link><pubDate>Sat, 28 Nov 2020 11:00:35 +0800</pubDate><guid>https://blogs.qipai360.cn/post/difference-between-memcpy-and-memmove/</guid><description>&lt;p&gt;其实很早就知道两个函数其中有一个在面临内存覆盖时行为有点特别, 但是工作中很少用到此场景, 也就没有深究. 现在居然面试遇到了, 那就把研究清楚吧.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;memcpy 简单粗暴, 不考虑内存重叠问题. 后果程序员自负&lt;/li&gt;
+&lt;li&gt;memmove 比memcpy多了层检查内存重叠的考虑,如果发现重叠, 则反向拷贝, 性能和memcpy基本一样. 就是多了个检查是否重叠的代码.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;综上所述, 以后干脆就用memmove吧. 省的那么多事. 反正性能几乎没有损失.&lt;/p&gt;</description></item></channel></rss>
