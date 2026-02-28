@@ -1,0 +1,322 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Safe on Rise的自留地</title><link>https://blogs.qipai360.cn/tags/safe/</link><description>Recent content in Safe on Rise的自留地</description><generator>Hugo</generator><language>zh-CN</language><lastBuildDate>Thu, 18 Jul 2024 10:46:46 +0800</lastBuildDate><atom:link href="https://blogs.qipai360.cn/tags/safe/rss.xml" rel="self" type="application/rss+xml"/><item><title>IDA 自动分析</title><link>https://blogs.qipai360.cn/post/ida-auto-analysis/</link><pubDate>Thu, 18 Jul 2024 10:46:46 +0800</pubDate><guid>https://blogs.qipai360.cn/post/ida-auto-analysis/</guid><description>&lt;p&gt;在逆向领域，有款很功能强大且好用的工具=利器是：&lt;code&gt;IDA&lt;/code&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;常用于&lt;/li&gt;
+&lt;li&gt;iOS逆向
+&lt;ul&gt;
+&lt;li&gt;静态分析：逆向二进制，研究代码逻辑&lt;/li&gt;
+&lt;li&gt;常用功能：函数、F5伪代码、字符串、类的结构体定义等等&lt;/li&gt;
+&lt;li&gt;动态调试：调试iOS的app&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Android逆向
+&lt;ul&gt;
+&lt;li&gt;支持对Android的静态分析与动态调试&lt;/li&gt;
+&lt;li&gt;包括：动态调试so文件&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;特点&lt;/li&gt;
+&lt;li&gt;支持多平台运行：&lt;code&gt;Windows&lt;/code&gt;、&lt;code&gt;Mac&lt;/code&gt;、&lt;code&gt;Linux&lt;/code&gt;(&lt;code&gt;CentOS&lt;/code&gt;、&lt;code&gt;Ubuntu&lt;/code&gt;等)等&lt;/li&gt;
+&lt;li&gt;支持多种CPU架构：&lt;code&gt;x86/x64&lt;/code&gt;、&lt;code&gt;ARM/ARM64&lt;/code&gt;、&lt;code&gt;MIPS/MIPS64&lt;/code&gt;、&lt;code&gt;PowerPC/PPC64&lt;/code&gt;、&lt;code&gt;Motorola 68K/Coldfire&lt;/code&gt;等共&lt;strong&gt;68&lt;/strong&gt;种&lt;/li&gt;
+&lt;li&gt;支持插件，可以扩展各种功能&lt;/li&gt;
+&lt;li&gt;可编程=支持API接口调用，写脚本，实现各种功能&lt;/li&gt;
+&lt;li&gt;主页&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="https://hex-rays.com/" title="https://hex-rays.com/" rel="noopener external nofollow noreferrer" target="_blank" class=" exturl"&gt;
+ https://hex-rays.com/
+ 
+&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;关于&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="https://www.hex-rays.com/products/ida/index.shtml" title="IDA: About" rel="noopener external nofollow noreferrer" target="_blank" class=" exturl"&gt;
+ IDA: About
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;下载&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="https://www.hex-rays.com/products/ida/support/download.shtml" title="IDA Support: Download Center" rel="noopener external nofollow noreferrer" target="_blank" class=" exturl"&gt;
+ IDA Support: Download Center
+ 
+&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;注：&lt;code&gt;IDA Pro&lt;/code&gt;是商业收费软件，请支持和购买正版&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;ida 自动分析的典型过程：把二进制文件拖动到IDA后，就开始自动分析`了。&lt;/p&gt;</description></item><item><title>Ollvm混淆与反混淆： goron框架字符串加密的实现原理</title><link>https://blogs.qipai360.cn/post/the-goron-framework-string-encryption-implementation-principle/</link><pubDate>Mon, 20 May 2024 10:11:31 +0800</pubDate><guid>https://blogs.qipai360.cn/post/the-goron-framework-string-encryption-implementation-principle/</guid><description>&lt;p&gt;函数实现逻辑在llvm/lib/Transforms/Obfuscation/StringEncryption.cpp文件中，IndirectBranch，集成自类ModulePass，实现了runOnModule函数&lt;/p&gt;</description></item><item><title>Ollvm混淆与反混淆： Goron框架编译与使用</title><link>https://blogs.qipai360.cn/post/the-goron-framework-is-compiled-and-used/</link><pubDate>Mon, 20 May 2024 09:29:28 +0800</pubDate><guid>https://blogs.qipai360.cn/post/the-goron-framework-is-compiled-and-used/</guid><description>&lt;p&gt;很多App实现的定制ollvm框架中都有goron框架的影子，或多或少的借鉴了它的功能，包括&lt;/p&gt;
+&lt;p&gt;间接跳转,并加密跳转目标(-mllvm -irobf-indbr)
+间接函数调用,并加密目标函数地址(-mllvm -irobf-icall)
+间接全局变量引用,并加密变量地址(-mllvm -irobf-indgv)
+字符串(c string)加密功能(-mllvm -irobf-cse)
+过程相关控制流平坦混淆(-mllvm -irobf-cff)
+想要了解怎么针对这些混淆功能完成去混淆，势必要先对其混淆过程有所了解，那么第一步就是对goron框架的编译使用&lt;/p&gt;</description></item><item><title>lua语言特性及用途</title><link>https://blogs.qipai360.cn/post/lua-basic-and-vm-modifications/</link><pubDate>Sat, 18 May 2024 18:44:05 +0800</pubDate><guid>https://blogs.qipai360.cn/post/lua-basic-and-vm-modifications/</guid><description>&lt;p&gt;Lua是一个小巧的脚本语言，其设计目的是为了通过灵活嵌入应用程序中从而为应用程序提供灵活的扩展和定制功能。Lua由标准C编写而成，几乎在所有操作系统和平台上都可以编译，运行。Lua并没有提供强大的库，这是由它的定位决定的。&lt;/p&gt;</description></item><item><title>Android扩展知识点</title><link>https://blogs.qipai360.cn/post/android-extension-knowledge-points/</link><pubDate>Sat, 03 Jun 2023 14:48:29 +0800</pubDate><guid>https://blogs.qipai360.cn/post/android-extension-knowledge-points/</guid><description>&lt;ul&gt;
+&lt;li&gt;
+&lt;a href="#art" title="ART" &gt;
+ ART
+ 
+&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href="#art-%e5%8a%9f%e8%83%bd" title="ART 功能" &gt;
+ ART 功能
+ 
+&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href="#%e9%a2%84%e5%85%88-aot-%e7%bc%96%e8%af%91" title="预先 (AOT) 编译" &gt;
+ 预先 (AOT) 编译
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e5%9e%83%e5%9c%be%e5%9b%9e%e6%94%b6%e4%bc%98%e5%8c%96" title="垃圾回收优化" &gt;
+ 垃圾回收优化
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e5%bc%80%e5%8f%91%e5%92%8c%e8%b0%83%e8%af%95%e6%96%b9%e9%9d%a2%e7%9a%84%e4%bc%98%e5%8c%96" title="开发和调试方面的优化" &gt;
+ 开发和调试方面的优化
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#art-gc" title="ART GC" &gt;
+ ART GC
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#hook" title="Hook" &gt;
+ Hook
+ 
+&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href="#%e5%9f%ba%e6%9c%ac%e6%b5%81%e7%a8%8b" title="基本流程" &gt;
+ 基本流程
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e4%bd%bf%e7%94%a8%e7%a4%ba%e4%be%8b" title="使用示例" &gt;
+ 使用示例
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#proguard" title="Proguard" &gt;
+ Proguard
+ 
+&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href="#%e8%a7%84%e5%88%99" title="规则" &gt;
+ 规则
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e5%85%ac%e5%85%b1%e6%a8%a1%e6%9d%bf" title="公共模板" &gt;
+ 公共模板
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e5%b8%b8%e7%94%a8%e7%9a%84%e8%87%aa%e5%ae%9a%e4%b9%89%e6%b7%b7%e6%b7%86%e8%a7%84%e5%88%99" title="常用的自定义混淆规则" &gt;
+ 常用的自定义混淆规则
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#aar%e4%b8%ad%e5%a2%9e%e5%8a%a0%e7%8b%ac%e7%ab%8b%e7%9a%84%e6%b7%b7%e6%b7%86%e9%85%8d%e7%bd%ae" title="aar中增加独立的混淆配置" &gt;
+ aar中增加独立的混淆配置
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e6%a3%80%e6%9f%a5%e6%b7%b7%e6%b7%86%e5%92%8c%e8%bf%bd%e8%b8%aa%e5%bc%82%e5%b8%b8" title="检查混淆和追踪异常" &gt;
+ 检查混淆和追踪异常
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e6%9e%b6%e6%9e%84" title="架构" &gt;
+ 架构
+ 
+&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href="#mvc" title="MVC" &gt;
+ MVC
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#mvp" title="MVP" &gt;
+ MVP
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#mvvm" title="MVVM" &gt;
+ MVVM
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#jetpack" title="Jetpack" &gt;
+ Jetpack
+ 
+&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href="#%e6%9e%b6%e6%9e%84-1" title="架构" &gt;
+ 架构
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e4%bd%bf%e7%94%a8%e7%a4%ba%e4%be%8b-1" title="使用示例" &gt;
+ 使用示例
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#ndk-%e5%bc%80%e5%8f%91" title="NDK 开发" &gt;
+ NDK 开发
+ 
+&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href="#jni-%e5%9f%ba%e7%a1%80" title="JNI 基础" &gt;
+ JNI 基础
+ 
+&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href="#%e6%95%b0%e6%8d%ae%e7%b1%bb%e5%9e%8b" title="数据类型" &gt;
+ 数据类型
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#string-%e5%ad%97%e7%ac%a6%e4%b8%b2%e5%87%bd%e6%95%b0%e6%93%8d%e4%bd%9c" title="String 字符串函数操作" &gt;
+ String 字符串函数操作
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e5%b8%b8%e7%94%a8-jni-%e8%ae%bf%e9%97%ae-java-%e5%af%b9%e8%b1%a1%e6%96%b9%e6%b3%95" title="常用 JNI 访问 Java 对象方法" &gt;
+ 常用 JNI 访问 Java 对象方法
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#ndk-%e5%bc%80%e5%8f%91-1" title="NDK 开发" &gt;
+ NDK 开发
+ 
+&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href="#%e5%9f%ba%e7%a1%80%e5%bc%80%e5%8f%91%e6%b5%81%e7%a8%8b" title="基础开发流程" &gt;
+ 基础开发流程
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#systemloadlibrary" title="System.loadLibrary()" &gt;
+ System.loadLibrary()
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#cmake-%e6%9e%84%e5%bb%ba-ndk-%e9%a1%b9%e7%9b%ae" title="CMake 构建 NDK 项目" &gt;
+ CMake 构建 NDK 项目
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e5%b8%b8%e7%94%a8%e7%9a%84-android-ndk-%e5%8e%9f%e7%94%9f-api" title="常用的 Android NDK 原生 API" &gt;
+ 常用的 Android NDK 原生 API
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#%e7%b1%bb%e5%8a%a0%e8%bd%bd%e5%99%a8" title="类加载器" &gt;
+ 类加载器
+ 
+&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href="#%e5%8f%8c%e4%ba%b2%e5%a7%94%e6%89%98%e6%a8%a1%e5%bc%8f" title="双亲委托模式" &gt;
+ 双亲委托模式
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#dexpathlist" title="DexPathList" &gt;
+ DexPathList
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id="art"&gt;ART
+&lt;a class="header-anchor" href="#art"&gt;&lt;/a&gt;
+&lt;/h1&gt;&lt;p&gt;ART 代表 Android Runtime，其处理应用程序执行的方式完全不同于 Dalvik，Dalvik 是依靠一个 Just-In-Time (JIT) 编译器去解释字节码。开发者编译后的应用代码需要通过一个解释器在用户的设备上运行，这一机制并不高效，但让应用能更容易在不同硬件和架构上运 行。ART 则完全改变了这套做法，在应用安装时就预编译字节码到机器语言，这一机制叫 Ahead-Of-Time (AOT）编译。在移除解释代码这一过程后，应用程序执行将更有效率，启动更快。&lt;/p&gt;</description></item><item><title>C/C++程序隐藏符号</title><link>https://blogs.qipai360.cn/post/c-cpp-hide-symbol/</link><pubDate>Thu, 23 Feb 2023 11:09:43 +0800</pubDate><guid>https://blogs.qipai360.cn/post/c-cpp-hide-symbol/</guid><description>&lt;h2 id="使用visibility"&gt;使用&lt;code&gt;visibility&lt;/code&gt;
+&lt;a class="header-anchor" href="#%e4%bd%bf%e7%94%a8visibility"&gt;&lt;/a&gt;
+&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt" id="hl-0-1"&gt;&lt;a class="lnlinks" href="#hl-0-1"&gt; 1&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-2"&gt;&lt;a class="lnlinks" href="#hl-0-2"&gt; 2&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-3"&gt;&lt;a class="lnlinks" href="#hl-0-3"&gt; 3&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-4"&gt;&lt;a class="lnlinks" href="#hl-0-4"&gt; 4&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-5"&gt;&lt;a class="lnlinks" href="#hl-0-5"&gt; 5&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-6"&gt;&lt;a class="lnlinks" href="#hl-0-6"&gt; 6&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-7"&gt;&lt;a class="lnlinks" href="#hl-0-7"&gt; 7&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-8"&gt;&lt;a class="lnlinks" href="#hl-0-8"&gt; 8&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-9"&gt;&lt;a class="lnlinks" href="#hl-0-9"&gt; 9&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-10"&gt;&lt;a class="lnlinks" href="#hl-0-10"&gt;10&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-11"&gt;&lt;a class="lnlinks" href="#hl-0-11"&gt;11&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-12"&gt;&lt;a class="lnlinks" href="#hl-0-12"&gt;12&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-13"&gt;&lt;a class="lnlinks" href="#hl-0-13"&gt;13&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-14"&gt;&lt;a class="lnlinks" href="#hl-0-14"&gt;14&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-15"&gt;&lt;a class="lnlinks" href="#hl-0-15"&gt;15&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-16"&gt;&lt;a class="lnlinks" href="#hl-0-16"&gt;16&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-17"&gt;&lt;a class="lnlinks" href="#hl-0-17"&gt;17&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-18"&gt;&lt;a class="lnlinks" href="#hl-0-18"&gt;18&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-19"&gt;&lt;a class="lnlinks" href="#hl-0-19"&gt;19&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-20"&gt;&lt;a class="lnlinks" href="#hl-0-20"&gt;20&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-21"&gt;&lt;a class="lnlinks" href="#hl-0-21"&gt;21&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-22"&gt;&lt;a class="lnlinks" href="#hl-0-22"&gt;22&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-23"&gt;&lt;a class="lnlinks" href="#hl-0-23"&gt;23&lt;/a&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-C++" data-lang="C++"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="cp"&gt;#if defined _WIN32 || defined __CYGWIN__
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="cp"&gt;#ifdef MY_NO_EXPORT
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="cp"&gt;#define API
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="cp"&gt;#else
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="cp"&gt;#define API __declspec(dllexport)
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="cp"&gt;#endif
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="cp"&gt;#else
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="cp"&gt;#ifdef __GNUC__
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="cp"&gt;#define API __attribute__((visibility(&amp;#34;default&amp;#34;)))
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="cp"&gt;#else
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="cp"&gt;#define API
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="cp"&gt;#endif
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="cp"&gt;#endif
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="cp"&gt;#if defined __cplusplus
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="cp"&gt;#define EXTERN extern &amp;#34;C&amp;#34;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="cp"&gt;#else
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="cp"&gt;#include&lt;/span&gt; &lt;span class="cpf"&gt;&amp;lt;stdarg.h&amp;gt;&lt;/span&gt;&lt;span class="cp"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="cp"&gt;#include&lt;/span&gt; &lt;span class="cpf"&gt;&amp;lt;stdbool.h&amp;gt;&lt;/span&gt;&lt;span class="cp"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="cp"&gt;#define EXTERN extern
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="cp"&gt;#endif
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="cp"&gt;#define MY_API EXTERN API&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;p&gt;GNU C 的一大特色就是attribute 机制。
+试想这样的情景，程序调用某函数A，A函数存在于两个动态链接库liba.so，libb.so中，并且程序执行需要链接这两个库，此时程序调用的A函数到底是来自于a还是b呢？
+这取决于链接时的顺序，比如先链接liba.so，这时候通过liba.so的导出符号表就可以找到函数A的定义，并加入到符号表中，链接libb.so的时候，符号表中已经存在函数A，就不会再更新符号表，所以调用的始终是liba.so中的A函数。
+为了避免这种混乱，所以使用&lt;/p&gt;</description></item></channel></rss>

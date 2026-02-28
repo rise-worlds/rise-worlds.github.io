@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Gradle on Rise的自留地</title><link>https://blogs.qipai360.cn/tags/gradle/</link><description>Recent content in Gradle on Rise的自留地</description><generator>Hugo</generator><language>zh-CN</language><lastBuildDate>Sat, 03 Jun 2023 14:56:56 +0800</lastBuildDate><atom:link href="https://blogs.qipai360.cn/tags/gradle/rss.xml" rel="self" type="application/rss+xml"/><item><title>Gradle知识点汇总</title><link>https://blogs.qipai360.cn/post/gradle-knowledge-points/</link><pubDate>Sat, 03 Jun 2023 14:56:56 +0800</pubDate><guid>https://blogs.qipai360.cn/post/gradle-knowledge-points/</guid><description>&lt;h1 id="依赖项配置"&gt;依赖项配置
+&lt;a class="header-anchor" href="#%e4%be%9d%e8%b5%96%e9%a1%b9%e9%85%8d%e7%bd%ae"&gt;&lt;/a&gt;
+&lt;/h1&gt;&lt;table&gt;
+ &lt;thead&gt;
+ &lt;tr&gt;
+ &lt;th&gt;配置&lt;/th&gt;
+ &lt;th&gt;说明&lt;/th&gt;
+ &lt;/tr&gt;
+ &lt;/thead&gt;
+ &lt;tbody&gt;
+ &lt;tr&gt;
+ &lt;td&gt;implementation&lt;/td&gt;
+ &lt;td&gt;Gradle 会将依赖项添加到编译类路径，并将依赖项打包到编译输出。不过，当模块配置 implementation 依赖项时，其他模块只有在运行时才能使用该依赖项。&lt;/td&gt;
+ &lt;/tr&gt;
+ &lt;tr&gt;
+ &lt;td&gt;api&lt;/td&gt;
+ &lt;td&gt;Gradle 会将依赖项添加到编译类路径和编译输出。当一个模块包含 api 依赖项时，会让 Gradle 了解该模块要以传递方式将该依赖项导出到其他模块，以便这些模块在运行时和编译时都可以使用该依赖项。&lt;/td&gt;
+ &lt;/tr&gt;
+ &lt;tr&gt;
+ &lt;td&gt;compileOnly&lt;/td&gt;
+ &lt;td&gt;Gradle 只会将依赖项添加到编译类路径（也就是说，不会将其添加到编译输出）。&lt;/td&gt;
+ &lt;/tr&gt;
+ &lt;tr&gt;
+ &lt;td&gt;runtimeOnly&lt;/td&gt;
+ &lt;td&gt;Gradle 只会将依赖项添加到编译输出，以便在运行时使用。也就是说，不会将其添加到编译类路径。&lt;/td&gt;
+ &lt;/tr&gt;
+ &lt;tr&gt;
+ &lt;td&gt;annotationProcessor&lt;/td&gt;
+ &lt;td&gt;要添加对作为注解处理器的库的依赖关系，必须使用 annotationProcessor 配置将其添加到注解处理器类路径。&lt;/td&gt;
+ &lt;/tr&gt;
+ &lt;/tbody&gt;
+&lt;/table&gt;</description></item></channel></rss>

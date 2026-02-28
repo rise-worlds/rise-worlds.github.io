@@ -1,0 +1,1249 @@
+<!doctype html><html lang=zh-CN data-theme=dark><head><meta charset=UTF-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=theme-color content="#222" media="(prefers-color-scheme: dark)"><meta name=generator content="Hugo 0.157.0"><link rel="shortcut icon" type=image/x-icon href=/imgs/icons/favicon.ico><link rel=icon type=image/x-icon href=/imgs/icons/favicon.ico><link rel=icon type=image/png sizes=16x16 href=/imgs/icons/favicon_32_32_next.png><link rel=icon type=image/png sizes=32x32 href=/imgs/icons/favicon_128_128_next.png><link rel=apple-touch-icon sizes=180x180 href=/imgs/icons/apple_touch_icon_next.png><meta itemprop=name content="Android扩展知识点"><meta itemprop=description content="点击阅读前文前, 首页能看到的文章的简短描述"><meta name=description content="点击阅读前文前, 首页能看到的文章的简短描述"><meta itemprop=datePublished zgotmplz><meta itemprop=dateModified zgotmplz><meta itemprop=image content="https://blogs.qipai360.cn/imgs/avatar.jpg"><meta itemprop=keywords content="android,Safe,JNI,naitive"><meta property="og:type" content="article"><meta property="og:title" content="Android扩展知识点"><meta property="og:description" content="点击阅读前文前, 首页能看到的文章的简短描述"><meta property="og:image" content="/imgs/avatar.jpg"><meta property="og:image:width" content="312"><meta property="og:image:height" content="312"><meta property="og:image:type" content="image/jpeg/png/svg/jpg"><meta property="og:url" content="https://blogs.qipai360.cn/post/android-extension-knowledge-points/"><meta property="og:site_name" content="Rise的自留地"><meta property="og:locale" content="zh-CN"><meta property="article:author" content="Rise"><meta property="article:published_time" content="2023-06-03 14:48:29 +0800 +0800"><meta property="article:modified_time" content="2023-06-03 14:48:29 +0800 +0800"><link type=text/css rel=stylesheet href=https://blogs.qipai360.cn/js/3rd/font-awesome/6.7.2/css/all.min.css><link type=text/css rel=stylesheet href=https://blogs.qipai360.cn/js/3rd/animate.css/3.1.1/animate.min.css><link type=text/css rel=stylesheet href=https://blogs.qipai360.cn/js/3rd/viewerjs/1.11.6/viewer.min.css><link rel=stylesheet href="/css/main.min.css?=1772265587"><style type=text/css>.post-footer hr:after{content:"~ 我可是有底线的哟 ~"}.flinks-list-footer hr:after{content:"~ 我可是有底线的哟 ~"}</style><script type=text/javascript>(function(){localDB={set:function(e,t,n){if(n===0)return;const s=new Date,o=n*864e5,i={value:t,expiry:s.getTime()+o};localStorage.setItem(e,JSON.stringify(i))},get:function(e){const t=localStorage.getItem(e);if(!t)return 0[0];const n=JSON.parse(t),s=new Date;return s.getTime()>n.expiry?(localStorage.removeItem(e),0[0]):n.value}},theme={active:function(){const e=localDB.get("theme");if(e==null)return;theme.toggle(e),window.matchMedia("(prefers-color-scheme: dark)").addListener(function(e){theme.toggle(e.matches?"dark":"light")})},toggle:function(e){document.documentElement.setAttribute("data-theme",e),localDB.set("theme",e,2);const t=document.querySelector("iframe.giscus-frame");if(t){const n={setConfig:{theme:e}};t.contentWindow.postMessage({giscus:n},"https://giscus.app")}}},theme.active()})(window)</script><script type=text/javascript>document.addEventListener("DOMContentLoaded",()=>{var e=document.createElement("script");e.charset="UTF-8",e.src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js",e.async=!1,e.defer=!0,document.head.appendChild(e),e.onload=function(){NexT.utils.fmtBusuanzi()}})</script><script defer src=https://static.cloudflareinsights.com/beacon.min.js data-cf-beacon='{"token": "2b23669184fc49269e400525ac2447d9"}'></script><title>Android扩展知识点 - Rise的自留地</title><noscript><link rel=stylesheet href=/css/noscript.css></noscript></head><body itemscope itemtype=http://schema.org/WebPage class=use-motion><div class=headband></div><main class=main><header class=header itemscope itemtype=http://schema.org/WPHeader><div class=header-inner><div class=site-brand-container><div class=site-nav-toggle><div class=toggle aria-label role=button><span class=toggle-line></span>
+<span class=toggle-line></span>
+<span class=toggle-line></span></div></div><div class=site-meta><a href=/ class=brand rel=start><i class=logo-line></i><h1 class=site-title>Rise的自留地</h1><i class=logo-line></i></a><p class=site-subtitle itemprop=description>记录生活中的点滴，分享编程技术和游戏开发经验。</p></div><div class=site-nav-right><div class="toggle popup-trigger"></div></div></div><nav class=site-nav><ul class="main-menu menu"><li class="menu-item menu-item-home"><a href=/ class=hvr-icon-pulse rel=section><i class="fa fa-home hvr-icon"></i>首页</a></li><li class="menu-item menu-item-about"><a href=/about.html class=hvr-icon-pulse rel=section><i class="fa fa-user hvr-icon"></i>关于</a></li><li class="menu-item menu-item-archives"><a href=/archives/ class=hvr-icon-pulse rel=section><i class="fa fa-archive hvr-icon"></i>归档
+<span class=badge>679</span></a></li><li class="menu-item menu-item-tags"><a href=/tags/ class=hvr-icon-pulse rel=section><i class="fa fa-tags hvr-icon"></i>标签</a></li><li class="menu-item menu-item-message"><a href=/message/ class=hvr-icon-pulse rel=section><i class="fa fa-comments hvr-icon"></i>留言板</a></li><li class="menu-item menu-item-commonweal"><a href=/404.html class=hvr-icon-pulse rel=section><i class="fa fa-heartbeat hvr-icon"></i>公益 404</a></li></ul></nav></div><div class="toggle sidebar-toggle" role=button><span class=toggle-line></span>
+<span class=toggle-line></span>
+<span class=toggle-line></span></div><aside class=sidebar><div class="sidebar-inner sidebar-overview-active"><ul class=sidebar-nav><li class=sidebar-nav-toc>文章目录</li><li class=sidebar-nav-overview>站点概览</li></ul><div class=sidebar-panel-container><div class="post-toc-wrap sidebar-panel"><div class="post-toc animated"><nav id=TableOfContents><ul><li><a href=#art-功能>ART 功能</a><ul><li><a href=#预先-aot-编译>预先 (AOT) 编译</a></li><li><a href=#垃圾回收优化>垃圾回收优化</a></li><li><a href=#开发和调试方面的优化>开发和调试方面的优化</a></li></ul></li><li><a href=#art-gc>ART GC</a></li></ul><ul><li><a href=#基本流程>基本流程</a></li><li><a href=#使用示例>使用示例</a></li></ul><ul><li><a href=#规则>规则</a></li><li><a href=#公共模板>公共模板</a></li><li><a href=#常用的自定义混淆规则>常用的自定义混淆规则</a></li><li><a href=#aar中增加独立的混淆配置>aar中增加独立的混淆配置</a></li><li><a href=#检查混淆和追踪异常>检查混淆和追踪异常</a></li></ul><ul><li><a href=#mvc>MVC</a></li><li><a href=#mvp>MVP</a></li><li><a href=#mvvm>MVVM</a></li></ul><ul><li><a href=#架构-1>架构</a></li><li><a href=#使用示例-1>使用示例</a></li></ul><ul><li><a href=#jni-基础>JNI 基础</a><ul><li><a href=#数据类型>数据类型</a></li><li><a href=#string-字符串函数操作>String 字符串函数操作</a></li><li><a href=#常用-jni-访问-java-对象方法>常用 JNI 访问 Java 对象方法</a></li></ul></li><li><a href=#ndk-开发-1>NDK 开发</a><ul><li><a href=#基础开发流程>基础开发流程</a></li><li><a href=#systemloadlibrary>System.loadLibrary()</a></li></ul></li><li><a href=#cmake-构建-ndk-项目>CMake 构建 NDK 项目</a></li><li><a href=#常用的-android-ndk-原生-api>常用的 Android NDK 原生 API</a></li></ul><ul><li><a href=#双亲委托模式>双亲委托模式</a></li><li><a href=#dexpathlist>DexPathList</a></li></ul></nav></div></div><div class="site-overview-wrap sidebar-panel"><div class="site-author site-overview-item animated" itemprop=author itemscope itemtype=http://schema.org/Person><img class=site-author-image itemprop=image alt=Rise src=/imgs/img-lazy-loading.gif data-src=/imgs/avatar.jpg><p class=site-author-name itemprop=name>Rise</p><div class=site-description itemprop=description>福兮祸兮，焉知所依？冬去冰泮，春来萌荣。朝生暮死，亦可惊鸿。知足者富，自足者强。</div></div><div class="site-state-wrap site-overview-item animated"><nav class=site-state><div class="site-state-item site-state-posts"><a href=/archives/><span class=site-state-item-count>679</span>
+<span class=site-state-item-name>日志</span></a></div><div class="site-state-item site-state-categories"><a href=/categories/><span class=site-state-item-count>35</span>
+<span class=site-state-item-name>分类</span></a></div><div class="site-state-item site-state-tags"><a href=/tags/><span class=site-state-item-count>118</span>
+<span class=site-state-item-name>标签</span></a></div></nav></div><div class="links-of-social site-overview-item animated"><span class=links-of-social-item><a href=https://github.com/rise-worlds title="Github → https://github.com/rise-worlds" rel=noopener class=hvr-icon-pulse target=_blank><i class="fab fa-github fa-fw hvr-icon"></i>
+Github
+</a></span><span class=links-of-social-item><a href=mailto:rise.worlds@outlook.com title="E-Mail → mailto:rise.worlds@outlook.com" rel=noopener class=hvr-icon-pulse target=_blank><i class="fa fa-envelope fa-fw hvr-icon"></i>
+E-Mail
+</a></span><span class=links-of-social-item><a href=https://www.zhihu.com/people/rise-worlds title="知乎 → https://www.zhihu.com/people/rise-worlds" rel=noopener class=hvr-icon-pulse target=_blank><i class="fa fa-book fa-fw hvr-icon"></i>
+知乎
+</a></span><span class=links-of-social-item><a href=https://twitter.com/riseworlds title="Twitter → https://twitter.com/riseworlds" rel=noopener class=hvr-icon-pulse target=_blank><i class="fab fa-twitter fa-fw hvr-icon"></i>
+Twitter
+</a></span><span class=links-of-social-item><a href=https://www.facebook.com/rise.worlds title="facebook → https://www.facebook.com/rise.worlds" rel=noopener class=hvr-icon-pulse target=_blank><i class="fab fa-facebook fa-fw hvr-icon"></i>
+facebook
+</a></span><span class=links-of-social-item><a href=https://youtube.com/@YiXuan title="YouTube → https://youtube.com/@YiXuan" rel=noopener class=hvr-icon-pulse target=_blank><i class="fab fa-youtube fa-fw hvr-icon"></i>
+YouTube
+</a></span><span class=links-of-social-item><a href=https://instagram.com/rise.worlds title="Instagram → https://instagram.com/rise.worlds" rel=noopener class=hvr-icon-pulse target=_blank><i class="fab fa-instagram fa-fw hvr-icon"></i>
+Instagram
+</a></span><span class=links-of-social-item><a href=https://t.me/riseworlds title="Telegram → https://t.me/riseworlds" rel=noopener class=hvr-icon-pulse target=_blank><i class="fab fa-telegram fa-fw hvr-icon"></i>
+Telegram</a></span></div><div class="links-of-blogroll site-overview-item animated"><div class=links-of-blogroll-title><i class="fa fa-globe fa-fw"></i>
+友情链接</div><ul class=links-of-blogroll-list><li class=links-of-blogroll-item><a href=https://www.qipai360.cn title=https://www.qipai360.cn target=_blank>Qipai360</a></li><li class=links-of-blogroll-item><a href=https://www.cnblogs.com/flying_bat title=https://www.cnblogs.com/flying_bat target=_blank>博客园</a></li><li class=links-of-blogroll-item><a href=https://zishu.me title=https://zishu.me target=_blank>子舒的博客</a></li><li class=links-of-blogroll-item><a href=https://gitee.com/hugo-next/hugo-theme-next title=https://gitee.com/hugo-next/hugo-theme-next target=_blank>Hugo-NexT</a></li></ul></div></div></div></div><div id=siteinfo-card-widget class=sidebar-card-widget><div class=item-headline><i class="fas fa-chart-line"></i>
+<span>网站资讯</span></div><div class=siteinfo><div class=siteinfo-item><div class=item-name><i class="fa-solid fa-calendar-check"></i>已运行：</div><div class=item-count id=runTimes data-publishdate="2004-10-06 15:24:00 +0800 +0800"></div></div><div class=siteinfo-item><div class=item-name><i class="fas fa fa-user"></i>总访客数：</div><div class=item-count id=busuanzi_value_site_uv><i class="fa fa-sync fa-spin"></i></div></div><div class=siteinfo-item><div class=item-name><i class="fas fa fa-eye"></i>页面浏览：</div><div class=item-count id=busuanzi_value_site_pv><i class="fa fa-sync fa-spin"></i></div></div><div class=siteinfo-item><div class=item-name><i class="fa fa-font"></i>总字数：</div><div class=item-count id=wordsCount data-count=2423147></div></div><div class=siteinfo-item><div class=item-name><i class="fa fa-mug-hot"></i>阅读约：</div><div class=item-count id=readTimes data-times=5207></div></div><div class=siteinfo-item><div class=item-name><i class="fa fa-clock-rotate-left"></i>最后更新于：</div><div class=item-count id=last-push-date data-lastpushdate="2026-02-28 15:59:00 +0800 +0800"></div></div></div></div></aside><div class=sidebar-dimmer></div></header><div class=tool-buttons><div id=goto-comments class="button goto-comments" title=直达评论><i class="fas fa-comments"></i></div><div id=toggle-theme class=button title=深浅模式切换><i class="fas fa-adjust"></i></div><div class=back-to-top role=button title=返回顶部><i class="fa fa-arrow-up"></i>
+<span>0%</span></div></div><div class=reading-progress-bar></div><a role=button class="book-mark-link book-mark-link-fixed"></a><a href=https://github.com/rise-worlds rel="noopener external nofollow noreferrer" target=_blank title="Follow me on GitHub" class="exturl github-corner"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0 0 115 115h15l12 27L250 250V0z"/><path d="M128.3 109C113.8 99.7 119 89.6 119 89.6 122 82.7 120.5 78.6 120.5 78.6 119.2 72 123.4 76.3 123.4 76.3 127.3 80.9 125.5 87.3 125.5 87.3 122.9 97.6 130.6 101.9 134.4 103.2" fill="currentColor" style="transform-origin:130px 106px" class="octo-arm"/><path d="M115 115C114.9 115.1 118.7 116.5 119.8 115.4l13.9-13.8C136.9 99.2 139.9 98.4 142.2 98.6 133.8 88 127.5 74.4 143.8 58 148.5 53.4 154 51.2 159.7 51 160.3 49.4 163.2 43.6 171.4 40.1 171.4 40.1 176.1 42.5 178.8 56.2 183.1 58.6 187.2 61.8 190.9 65.4 194.5 69 197.7 73.2 200.1 77.6 213.8 80.2 216.3 84.9 216.3 84.9 212.7 93.1 206.9 96 205.4 96.6 205.1 102.4 203 107.8 198.3 112.5 181.9 128.9 168.3 122.5 157.7 114.1 157.9 116.9 156.7 120.9 152.7 124.9L141 136.5C139.8 137.7 141.6 141.9 141.8 141.8z" fill="currentColor" class="octo-body"/></svg></a><noscript><div class=noscript-warning>Theme NexT works best with JavaScript enabled</div></noscript><div class="main-inner post posts-expand"><div class=post-block><article itemscope itemtype=http://schema.org/Article class=post-content lang><link itemprop=mainEntityOfPage href=https://blogs.qipai360.cn/post/android-extension-knowledge-points/><span hidden itemprop=author itemscope itemtype=http://schema.org/Person><meta itemprop=image content="/imgs/avatar.jpg"><meta itemprop=name content="Rise"></span><span hidden itemprop=publisher itemscope itemtype=http://schema.org/Organization><meta itemprop=name content="Rise"><meta itemprop=description content="福兮祸兮，焉知所依？冬去冰泮，春来萌荣。朝生暮死，亦可惊鸿。知足者富，自足者强。"></span><span hidden itemprop=post itemscope itemtype=http://schema.org/CreativeWork><meta itemprop=name content="Android扩展知识点"><meta itemprop=description content="点击阅读前文前, 首页能看到的文章的简短描述"></span><header class=post-header><h1 class=post-title itemprop="name headline">Android扩展知识点</h1><div class=post-meta-container><div class=post-meta-items><span class=post-meta-item><span class=post-meta-item-icon><i class="fas fa-solid fa-calendar"></i>
+</span><span class=post-meta-item-text title=发表于>发表于：
+</span><time title="创建时间：2023年06月03日 14:48:29 CST" itemprop="dateCreated datePublished" datetime="2023-06-03 14:48:29 +0800 +0800">2023年06月03日</time></span></div><div class=post-meta-items><span class=post-meta-item title=字数><span class=post-meta-item-icon><i class="fas fa-solid fa-file-word"></i>
+</span><span class=post-meta-item-text>字数：</span>
+<span>8397</span>
+</span><span class=post-meta-item title=阅读><span class=post-meta-item-icon><i class="fas fa-solid fa-clock"></i>
+</span><span class=post-meta-item-text>阅读：&ap;</span>
+<span>17分钟</span>
+</span><span class=post-meta-item title=浏览><span class=post-meta-item-icon><i class="fas fa-solid fa-eye"></i>
+</span><span class=post-meta-item-text>浏览：
+</span><span id=pageview-count data-path=/post/android-extension-knowledge-points/><i class="fa fa-sync fa-spin"></i></span></span></div></div></header><div class=post-body itemprop=articleBody><div class=post-summary-wrapper><div class=summary-title><span><i class="fa-solid fa-list"></i></span>
+<span>总结摘要</span></div><div class=summary-content>点击阅读前文前, 首页能看到的文章的简短描述</div></div><ul><li><a href=#art title=ART>ART</a><ul><li><a href=#art-%e5%8a%9f%e8%83%bd title="ART 功能">ART 功能</a><ul><li><a href=#%e9%a2%84%e5%85%88-aot-%e7%bc%96%e8%af%91 title="预先 (AOT) 编译">预先 (AOT) 编译</a></li><li><a href=#%e5%9e%83%e5%9c%be%e5%9b%9e%e6%94%b6%e4%bc%98%e5%8c%96 title=垃圾回收优化>垃圾回收优化</a></li><li><a href=#%e5%bc%80%e5%8f%91%e5%92%8c%e8%b0%83%e8%af%95%e6%96%b9%e9%9d%a2%e7%9a%84%e4%bc%98%e5%8c%96 title=开发和调试方面的优化>开发和调试方面的优化</a></li></ul></li><li><a href=#art-gc title="ART GC">ART GC</a></li></ul></li><li><a href=#hook title=Hook>Hook</a><ul><li><a href=#%e5%9f%ba%e6%9c%ac%e6%b5%81%e7%a8%8b title=基本流程>基本流程</a></li><li><a href=#%e4%bd%bf%e7%94%a8%e7%a4%ba%e4%be%8b title=使用示例>使用示例</a></li></ul></li><li><a href=#proguard title=Proguard>Proguard</a><ul><li><a href=#%e8%a7%84%e5%88%99 title=规则>规则</a></li><li><a href=#%e5%85%ac%e5%85%b1%e6%a8%a1%e6%9d%bf title=公共模板>公共模板</a></li><li><a href=#%e5%b8%b8%e7%94%a8%e7%9a%84%e8%87%aa%e5%ae%9a%e4%b9%89%e6%b7%b7%e6%b7%86%e8%a7%84%e5%88%99 title=常用的自定义混淆规则>常用的自定义混淆规则</a></li><li><a href=#aar%e4%b8%ad%e5%a2%9e%e5%8a%a0%e7%8b%ac%e7%ab%8b%e7%9a%84%e6%b7%b7%e6%b7%86%e9%85%8d%e7%bd%ae title=aar中增加独立的混淆配置>aar中增加独立的混淆配置</a></li><li><a href=#%e6%a3%80%e6%9f%a5%e6%b7%b7%e6%b7%86%e5%92%8c%e8%bf%bd%e8%b8%aa%e5%bc%82%e5%b8%b8 title=检查混淆和追踪异常>检查混淆和追踪异常</a></li></ul></li><li><a href=#%e6%9e%b6%e6%9e%84 title=架构>架构</a><ul><li><a href=#mvc title=MVC>MVC</a></li><li><a href=#mvp title=MVP>MVP</a></li><li><a href=#mvvm title=MVVM>MVVM</a></li></ul></li><li><a href=#jetpack title=Jetpack>Jetpack</a><ul><li><a href=#%e6%9e%b6%e6%9e%84-1 title=架构>架构</a></li><li><a href=#%e4%bd%bf%e7%94%a8%e7%a4%ba%e4%be%8b-1 title=使用示例>使用示例</a></li></ul></li><li><a href=#ndk-%e5%bc%80%e5%8f%91 title="NDK 开发">NDK 开发</a><ul><li><a href=#jni-%e5%9f%ba%e7%a1%80 title="JNI 基础">JNI 基础</a><ul><li><a href=#%e6%95%b0%e6%8d%ae%e7%b1%bb%e5%9e%8b title=数据类型>数据类型</a></li><li><a href=#string-%e5%ad%97%e7%ac%a6%e4%b8%b2%e5%87%bd%e6%95%b0%e6%93%8d%e4%bd%9c title="String 字符串函数操作">String 字符串函数操作</a></li><li><a href=#%e5%b8%b8%e7%94%a8-jni-%e8%ae%bf%e9%97%ae-java-%e5%af%b9%e8%b1%a1%e6%96%b9%e6%b3%95 title="常用 JNI 访问 Java 对象方法">常用 JNI 访问 Java 对象方法</a></li></ul></li><li><a href=#ndk-%e5%bc%80%e5%8f%91-1 title="NDK 开发">NDK 开发</a><ul><li><a href=#%e5%9f%ba%e7%a1%80%e5%bc%80%e5%8f%91%e6%b5%81%e7%a8%8b title=基础开发流程>基础开发流程</a></li><li><a href=#systemloadlibrary title=System.loadLibrary()>System.loadLibrary()</a></li></ul></li><li><a href=#cmake-%e6%9e%84%e5%bb%ba-ndk-%e9%a1%b9%e7%9b%ae title="CMake 构建 NDK 项目">CMake 构建 NDK 项目</a></li><li><a href=#%e5%b8%b8%e7%94%a8%e7%9a%84-android-ndk-%e5%8e%9f%e7%94%9f-api title="常用的 Android NDK 原生 API">常用的 Android NDK 原生 API</a></li></ul></li><li><a href=#%e7%b1%bb%e5%8a%a0%e8%bd%bd%e5%99%a8 title=类加载器>类加载器</a><ul><li><a href=#%e5%8f%8c%e4%ba%b2%e5%a7%94%e6%89%98%e6%a8%a1%e5%bc%8f title=双亲委托模式>双亲委托模式</a></li><li><a href=#dexpathlist title=DexPathList>DexPathList</a></li></ul></li></ul><h1 id=art>ART
+<a class=header-anchor href=#art></a></h1><p>ART 代表 Android Runtime，其处理应用程序执行的方式完全不同于 Dalvik，Dalvik 是依靠一个 Just-In-Time (JIT) 编译器去解释字节码。开发者编译后的应用代码需要通过一个解释器在用户的设备上运行，这一机制并不高效，但让应用能更容易在不同硬件和架构上运 行。ART 则完全改变了这套做法，在应用安装时就预编译字节码到机器语言，这一机制叫 Ahead-Of-Time (AOT）编译。在移除解释代码这一过程后，应用程序执行将更有效率，启动更快。</p><a id=more></a><h2 id=art-功能>ART 功能
+<a class=header-anchor href=#art-%e5%8a%9f%e8%83%bd></a></h2><h3 id=预先-aot-编译>预先 (AOT) 编译
+<a class=header-anchor href=#%e9%a2%84%e5%85%88-aot-%e7%bc%96%e8%af%91></a></h3><p>ART 引入了预先编译机制，可提高应用的性能。ART 还具有比 Dalvik 更严格的安装时验证。在安装时，ART 使用设备自带的 dex2oat 工具来编译应用。该实用工具接受 DEX 文件作为输入，并为目标设备生成经过编译的应用可执行文件。该工具应能够顺利编译所有有效的 DEX 文件。</p><h3 id=垃圾回收优化>垃圾回收优化
+<a class=header-anchor href=#%e5%9e%83%e5%9c%be%e5%9b%9e%e6%94%b6%e4%bc%98%e5%8c%96></a></h3><p>垃圾回收 (GC) 可能有损于应用性能，从而导致显示不稳定、界面响应速度缓慢以及其他问题。ART 通过以下几种方式对垃圾回收做了优化：</p><ul><li>只有一次（而非两次）GC 暂停</li><li>在 GC 保持暂停状态期间并行处理</li><li>在清理最近分配的短时对象这种特殊情况中，回收器的总 GC 时间更短</li><li>优化了垃圾回收的工效，能够更加及时地进行并行垃圾回收，这使得 GC_FOR_ALLOC 事件在典型用例中极为罕见</li><li>压缩 GC 以减少后台内存使用和碎片</li></ul><h3 id=开发和调试方面的优化>开发和调试方面的优化
+<a class=header-anchor href=#%e5%bc%80%e5%8f%91%e5%92%8c%e8%b0%83%e8%af%95%e6%96%b9%e9%9d%a2%e7%9a%84%e4%bc%98%e5%8c%96></a></h3><ul><li>支持采样分析器</li></ul><p>一直以来，开发者都使用 Traceview 工具（用于跟踪应用执行情况）作为分析器。虽然 Traceview 可提供有用的信息，但每次方法调用产生的开销会导致 Dalvik 分析结果出现偏差，而且使用该工具明显会影响运行时性能</p><p>ART 添加了对没有这些限制的专用采样分析器的支持，因而可更准确地了解应用执行情况，而不会明显减慢速度。KitKat 版本为 Dalvik 的 Traceview 添加了采样支持。</p><ul><li>支持更多调试功能</li></ul><p>ART 支持许多新的调试选项，特别是与监控和垃圾回收相关的功能。例如，查看堆栈跟踪中保留了哪些锁，然后跳转到持有锁的线程；询问指定类的当前活动的实例数、请求查看实例，以及查看使对象保持有效状态的参考；过滤特定实例的事件（如断点）等。</p><ul><li>优化了异常和崩溃报告中的诊断详细信息</li></ul><p>当发生运行时异常时，ART 会为您提供尽可能多的上下文和详细信息。ART 会提供 <code>java.lang.ClassCastException</code>、<code>java.lang.ClassNotFoundException</code> 和 <code>java.lang.NullPointerException</code> 的更多异常详细信息（较高版本的 Dalvik 会提供 <code>java.lang.ArrayIndexOutOfBoundsException</code> 和 <code>java.lang.ArrayStoreException</code> 的更多异常详细信息，这些信息现在包括数组大小和越界偏移量；ART 也提供这类信息）。</p><h2 id=art-gc>ART GC
+<a class=header-anchor href=#art-gc></a></h2><p>ART 有多个不同的 GC 方案，这些方案包括运行不同垃圾回收器。默认方案是 CMS（并发标记清除）方案，主要使用粘性 CMS 和部分 CMS。粘性 CMS 是 ART 的不移动分代垃圾回收器。它仅扫描堆中自上次 GC 后修改的部分，并且只能回收自上次 GC 后分配的对象。除 CMS 方案外，当应用将进程状态更改为察觉不到卡顿的进程状态（例如，后台或缓存）时，ART 将执行堆压缩。</p><p>除了新的垃圾回收器之外，ART 还引入了一种基于位图的新内存分配程序，称为 RosAlloc（插槽运行分配器）。此新分配器具有分片锁，当分配规模较小时可添加线程的本地缓冲区，因而性能优于 DlMalloc。</p><p>与 Dalvik 相比，ART CMS 垃圾回收计划在很多方面都有一定的改善：</p><ul><li><p>与 Dalvik 相比，暂停次数从 2 次减少到 1 次。Dalvik 的第一次暂停主要是为了进行根标记，即在 ART 中进行并发标记，让线程标记自己的根，然后马上恢复运行。</p></li><li><p>与 Dalvik 类似，ART GC 在清除过程开始之前也会暂停 1 次。两者在这方面的主要差异在于：在此暂停期间，某些 Dalvik 环节在 ART 中并发进行。这些环节包括 java.lang.ref.Reference 处理、系统弱清除（例如，jni 弱全局等）、重新标记非线程根和卡片预清理。在 ART 暂停期间仍进行的阶段包括扫描脏卡片以及重新标记线程根，这些操作有助于缩短暂停时间。</p></li><li><p>相对于 Dalvik，ART GC 改进的最后一个方面是粘性 CMS 回收器增加了 GC 吞吐量。不同于普通的分代 GC，粘性 CMS 不移动。系统会将年轻对象保存在一个分配堆栈（基本上是 java.lang.Object 数组）中，而非为其设置一个专属区域。这样可以避免移动所需的对象以维持低暂停次数，但缺点是容易在堆栈中加入大量复杂对象图像而使堆栈变长。</p></li></ul><p>ART GC 与 Dalvik 的另一个主要区别在于 ART GC 引入了移动垃圾回收器。使用移动 GC 的目的在于通过堆压缩来减少后台应用使用的内存。目前，触发堆压缩的事件是 ActivityManager 进程状态的改变。当应用转到后台运行时，它会通知 ART 已进入不再“感知”卡顿的进程状态。此时 ART 会进行一些操作（例如，压缩和监视器压缩），从而导致应用线程长时间暂停。目前正在使用的两个移动 GC 是同构空间压缩和半空间压缩。</p><ul><li><p>半空间压缩将对象在两个紧密排列的碰撞指针空间之间进行移动。这种移动 GC 适用于小内存设备，因为它可以比同构空间压缩稍微多节省一点内存。额外节省出的空间主要来自紧密排列的对象，这样可以避免 RosAlloc/DlMalloc 分配器占用开销。由于 CMS 仍在前台使用，且不能从碰撞指针空间中进行收集，因此当应用在前台使用时，半空间还要再进行一次转换。这种情况并不理想，因为它可能引起较长时间的暂停。</p></li><li><p>同构空间压缩通过将对象从一个 RosAlloc 空间复制到另一个 RosAlloc 空间来实现。这有助于通过减少堆碎片来减少内存使用量。这是目前非低内存设备的默认压缩模式。相比半空间压缩，同构空间压缩的主要优势在于应用从后台切换到前台时无需进行堆转换。</p></li></ul><h1 id=hook>Hook
+<a class=header-anchor href=#hook></a></h1><h2 id=基本流程>基本流程
+<a class=header-anchor href=#%e5%9f%ba%e6%9c%ac%e6%b5%81%e7%a8%8b></a></h2><p>1、根据需求确定 要 hook 的对象<br>2、寻找要hook的对象的持有者，拿到要 hook 的对象<br>3、定义“要 hook 的对象”的代理类，并且创建该类的对象<br>4、使用上一步创建出来的对象，替换掉要 hook 的对象</p><h2 id=使用示例>使用示例
+<a class=header-anchor href=#%e4%bd%bf%e7%94%a8%e7%a4%ba%e4%be%8b></a></h2><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt id=hl-0-1><a class=lnlinks href=#hl-0-1> 1</a>
+</span><span class=lnt id=hl-0-2><a class=lnlinks href=#hl-0-2> 2</a>
+</span><span class=lnt id=hl-0-3><a class=lnlinks href=#hl-0-3> 3</a>
+</span><span class=lnt id=hl-0-4><a class=lnlinks href=#hl-0-4> 4</a>
+</span><span class=lnt id=hl-0-5><a class=lnlinks href=#hl-0-5> 5</a>
+</span><span class=lnt id=hl-0-6><a class=lnlinks href=#hl-0-6> 6</a>
+</span><span class=lnt id=hl-0-7><a class=lnlinks href=#hl-0-7> 7</a>
+</span><span class=lnt id=hl-0-8><a class=lnlinks href=#hl-0-8> 8</a>
+</span><span class=lnt id=hl-0-9><a class=lnlinks href=#hl-0-9> 9</a>
+</span><span class=lnt id=hl-0-10><a class=lnlinks href=#hl-0-10>10</a>
+</span><span class=lnt id=hl-0-11><a class=lnlinks href=#hl-0-11>11</a>
+</span><span class=lnt id=hl-0-12><a class=lnlinks href=#hl-0-12>12</a>
+</span><span class=lnt id=hl-0-13><a class=lnlinks href=#hl-0-13>13</a>
+</span><span class=lnt id=hl-0-14><a class=lnlinks href=#hl-0-14>14</a>
+</span><span class=lnt id=hl-0-15><a class=lnlinks href=#hl-0-15>15</a>
+</span><span class=lnt id=hl-0-16><a class=lnlinks href=#hl-0-16>16</a>
+</span><span class=lnt id=hl-0-17><a class=lnlinks href=#hl-0-17>17</a>
+</span><span class=lnt id=hl-0-18><a class=lnlinks href=#hl-0-18>18</a>
+</span><span class=lnt id=hl-0-19><a class=lnlinks href=#hl-0-19>19</a>
+</span><span class=lnt id=hl-0-20><a class=lnlinks href=#hl-0-20>20</a>
+</span><span class=lnt id=hl-0-21><a class=lnlinks href=#hl-0-21>21</a>
+</span><span class=lnt id=hl-0-22><a class=lnlinks href=#hl-0-22>22</a>
+</span><span class=lnt id=hl-0-23><a class=lnlinks href=#hl-0-23>23</a>
+</span><span class=lnt id=hl-0-24><a class=lnlinks href=#hl-0-24>24</a>
+</span><span class=lnt id=hl-0-25><a class=lnlinks href=#hl-0-25>25</a>
+</span><span class=lnt id=hl-0-26><a class=lnlinks href=#hl-0-26>26</a>
+</span><span class=lnt id=hl-0-27><a class=lnlinks href=#hl-0-27>27</a>
+</span><span class=lnt id=hl-0-28><a class=lnlinks href=#hl-0-28>28</a>
+</span><span class=lnt id=hl-0-29><a class=lnlinks href=#hl-0-29>29</a>
+</span><span class=lnt id=hl-0-30><a class=lnlinks href=#hl-0-30>30</a>
+</span><span class=lnt id=hl-0-31><a class=lnlinks href=#hl-0-31>31</a>
+</span><span class=lnt id=hl-0-32><a class=lnlinks href=#hl-0-32>32</a>
+</span><span class=lnt id=hl-0-33><a class=lnlinks href=#hl-0-33>33</a>
+</span><span class=lnt id=hl-0-34><a class=lnlinks href=#hl-0-34>34</a>
+</span><span class=lnt id=hl-0-35><a class=lnlinks href=#hl-0-35>35</a>
+</span><span class=lnt id=hl-0-36><a class=lnlinks href=#hl-0-36>36</a>
+</span><span class=lnt id=hl-0-37><a class=lnlinks href=#hl-0-37>37</a>
+</span><span class=lnt id=hl-0-38><a class=lnlinks href=#hl-0-38>38</a>
+</span><span class=lnt id=hl-0-39><a class=lnlinks href=#hl-0-39>39</a>
+</span><span class=lnt id=hl-0-40><a class=lnlinks href=#hl-0-40>40</a>
+</span><span class=lnt id=hl-0-41><a class=lnlinks href=#hl-0-41>41</a>
+</span><span class=lnt id=hl-0-42><a class=lnlinks href=#hl-0-42>42</a>
+</span><span class=lnt id=hl-0-43><a class=lnlinks href=#hl-0-43>43</a>
+</span><span class=lnt id=hl-0-44><a class=lnlinks href=#hl-0-44>44</a>
+</span><span class=lnt id=hl-0-45><a class=lnlinks href=#hl-0-45>45</a>
+</span><span class=lnt id=hl-0-46><a class=lnlinks href=#hl-0-46>46</a>
+</span><span class=lnt id=hl-0-47><a class=lnlinks href=#hl-0-47>47</a>
+</span><span class=lnt id=hl-0-48><a class=lnlinks href=#hl-0-48>48</a>
+</span><span class=lnt id=hl-0-49><a class=lnlinks href=#hl-0-49>49</a>
+</span><span class=lnt id=hl-0-50><a class=lnlinks href=#hl-0-50>50</a>
+</span><span class=lnt id=hl-0-51><a class=lnlinks href=#hl-0-51>51</a>
+</span><span class=lnt id=hl-0-52><a class=lnlinks href=#hl-0-52>52</a>
+</span><span class=lnt id=hl-0-53><a class=lnlinks href=#hl-0-53>53</a>
+</span><span class=lnt id=hl-0-54><a class=lnlinks href=#hl-0-54>54</a>
+</span><span class=lnt id=hl-0-55><a class=lnlinks href=#hl-0-55>55</a>
+</span><span class=lnt id=hl-0-56><a class=lnlinks href=#hl-0-56>56</a>
+</span><span class=lnt id=hl-0-57><a class=lnlinks href=#hl-0-57>57</a>
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=cm>/**
+</span></span></span><span class=line><span class=cl><span class=cm>* hook的核心代码
+</span></span></span><span class=line><span class=cl><span class=cm>* 这个方法的唯一目的：用自己的点击事件，替换掉 View 原来的点击事件
+</span></span></span><span class=line><span class=cl><span class=cm>*
+</span></span></span><span class=line><span class=cl><span class=cm>* @param view hook的范围仅限于这个view
+</span></span></span><span class=line><span class=cl><span class=cm>*/</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=nd>@SuppressLint</span><span class=p>({</span><span class=s>&#34;DiscouragedPrivateApi&#34;</span><span class=p>,</span><span class=w> </span><span class=s>&#34;PrivateApi&#34;</span><span class=p>})</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=kd>public</span><span class=w> </span><span class=kd>static</span><span class=w> </span><span class=kt>void</span><span class=w> </span><span class=nf>hook</span><span class=p>(</span><span class=n>Context</span><span class=w> </span><span class=n>context</span><span class=p>,</span><span class=w> </span><span class=kd>final</span><span class=w> </span><span class=n>View</span><span class=w> </span><span class=n>view</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=c1>//</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=k>try</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=c1>// 反射执行View类的getListenerInfo()方法，拿到v的mListenerInfo对象，这个对象就是点击事件的持有者</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=n>Method</span><span class=w> </span><span class=n>method</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>View</span><span class=p>.</span><span class=na>class</span><span class=p>.</span><span class=na>getDeclaredMethod</span><span class=p>(</span><span class=s>&#34;getListenerInfo&#34;</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=n>method</span><span class=p>.</span><span class=na>setAccessible</span><span class=p>(</span><span class=kc>true</span><span class=p>);</span><span class=c1>//由于getListenerInfo()方法并不是public的，所以要加这个代码来保证访问权限</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=n>Object</span><span class=w> </span><span class=n>mListenerInfo</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>method</span><span class=p>.</span><span class=na>invoke</span><span class=p>(</span><span class=n>view</span><span class=p>);</span><span class=c1>//这里拿到的就是mListenerInfo对象，也就是点击事件的持有者</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=c1>// 要从这里面拿到当前的点击事件对象</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=n>Class</span><span class=o>&lt;?&gt;</span><span class=w> </span><span class=n>listenerInfoClz</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>Class</span><span class=p>.</span><span class=na>forName</span><span class=p>(</span><span class=s>&#34;android.view.View$ListenerInfo&#34;</span><span class=p>);</span><span class=c1>// 这是内部类的表示方法</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=n>Field</span><span class=w> </span><span class=n>field</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>listenerInfoClz</span><span class=p>.</span><span class=na>getDeclaredField</span><span class=p>(</span><span class=s>&#34;mOnClickListener&#34;</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=kd>final</span><span class=w> </span><span class=n>View</span><span class=p>.</span><span class=na>OnClickListener</span><span class=w> </span><span class=n>onClickListenerInstance</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=p>(</span><span class=n>View</span><span class=p>.</span><span class=na>OnClickListener</span><span class=p>)</span><span class=w> </span><span class=n>field</span><span class=p>.</span><span class=na>get</span><span class=p>(</span><span class=n>mListenerInfo</span><span class=p>);</span><span class=c1>//取得真实的mOnClickListener对象</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=c1>// 2. 创建我们自己的点击事件代理类</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=c1>//   方式1：自己创建代理类</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=c1>//   ProxyOnClickListener proxyOnClickListener = new ProxyOnClickListener(onClickListenerInstance);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=c1>//   方式2：由于View.OnClickListener是一个接口，所以可以直接用动态代理模式</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=c1>// Proxy.newProxyInstance的3个参数依次分别是：</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=c1>// 本地的类加载器;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=c1>// 代理类的对象所继承的接口（用Class数组表示，支持多个接口）</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=c1>// 代理类的实际逻辑，封装在new出来的InvocationHandler内</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=n>Object</span><span class=w> </span><span class=n>proxyOnClickListener</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>Proxy</span><span class=p>.</span><span class=na>newProxyInstance</span><span class=p>(</span><span class=n>context</span><span class=p>.</span><span class=na>getClass</span><span class=p>().</span><span class=na>getClassLoader</span><span class=p>(),</span><span class=w> </span><span class=k>new</span><span class=w> </span><span class=n>Class</span><span class=o>[]</span><span class=p>{</span><span class=n>View</span><span class=p>.</span><span class=na>OnClickListener</span><span class=p>.</span><span class=na>class</span><span class=p>},</span><span class=w> </span><span class=k>new</span><span class=w> </span><span class=n>InvocationHandler</span><span class=p>()</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>            </span><span class=nd>@Override</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>            </span><span class=kd>public</span><span class=w> </span><span class=n>Object</span><span class=w> </span><span class=nf>invoke</span><span class=p>(</span><span class=n>Object</span><span class=w> </span><span class=n>proxy</span><span class=p>,</span><span class=w> </span><span class=n>Method</span><span class=w> </span><span class=n>method</span><span class=p>,</span><span class=w> </span><span class=n>Object</span><span class=o>[]</span><span class=w> </span><span class=n>args</span><span class=p>)</span><span class=w> </span><span class=kd>throws</span><span class=w> </span><span class=n>Throwable</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>                </span><span class=n>Log</span><span class=p>.</span><span class=na>d</span><span class=p>(</span><span class=s>&#34;HookSetOnClickListener&#34;</span><span class=p>,</span><span class=w> </span><span class=s>&#34;点击事件被hook到了&#34;</span><span class=p>);</span><span class=c1>//加入自己的逻辑</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>                </span><span class=k>return</span><span class=w> </span><span class=n>method</span><span class=p>.</span><span class=na>invoke</span><span class=p>(</span><span class=n>onClickListenerInstance</span><span class=p>,</span><span class=w> </span><span class=n>args</span><span class=p>);</span><span class=c1>//执行被代理的对象的逻辑</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>            </span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=p>});</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=c1>// 3. 用我们自己的点击事件代理类，设置到&#34;持有者&#34;中</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=n>field</span><span class=p>.</span><span class=na>set</span><span class=p>(</span><span class=n>mListenerInfo</span><span class=p>,</span><span class=w> </span><span class=n>proxyOnClickListener</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=p>}</span><span class=w> </span><span class=k>catch</span><span class=w> </span><span class=p>(</span><span class=n>Exception</span><span class=w> </span><span class=n>e</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=n>e</span><span class=p>.</span><span class=na>printStackTrace</span><span class=p>();</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=c1>// 自定义代理类</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=kd>static</span><span class=w> </span><span class=kd>class</span> <span class=nc>ProxyOnClickListener</span><span class=w> </span><span class=kd>implements</span><span class=w> </span><span class=n>View</span><span class=p>.</span><span class=na>OnClickListener</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=n>View</span><span class=p>.</span><span class=na>OnClickListener</span><span class=w> </span><span class=n>oriLis</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=kd>public</span><span class=w> </span><span class=nf>ProxyOnClickListener</span><span class=p>(</span><span class=n>View</span><span class=p>.</span><span class=na>OnClickListener</span><span class=w> </span><span class=n>oriLis</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=k>this</span><span class=p>.</span><span class=na>oriLis</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>oriLis</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nd>@Override</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=kd>public</span><span class=w> </span><span class=kt>void</span><span class=w> </span><span class=nf>onClick</span><span class=p>(</span><span class=n>View</span><span class=w> </span><span class=n>v</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=n>Log</span><span class=p>.</span><span class=na>d</span><span class=p>(</span><span class=s>&#34;HookSetOnClickListener&#34;</span><span class=p>,</span><span class=w> </span><span class=s>&#34;点击事件被hook到了&#34;</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=k>if</span><span class=w> </span><span class=p>(</span><span class=n>oriLis</span><span class=w> </span><span class=o>!=</span><span class=w> </span><span class=kc>null</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>            </span><span class=n>oriLis</span><span class=p>.</span><span class=na>onClick</span><span class=p>(</span><span class=n>v</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=p>}</span></span></span></code></pre></td></tr></table></div></div><h1 id=proguard>Proguard
+<a class=header-anchor href=#proguard></a></h1><p>Proguard 具有以下三个功能：</p><ul><li>压缩（Shrink）: 检测和删除没有使用的类，字段，方法和特性</li><li>优化（Optimize） : 分析和优化Java字节码</li><li>混淆（Obfuscate）: 使用简短的无意义的名称，对类，字段和方法进行重命名</li></ul><h2 id=规则>规则
+<a class=header-anchor href=#%e8%a7%84%e5%88%99></a></h2><ul><li>关键字</li></ul><table><thead><tr><th>关键字</th><th>描述</th></tr></thead><tbody><tr><td>keep</td><td>保留类和类中的成员，防止被混淆或移除</td></tr><tr><td>keepnames</td><td>保留类和类中的成员，防止被混淆，成员没有被引用会被移除</td></tr><tr><td>keepclassmembers</td><td>只保留类中的成员，防止被混淆或移除</td></tr><tr><td>keepclassmembernames</td><td>只保留类中的成员，防止被混淆，成员没有引用会被移除</td></tr><tr><td>keepclasseswithmembers</td><td>保留类和类中的成员，防止被混淆或移除，保留指明的成员</td></tr><tr><td>keepclasseswithmembernames</td><td>保留类和类中的成员，防止被混淆，保留指明的成员，成员没有引用会被移除</td></tr></tbody></table><ul><li>通配符</li></ul><table><thead><tr><th>通配符</th><th>描述</th></tr></thead><tbody><tr><td>&lt;field></td><td>匹配类中的所有字段</td></tr><tr><td>&lt;method></td><td>匹配类中所有的方法</td></tr><tr><td>&lt;init></td><td>匹配类中所有的构造函数</td></tr><tr><td>*</td><td>匹配任意长度字符，不包含包名分隔符(.)</td></tr><tr><td>**</td><td>匹配任意长度字符，包含包名分隔符(.)</td></tr><tr><td>***</td><td>匹配任意参数类型</td></tr></tbody></table><ul><li>指定混淆时可使用字典</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt id=hl-1-1><a class=lnlinks href=#hl-1-1>1</a>
+</span><span class=lnt id=hl-1-2><a class=lnlinks href=#hl-1-2>2</a>
+</span><span class=lnt id=hl-1-3><a class=lnlinks href=#hl-1-3>3</a>
+</span><span class=lnt id=hl-1-4><a class=lnlinks href=#hl-1-4>4</a>
+</span><span class=lnt id=hl-1-5><a class=lnlinks href=#hl-1-5>5</a>
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-gdscript3 data-lang=gdscript3><span class=line><span class=cl><span class=o>-</span><span class=n>applymapping</span> <span class=n>filename</span> <span class=err>指定重用一个已经写好了的</span><span class=n>map文件作为新旧元素名的映射</span><span class=err>。</span>
+</span></span><span class=line><span class=cl><span class=o>-</span><span class=n>obfuscationdictionary</span> <span class=n>filename</span> <span class=err>指定一个文本文件用来生成混淆后的名字。</span>
+</span></span><span class=line><span class=cl><span class=o>-</span><span class=n>classobfuscationdictionary</span> <span class=n>filename</span> <span class=err>指定一个混淆类名的字典</span>
+</span></span><span class=line><span class=cl><span class=o>-</span><span class=n>packageobfuscationdictionary</span> <span class=n>filename</span> <span class=err>指定一个混淆包名的字典</span>
+</span></span><span class=line><span class=cl><span class=o>-</span><span class=n>overloadaggressively</span> <span class=err>混淆的时候大量使用重载，多个方法名使用同一个混淆名（慎用）</span></span></span></code></pre></td></tr></table></div></div><h2 id=公共模板>公共模板
+<a class=header-anchor href=#%e5%85%ac%e5%85%b1%e6%a8%a1%e6%9d%bf></a></h2><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt id=hl-2-1><a class=lnlinks href=#hl-2-1>  1</a>
+</span><span class=lnt id=hl-2-2><a class=lnlinks href=#hl-2-2>  2</a>
+</span><span class=lnt id=hl-2-3><a class=lnlinks href=#hl-2-3>  3</a>
+</span><span class=lnt id=hl-2-4><a class=lnlinks href=#hl-2-4>  4</a>
+</span><span class=lnt id=hl-2-5><a class=lnlinks href=#hl-2-5>  5</a>
+</span><span class=lnt id=hl-2-6><a class=lnlinks href=#hl-2-6>  6</a>
+</span><span class=lnt id=hl-2-7><a class=lnlinks href=#hl-2-7>  7</a>
+</span><span class=lnt id=hl-2-8><a class=lnlinks href=#hl-2-8>  8</a>
+</span><span class=lnt id=hl-2-9><a class=lnlinks href=#hl-2-9>  9</a>
+</span><span class=lnt id=hl-2-10><a class=lnlinks href=#hl-2-10> 10</a>
+</span><span class=lnt id=hl-2-11><a class=lnlinks href=#hl-2-11> 11</a>
+</span><span class=lnt id=hl-2-12><a class=lnlinks href=#hl-2-12> 12</a>
+</span><span class=lnt id=hl-2-13><a class=lnlinks href=#hl-2-13> 13</a>
+</span><span class=lnt id=hl-2-14><a class=lnlinks href=#hl-2-14> 14</a>
+</span><span class=lnt id=hl-2-15><a class=lnlinks href=#hl-2-15> 15</a>
+</span><span class=lnt id=hl-2-16><a class=lnlinks href=#hl-2-16> 16</a>
+</span><span class=lnt id=hl-2-17><a class=lnlinks href=#hl-2-17> 17</a>
+</span><span class=lnt id=hl-2-18><a class=lnlinks href=#hl-2-18> 18</a>
+</span><span class=lnt id=hl-2-19><a class=lnlinks href=#hl-2-19> 19</a>
+</span><span class=lnt id=hl-2-20><a class=lnlinks href=#hl-2-20> 20</a>
+</span><span class=lnt id=hl-2-21><a class=lnlinks href=#hl-2-21> 21</a>
+</span><span class=lnt id=hl-2-22><a class=lnlinks href=#hl-2-22> 22</a>
+</span><span class=lnt id=hl-2-23><a class=lnlinks href=#hl-2-23> 23</a>
+</span><span class=lnt id=hl-2-24><a class=lnlinks href=#hl-2-24> 24</a>
+</span><span class=lnt id=hl-2-25><a class=lnlinks href=#hl-2-25> 25</a>
+</span><span class=lnt id=hl-2-26><a class=lnlinks href=#hl-2-26> 26</a>
+</span><span class=lnt id=hl-2-27><a class=lnlinks href=#hl-2-27> 27</a>
+</span><span class=lnt id=hl-2-28><a class=lnlinks href=#hl-2-28> 28</a>
+</span><span class=lnt id=hl-2-29><a class=lnlinks href=#hl-2-29> 29</a>
+</span><span class=lnt id=hl-2-30><a class=lnlinks href=#hl-2-30> 30</a>
+</span><span class=lnt id=hl-2-31><a class=lnlinks href=#hl-2-31> 31</a>
+</span><span class=lnt id=hl-2-32><a class=lnlinks href=#hl-2-32> 32</a>
+</span><span class=lnt id=hl-2-33><a class=lnlinks href=#hl-2-33> 33</a>
+</span><span class=lnt id=hl-2-34><a class=lnlinks href=#hl-2-34> 34</a>
+</span><span class=lnt id=hl-2-35><a class=lnlinks href=#hl-2-35> 35</a>
+</span><span class=lnt id=hl-2-36><a class=lnlinks href=#hl-2-36> 36</a>
+</span><span class=lnt id=hl-2-37><a class=lnlinks href=#hl-2-37> 37</a>
+</span><span class=lnt id=hl-2-38><a class=lnlinks href=#hl-2-38> 38</a>
+</span><span class=lnt id=hl-2-39><a class=lnlinks href=#hl-2-39> 39</a>
+</span><span class=lnt id=hl-2-40><a class=lnlinks href=#hl-2-40> 40</a>
+</span><span class=lnt id=hl-2-41><a class=lnlinks href=#hl-2-41> 41</a>
+</span><span class=lnt id=hl-2-42><a class=lnlinks href=#hl-2-42> 42</a>
+</span><span class=lnt id=hl-2-43><a class=lnlinks href=#hl-2-43> 43</a>
+</span><span class=lnt id=hl-2-44><a class=lnlinks href=#hl-2-44> 44</a>
+</span><span class=lnt id=hl-2-45><a class=lnlinks href=#hl-2-45> 45</a>
+</span><span class=lnt id=hl-2-46><a class=lnlinks href=#hl-2-46> 46</a>
+</span><span class=lnt id=hl-2-47><a class=lnlinks href=#hl-2-47> 47</a>
+</span><span class=lnt id=hl-2-48><a class=lnlinks href=#hl-2-48> 48</a>
+</span><span class=lnt id=hl-2-49><a class=lnlinks href=#hl-2-49> 49</a>
+</span><span class=lnt id=hl-2-50><a class=lnlinks href=#hl-2-50> 50</a>
+</span><span class=lnt id=hl-2-51><a class=lnlinks href=#hl-2-51> 51</a>
+</span><span class=lnt id=hl-2-52><a class=lnlinks href=#hl-2-52> 52</a>
+</span><span class=lnt id=hl-2-53><a class=lnlinks href=#hl-2-53> 53</a>
+</span><span class=lnt id=hl-2-54><a class=lnlinks href=#hl-2-54> 54</a>
+</span><span class=lnt id=hl-2-55><a class=lnlinks href=#hl-2-55> 55</a>
+</span><span class=lnt id=hl-2-56><a class=lnlinks href=#hl-2-56> 56</a>
+</span><span class=lnt id=hl-2-57><a class=lnlinks href=#hl-2-57> 57</a>
+</span><span class=lnt id=hl-2-58><a class=lnlinks href=#hl-2-58> 58</a>
+</span><span class=lnt id=hl-2-59><a class=lnlinks href=#hl-2-59> 59</a>
+</span><span class=lnt id=hl-2-60><a class=lnlinks href=#hl-2-60> 60</a>
+</span><span class=lnt id=hl-2-61><a class=lnlinks href=#hl-2-61> 61</a>
+</span><span class=lnt id=hl-2-62><a class=lnlinks href=#hl-2-62> 62</a>
+</span><span class=lnt id=hl-2-63><a class=lnlinks href=#hl-2-63> 63</a>
+</span><span class=lnt id=hl-2-64><a class=lnlinks href=#hl-2-64> 64</a>
+</span><span class=lnt id=hl-2-65><a class=lnlinks href=#hl-2-65> 65</a>
+</span><span class=lnt id=hl-2-66><a class=lnlinks href=#hl-2-66> 66</a>
+</span><span class=lnt id=hl-2-67><a class=lnlinks href=#hl-2-67> 67</a>
+</span><span class=lnt id=hl-2-68><a class=lnlinks href=#hl-2-68> 68</a>
+</span><span class=lnt id=hl-2-69><a class=lnlinks href=#hl-2-69> 69</a>
+</span><span class=lnt id=hl-2-70><a class=lnlinks href=#hl-2-70> 70</a>
+</span><span class=lnt id=hl-2-71><a class=lnlinks href=#hl-2-71> 71</a>
+</span><span class=lnt id=hl-2-72><a class=lnlinks href=#hl-2-72> 72</a>
+</span><span class=lnt id=hl-2-73><a class=lnlinks href=#hl-2-73> 73</a>
+</span><span class=lnt id=hl-2-74><a class=lnlinks href=#hl-2-74> 74</a>
+</span><span class=lnt id=hl-2-75><a class=lnlinks href=#hl-2-75> 75</a>
+</span><span class=lnt id=hl-2-76><a class=lnlinks href=#hl-2-76> 76</a>
+</span><span class=lnt id=hl-2-77><a class=lnlinks href=#hl-2-77> 77</a>
+</span><span class=lnt id=hl-2-78><a class=lnlinks href=#hl-2-78> 78</a>
+</span><span class=lnt id=hl-2-79><a class=lnlinks href=#hl-2-79> 79</a>
+</span><span class=lnt id=hl-2-80><a class=lnlinks href=#hl-2-80> 80</a>
+</span><span class=lnt id=hl-2-81><a class=lnlinks href=#hl-2-81> 81</a>
+</span><span class=lnt id=hl-2-82><a class=lnlinks href=#hl-2-82> 82</a>
+</span><span class=lnt id=hl-2-83><a class=lnlinks href=#hl-2-83> 83</a>
+</span><span class=lnt id=hl-2-84><a class=lnlinks href=#hl-2-84> 84</a>
+</span><span class=lnt id=hl-2-85><a class=lnlinks href=#hl-2-85> 85</a>
+</span><span class=lnt id=hl-2-86><a class=lnlinks href=#hl-2-86> 86</a>
+</span><span class=lnt id=hl-2-87><a class=lnlinks href=#hl-2-87> 87</a>
+</span><span class=lnt id=hl-2-88><a class=lnlinks href=#hl-2-88> 88</a>
+</span><span class=lnt id=hl-2-89><a class=lnlinks href=#hl-2-89> 89</a>
+</span><span class=lnt id=hl-2-90><a class=lnlinks href=#hl-2-90> 90</a>
+</span><span class=lnt id=hl-2-91><a class=lnlinks href=#hl-2-91> 91</a>
+</span><span class=lnt id=hl-2-92><a class=lnlinks href=#hl-2-92> 92</a>
+</span><span class=lnt id=hl-2-93><a class=lnlinks href=#hl-2-93> 93</a>
+</span><span class=lnt id=hl-2-94><a class=lnlinks href=#hl-2-94> 94</a>
+</span><span class=lnt id=hl-2-95><a class=lnlinks href=#hl-2-95> 95</a>
+</span><span class=lnt id=hl-2-96><a class=lnlinks href=#hl-2-96> 96</a>
+</span><span class=lnt id=hl-2-97><a class=lnlinks href=#hl-2-97> 97</a>
+</span><span class=lnt id=hl-2-98><a class=lnlinks href=#hl-2-98> 98</a>
+</span><span class=lnt id=hl-2-99><a class=lnlinks href=#hl-2-99> 99</a>
+</span><span class=lnt id=hl-2-100><a class=lnlinks href=#hl-2-100>100</a>
+</span><span class=lnt id=hl-2-101><a class=lnlinks href=#hl-2-101>101</a>
+</span><span class=lnt id=hl-2-102><a class=lnlinks href=#hl-2-102>102</a>
+</span><span class=lnt id=hl-2-103><a class=lnlinks href=#hl-2-103>103</a>
+</span><span class=lnt id=hl-2-104><a class=lnlinks href=#hl-2-104>104</a>
+</span><span class=lnt id=hl-2-105><a class=lnlinks href=#hl-2-105>105</a>
+</span><span class=lnt id=hl-2-106><a class=lnlinks href=#hl-2-106>106</a>
+</span><span class=lnt id=hl-2-107><a class=lnlinks href=#hl-2-107>107</a>
+</span><span class=lnt id=hl-2-108><a class=lnlinks href=#hl-2-108>108</a>
+</span><span class=lnt id=hl-2-109><a class=lnlinks href=#hl-2-109>109</a>
+</span><span class=lnt id=hl-2-110><a class=lnlinks href=#hl-2-110>110</a>
+</span><span class=lnt id=hl-2-111><a class=lnlinks href=#hl-2-111>111</a>
+</span><span class=lnt id=hl-2-112><a class=lnlinks href=#hl-2-112>112</a>
+</span><span class=lnt id=hl-2-113><a class=lnlinks href=#hl-2-113>113</a>
+</span><span class=lnt id=hl-2-114><a class=lnlinks href=#hl-2-114>114</a>
+</span><span class=lnt id=hl-2-115><a class=lnlinks href=#hl-2-115>115</a>
+</span><span class=lnt id=hl-2-116><a class=lnlinks href=#hl-2-116>116</a>
+</span><span class=lnt id=hl-2-117><a class=lnlinks href=#hl-2-117>117</a>
+</span><span class=lnt id=hl-2-118><a class=lnlinks href=#hl-2-118>118</a>
+</span><span class=lnt id=hl-2-119><a class=lnlinks href=#hl-2-119>119</a>
+</span><span class=lnt id=hl-2-120><a class=lnlinks href=#hl-2-120>120</a>
+</span><span class=lnt id=hl-2-121><a class=lnlinks href=#hl-2-121>121</a>
+</span><span class=lnt id=hl-2-122><a class=lnlinks href=#hl-2-122>122</a>
+</span><span class=lnt id=hl-2-123><a class=lnlinks href=#hl-2-123>123</a>
+</span><span class=lnt id=hl-2-124><a class=lnlinks href=#hl-2-124>124</a>
+</span><span class=lnt id=hl-2-125><a class=lnlinks href=#hl-2-125>125</a>
+</span><span class=lnt id=hl-2-126><a class=lnlinks href=#hl-2-126>126</a>
+</span><span class=lnt id=hl-2-127><a class=lnlinks href=#hl-2-127>127</a>
+</span><span class=lnt id=hl-2-128><a class=lnlinks href=#hl-2-128>128</a>
+</span><span class=lnt id=hl-2-129><a class=lnlinks href=#hl-2-129>129</a>
+</span><span class=lnt id=hl-2-130><a class=lnlinks href=#hl-2-130>130</a>
+</span><span class=lnt id=hl-2-131><a class=lnlinks href=#hl-2-131>131</a>
+</span><span class=lnt id=hl-2-132><a class=lnlinks href=#hl-2-132>132</a>
+</span><span class=lnt id=hl-2-133><a class=lnlinks href=#hl-2-133>133</a>
+</span><span class=lnt id=hl-2-134><a class=lnlinks href=#hl-2-134>134</a>
+</span><span class=lnt id=hl-2-135><a class=lnlinks href=#hl-2-135>135</a>
+</span><span class=lnt id=hl-2-136><a class=lnlinks href=#hl-2-136>136</a>
+</span><span class=lnt id=hl-2-137><a class=lnlinks href=#hl-2-137>137</a>
+</span><span class=lnt id=hl-2-138><a class=lnlinks href=#hl-2-138>138</a>
+</span><span class=lnt id=hl-2-139><a class=lnlinks href=#hl-2-139>139</a>
+</span><span class=lnt id=hl-2-140><a class=lnlinks href=#hl-2-140>140</a>
+</span><span class=lnt id=hl-2-141><a class=lnlinks href=#hl-2-141>141</a>
+</span><span class=lnt id=hl-2-142><a class=lnlinks href=#hl-2-142>142</a>
+</span><span class=lnt id=hl-2-143><a class=lnlinks href=#hl-2-143>143</a>
+</span><span class=lnt id=hl-2-144><a class=lnlinks href=#hl-2-144>144</a>
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-gdscript3 data-lang=gdscript3><span class=line><span class=cl><span class=c1>#############################################</span>
+</span></span><span class=line><span class=cl><span class=c1>#</span>
+</span></span><span class=line><span class=cl><span class=c1># 对于一些基本指令的添加</span>
+</span></span><span class=line><span class=cl><span class=c1>#</span>
+</span></span><span class=line><span class=cl><span class=c1>#############################################</span>
+</span></span><span class=line><span class=cl><span class=c1># 代码混淆压缩比，在 0~7 之间，默认为 5，一般不做修改</span>
+</span></span><span class=line><span class=cl><span class=o>-</span><span class=n>optimizationpasses</span> <span class=mi>5</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># 混合时不使用大小写混合，混合后的类名为小写</span>
+</span></span><span class=line><span class=cl><span class=o>-</span><span class=n>dontusemixedcaseclassnames</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># 指定不去忽略非公共库的类</span>
+</span></span><span class=line><span class=cl><span class=o>-</span><span class=n>dontskipnonpubliclibraryclasses</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># 这句话能够使我们的项目混淆后产生映射文件</span>
+</span></span><span class=line><span class=cl><span class=c1># 包含有类名-&gt;混淆后类名的映射关系</span>
+</span></span><span class=line><span class=cl><span class=o>-</span><span class=n>verbose</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># 指定不去忽略非公共库的类成员</span>
+</span></span><span class=line><span class=cl><span class=o>-</span><span class=n>dontskipnonpubliclibraryclassmembers</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># 不做预校验，preverify 是 proguard 的四个步骤之一，Android 不需要 preverify，去掉这一步能够加快混淆速度。</span>
+</span></span><span class=line><span class=cl><span class=o>-</span><span class=n>dontpreverify</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># 保留 Annotation 不混淆</span>
+</span></span><span class=line><span class=cl><span class=o>-</span><span class=n>keepattributes</span> <span class=o>*</span><span class=n>Annotation</span><span class=o>*</span><span class=p>,</span><span class=n>InnerClasses</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># 避免混淆泛型</span>
+</span></span><span class=line><span class=cl><span class=o>-</span><span class=n>keepattributes</span> <span class=n>Signature</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># 抛出异常时保留代码行号</span>
+</span></span><span class=line><span class=cl><span class=o>-</span><span class=n>keepattributes</span> <span class=n>SourceFile</span><span class=p>,</span><span class=n>LineNumberTable</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># 指定混淆是采用的算法，后面的参数是一个过滤器</span>
+</span></span><span class=line><span class=cl><span class=c1># 这个过滤器是谷歌推荐的算法，一般不做更改</span>
+</span></span><span class=line><span class=cl><span class=o>-</span><span class=n>optimizations</span> <span class=o>!</span><span class=n>code</span><span class=o>/</span><span class=n>simplification</span><span class=o>/</span><span class=n>cast</span><span class=p>,</span><span class=o>!</span><span class=n>field</span><span class=o>/*</span><span class=p>,</span><span class=o>!</span><span class=k>class</span><span class=o>/</span><span class=n>merging</span><span class=o>/*</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>#############################################</span>
+</span></span><span class=line><span class=cl><span class=c1>#</span>
+</span></span><span class=line><span class=cl><span class=c1># Android开发中一些需要保留的公共部分</span>
+</span></span><span class=line><span class=cl><span class=c1>#</span>
+</span></span><span class=line><span class=cl><span class=c1>#############################################</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># 保留我们使用的四大组件，自定义的 Application 等等这些类不被混淆</span>
+</span></span><span class=line><span class=cl><span class=c1># 因为这些子类都有可能被外部调用</span>
+</span></span><span class=line><span class=cl><span class=o>-</span><span class=n>keep</span> <span class=n>public</span> <span class=k>class</span> <span class=o>*</span> <span class=k>extends</span> <span class=n>android</span><span class=o>.</span><span class=n>app</span><span class=o>.</span><span class=n>Activity</span>
+</span></span><span class=line><span class=cl><span class=o>-</span><span class=n>keep</span> <span class=n>public</span> <span class=k>class</span> <span class=o>*</span> <span class=k>extends</span> <span class=n>android</span><span class=o>.</span><span class=n>app</span><span class=o>.</span><span class=n>Appliction</span>
+</span></span><span class=line><span class=cl><span class=o>-</span><span class=n>keep</span> <span class=n>public</span> <span class=k>class</span> <span class=o>*</span> <span class=k>extends</span> <span class=n>android</span><span class=o>.</span><span class=n>app</span><span class=o>.</span><span class=n>Service</span>
+</span></span><span class=line><span class=cl><span class=o>-</span><span class=n>keep</span> <span class=n>public</span> <span class=k>class</span> <span class=o>*</span> <span class=k>extends</span> <span class=n>android</span><span class=o>.</span><span class=n>content</span><span class=o>.</span><span class=n>BroadcastReceiver</span>
+</span></span><span class=line><span class=cl><span class=o>-</span><span class=n>keep</span> <span class=n>public</span> <span class=k>class</span> <span class=o>*</span> <span class=k>extends</span> <span class=n>android</span><span class=o>.</span><span class=n>content</span><span class=o>.</span><span class=n>ContentProvider</span>
+</span></span><span class=line><span class=cl><span class=o>-</span><span class=n>keep</span> <span class=n>public</span> <span class=k>class</span> <span class=o>*</span> <span class=k>extends</span> <span class=n>android</span><span class=o>.</span><span class=n>app</span><span class=o>.</span><span class=n>backup</span><span class=o>.</span><span class=n>BackupAgentHelper</span>
+</span></span><span class=line><span class=cl><span class=o>-</span><span class=n>keep</span> <span class=n>public</span> <span class=k>class</span> <span class=o>*</span> <span class=k>extends</span> <span class=n>android</span><span class=o>.</span><span class=n>preference</span><span class=o>.</span><span class=n>Preference</span>
+</span></span><span class=line><span class=cl><span class=o>-</span><span class=n>keep</span> <span class=n>public</span> <span class=k>class</span> <span class=o>*</span> <span class=k>extends</span> <span class=n>android</span><span class=o>.</span><span class=n>view</span><span class=o>.</span><span class=n>View</span>
+</span></span><span class=line><span class=cl><span class=o>-</span><span class=n>keep</span> <span class=n>public</span> <span class=k>class</span> <span class=n>com</span><span class=o>.</span><span class=n>android</span><span class=o>.</span><span class=n>vending</span><span class=o>.</span><span class=n>licensing</span><span class=o>.</span><span class=n>ILicensingService</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># 保留 support 下的所有类及其内部类</span>
+</span></span><span class=line><span class=cl><span class=o>-</span><span class=n>keep</span> <span class=k>class</span> <span class=n>android</span><span class=o>.</span><span class=n>support</span><span class=o>.**</span> <span class=p>{</span> <span class=o>*</span><span class=p>;</span> <span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># 保留继承的</span>
+</span></span><span class=line><span class=cl><span class=o>-</span><span class=n>keep</span> <span class=n>public</span> <span class=k>class</span> <span class=o>*</span> <span class=k>extends</span> <span class=n>android</span><span class=o>.</span><span class=n>support</span><span class=o>.</span><span class=n>v4</span><span class=o>.**</span>
+</span></span><span class=line><span class=cl><span class=o>-</span><span class=n>keep</span> <span class=n>public</span> <span class=k>class</span> <span class=o>*</span> <span class=k>extends</span> <span class=n>android</span><span class=o>.</span><span class=n>support</span><span class=o>.</span><span class=n>v7</span><span class=o>.**</span>
+</span></span><span class=line><span class=cl><span class=o>-</span><span class=n>keep</span> <span class=n>public</span> <span class=k>class</span> <span class=o>*</span> <span class=k>extends</span> <span class=n>android</span><span class=o>.</span><span class=n>support</span><span class=o>.</span><span class=n>annotation</span><span class=o>.**</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># 保留 R 下面的资源</span>
+</span></span><span class=line><span class=cl><span class=o>-</span><span class=n>keep</span> <span class=k>class</span> <span class=o>**.</span><span class=n>R</span><span class=o>$*</span> <span class=p>{</span> <span class=o>*</span><span class=p>;</span> <span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># 保留本地 native 方法不被混淆</span>
+</span></span><span class=line><span class=cl><span class=o>-</span><span class=n>keepclasseswithmembernames</span> <span class=k>class</span> <span class=o>*</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=n>native</span> <span class=o>&lt;</span><span class=n>methods</span><span class=o>&gt;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># 保留在 Activity 中的方法参数是view的方法，</span>
+</span></span><span class=line><span class=cl><span class=c1># 这样以来我们在 layout 中写的 onClick 就不会被影响</span>
+</span></span><span class=line><span class=cl><span class=o>-</span><span class=n>keepclassmembers</span> <span class=k>class</span> <span class=o>*</span> <span class=k>extends</span> <span class=n>android</span><span class=o>.</span><span class=n>app</span><span class=o>.</span><span class=n>Activity</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=n>public</span> <span class=n>void</span> <span class=o>*</span><span class=p>(</span><span class=n>android</span><span class=o>.</span><span class=n>view</span><span class=o>.</span><span class=n>View</span><span class=p>);</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># 保留枚举类不被混淆</span>
+</span></span><span class=line><span class=cl><span class=o>-</span><span class=n>keepclassmembers</span> <span class=k>enum</span> <span class=o>*</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=n>public</span> <span class=k>static</span> <span class=o>**</span><span class=p>[]</span> <span class=n>values</span><span class=p>();</span>
+</span></span><span class=line><span class=cl>    <span class=n>public</span> <span class=k>static</span> <span class=o>**</span> <span class=n>valueOf</span><span class=p>(</span><span class=n>java</span><span class=o>.</span><span class=n>lang</span><span class=o>.</span><span class=n>String</span><span class=p>);</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># 保留我们自定义控件（继承自 View）不被混淆</span>
+</span></span><span class=line><span class=cl><span class=o>-</span><span class=n>keep</span> <span class=n>public</span> <span class=k>class</span> <span class=o>*</span> <span class=k>extends</span> <span class=n>android</span><span class=o>.</span><span class=n>view</span><span class=o>.</span><span class=n>View</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=o>***</span> <span class=n>get</span><span class=o>*</span><span class=p>();</span>
+</span></span><span class=line><span class=cl>    <span class=n>void</span> <span class=n>set</span><span class=o>*</span><span class=p>(</span><span class=o>***</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=n>public</span> <span class=o>&lt;</span><span class=n>init</span><span class=o>&gt;</span><span class=p>(</span><span class=n>android</span><span class=o>.</span><span class=n>content</span><span class=o>.</span><span class=n>Context</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=n>public</span> <span class=o>&lt;</span><span class=n>init</span><span class=o>&gt;</span><span class=p>(</span><span class=n>android</span><span class=o>.</span><span class=n>content</span><span class=o>.</span><span class=n>Context</span><span class=p>,</span> <span class=n>android</span><span class=o>.</span><span class=n>util</span><span class=o>.</span><span class=n>AttributeSet</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=n>public</span> <span class=o>&lt;</span><span class=n>init</span><span class=o>&gt;</span><span class=p>(</span><span class=n>android</span><span class=o>.</span><span class=n>content</span><span class=o>.</span><span class=n>Context</span><span class=p>,</span> <span class=n>android</span><span class=o>.</span><span class=n>util</span><span class=o>.</span><span class=n>AttributeSet</span><span class=p>,</span> <span class=ne>int</span><span class=p>);</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># 保留 Parcelable 序列化类不被混淆</span>
+</span></span><span class=line><span class=cl><span class=o>-</span><span class=n>keep</span> <span class=k>class</span> <span class=o>*</span> <span class=n>implements</span> <span class=n>android</span><span class=o>.</span><span class=n>os</span><span class=o>.</span><span class=n>Parcelable</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=n>public</span> <span class=k>static</span> <span class=n>final</span> <span class=n>android</span><span class=o>.</span><span class=n>os</span><span class=o>.</span><span class=n>Parcelable</span><span class=o>$</span><span class=n>Creator</span> <span class=o>*</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># 保留 Serializable 序列化的类不被混淆</span>
+</span></span><span class=line><span class=cl><span class=o>-</span><span class=n>keepnames</span> <span class=k>class</span> <span class=o>*</span> <span class=n>implements</span> <span class=n>java</span><span class=o>.</span><span class=n>io</span><span class=o>.</span><span class=n>Serializable</span>
+</span></span><span class=line><span class=cl><span class=o>-</span><span class=n>keepclassmembers</span> <span class=k>class</span> <span class=o>*</span> <span class=n>implements</span> <span class=n>java</span><span class=o>.</span><span class=n>io</span><span class=o>.</span><span class=n>Serializable</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=k>static</span> <span class=n>final</span> <span class=n>long</span> <span class=n>serialVersionUID</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=n>private</span> <span class=k>static</span> <span class=n>final</span> <span class=n>java</span><span class=o>.</span><span class=n>io</span><span class=o>.</span><span class=n>ObjectStreamField</span><span class=p>[]</span> <span class=n>serialPersistentFields</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=o>!</span><span class=k>static</span> <span class=o>!</span><span class=n>transient</span> <span class=o>&lt;</span><span class=n>fields</span><span class=o>&gt;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=o>!</span><span class=n>private</span> <span class=o>&lt;</span><span class=n>fields</span><span class=o>&gt;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=o>!</span><span class=n>private</span> <span class=o>&lt;</span><span class=n>methods</span><span class=o>&gt;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=n>private</span> <span class=n>void</span> <span class=n>writeObject</span><span class=p>(</span><span class=n>java</span><span class=o>.</span><span class=n>io</span><span class=o>.</span><span class=n>ObjectOutputStream</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=n>private</span> <span class=n>void</span> <span class=n>readObject</span><span class=p>(</span><span class=n>java</span><span class=o>.</span><span class=n>io</span><span class=o>.</span><span class=n>ObjectInputStream</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=n>java</span><span class=o>.</span><span class=n>lang</span><span class=o>.</span><span class=n>Object</span> <span class=n>writeReplace</span><span class=p>();</span>
+</span></span><span class=line><span class=cl>    <span class=n>java</span><span class=o>.</span><span class=n>lang</span><span class=o>.</span><span class=n>Object</span> <span class=n>readResolve</span><span class=p>();</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># 对于带有回调函数的 onXXEvent、**On*Listener 的，不能被混淆</span>
+</span></span><span class=line><span class=cl><span class=o>-</span><span class=n>keepclassmembers</span> <span class=k>class</span> <span class=o>*</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=n>void</span> <span class=o>*</span><span class=p>(</span><span class=o>**</span><span class=n>On</span><span class=o>*</span><span class=n>Event</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=n>void</span> <span class=o>*</span><span class=p>(</span><span class=o>**</span><span class=n>On</span><span class=o>*</span><span class=n>Listener</span><span class=p>);</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># webView 处理，项目中没有使用到 webView 忽略即可</span>
+</span></span><span class=line><span class=cl><span class=o>-</span><span class=n>keepclassmembers</span> <span class=k>class</span> <span class=n>fqcn</span><span class=o>.</span><span class=n>of</span><span class=o>.</span><span class=n>javascript</span><span class=o>.</span><span class=n>interface</span><span class=o>.</span><span class=k>for</span><span class=o>.</span><span class=n>webview</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=n>public</span> <span class=o>*</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=o>-</span><span class=n>keepclassmembers</span> <span class=k>class</span> <span class=o>*</span> <span class=k>extends</span> <span class=n>android</span><span class=o>.</span><span class=n>webkit</span><span class=o>.</span><span class=n>webViewClient</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=n>public</span> <span class=n>void</span> <span class=o>*</span><span class=p>(</span><span class=n>android</span><span class=o>.</span><span class=n>webkit</span><span class=o>.</span><span class=n>WebView</span><span class=p>,</span> <span class=n>java</span><span class=o>.</span><span class=n>lang</span><span class=o>.</span><span class=n>String</span><span class=p>,</span> <span class=n>android</span><span class=o>.</span><span class=n>graphics</span><span class=o>.</span><span class=n>Bitmap</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=n>public</span> <span class=n>boolean</span> <span class=o>*</span><span class=p>(</span><span class=n>android</span><span class=o>.</span><span class=n>webkit</span><span class=o>.</span><span class=n>WebView</span><span class=p>,</span> <span class=n>java</span><span class=o>.</span><span class=n>lang</span><span class=o>.</span><span class=n>String</span><span class=p>);</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=o>-</span><span class=n>keepclassmembers</span> <span class=k>class</span> <span class=o>*</span> <span class=k>extends</span> <span class=n>android</span><span class=o>.</span><span class=n>webkit</span><span class=o>.</span><span class=n>webViewClient</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=n>public</span> <span class=n>void</span> <span class=o>*</span><span class=p>(</span><span class=n>android</span><span class=o>.</span><span class=n>webkit</span><span class=o>.</span><span class=n>webView</span><span class=p>,</span> <span class=n>java</span><span class=o>.</span><span class=n>lang</span><span class=o>.</span><span class=n>String</span><span class=p>);</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># js</span>
+</span></span><span class=line><span class=cl><span class=o>-</span><span class=n>keepattributes</span> <span class=n>JavascriptInterface</span>
+</span></span><span class=line><span class=cl><span class=o>-</span><span class=n>keep</span> <span class=k>class</span> <span class=n>android</span><span class=o>.</span><span class=n>webkit</span><span class=o>.</span><span class=n>JavascriptInterface</span> <span class=p>{</span> <span class=o>*</span><span class=p>;</span> <span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=o>-</span><span class=n>keepclassmembers</span> <span class=k>class</span> <span class=o>*</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=err>@</span><span class=n>android</span><span class=o>.</span><span class=n>webkit</span><span class=o>.</span><span class=n>JavascriptInterface</span> <span class=o>&lt;</span><span class=n>methods</span><span class=o>&gt;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># @Keep</span>
+</span></span><span class=line><span class=cl><span class=o>-</span><span class=n>keep</span><span class=p>,</span><span class=n>allowobfuscation</span> <span class=err>@</span><span class=n>interface</span> <span class=n>android</span><span class=o>.</span><span class=n>support</span><span class=o>.</span><span class=n>annotation</span><span class=o>.</span><span class=n>Keep</span>
+</span></span><span class=line><span class=cl><span class=o>-</span><span class=n>keep</span> <span class=err>@</span><span class=n>android</span><span class=o>.</span><span class=n>support</span><span class=o>.</span><span class=n>annotation</span><span class=o>.</span><span class=n>Keep</span> <span class=k>class</span> <span class=o>*</span>
+</span></span><span class=line><span class=cl><span class=o>-</span><span class=n>keepclassmembers</span> <span class=k>class</span> <span class=o>*</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=err>@</span><span class=n>android</span><span class=o>.</span><span class=n>support</span><span class=o>.</span><span class=n>annotation</span><span class=o>.</span><span class=n>Keep</span> <span class=o>*</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span></span></span></code></pre></td></tr></table></div></div><h2 id=常用的自定义混淆规则>常用的自定义混淆规则
+<a class=header-anchor href=#%e5%b8%b8%e7%94%a8%e7%9a%84%e8%87%aa%e5%ae%9a%e4%b9%89%e6%b7%b7%e6%b7%86%e8%a7%84%e5%88%99></a></h2><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt id=hl-3-1><a class=lnlinks href=#hl-3-1> 1</a>
+</span><span class=lnt id=hl-3-2><a class=lnlinks href=#hl-3-2> 2</a>
+</span><span class=lnt id=hl-3-3><a class=lnlinks href=#hl-3-3> 3</a>
+</span><span class=lnt id=hl-3-4><a class=lnlinks href=#hl-3-4> 4</a>
+</span><span class=lnt id=hl-3-5><a class=lnlinks href=#hl-3-5> 5</a>
+</span><span class=lnt id=hl-3-6><a class=lnlinks href=#hl-3-6> 6</a>
+</span><span class=lnt id=hl-3-7><a class=lnlinks href=#hl-3-7> 7</a>
+</span><span class=lnt id=hl-3-8><a class=lnlinks href=#hl-3-8> 8</a>
+</span><span class=lnt id=hl-3-9><a class=lnlinks href=#hl-3-9> 9</a>
+</span><span class=lnt id=hl-3-10><a class=lnlinks href=#hl-3-10>10</a>
+</span><span class=lnt id=hl-3-11><a class=lnlinks href=#hl-3-11>11</a>
+</span><span class=lnt id=hl-3-12><a class=lnlinks href=#hl-3-12>12</a>
+</span><span class=lnt id=hl-3-13><a class=lnlinks href=#hl-3-13>13</a>
+</span><span class=lnt id=hl-3-14><a class=lnlinks href=#hl-3-14>14</a>
+</span><span class=lnt id=hl-3-15><a class=lnlinks href=#hl-3-15>15</a>
+</span><span class=lnt id=hl-3-16><a class=lnlinks href=#hl-3-16>16</a>
+</span><span class=lnt id=hl-3-17><a class=lnlinks href=#hl-3-17>17</a>
+</span><span class=lnt id=hl-3-18><a class=lnlinks href=#hl-3-18>18</a>
+</span><span class=lnt id=hl-3-19><a class=lnlinks href=#hl-3-19>19</a>
+</span><span class=lnt id=hl-3-20><a class=lnlinks href=#hl-3-20>20</a>
+</span><span class=lnt id=hl-3-21><a class=lnlinks href=#hl-3-21>21</a>
+</span><span class=lnt id=hl-3-22><a class=lnlinks href=#hl-3-22>22</a>
+</span><span class=lnt id=hl-3-23><a class=lnlinks href=#hl-3-23>23</a>
+</span><span class=lnt id=hl-3-24><a class=lnlinks href=#hl-3-24>24</a>
+</span><span class=lnt id=hl-3-25><a class=lnlinks href=#hl-3-25>25</a>
+</span><span class=lnt id=hl-3-26><a class=lnlinks href=#hl-3-26>26</a>
+</span><span class=lnt id=hl-3-27><a class=lnlinks href=#hl-3-27>27</a>
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-xml data-lang=xml><span class=line><span class=cl># 通配符*，匹配任意长度字符，但不含包名分隔符(.)
+</span></span><span class=line><span class=cl># 通配符**，匹配任意长度字符，并且包含包名分隔符(.)
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl># 不混淆某个类
+</span></span><span class=line><span class=cl>-keep public class com.jasonwu.demo.Test { *; }
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl># 不混淆某个包所有的类
+</span></span><span class=line><span class=cl>-keep class com.jasonwu.demo.test.** { *; }
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl># 不混淆某个类的子类
+</span></span><span class=line><span class=cl>-keep public class * com.jasonwu.demo.Test { *; }
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl># 不混淆所有类名中包含了 ``model`` 的类及其成员
+</span></span><span class=line><span class=cl>-keep public class **.*model*.** {*;}
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl># 不混淆某个接口的实现
+</span></span><span class=line><span class=cl>-keep class * implements com.jasonwu.demo.TestInterface { *; }
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl># 不混淆某个类的构造方法
+</span></span><span class=line><span class=cl>-keepclassmembers class com.jasonwu.demo.Test { 
+</span></span><span class=line><span class=cl>  public <span class=nt>&lt;init&gt;</span>(); 
+</span></span><span class=line><span class=cl>}
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl># 不混淆某个类的特定的方法
+</span></span><span class=line><span class=cl>-keepclassmembers class com.jasonwu.demo.Test { 
+</span></span><span class=line><span class=cl>  public void test(java.lang.String); 
+</span></span><span class=line><span class=cl>}</span></span></code></pre></td></tr></table></div></div><h2 id=aar中增加独立的混淆配置>aar中增加独立的混淆配置
+<a class=header-anchor href=#aar%e4%b8%ad%e5%a2%9e%e5%8a%a0%e7%8b%ac%e7%ab%8b%e7%9a%84%e6%b7%b7%e6%b7%86%e9%85%8d%e7%bd%ae></a></h2><p><code>build.gralde</code></p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt id=hl-4-1><a class=lnlinks href=#hl-4-1>1</a>
+</span><span class=lnt id=hl-4-2><a class=lnlinks href=#hl-4-2>2</a>
+</span><span class=lnt id=hl-4-3><a class=lnlinks href=#hl-4-3>3</a>
+</span><span class=lnt id=hl-4-4><a class=lnlinks href=#hl-4-4>4</a>
+</span><span class=lnt id=hl-4-5><a class=lnlinks href=#hl-4-5>5</a>
+</span><span class=lnt id=hl-4-6><a class=lnlinks href=#hl-4-6>6</a>
+</span><span class=lnt id=hl-4-7><a class=lnlinks href=#hl-4-7>7</a>
+</span><span class=lnt id=hl-4-8><a class=lnlinks href=#hl-4-8>8</a>
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-gradle data-lang=gradle><span class=line><span class=cl><span class=n>android</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>    <span class=err>···</span>
+</span></span><span class=line><span class=cl>    <span class=n>defaultConfig</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>        <span class=err>···</span>
+</span></span><span class=line><span class=cl>        <span class=n>consumerProguardFile</span> <span class=s1>&#39;proguard-rules.pro&#39;</span>
+</span></span><span class=line><span class=cl>    <span class=o>}</span>
+</span></span><span class=line><span class=cl>    <span class=err>···</span>
+</span></span><span class=line><span class=cl><span class=o>}</span></span></span></code></pre></td></tr></table></div></div><h2 id=检查混淆和追踪异常>检查混淆和追踪异常
+<a class=header-anchor href=#%e6%a3%80%e6%9f%a5%e6%b7%b7%e6%b7%86%e5%92%8c%e8%bf%bd%e8%b8%aa%e5%bc%82%e5%b8%b8></a></h2><p>开启 Proguard 功能，则每次构建时 ProGuard 都会输出下列文件：</p><ul><li><p>dump.txt<br>说明 APK 中所有类文件的内部结构。</p></li><li><p>mapping.txt<br>提供原始与混淆过的类、方法和字段名称之间的转换。</p></li><li><p>seeds.txt<br>列出未进行混淆的类和成员。</p></li><li><p>usage.txt<br>列出从 APK 移除的代码。</p></li></ul><p>这些文件保存在 /build/outputs/mapping/release/ 中。我们可以查看 seeds.txt 里面是否是我们需要保留的，以及 usage.txt 里查看是否有误删除的代码。 mapping.txt 文件很重要，由于我们的部分代码是经过重命名的，如果该部分出现 bug，对应的异常堆栈信息里的类或成员也是经过重命名的，难以定位问题。我们可以用 retrace 脚本（在 Windows 上为 retrace.bat；在 Mac/Linux 上为 retrace.sh）。它位于 /tools/proguard/ 目录中。该脚本利用 mapping.txt 文件和你的异常堆栈文件生成没有经过混淆的异常堆栈文件,这样就可以看清是哪里出问题了。使用 retrace 工具的语法如下：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt id=hl-5-1><a class=lnlinks href=#hl-5-1>1</a>
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=line><span class=cl>retrace.bat<span class=p>|</span>retrace.sh <span class=o>[</span>-verbose<span class=o>]</span> mapping.txt <span class=o>[</span>&lt;stacktrace_file&gt;<span class=o>]</span></span></span></code></pre></td></tr></table></div></div><h1 id=架构>架构
+<a class=header-anchor href=#%e6%9e%b6%e6%9e%84></a></h1><h2 id=mvc>MVC
+<a class=header-anchor href=#mvc></a></h2><p><img src=/imgs/img-lazy-loading.gif data-src="https://mmbiz.qpic.cn/mmbiz_png/zKFJDM5V3Wy5xbLTp6JMMdouZiavFxyYCwLhGyLdicyLzgUDKFTZVt1OgU6iaSx2IUwnygzmQzW7Renaa8hmQ62cQ/640?wx_fmt=png&amp;tp=webp&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1" alt></p><p>在 Android 中，三者的关系如下：</p><p><img src=/imgs/img-lazy-loading.gif data-src="https://mmbiz.qpic.cn/mmbiz_png/zKFJDM5V3Wy5xbLTp6JMMdouZiavFxyYCicNvEVMO9vDgukUR29Z1DCacZJwmmH1EEb7gUOZmDxolWexP01O8jfg/640?wx_fmt=png&amp;tp=webp&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1" alt></p><p>由于在 Android 中 xml 布局的功能性太弱，所以 Activity 承担了绝大部分的工作，所以在 Android 中 mvc 更像：</p><p><img src=/imgs/img-lazy-loading.gif data-src="https://mmbiz.qpic.cn/mmbiz_png/zKFJDM5V3Wy5xbLTp6JMMdouZiavFxyYCOq89MLQX4UM3dgBTQfU72desHb1XbOWRQZINnXOCCdZCuicUiaTHhtEg/640?wx_fmt=png&amp;tp=webp&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1" alt></p><p>总结：</p><ul><li>具有一定的分层，model 解耦，controller 和 view 并没有解耦</li><li>controller 和 view 在 Android 中无法做到彻底分离，Controller 变得臃肿不堪</li><li>易于理解、开发速度快、可维护性高</li></ul><h2 id=mvp>MVP
+<a class=header-anchor href=#mvp></a></h2><p><img src=/imgs/img-lazy-loading.gif data-src="https://mmbiz.qpic.cn/mmbiz_png/zKFJDM5V3Wy5xbLTp6JMMdouZiavFxyYCLVgibsuVQFguBI8FBdZibLNfpvbpd6njkdGWdyR2UL6TzMOhKHFqLC0Q/640?wx_fmt=png&amp;tp=webp&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1" alt></p><p>通过引入接口 BaseView，让相应的视图组件如 Activity，Fragment去实现 BaseView，把业务逻辑放在 presenter 层中，弱化 Model 只有跟 view 相关的操作都由 View 层去完成。</p><p>总结：</p><ul><li>彻底解决了 MVC 中 View 和 Controller 傻傻分不清楚的问题</li><li>但是随着业务逻辑的增加，一个页面可能会非常复杂，UI 的改变是非常多，会有非常多的 case，这样就会造成 View 的接口会很庞大</li><li>更容易单元测试</li></ul><h2 id=mvvm>MVVM
+<a class=header-anchor href=#mvvm></a></h2><p><img src=/imgs/img-lazy-loading.gif data-src="https://mmbiz.qpic.cn/mmbiz_png/zKFJDM5V3Wy5xbLTp6JMMdouZiavFxyYCMygIDD6xo5djkq6Y3jZo53sT2A4kKNaz8JEVRwmUnTmcAwJm0pZVWg/640?wx_fmt=png&amp;tp=webp&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1" alt></p><p>在 MVP 中 View 和 Presenter 要相互持有，方便调用对方，而在 MVP 中 View 和 ViewModel 通过 Binding 进行关联，他们之前的关联处理通过 DataBinding 完成。</p><p>总结：</p><ul><li>很好的解决了 MVC 和 MVP 的问题</li><li>视图状态较多，ViewModel 的构建和维护的成本都会比较高</li><li>但是由于数据和视图的双向绑定，导致出现问题时不太好定位来源</li></ul><h1 id=jetpack>Jetpack
+<a class=header-anchor href=#jetpack></a></h1><h2 id=架构-1>架构
+<a class=header-anchor href=#%e6%9e%b6%e6%9e%84-1></a></h2><p><img src=/imgs/img-lazy-loading.gif data-src=https://developer.android.google.cn/topic/libraries/architecture/images/final-architecture.png alt></p><h2 id=使用示例-1>使用示例
+<a class=header-anchor href=#%e4%bd%bf%e7%94%a8%e7%a4%ba%e4%be%8b-1></a></h2><p><code>build.gradle</code></p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt id=hl-6-1><a class=lnlinks href=#hl-6-1> 1</a>
+</span><span class=lnt id=hl-6-2><a class=lnlinks href=#hl-6-2> 2</a>
+</span><span class=lnt id=hl-6-3><a class=lnlinks href=#hl-6-3> 3</a>
+</span><span class=lnt id=hl-6-4><a class=lnlinks href=#hl-6-4> 4</a>
+</span><span class=lnt id=hl-6-5><a class=lnlinks href=#hl-6-5> 5</a>
+</span><span class=lnt id=hl-6-6><a class=lnlinks href=#hl-6-6> 6</a>
+</span><span class=lnt id=hl-6-7><a class=lnlinks href=#hl-6-7> 7</a>
+</span><span class=lnt id=hl-6-8><a class=lnlinks href=#hl-6-8> 8</a>
+</span><span class=lnt id=hl-6-9><a class=lnlinks href=#hl-6-9> 9</a>
+</span><span class=lnt id=hl-6-10><a class=lnlinks href=#hl-6-10>10</a>
+</span><span class=lnt id=hl-6-11><a class=lnlinks href=#hl-6-11>11</a>
+</span><span class=lnt id=hl-6-12><a class=lnlinks href=#hl-6-12>12</a>
+</span><span class=lnt id=hl-6-13><a class=lnlinks href=#hl-6-13>13</a>
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-groovy data-lang=groovy><span class=line><span class=cl><span class=n>android</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>    <span class=err>···</span>
+</span></span><span class=line><span class=cl>    <span class=n>dataBinding</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>        <span class=n>enabled</span> <span class=o>=</span> <span class=kc>true</span>
+</span></span><span class=line><span class=cl>    <span class=o>}</span>
+</span></span><span class=line><span class=cl><span class=o>}</span>
+</span></span><span class=line><span class=cl><span class=n>dependencies</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>    <span class=err>···</span>
+</span></span><span class=line><span class=cl>    <span class=n>implementation</span> <span class=s2>&#34;androidx.fragment:fragment-ktx:$rootProject.fragmentVersion&#34;</span>
+</span></span><span class=line><span class=cl>    <span class=n>implementation</span> <span class=s2>&#34;androidx.lifecycle:lifecycle-extensions:$rootProject.lifecycleVersion&#34;</span>
+</span></span><span class=line><span class=cl>    <span class=n>implementation</span> <span class=s2>&#34;androidx.lifecycle:lifecycle-livedata-ktx:$rootProject.lifecycleVersion&#34;</span>
+</span></span><span class=line><span class=cl>    <span class=n>implementation</span> <span class=s2>&#34;androidx.lifecycle:lifecycle-viewmodel-ktx:$rootProject.lifecycleVersion&#34;</span>
+</span></span><span class=line><span class=cl><span class=o>}</span></span></span></code></pre></td></tr></table></div></div><p><code>fragment_plant_detail.xml</code></p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt id=hl-7-1><a class=lnlinks href=#hl-7-1> 1</a>
+</span><span class=lnt id=hl-7-2><a class=lnlinks href=#hl-7-2> 2</a>
+</span><span class=lnt id=hl-7-3><a class=lnlinks href=#hl-7-3> 3</a>
+</span><span class=lnt id=hl-7-4><a class=lnlinks href=#hl-7-4> 4</a>
+</span><span class=lnt id=hl-7-5><a class=lnlinks href=#hl-7-5> 5</a>
+</span><span class=lnt id=hl-7-6><a class=lnlinks href=#hl-7-6> 6</a>
+</span><span class=lnt id=hl-7-7><a class=lnlinks href=#hl-7-7> 7</a>
+</span><span class=lnt id=hl-7-8><a class=lnlinks href=#hl-7-8> 8</a>
+</span><span class=lnt id=hl-7-9><a class=lnlinks href=#hl-7-9> 9</a>
+</span><span class=lnt id=hl-7-10><a class=lnlinks href=#hl-7-10>10</a>
+</span><span class=lnt id=hl-7-11><a class=lnlinks href=#hl-7-11>11</a>
+</span><span class=lnt id=hl-7-12><a class=lnlinks href=#hl-7-12>12</a>
+</span><span class=lnt id=hl-7-13><a class=lnlinks href=#hl-7-13>13</a>
+</span><span class=lnt id=hl-7-14><a class=lnlinks href=#hl-7-14>14</a>
+</span><span class=lnt id=hl-7-15><a class=lnlinks href=#hl-7-15>15</a>
+</span><span class=lnt id=hl-7-16><a class=lnlinks href=#hl-7-16>16</a>
+</span><span class=lnt id=hl-7-17><a class=lnlinks href=#hl-7-17>17</a>
+</span><span class=lnt id=hl-7-18><a class=lnlinks href=#hl-7-18>18</a>
+</span><span class=lnt id=hl-7-19><a class=lnlinks href=#hl-7-19>19</a>
+</span><span class=lnt id=hl-7-20><a class=lnlinks href=#hl-7-20>20</a>
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-xml data-lang=xml><span class=line><span class=cl><span class=nt>&lt;layout</span> <span class=na>xmlns:android=</span><span class=s>&#34;http://schemas.android.com/apk/res/android&#34;</span>
+</span></span><span class=line><span class=cl>    <span class=na>xmlns:app=</span><span class=s>&#34;http://schemas.android.com/apk/res-auto&#34;</span>
+</span></span><span class=line><span class=cl>    <span class=na>xmlns:tools=</span><span class=s>&#34;http://schemas.android.com/tools&#34;</span><span class=nt>&gt;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=nt>&lt;data&gt;</span>
+</span></span><span class=line><span class=cl>        <span class=nt>&lt;variable</span>
+</span></span><span class=line><span class=cl>            <span class=na>name=</span><span class=s>&#34;viewModel&#34;</span>
+</span></span><span class=line><span class=cl>            <span class=na>type=</span><span class=s>&#34;com.google.samples.apps.sunflower.viewmodels.PlantDetailViewModel&#34;</span> <span class=nt>/&gt;</span>
+</span></span><span class=line><span class=cl>    <span class=nt>&lt;/data&gt;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=nt>&lt;androidx.constraintlayout.widget.ConstraintLayout</span>
+</span></span><span class=line><span class=cl>        <span class=na>android:layout_width=</span><span class=s>&#34;match_parent&#34;</span>
+</span></span><span class=line><span class=cl>        <span class=na>android:layout_height=</span><span class=s>&#34;match_parent&#34;</span><span class=nt>&gt;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        <span class=nt>&lt;TextView</span>
+</span></span><span class=line><span class=cl>            <span class=err>···</span>
+</span></span><span class=line><span class=cl>            <span class=na>android:text=</span><span class=s>&#34;@{viewModel.plant.name}&#34;</span><span class=nt>/&gt;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=nt>&lt;/androidx.constraintlayout.widget.ConstraintLayout&gt;</span>
+</span></span><span class=line><span class=cl><span class=nt>&lt;/layout&gt;</span></span></span></code></pre></td></tr></table></div></div><p><code>PlantDetailFragment.kt</code></p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt id=hl-8-1><a class=lnlinks href=#hl-8-1> 1</a>
+</span><span class=lnt id=hl-8-2><a class=lnlinks href=#hl-8-2> 2</a>
+</span><span class=lnt id=hl-8-3><a class=lnlinks href=#hl-8-3> 3</a>
+</span><span class=lnt id=hl-8-4><a class=lnlinks href=#hl-8-4> 4</a>
+</span><span class=lnt id=hl-8-5><a class=lnlinks href=#hl-8-5> 5</a>
+</span><span class=lnt id=hl-8-6><a class=lnlinks href=#hl-8-6> 6</a>
+</span><span class=lnt id=hl-8-7><a class=lnlinks href=#hl-8-7> 7</a>
+</span><span class=lnt id=hl-8-8><a class=lnlinks href=#hl-8-8> 8</a>
+</span><span class=lnt id=hl-8-9><a class=lnlinks href=#hl-8-9> 9</a>
+</span><span class=lnt id=hl-8-10><a class=lnlinks href=#hl-8-10>10</a>
+</span><span class=lnt id=hl-8-11><a class=lnlinks href=#hl-8-11>11</a>
+</span><span class=lnt id=hl-8-12><a class=lnlinks href=#hl-8-12>12</a>
+</span><span class=lnt id=hl-8-13><a class=lnlinks href=#hl-8-13>13</a>
+</span><span class=lnt id=hl-8-14><a class=lnlinks href=#hl-8-14>14</a>
+</span><span class=lnt id=hl-8-15><a class=lnlinks href=#hl-8-15>15</a>
+</span><span class=lnt id=hl-8-16><a class=lnlinks href=#hl-8-16>16</a>
+</span><span class=lnt id=hl-8-17><a class=lnlinks href=#hl-8-17>17</a>
+</span><span class=lnt id=hl-8-18><a class=lnlinks href=#hl-8-18>18</a>
+</span><span class=lnt id=hl-8-19><a class=lnlinks href=#hl-8-19>19</a>
+</span><span class=lnt id=hl-8-20><a class=lnlinks href=#hl-8-20>20</a>
+</span><span class=lnt id=hl-8-21><a class=lnlinks href=#hl-8-21>21</a>
+</span><span class=lnt id=hl-8-22><a class=lnlinks href=#hl-8-22>22</a>
+</span><span class=lnt id=hl-8-23><a class=lnlinks href=#hl-8-23>23</a>
+</span><span class=lnt id=hl-8-24><a class=lnlinks href=#hl-8-24>24</a>
+</span><span class=lnt id=hl-8-25><a class=lnlinks href=#hl-8-25>25</a>
+</span><span class=lnt id=hl-8-26><a class=lnlinks href=#hl-8-26>26</a>
+</span><span class=lnt id=hl-8-27><a class=lnlinks href=#hl-8-27>27</a>
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-kotlin data-lang=kotlin><span class=line><span class=cl><span class=k>class</span> <span class=nc>PlantDetailFragment</span> <span class=p>:</span> <span class=n>Fragment</span><span class=p>()</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=k>private</span> <span class=k>val</span> <span class=py>args</span><span class=p>:</span> <span class=n>PlantDetailFragmentArgs</span> <span class=k>by</span> <span class=n>navArgs</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>    <span class=k>private</span> <span class=k>lateinit</span> <span class=k>var</span> <span class=py>shareText</span><span class=p>:</span> <span class=n>String</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=k>private</span> <span class=k>val</span> <span class=py>plantDetailViewModel</span><span class=p>:</span> <span class=n>PlantDetailViewModel</span> <span class=k>by</span> <span class=n>viewModels</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=nc>InjectorUtils</span><span class=p>.</span><span class=n>providePlantDetailViewModelFactory</span><span class=p>(</span><span class=n>requireActivity</span><span class=p>(),</span> <span class=n>args</span><span class=p>.</span><span class=n>plantId</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=k>override</span> <span class=k>fun</span> <span class=nf>onCreateView</span><span class=p>(</span>
+</span></span><span class=line><span class=cl>        <span class=n>inflater</span><span class=p>:</span> <span class=n>LayoutInflater</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=n>container</span><span class=p>:</span> <span class=n>ViewGroup</span><span class=p>?,</span>
+</span></span><span class=line><span class=cl>        <span class=n>savedInstanceState</span><span class=p>:</span> <span class=n>Bundle</span><span class=p>?</span>
+</span></span><span class=line><span class=cl>    <span class=p>):</span> <span class=n>View</span><span class=p>?</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=k>val</span> <span class=py>binding</span> <span class=p>=</span> <span class=nc>DataBindingUtil</span><span class=p>.</span><span class=n>inflate</span><span class=p>&lt;</span><span class=n>FragmentPlantDetailBinding</span><span class=p>&gt;(</span>
+</span></span><span class=line><span class=cl>                <span class=n>inflater</span><span class=p>,</span> <span class=nc>R</span><span class=p>.</span><span class=n>layout</span><span class=p>.</span><span class=n>fragment_plant_detail</span><span class=p>,</span> <span class=n>container</span><span class=p>,</span> <span class=k>false</span><span class=p>).</span><span class=n>apply</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>            <span class=n>viewModel</span> <span class=p>=</span> <span class=n>plantDetailViewModel</span>
+</span></span><span class=line><span class=cl>            <span class=n>lifecycleOwner</span> <span class=p>=</span> <span class=k>this</span><span class=nd>@PlantDetailFragment</span>
+</span></span><span class=line><span class=cl>        <span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        <span class=n>plantDetailViewModel</span><span class=p>.</span><span class=n>plant</span><span class=p>.</span><span class=n>observe</span><span class=p>(</span><span class=k>this</span><span class=p>)</span> <span class=p>{</span> <span class=n>plant</span> <span class=o>-&gt;</span>
+</span></span><span class=line><span class=cl>            <span class=c1>// 更新相关 UI
+</span></span></span><span class=line><span class=cl>        <span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        <span class=k>return</span> <span class=n>binding</span><span class=p>.</span><span class=n>root</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>}</span></span></span></code></pre></td></tr></table></div></div><p><code>Plant.kt</code></p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt id=hl-9-1><a class=lnlinks href=#hl-9-1>1</a>
+</span><span class=lnt id=hl-9-2><a class=lnlinks href=#hl-9-2>2</a>
+</span><span class=lnt id=hl-9-3><a class=lnlinks href=#hl-9-3>3</a>
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-kotlin data-lang=kotlin><span class=line><span class=cl><span class=k>data</span> <span class=k>class</span> <span class=nc>Plant</span> <span class=p>(</span>
+</span></span><span class=line><span class=cl>    <span class=k>val</span> <span class=py>name</span><span class=p>:</span> <span class=n>String</span>
+</span></span><span class=line><span class=cl><span class=p>)</span></span></span></code></pre></td></tr></table></div></div><p><code>PlantDetailViewModel.kt</code></p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt id=hl-10-1><a class=lnlinks href=#hl-10-1> 1</a>
+</span><span class=lnt id=hl-10-2><a class=lnlinks href=#hl-10-2> 2</a>
+</span><span class=lnt id=hl-10-3><a class=lnlinks href=#hl-10-3> 3</a>
+</span><span class=lnt id=hl-10-4><a class=lnlinks href=#hl-10-4> 4</a>
+</span><span class=lnt id=hl-10-5><a class=lnlinks href=#hl-10-5> 5</a>
+</span><span class=lnt id=hl-10-6><a class=lnlinks href=#hl-10-6> 6</a>
+</span><span class=lnt id=hl-10-7><a class=lnlinks href=#hl-10-7> 7</a>
+</span><span class=lnt id=hl-10-8><a class=lnlinks href=#hl-10-8> 8</a>
+</span><span class=lnt id=hl-10-9><a class=lnlinks href=#hl-10-9> 9</a>
+</span><span class=lnt id=hl-10-10><a class=lnlinks href=#hl-10-10>10</a>
+</span><span class=lnt id=hl-10-11><a class=lnlinks href=#hl-10-11>11</a>
+</span><span class=lnt id=hl-10-12><a class=lnlinks href=#hl-10-12>12</a>
+</span><span class=lnt id=hl-10-13><a class=lnlinks href=#hl-10-13>13</a>
+</span><span class=lnt id=hl-10-14><a class=lnlinks href=#hl-10-14>14</a>
+</span><span class=lnt id=hl-10-15><a class=lnlinks href=#hl-10-15>15</a>
+</span><span class=lnt id=hl-10-16><a class=lnlinks href=#hl-10-16>16</a>
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-kotlin data-lang=kotlin><span class=line><span class=cl><span class=k>class</span> <span class=nc>PlantDetailViewModel</span><span class=p>(</span>
+</span></span><span class=line><span class=cl>    <span class=n>plantRepository</span><span class=p>:</span> <span class=n>PlantRepository</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>    <span class=k>private</span> <span class=k>val</span> <span class=py>plantId</span><span class=p>:</span> <span class=n>String</span>
+</span></span><span class=line><span class=cl><span class=p>)</span> <span class=p>:</span> <span class=n>ViewModel</span><span class=p>()</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=k>val</span> <span class=py>plant</span><span class=p>:</span> <span class=n>LiveData</span><span class=p>&lt;</span><span class=n>Plant</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=k>override</span> <span class=k>fun</span> <span class=nf>onCleared</span><span class=p>()</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=k>super</span><span class=p>.</span><span class=n>onCleared</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>        <span class=n>viewModelScope</span><span class=p>.</span><span class=n>cancel</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=k>init</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=n>plant</span> <span class=p>=</span> <span class=n>plantRepository</span><span class=p>.</span><span class=n>getPlant</span><span class=p>(</span><span class=n>plantId</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>}</span></span></span></code></pre></td></tr></table></div></div><p><code>PlantDetailViewModelFactory.kt</code></p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt id=hl-11-1><a class=lnlinks href=#hl-11-1> 1</a>
+</span><span class=lnt id=hl-11-2><a class=lnlinks href=#hl-11-2> 2</a>
+</span><span class=lnt id=hl-11-3><a class=lnlinks href=#hl-11-3> 3</a>
+</span><span class=lnt id=hl-11-4><a class=lnlinks href=#hl-11-4> 4</a>
+</span><span class=lnt id=hl-11-5><a class=lnlinks href=#hl-11-5> 5</a>
+</span><span class=lnt id=hl-11-6><a class=lnlinks href=#hl-11-6> 6</a>
+</span><span class=lnt id=hl-11-7><a class=lnlinks href=#hl-11-7> 7</a>
+</span><span class=lnt id=hl-11-8><a class=lnlinks href=#hl-11-8> 8</a>
+</span><span class=lnt id=hl-11-9><a class=lnlinks href=#hl-11-9> 9</a>
+</span><span class=lnt id=hl-11-10><a class=lnlinks href=#hl-11-10>10</a>
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-kotlin data-lang=kotlin><span class=line><span class=cl><span class=k>class</span> <span class=nc>PlantDetailViewModelFactory</span><span class=p>(</span>
+</span></span><span class=line><span class=cl>    <span class=k>private</span> <span class=k>val</span> <span class=py>plantRepository</span><span class=p>:</span> <span class=n>PlantRepository</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>    <span class=k>private</span> <span class=k>val</span> <span class=py>plantId</span><span class=p>:</span> <span class=n>String</span>
+</span></span><span class=line><span class=cl><span class=p>)</span> <span class=p>:</span> <span class=nc>ViewModelProvider</span><span class=p>.</span><span class=n>NewInstanceFactory</span><span class=p>()</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=nd>@Suppress</span><span class=p>(</span><span class=s2>&#34;UNCHECKED_CAST&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=k>override</span> <span class=k>fun</span> <span class=p>&lt;</span><span class=nc>T</span> <span class=p>:</span> <span class=nc>ViewModel</span><span class=p>&gt;</span> <span class=nf>create</span><span class=p>(</span><span class=n>modelClass</span><span class=p>:</span> <span class=n>Class</span><span class=p>&lt;</span><span class=n>T</span><span class=p>&gt;):</span> <span class=n>T</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=k>return</span> <span class=n>PlantDetailViewModel</span><span class=p>(</span><span class=n>plantRepository</span><span class=p>,</span> <span class=n>plantId</span><span class=p>)</span> <span class=k>as</span> <span class=n>T</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>}</span></span></span></code></pre></td></tr></table></div></div><p><code>InjectorUtils.kt</code></p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt id=hl-12-1><a class=lnlinks href=#hl-12-1> 1</a>
+</span><span class=lnt id=hl-12-2><a class=lnlinks href=#hl-12-2> 2</a>
+</span><span class=lnt id=hl-12-3><a class=lnlinks href=#hl-12-3> 3</a>
+</span><span class=lnt id=hl-12-4><a class=lnlinks href=#hl-12-4> 4</a>
+</span><span class=lnt id=hl-12-5><a class=lnlinks href=#hl-12-5> 5</a>
+</span><span class=lnt id=hl-12-6><a class=lnlinks href=#hl-12-6> 6</a>
+</span><span class=lnt id=hl-12-7><a class=lnlinks href=#hl-12-7> 7</a>
+</span><span class=lnt id=hl-12-8><a class=lnlinks href=#hl-12-8> 8</a>
+</span><span class=lnt id=hl-12-9><a class=lnlinks href=#hl-12-9> 9</a>
+</span><span class=lnt id=hl-12-10><a class=lnlinks href=#hl-12-10>10</a>
+</span><span class=lnt id=hl-12-11><a class=lnlinks href=#hl-12-11>11</a>
+</span><span class=lnt id=hl-12-12><a class=lnlinks href=#hl-12-12>12</a>
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-kotlin data-lang=kotlin><span class=line><span class=cl><span class=k>object</span> <span class=nc>InjectorUtils</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=k>private</span> <span class=k>fun</span> <span class=nf>getPlantRepository</span><span class=p>(</span><span class=n>context</span><span class=p>:</span> <span class=n>Context</span><span class=p>):</span> <span class=n>PlantRepository</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=err>···</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=k>fun</span> <span class=nf>providePlantDetailViewModelFactory</span><span class=p>(</span>
+</span></span><span class=line><span class=cl>        <span class=n>context</span><span class=p>:</span> <span class=n>Context</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=n>plantId</span><span class=p>:</span> <span class=n>String</span>
+</span></span><span class=line><span class=cl>    <span class=p>):</span> <span class=n>PlantDetailViewModelFactory</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=k>return</span> <span class=n>PlantDetailViewModelFactory</span><span class=p>(</span><span class=n>getPlantRepository</span><span class=p>(</span><span class=n>context</span><span class=p>),</span> <span class=n>plantId</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>}</span></span></span></code></pre></td></tr></table></div></div><h1 id=ndk-开发>NDK 开发
+<a class=header-anchor href=#ndk-%e5%bc%80%e5%8f%91></a></h1><blockquote><p>NDK 全称是 Native Development Kit，是一组可以让你在 Android 应用中编写实现 C/C++ 的工具，可以在项目用自己写源代码构建，也可以利用现有的预构建库。</p></blockquote><p>使用 NDK 的使用目的有：</p><ul><li>从设备获取更好的性能以用于计算密集型应用，例如游戏或物理模拟</li><li>重复使用自己或其他开发者的 C/C++ 库，便利于跨平台。</li><li>NDK 集成了譬如 OpenSL、Vulkan 等 API 规范的特定实现，以实现在 java 层无法做到的功能如提升音频性能等</li><li>增加反编译难度</li></ul><h2 id=jni-基础>JNI 基础
+<a class=header-anchor href=#jni-%e5%9f%ba%e7%a1%80></a></h2><h3 id=数据类型>数据类型
+<a class=header-anchor href=#%e6%95%b0%e6%8d%ae%e7%b1%bb%e5%9e%8b></a></h3><ul><li>基本数据类型</li></ul><table><thead><tr><th>Java 类型</th><th>Native 类型</th><th>符号属性</th><th>字长</th></tr></thead><tbody><tr><td>boolean</td><td>jboolean</td><td>无符号</td><td>8位</td></tr><tr><td>byte</td><td>jbyte</td><td>无符号</td><td>8位</td></tr><tr><td>char</td><td>jchar</td><td>无符号</td><td>16位</td></tr><tr><td>short</td><td>jshort</td><td>有符号</td><td>16位</td></tr><tr><td>int</td><td>jnit</td><td>有符号</td><td>32位</td></tr><tr><td>long</td><td>jlong</td><td>有符号</td><td>64位</td></tr><tr><td>float</td><td>jfloat</td><td>有符号</td><td>32位</td></tr><tr><td>double</td><td>jdouble</td><td>有符号</td><td>64位</td></tr></tbody></table><ul><li>引用数据类型</li></ul><table><thead><tr><th>Java 引用类型</th><th>Native 类型</th><th>Java 引用类型</th><th>Native 类型</th></tr></thead><tbody><tr><td>All objects</td><td>jobject</td><td>char[]</td><td>jcharArray</td></tr><tr><td>java.lang.Class</td><td>jclass</td><td>short[]</td><td>jshortArray</td></tr><tr><td>java.lang.String</td><td>jstring</td><td>int[]</td><td>jintArray</td></tr><tr><td>Object[]</td><td>jobjectArray</td><td>long[]</td><td>jlongArray</td></tr><tr><td>boolean[]</td><td>jbooleanArray</td><td>float[]</td><td>jfloatArray</td></tr><tr><td>byte[]</td><td>jbyteArray</td><td>double[]</td><td>jdoubleArray</td></tr><tr><td>java.lang.Throwable</td><td>jthrowable</td><td></td><td></td></tr></tbody></table><h3 id=string-字符串函数操作>String 字符串函数操作
+<a class=header-anchor href=#string-%e5%ad%97%e7%ac%a6%e4%b8%b2%e5%87%bd%e6%95%b0%e6%93%8d%e4%bd%9c></a></h3><table><thead><tr><th>JNI 函数</th><th>描述</th></tr></thead><tbody><tr><td>GetStringChars / ReleaseStringChars</td><td>获得或释放一个指向 Unicode 编码的字符串的指针（指 C/C++ 字符串）</td></tr><tr><td>GetStringUTFChars / ReleaseStringUTFChars</td><td>获得或释放一个指向 UTF-8 编码的字符串的指针（指 C/C++ 字符串）</td></tr><tr><td>GetStringLength</td><td>返回 Unicode 编码的字符串的长度</td></tr><tr><td>getStringUTFLength</td><td>返回 UTF-8 编码的字符串的长度</td></tr><tr><td>NewString</td><td>将 Unicode 编码的 C/C++ 字符串转换为 Java 字符串</td></tr><tr><td>NewStringUTF</td><td>将 UTF-8 编码的 C/C++ 字符串转换为 Java 字符串</td></tr><tr><td>GetStringCritical / ReleaseStringCritical</td><td>获得或释放一个指向字符串内容的指针(指 Java 字符串)</td></tr><tr><td>GetStringRegion</td><td>获取或者设置 Unicode 编码的字符串的指定范围的内容</td></tr><tr><td>GetStringUTFRegion</td><td>获取或者设置 UTF-8 编码的字符串的指定范围的内容</td></tr></tbody></table><h3 id=常用-jni-访问-java-对象方法>常用 JNI 访问 Java 对象方法
+<a class=header-anchor href=#%e5%b8%b8%e7%94%a8-jni-%e8%ae%bf%e9%97%ae-java-%e5%af%b9%e8%b1%a1%e6%96%b9%e6%b3%95></a></h3><p><code>MyJob.java</code></p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt id=hl-13-1><a class=lnlinks href=#hl-13-1> 1</a>
+</span><span class=lnt id=hl-13-2><a class=lnlinks href=#hl-13-2> 2</a>
+</span><span class=lnt id=hl-13-3><a class=lnlinks href=#hl-13-3> 3</a>
+</span><span class=lnt id=hl-13-4><a class=lnlinks href=#hl-13-4> 4</a>
+</span><span class=lnt id=hl-13-5><a class=lnlinks href=#hl-13-5> 5</a>
+</span><span class=lnt id=hl-13-6><a class=lnlinks href=#hl-13-6> 6</a>
+</span><span class=lnt id=hl-13-7><a class=lnlinks href=#hl-13-7> 7</a>
+</span><span class=lnt id=hl-13-8><a class=lnlinks href=#hl-13-8> 8</a>
+</span><span class=lnt id=hl-13-9><a class=lnlinks href=#hl-13-9> 9</a>
+</span><span class=lnt id=hl-13-10><a class=lnlinks href=#hl-13-10>10</a>
+</span><span class=lnt id=hl-13-11><a class=lnlinks href=#hl-13-11>11</a>
+</span><span class=lnt id=hl-13-12><a class=lnlinks href=#hl-13-12>12</a>
+</span><span class=lnt id=hl-13-13><a class=lnlinks href=#hl-13-13>13</a>
+</span><span class=lnt id=hl-13-14><a class=lnlinks href=#hl-13-14>14</a>
+</span><span class=lnt id=hl-13-15><a class=lnlinks href=#hl-13-15>15</a>
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=kn>package</span><span class=w> </span><span class=nn>com.example.myjniproject</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=kd>public</span><span class=w> </span><span class=kd>class</span> <span class=nc>MyJob</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=kd>public</span><span class=w> </span><span class=kd>static</span><span class=w> </span><span class=n>String</span><span class=w> </span><span class=n>JOB_STRING</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=s>&#34;my_job&#34;</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=kd>private</span><span class=w> </span><span class=kt>int</span><span class=w> </span><span class=n>jobId</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=kd>public</span><span class=w> </span><span class=nf>MyJob</span><span class=p>(</span><span class=kt>int</span><span class=w> </span><span class=n>jobId</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=k>this</span><span class=p>.</span><span class=na>jobId</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>jobId</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=kd>public</span><span class=w> </span><span class=kt>int</span><span class=w> </span><span class=nf>getJobId</span><span class=p>()</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=k>return</span><span class=w> </span><span class=n>jobId</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=p>}</span></span></span></code></pre></td></tr></table></div></div><p><code>native-lib.cpp</code></p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt id=hl-14-1><a class=lnlinks href=#hl-14-1> 1</a>
+</span><span class=lnt id=hl-14-2><a class=lnlinks href=#hl-14-2> 2</a>
+</span><span class=lnt id=hl-14-3><a class=lnlinks href=#hl-14-3> 3</a>
+</span><span class=lnt id=hl-14-4><a class=lnlinks href=#hl-14-4> 4</a>
+</span><span class=lnt id=hl-14-5><a class=lnlinks href=#hl-14-5> 5</a>
+</span><span class=lnt id=hl-14-6><a class=lnlinks href=#hl-14-6> 6</a>
+</span><span class=lnt id=hl-14-7><a class=lnlinks href=#hl-14-7> 7</a>
+</span><span class=lnt id=hl-14-8><a class=lnlinks href=#hl-14-8> 8</a>
+</span><span class=lnt id=hl-14-9><a class=lnlinks href=#hl-14-9> 9</a>
+</span><span class=lnt id=hl-14-10><a class=lnlinks href=#hl-14-10>10</a>
+</span><span class=lnt id=hl-14-11><a class=lnlinks href=#hl-14-11>11</a>
+</span><span class=lnt id=hl-14-12><a class=lnlinks href=#hl-14-12>12</a>
+</span><span class=lnt id=hl-14-13><a class=lnlinks href=#hl-14-13>13</a>
+</span><span class=lnt id=hl-14-14><a class=lnlinks href=#hl-14-14>14</a>
+</span><span class=lnt id=hl-14-15><a class=lnlinks href=#hl-14-15>15</a>
+</span><span class=lnt id=hl-14-16><a class=lnlinks href=#hl-14-16>16</a>
+</span><span class=lnt id=hl-14-17><a class=lnlinks href=#hl-14-17>17</a>
+</span><span class=lnt id=hl-14-18><a class=lnlinks href=#hl-14-18>18</a>
+</span><span class=lnt id=hl-14-19><a class=lnlinks href=#hl-14-19>19</a>
+</span><span class=lnt id=hl-14-20><a class=lnlinks href=#hl-14-20>20</a>
+</span><span class=lnt id=hl-14-21><a class=lnlinks href=#hl-14-21>21</a>
+</span><span class=lnt id=hl-14-22><a class=lnlinks href=#hl-14-22>22</a>
+</span><span class=lnt id=hl-14-23><a class=lnlinks href=#hl-14-23>23</a>
+</span><span class=lnt id=hl-14-24><a class=lnlinks href=#hl-14-24>24</a>
+</span><span class=lnt id=hl-14-25><a class=lnlinks href=#hl-14-25>25</a>
+</span><span class=lnt id=hl-14-26><a class=lnlinks href=#hl-14-26>26</a>
+</span><span class=lnt id=hl-14-27><a class=lnlinks href=#hl-14-27>27</a>
+</span><span class=lnt id=hl-14-28><a class=lnlinks href=#hl-14-28>28</a>
+</span><span class=lnt id=hl-14-29><a class=lnlinks href=#hl-14-29>29</a>
+</span><span class=lnt id=hl-14-30><a class=lnlinks href=#hl-14-30>30</a>
+</span><span class=lnt id=hl-14-31><a class=lnlinks href=#hl-14-31>31</a>
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-c++ data-lang=c++><span class=line><span class=cl><span class=cp>#include</span> <span class=cpf>&lt;jni.h&gt;</span><span class=cp>
+</span></span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>extern</span> <span class=s>&#34;C&#34;</span>
+</span></span><span class=line><span class=cl><span class=n>JNIEXPORT</span> <span class=n>jint</span> <span class=n>JNICALL</span>
+</span></span><span class=line><span class=cl><span class=n>Java_com_example_myjniproject_MainActivity_getJobId</span><span class=p>(</span><span class=n>JNIEnv</span> <span class=o>*</span><span class=n>env</span><span class=p>,</span> <span class=n>jobject</span> <span class=n>thiz</span><span class=p>,</span> <span class=n>jobject</span> <span class=n>job</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=c1>// 根据实力获取 class 对象
+</span></span></span><span class=line><span class=cl>    <span class=n>jclass</span> <span class=n>jobClz</span> <span class=o>=</span> <span class=n>env</span><span class=o>-&gt;</span><span class=n>GetObjectClass</span><span class=p>(</span><span class=n>job</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=c1>// 根据类名获取 class 对象
+</span></span></span><span class=line><span class=cl>    <span class=n>jclass</span> <span class=n>jobClz</span> <span class=o>=</span> <span class=n>env</span><span class=o>-&gt;</span><span class=n>FindClass</span><span class=p>(</span><span class=s>&#34;com/example/myjniproject/MyJob&#34;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=c1>// 获取属性 id
+</span></span></span><span class=line><span class=cl>    <span class=n>jfieldID</span> <span class=n>fieldId</span> <span class=o>=</span> <span class=n>env</span><span class=o>-&gt;</span><span class=n>GetFieldID</span><span class=p>(</span><span class=n>jobClz</span><span class=p>,</span> <span class=s>&#34;jobId&#34;</span><span class=p>,</span> <span class=s>&#34;I&#34;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=c1>// 获取静态属性 id
+</span></span></span><span class=line><span class=cl>    <span class=n>jfieldID</span> <span class=n>sFieldId</span> <span class=o>=</span> <span class=n>env</span><span class=o>-&gt;</span><span class=n>GetStaticFieldID</span><span class=p>(</span><span class=n>jobClz</span><span class=p>,</span> <span class=s>&#34;JOB_STRING&#34;</span><span class=p>,</span> <span class=s>&#34;Ljava/lang/String;&#34;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=c1>// 获取方法 id
+</span></span></span><span class=line><span class=cl>    <span class=n>jmethodID</span> <span class=n>methodId</span> <span class=o>=</span> <span class=n>env</span><span class=o>-&gt;</span><span class=n>GetMethodID</span><span class=p>(</span><span class=n>jobClz</span><span class=p>,</span> <span class=s>&#34;getJobId&#34;</span><span class=p>,</span> <span class=s>&#34;()I&#34;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=c1>// 获取构造方法 id
+</span></span></span><span class=line><span class=cl>    <span class=n>jmethodID</span>  <span class=n>initMethodId</span> <span class=o>=</span> <span class=n>env</span><span class=o>-&gt;</span><span class=n>GetMethodID</span><span class=p>(</span><span class=n>jobClz</span><span class=p>,</span> <span class=s>&#34;&lt;init&gt;&#34;</span><span class=p>,</span> <span class=s>&#34;(I)V&#34;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=c1>// 根据对象属性 id 获取该属性值
+</span></span></span><span class=line><span class=cl>    <span class=n>jint</span> <span class=n>id</span> <span class=o>=</span> <span class=n>env</span><span class=o>-&gt;</span><span class=n>GetIntField</span><span class=p>(</span><span class=n>job</span><span class=p>,</span> <span class=n>fieldId</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=c1>// 根据对象方法 id 调用该方法
+</span></span></span><span class=line><span class=cl>    <span class=n>jint</span> <span class=n>id</span> <span class=o>=</span> <span class=n>env</span><span class=o>-&gt;</span><span class=n>CallIntMethod</span><span class=p>(</span><span class=n>job</span><span class=p>,</span> <span class=n>methodId</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=c1>// 创建新的对象
+</span></span></span><span class=line><span class=cl>    <span class=n>jobject</span> <span class=n>newJob</span> <span class=o>=</span> <span class=n>env</span><span class=o>-&gt;</span><span class=n>NewObject</span><span class=p>(</span><span class=n>jobClz</span><span class=p>,</span> <span class=n>initMethodId</span><span class=p>,</span> <span class=mi>10</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=n>id</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span></span></span></code></pre></td></tr></table></div></div><h2 id=ndk-开发-1>NDK 开发
+<a class=header-anchor href=#ndk-%e5%bc%80%e5%8f%91-1></a></h2><h3 id=基础开发流程>基础开发流程
+<a class=header-anchor href=#%e5%9f%ba%e7%a1%80%e5%bc%80%e5%8f%91%e6%b5%81%e7%a8%8b></a></h3><ul><li>在 java 中声明 native 方法</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt id=hl-15-1><a class=lnlinks href=#hl-15-1> 1</a>
+</span><span class=lnt id=hl-15-2><a class=lnlinks href=#hl-15-2> 2</a>
+</span><span class=lnt id=hl-15-3><a class=lnlinks href=#hl-15-3> 3</a>
+</span><span class=lnt id=hl-15-4><a class=lnlinks href=#hl-15-4> 4</a>
+</span><span class=lnt id=hl-15-5><a class=lnlinks href=#hl-15-5> 5</a>
+</span><span class=lnt id=hl-15-6><a class=lnlinks href=#hl-15-6> 6</a>
+</span><span class=lnt id=hl-15-7><a class=lnlinks href=#hl-15-7> 7</a>
+</span><span class=lnt id=hl-15-8><a class=lnlinks href=#hl-15-8> 8</a>
+</span><span class=lnt id=hl-15-9><a class=lnlinks href=#hl-15-9> 9</a>
+</span><span class=lnt id=hl-15-10><a class=lnlinks href=#hl-15-10>10</a>
+</span><span class=lnt id=hl-15-11><a class=lnlinks href=#hl-15-11>11</a>
+</span><span class=lnt id=hl-15-12><a class=lnlinks href=#hl-15-12>12</a>
+</span><span class=lnt id=hl-15-13><a class=lnlinks href=#hl-15-13>13</a>
+</span><span class=lnt id=hl-15-14><a class=lnlinks href=#hl-15-14>14</a>
+</span><span class=lnt id=hl-15-15><a class=lnlinks href=#hl-15-15>15</a>
+</span><span class=lnt id=hl-15-16><a class=lnlinks href=#hl-15-16>16</a>
+</span><span class=lnt id=hl-15-17><a class=lnlinks href=#hl-15-17>17</a>
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=kd>public</span><span class=w> </span><span class=kd>class</span> <span class=nc>MainActivity</span><span class=w> </span><span class=kd>extends</span><span class=w> </span><span class=n>AppCompatActivity</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=c1>// Used to load the &#39;native-lib&#39; library on application startup.</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=kd>static</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=n>System</span><span class=p>.</span><span class=na>loadLibrary</span><span class=p>(</span><span class=s>&#34;native-lib&#34;</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nd>@Override</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=kd>protected</span><span class=w> </span><span class=kt>void</span><span class=w> </span><span class=nf>onCreate</span><span class=p>(</span><span class=n>Bundle</span><span class=w> </span><span class=n>savedInstanceState</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=kd>super</span><span class=p>.</span><span class=na>onCreate</span><span class=p>(</span><span class=n>savedInstanceState</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=n>setContentView</span><span class=p>(</span><span class=n>R</span><span class=p>.</span><span class=na>layout</span><span class=p>.</span><span class=na>activity_main</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=n>Log</span><span class=p>.</span><span class=na>d</span><span class=p>(</span><span class=s>&#34;MainActivity&#34;</span><span class=p>,</span><span class=w> </span><span class=n>stringFromJNI</span><span class=p>());</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=kd>private</span><span class=w> </span><span class=kd>native</span><span class=w> </span><span class=n>String</span><span class=w> </span><span class=nf>stringFromJNI</span><span class=p>();</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=p>}</span></span></span></code></pre></td></tr></table></div></div><ul><li>在 <code>app/src/main</code> 目录下新建 cpp 目录，新建相关 cpp 文件，实现相关方法（AS 可用快捷键快速生成）</li></ul><p><code>native-lib.cpp</code></p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt id=hl-16-1><a class=lnlinks href=#hl-16-1>1</a>
+</span><span class=lnt id=hl-16-2><a class=lnlinks href=#hl-16-2>2</a>
+</span><span class=lnt id=hl-16-3><a class=lnlinks href=#hl-16-3>3</a>
+</span><span class=lnt id=hl-16-4><a class=lnlinks href=#hl-16-4>4</a>
+</span><span class=lnt id=hl-16-5><a class=lnlinks href=#hl-16-5>5</a>
+</span><span class=lnt id=hl-16-6><a class=lnlinks href=#hl-16-6>6</a>
+</span><span class=lnt id=hl-16-7><a class=lnlinks href=#hl-16-7>7</a>
+</span><span class=lnt id=hl-16-8><a class=lnlinks href=#hl-16-8>8</a>
+</span><span class=lnt id=hl-16-9><a class=lnlinks href=#hl-16-9>9</a>
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=line><span class=cl><span class=cp>#include</span> <span class=cpf>&lt;jni.h&gt;</span><span class=cp>
+</span></span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>extern</span> <span class=s>&#34;C&#34;</span> <span class=n>JNIEXPORT</span> <span class=n>jstring</span> <span class=n>JNICALL</span>
+</span></span><span class=line><span class=cl><span class=nf>Java_com_example_myjniproject_MainActivity_stringFromJNI</span><span class=p>(</span>
+</span></span><span class=line><span class=cl>        <span class=n>JNIEnv</span> <span class=o>*</span><span class=n>env</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=n>jobject</span> <span class=cm>/* this */</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=n>std</span><span class=o>::</span><span class=n>string</span> <span class=n>hello</span> <span class=o>=</span> <span class=s>&#34;Hello from C++&#34;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=n>env</span><span class=o>-&gt;</span><span class=nf>NewStringUTF</span><span class=p>(</span><span class=n>hello</span><span class=p>.</span><span class=nf>c_str</span><span class=p>());</span>
+</span></span><span class=line><span class=cl><span class=p>}</span></span></span></code></pre></td></tr></table></div></div><blockquote><ul><li>函数名的格式遵循遵循如下规则：Java_包名_类名_方法名。</li><li>extern &ldquo;C&rdquo; 指定采用 C 语言的命名风格来编译，否则由于 C 与 C++ 风格不同，导致链接时无法找到具体的函数</li><li>JNIEnv*：表示一个指向 JNI 环境的指针，可以通过他来访问 JNI 提供的接口方法</li><li>jobject：表示 java 对象中的 this</li><li>JNIEXPORT 和 JNICALL：JNI 所定义的宏，可以在 jni.h 头文件中查找到</li></ul></blockquote><ul><li>通过 CMake 或者 ndk-build 构建动态库</li></ul><h3 id=systemloadlibrary>System.loadLibrary()
+<a class=header-anchor href=#systemloadlibrary></a></h3><p><code>java/lang/System.java</code>:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt id=hl-17-1><a class=lnlinks href=#hl-17-1>1</a>
+</span><span class=lnt id=hl-17-2><a class=lnlinks href=#hl-17-2>2</a>
+</span><span class=lnt id=hl-17-3><a class=lnlinks href=#hl-17-3>3</a>
+</span><span class=lnt id=hl-17-4><a class=lnlinks href=#hl-17-4>4</a>
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=nd>@CallerSensitive</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=kd>public</span><span class=w> </span><span class=kd>static</span><span class=w> </span><span class=kt>void</span><span class=w> </span><span class=nf>load</span><span class=p>(</span><span class=n>String</span><span class=w> </span><span class=n>filename</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=n>Runtime</span><span class=p>.</span><span class=na>getRuntime</span><span class=p>().</span><span class=na>load0</span><span class=p>(</span><span class=n>Reflection</span><span class=p>.</span><span class=na>getCallerClass</span><span class=p>(),</span><span class=w> </span><span class=n>filename</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=p>}</span></span></span></code></pre></td></tr></table></div></div><ul><li>调用 <code>Runtime</code> 相关 native 方法</li></ul><p><code>java/lang/Runtime.java</code>:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt id=hl-18-1><a class=lnlinks href=#hl-18-1>1</a>
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=kd>private</span><span class=w> </span><span class=kd>static</span><span class=w> </span><span class=kd>native</span><span class=w> </span><span class=n>String</span><span class=w> </span><span class=nf>nativeLoad</span><span class=p>(</span><span class=n>String</span><span class=w> </span><span class=n>filename</span><span class=p>,</span><span class=w> </span><span class=n>ClassLoader</span><span class=w> </span><span class=n>loader</span><span class=p>,</span><span class=w> </span><span class=n>Class</span><span class=o>&lt;?&gt;</span><span class=w> </span><span class=n>caller</span><span class=p>);</span></span></span></code></pre></td></tr></table></div></div><ul><li>native 方法的实现如下：</li></ul><p><code>dalvik/vm/native/java_lang_Runtime.cpp</code>:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt id=hl-19-1><a class=lnlinks href=#hl-19-1> 1</a>
+</span><span class=lnt id=hl-19-2><a class=lnlinks href=#hl-19-2> 2</a>
+</span><span class=lnt id=hl-19-3><a class=lnlinks href=#hl-19-3> 3</a>
+</span><span class=lnt id=hl-19-4><a class=lnlinks href=#hl-19-4> 4</a>
+</span><span class=lnt id=hl-19-5><a class=lnlinks href=#hl-19-5> 5</a>
+</span><span class=lnt id=hl-19-6><a class=lnlinks href=#hl-19-6> 6</a>
+</span><span class=lnt id=hl-19-7><a class=lnlinks href=#hl-19-7> 7</a>
+</span><span class=lnt id=hl-19-8><a class=lnlinks href=#hl-19-8> 8</a>
+</span><span class=lnt id=hl-19-9><a class=lnlinks href=#hl-19-9> 9</a>
+</span><span class=lnt id=hl-19-10><a class=lnlinks href=#hl-19-10>10</a>
+</span><span class=lnt id=hl-19-11><a class=lnlinks href=#hl-19-11>11</a>
+</span><span class=lnt id=hl-19-12><a class=lnlinks href=#hl-19-12>12</a>
+</span><span class=lnt id=hl-19-13><a class=lnlinks href=#hl-19-13>13</a>
+</span><span class=lnt id=hl-19-14><a class=lnlinks href=#hl-19-14>14</a>
+</span><span class=lnt id=hl-19-15><a class=lnlinks href=#hl-19-15>15</a>
+</span><span class=lnt id=hl-19-16><a class=lnlinks href=#hl-19-16>16</a>
+</span><span class=lnt id=hl-19-17><a class=lnlinks href=#hl-19-17>17</a>
+</span><span class=lnt id=hl-19-18><a class=lnlinks href=#hl-19-18>18</a>
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-cpp data-lang=cpp><span class=line><span class=cl><span class=k>static</span> <span class=kt>void</span> <span class=nf>Dalvik_java_lang_Runtime_nativeLoad</span><span class=p>(</span><span class=k>const</span> <span class=n>u4</span><span class=o>*</span> <span class=n>args</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>    <span class=n>JValue</span><span class=o>*</span> <span class=n>pResult</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=err>···</span>
+</span></span><span class=line><span class=cl>    <span class=kt>bool</span> <span class=n>success</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=n>assert</span><span class=p>(</span><span class=n>fileNameObj</span> <span class=o>!=</span> <span class=nb>NULL</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=c1>// 将 Java 的 library path String 转换到 native 的 String
+</span></span></span><span class=line><span class=cl>    <span class=n>fileName</span> <span class=o>=</span> <span class=n>dvmCreateCstrFromString</span><span class=p>(</span><span class=n>fileNameObj</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=n>success</span> <span class=o>=</span> <span class=n>dvmLoadNativeCode</span><span class=p>(</span><span class=n>fileName</span><span class=p>,</span> <span class=n>classLoader</span><span class=p>,</span> <span class=o>&amp;</span><span class=n>reason</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=k>if</span> <span class=p>(</span><span class=o>!</span><span class=n>success</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=k>const</span> <span class=kt>char</span><span class=o>*</span> <span class=n>msg</span> <span class=o>=</span> <span class=p>(</span><span class=n>reason</span> <span class=o>!=</span> <span class=nb>NULL</span><span class=p>)</span> <span class=o>?</span> <span class=nl>reason</span> <span class=p>:</span> <span class=s>&#34;unknown failure&#34;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=n>result</span> <span class=o>=</span> <span class=n>dvmCreateStringFromCstr</span><span class=p>(</span><span class=n>msg</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>        <span class=n>dvmReleaseTrackedAlloc</span><span class=p>((</span><span class=n>Object</span><span class=o>*</span><span class=p>)</span> <span class=n>result</span><span class=p>,</span> <span class=nb>NULL</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>    <span class=err>···</span>
+</span></span><span class=line><span class=cl><span class=p>}</span></span></span></code></pre></td></tr></table></div></div><ul><li><code>dvmLoadNativeCode</code> 函数实现如下：</li></ul><p><code>dalvik/vm/Native.cpp</code></p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt id=hl-20-1><a class=lnlinks href=#hl-20-1> 1</a>
+</span><span class=lnt id=hl-20-2><a class=lnlinks href=#hl-20-2> 2</a>
+</span><span class=lnt id=hl-20-3><a class=lnlinks href=#hl-20-3> 3</a>
+</span><span class=lnt id=hl-20-4><a class=lnlinks href=#hl-20-4> 4</a>
+</span><span class=lnt id=hl-20-5><a class=lnlinks href=#hl-20-5> 5</a>
+</span><span class=lnt id=hl-20-6><a class=lnlinks href=#hl-20-6> 6</a>
+</span><span class=lnt id=hl-20-7><a class=lnlinks href=#hl-20-7> 7</a>
+</span><span class=lnt id=hl-20-8><a class=lnlinks href=#hl-20-8> 8</a>
+</span><span class=lnt id=hl-20-9><a class=lnlinks href=#hl-20-9> 9</a>
+</span><span class=lnt id=hl-20-10><a class=lnlinks href=#hl-20-10>10</a>
+</span><span class=lnt id=hl-20-11><a class=lnlinks href=#hl-20-11>11</a>
+</span><span class=lnt id=hl-20-12><a class=lnlinks href=#hl-20-12>12</a>
+</span><span class=lnt id=hl-20-13><a class=lnlinks href=#hl-20-13>13</a>
+</span><span class=lnt id=hl-20-14><a class=lnlinks href=#hl-20-14>14</a>
+</span><span class=lnt id=hl-20-15><a class=lnlinks href=#hl-20-15>15</a>
+</span><span class=lnt id=hl-20-16><a class=lnlinks href=#hl-20-16>16</a>
+</span><span class=lnt id=hl-20-17><a class=lnlinks href=#hl-20-17>17</a>
+</span><span class=lnt id=hl-20-18><a class=lnlinks href=#hl-20-18>18</a>
+</span><span class=lnt id=hl-20-19><a class=lnlinks href=#hl-20-19>19</a>
+</span><span class=lnt id=hl-20-20><a class=lnlinks href=#hl-20-20>20</a>
+</span><span class=lnt id=hl-20-21><a class=lnlinks href=#hl-20-21>21</a>
+</span><span class=lnt id=hl-20-22><a class=lnlinks href=#hl-20-22>22</a>
+</span><span class=lnt id=hl-20-23><a class=lnlinks href=#hl-20-23>23</a>
+</span><span class=lnt id=hl-20-24><a class=lnlinks href=#hl-20-24>24</a>
+</span><span class=lnt id=hl-20-25><a class=lnlinks href=#hl-20-25>25</a>
+</span><span class=lnt id=hl-20-26><a class=lnlinks href=#hl-20-26>26</a>
+</span><span class=lnt id=hl-20-27><a class=lnlinks href=#hl-20-27>27</a>
+</span><span class=lnt id=hl-20-28><a class=lnlinks href=#hl-20-28>28</a>
+</span><span class=lnt id=hl-20-29><a class=lnlinks href=#hl-20-29>29</a>
+</span><span class=lnt id=hl-20-30><a class=lnlinks href=#hl-20-30>30</a>
+</span><span class=lnt id=hl-20-31><a class=lnlinks href=#hl-20-31>31</a>
+</span><span class=lnt id=hl-20-32><a class=lnlinks href=#hl-20-32>32</a>
+</span><span class=lnt id=hl-20-33><a class=lnlinks href=#hl-20-33>33</a>
+</span><span class=lnt id=hl-20-34><a class=lnlinks href=#hl-20-34>34</a>
+</span><span class=lnt id=hl-20-35><a class=lnlinks href=#hl-20-35>35</a>
+</span><span class=lnt id=hl-20-36><a class=lnlinks href=#hl-20-36>36</a>
+</span><span class=lnt id=hl-20-37><a class=lnlinks href=#hl-20-37>37</a>
+</span><span class=lnt id=hl-20-38><a class=lnlinks href=#hl-20-38>38</a>
+</span><span class=lnt id=hl-20-39><a class=lnlinks href=#hl-20-39>39</a>
+</span><span class=lnt id=hl-20-40><a class=lnlinks href=#hl-20-40>40</a>
+</span><span class=lnt id=hl-20-41><a class=lnlinks href=#hl-20-41>41</a>
+</span><span class=lnt id=hl-20-42><a class=lnlinks href=#hl-20-42>42</a>
+</span><span class=lnt id=hl-20-43><a class=lnlinks href=#hl-20-43>43</a>
+</span><span class=lnt id=hl-20-44><a class=lnlinks href=#hl-20-44>44</a>
+</span><span class=lnt id=hl-20-45><a class=lnlinks href=#hl-20-45>45</a>
+</span><span class=lnt id=hl-20-46><a class=lnlinks href=#hl-20-46>46</a>
+</span><span class=lnt id=hl-20-47><a class=lnlinks href=#hl-20-47>47</a>
+</span><span class=lnt id=hl-20-48><a class=lnlinks href=#hl-20-48>48</a>
+</span><span class=lnt id=hl-20-49><a class=lnlinks href=#hl-20-49>49</a>
+</span><span class=lnt id=hl-20-50><a class=lnlinks href=#hl-20-50>50</a>
+</span><span class=lnt id=hl-20-51><a class=lnlinks href=#hl-20-51>51</a>
+</span><span class=lnt id=hl-20-52><a class=lnlinks href=#hl-20-52>52</a>
+</span><span class=lnt id=hl-20-53><a class=lnlinks href=#hl-20-53>53</a>
+</span><span class=lnt id=hl-20-54><a class=lnlinks href=#hl-20-54>54</a>
+</span><span class=lnt id=hl-20-55><a class=lnlinks href=#hl-20-55>55</a>
+</span><span class=lnt id=hl-20-56><a class=lnlinks href=#hl-20-56>56</a>
+</span><span class=lnt id=hl-20-57><a class=lnlinks href=#hl-20-57>57</a>
+</span><span class=lnt id=hl-20-58><a class=lnlinks href=#hl-20-58>58</a>
+</span><span class=lnt id=hl-20-59><a class=lnlinks href=#hl-20-59>59</a>
+</span><span class=lnt id=hl-20-60><a class=lnlinks href=#hl-20-60>60</a>
+</span><span class=lnt id=hl-20-61><a class=lnlinks href=#hl-20-61>61</a>
+</span><span class=lnt id=hl-20-62><a class=lnlinks href=#hl-20-62>62</a>
+</span><span class=lnt id=hl-20-63><a class=lnlinks href=#hl-20-63>63</a>
+</span><span class=lnt id=hl-20-64><a class=lnlinks href=#hl-20-64>64</a>
+</span><span class=lnt id=hl-20-65><a class=lnlinks href=#hl-20-65>65</a>
+</span><span class=lnt id=hl-20-66><a class=lnlinks href=#hl-20-66>66</a>
+</span><span class=lnt id=hl-20-67><a class=lnlinks href=#hl-20-67>67</a>
+</span><span class=lnt id=hl-20-68><a class=lnlinks href=#hl-20-68>68</a>
+</span><span class=lnt id=hl-20-69><a class=lnlinks href=#hl-20-69>69</a>
+</span><span class=lnt id=hl-20-70><a class=lnlinks href=#hl-20-70>70</a>
+</span><span class=lnt id=hl-20-71><a class=lnlinks href=#hl-20-71>71</a>
+</span><span class=lnt id=hl-20-72><a class=lnlinks href=#hl-20-72>72</a>
+</span><span class=lnt id=hl-20-73><a class=lnlinks href=#hl-20-73>73</a>
+</span><span class=lnt id=hl-20-74><a class=lnlinks href=#hl-20-74>74</a>
+</span><span class=lnt id=hl-20-75><a class=lnlinks href=#hl-20-75>75</a>
+</span><span class=lnt id=hl-20-76><a class=lnlinks href=#hl-20-76>76</a>
+</span><span class=lnt id=hl-20-77><a class=lnlinks href=#hl-20-77>77</a>
+</span><span class=lnt id=hl-20-78><a class=lnlinks href=#hl-20-78>78</a>
+</span><span class=lnt id=hl-20-79><a class=lnlinks href=#hl-20-79>79</a>
+</span><span class=lnt id=hl-20-80><a class=lnlinks href=#hl-20-80>80</a>
+</span><span class=lnt id=hl-20-81><a class=lnlinks href=#hl-20-81>81</a>
+</span><span class=lnt id=hl-20-82><a class=lnlinks href=#hl-20-82>82</a>
+</span><span class=lnt id=hl-20-83><a class=lnlinks href=#hl-20-83>83</a>
+</span><span class=lnt id=hl-20-84><a class=lnlinks href=#hl-20-84>84</a>
+</span><span class=lnt id=hl-20-85><a class=lnlinks href=#hl-20-85>85</a>
+</span><span class=lnt id=hl-20-86><a class=lnlinks href=#hl-20-86>86</a>
+</span><span class=lnt id=hl-20-87><a class=lnlinks href=#hl-20-87>87</a>
+</span><span class=lnt id=hl-20-88><a class=lnlinks href=#hl-20-88>88</a>
+</span><span class=lnt id=hl-20-89><a class=lnlinks href=#hl-20-89>89</a>
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-cpp data-lang=cpp><span class=line><span class=cl><span class=kt>bool</span> <span class=nf>dvmLoadNativeCode</span><span class=p>(</span><span class=k>const</span> <span class=kt>char</span><span class=o>*</span> <span class=n>pathName</span><span class=p>,</span> <span class=n>Object</span><span class=o>*</span> <span class=n>classLoader</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=kt>char</span><span class=o>**</span> <span class=n>detail</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=n>SharedLib</span><span class=o>*</span> <span class=n>pEntry</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=kt>void</span><span class=o>*</span> <span class=n>handle</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=err>···</span>
+</span></span><span class=line><span class=cl>    <span class=o>*</span><span class=n>detail</span> <span class=o>=</span> <span class=nb>NULL</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=c1>// 如果已经加载过了，则直接返回 true
+</span></span></span><span class=line><span class=cl>    <span class=n>pEntry</span> <span class=o>=</span> <span class=n>findSharedLibEntry</span><span class=p>(</span><span class=n>pathName</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=k>if</span> <span class=p>(</span><span class=n>pEntry</span> <span class=o>!=</span> <span class=nb>NULL</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=k>if</span> <span class=p>(</span><span class=n>pEntry</span><span class=o>-&gt;</span><span class=n>classLoader</span> <span class=o>!=</span> <span class=n>classLoader</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>            <span class=err>···</span>
+</span></span><span class=line><span class=cl>            <span class=k>return</span> <span class=nb>false</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=p>}</span>
+</span></span><span class=line><span class=cl>        <span class=err>···</span>
+</span></span><span class=line><span class=cl>        <span class=k>if</span> <span class=p>(</span><span class=o>!</span><span class=n>checkOnLoadResult</span><span class=p>(</span><span class=n>pEntry</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>            <span class=k>return</span> <span class=nb>false</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=k>return</span> <span class=nb>true</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=n>Thread</span><span class=o>*</span> <span class=n>self</span> <span class=o>=</span> <span class=n>dvmThreadSelf</span><span class=p>();</span>
+</span></span><span class=line><span class=cl>    <span class=n>ThreadStatus</span> <span class=n>oldStatus</span> <span class=o>=</span> <span class=n>dvmChangeStatus</span><span class=p>(</span><span class=n>self</span><span class=p>,</span> <span class=n>THREAD_VMWAIT</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=c1>// 把.so mmap 到进程空间，并把 func 等相关信息填充到 soinfo 中
+</span></span></span><span class=line><span class=cl>    <span class=n>handle</span> <span class=o>=</span> <span class=n>dlopen</span><span class=p>(</span><span class=n>pathName</span><span class=p>,</span> <span class=n>RTLD_LAZY</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=n>dvmChangeStatus</span><span class=p>(</span><span class=n>self</span><span class=p>,</span> <span class=n>oldStatus</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=err>···</span>
+</span></span><span class=line><span class=cl>    <span class=c1>// 创建一个新的 entry
+</span></span></span><span class=line><span class=cl>    <span class=n>SharedLib</span><span class=o>*</span> <span class=n>pNewEntry</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=n>pNewEntry</span> <span class=o>=</span> <span class=p>(</span><span class=n>SharedLib</span><span class=o>*</span><span class=p>)</span> <span class=n>calloc</span><span class=p>(</span><span class=mi>1</span><span class=p>,</span> <span class=k>sizeof</span><span class=p>(</span><span class=n>SharedLib</span><span class=p>));</span>
+</span></span><span class=line><span class=cl>    <span class=n>pNewEntry</span><span class=o>-&gt;</span><span class=n>pathName</span> <span class=o>=</span> <span class=n>strdup</span><span class=p>(</span><span class=n>pathName</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=n>pNewEntry</span><span class=o>-&gt;</span><span class=n>handle</span> <span class=o>=</span> <span class=n>handle</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=n>pNewEntry</span><span class=o>-&gt;</span><span class=n>classLoader</span> <span class=o>=</span> <span class=n>classLoader</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=n>dvmInitMutex</span><span class=p>(</span><span class=o>&amp;</span><span class=n>pNewEntry</span><span class=o>-&gt;</span><span class=n>onLoadLock</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=n>pthread_cond_init</span><span class=p>(</span><span class=o>&amp;</span><span class=n>pNewEntry</span><span class=o>-&gt;</span><span class=n>onLoadCond</span><span class=p>,</span> <span class=nb>NULL</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=n>pNewEntry</span><span class=o>-&gt;</span><span class=n>onLoadThreadId</span> <span class=o>=</span> <span class=n>self</span><span class=o>-&gt;</span><span class=n>threadId</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=c1>// 尝试添加到列表中
+</span></span></span><span class=line><span class=cl>    <span class=n>SharedLib</span><span class=o>*</span> <span class=n>pActualEntry</span> <span class=o>=</span> <span class=n>addSharedLibEntry</span><span class=p>(</span><span class=n>pNewEntry</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=k>if</span> <span class=p>(</span><span class=n>pNewEntry</span> <span class=o>!=</span> <span class=n>pActualEntry</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=err>···</span>
+</span></span><span class=line><span class=cl>        <span class=n>freeSharedLibEntry</span><span class=p>(</span><span class=n>pNewEntry</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>        <span class=k>return</span> <span class=n>checkOnLoadResult</span><span class=p>(</span><span class=n>pActualEntry</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span> <span class=k>else</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=err>···</span>
+</span></span><span class=line><span class=cl>        <span class=kt>bool</span> <span class=n>result</span> <span class=o>=</span> <span class=nb>true</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=kt>void</span><span class=o>*</span> <span class=n>vonLoad</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=kt>int</span> <span class=n>version</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=c1>// 调用该 so 库的 JNI_OnLoad 方法
+</span></span></span><span class=line><span class=cl>        <span class=n>vonLoad</span> <span class=o>=</span> <span class=n>dlsym</span><span class=p>(</span><span class=n>handle</span><span class=p>,</span> <span class=s>&#34;JNI_OnLoad&#34;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>        <span class=k>if</span> <span class=p>(</span><span class=n>vonLoad</span> <span class=o>==</span> <span class=nb>NULL</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>            <span class=err>···</span>
+</span></span><span class=line><span class=cl>        <span class=p>}</span> <span class=k>else</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>            <span class=c1>// 调用 JNI_Onload 方法，重写类加载器。
+</span></span></span><span class=line><span class=cl>            <span class=n>OnLoadFunc</span> <span class=n>func</span> <span class=o>=</span> <span class=p>(</span><span class=n>OnLoadFunc</span><span class=p>)</span><span class=n>vonLoad</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>            <span class=n>Object</span><span class=o>*</span> <span class=n>prevOverride</span> <span class=o>=</span> <span class=n>self</span><span class=o>-&gt;</span><span class=n>classLoaderOverride</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>            <span class=n>self</span><span class=o>-&gt;</span><span class=n>classLoaderOverride</span> <span class=o>=</span> <span class=n>classLoader</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>            <span class=n>oldStatus</span> <span class=o>=</span> <span class=n>dvmChangeStatus</span><span class=p>(</span><span class=n>self</span><span class=p>,</span> <span class=n>THREAD_NATIVE</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>            <span class=err>···</span>
+</span></span><span class=line><span class=cl>            <span class=n>version</span> <span class=o>=</span> <span class=p>(</span><span class=o>*</span><span class=n>func</span><span class=p>)(</span><span class=n>gDvmJni</span><span class=p>.</span><span class=n>jniVm</span><span class=p>,</span> <span class=nb>NULL</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>            <span class=n>dvmChangeStatus</span><span class=p>(</span><span class=n>self</span><span class=p>,</span> <span class=n>oldStatus</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>            <span class=n>self</span><span class=o>-&gt;</span><span class=n>classLoaderOverride</span> <span class=o>=</span> <span class=n>prevOverride</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>            <span class=k>if</span> <span class=p>(</span><span class=n>version</span> <span class=o>!=</span> <span class=n>JNI_VERSION_1_2</span> <span class=o>&amp;&amp;</span> <span class=n>version</span> <span class=o>!=</span> <span class=n>JNI_VERSION_1_4</span> <span class=o>&amp;&amp;</span>
+</span></span><span class=line><span class=cl>                <span class=n>version</span> <span class=o>!=</span> <span class=n>JNI_VERSION_1_6</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>            <span class=p>{</span>
+</span></span><span class=line><span class=cl>                <span class=err>···</span>
+</span></span><span class=line><span class=cl>                <span class=n>result</span> <span class=o>=</span> <span class=nb>false</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>            <span class=p>}</span> <span class=k>else</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>                <span class=err>···</span>
+</span></span><span class=line><span class=cl>            <span class=p>}</span>
+</span></span><span class=line><span class=cl>        <span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        <span class=k>if</span> <span class=p>(</span><span class=n>result</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>            <span class=n>pNewEntry</span><span class=o>-&gt;</span><span class=n>onLoadResult</span> <span class=o>=</span> <span class=n>kOnLoadOkay</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=k>else</span>
+</span></span><span class=line><span class=cl>            <span class=n>pNewEntry</span><span class=o>-&gt;</span><span class=n>onLoadResult</span> <span class=o>=</span> <span class=n>kOnLoadFailed</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        <span class=n>pNewEntry</span><span class=o>-&gt;</span><span class=n>onLoadThreadId</span> <span class=o>=</span> <span class=mi>0</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        <span class=c1>// 释放锁资源 
+</span></span></span><span class=line><span class=cl>        <span class=n>dvmLockMutex</span><span class=p>(</span><span class=o>&amp;</span><span class=n>pNewEntry</span><span class=o>-&gt;</span><span class=n>onLoadLock</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>        <span class=n>pthread_cond_broadcast</span><span class=p>(</span><span class=o>&amp;</span><span class=n>pNewEntry</span><span class=o>-&gt;</span><span class=n>onLoadCond</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>        <span class=n>dvmUnlockMutex</span><span class=p>(</span><span class=o>&amp;</span><span class=n>pNewEntry</span><span class=o>-&gt;</span><span class=n>onLoadLock</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>        <span class=k>return</span> <span class=n>result</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>}</span></span></span></code></pre></td></tr></table></div></div><h2 id=cmake-构建-ndk-项目>CMake 构建 NDK 项目
+<a class=header-anchor href=#cmake-%e6%9e%84%e5%bb%ba-ndk-%e9%a1%b9%e7%9b%ae></a></h2><blockquote><p>CMake 是一个开源的跨平台工具系列，旨在构建，测试和打包软件，从 Android Studio 2.2 开始，Android Sudio 默认地使用 CMake 与 Gradle 搭配使用来构建原生库。</p></blockquote><p>启动方式只需要在 <code>app/build.gradle</code> 中添加相关：
+​```groovy
+android {
+···
+defaultConfig {
+···
+externalNativeBuild {
+cmake {
+cppFlags ""
+}
+}</p><pre><code>    ndk {
+        abiFilters 'arm64-v8a', 'armeabi-v7a'
+    }
+}
+···
+externalNativeBuild {
+    cmake {
+        path &quot;CMakeLists.txt&quot;
+    }
+}
+</code></pre><p>}</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt id=hl-21-1><a class=lnlinks href=#hl-21-1> 1</a>
+</span><span class=lnt id=hl-21-2><a class=lnlinks href=#hl-21-2> 2</a>
+</span><span class=lnt id=hl-21-3><a class=lnlinks href=#hl-21-3> 3</a>
+</span><span class=lnt id=hl-21-4><a class=lnlinks href=#hl-21-4> 4</a>
+</span><span class=lnt id=hl-21-5><a class=lnlinks href=#hl-21-5> 5</a>
+</span><span class=lnt id=hl-21-6><a class=lnlinks href=#hl-21-6> 6</a>
+</span><span class=lnt id=hl-21-7><a class=lnlinks href=#hl-21-7> 7</a>
+</span><span class=lnt id=hl-21-8><a class=lnlinks href=#hl-21-8> 8</a>
+</span><span class=lnt id=hl-21-9><a class=lnlinks href=#hl-21-9> 9</a>
+</span><span class=lnt id=hl-21-10><a class=lnlinks href=#hl-21-10>10</a>
+</span><span class=lnt id=hl-21-11><a class=lnlinks href=#hl-21-11>11</a>
+</span><span class=lnt id=hl-21-12><a class=lnlinks href=#hl-21-12>12</a>
+</span><span class=lnt id=hl-21-13><a class=lnlinks href=#hl-21-13>13</a>
+</span><span class=lnt id=hl-21-14><a class=lnlinks href=#hl-21-14>14</a>
+</span><span class=lnt id=hl-21-15><a class=lnlinks href=#hl-21-15>15</a>
+</span><span class=lnt id=hl-21-16><a class=lnlinks href=#hl-21-16>16</a>
+</span><span class=lnt id=hl-21-17><a class=lnlinks href=#hl-21-17>17</a>
+</span><span class=lnt id=hl-21-18><a class=lnlinks href=#hl-21-18>18</a>
+</span><span class=lnt id=hl-21-19><a class=lnlinks href=#hl-21-19>19</a>
+</span><span class=lnt id=hl-21-20><a class=lnlinks href=#hl-21-20>20</a>
+</span><span class=lnt id=hl-21-21><a class=lnlinks href=#hl-21-21>21</a>
+</span><span class=lnt id=hl-21-22><a class=lnlinks href=#hl-21-22>22</a>
+</span><span class=lnt id=hl-21-23><a class=lnlinks href=#hl-21-23>23</a>
+</span><span class=lnt id=hl-21-24><a class=lnlinks href=#hl-21-24>24</a>
+</span><span class=lnt id=hl-21-25><a class=lnlinks href=#hl-21-25>25</a>
+</span><span class=lnt id=hl-21-26><a class=lnlinks href=#hl-21-26>26</a>
+</span><span class=lnt id=hl-21-27><a class=lnlinks href=#hl-21-27>27</a>
+</span><span class=lnt id=hl-21-28><a class=lnlinks href=#hl-21-28>28</a>
+</span><span class=lnt id=hl-21-29><a class=lnlinks href=#hl-21-29>29</a>
+</span><span class=lnt id=hl-21-30><a class=lnlinks href=#hl-21-30>30</a>
+</span><span class=lnt id=hl-21-31><a class=lnlinks href=#hl-21-31>31</a>
+</span><span class=lnt id=hl-21-32><a class=lnlinks href=#hl-21-32>32</a>
+</span><span class=lnt id=hl-21-33><a class=lnlinks href=#hl-21-33>33</a>
+</span><span class=lnt id=hl-21-34><a class=lnlinks href=#hl-21-34>34</a>
+</span><span class=lnt id=hl-21-35><a class=lnlinks href=#hl-21-35>35</a>
+</span><span class=lnt id=hl-21-36><a class=lnlinks href=#hl-21-36>36</a>
+</span><span class=lnt id=hl-21-37><a class=lnlinks href=#hl-21-37>37</a>
+</span><span class=lnt id=hl-21-38><a class=lnlinks href=#hl-21-38>38</a>
+</span><span class=lnt id=hl-21-39><a class=lnlinks href=#hl-21-39>39</a>
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-gdscript3 data-lang=gdscript3><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=err>然后在对应目录新建一个</span> <span class=err>``</span><span class=n>CMakeLists</span><span class=o>.</span><span class=n>txt</span><span class=err>``</span> <span class=err>文件：</span>
+</span></span><span class=line><span class=cl><span class=err>```</span><span class=n>txt</span>
+</span></span><span class=line><span class=cl><span class=c1># 定义了所需 CMake 的最低版本</span>
+</span></span><span class=line><span class=cl><span class=n>cmake_minimum_required</span><span class=p>(</span><span class=n>VERSION</span> <span class=mf>3.4</span><span class=o>.</span><span class=mi>1</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># add_library() 命令用来添加库</span>
+</span></span><span class=line><span class=cl><span class=c1># native-lib 对应着生成的库的名字</span>
+</span></span><span class=line><span class=cl><span class=c1># SHARED 代表为分享库</span>
+</span></span><span class=line><span class=cl><span class=c1># src/main/cpp/native-lib.cpp 则是指明了源文件的路径。</span>
+</span></span><span class=line><span class=cl><span class=n>add_library</span><span class=p>(</span> <span class=c1># Sets the name of the library.</span>
+</span></span><span class=line><span class=cl>        <span class=n>native</span><span class=o>-</span><span class=n>lib</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        <span class=c1># Sets the library as a shared library.</span>
+</span></span><span class=line><span class=cl>        <span class=n>SHARED</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        <span class=c1># Provides a relative path to your source file(s).</span>
+</span></span><span class=line><span class=cl>        <span class=n>src</span><span class=o>/</span><span class=n>main</span><span class=o>/</span><span class=n>cpp</span><span class=o>/</span><span class=n>native</span><span class=o>-</span><span class=n>lib</span><span class=o>.</span><span class=n>cpp</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># find_library 命令添加到 CMake 构建脚本中以定位 NDK 库，并将其路径存储为一个变量。</span>
+</span></span><span class=line><span class=cl><span class=c1># 可以使用此变量在构建脚本的其他部分引用 NDK 库</span>
+</span></span><span class=line><span class=cl><span class=n>find_library</span><span class=p>(</span> <span class=c1># Sets the name of the path variable.</span>
+</span></span><span class=line><span class=cl>        <span class=nb>log</span><span class=o>-</span><span class=n>lib</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        <span class=c1># Specifies the name of the NDK library that</span>
+</span></span><span class=line><span class=cl>        <span class=c1># you want CMake to locate.</span>
+</span></span><span class=line><span class=cl>        <span class=nb>log</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># 预构建的 NDK 库已经存在于 Android 平台上，因此，无需再构建或将其打包到 APK 中。</span>
+</span></span><span class=line><span class=cl><span class=c1># 由于 NDK 库已经是 CMake 搜索路径的一部分，只需要向 CMake 提供希望使用的库的名称，并将其关联到自己的原生库中</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># 要将预构建库关联到自己的原生库</span>
+</span></span><span class=line><span class=cl><span class=n>target_link_libraries</span><span class=p>(</span> <span class=c1># Specifies the target library.</span>
+</span></span><span class=line><span class=cl>        <span class=n>native</span><span class=o>-</span><span class=n>lib</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        <span class=c1># Links the target library to the log library</span>
+</span></span><span class=line><span class=cl>        <span class=c1># included in the NDK.</span>
+</span></span><span class=line><span class=cl>        <span class=o>$</span><span class=p>{</span><span class=nb>log</span><span class=o>-</span><span class=n>lib</span><span class=p>})</span>
+</span></span><span class=line><span class=cl><span class=err>···</span></span></span></code></pre></td></tr></table></div></div><ul><li><a href=https://cmake.org/cmake/help/latest/manual/cmake-commands.7.html title="CMake 命令详细信息文档" rel="noopener external nofollow noreferrer" target=_blank class=exturl>CMake 命令详细信息文档</a></li></ul><h2 id=常用的-android-ndk-原生-api>常用的 Android NDK 原生 API
+<a class=header-anchor href=#%e5%b8%b8%e7%94%a8%e7%9a%84-android-ndk-%e5%8e%9f%e7%94%9f-api></a></h2><table><thead><tr><th>支持 NDK 的 API 级别</th><th>关键原生 API</th><th>包括</th></tr></thead><tbody><tr><td>3</td><td>Java 原生接口</td><td>#include &lt;jni.h></td></tr><tr><td>3</td><td>Android 日志记录 API</td><td>#include &lt;android/log.h></td></tr><tr><td>5</td><td>OpenGL ES 2.0</td><td>#include &lt;GLES2/gl2.h><br>#include &lt;GLES2/gl2ext.h></td></tr><tr><td>8</td><td>Android 位图 API</td><td>#include &lt;android/bitmap.h></td></tr><tr><td>9</td><td>OpenSL ES</td><td>#include &lt;SLES/OpenSLES.h><br>#include &lt;SLES/OpenSLES_Platform.h><br>#include &lt;SLES/OpenSLES_Android.h><br>#include &lt;SLES/OpenSLES_AndroidConfiguration.h></td></tr><tr><td>9</td><td>原生应用 API</td><td>#include &lt;android/rect.h><br>#include &lt;android/window.h><br>#include&lt;android/native_activity.h><br>···</td></tr><tr><td>18</td><td>OpenGL ES 3.0</td><td>#include &lt;GLES3/gl3.h><br>#include &lt;GLES3/gl3ext.h></td></tr><tr><td>21</td><td>原生媒体 API</td><td>#include &lt;media/NdkMediaCodec.h><br>#include &lt;media/NdkMediaCrypto.h><br>···</td></tr><tr><td>24</td><td>原生相机 API</td><td>#include &lt;camera/NdkCameraCaptureSession.h><br>#include &lt;camera/NdkCameraDevice.h><br>···</td></tr><tr><td>···</td><td></td><td></td></tr></tbody></table><h1 id=类加载器>类加载器
+<a class=header-anchor href=#%e7%b1%bb%e5%8a%a0%e8%bd%bd%e5%99%a8></a></h1><p><img src=/imgs/img-lazy-loading.gif data-src="https://img-blog.csdn.net/20161021101447117?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt></p><h2 id=双亲委托模式>双亲委托模式
+<a class=header-anchor href=#%e5%8f%8c%e4%ba%b2%e5%a7%94%e6%89%98%e6%a8%a1%e5%bc%8f></a></h2><p>某个特定的类加载器在接到加载类的请求时，首先将加载任务委托给父类加载器，依次递归，如果父类加载器可以完成类加载任务，就成功返回；只有父类加载器无法完成此加载任务时，才自己去加载。</p><p>因为这样可以避免重复加载，当父亲已经加载了该类的时候，就没有必要子 ClassLoader 再加载一次。如果不使用这种委托模式，那我们就可以随时使用自定义的类来动态替代一些核心的类，存在非常大的安全隐患。</p><h2 id=dexpathlist>DexPathList
+<a class=header-anchor href=#dexpathlist></a></h2><p>DexClassLoader 重载了 <code>findClass</code> 方法，在加载类时会调用其内部的 DexPathList 去加载。DexPathList 是在构造 DexClassLoader 时生成的，其内部包含了 DexFile。</p><p><code>DexPathList.java</code></p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt id=hl-22-1><a class=lnlinks href=#hl-22-1> 1</a>
+</span><span class=lnt id=hl-22-2><a class=lnlinks href=#hl-22-2> 2</a>
+</span><span class=lnt id=hl-22-3><a class=lnlinks href=#hl-22-3> 3</a>
+</span><span class=lnt id=hl-22-4><a class=lnlinks href=#hl-22-4> 4</a>
+</span><span class=lnt id=hl-22-5><a class=lnlinks href=#hl-22-5> 5</a>
+</span><span class=lnt id=hl-22-6><a class=lnlinks href=#hl-22-6> 6</a>
+</span><span class=lnt id=hl-22-7><a class=lnlinks href=#hl-22-7> 7</a>
+</span><span class=lnt id=hl-22-8><a class=lnlinks href=#hl-22-8> 8</a>
+</span><span class=lnt id=hl-22-9><a class=lnlinks href=#hl-22-9> 9</a>
+</span><span class=lnt id=hl-22-10><a class=lnlinks href=#hl-22-10>10</a>
+</span><span class=lnt id=hl-22-11><a class=lnlinks href=#hl-22-11>11</a>
+</span><span class=lnt id=hl-22-12><a class=lnlinks href=#hl-22-12>12</a>
+</span><span class=lnt id=hl-22-13><a class=lnlinks href=#hl-22-13>13</a>
+</span><span class=lnt id=hl-22-14><a class=lnlinks href=#hl-22-14>14</a>
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=err>···</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=kd>public</span><span class=w> </span><span class=n>Class</span><span class=w> </span><span class=nf>findClass</span><span class=p>(</span><span class=n>String</span><span class=w> </span><span class=n>name</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=k>for</span><span class=w> </span><span class=p>(</span><span class=n>Element</span><span class=w> </span><span class=n>element</span><span class=w> </span><span class=p>:</span><span class=w> </span><span class=n>dexElements</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=n>DexFile</span><span class=w> </span><span class=n>dex</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>element</span><span class=p>.</span><span class=na>dexFile</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=k>if</span><span class=w> </span><span class=p>(</span><span class=n>dex</span><span class=w> </span><span class=o>!=</span><span class=w> </span><span class=kc>null</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>            </span><span class=n>Class</span><span class=w> </span><span class=n>clazz</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>dex</span><span class=p>.</span><span class=na>loadClassBinaryName</span><span class=p>(</span><span class=n>name</span><span class=p>,</span><span class=w> </span><span class=n>definingContext</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>            </span><span class=k>if</span><span class=w> </span><span class=p>(</span><span class=n>clazz</span><span class=w> </span><span class=o>!=</span><span class=w> </span><span class=kc>null</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>                </span><span class=k>return</span><span class=w> </span><span class=n>clazz</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>            </span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=k>return</span><span class=w> </span><span class=kc>null</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=err>···</span></span></span></code></pre></td></tr></table></div></div></div><footer class=post-footer><div class=post-tags><a href=/tags/android/>android
+</a><a href=/tags/safe/>Safe
+</a><a href=/tags/jni/>JNI
+</a><a href=/tags/naitive/>naitive</a></div><hr><div class=post-copyright><img src=/imgs/cc/cc.svg class=cc-icon width=75 height=75 align=right alt=共享知识 title=共享知识><ul><li class=post-copyright-title><strong>文章标题：</strong>
+Android扩展知识点</li><li class=post-copyright-author><strong>本文作者： </strong>Rise</li><li class=post-copyright-link><strong>本文链接：</strong>
+<a id=post-cr-link href=https://blogs.qipai360.cn/post/android-extension-knowledge-points/ title=Android扩展知识点>https://blogs.qipai360.cn/post/android-extension-knowledge-points/</a></li><li class=post-copyright-license><strong>版权声明： </strong>本作品采用 <i class="fab fa-fw fa-creative-commons"></i><a target=_blank href=https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh-hans>BY-NC-SA</a> 许可协议。转载请注明出处！</li><li><div class=license-icons><a href=https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh-hans target=_blank><img src=/imgs/cc/big/by_nc_sa.svg alt=BY-NC-SA title=BY-NC-SA>
+</a><a href=https://notbyai.fyi target=_blank><img src=/imgs/notbyai/zh-hans/black.svg title="Not By AI"></a></div></li></ul></div><div class=followme><span>欢迎关注我的其它发布渠道</span><div class=social-list><div class=social-item><a target=_blank class=social-link href=https://www.zhihu.com/people/rise-worlds><span class=icon><i class="fa fa-book"></i>
+</span><span class=label>知乎</span></a></div><div class=social-item><a target=_blank class=social-link href=https://twitter.com/riseworlds><span class=icon><i class="fab fa-twitter"></i>
+</span><span class=label>Twitter</span></a></div><div class=social-item><a target=_blank class=social-link href=https://www.facebook.com/rise.worlds><span class=icon><i class="fab fa-facebook"></i>
+</span><span class=label>facebook</span></a></div><div class=social-item><a target=_blank class=social-link href=https://youtube.com/@YiXuan><span class=icon><i class="fab fa-youtube"></i>
+</span><span class=label>YouTube</span></a></div><div class=social-item><a target=_blank class=social-link href=https://instagram.com/rise.worlds><span class=icon><i class="fab fa-instagram"></i>
+</span><span class=label>Instagram</span></a></div><div class=social-item><a target=_blank class=social-link href=https://t.me/riseworlds><span class=icon><i class="fab fa-telegram"></i>
+</span><span class=label>Telegram</span></a></div></div></div><div class=post-nav><div class="post-nav-next post-nav-item"><a href=/post/android-open-source-library-source-analysis/ rel=next title=Android开源库源码分析><i class="fa fa-chevron-left"></i> Android开源库源码分析</a></div><div class="post-nav-prev post-nav-item"><a href=/post/android-knowledge-points/ rel=prev title=Android知识点汇总>Android知识点汇总
+<i class="fa fa-chevron-right"></i></a></div></div></footer></article></div><div id=comments class=post-comments><div class=comment-head><div class=comment-headline><i class="fas fa-comments fa-fw"></i>
+<span>评论交流</span></div></div><div class=comment-wrap><div><div class=comment-loading><i class="fa fa-sync fa-spin"></i></div><div class=giscus-container></div></div></div></div></div></main><footer class=footer><div class=footer-inner><div class=copyright>&copy;
+<span itemprop=copyrightYear>2004 - 2026
+</span><span class=with-love><i class="fa fa-heart"></i>
+</span><span class=author itemprop=copyrightHolder>Rise</span></div><div class=powered-by>由 <a href=https://gohugo.io title=0.157.0 target=_blank>Hugo</a> & <a href=https://github.com/hugo-next/hugo-theme-next title=4.8.3 target=_blank>Hugo NexT.Gemini</a> 强力驱动</div><div class=beian><a href=https://beian.miit.gov.cn target=_blank>豫ICP备2021009490号</a>
+<img src=/imgs/gongan.png alt=豫公网安备>
+<a href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=41162302000074" target=_blank>豫公网安备 41162302000074 号</a></div></div></footer><script class=next-config data-name=page type=application/json>{"clipboard":{"js":{"alias":"clipboard","file":"dist/clipboard.min.js","name":"clipboard.js","version":"2.0.11"}},"comments":true,"expired":false,"isHome":false,"isPage":true,"path":"android-extension-knowledge-points","permalink":"https://blogs.qipai360.cn/post/android-extension-knowledge-points/","title":"Android扩展知识点","toc":false,"waline3":{"pagecnt":{"alias":"@waline/client","alias_name":"waline","file":"dist/pageview.js","name":"pageview","version":"3.5.7"}}}</script><script type=text/javascript src=https://blogs.qipai360.cn/js/3rd/animejs/3.2.2/anime.min.js crossorigin=anonymous defer></script><script type=text/javascript src=https://blogs.qipai360.cn/js/3rd/viewerjs/1.11.6/viewer.min.js crossorigin=anonymous defer></script><script class=next-config data-name=main type=application/json>{"bookmark":{"color":"#222","enable":true,"save":"manual"},"copybtn":true,"darkmode":true,"giscus":{"cfg":{"category":"Announcements","categoryid":"DIC_kwDOA6L0YM4CiXf9","emit":false,"inputposition":"top","mapping":"title","reactions":false,"repo":"rise-worlds/rise-worlds.github.io","repoid":"MDEwOlJlcG9zaXRvcnk2MTAxMTA0MA==","theme":"transparent_dark"},"js":"https://giscus.app/client.js"},"hostname":"https://blogs.qipai360.cn/","i18n":{"ds_day":" 天前","ds_days":" 天 ","ds_hour":" 小时前","ds_hours":" 小时 ","ds_just":"刚刚","ds_min":" 分钟前","ds_mins":" 分钟","ds_month":" 个月前","ds_years":" 年 ","empty":"没有找到任何搜索结果：${query}","hits":"找到 ${hits} 个搜索结果","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","placeholder":"搜索..."},"isMultiLang":false,"lang":"zh-CN","lazyload":false,"motion":{"async":true,"enable":true,"transition":{"collheader":"fadeInLeft","postblock":"fadeIn","postbody":"fadeInDown","postheader":"fadeInDown","sidebar":"fadeInUp"}},"postmeta":{"comments":{"enable":false,"plugin":"waline3"},"views":{"enable":true,"plugin":"waline3"}},"root":"/","scheme":"Gemini","share":{"addtoany":{"js":"https://static.addtoany.com/menu/page.js","locale":"zh-CN","num":8},"enable":false},"sidebar":{"display":"post","offset":12,"padding":18,"position":"left","width":256},"vendor":{"plugins":"local","router":{"name":"local","type":"modern","url":"https://blogs.qipai360.cn/js/3rd"}},"version":"4.8.3","waline3":{"cfg":{"emoji":false,"imguploader":false,"placeholder":"请文明发言哟 ヾ(≧▽≦*)o 可用快捷键选取表情符号：😀😄😁🥳👻👽👀🚄 (Window系统：Win+.，Mac系统：Control+Command+Space)","reaction":true,"reactiontext":["点赞","踩一下","得意","不屑","尴尬","睡觉"],"reactiontitle":"你认为这篇文章怎么样？","requiredmeta":["nick","mail"],"search":true,"serverurl":"https://walinejs.comment.lithub.cc","sofa":"快来发表你的意见吧 (≧∀≦)ゞ","wordlimit":200},"css":{"alias":"@waline/client","file":"dist/waline.css","name":"waline","version":"3.5.7"},"js":{"alias":"@waline/client","file":"dist/waline.js","name":"waline","version":"3.5.7"}}}</script><script type=text/javascript src="/js/main.min.js?=1772265585" defer></script><script type=text/javascript src="/js/clipboard.min.js?=1772265587" defer></script></body></html>

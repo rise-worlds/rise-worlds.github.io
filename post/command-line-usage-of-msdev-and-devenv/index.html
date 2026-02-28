@@ -1,0 +1,293 @@
+<!doctype html><html lang=zh-CN data-theme=dark><head><meta charset=UTF-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=theme-color content="#222" media="(prefers-color-scheme: dark)"><meta name=generator content="Hugo 0.157.0"><link rel="shortcut icon" type=image/x-icon href=/imgs/icons/favicon.ico><link rel=icon type=image/x-icon href=/imgs/icons/favicon.ico><link rel=icon type=image/png sizes=16x16 href=/imgs/icons/favicon_32_32_next.png><link rel=icon type=image/png sizes=32x32 href=/imgs/icons/favicon_128_128_next.png><link rel=apple-touch-icon sizes=180x180 href=/imgs/icons/apple_touch_icon_next.png><meta itemprop=name content="msdev 和 devenv 的命令行用法"><meta itemprop=description content="福兮祸兮，焉知所依？冬去冰泮，春来萌荣。朝生暮死，亦可惊鸿。知足者富，自足者强。"><meta name=description content="福兮祸兮，焉知所依？冬去冰泮，春来萌荣。朝生暮死，亦可惊鸿。知足者富，自足者强。"><meta itemprop=datePublished zgotmplz><meta itemprop=dateModified zgotmplz><meta itemprop=image content="https://blogs.qipai360.cn/imgs/avatar.jpg"><meta itemprop=keywords content="Rise,ZhangTuohui,技术,C++,Unity3D,Lua,NodeJS,C#,JavaScript,游戏开发,机器学习,深度学习,AI,编程,编程语言,编程技术,编程开发,游戏引擎,游戏设计,游戏制作,游戏开发者,游戏开发者博客,游戏开发者网站,游戏开发者工具,游戏开发者教程,游戏开发者学习,游戏开发者交流,游戏开发者分享,游戏开发者经验,游戏开发者心得,游戏开发者技巧,游戏开发者方法,游戏开发者思路,游戏开发者理念,游戏开发者文化,游戏开发者精神,游戏开发者信仰"><meta property="og:type" content="article"><meta property="og:title" content="msdev 和 devenv 的命令行用法"><meta property="og:description" content="福兮祸兮，焉知所依？冬去冰泮，春来萌荣。朝生暮死，亦可惊鸿。知足者富，自足者强。"><meta property="og:image" content="/imgs/avatar.jpg"><meta property="og:image:width" content="312"><meta property="og:image:height" content="312"><meta property="og:image:type" content="image/jpeg/png/svg/jpg"><meta property="og:url" content="https://blogs.qipai360.cn/post/command-line-usage-of-msdev-and-devenv/"><meta property="og:site_name" content="Rise的自留地"><meta property="og:locale" content="zh-CN"><meta property="article:author" content="Rise"><meta property="article:published_time" content="2009-07-23 10:30:00 +0800 +0800"><meta property="article:modified_time" content="2009-07-23 10:30:00 +0800 +0800"><link type=text/css rel=stylesheet href=https://blogs.qipai360.cn/js/3rd/font-awesome/6.7.2/css/all.min.css><link type=text/css rel=stylesheet href=https://blogs.qipai360.cn/js/3rd/animate.css/3.1.1/animate.min.css><link type=text/css rel=stylesheet href=https://blogs.qipai360.cn/js/3rd/viewerjs/1.11.6/viewer.min.css><link rel=stylesheet href="/css/main.min.css?=1772265588"><style type=text/css>.post-footer hr:after{content:"~ 我可是有底线的哟 ~"}.flinks-list-footer hr:after{content:"~ 我可是有底线的哟 ~"}</style><script type=text/javascript>(function(){localDB={set:function(e,t,n){if(n===0)return;const s=new Date,o=n*864e5,i={value:t,expiry:s.getTime()+o};localStorage.setItem(e,JSON.stringify(i))},get:function(e){const t=localStorage.getItem(e);if(!t)return 0[0];const n=JSON.parse(t),s=new Date;return s.getTime()>n.expiry?(localStorage.removeItem(e),0[0]):n.value}},theme={active:function(){const e=localDB.get("theme");if(e==null)return;theme.toggle(e),window.matchMedia("(prefers-color-scheme: dark)").addListener(function(e){theme.toggle(e.matches?"dark":"light")})},toggle:function(e){document.documentElement.setAttribute("data-theme",e),localDB.set("theme",e,2);const t=document.querySelector("iframe.giscus-frame");if(t){const n={setConfig:{theme:e}};t.contentWindow.postMessage({giscus:n},"https://giscus.app")}}},theme.active()})(window)</script><script type=text/javascript>document.addEventListener("DOMContentLoaded",()=>{var e=document.createElement("script");e.charset="UTF-8",e.src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js",e.async=!1,e.defer=!0,document.head.appendChild(e),e.onload=function(){NexT.utils.fmtBusuanzi()}})</script><script defer src=https://static.cloudflareinsights.com/beacon.min.js data-cf-beacon='{"token": "2b23669184fc49269e400525ac2447d9"}'></script><title>msdev 和 devenv 的命令行用法 - Rise的自留地</title><noscript><link rel=stylesheet href=/css/noscript.css></noscript></head><body itemscope itemtype=http://schema.org/WebPage class=use-motion><div class=headband></div><main class=main><header class=header itemscope itemtype=http://schema.org/WPHeader><div class=header-inner><div class=site-brand-container><div class=site-nav-toggle><div class=toggle aria-label role=button><span class=toggle-line></span>
+<span class=toggle-line></span>
+<span class=toggle-line></span></div></div><div class=site-meta><a href=/ class=brand rel=start><i class=logo-line></i><h1 class=site-title>Rise的自留地</h1><i class=logo-line></i></a><p class=site-subtitle itemprop=description>记录生活中的点滴，分享编程技术和游戏开发经验。</p></div><div class=site-nav-right><div class="toggle popup-trigger"></div></div></div><nav class=site-nav><ul class="main-menu menu"><li class="menu-item menu-item-home"><a href=/ class=hvr-icon-pulse rel=section><i class="fa fa-home hvr-icon"></i>首页</a></li><li class="menu-item menu-item-about"><a href=/about.html class=hvr-icon-pulse rel=section><i class="fa fa-user hvr-icon"></i>关于</a></li><li class="menu-item menu-item-archives"><a href=/archives/ class=hvr-icon-pulse rel=section><i class="fa fa-archive hvr-icon"></i>归档
+<span class=badge>679</span></a></li><li class="menu-item menu-item-tags"><a href=/tags/ class=hvr-icon-pulse rel=section><i class="fa fa-tags hvr-icon"></i>标签</a></li><li class="menu-item menu-item-message"><a href=/message/ class=hvr-icon-pulse rel=section><i class="fa fa-comments hvr-icon"></i>留言板</a></li><li class="menu-item menu-item-commonweal"><a href=/404.html class=hvr-icon-pulse rel=section><i class="fa fa-heartbeat hvr-icon"></i>公益 404</a></li></ul></nav></div><div class="toggle sidebar-toggle" role=button><span class=toggle-line></span>
+<span class=toggle-line></span>
+<span class=toggle-line></span></div><aside class=sidebar><div class="sidebar-inner sidebar-overview-active"><ul class=sidebar-nav><li class=sidebar-nav-toc>文章目录</li><li class=sidebar-nav-overview>站点概览</li></ul><div class=sidebar-panel-container><div class="post-toc-wrap sidebar-panel"><div class="post-toc animated"><nav id=TableOfContents></nav></div></div><div class="site-overview-wrap sidebar-panel"><div class="site-author site-overview-item animated" itemprop=author itemscope itemtype=http://schema.org/Person><img class=site-author-image itemprop=image alt=Rise src=/imgs/img-lazy-loading.gif data-src=/imgs/avatar.jpg><p class=site-author-name itemprop=name>Rise</p><div class=site-description itemprop=description>福兮祸兮，焉知所依？冬去冰泮，春来萌荣。朝生暮死，亦可惊鸿。知足者富，自足者强。</div></div><div class="site-state-wrap site-overview-item animated"><nav class=site-state><div class="site-state-item site-state-posts"><a href=/archives/><span class=site-state-item-count>679</span>
+<span class=site-state-item-name>日志</span></a></div><div class="site-state-item site-state-categories"><a href=/categories/><span class=site-state-item-count>35</span>
+<span class=site-state-item-name>分类</span></a></div><div class="site-state-item site-state-tags"><a href=/tags/><span class=site-state-item-count>118</span>
+<span class=site-state-item-name>标签</span></a></div></nav></div><div class="links-of-social site-overview-item animated"><span class=links-of-social-item><a href=https://github.com/rise-worlds title="Github → https://github.com/rise-worlds" rel=noopener class=hvr-icon-pulse target=_blank><i class="fab fa-github fa-fw hvr-icon"></i>
+Github
+</a></span><span class=links-of-social-item><a href=mailto:rise.worlds@outlook.com title="E-Mail → mailto:rise.worlds@outlook.com" rel=noopener class=hvr-icon-pulse target=_blank><i class="fa fa-envelope fa-fw hvr-icon"></i>
+E-Mail
+</a></span><span class=links-of-social-item><a href=https://www.zhihu.com/people/rise-worlds title="知乎 → https://www.zhihu.com/people/rise-worlds" rel=noopener class=hvr-icon-pulse target=_blank><i class="fa fa-book fa-fw hvr-icon"></i>
+知乎
+</a></span><span class=links-of-social-item><a href=https://twitter.com/riseworlds title="Twitter → https://twitter.com/riseworlds" rel=noopener class=hvr-icon-pulse target=_blank><i class="fab fa-twitter fa-fw hvr-icon"></i>
+Twitter
+</a></span><span class=links-of-social-item><a href=https://www.facebook.com/rise.worlds title="facebook → https://www.facebook.com/rise.worlds" rel=noopener class=hvr-icon-pulse target=_blank><i class="fab fa-facebook fa-fw hvr-icon"></i>
+facebook
+</a></span><span class=links-of-social-item><a href=https://youtube.com/@YiXuan title="YouTube → https://youtube.com/@YiXuan" rel=noopener class=hvr-icon-pulse target=_blank><i class="fab fa-youtube fa-fw hvr-icon"></i>
+YouTube
+</a></span><span class=links-of-social-item><a href=https://instagram.com/rise.worlds title="Instagram → https://instagram.com/rise.worlds" rel=noopener class=hvr-icon-pulse target=_blank><i class="fab fa-instagram fa-fw hvr-icon"></i>
+Instagram
+</a></span><span class=links-of-social-item><a href=https://t.me/riseworlds title="Telegram → https://t.me/riseworlds" rel=noopener class=hvr-icon-pulse target=_blank><i class="fab fa-telegram fa-fw hvr-icon"></i>
+Telegram</a></span></div><div class="links-of-blogroll site-overview-item animated"><div class=links-of-blogroll-title><i class="fa fa-globe fa-fw"></i>
+友情链接</div><ul class=links-of-blogroll-list><li class=links-of-blogroll-item><a href=https://www.qipai360.cn title=https://www.qipai360.cn target=_blank>Qipai360</a></li><li class=links-of-blogroll-item><a href=https://www.cnblogs.com/flying_bat title=https://www.cnblogs.com/flying_bat target=_blank>博客园</a></li><li class=links-of-blogroll-item><a href=https://zishu.me title=https://zishu.me target=_blank>子舒的博客</a></li><li class=links-of-blogroll-item><a href=https://gitee.com/hugo-next/hugo-theme-next title=https://gitee.com/hugo-next/hugo-theme-next target=_blank>Hugo-NexT</a></li></ul></div></div></div></div><div id=siteinfo-card-widget class=sidebar-card-widget><div class=item-headline><i class="fas fa-chart-line"></i>
+<span>网站资讯</span></div><div class=siteinfo><div class=siteinfo-item><div class=item-name><i class="fa-solid fa-calendar-check"></i>已运行：</div><div class=item-count id=runTimes data-publishdate="2004-10-06 15:24:00 +0800 +0800"></div></div><div class=siteinfo-item><div class=item-name><i class="fas fa fa-user"></i>总访客数：</div><div class=item-count id=busuanzi_value_site_uv><i class="fa fa-sync fa-spin"></i></div></div><div class=siteinfo-item><div class=item-name><i class="fas fa fa-eye"></i>页面浏览：</div><div class=item-count id=busuanzi_value_site_pv><i class="fa fa-sync fa-spin"></i></div></div><div class=siteinfo-item><div class=item-name><i class="fa fa-font"></i>总字数：</div><div class=item-count id=wordsCount data-count=2423147></div></div><div class=siteinfo-item><div class=item-name><i class="fa fa-mug-hot"></i>阅读约：</div><div class=item-count id=readTimes data-times=5207></div></div><div class=siteinfo-item><div class=item-name><i class="fa fa-clock-rotate-left"></i>最后更新于：</div><div class=item-count id=last-push-date data-lastpushdate="2026-02-28 15:59:00 +0800 +0800"></div></div></div></div></aside><div class=sidebar-dimmer></div></header><div class=tool-buttons><div id=goto-comments class="button goto-comments" title=直达评论><i class="fas fa-comments"></i></div><div id=toggle-theme class=button title=深浅模式切换><i class="fas fa-adjust"></i></div><div class=back-to-top role=button title=返回顶部><i class="fa fa-arrow-up"></i>
+<span>0%</span></div></div><div class=reading-progress-bar></div><a role=button class="book-mark-link book-mark-link-fixed"></a><a href=https://github.com/rise-worlds rel="noopener external nofollow noreferrer" target=_blank title="Follow me on GitHub" class="exturl github-corner"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0 0 115 115h15l12 27L250 250V0z"/><path d="M128.3 109C113.8 99.7 119 89.6 119 89.6 122 82.7 120.5 78.6 120.5 78.6 119.2 72 123.4 76.3 123.4 76.3 127.3 80.9 125.5 87.3 125.5 87.3 122.9 97.6 130.6 101.9 134.4 103.2" fill="currentColor" style="transform-origin:130px 106px" class="octo-arm"/><path d="M115 115C114.9 115.1 118.7 116.5 119.8 115.4l13.9-13.8C136.9 99.2 139.9 98.4 142.2 98.6 133.8 88 127.5 74.4 143.8 58 148.5 53.4 154 51.2 159.7 51 160.3 49.4 163.2 43.6 171.4 40.1 171.4 40.1 176.1 42.5 178.8 56.2 183.1 58.6 187.2 61.8 190.9 65.4 194.5 69 197.7 73.2 200.1 77.6 213.8 80.2 216.3 84.9 216.3 84.9 212.7 93.1 206.9 96 205.4 96.6 205.1 102.4 203 107.8 198.3 112.5 181.9 128.9 168.3 122.5 157.7 114.1 157.9 116.9 156.7 120.9 152.7 124.9L141 136.5C139.8 137.7 141.6 141.9 141.8 141.8z" fill="currentColor" class="octo-body"/></svg></a><noscript><div class=noscript-warning>Theme NexT works best with JavaScript enabled</div></noscript><div class="main-inner post posts-expand"><div class=post-block><article itemscope itemtype=http://schema.org/Article class=post-content lang><link itemprop=mainEntityOfPage href=https://blogs.qipai360.cn/post/command-line-usage-of-msdev-and-devenv/><span hidden itemprop=author itemscope itemtype=http://schema.org/Person><meta itemprop=image content="/imgs/avatar.jpg"><meta itemprop=name content="Rise"></span><span hidden itemprop=publisher itemscope itemtype=http://schema.org/Organization><meta itemprop=name content="Rise"><meta itemprop=description content="福兮祸兮，焉知所依？冬去冰泮，春来萌荣。朝生暮死，亦可惊鸿。知足者富，自足者强。"></span><span hidden itemprop=post itemscope itemtype=http://schema.org/CreativeWork><meta itemprop=name content="msdev 和 devenv 的命令行用法"><meta itemprop=description content="msdev是visual studio 6.0的IDE程序, devenv是visual studio 2005的IDE程序
+两种IDE程序, 既可以工作在图形模式下,也可以工作在命令模式下.
+其中, 直接运行msdev 和 devenv将打开vs6和vs2005的IDE界面. 命令行则支持不同的选项.
+msdev的命令行用法:"></span><header class=post-header><h1 class=post-title itemprop="name headline">msdev 和 devenv 的命令行用法</h1><div class=post-meta-container><div class=post-meta-items><span class=post-meta-item><span class=post-meta-item-icon><i class="fas fa-solid fa-calendar"></i>
+</span><span class=post-meta-item-text title=发表于>发表于：
+</span><time title="创建时间：2009年07月23日 10:30:00 CST" itemprop="dateCreated datePublished" datetime="2009-07-23 10:30:00 +0800 +0800">2009年07月23日
+</time></span><span class=post-meta-item><span class=post-meta-item-icon><i class="fas fa-solid fa-folder-open"></i>
+</span><span class=post-meta-item-text title=分类于>分类于：
+</span><span itemprop=about itemscope itemtype=http://schema.org/Thing><a href=/categories/win32dev/ itemprop=url rel=index><span itemprop=name>dev/Win32Dev</span></a></span></span></div><div class=post-meta-items><span class=post-meta-item title=字数><span class=post-meta-item-icon><i class="fas fa-solid fa-file-word"></i>
+</span><span class=post-meta-item-text>字数：</span>
+<span>2663</span>
+</span><span class=post-meta-item title=阅读><span class=post-meta-item-icon><i class="fas fa-solid fa-clock"></i>
+</span><span class=post-meta-item-text>阅读：&ap;</span>
+<span>6分钟</span>
+</span><span class=post-meta-item title=浏览><span class=post-meta-item-icon><i class="fas fa-solid fa-eye"></i>
+</span><span class=post-meta-item-text>浏览：
+</span><span id=pageview-count data-path=/post/command-line-usage-of-msdev-and-devenv/><i class="fa fa-sync fa-spin"></i></span></span></div></div></header><div class=post-body itemprop=articleBody><p><code>msdev</code>是<code>visual studio 6.0</code>的IDE程序, <code>devenv</code>是<code>visual studio 2005</code>的IDE程序
+两种IDE程序, 既可以工作在图形模式下,也可以工作在命令模式下.
+其中, 直接运行msdev 和 devenv将打开vs6和vs2005的IDE界面. 命令行则支持不同的选项.
+msdev的命令行用法:</p><a id=more></a><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt id=hl-0-1><a class=lnlinks href=#hl-0-1> 1</a>
+</span><span class=lnt id=hl-0-2><a class=lnlinks href=#hl-0-2> 2</a>
+</span><span class=lnt id=hl-0-3><a class=lnlinks href=#hl-0-3> 3</a>
+</span><span class=lnt id=hl-0-4><a class=lnlinks href=#hl-0-4> 4</a>
+</span><span class=lnt id=hl-0-5><a class=lnlinks href=#hl-0-5> 5</a>
+</span><span class=lnt id=hl-0-6><a class=lnlinks href=#hl-0-6> 6</a>
+</span><span class=lnt id=hl-0-7><a class=lnlinks href=#hl-0-7> 7</a>
+</span><span class=lnt id=hl-0-8><a class=lnlinks href=#hl-0-8> 8</a>
+</span><span class=lnt id=hl-0-9><a class=lnlinks href=#hl-0-9> 9</a>
+</span><span class=lnt id=hl-0-10><a class=lnlinks href=#hl-0-10>10</a>
+</span><span class=lnt id=hl-0-11><a class=lnlinks href=#hl-0-11>11</a>
+</span><span class=lnt id=hl-0-12><a class=lnlinks href=#hl-0-12>12</a>
+</span><span class=lnt id=hl-0-13><a class=lnlinks href=#hl-0-13>13</a>
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-txt data-lang=txt><span class=line><span class=cl>Usage:  
+</span></span><span class=line><span class=cl>  MSDEV [myprj.dsp|mywksp.dsw]  - load project/workspace  
+</span></span><span class=line><span class=cl>        [\&lt;filename&gt;]            - load source file  
+</span></span><span class=line><span class=cl>        /?                      - display usage information  
+</span></span><span class=line><span class=cl>        /EX \&lt;macroname&gt;         - execute a VBScript macro  
+</span></span><span class=line><span class=cl>        /OUT \&lt;filename&gt;         - redirect command line output to a file  
+</span></span><span class=line><span class=cl>        /USEENV                 - ignore tools.options.directories settings  
+</span></span><span class=line><span class=cl>        /MAKE [&lt;target&gt;] [...]  - build specified target(s)  
+</span></span><span class=line><span class=cl>              [&lt;project&gt; - &lt;platform&gt; &lt;configname&gt;]  
+</span></span><span class=line><span class=cl>              [[&lt;project&gt;|ALL] - [DEBUG|RELEASE|ALL]]  
+</span></span><span class=line><span class=cl>              /CLEAN            - delete intermediate files but don&#39;t build  
+</span></span><span class=line><span class=cl>              /REBUILD          - clean and build  
+</span></span><span class=line><span class=cl>              /NORECURSE        - don&#39;t build dependent projects  </span></span></code></pre></td></tr></table></div></div><p>比如projectdsw, 此工程文件由包含很多的子项目.
+编译所有项目Debug版本为:
+<code>msdev project.dsw /make "all - Win32 Debug x86"</code>
+其中有一个project有许多其他projects组成,就是build_all, 包含了C/C++的动态库,各种工具程序,还有各种示例程序. 编译此project Debug版本就为:
+<code>msdev project.dsw /make "build_all - Win32 Debug x86"</code>
+如果还想编译Java的动态库, 在vc6中设置好java后, 运行如下命令即可:
+<code>msdev project.dsw /make "db_java - Win32 Debug x86"</code>
+在工程文件外,还有一个用来衡量性能的程序, project_micro,编译该程序的命令为:
+<code>msdev project_micro.dsp /make "project_micro - Win32 Debug x86"</code>
+即,对于项目文件而言, 其只有一个project, 就是其本身.
+对于自动化程序而言, msdev有一个弊端,就是程序返回值.  当项目文件/工程文件不存在的时候, msdev的返回值居然是0!, 和编译成功的一样, 也许msdev认为不存在就是成功吧.
+devenv命令的格式就长了一点, 基本语法是:
+<code>devenv  [solutionfile | projectfile | anyfile.ext]  [switches]</code>
+比如, 为了方便VC2005以上的编译, project将会同时提供vc6所用的dsw文件同时, 也会推出一个sln文件,这sln文件就是solutionfile
+使用此文件编译project默认配置的Debug版本为:
+<code>devenv project.sln /build "Debug|Win32"</code>
+只编译db的动态库则为:
+<code>devenv project.sln /build "Debug|Win32" /project db</code>
+编译project_micro则复杂点,因为vc2005默认的project file是.vcproj的,而不是.dsp格式的,而test_micro只有.dsp格式的故而,需要先转化为.vcproj格式的, 可以用VCBuild工具:
+<code>VCBuild project_micro.dsp /upgrade</code>
+这样就产生了project_micro.vcproj<br>用devenv编译就是:
+<code>devenv project_micro.vcproj /build "Debug x86|Win32"</code>
+之所有配置与上面不同在与, project_micro中是适用于VC6的配置, 转化过来以后, 配置是保留的.
+与msdev不同, devenv将文件不存在视为编译失败. 更加适合程序处理.</p><p>附:devenv的命令行帮助</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt id=hl-1-1><a class=lnlinks href=#hl-1-1>1</a>
+</span><span class=lnt id=hl-1-2><a class=lnlinks href=#hl-1-2>2</a>
+</span><span class=lnt id=hl-1-3><a class=lnlinks href=#hl-1-3>3</a>
+</span><span class=lnt id=hl-1-4><a class=lnlinks href=#hl-1-4>4</a>
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-txt data-lang=txt><span class=line><span class=cl>Microsoft (R) Visual Studio 8.0.50727.762 版。
+</span></span><span class=line><span class=cl>版权所有 (C) Microsoft Corp 1984-2005。保留所有权利。
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>devenv  [solutionfile | projectfile | anyfile.ext]  [switches]</span></span></code></pre></td></tr></table></div></div><p>devenv 的第一个参数通常是一个解决方案文件或项目文件。如果您希望在编辑器中自动打开文件，也可以使用任何其他文件作为第一个参数。当您输入项目文件时，IDE会在项目文件的父目录中查找与该项目文件具有相同基名称的 .sln 文件。如果不存在这样的 .sln 文件，IDE 将查找引用该项目的单个 .sln 文件。如果不存在这样的单个.sln 文件，则 IDE 将创建一个具有默认 .sln 文件名且未保存的解决方案，其基名称与项目文件的基名称相同。</p><ul><li><p>命令行编译:
+<code>devenv solutionfile.sln /build solutionconfig [ /project projectnameorfile [ /projectconfig name ] ]</code></p></li><li><p>可用的命令行开关:</p></li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt id=hl-2-1><a class=lnlinks href=#hl-2-1> 1</a>
+</span><span class=lnt id=hl-2-2><a class=lnlinks href=#hl-2-2> 2</a>
+</span><span class=lnt id=hl-2-3><a class=lnlinks href=#hl-2-3> 3</a>
+</span><span class=lnt id=hl-2-4><a class=lnlinks href=#hl-2-4> 4</a>
+</span><span class=lnt id=hl-2-5><a class=lnlinks href=#hl-2-5> 5</a>
+</span><span class=lnt id=hl-2-6><a class=lnlinks href=#hl-2-6> 6</a>
+</span><span class=lnt id=hl-2-7><a class=lnlinks href=#hl-2-7> 7</a>
+</span><span class=lnt id=hl-2-8><a class=lnlinks href=#hl-2-8> 8</a>
+</span><span class=lnt id=hl-2-9><a class=lnlinks href=#hl-2-9> 9</a>
+</span><span class=lnt id=hl-2-10><a class=lnlinks href=#hl-2-10>10</a>
+</span><span class=lnt id=hl-2-11><a class=lnlinks href=#hl-2-11>11</a>
+</span><span class=lnt id=hl-2-12><a class=lnlinks href=#hl-2-12>12</a>
+</span><span class=lnt id=hl-2-13><a class=lnlinks href=#hl-2-13>13</a>
+</span><span class=lnt id=hl-2-14><a class=lnlinks href=#hl-2-14>14</a>
+</span><span class=lnt id=hl-2-15><a class=lnlinks href=#hl-2-15>15</a>
+</span><span class=lnt id=hl-2-16><a class=lnlinks href=#hl-2-16>16</a>
+</span><span class=lnt id=hl-2-17><a class=lnlinks href=#hl-2-17>17</a>
+</span><span class=lnt id=hl-2-18><a class=lnlinks href=#hl-2-18>18</a>
+</span><span class=lnt id=hl-2-19><a class=lnlinks href=#hl-2-19>19</a>
+</span><span class=lnt id=hl-2-20><a class=lnlinks href=#hl-2-20>20</a>
+</span><span class=lnt id=hl-2-21><a class=lnlinks href=#hl-2-21>21</a>
+</span><span class=lnt id=hl-2-22><a class=lnlinks href=#hl-2-22>22</a>
+</span><span class=lnt id=hl-2-23><a class=lnlinks href=#hl-2-23>23</a>
+</span><span class=lnt id=hl-2-24><a class=lnlinks href=#hl-2-24>24</a>
+</span><span class=lnt id=hl-2-25><a class=lnlinks href=#hl-2-25>25</a>
+</span><span class=lnt id=hl-2-26><a class=lnlinks href=#hl-2-26>26</a>
+</span><span class=lnt id=hl-2-27><a class=lnlinks href=#hl-2-27>27</a>
+</span><span class=lnt id=hl-2-28><a class=lnlinks href=#hl-2-28>28</a>
+</span><span class=lnt id=hl-2-29><a class=lnlinks href=#hl-2-29>29</a>
+</span><span class=lnt id=hl-2-30><a class=lnlinks href=#hl-2-30>30</a>
+</span><span class=lnt id=hl-2-31><a class=lnlinks href=#hl-2-31>31</a>
+</span><span class=lnt id=hl-2-32><a class=lnlinks href=#hl-2-32>32</a>
+</span><span class=lnt id=hl-2-33><a class=lnlinks href=#hl-2-33>33</a>
+</span><span class=lnt id=hl-2-34><a class=lnlinks href=#hl-2-34>34</a>
+</span><span class=lnt id=hl-2-35><a class=lnlinks href=#hl-2-35>35</a>
+</span><span class=lnt id=hl-2-36><a class=lnlinks href=#hl-2-36>36</a>
+</span><span class=lnt id=hl-2-37><a class=lnlinks href=#hl-2-37>37</a>
+</span><span class=lnt id=hl-2-38><a class=lnlinks href=#hl-2-38>38</a>
+</span><span class=lnt id=hl-2-39><a class=lnlinks href=#hl-2-39>39</a>
+</span><span class=lnt id=hl-2-40><a class=lnlinks href=#hl-2-40>40</a>
+</span><span class=lnt id=hl-2-41><a class=lnlinks href=#hl-2-41>41</a>
+</span><span class=lnt id=hl-2-42><a class=lnlinks href=#hl-2-42>42</a>
+</span><span class=lnt id=hl-2-43><a class=lnlinks href=#hl-2-43>43</a>
+</span><span class=lnt id=hl-2-44><a class=lnlinks href=#hl-2-44>44</a>
+</span><span class=lnt id=hl-2-45><a class=lnlinks href=#hl-2-45>45</a>
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-txt data-lang=txt><span class=line><span class=cl>/Build          使用指定的解决方案配置生成解决方案或  
+</span></span><span class=line><span class=cl>                项目。例如“Debug”。如果可能存在多个平台，  
+</span></span><span class=line><span class=cl>                则配置名称必须用引号括起来  
+</span></span><span class=line><span class=cl>                并且包含平台名称。例如“Debug|Win32”。  
+</span></span><span class=line><span class=cl>/Clean          删除生成结果。  
+</span></span><span class=line><span class=cl>/Command        启动 IDE 并执行该命令。  
+</span></span><span class=line><span class=cl>/Deploy         生成并部署指定的生成配置。  
+</span></span><span class=line><span class=cl>/Edit           在此应用程序的运行实例中打开  
+</span></span><span class=line><span class=cl>                指定文件。如果没有正在运行的实例，  
+</span></span><span class=line><span class=cl>                则启动一个具有简化窗口布局的新实例。  
+</span></span><span class=line><span class=cl>/LCID           设置 IDE 中用于用户界面的默认语言。  
+</span></span><span class=line><span class=cl>/Log            将 IDE 活动记录到指定的文件以用于故障排除。  
+</span></span><span class=line><span class=cl>/NoVSIP         禁用用于 VSIP 测试的 VSIP 开发人员许可证密钥。  
+</span></span><span class=line><span class=cl>/Out            将生成日志追加到指定的文件中。  
+</span></span><span class=line><span class=cl>/Project        指定生成、清理或部署的项目。  
+</span></span><span class=line><span class=cl>                必须和 /Build、/Rebuild、/Clean 或 /Deploy 一起使用。  
+</span></span><span class=line><span class=cl>/ProjectConfig  重写解决方案  
+</span></span><span class=line><span class=cl>                配置中指定的项目配置。例如“Debug”。如果可能存在  
+</span></span><span class=line><span class=cl>                多个平台，则配置名称必须用引号括起来  
+</span></span><span class=line><span class=cl>                并包含平台名称。例如“Debug|Win32”。  
+</span></span><span class=line><span class=cl>                必须和 /Project 一起使用。  
+</span></span><span class=line><span class=cl>/Rebuild        先清理，然后使用指定配置生成  
+</span></span><span class=line><span class=cl>                解决方案或项目。  
+</span></span><span class=line><span class=cl>/ResetAddin     移除与特定外接程序关联的命令和命令用户界面。  
+</span></span><span class=line><span class=cl>/ResetSettings  恢复 IDE 的默认设置，还可以重置为  
+</span></span><span class=line><span class=cl>                指定的 VSSettings 文件。  
+</span></span><span class=line><span class=cl>/ResetSkipPkgs  清除所有添加到 VSPackages 的 SkipLoading 标记。  
+</span></span><span class=line><span class=cl>/Run            编译并运行指定的解决方案。  
+</span></span><span class=line><span class=cl>/RunExit        编译并运行指定的解决方案然后关闭 IDE。  
+</span></span><span class=line><span class=cl>/SafeMode       以安全模式启动 IDE，加载最少数量的窗口。  
+</span></span><span class=line><span class=cl>/Upgrade        升级项目或解决方案以及其中的所有项目。  
+</span></span><span class=line><span class=cl>                并相应地创建这些文件的备份。有关备份  
+</span></span><span class=line><span class=cl>                过程的更多信息，请参见  
+</span></span><span class=line><span class=cl>                “Visual Studio 转换向导”上的帮助。
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>产品特定的开关:
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>/debugexe       打开要调试的指定可执行文件。  
+</span></span><span class=line><span class=cl>                命令行的其余部分作为它的参数  
+</span></span><span class=line><span class=cl>                传递到此执行文件。  
+</span></span><span class=line><span class=cl>/useenv         使用 PATH、INCLUDE、LIBPATH 和 LIB 环境变量  
+</span></span><span class=line><span class=cl>                而不是使用 VC++ 生成的 IDE 路径。
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>要从命令行附加调试器，请使用:  
+</span></span><span class=line><span class=cl>        VsJITDebugger.exe -p &lt;pid&gt;</span></span></code></pre></td></tr></table></div></div><p>vcbuild 的命令行帮助</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt id=hl-3-1><a class=lnlinks href=#hl-3-1>1</a>
+</span><span class=lnt id=hl-3-2><a class=lnlinks href=#hl-3-2>2</a>
+</span><span class=lnt id=hl-3-3><a class=lnlinks href=#hl-3-3>3</a>
+</span><span class=lnt id=hl-3-4><a class=lnlinks href=#hl-3-4>4</a>
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-txt data-lang=txt><span class=line><span class=cl>Microsoft(R) Visual C++ 项目生成器 - 命令行版本 8.00.50727  
+</span></span><span class=line><span class=cl>版权所有 (C) Microsoft Corp 1993-2003。保留所有权利。
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>vcbuild [options] [project|solution] [config|$ALL]</span></span></code></pre></td></tr></table></div></div><ul><li>选项:</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt id=hl-4-1><a class=lnlinks href=#hl-4-1> 1</a>
+</span><span class=lnt id=hl-4-2><a class=lnlinks href=#hl-4-2> 2</a>
+</span><span class=lnt id=hl-4-3><a class=lnlinks href=#hl-4-3> 3</a>
+</span><span class=lnt id=hl-4-4><a class=lnlinks href=#hl-4-4> 4</a>
+</span><span class=lnt id=hl-4-5><a class=lnlinks href=#hl-4-5> 5</a>
+</span><span class=lnt id=hl-4-6><a class=lnlinks href=#hl-4-6> 6</a>
+</span><span class=lnt id=hl-4-7><a class=lnlinks href=#hl-4-7> 7</a>
+</span><span class=lnt id=hl-4-8><a class=lnlinks href=#hl-4-8> 8</a>
+</span><span class=lnt id=hl-4-9><a class=lnlinks href=#hl-4-9> 9</a>
+</span><span class=lnt id=hl-4-10><a class=lnlinks href=#hl-4-10>10</a>
+</span><span class=lnt id=hl-4-11><a class=lnlinks href=#hl-4-11>11</a>
+</span><span class=lnt id=hl-4-12><a class=lnlinks href=#hl-4-12>12</a>
+</span><span class=lnt id=hl-4-13><a class=lnlinks href=#hl-4-13>13</a>
+</span><span class=lnt id=hl-4-14><a class=lnlinks href=#hl-4-14>14</a>
+</span><span class=lnt id=hl-4-15><a class=lnlinks href=#hl-4-15>15</a>
+</span><span class=lnt id=hl-4-16><a class=lnlinks href=#hl-4-16>16</a>
+</span><span class=lnt id=hl-4-17><a class=lnlinks href=#hl-4-17>17</a>
+</span><span class=lnt id=hl-4-18><a class=lnlinks href=#hl-4-18>18</a>
+</span><span class=lnt id=hl-4-19><a class=lnlinks href=#hl-4-19>19</a>
+</span><span class=lnt id=hl-4-20><a class=lnlinks href=#hl-4-20>20</a>
+</span><span class=lnt id=hl-4-21><a class=lnlinks href=#hl-4-21>21</a>
+</span><span class=lnt id=hl-4-22><a class=lnlinks href=#hl-4-22>22</a>
+</span><span class=lnt id=hl-4-23><a class=lnlinks href=#hl-4-23>23</a>
+</span><span class=lnt id=hl-4-24><a class=lnlinks href=#hl-4-24>24</a>
+</span><span class=lnt id=hl-4-25><a class=lnlinks href=#hl-4-25>25</a>
+</span><span class=lnt id=hl-4-26><a class=lnlinks href=#hl-4-26>26</a>
+</span><span class=lnt id=hl-4-27><a class=lnlinks href=#hl-4-27>27</a>
+</span><span class=lnt id=hl-4-28><a class=lnlinks href=#hl-4-28>28</a>
+</span><span class=lnt id=hl-4-29><a class=lnlinks href=#hl-4-29>29</a>
+</span><span class=lnt id=hl-4-30><a class=lnlinks href=#hl-4-30>30</a>
+</span><span class=lnt id=hl-4-31><a class=lnlinks href=#hl-4-31>31</a>
+</span><span class=lnt id=hl-4-32><a class=lnlinks href=#hl-4-32>32</a>
+</span><span class=lnt id=hl-4-33><a class=lnlinks href=#hl-4-33>33</a>
+</span><span class=lnt id=hl-4-34><a class=lnlinks href=#hl-4-34>34</a>
+</span><span class=lnt id=hl-4-35><a class=lnlinks href=#hl-4-35>35</a>
+</span><span class=lnt id=hl-4-36><a class=lnlinks href=#hl-4-36>36</a>
+</span><span class=lnt id=hl-4-37><a class=lnlinks href=#hl-4-37>37</a>
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-txt data-lang=txt><span class=line><span class=cl>/clean (/c)     只清除生成输出  
+</span></span><span class=line><span class=cl>/error:&lt;str&gt;    输出到 stderr 时添加到错误行的前缀  
+</span></span><span class=line><span class=cl>/errfile:&lt;file&gt; 将所有错误记录到指定的文件  
+</span></span><span class=line><span class=cl>/htmllog:&lt;file&gt; 将输出记录到指定的 html 文件  
+</span></span><span class=line><span class=cl>                (默认值: $(IntDir)\\BuildLog.htm)  
+</span></span><span class=line><span class=cl>/implib         为 DLL 配置创建导入库(不链接)  
+</span></span><span class=line><span class=cl>/info:&lt;str&gt;     输出到 stdout 时添加到信息行的前缀  
+</span></span><span class=line><span class=cl>/link (/l)      执行链接，而不生成源  
+</span></span><span class=line><span class=cl>/logcommands    将命令和响应文件打印到屏幕  
+</span></span><span class=line><span class=cl>/logfile:&lt;file&gt; 将所有输出和生成信息记录到指定的文件  
+</span></span><span class=line><span class=cl>/override:&lt;file&gt; 使用给定属性表文件中的设置  
+</span></span><span class=line><span class=cl>                重写项目设置
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>/M&lt;number&gt;      指定要运行的并发生成的数量(如果可以运行并发生成)  
+</span></span><span class=line><span class=cl>/msbuild:&lt;opt&gt;  将 &lt;opt&gt; 传递至 msbuild.exe
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>/nocolor        在输出错误信息和警告消息时不使用颜色突出显示  
+</span></span><span class=line><span class=cl>/nohtmllog      不编写 HTML 生成日志文件
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>/noimplib       不生成导入库。  
+</span></span><span class=line><span class=cl>                注意: 此选项会重写 /implib。  
+</span></span><span class=line><span class=cl>/nologo         取消显示版本和版权信息  
+</span></span><span class=line><span class=cl>/nondefmsbuild  不要使用位于 .NET  
+</span></span><span class=line><span class=cl>                Framework 安装中的 msbuild.exe 副本  
+</span></span><span class=line><span class=cl>/platform:&lt;str&gt; 只为给定平台生成配置  
+</span></span><span class=line><span class=cl>/implibobjs:&lt;s&gt; 管理员的其他依赖项  
+</span></span><span class=line><span class=cl>/rebuild (/r)   清除生成输出并执行生成  
+</span></span><span class=line><span class=cl>/forcelink      强制链接，而不生成源  
+</span></span><span class=line><span class=cl>/showenv        在 html 生成日志中显示环境  
+</span></span><span class=line><span class=cl>/time           从开始到结束的生成时间  
+</span></span><span class=line><span class=cl>/upgrade        将项目文件升级到受支持的最新格式  
+</span></span><span class=line><span class=cl>                注意: 升级开关不执行生成  
+</span></span><span class=line><span class=cl>                注意: 对于解决方案文件，会忽略此选项  
+</span></span><span class=line><span class=cl>/useenv (/u)    使用 INCLUDE 和 LIB 路径的环境变量  
+</span></span><span class=line><span class=cl>/wrnfile:&lt;file&gt; 将所有警告记录到指定的文件  
+</span></span><span class=line><span class=cl>/warning:&lt;str&gt;  输出到 stdout 时添加到警告行的前缀  
+</span></span><span class=line><span class=cl>@&lt;file&gt;         从指定的响应文件读取选项</span></span></code></pre></td></tr></table></div></div><ul><li>默认行为:
+===============================================================================
+如果没有指定项目，并且目录中只有一个 <code>.vcproj</code> 文件，将会生成该项目。
+如果没有指定配置，并设置了 <code>VCBUILD_DEFAULT_CFG</code> 环境变量，将会生成该变量指定的配置。如果未设置该变量，将会生成所有的配置。
+默认操作是生成指定的配置，而不执行清除。
+还将从 <code>VCBUILD_DEFAULT_OPTIONS</code> 环境变量中读取选项。
+===============================================================================</li></ul></div><footer class=post-footer><hr><div class=post-copyright><img src=/imgs/cc/cc.svg class=cc-icon width=75 height=75 align=right alt=共享知识 title=共享知识><ul><li class=post-copyright-title><strong>文章标题：</strong>
+msdev 和 devenv 的命令行用法</li><li class=post-copyright-author><strong>本文作者： </strong>Rise</li><li class=post-copyright-link><strong>本文链接：</strong>
+<a id=post-cr-link href=https://blogs.qipai360.cn/post/command-line-usage-of-msdev-and-devenv/ title="msdev 和 devenv 的命令行用法">https://blogs.qipai360.cn/post/command-line-usage-of-msdev-and-devenv/</a></li><li class=post-copyright-license><strong>版权声明： </strong>本作品采用 <i class="fab fa-fw fa-creative-commons"></i><a target=_blank href=https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh-hans>BY-NC-SA</a> 许可协议。转载请注明出处！</li><li><div class=license-icons><a href=https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh-hans target=_blank><img src=/imgs/cc/big/by_nc_sa.svg alt=BY-NC-SA title=BY-NC-SA>
+</a><a href=https://notbyai.fyi target=_blank><img src=/imgs/notbyai/zh-hans/black.svg title="Not By AI"></a></div></li></ul></div><div class=followme><span>欢迎关注我的其它发布渠道</span><div class=social-list><div class=social-item><a target=_blank class=social-link href=https://www.zhihu.com/people/rise-worlds><span class=icon><i class="fa fa-book"></i>
+</span><span class=label>知乎</span></a></div><div class=social-item><a target=_blank class=social-link href=https://twitter.com/riseworlds><span class=icon><i class="fab fa-twitter"></i>
+</span><span class=label>Twitter</span></a></div><div class=social-item><a target=_blank class=social-link href=https://www.facebook.com/rise.worlds><span class=icon><i class="fab fa-facebook"></i>
+</span><span class=label>facebook</span></a></div><div class=social-item><a target=_blank class=social-link href=https://youtube.com/@YiXuan><span class=icon><i class="fab fa-youtube"></i>
+</span><span class=label>YouTube</span></a></div><div class=social-item><a target=_blank class=social-link href=https://instagram.com/rise.worlds><span class=icon><i class="fab fa-instagram"></i>
+</span><span class=label>Instagram</span></a></div><div class=social-item><a target=_blank class=social-link href=https://t.me/riseworlds><span class=icon><i class="fab fa-telegram"></i>
+</span><span class=label>Telegram</span></a></div></div></div><div class=post-nav><div class="post-nav-next post-nav-item"><a href=/post/cplusplus-good-design-principles/ rel=next title=关于C++,我觉得好的设计法则><i class="fa fa-chevron-left"></i> 关于C++,我觉得好的设计法则</a></div><div class="post-nav-prev post-nav-item"><a href=/post/nicamera-usage/ rel=prev title=NiCamera的使用>NiCamera的使用
+<i class="fa fa-chevron-right"></i></a></div></div></footer></article></div><div id=comments class=post-comments><div class=comment-head><div class=comment-headline><i class="fas fa-comments fa-fw"></i>
+<span>评论交流</span></div></div><div class=comment-wrap><div><div class=comment-loading><i class="fa fa-sync fa-spin"></i></div><div class=giscus-container></div></div></div></div></div></main><footer class=footer><div class=footer-inner><div class=copyright>&copy;
+<span itemprop=copyrightYear>2004 - 2026
+</span><span class=with-love><i class="fa fa-heart"></i>
+</span><span class=author itemprop=copyrightHolder>Rise</span></div><div class=powered-by>由 <a href=https://gohugo.io title=0.157.0 target=_blank>Hugo</a> & <a href=https://github.com/hugo-next/hugo-theme-next title=4.8.3 target=_blank>Hugo NexT.Gemini</a> 强力驱动</div><div class=beian><a href=https://beian.miit.gov.cn target=_blank>豫ICP备2021009490号</a>
+<img src=/imgs/gongan.png alt=豫公网安备>
+<a href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=41162302000074" target=_blank>豫公网安备 41162302000074 号</a></div></div></footer><script class=next-config data-name=page type=application/json>{"clipboard":{"js":{"alias":"clipboard","file":"dist/clipboard.min.js","name":"clipboard.js","version":"2.0.11"}},"comments":true,"expired":false,"isHome":false,"isPage":true,"path":"command-line-usage-of-msdev-and-devenv","permalink":"https://blogs.qipai360.cn/post/command-line-usage-of-msdev-and-devenv/","title":"msdev 和 devenv 的命令行用法","toc":false,"waline3":{"pagecnt":{"alias":"@waline/client","alias_name":"waline","file":"dist/pageview.js","name":"pageview","version":"3.5.7"}}}</script><script type=text/javascript src=https://blogs.qipai360.cn/js/3rd/animejs/3.2.2/anime.min.js crossorigin=anonymous defer></script><script type=text/javascript src=https://blogs.qipai360.cn/js/3rd/viewerjs/1.11.6/viewer.min.js crossorigin=anonymous defer></script><script class=next-config data-name=main type=application/json>{"bookmark":{"color":"#222","enable":true,"save":"manual"},"copybtn":true,"darkmode":true,"giscus":{"cfg":{"category":"Announcements","categoryid":"DIC_kwDOA6L0YM4CiXf9","emit":false,"inputposition":"top","mapping":"title","reactions":false,"repo":"rise-worlds/rise-worlds.github.io","repoid":"MDEwOlJlcG9zaXRvcnk2MTAxMTA0MA==","theme":"transparent_dark"},"js":"https://giscus.app/client.js"},"hostname":"https://blogs.qipai360.cn/","i18n":{"ds_day":" 天前","ds_days":" 天 ","ds_hour":" 小时前","ds_hours":" 小时 ","ds_just":"刚刚","ds_min":" 分钟前","ds_mins":" 分钟","ds_month":" 个月前","ds_years":" 年 ","empty":"没有找到任何搜索结果：${query}","hits":"找到 ${hits} 个搜索结果","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","placeholder":"搜索..."},"isMultiLang":false,"lang":"zh-CN","lazyload":false,"motion":{"async":true,"enable":true,"transition":{"collheader":"fadeInLeft","postblock":"fadeIn","postbody":"fadeInDown","postheader":"fadeInDown","sidebar":"fadeInUp"}},"postmeta":{"comments":{"enable":false,"plugin":"waline3"},"views":{"enable":true,"plugin":"waline3"}},"root":"/","scheme":"Gemini","share":{"addtoany":{"js":"https://static.addtoany.com/menu/page.js","locale":"zh-CN","num":8},"enable":false},"sidebar":{"display":"post","offset":12,"padding":18,"position":"left","width":256},"vendor":{"plugins":"local","router":{"name":"local","type":"modern","url":"https://blogs.qipai360.cn/js/3rd"}},"version":"4.8.3","waline3":{"cfg":{"emoji":false,"imguploader":false,"placeholder":"请文明发言哟 ヾ(≧▽≦*)o 可用快捷键选取表情符号：😀😄😁🥳👻👽👀🚄 (Window系统：Win+.，Mac系统：Control+Command+Space)","reaction":true,"reactiontext":["点赞","踩一下","得意","不屑","尴尬","睡觉"],"reactiontitle":"你认为这篇文章怎么样？","requiredmeta":["nick","mail"],"search":true,"serverurl":"https://walinejs.comment.lithub.cc","sofa":"快来发表你的意见吧 (≧∀≦)ゞ","wordlimit":200},"css":{"alias":"@waline/client","file":"dist/waline.css","name":"waline","version":"3.5.7"},"js":{"alias":"@waline/client","file":"dist/waline.js","name":"waline","version":"3.5.7"}}}</script><script type=text/javascript src="/js/main.min.js?=1772265585" defer></script><script type=text/javascript src="/js/clipboard.min.js?=1772265588" defer></script></body></html>

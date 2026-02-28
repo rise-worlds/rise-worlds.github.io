@@ -1,0 +1,132 @@
+<!doctype html><html lang=zh-CN data-theme=dark><head><meta charset=UTF-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=theme-color content="#222" media="(prefers-color-scheme: dark)"><meta name=generator content="Hugo 0.157.0"><link rel="shortcut icon" type=image/x-icon href=/imgs/icons/favicon.ico><link rel=icon type=image/x-icon href=/imgs/icons/favicon.ico><link rel=icon type=image/png sizes=16x16 href=/imgs/icons/favicon_32_32_next.png><link rel=icon type=image/png sizes=32x32 href=/imgs/icons/favicon_128_128_next.png><link rel=apple-touch-icon sizes=180x180 href=/imgs/icons/apple_touch_icon_next.png><meta itemprop=name content="第三章 阴阳的工作机制（4）"><meta itemprop=description content="福兮祸兮，焉知所依？冬去冰泮，春来萌荣。朝生暮死，亦可惊鸿。知足者富，自足者强。"><meta name=description content="福兮祸兮，焉知所依？冬去冰泮，春来萌荣。朝生暮死，亦可惊鸿。知足者富，自足者强。"><meta itemprop=datePublished zgotmplz><meta itemprop=dateModified zgotmplz><meta itemprop=image content="https://blogs.qipai360.cn/imgs/avatar.jpg"><meta itemprop=keywords content="Rise,ZhangTuohui,技术,C++,Unity3D,Lua,NodeJS,C#,JavaScript,游戏开发,机器学习,深度学习,AI,编程,编程语言,编程技术,编程开发,游戏引擎,游戏设计,游戏制作,游戏开发者,游戏开发者博客,游戏开发者网站,游戏开发者工具,游戏开发者教程,游戏开发者学习,游戏开发者交流,游戏开发者分享,游戏开发者经验,游戏开发者心得,游戏开发者技巧,游戏开发者方法,游戏开发者思路,游戏开发者理念,游戏开发者文化,游戏开发者精神,游戏开发者信仰"><meta property="og:type" content="article"><meta property="og:title" content="第三章 阴阳的工作机制（4）"><meta property="og:description" content="福兮祸兮，焉知所依？冬去冰泮，春来萌荣。朝生暮死，亦可惊鸿。知足者富，自足者强。"><meta property="og:image" content="/imgs/avatar.jpg"><meta property="og:image:width" content="312"><meta property="og:image:height" content="312"><meta property="og:image:type" content="image/jpeg/png/svg/jpg"><meta property="og:url" content="https://blogs.qipai360.cn/post/chapter-3-yin-yang-mechanism-part-4/"><meta property="og:site_name" content="Rise的自留地"><meta property="og:locale" content="zh-CN"><meta property="article:author" content="Rise"><meta property="article:published_time" content="2007-08-24 19:31:00 +0800 +0800"><meta property="article:modified_time" content="2007-08-27 17:00:00 +0800 +0800"><link type=text/css rel=stylesheet href=https://blogs.qipai360.cn/js/3rd/font-awesome/6.7.2/css/all.min.css><link type=text/css rel=stylesheet href=https://blogs.qipai360.cn/js/3rd/animate.css/3.1.1/animate.min.css><link type=text/css rel=stylesheet href=https://blogs.qipai360.cn/js/3rd/viewerjs/1.11.6/viewer.min.css><link rel=stylesheet href="/css/main.min.css?=1772265588"><style type=text/css>.post-footer hr:after{content:"~ 我可是有底线的哟 ~"}.flinks-list-footer hr:after{content:"~ 我可是有底线的哟 ~"}</style><script type=text/javascript>(function(){localDB={set:function(e,t,n){if(n===0)return;const s=new Date,o=n*864e5,i={value:t,expiry:s.getTime()+o};localStorage.setItem(e,JSON.stringify(i))},get:function(e){const t=localStorage.getItem(e);if(!t)return 0[0];const n=JSON.parse(t),s=new Date;return s.getTime()>n.expiry?(localStorage.removeItem(e),0[0]):n.value}},theme={active:function(){const e=localDB.get("theme");if(e==null)return;theme.toggle(e),window.matchMedia("(prefers-color-scheme: dark)").addListener(function(e){theme.toggle(e.matches?"dark":"light")})},toggle:function(e){document.documentElement.setAttribute("data-theme",e),localDB.set("theme",e,2);const t=document.querySelector("iframe.giscus-frame");if(t){const n={setConfig:{theme:e}};t.contentWindow.postMessage({giscus:n},"https://giscus.app")}}},theme.active()})(window)</script><script type=text/javascript>document.addEventListener("DOMContentLoaded",()=>{var e=document.createElement("script");e.charset="UTF-8",e.src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js",e.async=!1,e.defer=!0,document.head.appendChild(e),e.onload=function(){NexT.utils.fmtBusuanzi()}})</script><script defer src=https://static.cloudflareinsights.com/beacon.min.js data-cf-beacon='{"token": "2b23669184fc49269e400525ac2447d9"}'></script><title>第三章 阴阳的工作机制（4） - Rise的自留地</title><noscript><link rel=stylesheet href=/css/noscript.css></noscript></head><body itemscope itemtype=http://schema.org/WebPage class=use-motion><div class=headband></div><main class=main><header class=header itemscope itemtype=http://schema.org/WPHeader><div class=header-inner><div class=site-brand-container><div class=site-nav-toggle><div class=toggle aria-label role=button><span class=toggle-line></span>
+<span class=toggle-line></span>
+<span class=toggle-line></span></div></div><div class=site-meta><a href=/ class=brand rel=start><i class=logo-line></i><h1 class=site-title>Rise的自留地</h1><i class=logo-line></i></a><p class=site-subtitle itemprop=description>记录生活中的点滴，分享编程技术和游戏开发经验。</p></div><div class=site-nav-right><div class="toggle popup-trigger"></div></div></div><nav class=site-nav><ul class="main-menu menu"><li class="menu-item menu-item-home"><a href=/ class=hvr-icon-pulse rel=section><i class="fa fa-home hvr-icon"></i>首页</a></li><li class="menu-item menu-item-about"><a href=/about.html class=hvr-icon-pulse rel=section><i class="fa fa-user hvr-icon"></i>关于</a></li><li class="menu-item menu-item-archives"><a href=/archives/ class=hvr-icon-pulse rel=section><i class="fa fa-archive hvr-icon"></i>归档
+<span class=badge>679</span></a></li><li class="menu-item menu-item-tags"><a href=/tags/ class=hvr-icon-pulse rel=section><i class="fa fa-tags hvr-icon"></i>标签</a></li><li class="menu-item menu-item-message"><a href=/message/ class=hvr-icon-pulse rel=section><i class="fa fa-comments hvr-icon"></i>留言板</a></li><li class="menu-item menu-item-commonweal"><a href=/404.html class=hvr-icon-pulse rel=section><i class="fa fa-heartbeat hvr-icon"></i>公益 404</a></li></ul></nav></div><div class="toggle sidebar-toggle" role=button><span class=toggle-line></span>
+<span class=toggle-line></span>
+<span class=toggle-line></span></div><aside class=sidebar><div class="sidebar-inner sidebar-overview-active"><ul class=sidebar-nav><li class=sidebar-nav-toc>文章目录</li><li class=sidebar-nav-overview>站点概览</li></ul><div class=sidebar-panel-container><div class="post-toc-wrap sidebar-panel"><div class="post-toc animated"><nav id=TableOfContents></nav></div></div><div class="site-overview-wrap sidebar-panel"><div class="site-author site-overview-item animated" itemprop=author itemscope itemtype=http://schema.org/Person><img class=site-author-image itemprop=image alt=Rise src=/imgs/img-lazy-loading.gif data-src=/imgs/avatar.jpg><p class=site-author-name itemprop=name>Rise</p><div class=site-description itemprop=description>福兮祸兮，焉知所依？冬去冰泮，春来萌荣。朝生暮死，亦可惊鸿。知足者富，自足者强。</div></div><div class="site-state-wrap site-overview-item animated"><nav class=site-state><div class="site-state-item site-state-posts"><a href=/archives/><span class=site-state-item-count>679</span>
+<span class=site-state-item-name>日志</span></a></div><div class="site-state-item site-state-categories"><a href=/categories/><span class=site-state-item-count>35</span>
+<span class=site-state-item-name>分类</span></a></div><div class="site-state-item site-state-tags"><a href=/tags/><span class=site-state-item-count>118</span>
+<span class=site-state-item-name>标签</span></a></div></nav></div><div class="links-of-social site-overview-item animated"><span class=links-of-social-item><a href=https://github.com/rise-worlds title="Github → https://github.com/rise-worlds" rel=noopener class=hvr-icon-pulse target=_blank><i class="fab fa-github fa-fw hvr-icon"></i>
+Github
+</a></span><span class=links-of-social-item><a href=mailto:rise.worlds@outlook.com title="E-Mail → mailto:rise.worlds@outlook.com" rel=noopener class=hvr-icon-pulse target=_blank><i class="fa fa-envelope fa-fw hvr-icon"></i>
+E-Mail
+</a></span><span class=links-of-social-item><a href=https://www.zhihu.com/people/rise-worlds title="知乎 → https://www.zhihu.com/people/rise-worlds" rel=noopener class=hvr-icon-pulse target=_blank><i class="fa fa-book fa-fw hvr-icon"></i>
+知乎
+</a></span><span class=links-of-social-item><a href=https://twitter.com/riseworlds title="Twitter → https://twitter.com/riseworlds" rel=noopener class=hvr-icon-pulse target=_blank><i class="fab fa-twitter fa-fw hvr-icon"></i>
+Twitter
+</a></span><span class=links-of-social-item><a href=https://www.facebook.com/rise.worlds title="facebook → https://www.facebook.com/rise.worlds" rel=noopener class=hvr-icon-pulse target=_blank><i class="fab fa-facebook fa-fw hvr-icon"></i>
+facebook
+</a></span><span class=links-of-social-item><a href=https://youtube.com/@YiXuan title="YouTube → https://youtube.com/@YiXuan" rel=noopener class=hvr-icon-pulse target=_blank><i class="fab fa-youtube fa-fw hvr-icon"></i>
+YouTube
+</a></span><span class=links-of-social-item><a href=https://instagram.com/rise.worlds title="Instagram → https://instagram.com/rise.worlds" rel=noopener class=hvr-icon-pulse target=_blank><i class="fab fa-instagram fa-fw hvr-icon"></i>
+Instagram
+</a></span><span class=links-of-social-item><a href=https://t.me/riseworlds title="Telegram → https://t.me/riseworlds" rel=noopener class=hvr-icon-pulse target=_blank><i class="fab fa-telegram fa-fw hvr-icon"></i>
+Telegram</a></span></div><div class="links-of-blogroll site-overview-item animated"><div class=links-of-blogroll-title><i class="fa fa-globe fa-fw"></i>
+友情链接</div><ul class=links-of-blogroll-list><li class=links-of-blogroll-item><a href=https://www.qipai360.cn title=https://www.qipai360.cn target=_blank>Qipai360</a></li><li class=links-of-blogroll-item><a href=https://www.cnblogs.com/flying_bat title=https://www.cnblogs.com/flying_bat target=_blank>博客园</a></li><li class=links-of-blogroll-item><a href=https://zishu.me title=https://zishu.me target=_blank>子舒的博客</a></li><li class=links-of-blogroll-item><a href=https://gitee.com/hugo-next/hugo-theme-next title=https://gitee.com/hugo-next/hugo-theme-next target=_blank>Hugo-NexT</a></li></ul></div></div></div></div><div id=siteinfo-card-widget class=sidebar-card-widget><div class=item-headline><i class="fas fa-chart-line"></i>
+<span>网站资讯</span></div><div class=siteinfo><div class=siteinfo-item><div class=item-name><i class="fa-solid fa-calendar-check"></i>已运行：</div><div class=item-count id=runTimes data-publishdate="2004-10-06 15:24:00 +0800 +0800"></div></div><div class=siteinfo-item><div class=item-name><i class="fas fa fa-user"></i>总访客数：</div><div class=item-count id=busuanzi_value_site_uv><i class="fa fa-sync fa-spin"></i></div></div><div class=siteinfo-item><div class=item-name><i class="fas fa fa-eye"></i>页面浏览：</div><div class=item-count id=busuanzi_value_site_pv><i class="fa fa-sync fa-spin"></i></div></div><div class=siteinfo-item><div class=item-name><i class="fa fa-font"></i>总字数：</div><div class=item-count id=wordsCount data-count=2423147></div></div><div class=siteinfo-item><div class=item-name><i class="fa fa-mug-hot"></i>阅读约：</div><div class=item-count id=readTimes data-times=5207></div></div><div class=siteinfo-item><div class=item-name><i class="fa fa-clock-rotate-left"></i>最后更新于：</div><div class=item-count id=last-push-date data-lastpushdate="2026-02-28 15:59:00 +0800 +0800"></div></div></div></div></aside><div class=sidebar-dimmer></div></header><div class=tool-buttons><div id=goto-comments class="button goto-comments" title=直达评论><i class="fas fa-comments"></i></div><div id=toggle-theme class=button title=深浅模式切换><i class="fas fa-adjust"></i></div><div class=back-to-top role=button title=返回顶部><i class="fa fa-arrow-up"></i>
+<span>0%</span></div></div><div class=reading-progress-bar></div><a role=button class="book-mark-link book-mark-link-fixed"></a><a href=https://github.com/rise-worlds rel="noopener external nofollow noreferrer" target=_blank title="Follow me on GitHub" class="exturl github-corner"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0 0 115 115h15l12 27L250 250V0z"/><path d="M128.3 109C113.8 99.7 119 89.6 119 89.6 122 82.7 120.5 78.6 120.5 78.6 119.2 72 123.4 76.3 123.4 76.3 127.3 80.9 125.5 87.3 125.5 87.3 122.9 97.6 130.6 101.9 134.4 103.2" fill="currentColor" style="transform-origin:130px 106px" class="octo-arm"/><path d="M115 115C114.9 115.1 118.7 116.5 119.8 115.4l13.9-13.8C136.9 99.2 139.9 98.4 142.2 98.6 133.8 88 127.5 74.4 143.8 58 148.5 53.4 154 51.2 159.7 51 160.3 49.4 163.2 43.6 171.4 40.1 171.4 40.1 176.1 42.5 178.8 56.2 183.1 58.6 187.2 61.8 190.9 65.4 194.5 69 197.7 73.2 200.1 77.6 213.8 80.2 216.3 84.9 216.3 84.9 212.7 93.1 206.9 96 205.4 96.6 205.1 102.4 203 107.8 198.3 112.5 181.9 128.9 168.3 122.5 157.7 114.1 157.9 116.9 156.7 120.9 152.7 124.9L141 136.5C139.8 137.7 141.6 141.9 141.8 141.8z" fill="currentColor" class="octo-body"/></svg></a><noscript><div class=noscript-warning>Theme NexT works best with JavaScript enabled</div></noscript><div class="main-inner post posts-expand"><div class=post-block><article itemscope itemtype=http://schema.org/Article class=post-content lang><link itemprop=mainEntityOfPage href=https://blogs.qipai360.cn/post/chapter-3-yin-yang-mechanism-part-4/><span hidden itemprop=author itemscope itemtype=http://schema.org/Person><meta itemprop=image content="/imgs/avatar.jpg"><meta itemprop=name content="Rise"></span><span hidden itemprop=publisher itemscope itemtype=http://schema.org/Organization><meta itemprop=name content="Rise"><meta itemprop=description content="福兮祸兮，焉知所依？冬去冰泮，春来萌荣。朝生暮死，亦可惊鸿。知足者富，自足者强。"></span><span hidden itemprop=post itemscope itemtype=http://schema.org/CreativeWork><meta itemprop=name content="第三章 阴阳的工作机制（4）"><meta itemprop=description content='4.伤寒传足不传手
+这一节我们讨论阴阳的离合机制，讨论开合枢，从《素问·阴阳离合论》里我们可
+以看到，它讲的是足三阴三阳，没有提手三阴三阳。而《灵枢·根结篇》里也谈到开合
+枢的问题，它讲开合枢也是在足经里讲，讲手经它不提这个问题。再加上《素问·热论》
+这样一篇论述"伤寒"的祖文，也是论足不论手，这就给后世的许多人产生一个误解，认
+为伤寒传足不传手，温病传手不传足。大家都知道，中医很重要的一个观念是整体观念，
+人与天地都是一个整体，天地的变化都会不时地影响人体，怎么可能手足之间不会产生
+影响、不会相传呢？但是，《内经》、《伤寒》在谈到上述问题时，又的确是偏重在足的一
+面，这是什么原因呢？要弄清这个问题，必须从以下几个方面来考虑。'></span><header class=post-header><h1 class=post-title itemprop="name headline">第三章 阴阳的工作机制（4）</h1><div class=post-meta-container><div class=post-meta-items><span class=post-meta-item><span class=post-meta-item-icon><i class="fas fa-solid fa-calendar"></i>
+</span><span class=post-meta-item-text title=发表于>发表于：
+</span><time title="创建时间：2007年08月24日 19:31:00 CST" itemprop="dateCreated datePublished" datetime="2007-08-24 19:31:00 +0800 +0800">2007年08月24日
+</time></span><span class=post-meta-item><span class=post-meta-item-icon><i class="fas fa-solid fa-calendar-check"></i>
+</span><span class=post-meta-item-text title=更新于>更新于：
+</span><time title="修改时间：2007年08月27日 17:00:00 CST" itemprop="dateModified dateLastmod" datetime="2007-08-27 17:00:00 +0800 +0800">2007年08月27日
+</time></span><span class=post-meta-item><span class=post-meta-item-icon><i class="fas fa-solid fa-folder-open"></i>
+</span><span class=post-meta-item-text title=分类于>分类于：
+</span><span itemprop=about itemscope itemtype=http://schema.org/Thing><a href=/categories/tcm/ itemprop=url rel=index><span itemprop=name>TCM</span></a></span></span></div><div class=post-meta-items><span class=post-meta-item title=字数><span class=post-meta-item-icon><i class="fas fa-solid fa-file-word"></i>
+</span><span class=post-meta-item-text>字数：</span>
+<span>2748</span>
+</span><span class=post-meta-item title=阅读><span class=post-meta-item-icon><i class="fas fa-solid fa-clock"></i>
+</span><span class=post-meta-item-text>阅读：&ap;</span>
+<span>6分钟</span>
+</span><span class=post-meta-item title=浏览><span class=post-meta-item-icon><i class="fas fa-solid fa-eye"></i>
+</span><span class=post-meta-item-text>浏览：
+</span><span id=pageview-count data-path=/post/chapter-3-yin-yang-mechanism-part-4/><i class="fa fa-sync fa-spin"></i></span></span></div></div></header><div class=post-body itemprop=articleBody><p><span style=font-weight:700>4.伤寒传足不传手</span></p><p>这一节我们讨论阴阳的离合机制，讨论开合枢，从《素问·阴阳离合论》里我们可
+以看到，它讲的是足三阴三阳，没有提手三阴三阳。而《灵枢·根结篇》里也谈到开合
+枢的问题，它讲开合枢也是在足经里讲，讲手经它不提这个问题。再加上《素问·热论》
+这样一篇论述"伤寒"的祖文，也是论足不论手，这就给后世的许多人产生一个误解，认
+为伤寒传足不传手，温病传手不传足。大家都知道，中医很重要的一个观念是整体观念，
+人与天地都是一个整体，天地的变化都会不时地影响人体，怎么可能手足之间不会产生
+影响、不会相传呢？但是，《内经》、《伤寒》在谈到上述问题时，又的确是偏重在足的一
+面，这是什么原因呢？要弄清这个问题，必须从以下几个方面来考虑。</p><a id=more></a><p>第一，我们从文化的含义上谈，人是什么东西呢？人是万物之灵。所以，大家得到
+这个人生着实不容易，应该真正做一些对自己、对人民有利益的事情。有些事做了对自
+己有利，但，对国家对人民不一定有利，而医这个行当，只要你发心不邪，对人对己都
+会有利。《素问》里常说"人禀天地之气生"，所以，考察人我们应该把他放到天地这个框
+架里。有关天地，古人常把它与经纬联系起来谈，我们看《三国》就经常会碰到"经天纬
+地"这个词。天以经言，地以纬言。经贯穿南北，连接上下，纬贯穿东西，连接左右。经
+纬这个概念看上去很简单，可是我们是否可以透过这个简单的概念去思考一些与中医相
+关的问题？大家想一想，人为什么叫万物之灵？在所有的动物中，除了人之外，其他的
+都是爬行动物，它是横行的，只有人是直立动物。所以，从天地这个角度，从经纬这个
+角度，人是沿经线走的，而其他动物是沿纬线走的。从禀气的多寡而言，当然人禀天气
+最多，而余者禀天气较少。这是造就人成为万物之灵的重要因素。</p><p>第二，我们对干支的这个概念很熟悉，几乎每个人都知道天干地支。但是，大家想
+过没有，为什么我们不可以叫地干天支呢？因为干是直立的，而长在干上的支是横行的，
+所以，干象天而支象地。万物虽然都是长在地上，但是，这个地上的万物要很好的生长
+却离不开天，离不开太阳。文化大革命时期我们经常唱一首红歌，&ldquo;大海航行靠舵手，万
+物生长靠太阳&rdquo;，就说明了这个意思。花叶果实虽然都长在树枝（支）上，但，它必须靠
+树干提供营养。所以，一个干支的概念也体现了天地的含义，也体现了一个纵横的问题，
+也体现出人与其他动物的差别。</p><p>第三，凡属于动物这一类，不管你是直立还是爬行，从象的角度而言，头都与天相
+应，足都与地相应。所以，《内经》说：&ldquo;圣人象天以养头，象地以养足。&ldquo;怎么养头呢？
+圣人说得很清楚，你就去思考天是什么一个样子，你按这个去做就是很好的养头，这样
+头脑就会发达。但是，这些都是后天的因素，而先天的东西已经固定在那里，没有办法
+改变。我们前面说了，人是走经线的，所以，从先天而言，他禀受的天气最多，而天象
+头。为什么人的头脑发达？为什么只有人类能够思维？为什么只有人类有智慧？为什么
+人类与其他动物有如此巨大的差别？根本的一个因素就在这个禀受天气的多寡。而其他
+的动物呢？它沿纬线走，所以，从先天而言，它禀受的地气最丰，而地象足。大家想一
+想，动物的脚力是不是比人好？你们有谁能跑过马？跑过老虎？跑过猴子？甚至你连猫、
+连狗、连鸡都跑不过。就是马家军也没办法！为什么呢？因为动物禀地气全，而人禀受
+地气相对要少得多。就这一点而言，人与动物是各有千秋的。当然，动物禀受地气全，
+脚力就好，这个问题还需相对来看。比如蚂蚁、乌龟，从行走的绝对速度上，那是没法
+跟人相比的，但是，从相对速度上、从耐力上，是不是也要比人强，这些问题恐怕需要
+大家从专门的角度来研究。</p><p>第四，也许有人会提问：人睡眠的时候不也是横卧的吗？对！这个问题提得好。所
+有的动物中，只有人，他的睡眠姿势与觉醒姿势不同，觉醒的时候直立，而睡觉时就放
+平了。直禀经天之气，横禀纬地之气，为什么说人禀天地之气生，天气和地气都很全，
+道理就在这里。所以，人不是光禀天气，他也禀地气，他是"头脑不简单，四肢也发达&rdquo;。
+当然，从量上而言，他禀受的地气还是不如其他动物全。其他动物觉醒和睡眠的姿势有
+不有改变？除了这个位的高低有改变，横直并没有改变。马家军的脚力很不错，跑一万
+米用不了多少时间，因为马俊仁教练知道怎么超强训练队员的体能。但是，我想如果马
+教练多来研究一下中医，从禀受地气的这个角度想想办法，开发队员的脚力，那么，多
+拿几块奥运金牌应该不成问题。</p><p>第五，以上几个方面都思考过了，我们就知道人之所以能为万物之灵，就因为他是
+禀天地之气而生，而且在这个天地，在这个经纬上，他又偏重于天经的一面，这是人之
+所以为人的一个最显著的特点。也就是说人类是重经的，偏重于经，以经统纬是人的一
+个特点。这也使我们想到，中医的十二经为什么不叫十二纬？这也使我们想到了圣人的
+东西为什么一定要叫经典！明确了上面的这些原则，我们就可以来解答小节开首提出的
+问题。在人的十二经脉当中，我们看一看哪些经能够真正地贯穿南北，连接上下？是足
+经还是手经？很显然是足经。手经它只走到一半，它没有贯穿整个南北，它没有贯穿人
+的整个"经&rdquo;，所以，手经它并不能完全的代表人的特性，惟有足经能够做到这一点。它
+从头到足，从天到地，走完人的整个"经"线，所以，足经才能真正地代表这个"经"。《内
+经》也好，《伤寒》也好，在谈到很重要的问题时都是举出足经为代表，道理就在这里。
+实际上，这是以足赅手，以足统手，言足经手在其中矣。并不是言足不言手，更不是传
+足不传手，这个问题大家应该这样来理解。</p><p>第六，上面这个问题解决了，我们可以来思考另一个相关的问题，就是六经辨证与
+其他辨证有什么区别？当然，搞温病的肯定会强调卫气营血辨证、三焦辨证，搞脏腑的
+会说只有脏腑辨证、八纲辨证才行，而我们搞伤寒的是不是就要王婆卖瓜呢？我想这个
+不完全是王婆卖瓜，你要有依据，有道理，不要光是感情用事。为什么六经辨证有这个
+优越性呢？这就是刚刚谈到的，它是一个纵向的辨证，是一个贯穿天地的辨证，是一个
+真正的"经"的辨证。因此，这样的辨证才最符合人的本性，最能够体现人的这个特征，
+所以，这个辨证方法最能揭示疾病的根本。《素问》说"治病必求于本"，可以说这个辨证
+模式是一个最方便的求本模式。难怪后世要把六经这个辨证模式称为能"钤百病"的模式。
+而其他的辨证模式，像卫气营血辨证、三焦辨证，以及脏腑辨证，这些都是横向的辨证，
+都是注重纬线的辨证。所以，这些辨证在某方面都有局限性，而六经辨证或者说阴阳辨
+证没有这个局限性。</p></div><footer class=post-footer><hr><div class=post-copyright><img src=/imgs/cc/cc.svg class=cc-icon width=75 height=75 align=right alt=共享知识 title=共享知识><ul><li class=post-copyright-title><strong>文章标题：</strong>
+第三章 阴阳的工作机制（4）</li><li class=post-copyright-author><strong>本文作者： </strong>Rise</li><li class=post-copyright-link><strong>本文链接：</strong>
+<a id=post-cr-link href=https://blogs.qipai360.cn/post/chapter-3-yin-yang-mechanism-part-4/ title="第三章 阴阳的工作机制（4）">https://blogs.qipai360.cn/post/chapter-3-yin-yang-mechanism-part-4/</a></li><li class=post-copyright-license><strong>版权声明： </strong>本作品采用 <i class="fab fa-fw fa-creative-commons"></i><a target=_blank href=https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh-hans>BY-NC-SA</a> 许可协议。转载请注明出处！</li><li><div class=license-icons><a href=https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh-hans target=_blank><img src=/imgs/cc/big/by_nc_sa.svg alt=BY-NC-SA title=BY-NC-SA>
+</a><a href=https://notbyai.fyi target=_blank><img src=/imgs/notbyai/zh-hans/black.svg title="Not By AI"></a></div></li></ul></div><div class=followme><span>欢迎关注我的其它发布渠道</span><div class=social-list><div class=social-item><a target=_blank class=social-link href=https://www.zhihu.com/people/rise-worlds><span class=icon><i class="fa fa-book"></i>
+</span><span class=label>知乎</span></a></div><div class=social-item><a target=_blank class=social-link href=https://twitter.com/riseworlds><span class=icon><i class="fab fa-twitter"></i>
+</span><span class=label>Twitter</span></a></div><div class=social-item><a target=_blank class=social-link href=https://www.facebook.com/rise.worlds><span class=icon><i class="fab fa-facebook"></i>
+</span><span class=label>facebook</span></a></div><div class=social-item><a target=_blank class=social-link href=https://youtube.com/@YiXuan><span class=icon><i class="fab fa-youtube"></i>
+</span><span class=label>YouTube</span></a></div><div class=social-item><a target=_blank class=social-link href=https://instagram.com/rise.worlds><span class=icon><i class="fab fa-instagram"></i>
+</span><span class=label>Instagram</span></a></div><div class=social-item><a target=_blank class=social-link href=https://t.me/riseworlds><span class=icon><i class="fab fa-telegram"></i>
+</span><span class=label>Telegram</span></a></div></div></div><div class=post-nav><div class="post-nav-next post-nav-item"><a href=/post/chapter-4-treatment-principles-part-1/ rel=next title="第四章 治病法要（1）"><i class="fa fa-chevron-left"></i> 第四章 治病法要（1）</a></div><div class="post-nav-prev post-nav-item"><a href=/post/chapter-3-yin-yang-mechanism-part-3/ rel=prev title="第三章 阴阳的工作机制（3）">第三章 阴阳的工作机制（3）
+<i class="fa fa-chevron-right"></i></a></div></div></footer></article></div><div id=comments class=post-comments><div class=comment-head><div class=comment-headline><i class="fas fa-comments fa-fw"></i>
+<span>评论交流</span></div></div><div class=comment-wrap><div><div class=comment-loading><i class="fa fa-sync fa-spin"></i></div><div class=giscus-container></div></div></div></div></div></main><footer class=footer><div class=footer-inner><div class=copyright>&copy;
+<span itemprop=copyrightYear>2004 - 2026
+</span><span class=with-love><i class="fa fa-heart"></i>
+</span><span class=author itemprop=copyrightHolder>Rise</span></div><div class=powered-by>由 <a href=https://gohugo.io title=0.157.0 target=_blank>Hugo</a> & <a href=https://github.com/hugo-next/hugo-theme-next title=4.8.3 target=_blank>Hugo NexT.Gemini</a> 强力驱动</div><div class=beian><a href=https://beian.miit.gov.cn target=_blank>豫ICP备2021009490号</a>
+<img src=/imgs/gongan.png alt=豫公网安备>
+<a href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=41162302000074" target=_blank>豫公网安备 41162302000074 号</a></div></div></footer><script class=next-config data-name=page type=application/json>{"comments":true,"expired":false,"isHome":false,"isPage":true,"path":"chapter-3-yin-yang-mechanism-part-4","permalink":"https://blogs.qipai360.cn/post/chapter-3-yin-yang-mechanism-part-4/","title":"第三章 阴阳的工作机制（4）","toc":false,"waline3":{"pagecnt":{"alias":"@waline/client","alias_name":"waline","file":"dist/pageview.js","name":"pageview","version":"3.5.7"}}}</script><script type=text/javascript src=https://blogs.qipai360.cn/js/3rd/animejs/3.2.2/anime.min.js crossorigin=anonymous defer></script><script type=text/javascript src=https://blogs.qipai360.cn/js/3rd/viewerjs/1.11.6/viewer.min.js crossorigin=anonymous defer></script><script class=next-config data-name=main type=application/json>{"bookmark":{"color":"#222","enable":true,"save":"manual"},"copybtn":true,"darkmode":true,"giscus":{"cfg":{"category":"Announcements","categoryid":"DIC_kwDOA6L0YM4CiXf9","emit":false,"inputposition":"top","mapping":"title","reactions":false,"repo":"rise-worlds/rise-worlds.github.io","repoid":"MDEwOlJlcG9zaXRvcnk2MTAxMTA0MA==","theme":"transparent_dark"},"js":"https://giscus.app/client.js"},"hostname":"https://blogs.qipai360.cn/","i18n":{"ds_day":" 天前","ds_days":" 天 ","ds_hour":" 小时前","ds_hours":" 小时 ","ds_just":"刚刚","ds_min":" 分钟前","ds_mins":" 分钟","ds_month":" 个月前","ds_years":" 年 ","empty":"没有找到任何搜索结果：${query}","hits":"找到 ${hits} 个搜索结果","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","placeholder":"搜索..."},"isMultiLang":false,"lang":"zh-CN","lazyload":false,"motion":{"async":true,"enable":true,"transition":{"collheader":"fadeInLeft","postblock":"fadeIn","postbody":"fadeInDown","postheader":"fadeInDown","sidebar":"fadeInUp"}},"postmeta":{"comments":{"enable":false,"plugin":"waline3"},"views":{"enable":true,"plugin":"waline3"}},"root":"/","scheme":"Gemini","share":{"addtoany":{"js":"https://static.addtoany.com/menu/page.js","locale":"zh-CN","num":8},"enable":false},"sidebar":{"display":"post","offset":12,"padding":18,"position":"left","width":256},"vendor":{"plugins":"local","router":{"name":"local","type":"modern","url":"https://blogs.qipai360.cn/js/3rd"}},"version":"4.8.3","waline3":{"cfg":{"emoji":false,"imguploader":false,"placeholder":"请文明发言哟 ヾ(≧▽≦*)o 可用快捷键选取表情符号：😀😄😁🥳👻👽👀🚄 (Window系统：Win+.，Mac系统：Control+Command+Space)","reaction":true,"reactiontext":["点赞","踩一下","得意","不屑","尴尬","睡觉"],"reactiontitle":"你认为这篇文章怎么样？","requiredmeta":["nick","mail"],"search":true,"serverurl":"https://walinejs.comment.lithub.cc","sofa":"快来发表你的意见吧 (≧∀≦)ゞ","wordlimit":200},"css":{"alias":"@waline/client","file":"dist/waline.css","name":"waline","version":"3.5.7"},"js":{"alias":"@waline/client","file":"dist/waline.js","name":"waline","version":"3.5.7"}}}</script><script type=text/javascript src="/js/main.min.js?=1772265585" defer></script></body></html>

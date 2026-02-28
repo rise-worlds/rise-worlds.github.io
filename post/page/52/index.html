@@ -1,0 +1,672 @@
+<!doctype html><html lang=zh-CN data-theme=dark><head><meta charset=UTF-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=theme-color content="#222" media="(prefers-color-scheme: dark)"><meta name=generator content="Hugo 0.157.0"><link rel="shortcut icon" type=image/x-icon href=/imgs/icons/favicon.ico><link rel=icon type=image/x-icon href=/imgs/icons/favicon.ico><link rel=icon type=image/png sizes=16x16 href=/imgs/icons/favicon_32_32_next.png><link rel=icon type=image/png sizes=32x32 href=/imgs/icons/favicon_128_128_next.png><link rel=apple-touch-icon sizes=180x180 href=/imgs/icons/apple_touch_icon_next.png><meta itemprop=name content="Posts"><meta itemprop=description content="福兮祸兮，焉知所依？冬去冰泮，春来萌荣。朝生暮死，亦可惊鸿。知足者富，自足者强。"><meta name=description content="福兮祸兮，焉知所依？冬去冰泮，春来萌荣。朝生暮死，亦可惊鸿。知足者富，自足者强。"><meta itemprop=image content="https://blogs.qipai360.cn/imgs/avatar.jpg"><meta itemprop=keywords content="Rise,ZhangTuohui,技术,C++,Unity3D,Lua,NodeJS,C#,JavaScript,游戏开发,机器学习,深度学习,AI,编程,编程语言,编程技术,编程开发,游戏引擎,游戏设计,游戏制作,游戏开发者,游戏开发者博客,游戏开发者网站,游戏开发者工具,游戏开发者教程,游戏开发者学习,游戏开发者交流,游戏开发者分享,游戏开发者经验,游戏开发者心得,游戏开发者技巧,游戏开发者方法,游戏开发者思路,游戏开发者理念,游戏开发者文化,游戏开发者精神,游戏开发者信仰"><meta property="og:type" content="website"><meta property="og:title" content="Posts"><meta property="og:description" content="福兮祸兮，焉知所依？冬去冰泮，春来萌荣。朝生暮死，亦可惊鸿。知足者富，自足者强。"><meta property="og:image" content="/imgs/avatar.jpg"><meta property="og:image:width" content="312"><meta property="og:image:height" content="312"><meta property="og:image:type" content="image/jpeg/png/svg/jpg"><meta property="og:url" content="https://blogs.qipai360.cn/post/"><meta property="og:site_name" content="Rise的自留地"><meta property="og:locale" content="zh-CN"><link type=text/css rel=stylesheet href=https://blogs.qipai360.cn/js/3rd/font-awesome/6.7.2/css/all.min.css><link type=text/css rel=stylesheet href=https://blogs.qipai360.cn/js/3rd/animate.css/3.1.1/animate.min.css><link type=text/css rel=stylesheet href=https://blogs.qipai360.cn/js/3rd/viewerjs/1.11.6/viewer.min.css><link rel=stylesheet href="/css/main.min.css?=1772265587"><style type=text/css>.post-footer hr:after{content:"~ 我可是有底线的哟 ~"}.flinks-list-footer hr:after{content:"~ 我可是有底线的哟 ~"}</style><script type=text/javascript>(function(){localDB={set:function(e,t,n){if(n===0)return;const s=new Date,o=n*864e5,i={value:t,expiry:s.getTime()+o};localStorage.setItem(e,JSON.stringify(i))},get:function(e){const t=localStorage.getItem(e);if(!t)return 0[0];const n=JSON.parse(t),s=new Date;return s.getTime()>n.expiry?(localStorage.removeItem(e),0[0]):n.value}},theme={active:function(){const e=localDB.get("theme");if(e==null)return;theme.toggle(e),window.matchMedia("(prefers-color-scheme: dark)").addListener(function(e){theme.toggle(e.matches?"dark":"light")})},toggle:function(e){document.documentElement.setAttribute("data-theme",e),localDB.set("theme",e,2);const t=document.querySelector("iframe.giscus-frame");if(t){const n={setConfig:{theme:e}};t.contentWindow.postMessage({giscus:n},"https://giscus.app")}}},theme.active()})(window)</script><script type=text/javascript>document.addEventListener("DOMContentLoaded",()=>{var e=document.createElement("script");e.charset="UTF-8",e.src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js",e.async=!1,e.defer=!0,document.head.appendChild(e),e.onload=function(){NexT.utils.fmtBusuanzi()}})</script><script defer src=https://static.cloudflareinsights.com/beacon.min.js data-cf-beacon='{"token": "2b23669184fc49269e400525ac2447d9"}'></script><title>post - Rise的自留地</title><noscript><link rel=stylesheet href=/css/noscript.css></noscript></head><body itemscope itemtype=http://schema.org/WebPage class=use-motion><div class=headband></div><main class=main><header class=header itemscope itemtype=http://schema.org/WPHeader><div class=header-inner><div class=site-brand-container><div class=site-nav-toggle><div class=toggle aria-label role=button><span class=toggle-line></span>
+<span class=toggle-line></span>
+<span class=toggle-line></span></div></div><div class=site-meta><a href=/ class=brand rel=start><i class=logo-line></i><h1 class=site-title>Rise的自留地</h1><i class=logo-line></i></a><p class=site-subtitle itemprop=description>记录生活中的点滴，分享编程技术和游戏开发经验。</p></div><div class=site-nav-right><div class="toggle popup-trigger"></div></div></div><nav class=site-nav><ul class="main-menu menu"><li class="menu-item menu-item-home"><a href=/ class=hvr-icon-pulse rel=section><i class="fa fa-home hvr-icon"></i>首页</a></li><li class="menu-item menu-item-about"><a href=/about.html class=hvr-icon-pulse rel=section><i class="fa fa-user hvr-icon"></i>关于</a></li><li class="menu-item menu-item-archives"><a href=/archives/ class=hvr-icon-pulse rel=section><i class="fa fa-archive hvr-icon"></i>归档
+<span class=badge>679</span></a></li><li class="menu-item menu-item-tags"><a href=/tags/ class=hvr-icon-pulse rel=section><i class="fa fa-tags hvr-icon"></i>标签</a></li><li class="menu-item menu-item-message"><a href=/message/ class=hvr-icon-pulse rel=section><i class="fa fa-comments hvr-icon"></i>留言板</a></li><li class="menu-item menu-item-commonweal"><a href=/404.html class=hvr-icon-pulse rel=section><i class="fa fa-heartbeat hvr-icon"></i>公益 404</a></li></ul></nav></div><div class="toggle sidebar-toggle" role=button><span class=toggle-line></span>
+<span class=toggle-line></span>
+<span class=toggle-line></span></div><aside class=sidebar><div class="sidebar-inner sidebar-overview-active"><ul class=sidebar-nav><li class=sidebar-nav-toc>文章目录</li><li class=sidebar-nav-overview>站点概览</li></ul><div class=sidebar-panel-container><div class="post-toc-wrap sidebar-panel"><div class="post-toc animated"><nav id=TableOfContents></nav></div></div><div class="site-overview-wrap sidebar-panel"><div class="site-author site-overview-item animated" itemprop=author itemscope itemtype=http://schema.org/Person><img class=site-author-image itemprop=image alt=Rise src=/imgs/img-lazy-loading.gif data-src=/imgs/avatar.jpg><p class=site-author-name itemprop=name>Rise</p><div class=site-description itemprop=description>福兮祸兮，焉知所依？冬去冰泮，春来萌荣。朝生暮死，亦可惊鸿。知足者富，自足者强。</div></div><div class="site-state-wrap site-overview-item animated"><nav class=site-state><div class="site-state-item site-state-posts"><a href=/archives/><span class=site-state-item-count>679</span>
+<span class=site-state-item-name>日志</span></a></div><div class="site-state-item site-state-categories"><a href=/categories/><span class=site-state-item-count>35</span>
+<span class=site-state-item-name>分类</span></a></div><div class="site-state-item site-state-tags"><a href=/tags/><span class=site-state-item-count>118</span>
+<span class=site-state-item-name>标签</span></a></div></nav></div><div class="links-of-social site-overview-item animated"><span class=links-of-social-item><a href=https://github.com/rise-worlds title="Github → https://github.com/rise-worlds" rel=noopener class=hvr-icon-pulse target=_blank><i class="fab fa-github fa-fw hvr-icon"></i>
+Github
+</a></span><span class=links-of-social-item><a href=mailto:rise.worlds@outlook.com title="E-Mail → mailto:rise.worlds@outlook.com" rel=noopener class=hvr-icon-pulse target=_blank><i class="fa fa-envelope fa-fw hvr-icon"></i>
+E-Mail
+</a></span><span class=links-of-social-item><a href=https://www.zhihu.com/people/rise-worlds title="知乎 → https://www.zhihu.com/people/rise-worlds" rel=noopener class=hvr-icon-pulse target=_blank><i class="fa fa-book fa-fw hvr-icon"></i>
+知乎
+</a></span><span class=links-of-social-item><a href=https://twitter.com/riseworlds title="Twitter → https://twitter.com/riseworlds" rel=noopener class=hvr-icon-pulse target=_blank><i class="fab fa-twitter fa-fw hvr-icon"></i>
+Twitter
+</a></span><span class=links-of-social-item><a href=https://www.facebook.com/rise.worlds title="facebook → https://www.facebook.com/rise.worlds" rel=noopener class=hvr-icon-pulse target=_blank><i class="fab fa-facebook fa-fw hvr-icon"></i>
+facebook
+</a></span><span class=links-of-social-item><a href=https://youtube.com/@YiXuan title="YouTube → https://youtube.com/@YiXuan" rel=noopener class=hvr-icon-pulse target=_blank><i class="fab fa-youtube fa-fw hvr-icon"></i>
+YouTube
+</a></span><span class=links-of-social-item><a href=https://instagram.com/rise.worlds title="Instagram → https://instagram.com/rise.worlds" rel=noopener class=hvr-icon-pulse target=_blank><i class="fab fa-instagram fa-fw hvr-icon"></i>
+Instagram
+</a></span><span class=links-of-social-item><a href=https://t.me/riseworlds title="Telegram → https://t.me/riseworlds" rel=noopener class=hvr-icon-pulse target=_blank><i class="fab fa-telegram fa-fw hvr-icon"></i>
+Telegram</a></span></div><div class="links-of-blogroll site-overview-item animated"><div class=links-of-blogroll-title><i class="fa fa-globe fa-fw"></i>
+友情链接</div><ul class=links-of-blogroll-list><li class=links-of-blogroll-item><a href=https://www.qipai360.cn title=https://www.qipai360.cn target=_blank>Qipai360</a></li><li class=links-of-blogroll-item><a href=https://www.cnblogs.com/flying_bat title=https://www.cnblogs.com/flying_bat target=_blank>博客园</a></li><li class=links-of-blogroll-item><a href=https://zishu.me title=https://zishu.me target=_blank>子舒的博客</a></li><li class=links-of-blogroll-item><a href=https://gitee.com/hugo-next/hugo-theme-next title=https://gitee.com/hugo-next/hugo-theme-next target=_blank>Hugo-NexT</a></li></ul></div></div></div></div><div id=siteinfo-card-widget class=sidebar-card-widget><div class=item-headline><i class="fas fa-chart-line"></i>
+<span>网站资讯</span></div><div class=siteinfo><div class=siteinfo-item><div class=item-name><i class="fa-solid fa-calendar-check"></i>已运行：</div><div class=item-count id=runTimes data-publishdate="2004-10-06 15:24:00 +0800 +0800"></div></div><div class=siteinfo-item><div class=item-name><i class="fas fa fa-user"></i>总访客数：</div><div class=item-count id=busuanzi_value_site_uv><i class="fa fa-sync fa-spin"></i></div></div><div class=siteinfo-item><div class=item-name><i class="fas fa fa-eye"></i>页面浏览：</div><div class=item-count id=busuanzi_value_site_pv><i class="fa fa-sync fa-spin"></i></div></div><div class=siteinfo-item><div class=item-name><i class="fa fa-font"></i>总字数：</div><div class=item-count id=wordsCount data-count=2423147></div></div><div class=siteinfo-item><div class=item-name><i class="fa fa-mug-hot"></i>阅读约：</div><div class=item-count id=readTimes data-times=5207></div></div><div class=siteinfo-item><div class=item-name><i class="fa fa-clock-rotate-left"></i>最后更新于：</div><div class=item-count id=last-push-date data-lastpushdate="2026-02-28 15:59:00 +0800 +0800"></div></div></div></div></aside><div class=sidebar-dimmer></div></header><div class=tool-buttons><div id=goto-comments class="button goto-comments" title=直达评论><i class="fas fa-comments"></i></div><div id=toggle-theme class=button title=深浅模式切换><i class="fas fa-adjust"></i></div><div class=back-to-top role=button title=返回顶部><i class="fa fa-arrow-up"></i>
+<span>0%</span></div></div><div class=reading-progress-bar></div><a role=button class="book-mark-link book-mark-link-fixed"></a><a href=https://github.com/rise-worlds rel="noopener external nofollow noreferrer" target=_blank title="Follow me on GitHub" class="exturl github-corner"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0 0 115 115h15l12 27L250 250V0z"/><path d="M128.3 109C113.8 99.7 119 89.6 119 89.6 122 82.7 120.5 78.6 120.5 78.6 119.2 72 123.4 76.3 123.4 76.3 127.3 80.9 125.5 87.3 125.5 87.3 122.9 97.6 130.6 101.9 134.4 103.2" fill="currentColor" style="transform-origin:130px 106px" class="octo-arm"/><path d="M115 115C114.9 115.1 118.7 116.5 119.8 115.4l13.9-13.8C136.9 99.2 139.9 98.4 142.2 98.6 133.8 88 127.5 74.4 143.8 58 148.5 53.4 154 51.2 159.7 51 160.3 49.4 163.2 43.6 171.4 40.1 171.4 40.1 176.1 42.5 178.8 56.2 183.1 58.6 187.2 61.8 190.9 65.4 194.5 69 197.7 73.2 200.1 77.6 213.8 80.2 216.3 84.9 216.3 84.9 212.7 93.1 206.9 96 205.4 96.6 205.1 102.4 203 107.8 198.3 112.5 181.9 128.9 168.3 122.5 157.7 114.1 157.9 116.9 156.7 120.9 152.7 124.9L141 136.5C139.8 137.7 141.6 141.9 141.8 141.8z" fill="currentColor" class="octo-body"/></svg></a><noscript><div class=noscript-warning>Theme NexT works best with JavaScript enabled</div></noscript><div class="main-inner index posts-expand"><div class=post-block><article itemscope itemtype=http://schema.org/Article class=post-content lang><link itemprop=mainEntityOfPage href=https://blogs.qipai360.cn/post/chapter-2-typhoid-significance-part-2/><span hidden itemprop=author itemscope itemtype=http://schema.org/Person><meta itemprop=image content="/imgs/avatar.jpg"><meta itemprop=name content="Rise"></span><span hidden itemprop=publisher itemscope itemtype=http://schema.org/Organization><meta itemprop=name content="Rise"><meta itemprop=description content="福兮祸兮，焉知所依？冬去冰泮，春来萌荣。朝生暮死，亦可惊鸿。知足者富，自足者强。"></span><span hidden itemprop=post itemscope itemtype=http://schema.org/CreativeWork><meta itemprop=name content="第二章 伤寒之意义（2）"><meta itemprop=description content='（2）主导问题 通过上述讨论，我们看到了这样一种阴随阳生而长，阴随阳杀而藏
+的关系，这就要求我们明确两个更具体的主导问题。第一个主导，是阴阳之间协同为主
+导，而非对立制约为主导。这也是前面所讲的"夫唱妇随"的关系。阴阳在现实生活中一
+个更为具体的例子就是男女，就是夫妇，就是一个家庭关系。大家设想一下，如果一个
+家庭中，夫妇两个以对立为主，一个面南，一个面北，水火不相容，那这个日子怎么过，
+连基本的日子都没法过，更不要谈事业了。所以，家庭的关系，夫妇的关系，阴阳的关
+系应该以协同为主导。第二个主导是阴阳之间阳为主导，这个主导实际上已经包含在第
+一个主导里。这个主导说明在阴阳之间，阳的变化起主导的作用、决定的作用。作为阴
+它是随着阳的变化而变化。有关这层主导关系，我们可以在自然、社会的方方面面感受
+到。前面《素问》所说的"阳生阴长，阳杀阴藏"，实际上就是我们常说的生、长、收、
+藏。生、长、收、藏虽然用于表述一年里万物的变化情况，即春生、夏长、秋收、冬藏，
+但更实质的东西，更内涵的东西，则是阳的变化。是阳的春生、夏长、秋收、冬藏才导
+致了这个万物的生、长、收、藏。有关这一点，董仲舒在他的《春秋繁露》里说得很清
+楚：&ldquo;物随阳而出入，数随阳而终始。阳者岁之主也，天下之昆虫，随阳而出入。天
+下之草木随阳而生落。天下之三王随阳而改正。&ldquo;大家考察一下自然，看是不是这么回事
+呢？确实就是这么回事。草木也好，昆虫也好，植物也好，动物也好，它确实是在随着
+春、夏、秋、冬的变化而变化。而春夏秋冬怎么来？春夏秋冬由什么来决定？大家知道
+是由太阳的视运动决定的。太阳沿黄道运行一周，就形成了一年的春夏秋冬。因此，春
+夏秋冬即反映了时间的变化，而更重要的是反映了阳的状态。什么叫春呢？春实际上就
+是阳气处于生的状态所占的时段，依次，夏就是阳气处于长的状态所占的时段；秋就是
+阳气处于收的状态所占的时段；冬为阳气处于藏的状态所占的时段。由阳的变化产生了
+春夏秋冬，而万物又依着这个春夏秋冬的变化而变化，它们之间就是这么一种关系。从
+社会的角度，阳（男）作为主导的地位就更为明确，这一点大家有目共睹，不需多谈。
+上面我们谈阴阳用了十二消息卦，看到这些卦象的变化，也许大家还是容易将阴阳分开
+来，对立来看。比如从复到乾这个阳局的变化，明明是阳日增，阴日消，我多你少，你
+死我活，这个对立好像很鲜明。其实，我们不能这样看。阳日增，说的是这个阳的生发，
+释放的增加，阴日少，不是说随着阳的增加，有另外一个独立的东西（阴），它在慢慢的
+减少。如果我们这样来理解阴阳，那就会出根本上的问题。阴日少，我们确实看到这个
+阴爻从复卦以后，在慢慢减少，直到乾卦减为零，那，我们是否可以说在乾所主的这个
+时候，是纯阳无阴呢？一点阴都没有，那不成了孤阳！《内经》说：孤阳不生，孤阴不长。
+可是我们看到夏三月的景象是万物蕃秀，真正的一派繁荣。可见我们不能这样来理解阴
+阳。上述这个阴日少，说的是随着阳气生发、释放的增加，阳的收藏自然就日益地缩减，
+前面我们不是申明过，阳的收藏状态为阴吗？释放增加了，收藏自然地就减少，不可能
+又释放，又收藏，就像我们的拳头，打出去再收回来，收回来才能再打出去，不可能在
+同一个时候，又收回来，又打出去。这就是阴阳的消长关系。所以，虽然是在谈消长，
+其实说的还是一个问题，即阳气的变化问题。十二消息卦的另一个层面，也就是阴局这
+个层面，也非常容易发生误解。大家看从姤卦以后，阴爻日增，阳爻日减，很多人就认
+为这是阴日盛，阳日衰，是一个阴盛阳衰的过程。我们从卦上看，从表面看，好像是这
+么回事。但，究竟的思维一下，就知道这个看法有问题。为什么说这个看法有问题呢？
+大家可以思考，从姤以后，也就是从夏至以后，一阴始生，阳气逐渐由释放转入收、转
+入藏。那么，这个收藏的目的是什么呢？就像我们的拳头打出去，要收回来，收回来的
+目的是为了重新打出去。同样，阳气要收藏，收藏的目的是为了能够重新释放。如果收
+藏以后，阳气反而衰减了，那它怎么能够再释放？实际上释放就会有消耗，就会有衰减，
+而收藏的目的正是为了补偿这个消耗、这个衰减。因此，从量上来说，这个秋冬的过程，
+这个阳气收藏的过程，也就是我们前面认为的这个"阴盛阳衰"的过程，阳气的量不但没
+有衰减，反而得到了补偿，得到了增加。只有这样，才有可能经过收藏以后再发动新一
+轮的生发、释放。联系我们人体，白天工作的过程，其实就是阳气释放的过程，而晚上
+的休息，则是阳气的收藏过程。休息的目的是什么呢？是为了白天更好的工作，是为了
+获得更旺盛的精力，如果通过休息，阳气反而衰减了，那么这个精力怎么旺盛？那还有
+谁愿意睡觉、愿意休息？所以，我们只要一思考，上面这个问题就不难解决。阴阳的问
+题是一而二，二而一。分开来好像有两个，一个男、一个女，好像是两个确凿的、独立
+的东西。但，合起来的实质却是一。所以，阴阳的问题如果我们只能分开来看，而不能
+合二为一，那就很难看到点子上。就比如寒热这个问题，寒热如同水火，很难把它们扯
+到一块。这应该是两个截然不同的东西，无论如何都不能把它合二为一。可实际上并不
+是这么回事，我们看到的这个截然不同，只是显现上的不同，如果进一步从深层去考虑，
+发现它还是一个阳气的问题。前面我们说过，阳气好比能量，好比热能。春夏的天气为
+什么温热？就是因为这个阳气的释放造成的，属热的东西释放出来了，那天气当然就变
+热了。到了秋冬，秋天的天气为什么凉？冬天的天气为什么寒冷？热的东西不释放了，
+收藏起来了，天气当然就变得寒冷。也就是说，寒热是伴随阳的生长收藏的一个表象，
+阳气释放了，天气就变热，阳气收藏了，天就变冷，并不是在热之外又有一个独立的属
+寒的东西。上述这个问题，一个谈实质，一个讲显现，对这个过程我们应该多思维之，
+善思维之。要是这个过程我们思考得清清楚楚，明明白白，那阴阳的问题可以说基本地
+解决了。《素问》强调：&ldquo;阴阳者，数之可十，推之可百；数之可千，推之可万，万之大
+不可胜数。然其要一也。&ldquo;&ldquo;知其要者，一言而终，不知其要，流散无穷。&ldquo;这个"数之可
+十，推之可百，数之可千，推之可万"其实就是讲显现，是从现象上讲。而这个不可胜数
+的显现，就其实质而言却只是一个。知道了这个实质，就可以一言而终，就可以"能知一，
+万事毕&rdquo;，而不知道这个实质，则必会流散无穷。上述这个阴阳变化，上述这个主导关系，
+我们还可以从最原始的天文测算过程去体悟。大家知道《周髀算经》这本书吧，这部书
+记述了最原始的测量太阳运行轨迹，也就是一年二十四节气的方法。就是在日中正午的
+时候，在太阳下立一个八尺的圭表，圭表的投影叫晷影，测量这个晷影的长度，就能够
+知道太阳运行到了什么地方，就能够确定出二十四节气。《周髀算经》告诉我们，晷影最
+长的长度是一丈三尺五寸，最短的长度是一尺六寸。大家可以思考，最长的这个晷影应
+该对应哪一天？最短的这个晷影应该对应哪一天？最长晷影的这一天应该是冬至这一
+天，相反的，最短晷影的这一天就是夏至这一天。晷影也就是太阳的阴影，盛夏的时节
+我们外出，大家总是喜欢走在树阴下面，或者总是希望来一片青云，为什么呢？因为树
+阴把太阳遮住了，青云把太阳光收藏起来了。所以，我们马上就会感受到清凉。因此，
+我们可以把上述的这个晷影当作是阳的收藏状态的一个尺度。为什么冬至的晷影最长
+呢？因为这个时候阳的收藏最厉害。冬至一过，我们看到这个晷影就日渐缩短，这反映
+了阳的收藏在减弱，随着这个收藏的减弱，阳气自然日益显露，日益生发、释放。所以，
+冬至以后，白天也一日一日增长，黑夜一日日缩短，这些都是收藏与显露，收藏与释放
+的变换。上述这个日益短缩的晷影到了夏至这一天，缩至了一尺六寸，一尺六寸与一丈
+三尺五寸相比，零头都不到。这个时候的阳气充分显露出来了，几乎没有什么遮拦，这
+就使得阳气的释放达到了最大的程度。然而重阳必阴，所以，夏至一过，这个晷影就一
+天天地变长。与之相应，白天也一天天地缩短，黑夜一天天地延长。阳气在充分地释放
+以后，又渐渐转入到收藏。由上面这个晷影的伸缩，我们可以看到，一年四季的变化，
+二十四节气的变化，其实就是阳气收藏与释放之间的变化。我们抓住了这个主导，阴阳
+的方方面面就会自然地连带出来。'></span><header class=post-header><h2 class=post-title itemprop="name headline"><a href=/post/chapter-2-typhoid-significance-part-2/ itemprop=url class=post-title-link>第二章 伤寒之意义（2）</a></h2><div class=post-meta-container><div class=post-meta-items><span class=post-meta-item><span class=post-meta-item-icon><i class="fas fa-solid fa-calendar"></i>
+</span><span class=post-meta-item-text title=发表于>发表于：
+</span><time title="创建时间：2007年08月24日 14:11:00 CST" itemprop="dateCreated datePublished" datetime="2007-08-24 14:11:00 +0800 +0800">2007年08月24日
+</time></span><span class=post-meta-item><span class=post-meta-item-icon><i class="fas fa-solid fa-calendar-check"></i>
+</span><span class=post-meta-item-text title=更新于>更新于：
+</span><time title="修改时间：2007年08月27日 17:00:00 CST" itemprop="dateModified dateLastmod" datetime="2007-08-27 17:00:00 +0800 +0800">2007年08月27日
+</time></span><span class=post-meta-item><span class=post-meta-item-icon><i class="fas fa-solid fa-folder-open"></i>
+</span><span class=post-meta-item-text title=分类于>分类于：
+</span><span itemprop=about itemscope itemtype=http://schema.org/Thing><a href=/categories/tcm/ itemprop=url rel=index><span itemprop=name>TCM</span>
+</a></span></span><span class=post-meta-item title=浏览><span class=post-meta-item-icon><i class="fas fa-solid fa-eye"></i>
+</span><span class=post-meta-item-text>浏览：
+</span><span id=pageview-count data-path=/post/chapter-2-typhoid-significance-part-2/><i class="fa fa-sync fa-spin"></i></span></span></div></div></header><div class=post-body itemprop=articleBody><p><span style=font-weight:700>（2）主导问题</span> 通过上述讨论，我们看到了这样一种阴随阳生而长，阴随阳杀而藏
+的关系，这就要求我们明确两个更具体的主导问题。第一个主导，是阴阳之间协同为主
+导，而非对立制约为主导。这也是前面所讲的"夫唱妇随"的关系。阴阳在现实生活中一
+个更为具体的例子就是男女，就是夫妇，就是一个家庭关系。大家设想一下，如果一个
+家庭中，夫妇两个以对立为主，一个面南，一个面北，水火不相容，那这个日子怎么过，
+连基本的日子都没法过，更不要谈事业了。所以，家庭的关系，夫妇的关系，阴阳的关
+系应该以协同为主导。第二个主导是阴阳之间阳为主导，这个主导实际上已经包含在第
+一个主导里。这个主导说明在阴阳之间，阳的变化起主导的作用、决定的作用。作为阴
+它是随着阳的变化而变化。有关这层主导关系，我们可以在自然、社会的方方面面感受
+到。前面《素问》所说的"阳生阴长，阳杀阴藏"，实际上就是我们常说的生、长、收、
+藏。生、长、收、藏虽然用于表述一年里万物的变化情况，即春生、夏长、秋收、冬藏，
+但更实质的东西，更内涵的东西，则是阳的变化。是阳的春生、夏长、秋收、冬藏才导
+致了这个万物的生、长、收、藏。有关这一点，董仲舒在他的《春秋繁露》里说得很清
+楚：&ldquo;物随阳而出入，数随阳而终始。阳者岁之主也，天下之昆虫，随阳而出入。天
+下之草木随阳而生落。天下之三王随阳而改正。&ldquo;大家考察一下自然，看是不是这么回事
+呢？确实就是这么回事。草木也好，昆虫也好，植物也好，动物也好，它确实是在随着
+春、夏、秋、冬的变化而变化。而春夏秋冬怎么来？春夏秋冬由什么来决定？大家知道
+是由太阳的视运动决定的。太阳沿黄道运行一周，就形成了一年的春夏秋冬。因此，春
+夏秋冬即反映了时间的变化，而更重要的是反映了阳的状态。什么叫春呢？春实际上就
+是阳气处于生的状态所占的时段，依次，夏就是阳气处于长的状态所占的时段；秋就是
+阳气处于收的状态所占的时段；冬为阳气处于藏的状态所占的时段。由阳的变化产生了
+春夏秋冬，而万物又依着这个春夏秋冬的变化而变化，它们之间就是这么一种关系。从
+社会的角度，阳（男）作为主导的地位就更为明确，这一点大家有目共睹，不需多谈。
+上面我们谈阴阳用了十二消息卦，看到这些卦象的变化，也许大家还是容易将阴阳分开
+来，对立来看。比如从复到乾这个阳局的变化，明明是阳日增，阴日消，我多你少，你
+死我活，这个对立好像很鲜明。其实，我们不能这样看。阳日增，说的是这个阳的生发，
+释放的增加，阴日少，不是说随着阳的增加，有另外一个独立的东西（阴），它在慢慢的
+减少。如果我们这样来理解阴阳，那就会出根本上的问题。阴日少，我们确实看到这个
+阴爻从复卦以后，在慢慢减少，直到乾卦减为零，那，我们是否可以说在乾所主的这个
+时候，是纯阳无阴呢？一点阴都没有，那不成了孤阳！《内经》说：孤阳不生，孤阴不长。
+可是我们看到夏三月的景象是万物蕃秀，真正的一派繁荣。可见我们不能这样来理解阴
+阳。上述这个阴日少，说的是随着阳气生发、释放的增加，阳的收藏自然就日益地缩减，
+前面我们不是申明过，阳的收藏状态为阴吗？释放增加了，收藏自然地就减少，不可能
+又释放，又收藏，就像我们的拳头，打出去再收回来，收回来才能再打出去，不可能在
+同一个时候，又收回来，又打出去。这就是阴阳的消长关系。所以，虽然是在谈消长，
+其实说的还是一个问题，即阳气的变化问题。十二消息卦的另一个层面，也就是阴局这
+个层面，也非常容易发生误解。大家看从姤卦以后，阴爻日增，阳爻日减，很多人就认
+为这是阴日盛，阳日衰，是一个阴盛阳衰的过程。我们从卦上看，从表面看，好像是这
+么回事。但，究竟的思维一下，就知道这个看法有问题。为什么说这个看法有问题呢？
+大家可以思考，从姤以后，也就是从夏至以后，一阴始生，阳气逐渐由释放转入收、转
+入藏。那么，这个收藏的目的是什么呢？就像我们的拳头打出去，要收回来，收回来的
+目的是为了重新打出去。同样，阳气要收藏，收藏的目的是为了能够重新释放。如果收
+藏以后，阳气反而衰减了，那它怎么能够再释放？实际上释放就会有消耗，就会有衰减，
+而收藏的目的正是为了补偿这个消耗、这个衰减。因此，从量上来说，这个秋冬的过程，
+这个阳气收藏的过程，也就是我们前面认为的这个"阴盛阳衰"的过程，阳气的量不但没
+有衰减，反而得到了补偿，得到了增加。只有这样，才有可能经过收藏以后再发动新一
+轮的生发、释放。联系我们人体，白天工作的过程，其实就是阳气释放的过程，而晚上
+的休息，则是阳气的收藏过程。休息的目的是什么呢？是为了白天更好的工作，是为了
+获得更旺盛的精力，如果通过休息，阳气反而衰减了，那么这个精力怎么旺盛？那还有
+谁愿意睡觉、愿意休息？所以，我们只要一思考，上面这个问题就不难解决。阴阳的问
+题是一而二，二而一。分开来好像有两个，一个男、一个女，好像是两个确凿的、独立
+的东西。但，合起来的实质却是一。所以，阴阳的问题如果我们只能分开来看，而不能
+合二为一，那就很难看到点子上。就比如寒热这个问题，寒热如同水火，很难把它们扯
+到一块。这应该是两个截然不同的东西，无论如何都不能把它合二为一。可实际上并不
+是这么回事，我们看到的这个截然不同，只是显现上的不同，如果进一步从深层去考虑，
+发现它还是一个阳气的问题。前面我们说过，阳气好比能量，好比热能。春夏的天气为
+什么温热？就是因为这个阳气的释放造成的，属热的东西释放出来了，那天气当然就变
+热了。到了秋冬，秋天的天气为什么凉？冬天的天气为什么寒冷？热的东西不释放了，
+收藏起来了，天气当然就变得寒冷。也就是说，寒热是伴随阳的生长收藏的一个表象，
+阳气释放了，天气就变热，阳气收藏了，天就变冷，并不是在热之外又有一个独立的属
+寒的东西。上述这个问题，一个谈实质，一个讲显现，对这个过程我们应该多思维之，
+善思维之。要是这个过程我们思考得清清楚楚，明明白白，那阴阳的问题可以说基本地
+解决了。《素问》强调：&ldquo;阴阳者，数之可十，推之可百；数之可千，推之可万，万之大
+不可胜数。然其要一也。&ldquo;&ldquo;知其要者，一言而终，不知其要，流散无穷。&ldquo;这个"数之可
+十，推之可百，数之可千，推之可万"其实就是讲显现，是从现象上讲。而这个不可胜数
+的显现，就其实质而言却只是一个。知道了这个实质，就可以一言而终，就可以"能知一，
+万事毕&rdquo;，而不知道这个实质，则必会流散无穷。上述这个阴阳变化，上述这个主导关系，
+我们还可以从最原始的天文测算过程去体悟。大家知道《周髀算经》这本书吧，这部书
+记述了最原始的测量太阳运行轨迹，也就是一年二十四节气的方法。就是在日中正午的
+时候，在太阳下立一个八尺的圭表，圭表的投影叫晷影，测量这个晷影的长度，就能够
+知道太阳运行到了什么地方，就能够确定出二十四节气。《周髀算经》告诉我们，晷影最
+长的长度是一丈三尺五寸，最短的长度是一尺六寸。大家可以思考，最长的这个晷影应
+该对应哪一天？最短的这个晷影应该对应哪一天？最长晷影的这一天应该是冬至这一
+天，相反的，最短晷影的这一天就是夏至这一天。晷影也就是太阳的阴影，盛夏的时节
+我们外出，大家总是喜欢走在树阴下面，或者总是希望来一片青云，为什么呢？因为树
+阴把太阳遮住了，青云把太阳光收藏起来了。所以，我们马上就会感受到清凉。因此，
+我们可以把上述的这个晷影当作是阳的收藏状态的一个尺度。为什么冬至的晷影最长
+呢？因为这个时候阳的收藏最厉害。冬至一过，我们看到这个晷影就日渐缩短，这反映
+了阳的收藏在减弱，随着这个收藏的减弱，阳气自然日益显露，日益生发、释放。所以，
+冬至以后，白天也一日一日增长，黑夜一日日缩短，这些都是收藏与显露，收藏与释放
+的变换。上述这个日益短缩的晷影到了夏至这一天，缩至了一尺六寸，一尺六寸与一丈
+三尺五寸相比，零头都不到。这个时候的阳气充分显露出来了，几乎没有什么遮拦，这
+就使得阳气的释放达到了最大的程度。然而重阳必阴，所以，夏至一过，这个晷影就一
+天天地变长。与之相应，白天也一天天地缩短，黑夜一天天地延长。阳气在充分地释放
+以后，又渐渐转入到收藏。由上面这个晷影的伸缩，我们可以看到，一年四季的变化，
+二十四节气的变化，其实就是阳气收藏与释放之间的变化。我们抓住了这个主导，阴阳
+的方方面面就会自然地连带出来。</p></div><footer class=post-footer><div class=post-button><a class=btn href=/post/chapter-2-typhoid-significance-part-2/#more rel=contents>阅读全文 &#187;</a></div><div class=post-eof></div></footer></article></div><div class=post-block><article itemscope itemtype=http://schema.org/Article class=post-content lang><link itemprop=mainEntityOfPage href=https://blogs.qipai360.cn/post/chapter-2-typhoid-significance-part-1/><span hidden itemprop=author itemscope itemtype=http://schema.org/Person><meta itemprop=image content="/imgs/avatar.jpg"><meta itemprop=name content="Rise"></span><span hidden itemprop=publisher itemscope itemtype=http://schema.org/Organization><meta itemprop=name content="Rise"><meta itemprop=description content="福兮祸兮，焉知所依？冬去冰泮，春来萌荣。朝生暮死，亦可惊鸿。知足者富，自足者强。"></span><span hidden itemprop=post itemscope itemtype=http://schema.org/CreativeWork><meta itemprop=name content="第二章 伤寒之意义（1）"><meta itemprop=description content="一、伤寒论说什么？
+从这一章开始，我们将进入《伤寒杂病论》一些具体问题的讨论，在讨论这些问题
+前，应该首先弄清楚这部书是一部什么样的书。我想这个问题，我们可以通过论题，通
+过书名来解决。"></span><header class=post-header><h2 class=post-title itemprop="name headline"><a href=/post/chapter-2-typhoid-significance-part-1/ itemprop=url class=post-title-link>第二章 伤寒之意义（1）</a></h2><div class=post-meta-container><div class=post-meta-items><span class=post-meta-item><span class=post-meta-item-icon><i class="fas fa-solid fa-calendar"></i>
+</span><span class=post-meta-item-text title=发表于>发表于：
+</span><time title="创建时间：2007年08月24日 12:05:00 CST" itemprop="dateCreated datePublished" datetime="2007-08-24 12:05:00 +0800 +0800">2007年08月24日
+</time></span><span class=post-meta-item><span class=post-meta-item-icon><i class="fas fa-solid fa-calendar-check"></i>
+</span><span class=post-meta-item-text title=更新于>更新于：
+</span><time title="修改时间：2007年08月27日 17:00:00 CST" itemprop="dateModified dateLastmod" datetime="2007-08-27 17:00:00 +0800 +0800">2007年08月27日
+</time></span><span class=post-meta-item><span class=post-meta-item-icon><i class="fas fa-solid fa-folder-open"></i>
+</span><span class=post-meta-item-text title=分类于>分类于：
+</span><span itemprop=about itemscope itemtype=http://schema.org/Thing><a href=/categories/tcm/ itemprop=url rel=index><span itemprop=name>TCM</span>
+</a></span></span><span class=post-meta-item title=浏览><span class=post-meta-item-icon><i class="fas fa-solid fa-eye"></i>
+</span><span class=post-meta-item-text>浏览：
+</span><span id=pageview-count data-path=/post/chapter-2-typhoid-significance-part-1/><i class="fa fa-sync fa-spin"></i></span></span></div></div></header><div class=post-body itemprop=articleBody><p><span style=font-weight:700>一、伤寒论说什么？</span></p><p>从这一章开始，我们将进入《伤寒杂病论》一些具体问题的讨论，在讨论这些问题
+前，应该首先弄清楚这部书是一部什么样的书。我想这个问题，我们可以通过论题，通
+过书名来解决。</p></div><footer class=post-footer><div class=post-button><a class=btn href=/post/chapter-2-typhoid-significance-part-1/#more rel=contents>阅读全文 &#187;</a></div><div class=post-eof></div></footer></article></div><div class=post-block><article itemscope itemtype=http://schema.org/Article class=post-content lang><link itemprop=mainEntityOfPage href=https://blogs.qipai360.cn/post/chapter-1-brief-introduction-to-learning-and-research-of-tcm-8/><span hidden itemprop=author itemscope itemtype=http://schema.org/Person><meta itemprop=image content="/imgs/avatar.jpg"><meta itemprop=name content="Rise"></span><span hidden itemprop=publisher itemscope itemtype=http://schema.org/Organization><meta itemprop=name content="Rise"><meta itemprop=description content="福兮祸兮，焉知所依？冬去冰泮，春来萌荣。朝生暮死，亦可惊鸿。知足者富，自足者强。"></span><span hidden itemprop=post itemscope itemtype=http://schema.org/CreativeWork><meta itemprop=name content="第一章 略说中医的学习与研究（8）"><meta itemprop=description content="5.认识经典与现代
+下面我们从另一个角度来讨论经典，可以分三方面谈：
+（1）保守性问题 一提起经典，一提起传统，大家都免不了会想到一个问题，就是
+文化的保守性问题。以为现代文化必然都是开放性的，而经典的、传统的文化，必然带
+有保守性。中国为什么落后？中国为什么没有产生近现代科学？甚至中国的科学家为什
+么没有拿到诺贝尔奖？这些似乎都与我们的文化有关，都是我们文化中固有的保守因素
+造成的。这样一来，传统的东西当然就成了障碍。但，事实究竟是不是这么回事呢？如
+果我们对传统的文化持这样一种见解，那就是太不了解我们的文化了。1998 年度，又有
+一位香港的华裔科学家摘取了诺贝尔化学奖的桂冠，在一次座谈会上，杨振宁博士专门
+就此谈到了大陆的科学家为什么至今仍未有一位问鼎诺贝尔奖。他认为一个很重要的因
+素，就是受儒家文化保守性的影响。在这里，我想单就儒家文化的保守性问题提出来与
+杨振宁贝尔奖的博士商榷。认为儒家文化有保守性，我想杨教授的这个观点是不是有代
+表性的。现在要是抽问10 个人，起码会有9 个人这样的回答。"></span><header class=post-header><h2 class=post-title itemprop="name headline"><a href=/post/chapter-1-brief-introduction-to-learning-and-research-of-tcm-8/ itemprop=url class=post-title-link>第一章 略说中医的学习与研究（8）</a></h2><div class=post-meta-container><div class=post-meta-items><span class=post-meta-item><span class=post-meta-item-icon><i class="fas fa-solid fa-calendar"></i>
+</span><span class=post-meta-item-text title=发表于>发表于：
+</span><time title="创建时间：2007年08月24日 10:58:00 CST" itemprop="dateCreated datePublished" datetime="2007-08-24 10:58:00 +0800 +0800">2007年08月24日
+</time></span><span class=post-meta-item><span class=post-meta-item-icon><i class="fas fa-solid fa-calendar-check"></i>
+</span><span class=post-meta-item-text title=更新于>更新于：
+</span><time title="修改时间：2007年08月27日 16:59:00 CST" itemprop="dateModified dateLastmod" datetime="2007-08-27 16:59:00 +0800 +0800">2007年08月27日
+</time></span><span class=post-meta-item><span class=post-meta-item-icon><i class="fas fa-solid fa-folder-open"></i>
+</span><span class=post-meta-item-text title=分类于>分类于：
+</span><span itemprop=about itemscope itemtype=http://schema.org/Thing><a href=/categories/tcm/ itemprop=url rel=index><span itemprop=name>TCM</span>
+</a></span></span><span class=post-meta-item title=浏览><span class=post-meta-item-icon><i class="fas fa-solid fa-eye"></i>
+</span><span class=post-meta-item-text>浏览：
+</span><span id=pageview-count data-path=/post/chapter-1-brief-introduction-to-learning-and-research-of-tcm-8/><i class="fa fa-sync fa-spin"></i></span></span></div></div></header><div class=post-body itemprop=articleBody><p><span style=font-weight:700>5.认识经典与现代</span></p><p>下面我们从另一个角度来讨论经典，可以分三方面谈：</p><p><span style=font-weight:700>（1）保守性问题</span> 一提起经典，一提起传统，大家都免不了会想到一个问题，就是
+文化的保守性问题。以为现代文化必然都是开放性的，而经典的、传统的文化，必然带
+有保守性。中国为什么落后？中国为什么没有产生近现代科学？甚至中国的科学家为什
+么没有拿到诺贝尔奖？这些似乎都与我们的文化有关，都是我们文化中固有的保守因素
+造成的。这样一来，传统的东西当然就成了障碍。但，事实究竟是不是这么回事呢？如
+果我们对传统的文化持这样一种见解，那就是太不了解我们的文化了。1998 年度，又有
+一位香港的华裔科学家摘取了诺贝尔化学奖的桂冠，在一次座谈会上，杨振宁博士专门
+就此谈到了大陆的科学家为什么至今仍未有一位问鼎诺贝尔奖。他认为一个很重要的因
+素，就是受儒家文化保守性的影响。在这里，我想单就儒家文化的保守性问题提出来与
+杨振宁贝尔奖的博士商榷。认为儒家文化有保守性，我想杨教授的这个观点是不是有代
+表性的。现在要是抽问10 个人，起码会有9 个人这样的回答。</p></div><footer class=post-footer><div class=post-button><a class=btn href=/post/chapter-1-brief-introduction-to-learning-and-research-of-tcm-8/#more rel=contents>阅读全文 &#187;</a></div><div class=post-eof></div></footer></article></div><div class=post-block><article itemscope itemtype=http://schema.org/Article class=post-content lang><link itemprop=mainEntityOfPage href=https://blogs.qipai360.cn/post/chapter-1-brief-introduction-to-learning-and-research-of-tcm-7/><span hidden itemprop=author itemscope itemtype=http://schema.org/Person><meta itemprop=image content="/imgs/avatar.jpg"><meta itemprop=name content="Rise"></span><span hidden itemprop=publisher itemscope itemtype=http://schema.org/Organization><meta itemprop=name content="Rise"><meta itemprop=description content="福兮祸兮，焉知所依？冬去冰泮，春来萌荣。朝生暮死，亦可惊鸿。知足者富，自足者强。"></span><span hidden itemprop=post itemscope itemtype=http://schema.org/CreativeWork><meta itemprop=name content="第一章 略说中医的学习与研究（7）"><meta itemprop=description content='4.学习经典的意义
+（1）不是守旧  上面我们从文化层面的角度来谈经典，目的就是想说明，经典的年代
+虽然久远，但，它不一定就过时了，就落后了。所以，大家不要轻易地否定它，遗弃它。
+不过话又说回来，我们现在强调二千年前的经典，大家还是会担心，这是否在守旧？因
+此，对于新、旧这样一个概念，大家还是应该从多层面去看待。张仲景在《伤寒杂病论》
+的序言中谈到：&ldquo;上古有神农、黄帝、岐伯、伯高、雷公、少俞、少师、仲文，中世有长
+桑、扁鹊，汉有公乘阳庆及仓公。下此以往，未之闻也。&ldquo;张仲景在这段文字所显示的资
+料，提醒我们注意这样一个问题，为什么正值经典产生，或愈是接近经典的年代，名医、
+大师愈多？而为什么一旦远离这个时代，名医、大师就"未之闻也&rdquo;？这个现象值得我们
+去思考。所以，我们现在强调经典的重要，并不是为了其他什么，而是明知我们在时间
+上离经典愈来愈远了，但是，能否通过有效的学习，使我们在实质上接近它呢？接近它，
+其实就接近了这些大师，我们通过学习经典，最后把我们自己造就成了雷公、少俞、少
+师，这有什么不好呢？我想这是我们学习经典的最根本的意义。张仲景在序言的下一段
+文字中接着谈到：&ldquo;观今之医，不念思求经旨，以演其所知，各承家技，始终顺旧。&ldquo;从
+这段文字我们可以看到，仲景在1700 年前已经清楚地说明了什么是守旧，什么是创新。
+当时的医生中，各人只抱守家传的一点经验，这就叫守旧；而反过来呢？能够"思求经旨，
+演其所知&rdquo;，这就是创新。所以，我们学习经典，学习《内经》、《伤寒》这些著作，完全
+是为了"演其所知&rdquo;。演是什么意思呢？演就是推演、扩大、发展、延续的意思。能够把
+我们那点局限的知识发展、拓宽开来，能够发扬光大它，这个东西就是真正地经旨。
+现在我们老说中医要创新才有出路，但你凭什么去创新呢？所以，搞
+经典完全不是守旧，而是为了创新。这一你学进去了，你就会有体会，这
+个过程究竟是不是创新，你会有感觉，临床实践上也会有印证，光是口说还不行。
+我经常谈到，做学问要学会"喜新而不厌旧&rdquo;，这也是孔子的一个思想。孔子所说的，做
+学问的一个关键就是：&ldquo;学而不思则罔，思而不学则殆。&ldquo;大家好好琢磨这句话以后再来
+做学问，不管你做什么学问，西医也好，中医也好，我看就会有着落。学，学什么呢？
+学就是学习过去的、现在以前的东西，实际上就是旧有的东西，只是这个旧的程度有不
+同而已。光学现有的东西行不行呢？这种为了学习而学习，孔子认为那是罔然。所以，
+光是学了很多东西，知识积累了很多，哪怕你成了一部活字典，那还是不行。有知识，
+不一定有学问。古人的这个认识是很有道理的。所以，孔子说学了还要思，思是什么呢？
+思就是一个组合的过程，通过这个组合，各种材料，各个部件逐渐碰撞、接触，融合成
+新的东西。因此，这个过程实际上就是创新的过程。&ldquo;喜新"这是每个人的习性，但，新
+不能凭空来，新是从旧中来，所以，&ldquo;思而不学则殆&rdquo;。没有材料，我们怎么搞建筑？学
+习经典亦是如此，要想有收获，就得这样去做。不这样做，光学不思，你哪会有收获，
+当然是白打工，罔罔然！现在听许多人说《内经》、《伤寒》没什么，不是丢在一边，就
+是束之高阁，心里面很是难过。这样宝贵的东西，他们却说没什么，怎么不叫人痛心。
+所以，学经典必须要即思即学，即学即思。'></span><header class=post-header><h2 class=post-title itemprop="name headline"><a href=/post/chapter-1-brief-introduction-to-learning-and-research-of-tcm-7/ itemprop=url class=post-title-link>第一章 略说中医的学习与研究（7）</a></h2><div class=post-meta-container><div class=post-meta-items><span class=post-meta-item><span class=post-meta-item-icon><i class="fas fa-solid fa-calendar"></i>
+</span><span class=post-meta-item-text title=发表于>发表于：
+</span><time title="创建时间：2007年08月23日 21:02:00 CST" itemprop="dateCreated datePublished" datetime="2007-08-23 21:02:00 +0800 +0800">2007年08月23日
+</time></span><span class=post-meta-item><span class=post-meta-item-icon><i class="fas fa-solid fa-calendar-check"></i>
+</span><span class=post-meta-item-text title=更新于>更新于：
+</span><time title="修改时间：2007年08月27日 16:59:00 CST" itemprop="dateModified dateLastmod" datetime="2007-08-27 16:59:00 +0800 +0800">2007年08月27日
+</time></span><span class=post-meta-item><span class=post-meta-item-icon><i class="fas fa-solid fa-folder-open"></i>
+</span><span class=post-meta-item-text title=分类于>分类于：
+</span><span itemprop=about itemscope itemtype=http://schema.org/Thing><a href=/categories/tcm/ itemprop=url rel=index><span itemprop=name>TCM</span>
+</a></span></span><span class=post-meta-item title=浏览><span class=post-meta-item-icon><i class="fas fa-solid fa-eye"></i>
+</span><span class=post-meta-item-text>浏览：
+</span><span id=pageview-count data-path=/post/chapter-1-brief-introduction-to-learning-and-research-of-tcm-7/><i class="fa fa-sync fa-spin"></i></span></span></div></div></header><div class=post-body itemprop=articleBody><p><span style=font-weight:700>4.学习经典的意义</span></p><p><span style=font-weight:700>（1）不是守旧</span>  上面我们从文化层面的角度来谈经典，目的就是想说明，经典的年代
+虽然久远，但，它不一定就过时了，就落后了。所以，大家不要轻易地否定它，遗弃它。
+不过话又说回来，我们现在强调二千年前的经典，大家还是会担心，这是否在守旧？因
+此，对于新、旧这样一个概念，大家还是应该从多层面去看待。张仲景在《伤寒杂病论》
+的序言中谈到：&ldquo;上古有神农、黄帝、岐伯、伯高、雷公、少俞、少师、仲文，中世有长
+桑、扁鹊，汉有公乘阳庆及仓公。下此以往，未之闻也。&ldquo;张仲景在这段文字所显示的资
+料，提醒我们注意这样一个问题，为什么正值经典产生，或愈是接近经典的年代，名医、
+大师愈多？而为什么一旦远离这个时代，名医、大师就"未之闻也&rdquo;？这个现象值得我们
+去思考。所以，我们现在强调经典的重要，并不是为了其他什么，而是明知我们在时间
+上离经典愈来愈远了，但是，能否通过有效的学习，使我们在实质上接近它呢？接近它，
+其实就接近了这些大师，我们通过学习经典，最后把我们自己造就成了雷公、少俞、少
+师，这有什么不好呢？我想这是我们学习经典的最根本的意义。张仲景在序言的下一段
+文字中接着谈到：&ldquo;观今之医，不念思求经旨，以演其所知，各承家技，始终顺旧。&ldquo;从
+这段文字我们可以看到，仲景在1700 年前已经清楚地说明了什么是守旧，什么是创新。
+当时的医生中，各人只抱守家传的一点经验，这就叫守旧；而反过来呢？能够"思求经旨，
+演其所知&rdquo;，这就是创新。所以，我们学习经典，学习《内经》、《伤寒》这些著作，完全
+是为了"演其所知&rdquo;。演是什么意思呢？演就是推演、扩大、发展、延续的意思。能够把
+我们那点局限的知识发展、拓宽开来，能够发扬光大它，这个东西就是真正地经旨。
+现在我们老说中医要创新才有出路，但你凭什么去创新呢？所以，搞
+经典完全不是守旧，而是为了创新。这一你学进去了，你就会有体会，这
+个过程究竟是不是创新，你会有感觉，临床实践上也会有印证，光是口说还不行。
+我经常谈到，做学问要学会"喜新而不厌旧&rdquo;，这也是孔子的一个思想。孔子所说的，做
+学问的一个关键就是：&ldquo;学而不思则罔，思而不学则殆。&ldquo;大家好好琢磨这句话以后再来
+做学问，不管你做什么学问，西医也好，中医也好，我看就会有着落。学，学什么呢？
+学就是学习过去的、现在以前的东西，实际上就是旧有的东西，只是这个旧的程度有不
+同而已。光学现有的东西行不行呢？这种为了学习而学习，孔子认为那是罔然。所以，
+光是学了很多东西，知识积累了很多，哪怕你成了一部活字典，那还是不行。有知识，
+不一定有学问。古人的这个认识是很有道理的。所以，孔子说学了还要思，思是什么呢？
+思就是一个组合的过程，通过这个组合，各种材料，各个部件逐渐碰撞、接触，融合成
+新的东西。因此，这个过程实际上就是创新的过程。&ldquo;喜新"这是每个人的习性，但，新
+不能凭空来，新是从旧中来，所以，&ldquo;思而不学则殆&rdquo;。没有材料，我们怎么搞建筑？学
+习经典亦是如此，要想有收获，就得这样去做。不这样做，光学不思，你哪会有收获，
+当然是白打工，罔罔然！现在听许多人说《内经》、《伤寒》没什么，不是丢在一边，就
+是束之高阁，心里面很是难过。这样宝贵的东西，他们却说没什么，怎么不叫人痛心。
+所以，学经典必须要即思即学，即学即思。</p></div><footer class=post-footer><div class=post-button><a class=btn href=/post/chapter-1-brief-introduction-to-learning-and-research-of-tcm-7/#more rel=contents>阅读全文 &#187;</a></div><div class=post-eof></div></footer></article></div><div class=post-block><article itemscope itemtype=http://schema.org/Article class=post-content lang><link itemprop=mainEntityOfPage href=https://blogs.qipai360.cn/post/chapter-1-brief-introduction-to-learning-and-research-of-tcm-6/><span hidden itemprop=author itemscope itemtype=http://schema.org/Person><meta itemprop=image content="/imgs/avatar.jpg"><meta itemprop=name content="Rise"></span><span hidden itemprop=publisher itemscope itemtype=http://schema.org/Organization><meta itemprop=name content="Rise"><meta itemprop=description content="福兮祸兮，焉知所依？冬去冰泮，春来萌荣。朝生暮死，亦可惊鸿。知足者富，自足者强。"></span><span hidden itemprop=post itemscope itemtype=http://schema.org/CreativeWork><meta itemprop=name content="第一章 略说中医的学习与研究（6）"><meta itemprop=description content='3.三种文化
+前面我们强调了理论认识的重要性，为什么要强调这个问题呢？因为现在与过去不
+同，过去许多名医走上学医的道路，并不先需要一个理性过程，他们是直接从感性开始
+的。感性这个东西很奇怪，力量很大，一旦感性的动力确定了，其他问题都好解决。古
+人大都是从这上面走上学医道路的。像张仲景一样，他是"感往昔之沦丧，伤夭横之莫救，
+乃勤求古训，博采众方"，而《针灸甲乙经》的作者皇甫谧以及其他医家都有类似的情况，
+都是从这样一种感性中获得动力，从而发奋学医的。但是，现在大家来分析一下自己，
+看看我们有没有这个动力？我看大家并没有这个动力，即便有，也是模糊的。大家看看
+自己是怎么到中医学院来的。高考分数达不到清华、北大，达不到重点线，甚至入不了
+一般高校，于是就上了中医学院。考分不争气，无可奈何，这就上了中医学院。有没有
+能上清华、北大的分数而来报中医学院的呢？我看没有！大家就是以这样一种心态来学
+中医的，一种良性的感性动力根本就没有，这个中医怎么能学好？现代科学需我师父曾
+经多次跟我谈到，中医不是一般人所能学的东西，必须具有北大、清华这样的素质才有
+可能学好中医。而宋代的林亿、高保衡亦持如是观点。他们
+在《重广补注黄帝内经素问》序中言：&ldquo;奈何以至精至微之道，传之以至下至浅之人，其
+不废绝，为已幸矣。&ldquo;现在的情况就是这样，高素质的人对中医不屑一顾，低素质的人，
+压根儿又学不好中医，所以，其不废绝，为已幸矣！这种情况如果不从根本上改变，中
+医怎么继承？怎么发扬光大？高素质的人为什么瞧不起中医？这与环境的关系很大。现
+在大家身边所感受的都是现代文化的气息，都习惯了用一种文化视角去看待问题，去思
+考问题，所以，从感性的层面讲，很难产生对传统、对中医有利的动力。正因为如此，
+我们强调理性，要从理性的层面来分析，通过这个分析，帮助我们寻找传统的感觉，建
+立感性的动力。文化实际上是多元的，不局限在一种模式里，只是现在大家业已习惯了
+这么一种模式，就用这么一种模式的东西去看待一切，其实，这是局限的、片面的。大
+家现在已经习惯了的这种文化实际上就是现代科学文化，或简称科学文化。这种文化有
+它鲜明的特点，就是它的时代性很强，时代进步，它也进步，真可以用日新月异这句话
+来形容。大家可以感受一下自己身边的一切是不是这样？看看前十年跟这十年有什么差
+别？差别太大了。正因为我们很鲜明地感受到了这一切巨大的变化，所以，我们会很自
+然地认为一切文化都是如此，长江后浪推前浪，一代新人胜旧人。时代进步了，一切文
+化都在进步，新的文化总比旧的文化强，古老的东西落后于今天的文化，这是必然的。
+有了这个认识他们怎么会瞧得上中医？怎么会重视经典？我们说文化的多元性，就是说
+文化不仅仅局限在上述这样一个模式里。当然现代科学文化在迄今为止的这样一个阶段
+里，都让我们感受到它是随着时代的进步而进步的。是不是其他任何文化都有这个特性
+呢？比如艺术文化，是不是时代进步了，艺术这门文化也一定进步了呢？我们不用专门
+从事艺术研究，只要粗略地回顾一下中外的艺术历史，就可以确定根本不是这么一回事。
+以诗词为例，比如说唐诗，以唐诗这样一种格律体裁的诗，在唐朝这几百年里已占尽风
+光，是不是到了宋代，这样一种诗又有进步了，又有发展了？当然不是这样。古人知道，
+诗写到唐的份上，诗机已然让他们占尽，要想再超过唐诗，几乎不可能了。于是宋人学
+聪明了，他们不再在唐诗里绕圈子，而转往另一个方向，宋词也就这样形成了气候。同
+样，元曲也是类似的情况。这是诗词方面。那么，音乐呢？绘画呢？情况也差不多。在
+维也纳，每年元旦都要举行新年音乐会，音乐会演奏的都是什么曲目呢？几乎都是大小
+施特劳斯的作品。演奏这些曲目并不仅仅为了纪念，作品的水平摆在那儿。像贝多芬、
+柴可夫斯基，这样的顶级音乐家所代表的音乐水平，是不是过若干年、几十年、几百年
+就一定有发展，就一定会有超过这个水平的音乐出现呢？至少搞音乐的人都很清楚，到
+现在还没有出现这样的阶段。音乐也好，绘画也好，诗歌也好，在这些领域的文化，确
+实不像科学文化，存在线性发展的规律，它们往往是非线性的。一个高峰出现后，若干
+年、几百年，或许会出现另一个高峰，但，这个峰的峰值并不一定能超过前一个。一个
+是线性，一个是非线性。一个是直线向前发展，一个是曲线徘徊。很显然，这个文化的
+层面和模式都很不相同。除了上面两个层面的文化以外，还有一个特殊的文化，就是古
+代形成的一些文化，比如佛教文化。佛教文化诞生于公元前四百余年，由印度的悉达多
+太子释迦牟尼所创立。与其他文化，特别是与科学文化截然相反，释迦佛没有预言他所
+创立的这门学科会不断发展壮大，相反的，他以一种反常规的模式预言了他的学科的三
+个不同阶段，那就是正法时期，象法时期，末法时期。此处我们暂且不去从专业的角度
+分析，为什么这样一门特殊的学问会走这样一条不同寻常的路子？这个原因我们暂且不
+去讨论。我们只要清楚这个现象是确凿的就行了。另外，像道家的文化，儒家的文化，
+实际上，它也跟佛教的这个模式差不多，它也是创立以后就处于实质性的鼎盛阶段，然
+后逐渐走向衰落，乃至于到现在名存实亡。所以，文化是多元的，并不仅仅局限在一个
+模式里面。若都是以发展的眼光看问题，那也不一定符合事实。在上述这些文化层面里，
+中医究竟属于哪一个层面的东西，或者三个层面兼而有之，这一点需要我们开动脑筋去
+思考。我的意见，中医至少不是局限在科学文化这一个层面的东西。对于中医，有些时
+候需要向前看，有些时候需要向后看。科学主义的我常说，中
+医究竟属于什么样的文化，我们观察也许就会有答案。你可以观察，在
+你那里，中医究竟是一个什么情况？是发展了，还是倒退了？你是高等学府的毕业生，甚
+至还是研究生、博士生，如果你的中医很棒，理论和实践都没有问题，对经典的
+理解无有障碍，那也许中医在你那里是发展的，是一种线性的模式。如果情况反过来，
+你的中医不怎么样，理论不怎么样，临床也解决不了问题，特别对于经典一窍不通，那
+中医在你那里就成问题，就倒退了，就是另外一种模式。所以，在这里要特别强调自知
+之明。另外一个重要的问题，就是对于经典的认识，对于经典的评价，那是要讲受用的，
+对经典没有觉受，那说出来的必定是空话。所以，我奉劝那些欲对经典发表意见的人，
+一定要三思而后言。否则你的底线在哪儿，人家一望便知。对于这个问题的认识，孔子
+在《系辞》中的话说得很好：&ldquo;仁者见之谓之仁，智者见之谓之智，百姓日用而不知，故
+君子之道鲜矣。&ldquo;经典的东西确实是仁者见仁，智者见智。当然，还有一句话，在这里不
+好说出来，不过，大家可以仔细去琢磨。仁者见之谓之仁；经典的"仁&rdquo;、&ldquo;智"成之谓之智。
+另外一个支持经典改选修的依据就是搞民意调者见之谓之查统计，弄几百份，甚至上千份
+问卷，要大家在上面打钩或者打&rdquo;×"，结果许多人的确在经典的一栏里打了&rdquo;×"，这个结果经过统
+计处理好像有意义，因为多数的人认为经典的意义不大，可以改为选修。但是，如果按
+照孔子的标准，这样的调查有可能没有丝毫意义。为什么呢？因为这是一门见仁见智的
+学问，你是仁者你方能见仁，你是智者，你方能见智，如果你什么都不是，你怎么见得
+到经中的"仁&rdquo;、&ldquo;智&rdquo;？那你当然会说经典没啥意义，甚至选修都可以不要。前面我们不
+是说学习经典要有觉受吗？觉受没有生起你绝对不会说经典的好话。所以，
+这个对象问题很重要，不是你随理解请参看39 页的有关便拿一个人来问话，都可以反映
+真实。申说。举个例子，像中国古代的四大文学名著，&ldquo;三国&rdquo;、&ldquo;西游&rdquo;、&ldquo;水浒&rdquo;、&ldquo;红楼
+&ldquo;，前三部我都读过不只一次，可是"红楼"呢？我很想读它，也看过不少名人的赞许，特
+别毛泽东就非常推崇这部名著。可是我每次读它，读到几回，最多十几回就读不下去了，
+也不知道什么原因，所以，至今我连这部名著也没能通读一遍，只知道个"赤条条，来去
+无牵挂&rdquo;，设想如果红学的东西问到我，那会是什么结果呢？我前面曾经跟大家介绍过我
+们学院的已故名老中医林沛湘教授，在林老那里，现代的内、外、妇、儿这些书可以不
+读，但是《内经》却不可以不读。林老不读内、外、妇、儿，他就凭一部《内经》。可是
+内、外、妇、儿的病，他都治得很漂亮。如果问卷问到林老那里，大家可以想一想他会
+是怎么回答。所以，像经典这样一些见仁见智的学问，我们在征询它的意义时，一定要
+注意对象，不是你认为经典没什么就没什么，你认为经典没什么，恰恰证明了你在经典
+中没有得到什么。人家下海发了财，成了百万富翁，偏偏你下海不但没赚到钱，反而亏
+本，那你当然说下海不好。经典的意义实际上也是这么回事。'></span><header class=post-header><h2 class=post-title itemprop="name headline"><a href=/post/chapter-1-brief-introduction-to-learning-and-research-of-tcm-6/ itemprop=url class=post-title-link>第一章 略说中医的学习与研究（6）</a></h2><div class=post-meta-container><div class=post-meta-items><span class=post-meta-item><span class=post-meta-item-icon><i class="fas fa-solid fa-calendar"></i>
+</span><span class=post-meta-item-text title=发表于>发表于：
+</span><time title="创建时间：2007年08月23日 20:03:00 CST" itemprop="dateCreated datePublished" datetime="2007-08-23 20:03:00 +0800 +0800">2007年08月23日
+</time></span><span class=post-meta-item><span class=post-meta-item-icon><i class="fas fa-solid fa-calendar-check"></i>
+</span><span class=post-meta-item-text title=更新于>更新于：
+</span><time title="修改时间：2007年08月27日 16:59:00 CST" itemprop="dateModified dateLastmod" datetime="2007-08-27 16:59:00 +0800 +0800">2007年08月27日
+</time></span><span class=post-meta-item><span class=post-meta-item-icon><i class="fas fa-solid fa-folder-open"></i>
+</span><span class=post-meta-item-text title=分类于>分类于：
+</span><span itemprop=about itemscope itemtype=http://schema.org/Thing><a href=/categories/tcm/ itemprop=url rel=index><span itemprop=name>TCM</span>
+</a></span></span><span class=post-meta-item title=浏览><span class=post-meta-item-icon><i class="fas fa-solid fa-eye"></i>
+</span><span class=post-meta-item-text>浏览：
+</span><span id=pageview-count data-path=/post/chapter-1-brief-introduction-to-learning-and-research-of-tcm-6/><i class="fa fa-sync fa-spin"></i></span></span></div></div></header><div class=post-body itemprop=articleBody><p><span style=font-weight:700>3.三种文化</span></p><p>前面我们强调了理论认识的重要性，为什么要强调这个问题呢？因为现在与过去不
+同，过去许多名医走上学医的道路，并不先需要一个理性过程，他们是直接从感性开始
+的。感性这个东西很奇怪，力量很大，一旦感性的动力确定了，其他问题都好解决。古
+人大都是从这上面走上学医道路的。像张仲景一样，他是"感往昔之沦丧，伤夭横之莫救，
+乃勤求古训，博采众方"，而《针灸甲乙经》的作者皇甫谧以及其他医家都有类似的情况，
+都是从这样一种感性中获得动力，从而发奋学医的。但是，现在大家来分析一下自己，
+看看我们有没有这个动力？我看大家并没有这个动力，即便有，也是模糊的。大家看看
+自己是怎么到中医学院来的。高考分数达不到清华、北大，达不到重点线，甚至入不了
+一般高校，于是就上了中医学院。考分不争气，无可奈何，这就上了中医学院。有没有
+能上清华、北大的分数而来报中医学院的呢？我看没有！大家就是以这样一种心态来学
+中医的，一种良性的感性动力根本就没有，这个中医怎么能学好？现代科学需我师父曾
+经多次跟我谈到，中医不是一般人所能学的东西，必须具有北大、清华这样的素质才有
+可能学好中医。而宋代的林亿、高保衡亦持如是观点。他们
+在《重广补注黄帝内经素问》序中言：&ldquo;奈何以至精至微之道，传之以至下至浅之人，其
+不废绝，为已幸矣。&ldquo;现在的情况就是这样，高素质的人对中医不屑一顾，低素质的人，
+压根儿又学不好中医，所以，其不废绝，为已幸矣！这种情况如果不从根本上改变，中
+医怎么继承？怎么发扬光大？高素质的人为什么瞧不起中医？这与环境的关系很大。现
+在大家身边所感受的都是现代文化的气息，都习惯了用一种文化视角去看待问题，去思
+考问题，所以，从感性的层面讲，很难产生对传统、对中医有利的动力。正因为如此，
+我们强调理性，要从理性的层面来分析，通过这个分析，帮助我们寻找传统的感觉，建
+立感性的动力。文化实际上是多元的，不局限在一种模式里，只是现在大家业已习惯了
+这么一种模式，就用这么一种模式的东西去看待一切，其实，这是局限的、片面的。大
+家现在已经习惯了的这种文化实际上就是现代科学文化，或简称科学文化。这种文化有
+它鲜明的特点，就是它的时代性很强，时代进步，它也进步，真可以用日新月异这句话
+来形容。大家可以感受一下自己身边的一切是不是这样？看看前十年跟这十年有什么差
+别？差别太大了。正因为我们很鲜明地感受到了这一切巨大的变化，所以，我们会很自
+然地认为一切文化都是如此，长江后浪推前浪，一代新人胜旧人。时代进步了，一切文
+化都在进步，新的文化总比旧的文化强，古老的东西落后于今天的文化，这是必然的。
+有了这个认识他们怎么会瞧得上中医？怎么会重视经典？我们说文化的多元性，就是说
+文化不仅仅局限在上述这样一个模式里。当然现代科学文化在迄今为止的这样一个阶段
+里，都让我们感受到它是随着时代的进步而进步的。是不是其他任何文化都有这个特性
+呢？比如艺术文化，是不是时代进步了，艺术这门文化也一定进步了呢？我们不用专门
+从事艺术研究，只要粗略地回顾一下中外的艺术历史，就可以确定根本不是这么一回事。
+以诗词为例，比如说唐诗，以唐诗这样一种格律体裁的诗，在唐朝这几百年里已占尽风
+光，是不是到了宋代，这样一种诗又有进步了，又有发展了？当然不是这样。古人知道，
+诗写到唐的份上，诗机已然让他们占尽，要想再超过唐诗，几乎不可能了。于是宋人学
+聪明了，他们不再在唐诗里绕圈子，而转往另一个方向，宋词也就这样形成了气候。同
+样，元曲也是类似的情况。这是诗词方面。那么，音乐呢？绘画呢？情况也差不多。在
+维也纳，每年元旦都要举行新年音乐会，音乐会演奏的都是什么曲目呢？几乎都是大小
+施特劳斯的作品。演奏这些曲目并不仅仅为了纪念，作品的水平摆在那儿。像贝多芬、
+柴可夫斯基，这样的顶级音乐家所代表的音乐水平，是不是过若干年、几十年、几百年
+就一定有发展，就一定会有超过这个水平的音乐出现呢？至少搞音乐的人都很清楚，到
+现在还没有出现这样的阶段。音乐也好，绘画也好，诗歌也好，在这些领域的文化，确
+实不像科学文化，存在线性发展的规律，它们往往是非线性的。一个高峰出现后，若干
+年、几百年，或许会出现另一个高峰，但，这个峰的峰值并不一定能超过前一个。一个
+是线性，一个是非线性。一个是直线向前发展，一个是曲线徘徊。很显然，这个文化的
+层面和模式都很不相同。除了上面两个层面的文化以外，还有一个特殊的文化，就是古
+代形成的一些文化，比如佛教文化。佛教文化诞生于公元前四百余年，由印度的悉达多
+太子释迦牟尼所创立。与其他文化，特别是与科学文化截然相反，释迦佛没有预言他所
+创立的这门学科会不断发展壮大，相反的，他以一种反常规的模式预言了他的学科的三
+个不同阶段，那就是正法时期，象法时期，末法时期。此处我们暂且不去从专业的角度
+分析，为什么这样一门特殊的学问会走这样一条不同寻常的路子？这个原因我们暂且不
+去讨论。我们只要清楚这个现象是确凿的就行了。另外，像道家的文化，儒家的文化，
+实际上，它也跟佛教的这个模式差不多，它也是创立以后就处于实质性的鼎盛阶段，然
+后逐渐走向衰落，乃至于到现在名存实亡。所以，文化是多元的，并不仅仅局限在一个
+模式里面。若都是以发展的眼光看问题，那也不一定符合事实。在上述这些文化层面里，
+中医究竟属于哪一个层面的东西，或者三个层面兼而有之，这一点需要我们开动脑筋去
+思考。我的意见，中医至少不是局限在科学文化这一个层面的东西。对于中医，有些时
+候需要向前看，有些时候需要向后看。科学主义的我常说，中
+医究竟属于什么样的文化，我们观察也许就会有答案。你可以观察，在
+你那里，中医究竟是一个什么情况？是发展了，还是倒退了？你是高等学府的毕业生，甚
+至还是研究生、博士生，如果你的中医很棒，理论和实践都没有问题，对经典的
+理解无有障碍，那也许中医在你那里是发展的，是一种线性的模式。如果情况反过来，
+你的中医不怎么样，理论不怎么样，临床也解决不了问题，特别对于经典一窍不通，那
+中医在你那里就成问题，就倒退了，就是另外一种模式。所以，在这里要特别强调自知
+之明。另外一个重要的问题，就是对于经典的认识，对于经典的评价，那是要讲受用的，
+对经典没有觉受，那说出来的必定是空话。所以，我奉劝那些欲对经典发表意见的人，
+一定要三思而后言。否则你的底线在哪儿，人家一望便知。对于这个问题的认识，孔子
+在《系辞》中的话说得很好：&ldquo;仁者见之谓之仁，智者见之谓之智，百姓日用而不知，故
+君子之道鲜矣。&ldquo;经典的东西确实是仁者见仁，智者见智。当然，还有一句话，在这里不
+好说出来，不过，大家可以仔细去琢磨。仁者见之谓之仁；经典的"仁&rdquo;、&ldquo;智"成之谓之智。
+另外一个支持经典改选修的依据就是搞民意调者见之谓之查统计，弄几百份，甚至上千份
+问卷，要大家在上面打钩或者打&rdquo;×"，结果许多人的确在经典的一栏里打了&rdquo;×"，这个结果经过统
+计处理好像有意义，因为多数的人认为经典的意义不大，可以改为选修。但是，如果按
+照孔子的标准，这样的调查有可能没有丝毫意义。为什么呢？因为这是一门见仁见智的
+学问，你是仁者你方能见仁，你是智者，你方能见智，如果你什么都不是，你怎么见得
+到经中的"仁&rdquo;、&ldquo;智&rdquo;？那你当然会说经典没啥意义，甚至选修都可以不要。前面我们不
+是说学习经典要有觉受吗？觉受没有生起你绝对不会说经典的好话。所以，
+这个对象问题很重要，不是你随理解请参看39 页的有关便拿一个人来问话，都可以反映
+真实。申说。举个例子，像中国古代的四大文学名著，&ldquo;三国&rdquo;、&ldquo;西游&rdquo;、&ldquo;水浒&rdquo;、&ldquo;红楼
+&ldquo;，前三部我都读过不只一次，可是"红楼"呢？我很想读它，也看过不少名人的赞许，特
+别毛泽东就非常推崇这部名著。可是我每次读它，读到几回，最多十几回就读不下去了，
+也不知道什么原因，所以，至今我连这部名著也没能通读一遍，只知道个"赤条条，来去
+无牵挂&rdquo;，设想如果红学的东西问到我，那会是什么结果呢？我前面曾经跟大家介绍过我
+们学院的已故名老中医林沛湘教授，在林老那里，现代的内、外、妇、儿这些书可以不
+读，但是《内经》却不可以不读。林老不读内、外、妇、儿，他就凭一部《内经》。可是
+内、外、妇、儿的病，他都治得很漂亮。如果问卷问到林老那里，大家可以想一想他会
+是怎么回答。所以，像经典这样一些见仁见智的学问，我们在征询它的意义时，一定要
+注意对象，不是你认为经典没什么就没什么，你认为经典没什么，恰恰证明了你在经典
+中没有得到什么。人家下海发了财，成了百万富翁，偏偏你下海不但没赚到钱，反而亏
+本，那你当然说下海不好。经典的意义实际上也是这么回事。</p></div><footer class=post-footer><div class=post-button><a class=btn href=/post/chapter-1-brief-introduction-to-learning-and-research-of-tcm-6/#more rel=contents>阅读全文 &#187;</a></div><div class=post-eof></div></footer></article></div><div class=post-block><article itemscope itemtype=http://schema.org/Article class=post-content lang><link itemprop=mainEntityOfPage href=https://blogs.qipai360.cn/post/chapter-1-brief-introduction-to-learning-and-research-of-tcm-5/><span hidden itemprop=author itemscope itemtype=http://schema.org/Person><meta itemprop=image content="/imgs/avatar.jpg"><meta itemprop=name content="Rise"></span><span hidden itemprop=publisher itemscope itemtype=http://schema.org/Organization><meta itemprop=name content="Rise"><meta itemprop=description content="福兮祸兮，焉知所依？冬去冰泮，春来萌荣。朝生暮死，亦可惊鸿。知足者富，自足者强。"></span><span hidden itemprop=post itemscope itemtype=http://schema.org/CreativeWork><meta itemprop=name content="第一章 略说中医的学习与研究（5）"><meta itemprop=description content="三、寻找有效的方法&mdash;依靠经典
+思想的问题解决了，信心就很自然地会生起来，加上有了师传的条件，那么，剩下
+来的，我觉得就是如何去寻找更有效的方法。我有一个认识，中医这门学问，要想真正
+搞上去，要想真正抓住她的价值，除了纯粹医学的技术成分外，还应关切和体悟她的科
+学层面，哲学层面，以及艺术层面。而要真正地做好这一点，不借重经典是不行的。我
+们提出要依靠经典来学好中医，这个方法好像不合符时宜，因为现在大多数中医院校已
+将经典改为选修。从必修沦为选修，经典的这个地位大大地下降了。它给人们的信息就
+是对于中医的学习来说，经典已经不是必须的了。"></span><header class=post-header><h2 class=post-title itemprop="name headline"><a href=/post/chapter-1-brief-introduction-to-learning-and-research-of-tcm-5/ itemprop=url class=post-title-link>第一章 略说中医的学习与研究（5）</a></h2><div class=post-meta-container><div class=post-meta-items><span class=post-meta-item><span class=post-meta-item-icon><i class="fas fa-solid fa-calendar"></i>
+</span><span class=post-meta-item-text title=发表于>发表于：
+</span><time title="创建时间：2007年08月23日 19:37:00 CST" itemprop="dateCreated datePublished" datetime="2007-08-23 19:37:00 +0800 +0800">2007年08月23日
+</time></span><span class=post-meta-item><span class=post-meta-item-icon><i class="fas fa-solid fa-calendar-check"></i>
+</span><span class=post-meta-item-text title=更新于>更新于：
+</span><time title="修改时间：2007年08月27日 16:59:00 CST" itemprop="dateModified dateLastmod" datetime="2007-08-27 16:59:00 +0800 +0800">2007年08月27日
+</time></span><span class=post-meta-item><span class=post-meta-item-icon><i class="fas fa-solid fa-folder-open"></i>
+</span><span class=post-meta-item-text title=分类于>分类于：
+</span><span itemprop=about itemscope itemtype=http://schema.org/Thing><a href=/categories/tcm/ itemprop=url rel=index><span itemprop=name>TCM</span>
+</a></span></span><span class=post-meta-item title=浏览><span class=post-meta-item-icon><i class="fas fa-solid fa-eye"></i>
+</span><span class=post-meta-item-text>浏览：
+</span><span id=pageview-count data-path=/post/chapter-1-brief-introduction-to-learning-and-research-of-tcm-5/><i class="fa fa-sync fa-spin"></i></span></span></div></div></header><div class=post-body itemprop=articleBody><p><span style=font-weight:700>三、寻找有效的方法&mdash;依靠经典</span></p><p>思想的问题解决了，信心就很自然地会生起来，加上有了师传的条件，那么，剩下
+来的，我觉得就是如何去寻找更有效的方法。我有一个认识，中医这门学问，要想真正
+搞上去，要想真正抓住她的价值，除了纯粹医学的技术成分外，还应关切和体悟她的科
+学层面，哲学层面，以及艺术层面。而要真正地做好这一点，不借重经典是不行的。我
+们提出要依靠经典来学好中医，这个方法好像不合符时宜，因为现在大多数中医院校已
+将经典改为选修。从必修沦为选修，经典的这个地位大大地下降了。它给人们的信息就
+是对于中医的学习来说，经典已经不是必须的了。</p></div><footer class=post-footer><div class=post-button><a class=btn href=/post/chapter-1-brief-introduction-to-learning-and-research-of-tcm-5/#more rel=contents>阅读全文 &#187;</a></div><div class=post-eof></div></footer></article></div><div class=post-block><article itemscope itemtype=http://schema.org/Article class=post-content lang><link itemprop=mainEntityOfPage href=https://blogs.qipai360.cn/post/chapter-1-brief-introduction-to-learning-and-research-of-tcm-4/><span hidden itemprop=author itemscope itemtype=http://schema.org/Person><meta itemprop=image content="/imgs/avatar.jpg"><meta itemprop=name content="Rise"></span><span hidden itemprop=publisher itemscope itemtype=http://schema.org/Organization><meta itemprop=name content="Rise"><meta itemprop=description content="福兮祸兮，焉知所依？冬去冰泮，春来萌荣。朝生暮死，亦可惊鸿。知足者富，自足者强。"></span><span hidden itemprop=post itemscope itemtype=http://schema.org/CreativeWork><meta itemprop=name content="第一章 略说中医的学习与研究（4）"><meta itemprop=description content="3.师徒相授
+既然传统中医是这样一种学问，它的确有许多有别于现代科学的地方。如果我们照
+搬现代科学这样一个教育模式，那势必就会在这个过程中丢失掉许多东西。而丢失掉的
+有可能恰恰是传统中医所注重的东西。这就使我们要思考，究竟什么样的教育方式最适
+合于中医？"></span><header class=post-header><h2 class=post-title itemprop="name headline"><a href=/post/chapter-1-brief-introduction-to-learning-and-research-of-tcm-4/ itemprop=url class=post-title-link>第一章 略说中医的学习与研究（4）</a></h2><div class=post-meta-container><div class=post-meta-items><span class=post-meta-item><span class=post-meta-item-icon><i class="fas fa-solid fa-calendar"></i>
+</span><span class=post-meta-item-text title=发表于>发表于：
+</span><time title="创建时间：2007年08月23日 19:15:00 CST" itemprop="dateCreated datePublished" datetime="2007-08-23 19:15:00 +0800 +0800">2007年08月23日
+</time></span><span class=post-meta-item><span class=post-meta-item-icon><i class="fas fa-solid fa-calendar-check"></i>
+</span><span class=post-meta-item-text title=更新于>更新于：
+</span><time title="修改时间：2007年08月27日 17:01:00 CST" itemprop="dateModified dateLastmod" datetime="2007-08-27 17:01:00 +0800 +0800">2007年08月27日
+</time></span><span class=post-meta-item><span class=post-meta-item-icon><i class="fas fa-solid fa-folder-open"></i>
+</span><span class=post-meta-item-text title=分类于>分类于：
+</span><span itemprop=about itemscope itemtype=http://schema.org/Thing><a href=/categories/tcm/ itemprop=url rel=index><span itemprop=name>TCM</span>
+</a></span></span><span class=post-meta-item title=浏览><span class=post-meta-item-icon><i class="fas fa-solid fa-eye"></i>
+</span><span class=post-meta-item-text>浏览：
+</span><span id=pageview-count data-path=/post/chapter-1-brief-introduction-to-learning-and-research-of-tcm-4/><i class="fa fa-sync fa-spin"></i></span></span></div></div></header><div class=post-body itemprop=articleBody><p><span style=font-weight:700>3.师徒相授</p><p></span>既然传统中医是这样一种学问，它的确有许多有别于现代科学的地方。如果我们照
+搬现代科学这样一个教育模式，那势必就会在这个过程中丢失掉许多东西。而丢失掉的
+有可能恰恰是传统中医所注重的东西。这就使我们要思考，究竟什么样的教育方式最适
+合于中医？</p></div><footer class=post-footer><div class=post-button><a class=btn href=/post/chapter-1-brief-introduction-to-learning-and-research-of-tcm-4/#more rel=contents>阅读全文 &#187;</a></div><div class=post-eof></div></footer></article></div><div class=post-block><article itemscope itemtype=http://schema.org/Article class=post-content lang><link itemprop=mainEntityOfPage href=https://blogs.qipai360.cn/post/chapter-1-brief-introduction-to-learning-and-research-of-tcm-3/><span hidden itemprop=author itemscope itemtype=http://schema.org/Person><meta itemprop=image content="/imgs/avatar.jpg"><meta itemprop=name content="Rise"></span><span hidden itemprop=publisher itemscope itemtype=http://schema.org/Organization><meta itemprop=name content="Rise"><meta itemprop=description content="福兮祸兮，焉知所依？冬去冰泮，春来萌荣。朝生暮死，亦可惊鸿。知足者富，自足者强。"></span><span hidden itemprop=post itemscope itemtype=http://schema.org/CreativeWork><meta itemprop=name content="第一章 略说中医的学习与研究（3）"><meta itemprop=description content='二、学问的传承
+接下来我们要谈一谈学问的传承，具体地说就是中医这门学问的传承。我们在这里
+用"传承"这个词，可以说比较的古典，一门学问要流传下去，它靠的什么呢？靠的就是
+这个传承。所以，学问的传承是一个重要的问题。下面我们分两部分来讨论。'></span><header class=post-header><h2 class=post-title itemprop="name headline"><a href=/post/chapter-1-brief-introduction-to-learning-and-research-of-tcm-3/ itemprop=url class=post-title-link>第一章 略说中医的学习与研究（3）</a></h2><div class=post-meta-container><div class=post-meta-items><span class=post-meta-item><span class=post-meta-item-icon><i class="fas fa-solid fa-calendar"></i>
+</span><span class=post-meta-item-text title=发表于>发表于：
+</span><time title="创建时间：2007年08月23日 17:34:00 CST" itemprop="dateCreated datePublished" datetime="2007-08-23 17:34:00 +0800 +0800">2007年08月23日
+</time></span><span class=post-meta-item><span class=post-meta-item-icon><i class="fas fa-solid fa-calendar-check"></i>
+</span><span class=post-meta-item-text title=更新于>更新于：
+</span><time title="修改时间：2007年08月27日 16:59:00 CST" itemprop="dateModified dateLastmod" datetime="2007-08-27 16:59:00 +0800 +0800">2007年08月27日
+</time></span><span class=post-meta-item><span class=post-meta-item-icon><i class="fas fa-solid fa-folder-open"></i>
+</span><span class=post-meta-item-text title=分类于>分类于：
+</span><span itemprop=about itemscope itemtype=http://schema.org/Thing><a href=/categories/tcm/ itemprop=url rel=index><span itemprop=name>TCM</span>
+</a></span></span><span class=post-meta-item title=浏览><span class=post-meta-item-icon><i class="fas fa-solid fa-eye"></i>
+</span><span class=post-meta-item-text>浏览：
+</span><span id=pageview-count data-path=/post/chapter-1-brief-introduction-to-learning-and-research-of-tcm-3/><i class="fa fa-sync fa-spin"></i></span></span></div></div></header><div class=post-body itemprop=articleBody><p><span style=font-weight:700>二、学问的传承</span></p><p>接下来我们要谈一谈学问的传承，具体地说就是中医这门学问的传承。我们在这里
+用"传承"这个词，可以说比较的古典，一门学问要流传下去，它靠的什么呢？靠的就是
+这个传承。所以，学问的传承是一个重要的问题。下面我们分两部分来讨论。</p></div><footer class=post-footer><div class=post-button><a class=btn href=/post/chapter-1-brief-introduction-to-learning-and-research-of-tcm-3/#more rel=contents>阅读全文 &#187;</a></div><div class=post-eof></div></footer></article></div><div class=post-block><article itemscope itemtype=http://schema.org/Article class=post-content lang><link itemprop=mainEntityOfPage href=https://blogs.qipai360.cn/post/chapter-1-brief-introduction-to-learning-and-research-of-tcm-2/><span hidden itemprop=author itemscope itemtype=http://schema.org/Person><meta itemprop=image content="/imgs/avatar.jpg"><meta itemprop=name content="Rise"></span><span hidden itemprop=publisher itemscope itemtype=http://schema.org/Organization><meta itemprop=name content="Rise"><meta itemprop=description content="福兮祸兮，焉知所依？冬去冰泮，春来萌荣。朝生暮死，亦可惊鸿。知足者富，自足者强。"></span><span hidden itemprop=post itemscope itemtype=http://schema.org/CreativeWork><meta itemprop=name content="第一章 略说中医的学习与研究（2）"><meta itemprop=description content='2.杨振宁教授所认识的中国文化
+1999 年12 月3 日，著名物理学家、诺贝尔奖获得者杨振宁教授应香港中文大学之
+邀，于新亚书院举办了一个题为"中国文化与科学"的讲座。在这个讲座中，杨教授用了
+相当长的篇幅来阐述中国文化的特征。杨教授是公认的20 世纪最伟大的物理学家之一，
+在传统文化方面也有相当的造诣。所以，他对传统文化的看法应该具有相当的代表性和
+影响力。杨振宁教授对中国传统文化的认识，可以归结为以下几个方面：'></span><header class=post-header><h2 class=post-title itemprop="name headline"><a href=/post/chapter-1-brief-introduction-to-learning-and-research-of-tcm-2/ itemprop=url class=post-title-link>第一章 略说中医的学习与研究（2）</a></h2><div class=post-meta-container><div class=post-meta-items><span class=post-meta-item><span class=post-meta-item-icon><i class="fas fa-solid fa-calendar"></i>
+</span><span class=post-meta-item-text title=发表于>发表于：
+</span><time title="创建时间：2007年08月23日 16:28:00 CST" itemprop="dateCreated datePublished" datetime="2007-08-23 16:28:00 +0800 +0800">2007年08月23日
+</time></span><span class=post-meta-item><span class=post-meta-item-icon><i class="fas fa-solid fa-calendar-check"></i>
+</span><span class=post-meta-item-text title=更新于>更新于：
+</span><time title="修改时间：2007年08月27日 16:58:00 CST" itemprop="dateModified dateLastmod" datetime="2007-08-27 16:58:00 +0800 +0800">2007年08月27日
+</time></span><span class=post-meta-item><span class=post-meta-item-icon><i class="fas fa-solid fa-folder-open"></i>
+</span><span class=post-meta-item-text title=分类于>分类于：
+</span><span itemprop=about itemscope itemtype=http://schema.org/Thing><a href=/categories/tcm/ itemprop=url rel=index><span itemprop=name>TCM</span>
+</a></span></span><span class=post-meta-item title=浏览><span class=post-meta-item-icon><i class="fas fa-solid fa-eye"></i>
+</span><span class=post-meta-item-text>浏览：
+</span><span id=pageview-count data-path=/post/chapter-1-brief-introduction-to-learning-and-research-of-tcm-2/><i class="fa fa-sync fa-spin"></i></span></span></div></div></header><div class=post-body itemprop=articleBody><p><span style=font-weight:700>2.杨振宁教授所认识的中国文化</span></p><p>1999 年12 月3 日，著名物理学家、诺贝尔奖获得者杨振宁教授应香港中文大学之
+邀，于新亚书院举办了一个题为"中国文化与科学"的讲座。在这个讲座中，杨教授用了
+相当长的篇幅来阐述中国文化的特征。杨教授是公认的20 世纪最伟大的物理学家之一，
+在传统文化方面也有相当的造诣。所以，他对传统文化的看法应该具有相当的代表性和
+影响力。杨振宁教授对中国传统文化的认识，可以归结为以下几个方面：</p></div><footer class=post-footer><div class=post-button><a class=btn href=/post/chapter-1-brief-introduction-to-learning-and-research-of-tcm-2/#more rel=contents>阅读全文 &#187;</a></div><div class=post-eof></div></footer></article></div><div class=post-block><article itemscope itemtype=http://schema.org/Article class=post-content lang><link itemprop=mainEntityOfPage href=https://blogs.qipai360.cn/post/chapter-1-brief-introduction-to-learning-and-research-of-tcm-1/><span hidden itemprop=author itemscope itemtype=http://schema.org/Person><meta itemprop=image content="/imgs/avatar.jpg"><meta itemprop=name content="Rise"></span><span hidden itemprop=publisher itemscope itemtype=http://schema.org/Organization><meta itemprop=name content="Rise"><meta itemprop=description content="福兮祸兮，焉知所依？冬去冰泮，春来萌荣。朝生暮死，亦可惊鸿。知足者富，自足者强。"></span><span hidden itemprop=post itemscope itemtype=http://schema.org/CreativeWork><meta itemprop=name content="第一章 略说中医的学习与研究（1）"><meta itemprop=description content='作者：刘力红
+对中医的心理。今年五月，我应邀参加一个中医学术研讨会，在会上就作了个"略说
+中医的学习与研究"的报告，报告之后，一位与会的博士找我交谈，一方面对我在这样的
+年代里还能用如此大的热情来研究经典、宣扬经典表示赞叹，另一方面，则是对我的行
+为感到不解。据说在他们一帮中医博士里，已经绝少有人看经典，如果哪一位博士的案
+头放上一部《黄帝内经》，那绝对是要被笑话的。博士的案头都是什么书呢？不可以不读
+都是分子生物学一类的现代书。博士这个群体，无疑是个高层次的群体。在他们身上肩
+负着中医现代化的使命，所以，读些现代的书是理所当然的。但为什么不愿读中医书尤
+其不读经典的书呢？我想答案只能有一个，就是在他们的心目中，中医只不过如此，经
+典只不过如此，难道还有什么更多的看头吗？我想与上述许多问题相比，这个问题显得
+尤其严重。大家知道，博士这个群体，将很快、很自然地要成为中医这个行当的决策者、
+领路人，等到这个群体真正当政的时候，中医会成一个什么样子呢？这是不难想象的。
+所以，这样一个问题就不得不提出来，就是：我们现在看到的中医，我们现在认识的这
+个中医，究竟代不代表真正的中医？我们现在在各类中医医疗机构看到的这些医生的水
+平，究竟能不能代表中医的真正水平？中医的真正水平在哪里？中医的制高点在哪里？
+在现代，还是在古代？对这个问题的不同回答，会形成对中医截然不同的认识。如果真
+正的中医就是我们现在看到的这个样子，那我们值不值得花很多时间来学习她？值不值
+得花毕生的精力去钻研她、实践她？我想首先我不会的！何必陷在这个死胡同里呢？花
+去许多精力还只能做个配角。所以，我提出"如何正确认识"这样一个问题，就是希望大
+家不要被当今的这个局面所迷惑，从而丧失掉对中医的信心。'></span><header class=post-header><h2 class=post-title itemprop="name headline"><a href=/post/chapter-1-brief-introduction-to-learning-and-research-of-tcm-1/ itemprop=url class=post-title-link>第一章 略说中医的学习与研究（1）</a></h2><div class=post-meta-container><div class=post-meta-items><span class=post-meta-item><span class=post-meta-item-icon><i class="fas fa-solid fa-calendar"></i>
+</span><span class=post-meta-item-text title=发表于>发表于：
+</span><time title="创建时间：2007年08月23日 15:23:00 CST" itemprop="dateCreated datePublished" datetime="2007-08-23 15:23:00 +0800 +0800">2007年08月23日
+</time></span><span class=post-meta-item><span class=post-meta-item-icon><i class="fas fa-solid fa-calendar-check"></i>
+</span><span class=post-meta-item-text title=更新于>更新于：
+</span><time title="修改时间：2007年08月27日 16:58:00 CST" itemprop="dateModified dateLastmod" datetime="2007-08-27 16:58:00 +0800 +0800">2007年08月27日
+</time></span><span class=post-meta-item><span class=post-meta-item-icon><i class="fas fa-solid fa-folder-open"></i>
+</span><span class=post-meta-item-text title=分类于>分类于：
+</span><span itemprop=about itemscope itemtype=http://schema.org/Thing><a href=/categories/tcm/ itemprop=url rel=index><span itemprop=name>TCM</span>
+</a></span></span><span class=post-meta-item title=浏览><span class=post-meta-item-icon><i class="fas fa-solid fa-eye"></i>
+</span><span class=post-meta-item-text>浏览：
+</span><span id=pageview-count data-path=/post/chapter-1-brief-introduction-to-learning-and-research-of-tcm-1/><i class="fa fa-sync fa-spin"></i></span></span></div></div></header><div class=post-body itemprop=articleBody><p><span style=font-weight:700>作者：刘力红</span></p><p>对中医的心理。今年五月，我应邀参加一个中医学术研讨会，在会上就作了个"略说
+中医的学习与研究"的报告，报告之后，一位与会的博士找我交谈，一方面对我在这样的
+年代里还能用如此大的热情来研究经典、宣扬经典表示赞叹，另一方面，则是对我的行
+为感到不解。据说在他们一帮中医博士里，已经绝少有人看经典，如果哪一位博士的案
+头放上一部《黄帝内经》，那绝对是要被笑话的。博士的案头都是什么书呢？不可以不读
+都是分子生物学一类的现代书。博士这个群体，无疑是个高层次的群体。在他们身上肩
+负着中医现代化的使命，所以，读些现代的书是理所当然的。但为什么不愿读中医书尤
+其不读经典的书呢？我想答案只能有一个，就是在他们的心目中，中医只不过如此，经
+典只不过如此，难道还有什么更多的看头吗？我想与上述许多问题相比，这个问题显得
+尤其严重。大家知道，博士这个群体，将很快、很自然地要成为中医这个行当的决策者、
+领路人，等到这个群体真正当政的时候，中医会成一个什么样子呢？这是不难想象的。
+所以，这样一个问题就不得不提出来，就是：我们现在看到的中医，我们现在认识的这
+个中医，究竟代不代表真正的中医？我们现在在各类中医医疗机构看到的这些医生的水
+平，究竟能不能代表中医的真正水平？中医的真正水平在哪里？中医的制高点在哪里？
+在现代，还是在古代？对这个问题的不同回答，会形成对中医截然不同的认识。如果真
+正的中医就是我们现在看到的这个样子，那我们值不值得花很多时间来学习她？值不值
+得花毕生的精力去钻研她、实践她？我想首先我不会的！何必陷在这个死胡同里呢？花
+去许多精力还只能做个配角。所以，我提出"如何正确认识"这样一个问题，就是希望大
+家不要被当今的这个局面所迷惑，从而丧失掉对中医的信心。</p></div><footer class=post-footer><div class=post-button><a class=btn href=/post/chapter-1-brief-introduction-to-learning-and-research-of-tcm-1/#more rel=contents>阅读全文 &#187;</a></div><div class=post-eof></div></footer></article></div><nav class=pagination><a class="extend prev" rel=prev href=/post/page/51/><i class="fa fa-angle-left"></i>
+</a><a class=page-number href=/post/page/48/>48</a>
+<a class=page-number href=/post/page/49/>49</a>
+<a class=page-number href=/post/page/50/>50</a>
+<a class=page-number href=/post/page/51/>51</a>
+<span class="page-number current">52</span>
+<a class=page-number href=/post/page/53/>53</a>
+<a class=page-number href=/post/page/54/>54</a>
+<a class=page-number href=/post/page/55/>55</a>
+<a class=page-number href=/post/page/56/>56</a>
+<a class="extend next" rel=next href=/post/page/53/><i class="fa fa-angle-right"></i></a></nav></div></main><footer class=footer><div class=footer-inner><div class=copyright>&copy;
+<span itemprop=copyrightYear>2004 - 2026
+</span><span class=with-love><i class="fa fa-heart"></i>
+</span><span class=author itemprop=copyrightHolder>Rise</span></div><div class=powered-by>由 <a href=https://gohugo.io title=0.157.0 target=_blank>Hugo</a> & <a href=https://github.com/hugo-next/hugo-theme-next title=4.8.3 target=_blank>Hugo NexT.Gemini</a> 强力驱动</div><div class=beian><a href=https://beian.miit.gov.cn target=_blank>豫ICP备2021009490号</a>
+<img src=/imgs/gongan.png alt=豫公网安备>
+<a href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=41162302000074" target=_blank>豫公网安备 41162302000074 号</a></div></div></footer><script class=next-config data-name=page type=application/json>{"comments":true,"expired":false,"isHome":false,"isPage":false,"path":"post","permalink":"https://blogs.qipai360.cn/post/","title":"Posts","toc":false,"waline3":{"pagecnt":{"alias":"@waline/client","alias_name":"waline","file":"dist/pageview.js","name":"pageview","version":"3.5.7"}}}</script><script type=text/javascript src=https://blogs.qipai360.cn/js/3rd/animejs/3.2.2/anime.min.js crossorigin=anonymous defer></script><script type=text/javascript src=https://blogs.qipai360.cn/js/3rd/viewerjs/1.11.6/viewer.min.js crossorigin=anonymous defer></script><script class=next-config data-name=main type=application/json>{"bookmark":{"color":"#222","enable":true,"save":"manual"},"copybtn":true,"darkmode":true,"giscus":{"cfg":{"category":"Announcements","categoryid":"DIC_kwDOA6L0YM4CiXf9","emit":false,"inputposition":"top","mapping":"title","reactions":false,"repo":"rise-worlds/rise-worlds.github.io","repoid":"MDEwOlJlcG9zaXRvcnk2MTAxMTA0MA==","theme":"transparent_dark"},"js":"https://giscus.app/client.js"},"hostname":"https://blogs.qipai360.cn/","i18n":{"ds_day":" 天前","ds_days":" 天 ","ds_hour":" 小时前","ds_hours":" 小时 ","ds_just":"刚刚","ds_min":" 分钟前","ds_mins":" 分钟","ds_month":" 个月前","ds_years":" 年 ","empty":"没有找到任何搜索结果：${query}","hits":"找到 ${hits} 个搜索结果","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","placeholder":"搜索..."},"isMultiLang":false,"lang":"zh-CN","lazyload":false,"motion":{"async":true,"enable":true,"transition":{"collheader":"fadeInLeft","postblock":"fadeIn","postbody":"fadeInDown","postheader":"fadeInDown","sidebar":"fadeInUp"}},"postmeta":{"comments":{"enable":false,"plugin":"waline3"},"views":{"enable":true,"plugin":"waline3"}},"root":"/","scheme":"Gemini","share":{"addtoany":{"js":"https://static.addtoany.com/menu/page.js","locale":"zh-CN","num":8},"enable":false},"sidebar":{"display":"post","offset":12,"padding":18,"position":"left","width":256},"vendor":{"plugins":"local","router":{"name":"local","type":"modern","url":"https://blogs.qipai360.cn/js/3rd"}},"version":"4.8.3","waline3":{"cfg":{"emoji":false,"imguploader":false,"placeholder":"请文明发言哟 ヾ(≧▽≦*)o 可用快捷键选取表情符号：😀😄😁🥳👻👽👀🚄 (Window系统：Win+.，Mac系统：Control+Command+Space)","reaction":true,"reactiontext":["点赞","踩一下","得意","不屑","尴尬","睡觉"],"reactiontitle":"你认为这篇文章怎么样？","requiredmeta":["nick","mail"],"search":true,"serverurl":"https://walinejs.comment.lithub.cc","sofa":"快来发表你的意见吧 (≧∀≦)ゞ","wordlimit":200},"css":{"alias":"@waline/client","file":"dist/waline.css","name":"waline","version":"3.5.7"},"js":{"alias":"@waline/client","file":"dist/waline.js","name":"waline","version":"3.5.7"}}}</script><script type=text/javascript src="/js/main.min.js?=1772265585" defer></script></body></html>

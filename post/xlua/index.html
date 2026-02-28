@@ -1,0 +1,826 @@
+<!doctype html><html lang=zh-CN data-theme=dark><head><meta charset=UTF-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=theme-color content="#222" media="(prefers-color-scheme: dark)"><meta name=generator content="Hugo 0.157.0"><link rel="shortcut icon" type=image/x-icon href=/imgs/icons/favicon.ico><link rel=icon type=image/x-icon href=/imgs/icons/favicon.ico><link rel=icon type=image/png sizes=16x16 href=/imgs/icons/favicon_32_32_next.png><link rel=icon type=image/png sizes=32x32 href=/imgs/icons/favicon_128_128_next.png><link rel=apple-touch-icon sizes=180x180 href=/imgs/icons/apple_touch_icon_next.png><meta itemprop=name content="xlua"><meta itemprop=description content="福兮祸兮，焉知所依？冬去冰泮，春来萌荣。朝生暮死，亦可惊鸿。知足者富，自足者强。"><meta name=description content="福兮祸兮，焉知所依？冬去冰泮，春来萌荣。朝生暮死，亦可惊鸿。知足者富，自足者强。"><meta itemprop=datePublished zgotmplz><meta itemprop=dateModified zgotmplz><meta itemprop=image content="https://blogs.qipai360.cn/imgs/avatar.jpg"><meta itemprop=keywords content="xlua,热更新"><meta property="og:type" content="article"><meta property="og:title" content="xlua"><meta property="og:description" content="福兮祸兮，焉知所依？冬去冰泮，春来萌荣。朝生暮死，亦可惊鸿。知足者富，自足者强。"><meta property="og:image" content="/imgs/avatar.jpg"><meta property="og:image:width" content="312"><meta property="og:image:height" content="312"><meta property="og:image:type" content="image/jpeg/png/svg/jpg"><meta property="og:url" content="https://blogs.qipai360.cn/post/xlua/"><meta property="og:site_name" content="Rise的自留地"><meta property="og:locale" content="zh-CN"><meta property="article:author" content="Rise"><meta property="article:published_time" content="2025-05-10 14:37:27 +0800 +0800"><meta property="article:modified_time" content="2025-05-10 14:37:27 +0800 +0800"><link type=text/css rel=stylesheet href=https://blogs.qipai360.cn/js/3rd/font-awesome/6.7.2/css/all.min.css><link type=text/css rel=stylesheet href=https://blogs.qipai360.cn/js/3rd/animate.css/3.1.1/animate.min.css><link type=text/css rel=stylesheet href=https://blogs.qipai360.cn/js/3rd/viewerjs/1.11.6/viewer.min.css><link rel=stylesheet href="/css/main.min.css?=1772265590"><style type=text/css>.post-footer hr:after{content:"~ 我可是有底线的哟 ~"}.flinks-list-footer hr:after{content:"~ 我可是有底线的哟 ~"}</style><script type=text/javascript>(function(){localDB={set:function(e,t,n){if(n===0)return;const s=new Date,o=n*864e5,i={value:t,expiry:s.getTime()+o};localStorage.setItem(e,JSON.stringify(i))},get:function(e){const t=localStorage.getItem(e);if(!t)return 0[0];const n=JSON.parse(t),s=new Date;return s.getTime()>n.expiry?(localStorage.removeItem(e),0[0]):n.value}},theme={active:function(){const e=localDB.get("theme");if(e==null)return;theme.toggle(e),window.matchMedia("(prefers-color-scheme: dark)").addListener(function(e){theme.toggle(e.matches?"dark":"light")})},toggle:function(e){document.documentElement.setAttribute("data-theme",e),localDB.set("theme",e,2);const t=document.querySelector("iframe.giscus-frame");if(t){const n={setConfig:{theme:e}};t.contentWindow.postMessage({giscus:n},"https://giscus.app")}}},theme.active()})(window)</script><script type=text/javascript>document.addEventListener("DOMContentLoaded",()=>{var e=document.createElement("script");e.charset="UTF-8",e.src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js",e.async=!1,e.defer=!0,document.head.appendChild(e),e.onload=function(){NexT.utils.fmtBusuanzi()}})</script><script defer src=https://static.cloudflareinsights.com/beacon.min.js data-cf-beacon='{"token": "2b23669184fc49269e400525ac2447d9"}'></script><title>xlua - Rise的自留地</title><noscript><link rel=stylesheet href=/css/noscript.css></noscript></head><body itemscope itemtype=http://schema.org/WebPage class=use-motion><div class=headband></div><main class=main><header class=header itemscope itemtype=http://schema.org/WPHeader><div class=header-inner><div class=site-brand-container><div class=site-nav-toggle><div class=toggle aria-label role=button><span class=toggle-line></span>
+<span class=toggle-line></span>
+<span class=toggle-line></span></div></div><div class=site-meta><a href=/ class=brand rel=start><i class=logo-line></i><h1 class=site-title>Rise的自留地</h1><i class=logo-line></i></a><p class=site-subtitle itemprop=description>记录生活中的点滴，分享编程技术和游戏开发经验。</p></div><div class=site-nav-right><div class="toggle popup-trigger"></div></div></div><nav class=site-nav><ul class="main-menu menu"><li class="menu-item menu-item-home"><a href=/ class=hvr-icon-pulse rel=section><i class="fa fa-home hvr-icon"></i>首页</a></li><li class="menu-item menu-item-about"><a href=/about.html class=hvr-icon-pulse rel=section><i class="fa fa-user hvr-icon"></i>关于</a></li><li class="menu-item menu-item-archives"><a href=/archives/ class=hvr-icon-pulse rel=section><i class="fa fa-archive hvr-icon"></i>归档
+<span class=badge>679</span></a></li><li class="menu-item menu-item-tags"><a href=/tags/ class=hvr-icon-pulse rel=section><i class="fa fa-tags hvr-icon"></i>标签</a></li><li class="menu-item menu-item-message"><a href=/message/ class=hvr-icon-pulse rel=section><i class="fa fa-comments hvr-icon"></i>留言板</a></li><li class="menu-item menu-item-commonweal"><a href=/404.html class=hvr-icon-pulse rel=section><i class="fa fa-heartbeat hvr-icon"></i>公益 404</a></li></ul></nav></div><div class="toggle sidebar-toggle" role=button><span class=toggle-line></span>
+<span class=toggle-line></span>
+<span class=toggle-line></span></div><aside class=sidebar><div class="sidebar-inner sidebar-overview-active"><ul class=sidebar-nav><li class=sidebar-nav-toc>文章目录</li><li class=sidebar-nav-overview>站点概览</li></ul><div class=sidebar-panel-container><div class="post-toc-wrap sidebar-panel"><div class="post-toc animated"><nav id=TableOfContents><ul><li><a href=#lua解析器>Lua解析器</a></li><li><a href=#lua文件加载重定向>Lua文件加载重定向</a></li><li><a href=#c调用lua>C#调用Lua</a><ul><li><a href=#获取全局变量>获取全局变量</a></li><li><a href=#获取全局函数>获取全局函数</a></li><li><a href=#list和dictionary>List和Dictionary</a></li><li><a href=#类映射table>类映射Table</a></li><li><a href=#接口映射table>接口映射Table</a></li><li><a href=#luatable映射table>LuaTable映射Table</a></li></ul></li><li><a href=#lua调用c>Lua调用C</a><ul><li><a href=#使用c的类>使用C#的类</a></li><li><a href=#使用c枚举>使用C#枚举</a></li><li><a href=#扩展方法>扩展方法</a></li><li><a href=#使用ref和out函数>使用ref和out函数</a></li><li><a href=#使用重载函数>使用重载函数</a></li><li><a href=#委托和事件>委托和事件</a></li><li><a href=#二维数组>二维数组</a></li><li><a href=#携程>携程</a></li><li><a href=#调用泛型方法>调用泛型方法</a></li></ul></li><li><a href=#特殊问题>特殊问题</a><ul><li><a href=#lua中的nil和cnull-不是相等的>lua中的nil和C#null 不是相等的</a></li><li><a href=#让系统类型和lua互相访问>让系统类型和Lua互相访问</a></li></ul></li><li><a href=#热补丁>热补丁</a></li></ul></nav></div></div><div class="site-overview-wrap sidebar-panel"><div class="site-author site-overview-item animated" itemprop=author itemscope itemtype=http://schema.org/Person><img class=site-author-image itemprop=image alt=Rise src=/imgs/img-lazy-loading.gif data-src=/imgs/avatar.jpg><p class=site-author-name itemprop=name>Rise</p><div class=site-description itemprop=description>福兮祸兮，焉知所依？冬去冰泮，春来萌荣。朝生暮死，亦可惊鸿。知足者富，自足者强。</div></div><div class="site-state-wrap site-overview-item animated"><nav class=site-state><div class="site-state-item site-state-posts"><a href=/archives/><span class=site-state-item-count>679</span>
+<span class=site-state-item-name>日志</span></a></div><div class="site-state-item site-state-categories"><a href=/categories/><span class=site-state-item-count>35</span>
+<span class=site-state-item-name>分类</span></a></div><div class="site-state-item site-state-tags"><a href=/tags/><span class=site-state-item-count>118</span>
+<span class=site-state-item-name>标签</span></a></div></nav></div><div class="links-of-social site-overview-item animated"><span class=links-of-social-item><a href=https://github.com/rise-worlds title="Github → https://github.com/rise-worlds" rel=noopener class=hvr-icon-pulse target=_blank><i class="fab fa-github fa-fw hvr-icon"></i>
+Github
+</a></span><span class=links-of-social-item><a href=mailto:rise.worlds@outlook.com title="E-Mail → mailto:rise.worlds@outlook.com" rel=noopener class=hvr-icon-pulse target=_blank><i class="fa fa-envelope fa-fw hvr-icon"></i>
+E-Mail
+</a></span><span class=links-of-social-item><a href=https://www.zhihu.com/people/rise-worlds title="知乎 → https://www.zhihu.com/people/rise-worlds" rel=noopener class=hvr-icon-pulse target=_blank><i class="fa fa-book fa-fw hvr-icon"></i>
+知乎
+</a></span><span class=links-of-social-item><a href=https://twitter.com/riseworlds title="Twitter → https://twitter.com/riseworlds" rel=noopener class=hvr-icon-pulse target=_blank><i class="fab fa-twitter fa-fw hvr-icon"></i>
+Twitter
+</a></span><span class=links-of-social-item><a href=https://www.facebook.com/rise.worlds title="facebook → https://www.facebook.com/rise.worlds" rel=noopener class=hvr-icon-pulse target=_blank><i class="fab fa-facebook fa-fw hvr-icon"></i>
+facebook
+</a></span><span class=links-of-social-item><a href=https://youtube.com/@YiXuan title="YouTube → https://youtube.com/@YiXuan" rel=noopener class=hvr-icon-pulse target=_blank><i class="fab fa-youtube fa-fw hvr-icon"></i>
+YouTube
+</a></span><span class=links-of-social-item><a href=https://instagram.com/rise.worlds title="Instagram → https://instagram.com/rise.worlds" rel=noopener class=hvr-icon-pulse target=_blank><i class="fab fa-instagram fa-fw hvr-icon"></i>
+Instagram
+</a></span><span class=links-of-social-item><a href=https://t.me/riseworlds title="Telegram → https://t.me/riseworlds" rel=noopener class=hvr-icon-pulse target=_blank><i class="fab fa-telegram fa-fw hvr-icon"></i>
+Telegram</a></span></div><div class="links-of-blogroll site-overview-item animated"><div class=links-of-blogroll-title><i class="fa fa-globe fa-fw"></i>
+友情链接</div><ul class=links-of-blogroll-list><li class=links-of-blogroll-item><a href=https://www.qipai360.cn title=https://www.qipai360.cn target=_blank>Qipai360</a></li><li class=links-of-blogroll-item><a href=https://www.cnblogs.com/flying_bat title=https://www.cnblogs.com/flying_bat target=_blank>博客园</a></li><li class=links-of-blogroll-item><a href=https://zishu.me title=https://zishu.me target=_blank>子舒的博客</a></li><li class=links-of-blogroll-item><a href=https://gitee.com/hugo-next/hugo-theme-next title=https://gitee.com/hugo-next/hugo-theme-next target=_blank>Hugo-NexT</a></li></ul></div></div></div></div><div id=siteinfo-card-widget class=sidebar-card-widget><div class=item-headline><i class="fas fa-chart-line"></i>
+<span>网站资讯</span></div><div class=siteinfo><div class=siteinfo-item><div class=item-name><i class="fa-solid fa-calendar-check"></i>已运行：</div><div class=item-count id=runTimes data-publishdate="2004-10-06 15:24:00 +0800 +0800"></div></div><div class=siteinfo-item><div class=item-name><i class="fas fa fa-user"></i>总访客数：</div><div class=item-count id=busuanzi_value_site_uv><i class="fa fa-sync fa-spin"></i></div></div><div class=siteinfo-item><div class=item-name><i class="fas fa fa-eye"></i>页面浏览：</div><div class=item-count id=busuanzi_value_site_pv><i class="fa fa-sync fa-spin"></i></div></div><div class=siteinfo-item><div class=item-name><i class="fa fa-font"></i>总字数：</div><div class=item-count id=wordsCount data-count=2423147></div></div><div class=siteinfo-item><div class=item-name><i class="fa fa-mug-hot"></i>阅读约：</div><div class=item-count id=readTimes data-times=5207></div></div><div class=siteinfo-item><div class=item-name><i class="fa fa-clock-rotate-left"></i>最后更新于：</div><div class=item-count id=last-push-date data-lastpushdate="2026-02-28 15:59:00 +0800 +0800"></div></div></div></div></aside><div class=sidebar-dimmer></div></header><div class=tool-buttons><div id=goto-comments class="button goto-comments" title=直达评论><i class="fas fa-comments"></i></div><div id=toggle-theme class=button title=深浅模式切换><i class="fas fa-adjust"></i></div><div class=back-to-top role=button title=返回顶部><i class="fa fa-arrow-up"></i>
+<span>0%</span></div></div><div class=reading-progress-bar></div><a role=button class="book-mark-link book-mark-link-fixed"></a><a href=https://github.com/rise-worlds rel="noopener external nofollow noreferrer" target=_blank title="Follow me on GitHub" class="exturl github-corner"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0 0 115 115h15l12 27L250 250V0z"/><path d="M128.3 109C113.8 99.7 119 89.6 119 89.6 122 82.7 120.5 78.6 120.5 78.6 119.2 72 123.4 76.3 123.4 76.3 127.3 80.9 125.5 87.3 125.5 87.3 122.9 97.6 130.6 101.9 134.4 103.2" fill="currentColor" style="transform-origin:130px 106px" class="octo-arm"/><path d="M115 115C114.9 115.1 118.7 116.5 119.8 115.4l13.9-13.8C136.9 99.2 139.9 98.4 142.2 98.6 133.8 88 127.5 74.4 143.8 58 148.5 53.4 154 51.2 159.7 51 160.3 49.4 163.2 43.6 171.4 40.1 171.4 40.1 176.1 42.5 178.8 56.2 183.1 58.6 187.2 61.8 190.9 65.4 194.5 69 197.7 73.2 200.1 77.6 213.8 80.2 216.3 84.9 216.3 84.9 212.7 93.1 206.9 96 205.4 96.6 205.1 102.4 203 107.8 198.3 112.5 181.9 128.9 168.3 122.5 157.7 114.1 157.9 116.9 156.7 120.9 152.7 124.9L141 136.5C139.8 137.7 141.6 141.9 141.8 141.8z" fill="currentColor" class="octo-body"/></svg></a><noscript><div class=noscript-warning>Theme NexT works best with JavaScript enabled</div></noscript><div class="main-inner post posts-expand"><div class=post-block><article itemscope itemtype=http://schema.org/Article class=post-content lang><link itemprop=mainEntityOfPage href=https://blogs.qipai360.cn/post/xlua/><span hidden itemprop=author itemscope itemtype=http://schema.org/Person><meta itemprop=image content="/imgs/avatar.jpg"><meta itemprop=name content="Rise"></span><span hidden itemprop=publisher itemscope itemtype=http://schema.org/Organization><meta itemprop=name content="Rise"><meta itemprop=description content="福兮祸兮，焉知所依？冬去冰泮，春来萌荣。朝生暮死，亦可惊鸿。知足者富，自足者强。"></span><span hidden itemprop=post itemscope itemtype=http://schema.org/CreativeWork><meta itemprop=name content="xlua"><meta itemprop=description content="Lua解析器
+
+Lua解析器能够让我们在Unity中执行Lua
+默认的Lua脚本放在Resources文件夹下，并且要加上.txt后缀 才能被执行
+
+
+
+1
+2
+3
+4
+
+
+LuaEnv env = new LuaEnv();
+env.DoString(&#34;print('你好世界')&#34;);
+//执行一个lua脚本
+env.DoString(&#34;require('Main')&#34;);
+
+
+
+垃圾回收"></span><header class=post-header><h1 class=post-title itemprop="name headline">xlua</h1><div class=post-meta-container><div class=post-meta-items><span class=post-meta-item><span class=post-meta-item-icon><i class="fas fa-solid fa-calendar"></i>
+</span><span class=post-meta-item-text title=发表于>发表于：
+</span><time title="创建时间：2025年05月10日 14:37:27 CST" itemprop="dateCreated datePublished" datetime="2025-05-10 14:37:27 +0800 +0800">2025年05月10日
+</time></span><span class=post-meta-item><span class=post-meta-item-icon><i class="fas fa-solid fa-folder-open"></i>
+</span><span class=post-meta-item-text title=分类于>分类于：
+</span><span itemprop=about itemscope itemtype=http://schema.org/Thing><a href=/categories/xlua/ itemprop=url rel=index><span itemprop=name>dev/lua/xlua</span></a></span></span></div><div class=post-meta-items><span class=post-meta-item title=字数><span class=post-meta-item-icon><i class="fas fa-solid fa-file-word"></i>
+</span><span class=post-meta-item-text>字数：</span>
+<span>5410</span>
+</span><span class=post-meta-item title=阅读><span class=post-meta-item-icon><i class="fas fa-solid fa-clock"></i>
+</span><span class=post-meta-item-text>阅读：&ap;</span>
+<span>11分钟</span>
+</span><span class=post-meta-item title=浏览><span class=post-meta-item-icon><i class="fas fa-solid fa-eye"></i>
+</span><span class=post-meta-item-text>浏览：
+</span><span id=pageview-count data-path=/post/xlua/><i class="fa fa-sync fa-spin"></i></span></span></div></div></header><div class=post-body itemprop=articleBody><h2 id=lua解析器>Lua解析器
+<a class=header-anchor href=#lua%e8%a7%a3%e6%9e%90%e5%99%a8></a></h2><p>Lua解析器能够让我们在Unity中执行Lua</p><p>默认的Lua脚本放在<code>Resources</code>文件夹下，并且要加上<code>.txt</code>后缀 才能被执行</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt id=hl-0-1><a class=lnlinks href=#hl-0-1>1</a>
+</span><span class=lnt id=hl-0-2><a class=lnlinks href=#hl-0-2>2</a>
+</span><span class=lnt id=hl-0-3><a class=lnlinks href=#hl-0-3>3</a>
+</span><span class=lnt id=hl-0-4><a class=lnlinks href=#hl-0-4>4</a>
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-c# data-lang=c#><span class=line><span class=cl><span class=n>LuaEnv</span> <span class=n>env</span> <span class=p>=</span> <span class=k>new</span> <span class=n>LuaEnv</span><span class=p>();</span>
+</span></span><span class=line><span class=cl><span class=n>env</span><span class=p>.</span><span class=n>DoString</span><span class=p>(</span><span class=s>&#34;print(&#39;你好世界&#39;)&#34;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl><span class=c1>//执行一个lua脚本</span>
+</span></span><span class=line><span class=cl><span class=n>env</span><span class=p>.</span><span class=n>DoString</span><span class=p>(</span><span class=s>&#34;require(&#39;Main&#39;)&#34;</span><span class=p>);</span></span></span></code></pre></td></tr></table></div></div><p><strong>垃圾回收</strong></p><a id=more></a><p>帮助我们清楚Lua中我们没有手动释放的对象 垃圾回收</p><p>帧更新中定时执行 或者 切场景时执行</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt id=hl-1-1><a class=lnlinks href=#hl-1-1>1</a>
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-c# data-lang=c#><span class=line><span class=cl><span class=n>env</span><span class=p>.</span><span class=n>Tick</span><span class=p>();</span></span></span></code></pre></td></tr></table></div></div><p><strong>销毁Lua解析器</strong></p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt id=hl-2-1><a class=lnlinks href=#hl-2-1>1</a>
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-c# data-lang=c#><span class=line><span class=cl><span class=n>env</span><span class=p>.</span><span class=n>Dispose</span><span class=p>();</span></span></span></code></pre></td></tr></table></div></div><h2 id=lua文件加载重定向>Lua文件加载重定向
+<a class=header-anchor href=#lua%e6%96%87%e4%bb%b6%e5%8a%a0%e8%bd%bd%e9%87%8d%e5%ae%9a%e5%90%91></a></h2><p>xlua提供的一个 路径重定向 的方法</p><p>允许我们自定义 加载 Lua文件的规则</p><p>当我们执行Lua语言 <code>require</code>时 相当于执行一个lua脚本</p><p>它就会 执行 我们自定义传入的这个函数</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt id=hl-3-1><a class=lnlinks href=#hl-3-1> 1</a>
+</span><span class=lnt id=hl-3-2><a class=lnlinks href=#hl-3-2> 2</a>
+</span><span class=lnt id=hl-3-3><a class=lnlinks href=#hl-3-3> 3</a>
+</span><span class=lnt id=hl-3-4><a class=lnlinks href=#hl-3-4> 4</a>
+</span><span class=lnt id=hl-3-5><a class=lnlinks href=#hl-3-5> 5</a>
+</span><span class=lnt id=hl-3-6><a class=lnlinks href=#hl-3-6> 6</a>
+</span><span class=lnt id=hl-3-7><a class=lnlinks href=#hl-3-7> 7</a>
+</span><span class=lnt id=hl-3-8><a class=lnlinks href=#hl-3-8> 8</a>
+</span><span class=lnt id=hl-3-9><a class=lnlinks href=#hl-3-9> 9</a>
+</span><span class=lnt id=hl-3-10><a class=lnlinks href=#hl-3-10>10</a>
+</span><span class=lnt id=hl-3-11><a class=lnlinks href=#hl-3-11>11</a>
+</span><span class=lnt id=hl-3-12><a class=lnlinks href=#hl-3-12>12</a>
+</span><span class=lnt id=hl-3-13><a class=lnlinks href=#hl-3-13>13</a>
+</span><span class=lnt id=hl-3-14><a class=lnlinks href=#hl-3-14>14</a>
+</span><span class=lnt id=hl-3-15><a class=lnlinks href=#hl-3-15>15</a>
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-c# data-lang=c#><span class=line><span class=cl><span class=n>LuaEnv</span> <span class=n>env</span> <span class=p>=</span> <span class=k>new</span> <span class=n>LuaEnv</span><span class=p>();</span>
+</span></span><span class=line><span class=cl><span class=n>env</span><span class=p>.</span><span class=n>AddLoader</span><span class=p>(</span><span class=n>MyCustomLoader</span><span class=p>);</span>
+</span></span><span class=line><span class=cl><span class=n>env</span><span class=p>.</span><span class=n>DoString</span><span class=p>(</span><span class=s>&#34;require(&#39;Main&#39;)&#34;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl><span class=kd>private</span> <span class=kt>byte</span><span class=p>[]</span> <span class=n>MyCustomLoader</span><span class=p>(</span><span class=k>ref</span> <span class=kt>string</span> <span class=n>filePath</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=c1>//通过函数中的逻辑 去加载 Lua文件 </span>
+</span></span><span class=line><span class=cl>    <span class=c1>//传入的参数 是 require执行的lua脚本文件名</span>
+</span></span><span class=line><span class=cl>    <span class=c1>//拼接一个Lua文件所在路径</span>
+</span></span><span class=line><span class=cl>    <span class=kt>string</span> <span class=n>path</span> <span class=p>=</span> <span class=n>Application</span><span class=p>.</span><span class=n>dataPath</span> <span class=p>+</span> <span class=s>&#34;/Lua/&#34;</span> <span class=p>+</span> <span class=n>filePath</span> <span class=p>+</span> <span class=s>&#34;.lua&#34;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=k>if</span> <span class=p>(</span> <span class=n>File</span><span class=p>.</span><span class=n>Exists</span><span class=p>(</span><span class=n>path</span><span class=p>)</span> <span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=k>return</span> <span class=n>File</span><span class=p>.</span><span class=n>ReadAllBytes</span><span class=p>(</span><span class=n>path</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=kc>null</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span></span></span></code></pre></td></tr></table></div></div><h2 id=c调用lua>C#调用Lua
+<a class=header-anchor href=#c%e8%b0%83%e7%94%a8lua></a></h2><h3 id=获取全局变量>获取全局变量
+<a class=header-anchor href=#%e8%8e%b7%e5%8f%96%e5%85%a8%e5%b1%80%e5%8f%98%e9%87%8f></a></h3><p><strong>获取大G表</strong></p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt id=hl-4-1><a class=lnlinks href=#hl-4-1>1</a>
+</span><span class=lnt id=hl-4-2><a class=lnlinks href=#hl-4-2>2</a>
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-c# data-lang=c#><span class=line><span class=cl><span class=n>LuaEnv</span> <span class=n>env</span> <span class=p>=</span> <span class=k>new</span> <span class=n>LuaEnv</span><span class=p>();</span>
+</span></span><span class=line><span class=cl><span class=n>LuaTable</span> <span class=n>global</span> <span class=p>=</span> <span class=n>env</span><span class=p>.</span><span class=n>Global</span><span class=p>;</span></span></span></code></pre></td></tr></table></div></div><p><strong>获取值</strong></p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt id=hl-5-1><a class=lnlinks href=#hl-5-1>1</a>
+</span><span class=lnt id=hl-5-2><a class=lnlinks href=#hl-5-2>2</a>
+</span><span class=lnt id=hl-5-3><a class=lnlinks href=#hl-5-3>3</a>
+</span><span class=lnt id=hl-5-4><a class=lnlinks href=#hl-5-4>4</a>
+</span><span class=lnt id=hl-5-5><a class=lnlinks href=#hl-5-5>5</a>
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-c# data-lang=c#><span class=line><span class=cl><span class=n>global</span><span class=p>.</span><span class=n>Get</span><span class=p>&lt;</span><span class=kt>int</span><span class=p>&gt;(</span><span class=s>&#34;number&#34;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl><span class=n>global</span><span class=p>.</span><span class=n>Get</span><span class=p>&lt;</span><span class=kt>bool</span><span class=p>&gt;(</span><span class=s>&#34;sex&#34;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl><span class=n>global</span><span class=p>.</span><span class=n>Get</span><span class=p>&lt;</span><span class=kt>float</span><span class=p>&gt;(</span><span class=s>&#34;testFloat&#34;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl><span class=n>global</span><span class=p>.</span><span class=n>Get</span><span class=p>&lt;</span><span class=kt>double</span><span class=p>&gt;(</span><span class=s>&#34;testDouble&#34;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl><span class=n>global</span><span class=p>.</span><span class=n>Get</span><span class=p>&lt;</span><span class=kt>string</span><span class=p>&gt;(</span><span class=s>&#34;testString&#34;</span><span class=p>);</span></span></span></code></pre></td></tr></table></div></div><p><strong>设置值</strong></p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt id=hl-6-1><a class=lnlinks href=#hl-6-1>1</a>
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-c# data-lang=c#><span class=line><span class=cl><span class=n>global</span><span class=p>.</span><span class=n>Set</span><span class=p>(</span><span class=s>&#34;number&#34;</span><span class=p>,</span><span class=m>12</span><span class=p>);</span></span></span></code></pre></td></tr></table></div></div><h3 id=获取全局函数>获取全局函数
+<a class=header-anchor href=#%e8%8e%b7%e5%8f%96%e5%85%a8%e5%b1%80%e5%87%bd%e6%95%b0></a></h3><p><strong>无参无返回的获取</strong></p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt id=hl-7-1><a class=lnlinks href=#hl-7-1>1</a>
+</span><span class=lnt id=hl-7-2><a class=lnlinks href=#hl-7-2>2</a>
+</span><span class=lnt id=hl-7-3><a class=lnlinks href=#hl-7-3>3</a>
+</span><span class=lnt id=hl-7-4><a class=lnlinks href=#hl-7-4>4</a>
+</span><span class=lnt id=hl-7-5><a class=lnlinks href=#hl-7-5>5</a>
+</span><span class=lnt id=hl-7-6><a class=lnlinks href=#hl-7-6>6</a>
+</span><span class=lnt id=hl-7-7><a class=lnlinks href=#hl-7-7>7</a>
+</span><span class=lnt id=hl-7-8><a class=lnlinks href=#hl-7-8>8</a>
+</span><span class=lnt id=hl-7-9><a class=lnlinks href=#hl-7-9>9</a>
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-c# data-lang=c#><span class=line><span class=cl><span class=c1>//通过自定义委托获取</span>
+</span></span><span class=line><span class=cl><span class=kd>public</span> <span class=k>delegate</span> <span class=k>void</span> <span class=n>CustomCall</span><span class=p>();</span>
+</span></span><span class=line><span class=cl><span class=n>CustomCall</span> <span class=n>call</span> <span class=p>=</span> <span class=n>global</span><span class=p>.</span><span class=n>Get</span><span class=p>&lt;</span><span class=n>CustomCall</span><span class=p>&gt;(</span><span class=s>&#34;testFun&#34;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl><span class=c1>//Unity自带委托</span>
+</span></span><span class=line><span class=cl><span class=n>UnityAction</span> <span class=n>ua</span> <span class=p>=</span> <span class=n>global</span><span class=p>.</span><span class=n>Get</span><span class=p>&lt;</span><span class=n>UnityAction</span><span class=p>&gt;(</span><span class=s>&#34;testFun&#34;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl><span class=c1>//C#提供的委托</span>
+</span></span><span class=line><span class=cl><span class=n>Action</span> <span class=n>ac</span> <span class=p>=</span> <span class=n>global</span><span class=p>.</span><span class=n>Get</span><span class=p>&lt;</span><span class=n>Action</span><span class=p>&gt;(</span><span class=s>&#34;testFun&#34;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl><span class=c1>//Xlua提供的一种 获取函数的方式 少用</span>
+</span></span><span class=line><span class=cl><span class=n>LuaFunction</span> <span class=n>lf</span> <span class=p>=</span> <span class=n>global</span><span class=p>.</span><span class=n>Get</span><span class=p>&lt;</span><span class=n>LuaFunction</span><span class=p>&gt;(</span><span class=s>&#34;testFun&#34;</span><span class=p>);</span></span></span></code></pre></td></tr></table></div></div><p><strong>有参有返回获取</strong></p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt id=hl-8-1><a class=lnlinks href=#hl-8-1> 1</a>
+</span><span class=lnt id=hl-8-2><a class=lnlinks href=#hl-8-2> 2</a>
+</span><span class=lnt id=hl-8-3><a class=lnlinks href=#hl-8-3> 3</a>
+</span><span class=lnt id=hl-8-4><a class=lnlinks href=#hl-8-4> 4</a>
+</span><span class=lnt id=hl-8-5><a class=lnlinks href=#hl-8-5> 5</a>
+</span><span class=lnt id=hl-8-6><a class=lnlinks href=#hl-8-6> 6</a>
+</span><span class=lnt id=hl-8-7><a class=lnlinks href=#hl-8-7> 7</a>
+</span><span class=lnt id=hl-8-8><a class=lnlinks href=#hl-8-8> 8</a>
+</span><span class=lnt id=hl-8-9><a class=lnlinks href=#hl-8-9> 9</a>
+</span><span class=lnt id=hl-8-10><a class=lnlinks href=#hl-8-10>10</a>
+</span><span class=lnt id=hl-8-11><a class=lnlinks href=#hl-8-11>11</a>
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-c# data-lang=c#><span class=line><span class=cl><span class=c1>//通过自定义委托获取</span>
+</span></span><span class=line><span class=cl><span class=c1>//有参有返回 的委托</span>
+</span></span><span class=line><span class=cl><span class=c1>//该特性是在XLua命名空间中的</span>
+</span></span><span class=line><span class=cl><span class=c1>//加了过后 要在编辑器里 生成 Lua代码</span>
+</span></span><span class=line><span class=cl><span class=na>[CSharpCallLua]</span>
+</span></span><span class=line><span class=cl><span class=kd>public</span> <span class=k>delegate</span> <span class=kt>int</span> <span class=n>CustomCall2</span><span class=p>(</span><span class=kt>int</span> <span class=n>a</span><span class=p>);</span>
+</span></span><span class=line><span class=cl><span class=n>CustomCall2</span> <span class=n>call2</span> <span class=p>=</span> <span class=n>global</span><span class=p>.</span><span class=n>Get</span><span class=p>&lt;</span><span class=n>CustomCall2</span><span class=p>&gt;(</span><span class=s>&#34;testFun2&#34;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl><span class=c1>//C#自带的泛型委托 方便我们使用</span>
+</span></span><span class=line><span class=cl><span class=n>Func</span><span class=p>&lt;</span><span class=kt>int</span><span class=p>,</span> <span class=kt>int</span><span class=p>&gt;</span> <span class=n>sFun</span> <span class=p>=</span> <span class=n>global</span><span class=p>.</span><span class=n>Get</span><span class=p>&lt;</span><span class=n>Func</span><span class=p>&lt;</span><span class=kt>int</span><span class=p>,</span> <span class=kt>int</span><span class=p>&gt;&gt;(</span><span class=s>&#34;testFun2&#34;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl><span class=c1>//Xlua提供的</span>
+</span></span><span class=line><span class=cl><span class=n>LuaFunction</span> <span class=n>lf2</span> <span class=p>=</span> <span class=n>global</span><span class=p>.</span><span class=n>Get</span><span class=p>&lt;</span><span class=n>LuaFunction</span><span class=p>&gt;(</span><span class=s>&#34;testFun2&#34;</span><span class=p>);</span></span></span></code></pre></td></tr></table></div></div><p><strong>多返回值获取</strong></p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt id=hl-9-1><a class=lnlinks href=#hl-9-1> 1</a>
+</span><span class=lnt id=hl-9-2><a class=lnlinks href=#hl-9-2> 2</a>
+</span><span class=lnt id=hl-9-3><a class=lnlinks href=#hl-9-3> 3</a>
+</span><span class=lnt id=hl-9-4><a class=lnlinks href=#hl-9-4> 4</a>
+</span><span class=lnt id=hl-9-5><a class=lnlinks href=#hl-9-5> 5</a>
+</span><span class=lnt id=hl-9-6><a class=lnlinks href=#hl-9-6> 6</a>
+</span><span class=lnt id=hl-9-7><a class=lnlinks href=#hl-9-7> 7</a>
+</span><span class=lnt id=hl-9-8><a class=lnlinks href=#hl-9-8> 8</a>
+</span><span class=lnt id=hl-9-9><a class=lnlinks href=#hl-9-9> 9</a>
+</span><span class=lnt id=hl-9-10><a class=lnlinks href=#hl-9-10>10</a>
+</span><span class=lnt id=hl-9-11><a class=lnlinks href=#hl-9-11>11</a>
+</span><span class=lnt id=hl-9-12><a class=lnlinks href=#hl-9-12>12</a>
+</span><span class=lnt id=hl-9-13><a class=lnlinks href=#hl-9-13>13</a>
+</span><span class=lnt id=hl-9-14><a class=lnlinks href=#hl-9-14>14</a>
+</span><span class=lnt id=hl-9-15><a class=lnlinks href=#hl-9-15>15</a>
+</span><span class=lnt id=hl-9-16><a class=lnlinks href=#hl-9-16>16</a>
+</span><span class=lnt id=hl-9-17><a class=lnlinks href=#hl-9-17>17</a>
+</span><span class=lnt id=hl-9-18><a class=lnlinks href=#hl-9-18>18</a>
+</span><span class=lnt id=hl-9-19><a class=lnlinks href=#hl-9-19>19</a>
+</span><span class=lnt id=hl-9-20><a class=lnlinks href=#hl-9-20>20</a>
+</span><span class=lnt id=hl-9-21><a class=lnlinks href=#hl-9-21>21</a>
+</span><span class=lnt id=hl-9-22><a class=lnlinks href=#hl-9-22>22</a>
+</span><span class=lnt id=hl-9-23><a class=lnlinks href=#hl-9-23>23</a>
+</span><span class=lnt id=hl-9-24><a class=lnlinks href=#hl-9-24>24</a>
+</span><span class=lnt id=hl-9-25><a class=lnlinks href=#hl-9-25>25</a>
+</span><span class=lnt id=hl-9-26><a class=lnlinks href=#hl-9-26>26</a>
+</span><span class=lnt id=hl-9-27><a class=lnlinks href=#hl-9-27>27</a>
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-c# data-lang=c#><span class=line><span class=cl><span class=c1>//自定义委托 参数中添加out关键字的方式接收</span>
+</span></span><span class=line><span class=cl><span class=na>[CSharpCallLua]</span>
+</span></span><span class=line><span class=cl><span class=kd>public</span> <span class=k>delegate</span> <span class=kt>int</span> <span class=n>CustomCall3</span><span class=p>(</span><span class=kt>int</span> <span class=n>a</span><span class=p>,</span> <span class=k>out</span> <span class=kt>int</span> <span class=n>b</span><span class=p>,</span> <span class=k>out</span> <span class=kt>bool</span> <span class=n>c</span><span class=p>,</span> <span class=k>out</span> <span class=kt>string</span> <span class=n>d</span><span class=p>,</span> <span class=k>out</span> <span class=kt>int</span> <span class=n>e</span><span class=p>);</span>
+</span></span><span class=line><span class=cl><span class=n>CustomCall3</span> <span class=n>call3</span> <span class=p>=</span> <span class=n>global</span><span class=p>.</span><span class=n>Get</span><span class=p>&lt;</span><span class=n>CustomCall3</span><span class=p>&gt;(</span><span class=s>&#34;testFun3&#34;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl><span class=kt>int</span> <span class=n>b</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=kt>bool</span> <span class=n>c</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=kt>string</span> <span class=n>d</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=kt>int</span> <span class=n>e</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=n>Debug</span><span class=p>.</span><span class=n>Log</span><span class=p>(</span><span class=s>&#34;第一个返回值：&#34;</span> <span class=p>+</span> <span class=n>call3</span><span class=p>(</span><span class=m>100</span><span class=p>,</span> <span class=k>out</span> <span class=n>b</span><span class=p>,</span> <span class=k>out</span> <span class=n>c</span><span class=p>,</span> <span class=k>out</span> <span class=n>d</span><span class=p>,</span> <span class=k>out</span> <span class=n>e</span><span class=p>));</span>
+</span></span><span class=line><span class=cl><span class=n>Debug</span><span class=p>.</span><span class=n>Log</span><span class=p>(</span><span class=n>b</span> <span class=p>+</span> <span class=s>&#34;_&#34;</span> <span class=p>+</span> <span class=n>c</span> <span class=p>+</span> <span class=s>&#34;_&#34;</span> <span class=p>+</span> <span class=n>d</span> <span class=p>+</span> <span class=s>&#34;_&#34;</span> <span class=p>+</span> <span class=n>e</span><span class=p>);</span>
+</span></span><span class=line><span class=cl><span class=c1>//自定义委托 参数中添加ref关键字的方式接收</span>
+</span></span><span class=line><span class=cl><span class=na>[CSharpCallLua]</span>
+</span></span><span class=line><span class=cl><span class=kd>public</span> <span class=k>delegate</span> <span class=kt>int</span> <span class=n>CustomCall4</span><span class=p>(</span><span class=kt>int</span> <span class=n>a</span><span class=p>,</span> <span class=k>ref</span> <span class=kt>int</span> <span class=n>b</span><span class=p>,</span> <span class=k>ref</span> <span class=kt>bool</span> <span class=n>c</span><span class=p>,</span> <span class=k>ref</span> <span class=kt>string</span> <span class=n>d</span><span class=p>,</span> <span class=k>ref</span> <span class=kt>int</span> <span class=n>e</span><span class=p>);</span>
+</span></span><span class=line><span class=cl><span class=kt>int</span> <span class=n>b1</span> <span class=p>=</span> <span class=m>0</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=kt>bool</span> <span class=n>c1</span> <span class=p>=</span> <span class=kc>true</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=kt>string</span> <span class=n>d1</span> <span class=p>=</span> <span class=s>&#34;&#34;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=kt>int</span> <span class=n>e1</span> <span class=p>=</span> <span class=m>0</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=n>Debug</span><span class=p>.</span><span class=n>Log</span><span class=p>(</span><span class=s>&#34;第一个返回值：&#34;</span> <span class=p>+</span> <span class=n>call4</span><span class=p>(</span><span class=m>200</span><span class=p>,</span> <span class=k>ref</span> <span class=n>b1</span><span class=p>,</span> <span class=k>ref</span> <span class=n>c1</span><span class=p>,</span> <span class=k>ref</span> <span class=n>d1</span><span class=p>,</span> <span class=k>ref</span> <span class=n>e1</span><span class=p>));</span>
+</span></span><span class=line><span class=cl><span class=n>Debug</span><span class=p>.</span><span class=n>Log</span><span class=p>(</span><span class=n>b1</span> <span class=p>+</span> <span class=s>&#34;_&#34;</span> <span class=p>+</span> <span class=n>c1</span> <span class=p>+</span> <span class=s>&#34;_&#34;</span> <span class=p>+</span> <span class=n>d1</span> <span class=p>+</span> <span class=s>&#34;_&#34;</span> <span class=p>+</span> <span class=n>e1</span><span class=p>);</span>
+</span></span><span class=line><span class=cl><span class=c1>//Xlua提供的</span>
+</span></span><span class=line><span class=cl><span class=n>LuaFunction</span> <span class=n>lf3</span> <span class=p>=</span> <span class=n>global</span><span class=p>.</span><span class=n>Get</span><span class=p>&lt;</span><span class=n>LuaFunction</span><span class=p>&gt;(</span><span class=s>&#34;testFun3&#34;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl><span class=c1>//返回值是一个Object数组</span>
+</span></span><span class=line><span class=cl><span class=kt>object</span><span class=p>[]</span> <span class=n>objs</span> <span class=p>=</span> <span class=n>lf3</span><span class=p>.</span><span class=n>Call</span><span class=p>(</span><span class=m>1000</span><span class=p>);</span>
+</span></span><span class=line><span class=cl><span class=k>for</span><span class=p>(</span> <span class=kt>int</span> <span class=n>i</span> <span class=p>=</span> <span class=m>0</span><span class=p>;</span> <span class=n>i</span> <span class=p>&lt;</span> <span class=n>objs</span><span class=p>.</span><span class=n>Length</span><span class=p>;</span> <span class=p>++</span><span class=n>i</span> <span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=n>Debug</span><span class=p>.</span><span class=n>Log</span><span class=p>(</span><span class=s>&#34;第&#34;</span> <span class=p>+</span> <span class=n>i</span> <span class=p>+</span> <span class=s>&#34;个返回值是：&#34;</span> <span class=p>+</span> <span class=n>objs</span><span class=p>[</span><span class=n>i</span><span class=p>]);</span>
+</span></span><span class=line><span class=cl><span class=p>}</span></span></span></code></pre></td></tr></table></div></div><p><strong>变长参数</strong></p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt id=hl-10-1><a class=lnlinks href=#hl-10-1>1</a>
+</span><span class=lnt id=hl-10-2><a class=lnlinks href=#hl-10-2>2</a>
+</span><span class=lnt id=hl-10-3><a class=lnlinks href=#hl-10-3>3</a>
+</span><span class=lnt id=hl-10-4><a class=lnlinks href=#hl-10-4>4</a>
+</span><span class=lnt id=hl-10-5><a class=lnlinks href=#hl-10-5>5</a>
+</span><span class=lnt id=hl-10-6><a class=lnlinks href=#hl-10-6>6</a>
+</span><span class=lnt id=hl-10-7><a class=lnlinks href=#hl-10-7>7</a>
+</span><span class=lnt id=hl-10-8><a class=lnlinks href=#hl-10-8>8</a>
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-c# data-lang=c#><span class=line><span class=cl><span class=c1>//自定义委托</span>
+</span></span><span class=line><span class=cl><span class=na>[CSharpCallLua]</span>
+</span></span><span class=line><span class=cl><span class=kd>public</span> <span class=k>delegate</span> <span class=k>void</span> <span class=n>CustomCall5</span><span class=p>(</span><span class=kt>string</span> <span class=n>a</span><span class=p>,</span> <span class=k>params</span> <span class=kt>int</span><span class=p>[]</span> <span class=n>args</span><span class=p>);</span><span class=c1>//变长参数的类型 是根据实际情况来定的</span>
+</span></span><span class=line><span class=cl><span class=n>CustomCall5</span> <span class=n>call5</span> <span class=p>=</span> <span class=n>global</span><span class=p>.</span><span class=n>Get</span><span class=p>&lt;</span><span class=n>CustomCall5</span><span class=p>&gt;(</span><span class=s>&#34;testFun4&#34;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl><span class=n>call5</span><span class=p>(</span><span class=s>&#34;123&#34;</span><span class=p>,</span> <span class=m>1</span><span class=p>,</span> <span class=m>2</span><span class=p>,</span> <span class=m>3</span><span class=p>,</span> <span class=m>4</span><span class=p>,</span> <span class=m>5</span><span class=p>,</span> <span class=m>566</span><span class=p>,</span> <span class=m>7</span><span class=p>,</span> <span class=m>7</span><span class=p>,</span> <span class=m>8</span><span class=p>,</span> <span class=m>9</span><span class=p>,</span> <span class=m>99</span><span class=p>);</span>
+</span></span><span class=line><span class=cl><span class=c1>//xlua自带</span>
+</span></span><span class=line><span class=cl><span class=n>LuaFunction</span> <span class=n>lf4</span> <span class=p>=</span> <span class=n>global</span><span class=p>.</span><span class=n>Get</span><span class=p>&lt;</span><span class=n>LuaFunction</span><span class=p>&gt;(</span><span class=s>&#34;testFun4&#34;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl><span class=n>lf4</span><span class=p>.</span><span class=n>Call</span><span class=p>(</span><span class=s>&#34;456&#34;</span><span class=p>,</span> <span class=m>6</span><span class=p>,</span> <span class=m>7</span><span class=p>,</span> <span class=m>8</span><span class=p>,</span> <span class=m>99</span><span class=p>,</span> <span class=m>1</span><span class=p>);</span></span></span></code></pre></td></tr></table></div></div><h3 id=list和dictionary>List和Dictionary
+<a class=header-anchor href=#list%e5%92%8cdictionary></a></h3><p><strong>获取List</strong></p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt id=hl-11-1><a class=lnlinks href=#hl-11-1>1</a>
+</span><span class=lnt id=hl-11-2><a class=lnlinks href=#hl-11-2>2</a>
+</span><span class=lnt id=hl-11-3><a class=lnlinks href=#hl-11-3>3</a>
+</span><span class=lnt id=hl-11-4><a class=lnlinks href=#hl-11-4>4</a>
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-c# data-lang=c#><span class=line><span class=cl><span class=c1>//指定类型</span>
+</span></span><span class=line><span class=cl><span class=n>List</span><span class=p>&lt;</span><span class=kt>int</span><span class=p>&gt;</span> <span class=n>list</span> <span class=p>=</span> <span class=n>global</span><span class=p>.</span><span class=n>Get</span><span class=p>&lt;</span><span class=n>List</span><span class=p>&lt;</span><span class=kt>int</span><span class=p>&gt;&gt;(</span><span class=s>&#34;testList&#34;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl><span class=c1>//不指定类型</span>
+</span></span><span class=line><span class=cl><span class=n>List</span><span class=p>&lt;</span><span class=kt>object</span><span class=p>&gt;</span> <span class=n>list3</span> <span class=p>=</span> <span class=n>global</span><span class=p>.</span><span class=n>Get</span><span class=p>&lt;</span><span class=n>List</span><span class=p>&lt;</span><span class=kt>object</span><span class=p>&gt;&gt;(</span><span class=s>&#34;testList2&#34;</span><span class=p>);</span></span></span></code></pre></td></tr></table></div></div><p><strong>获取 Dictionary</strong></p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt id=hl-12-1><a class=lnlinks href=#hl-12-1>1</a>
+</span><span class=lnt id=hl-12-2><a class=lnlinks href=#hl-12-2>2</a>
+</span><span class=lnt id=hl-12-3><a class=lnlinks href=#hl-12-3>3</a>
+</span><span class=lnt id=hl-12-4><a class=lnlinks href=#hl-12-4>4</a>
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-c# data-lang=c#><span class=line><span class=cl><span class=c1>//指定类型</span>
+</span></span><span class=line><span class=cl><span class=n>Dictionary</span><span class=p>&lt;</span><span class=kt>string</span><span class=p>,</span> <span class=kt>int</span><span class=p>&gt;</span> <span class=n>dic2</span> <span class=p>=</span> <span class=n>global</span><span class=p>.</span><span class=n>Get</span><span class=p>&lt;</span><span class=n>Dictionary</span><span class=p>&lt;</span><span class=kt>string</span><span class=p>,</span> <span class=kt>int</span><span class=p>&gt;&gt;(</span><span class=s>&#34;testDic&#34;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl><span class=c1>//不指定类型</span>
+</span></span><span class=line><span class=cl><span class=n>Dictionary</span><span class=p>&lt;</span><span class=kt>object</span><span class=p>,</span> <span class=kt>object</span><span class=p>&gt;</span> <span class=n>dic3</span> <span class=p>=</span> <span class=n>global</span><span class=p>.</span><span class=n>Get</span><span class=p>&lt;</span><span class=n>Dictionary</span><span class=p>&lt;</span><span class=kt>object</span><span class=p>,</span> <span class=kt>object</span><span class=p>&gt;&gt;(</span><span class=s>&#34;testDic2&#34;</span><span class=p>);</span></span></span></code></pre></td></tr></table></div></div><h3 id=类映射table>类映射Table
+<a class=header-anchor href=#%e7%b1%bb%e6%98%a0%e5%b0%84table></a></h3><ul><li><p>类中去声明成员变量名字一定要和 Lua那边的一样</p></li><li><p>必须是公共的 私有和保护 没办法赋值</p></li><li><p>这个自定义中的 变量 可以更多也可以更少</p><ul><li>如果变量比 lua中的少 就会忽略它</li><li>如果变量比 lua中的多 不会赋值 也会忽略</li></ul></li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt id=hl-13-1><a class=lnlinks href=#hl-13-1>1</a>
+</span><span class=lnt id=hl-13-2><a class=lnlinks href=#hl-13-2>2</a>
+</span><span class=lnt id=hl-13-3><a class=lnlinks href=#hl-13-3>3</a>
+</span><span class=lnt id=hl-13-4><a class=lnlinks href=#hl-13-4>4</a>
+</span><span class=lnt id=hl-13-5><a class=lnlinks href=#hl-13-5>5</a>
+</span><span class=lnt id=hl-13-6><a class=lnlinks href=#hl-13-6>6</a>
+</span><span class=lnt id=hl-13-7><a class=lnlinks href=#hl-13-7>7</a>
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-c# data-lang=c#><span class=line><span class=cl><span class=kd>public</span> <span class=k>class</span> <span class=nc>CallLuaClass</span>
+</span></span><span class=line><span class=cl><span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=kd>public</span> <span class=kt>int</span> <span class=n>testInt</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=kd>public</span> <span class=kt>bool</span> <span class=n>testBool</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=kd>public</span> <span class=n>UnityAction</span> <span class=n>testFun</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=n>CallLuaClass</span> <span class=n>obj</span> <span class=p>=</span> <span class=n>global</span><span class=p>.</span><span class=n>Get</span><span class=p>&lt;</span><span class=n>CallLuaClass</span><span class=p>&gt;(</span><span class=s>&#34;testClass&#34;</span><span class=p>);</span></span></span></code></pre></td></tr></table></div></div><h3 id=接口映射table>接口映射Table
+<a class=header-anchor href=#%e6%8e%a5%e5%8f%a3%e6%98%a0%e5%b0%84table></a></h3><ul><li>接口中是不允许有成员变量的</li><li>我们用属性来接受</li><li>接口和类规则一样 其中的属性多了少了 不影响结果 无非就是忽略他们</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt id=hl-14-1><a class=lnlinks href=#hl-14-1> 1</a>
+</span><span class=lnt id=hl-14-2><a class=lnlinks href=#hl-14-2> 2</a>
+</span><span class=lnt id=hl-14-3><a class=lnlinks href=#hl-14-3> 3</a>
+</span><span class=lnt id=hl-14-4><a class=lnlinks href=#hl-14-4> 4</a>
+</span><span class=lnt id=hl-14-5><a class=lnlinks href=#hl-14-5> 5</a>
+</span><span class=lnt id=hl-14-6><a class=lnlinks href=#hl-14-6> 6</a>
+</span><span class=lnt id=hl-14-7><a class=lnlinks href=#hl-14-7> 7</a>
+</span><span class=lnt id=hl-14-8><a class=lnlinks href=#hl-14-8> 8</a>
+</span><span class=lnt id=hl-14-9><a class=lnlinks href=#hl-14-9> 9</a>
+</span><span class=lnt id=hl-14-10><a class=lnlinks href=#hl-14-10>10</a>
+</span><span class=lnt id=hl-14-11><a class=lnlinks href=#hl-14-11>11</a>
+</span><span class=lnt id=hl-14-12><a class=lnlinks href=#hl-14-12>12</a>
+</span><span class=lnt id=hl-14-13><a class=lnlinks href=#hl-14-13>13</a>
+</span><span class=lnt id=hl-14-14><a class=lnlinks href=#hl-14-14>14</a>
+</span><span class=lnt id=hl-14-15><a class=lnlinks href=#hl-14-15>15</a>
+</span><span class=lnt id=hl-14-16><a class=lnlinks href=#hl-14-16>16</a>
+</span><span class=lnt id=hl-14-17><a class=lnlinks href=#hl-14-17>17</a>
+</span><span class=lnt id=hl-14-18><a class=lnlinks href=#hl-14-18>18</a>
+</span><span class=lnt id=hl-14-19><a class=lnlinks href=#hl-14-19>19</a>
+</span><span class=lnt id=hl-14-20><a class=lnlinks href=#hl-14-20>20</a>
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-c# data-lang=c#><span class=line><span class=cl><span class=na>[CSharpCallLua]</span>
+</span></span><span class=line><span class=cl><span class=kd>public</span> <span class=k>interface</span> <span class=nc>ICallLuaClass</span>
+</span></span><span class=line><span class=cl><span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=kt>int</span> <span class=n>testInt</span>
+</span></span><span class=line><span class=cl>    <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=k>get</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=k>set</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>    <span class=kt>bool</span> <span class=n>testBool</span>
+</span></span><span class=line><span class=cl>    <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=k>get</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=k>set</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>    <span class=n>UnityAction</span> <span class=n>testFun</span>
+</span></span><span class=line><span class=cl>    <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=k>get</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=k>set</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=n>ICallLuaClass</span> <span class=n>obj</span> <span class=p>=</span> <span class=n>global</span><span class=p>.</span><span class=n>Get</span><span class=p>&lt;</span><span class=n>ICallLuaClass</span><span class=p>&gt;(</span><span class=s>&#34;testClass&#34;</span><span class=p>);</span></span></span></code></pre></td></tr></table></div></div><p><strong>注意：接口拷贝 是引用拷贝 改了值 lua表中的值也变了</strong></p><h3 id=luatable映射table>LuaTable映射Table
+<a class=header-anchor href=#luatable%e6%98%a0%e5%b0%84table></a></h3><p>不建议使用LuaTable和LuaFunction 效率低</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt id=hl-15-1><a class=lnlinks href=#hl-15-1>1</a>
+</span><span class=lnt id=hl-15-2><a class=lnlinks href=#hl-15-2>2</a>
+</span><span class=lnt id=hl-15-3><a class=lnlinks href=#hl-15-3>3</a>
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-c# data-lang=c#><span class=line><span class=cl><span class=n>LuaTable</span> <span class=n>table</span> <span class=p>=</span> <span class=n>global</span><span class=p>.</span><span class=n>Get</span><span class=p>&lt;</span><span class=n>LuaTable</span><span class=p>&gt;(</span><span class=s>&#34;testClass&#34;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl><span class=n>table</span><span class=p>.</span><span class=n>Get</span><span class=p>&lt;</span><span class=kt>int</span><span class=p>&gt;(</span><span class=s>&#34;testInt&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=n>tables</span><span class=p>.</span><span class=n>Set</span><span class=p>(</span><span class=s>&#34;TestInt&#34;</span><span class=p>,</span><span class=m>20</span><span class=p>)</span></span></span></code></pre></td></tr></table></div></div><h2 id=lua调用c>Lua调用C
+<a class=header-anchor href=#lua%e8%b0%83%e7%94%a8c></a></h2><h3 id=使用c的类>使用C#的类
+<a class=header-anchor href=#%e4%bd%bf%e7%94%a8c%e7%9a%84%e7%b1%bb></a></h3><p>lua中使用C#的类非常简单</p><p>固定套路</p><p><code>CS.命名空间.类名</code></p><p>Unity的类 比如 <code>GameObject</code> <code>Transform</code>等等 —— <code>CS.UnityEngine.类名</code></p><p><code>CS.UnityEngine.GameObject</code></p><ul><li>通过C#中的类 实例化一个对象 lua中没有new 所以我们直接 类名括号就是实例化对象</li></ul><p>默认调用的 相当于就是无参构造</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt id=hl-16-1><a class=lnlinks href=#hl-16-1>1</a>
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-lua data-lang=lua><span class=line><span class=cl><span class=kd>local</span> <span class=n>obj1</span> <span class=o>=</span> <span class=n>CS.UnityEngine</span><span class=p>.</span><span class=n>GameObject</span><span class=p>()</span></span></span></code></pre></td></tr></table></div></div><p>为了方便使用 并且节约性能 可以定义全局变量存储 C#中的类</p><p>相当于取了一个别名</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt id=hl-17-1><a class=lnlinks href=#hl-17-1>1</a>
+</span><span class=lnt id=hl-17-2><a class=lnlinks href=#hl-17-2>2</a>
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-lua data-lang=lua><span class=line><span class=cl><span class=n>GameObject</span> <span class=o>=</span> <span class=n>CS.UnityEngine</span><span class=p>.</span><span class=n>GameObject</span>
+</span></span><span class=line><span class=cl><span class=kd>local</span> <span class=n>obj3</span> <span class=o>=</span> <span class=n>GameObject</span><span class=p>()</span></span></span></code></pre></td></tr></table></div></div><p>类中的静态对象 可以直接使用.来调用</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt id=hl-18-1><a class=lnlinks href=#hl-18-1>1</a>
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-lua data-lang=lua><span class=line><span class=cl><span class=kd>local</span> <span class=n>obj4</span> <span class=o>=</span> <span class=n>GameObject.Find</span><span class=p>(</span><span class=s2>&#34;GameObject&#34;</span><span class=p>)</span></span></span></code></pre></td></tr></table></div></div><p>得到对象中的成员变量 直接对象 . 即可</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt id=hl-19-1><a class=lnlinks href=#hl-19-1>1</a>
+</span><span class=lnt id=hl-19-2><a class=lnlinks href=#hl-19-2>2</a>
+</span><span class=lnt id=hl-19-3><a class=lnlinks href=#hl-19-3>3</a>
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-lua data-lang=lua><span class=line><span class=cl><span class=n>obj4.transform</span><span class=p>.</span><span class=n>position</span>
+</span></span><span class=line><span class=cl><span class=n>Debug</span> <span class=o>=</span> <span class=n>CS.UnityEngine</span><span class=p>.</span><span class=n>Debug</span>
+</span></span><span class=line><span class=cl><span class=n>Debug.Log</span><span class=p>(</span><span class=n>obj4.transform</span><span class=p>.</span><span class=n>position</span><span class=p>)</span></span></span></code></pre></td></tr></table></div></div><p>自定义类 使用方法 相同 只是命名空间不同而已</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt id=hl-20-1><a class=lnlinks href=#hl-20-1>1</a>
+</span><span class=lnt id=hl-20-2><a class=lnlinks href=#hl-20-2>2</a>
+</span><span class=lnt id=hl-20-3><a class=lnlinks href=#hl-20-3>3</a>
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-lua data-lang=lua><span class=line><span class=cl><span class=kd>local</span> <span class=n>t</span> <span class=o>=</span> <span class=n>CS.Test</span><span class=p>()</span>
+</span></span><span class=line><span class=cl><span class=c1>-- 成员方法 使用：调用</span>
+</span></span><span class=line><span class=cl><span class=n>t</span><span class=p>:</span><span class=n>Speak</span><span class=p>(</span><span class=s2>&#34;test说话&#34;</span><span class=p>)</span></span></span></code></pre></td></tr></table></div></div><p>继承了Mono的类 是不能直接new的</p><p>xlua提供了一个重要方法 typeof 可以得到类的Type</p><p>xlua中不支持 无参泛型函数 所以 我们要使用另一个重载</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt id=hl-21-1><a class=lnlinks href=#hl-21-1>1</a>
+</span><span class=lnt id=hl-21-2><a class=lnlinks href=#hl-21-2>2</a>
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-lua data-lang=lua><span class=line><span class=cl><span class=kd>local</span> <span class=n>obj5</span> <span class=o>=</span> <span class=n>GameObject</span><span class=p>(</span><span class=s2>&#34;加脚本测试&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=n>obj5</span><span class=p>:</span><span class=n>AddComponent</span><span class=p>(</span><span class=n>typeof</span><span class=p>(</span><span class=n>CS.LuaCallCSharp</span><span class=p>))</span></span></span></code></pre></td></tr></table></div></div><h3 id=使用c枚举>使用C#枚举
+<a class=header-anchor href=#%e4%bd%bf%e7%94%a8c%e6%9e%9a%e4%b8%be></a></h3><p>枚举的调用规则 和 类的调用规则是一样的</p><p><code>CS.命名空间.枚举名.枚举成员</code></p><p>也支持取别名</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt id=hl-22-1><a class=lnlinks href=#hl-22-1>1</a>
+</span><span class=lnt id=hl-22-2><a class=lnlinks href=#hl-22-2>2</a>
+</span><span class=lnt id=hl-22-3><a class=lnlinks href=#hl-22-3>3</a>
+</span><span class=lnt id=hl-22-4><a class=lnlinks href=#hl-22-4>4</a>
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-lua data-lang=lua><span class=line><span class=cl><span class=n>PrimitiveType</span> <span class=o>=</span> <span class=n>CS.UnityEngine</span><span class=p>.</span><span class=n>PrimitiveType</span>
+</span></span><span class=line><span class=cl><span class=n>GameObject</span> <span class=o>=</span> <span class=n>CS.UnityEngine</span><span class=p>.</span><span class=n>GameObject</span>
+</span></span><span class=line><span class=cl><span class=c1>-- 创建一个 立方体</span>
+</span></span><span class=line><span class=cl><span class=kd>local</span> <span class=n>obj</span> <span class=o>=</span> <span class=n>GameObject.CreatePrimitive</span><span class=p>(</span><span class=n>PrimitiveType.Cube</span><span class=p>)</span></span></span></code></pre></td></tr></table></div></div><p><strong>枚举转换</strong></p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt id=hl-23-1><a class=lnlinks href=#hl-23-1>1</a>
+</span><span class=lnt id=hl-23-2><a class=lnlinks href=#hl-23-2>2</a>
+</span><span class=lnt id=hl-23-3><a class=lnlinks href=#hl-23-3>3</a>
+</span><span class=lnt id=hl-23-4><a class=lnlinks href=#hl-23-4>4</a>
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-lua data-lang=lua><span class=line><span class=cl><span class=c1>--数值转枚举</span>
+</span></span><span class=line><span class=cl><span class=kd>local</span> <span class=n>a</span> <span class=o>=</span> <span class=n>E_MyEnum.__CastFrom</span><span class=p>(</span><span class=mi>1</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=c1>--字符串转枚举</span>
+</span></span><span class=line><span class=cl><span class=kd>local</span> <span class=n>b</span> <span class=o>=</span> <span class=n>E_MyEnum.__CastFrom</span><span class=p>(</span><span class=s2>&#34;Atk&#34;</span><span class=p>)</span></span></span></code></pre></td></tr></table></div></div><h3 id=扩展方法>扩展方法
+<a class=header-anchor href=#%e6%89%a9%e5%b1%95%e6%96%b9%e6%b3%95></a></h3><p>Lua可以使用C#的扩展方法</p><p>但是需要在扩展方法对应的静态类加[LuaCallCsharp]特性 然后生成代码</p><p>注意：该特性可以提升Lua访问C\#类的性能，所以建议只要Lua中使用的C\#类都加上该特性</p><p>C#类实现：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt id=hl-24-1><a class=lnlinks href=#hl-24-1> 1</a>
+</span><span class=lnt id=hl-24-2><a class=lnlinks href=#hl-24-2> 2</a>
+</span><span class=lnt id=hl-24-3><a class=lnlinks href=#hl-24-3> 3</a>
+</span><span class=lnt id=hl-24-4><a class=lnlinks href=#hl-24-4> 4</a>
+</span><span class=lnt id=hl-24-5><a class=lnlinks href=#hl-24-5> 5</a>
+</span><span class=lnt id=hl-24-6><a class=lnlinks href=#hl-24-6> 6</a>
+</span><span class=lnt id=hl-24-7><a class=lnlinks href=#hl-24-7> 7</a>
+</span><span class=lnt id=hl-24-8><a class=lnlinks href=#hl-24-8> 8</a>
+</span><span class=lnt id=hl-24-9><a class=lnlinks href=#hl-24-9> 9</a>
+</span><span class=lnt id=hl-24-10><a class=lnlinks href=#hl-24-10>10</a>
+</span><span class=lnt id=hl-24-11><a class=lnlinks href=#hl-24-11>11</a>
+</span><span class=lnt id=hl-24-12><a class=lnlinks href=#hl-24-12>12</a>
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-C# data-lang=C#><span class=line><span class=cl><span class=na>[LuaCallCsharp]</span>
+</span></span><span class=line><span class=cl><span class=kd>public</span> <span class=kd>static</span> <span class=k>class</span> <span class=nc>TestExpand</span>
+</span></span><span class=line><span class=cl><span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=kd>public</span> <span class=kd>static</span> <span class=k>void</span> <span class=n>TestFun</span><span class=p>(</span><span class=k>this</span> <span class=n>Test</span> <span class=n>test</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=n>Debug</span><span class=p>.</span><span class=n>log</span><span class=p>(</span><span class=n>test</span><span class=p>.</span><span class=n>name</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>}</span> 
+</span></span><span class=line><span class=cl><span class=kd>public</span> <span class=k>class</span> <span class=nc>Test</span>
+</span></span><span class=line><span class=cl><span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=kd>public</span> <span class=kt>string</span> <span class=n>name</span><span class=p>;</span> 
+</span></span><span class=line><span class=cl><span class=p>}</span></span></span></code></pre></td></tr></table></div></div><p>lua实现：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt id=hl-25-1><a class=lnlinks href=#hl-25-1>1</a>
+</span><span class=lnt id=hl-25-2><a class=lnlinks href=#hl-25-2>2</a>
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-lua data-lang=lua><span class=line><span class=cl><span class=kd>local</span> <span class=n>Test</span> <span class=o>=</span> <span class=n>CS.Test</span><span class=p>()</span>
+</span></span><span class=line><span class=cl><span class=n>test</span><span class=p>:</span><span class=n>TestFun</span><span class=p>()</span> <span class=c1>-- 使用扩展方法 和使用成员方法一致</span></span></span></code></pre></td></tr></table></div></div><h3 id=使用ref和out函数>使用ref和out函数
+<a class=header-anchor href=#%e4%bd%bf%e7%94%a8ref%e5%92%8cout%e5%87%bd%e6%95%b0></a></h3><p><strong>ref</strong></p><p>ref参数 会以多返回值的形式返回给lua</p><p>如果函数存在返回值 那么第一个值 就是该返回值</p><p>之后的返回值 就是ref的结果 从左到右一一对应</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt id=hl-26-1><a class=lnlinks href=#hl-26-1>1</a>
+</span><span class=lnt id=hl-26-2><a class=lnlinks href=#hl-26-2>2</a>
+</span><span class=lnt id=hl-26-3><a class=lnlinks href=#hl-26-3>3</a>
+</span><span class=lnt id=hl-26-4><a class=lnlinks href=#hl-26-4>4</a>
+</span><span class=lnt id=hl-26-5><a class=lnlinks href=#hl-26-5>5</a>
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-lua data-lang=lua><span class=line><span class=cl><span class=c1>--ref参数 需要传入一个默认值 占位置</span>
+</span></span><span class=line><span class=cl><span class=kd>local</span> <span class=n>a</span><span class=p>,</span><span class=n>b</span><span class=p>,</span><span class=n>c</span> <span class=o>=</span> <span class=n>obj</span><span class=p>:</span><span class=n>RefFun</span><span class=p>(</span><span class=mi>1</span><span class=p>,</span> <span class=mi>0</span><span class=p>,</span> <span class=mi>0</span><span class=p>,</span> <span class=mi>1</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=n>print</span><span class=p>(</span><span class=n>a</span><span class=p>)</span> <span class=c1>--函数返回值</span>
+</span></span><span class=line><span class=cl><span class=n>print</span><span class=p>(</span><span class=n>b</span><span class=p>)</span> <span class=c1>--第一个ref</span>
+</span></span><span class=line><span class=cl><span class=n>print</span><span class=p>(</span><span class=n>c</span><span class=p>)</span> <span class=c1>--第二个ref</span></span></span></code></pre></td></tr></table></div></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt id=hl-27-1><a class=lnlinks href=#hl-27-1>1</a>
+</span><span class=lnt id=hl-27-2><a class=lnlinks href=#hl-27-2>2</a>
+</span><span class=lnt id=hl-27-3><a class=lnlinks href=#hl-27-3>3</a>
+</span><span class=lnt id=hl-27-4><a class=lnlinks href=#hl-27-4>4</a>
+</span><span class=lnt id=hl-27-5><a class=lnlinks href=#hl-27-5>5</a>
+</span><span class=lnt id=hl-27-6><a class=lnlinks href=#hl-27-6>6</a>
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-c# data-lang=c#><span class=line><span class=cl><span class=kd>public</span> <span class=kt>int</span> <span class=n>ReFun</span><span class=p>(</span><span class=kt>int</span> <span class=n>a</span><span class=p>,</span> <span class=k>ref</span> <span class=kt>int</span> <span class=n>b</span><span class=p>,</span> <span class=k>ref</span> <span class=kt>int</span> <span class=n>c</span><span class=p>,</span><span class=kt>int</span> <span class=n>d</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=n>b</span> <span class=p>=</span> <span class=n>a</span> <span class=p>+</span> <span class=n>d</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=n>c</span> <span class=p>=</span> <span class=n>a</span> <span class=p>-</span> <span class=n>d</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=m>100</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span></span></span></code></pre></td></tr></table></div></div><p><strong>out</strong></p><p>out参数 会以多返回值的形式返回给lua</p><p>如果函数存在返回值 那么第一个值 就是该返回值</p><p>之后的返回值 就是out的结果 从左到右一一对应</p><p>out参数 不需要传占位置的值</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt id=hl-28-1><a class=lnlinks href=#hl-28-1>1</a>
+</span><span class=lnt id=hl-28-2><a class=lnlinks href=#hl-28-2>2</a>
+</span><span class=lnt id=hl-28-3><a class=lnlinks href=#hl-28-3>3</a>
+</span><span class=lnt id=hl-28-4><a class=lnlinks href=#hl-28-4>4</a>
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-lua data-lang=lua><span class=line><span class=cl><span class=kd>local</span> <span class=n>a</span><span class=p>,</span><span class=n>b</span><span class=p>,</span><span class=n>c</span> <span class=o>=</span> <span class=n>obj</span><span class=p>:</span><span class=n>OutFun</span><span class=p>(</span><span class=mi>20</span><span class=p>,</span><span class=mi>30</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=n>print</span><span class=p>(</span><span class=n>a</span><span class=p>)</span><span class=c1>--函数返回值</span>
+</span></span><span class=line><span class=cl><span class=n>print</span><span class=p>(</span><span class=n>b</span><span class=p>)</span><span class=c1>--第一个out</span>
+</span></span><span class=line><span class=cl><span class=n>print</span><span class=p>(</span><span class=n>c</span><span class=p>)</span><span class=c1>--第二个out</span></span></span></code></pre></td></tr></table></div></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt id=hl-29-1><a class=lnlinks href=#hl-29-1>1</a>
+</span><span class=lnt id=hl-29-2><a class=lnlinks href=#hl-29-2>2</a>
+</span><span class=lnt id=hl-29-3><a class=lnlinks href=#hl-29-3>3</a>
+</span><span class=lnt id=hl-29-4><a class=lnlinks href=#hl-29-4>4</a>
+</span><span class=lnt id=hl-29-5><a class=lnlinks href=#hl-29-5>5</a>
+</span><span class=lnt id=hl-29-6><a class=lnlinks href=#hl-29-6>6</a>
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-c# data-lang=c#><span class=line><span class=cl><span class=kd>public</span> <span class=kt>int</span> <span class=n>OutFun</span><span class=p>(</span><span class=kt>int</span> <span class=n>a</span><span class=p>,</span> <span class=kt>int</span> <span class=n>b</span><span class=p>,</span> <span class=k>out</span> <span class=kt>int</span> <span class=n>c</span><span class=p>,</span> <span class=k>out</span> <span class=kt>int</span> <span class=n>d</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=n>b</span> <span class=p>=</span> <span class=n>a</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=n>c</span> <span class=p>=</span> <span class=n>d</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=m>200</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span></span></span></code></pre></td></tr></table></div></div><p><strong>混合使用</strong></p><p>混合使用时 综合上面的规则</p><p>ref需占位 out不用传</p><p>第一个是函数的返回值 之后 从左到右依次对应ref或者out</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt id=hl-30-1><a class=lnlinks href=#hl-30-1>1</a>
+</span><span class=lnt id=hl-30-2><a class=lnlinks href=#hl-30-2>2</a>
+</span><span class=lnt id=hl-30-3><a class=lnlinks href=#hl-30-3>3</a>
+</span><span class=lnt id=hl-30-4><a class=lnlinks href=#hl-30-4>4</a>
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>&lt;span&gt;local&lt;/span&gt; a,b,c = obj:RefOutFun(&lt;span&gt;20&lt;/span&gt;,&lt;span&gt;1&lt;/span&gt;)
+</span></span><span class=line><span class=cl>&lt;span&gt;print&lt;/span&gt;(a)&lt;span&gt;--300&lt;/span&gt;
+</span></span><span class=line><span class=cl>&lt;span&gt;print&lt;/span&gt;(b)&lt;span&gt;--200&lt;/span&gt;
+</span></span><span class=line><span class=cl>&lt;span&gt;print&lt;/span&gt;(c)&lt;span&gt;--400&lt;/span&gt;</span></span></code></pre></td></tr></table></div></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt id=hl-31-1><a class=lnlinks href=#hl-31-1>1</a>
+</span><span class=lnt id=hl-31-2><a class=lnlinks href=#hl-31-2>2</a>
+</span><span class=lnt id=hl-31-3><a class=lnlinks href=#hl-31-3>3</a>
+</span><span class=lnt id=hl-31-4><a class=lnlinks href=#hl-31-4>4</a>
+</span><span class=lnt id=hl-31-5><a class=lnlinks href=#hl-31-5>5</a>
+</span><span class=lnt id=hl-31-6><a class=lnlinks href=#hl-31-6>6</a>
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-c# data-lang=c#><span class=line><span class=cl><span class=kd>public</span> <span class=kt>int</span> <span class=n>RefOutFun</span><span class=p>(</span><span class=kt>int</span> <span class=n>a</span><span class=p>,</span> <span class=kt>int</span> <span class=n>b</span><span class=p>,</span> <span class=k>out</span> <span class=kt>int</span> <span class=n>c</span><span class=p>,</span> <span class=k>ref</span> <span class=kt>int</span> <span class=n>d</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=n>b</span> <span class=p>=</span> <span class=n>a</span> <span class=p>*</span> <span class=m>10</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=n>c</span> <span class=p>=</span> <span class=n>a</span> <span class=p>*</span> <span class=m>20</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=m>300</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span></span></span></code></pre></td></tr></table></div></div><h3 id=使用重载函数>使用重载函数
+<a class=header-anchor href=#%e4%bd%bf%e7%94%a8%e9%87%8d%e8%bd%bd%e5%87%bd%e6%95%b0></a></h3><p>虽然Lua自己不支持写重载函数</p><p>但是Lua支持调用C#中的重载函数</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt id=hl-32-1><a class=lnlinks href=#hl-32-1>1</a>
+</span><span class=lnt id=hl-32-2><a class=lnlinks href=#hl-32-2>2</a>
+</span><span class=lnt id=hl-32-3><a class=lnlinks href=#hl-32-3>3</a>
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-lua data-lang=lua><span class=line><span class=cl><span class=kd>local</span> <span class=n>obj</span> <span class=o>=</span> <span class=n>CS.Test</span><span class=p>()</span>
+</span></span><span class=line><span class=cl><span class=n>print</span><span class=p>(</span><span class=n>obj</span><span class=p>:</span><span class=n>Calc</span><span class=p>())</span>
+</span></span><span class=line><span class=cl><span class=n>print</span><span class=p>(</span><span class=n>obj</span><span class=p>:</span><span class=n>Calc</span><span class=p>(</span><span class=mi>15</span><span class=p>,</span> <span class=mi>1</span><span class=p>))</span></span></span></code></pre></td></tr></table></div></div><p>Lua虽然支持调用C#重载函数</p><p>但是因为Lua中的数值类型 只有Number</p><p>对C#中多精度的重载函数支持不好</p><p>在使用时 可能出现意想不到的问题</p><p>例如：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt id=hl-33-1><a class=lnlinks href=#hl-33-1>1</a>
+</span><span class=lnt id=hl-33-2><a class=lnlinks href=#hl-33-2>2</a>
+</span><span class=lnt id=hl-33-3><a class=lnlinks href=#hl-33-3>3</a>
+</span><span class=lnt id=hl-33-4><a class=lnlinks href=#hl-33-4>4</a>
+</span><span class=lnt id=hl-33-5><a class=lnlinks href=#hl-33-5>5</a>
+</span><span class=lnt id=hl-33-6><a class=lnlinks href=#hl-33-6>6</a>
+</span><span class=lnt id=hl-33-7><a class=lnlinks href=#hl-33-7>7</a>
+</span><span class=lnt id=hl-33-8><a class=lnlinks href=#hl-33-8>8</a>
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-lua data-lang=lua><span class=line><span class=cl><span class=n>public</span> <span class=n>void</span> <span class=n>Calc</span><span class=p>(</span><span class=n>int</span> <span class=n>a</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=n>Debug.log</span><span class=p>(</span><span class=n>a</span><span class=p>);</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=n>public</span> <span class=n>void</span> <span class=n>Calc</span><span class=p>(</span><span class=n>float</span> <span class=n>a</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=n>Debug.log</span><span class=p>(</span><span class=n>a</span><span class=p>);</span>
+</span></span><span class=line><span class=cl><span class=p>}</span></span></span></code></pre></td></tr></table></div></div><p>解决重载函数含糊的问题</p><p>xlua提供了解决方案 反射机制</p><p>这种方法只做了解 尽量不要使用</p><p>Type是反射的关键类</p><p>得到指定函数的相关信息</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt id=hl-34-1><a class=lnlinks href=#hl-34-1>1</a>
+</span><span class=lnt id=hl-34-2><a class=lnlinks href=#hl-34-2>2</a>
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-lua data-lang=lua><span class=line><span class=cl><span class=kd>local</span> <span class=n>m1</span> <span class=o>=</span> <span class=n>typeof</span><span class=p>(</span><span class=n>CS.Test</span><span class=p>):</span><span class=n>GetMethod</span><span class=p>(</span><span class=s2>&#34;Calc&#34;</span><span class=p>,</span> <span class=p>{</span><span class=n>typeof</span><span class=p>(</span><span class=n>CS.System</span><span class=p>.</span><span class=n>Int32</span><span class=p>)})</span>
+</span></span><span class=line><span class=cl><span class=kd>local</span> <span class=n>m2</span> <span class=o>=</span> <span class=n>typeof</span><span class=p>(</span><span class=n>CS.Test</span><span class=p>):</span><span class=n>GetMethod</span><span class=p>(</span><span class=s2>&#34;Calc&#34;</span><span class=p>,</span> <span class=p>{</span><span class=n>typeof</span><span class=p>(</span><span class=n>CS.System</span><span class=p>.</span><span class=n>Single</span><span class=p>)})</span></span></span></code></pre></td></tr></table></div></div><p>通过xlua提供的一个方法 把它转成lua函数来使用</p><p>一般我们转一次 然后重复使用</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt id=hl-35-1><a class=lnlinks href=#hl-35-1>1</a>
+</span><span class=lnt id=hl-35-2><a class=lnlinks href=#hl-35-2>2</a>
+</span><span class=lnt id=hl-35-3><a class=lnlinks href=#hl-35-3>3</a>
+</span><span class=lnt id=hl-35-4><a class=lnlinks href=#hl-35-4>4</a>
+</span><span class=lnt id=hl-35-5><a class=lnlinks href=#hl-35-5>5</a>
+</span><span class=lnt id=hl-35-6><a class=lnlinks href=#hl-35-6>6</a>
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-lua data-lang=lua><span class=line><span class=cl><span class=kd>local</span> <span class=n>f1</span> <span class=o>=</span> <span class=n>xlua.tofunction</span><span class=p>(</span><span class=n>m1</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=kd>local</span> <span class=n>f2</span> <span class=o>=</span> <span class=n>xlua.tofunction</span><span class=p>(</span><span class=n>m2</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=c1>--成员方法 第一个参数传对象</span>
+</span></span><span class=line><span class=cl><span class=c1>--静态方法 不用传对象</span>
+</span></span><span class=line><span class=cl><span class=n>print</span><span class=p>(</span><span class=n>f1</span><span class=p>(</span><span class=n>obj</span><span class=p>,</span> <span class=mi>10</span><span class=p>))</span>
+</span></span><span class=line><span class=cl><span class=n>print</span><span class=p>(</span><span class=n>f2</span><span class=p>(</span><span class=n>obj</span><span class=p>,</span> <span class=mf>10.2</span><span class=p>))</span></span></span></code></pre></td></tr></table></div></div><h3 id=委托和事件>委托和事件
+<a class=header-anchor href=#%e5%a7%94%e6%89%98%e5%92%8c%e4%ba%8b%e4%bb%b6></a></h3><p>委托是用来装函数的</p><p>使用C#中的委托 就是用来装lua函数的</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt id=hl-36-1><a class=lnlinks href=#hl-36-1> 1</a>
+</span><span class=lnt id=hl-36-2><a class=lnlinks href=#hl-36-2> 2</a>
+</span><span class=lnt id=hl-36-3><a class=lnlinks href=#hl-36-3> 3</a>
+</span><span class=lnt id=hl-36-4><a class=lnlinks href=#hl-36-4> 4</a>
+</span><span class=lnt id=hl-36-5><a class=lnlinks href=#hl-36-5> 5</a>
+</span><span class=lnt id=hl-36-6><a class=lnlinks href=#hl-36-6> 6</a>
+</span><span class=lnt id=hl-36-7><a class=lnlinks href=#hl-36-7> 7</a>
+</span><span class=lnt id=hl-36-8><a class=lnlinks href=#hl-36-8> 8</a>
+</span><span class=lnt id=hl-36-9><a class=lnlinks href=#hl-36-9> 9</a>
+</span><span class=lnt id=hl-36-10><a class=lnlinks href=#hl-36-10>10</a>
+</span><span class=lnt id=hl-36-11><a class=lnlinks href=#hl-36-11>11</a>
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-c# data-lang=c#><span class=line><span class=cl><span class=c1>//声明委托和事件</span>
+</span></span><span class=line><span class=cl><span class=kd>public</span> <span class=n>UnityAcion</span> <span class=n>del</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=kd>public</span> <span class=k>event</span> <span class=n>UntiyAction</span> <span class=n>eventAction</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=kd>public</span> <span class=k>void</span> <span class=n>DoEvent</span><span class=p>()</span>
+</span></span><span class=line><span class=cl><span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=n>eventAction</span><span class=p>();</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=kd>public</span> <span class=k>void</span> <span class=n>ClearEvent</span><span class=p>()</span>
+</span></span><span class=line><span class=cl><span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=n>eventAction</span> <span class=p>=</span> <span class=kc>null</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span></span></span></code></pre></td></tr></table></div></div><p><strong>委托添加函数</strong></p><p>Lua中没有复合运算符 不能+=</p><p>如果第一次往委托中加函数 因为是nil 不能直接+</p><p>所以第一次 要先等=</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt id=hl-37-1><a class=lnlinks href=#hl-37-1> 1</a>
+</span><span class=lnt id=hl-37-2><a class=lnlinks href=#hl-37-2> 2</a>
+</span><span class=lnt id=hl-37-3><a class=lnlinks href=#hl-37-3> 3</a>
+</span><span class=lnt id=hl-37-4><a class=lnlinks href=#hl-37-4> 4</a>
+</span><span class=lnt id=hl-37-5><a class=lnlinks href=#hl-37-5> 5</a>
+</span><span class=lnt id=hl-37-6><a class=lnlinks href=#hl-37-6> 6</a>
+</span><span class=lnt id=hl-37-7><a class=lnlinks href=#hl-37-7> 7</a>
+</span><span class=lnt id=hl-37-8><a class=lnlinks href=#hl-37-8> 8</a>
+</span><span class=lnt id=hl-37-9><a class=lnlinks href=#hl-37-9> 9</a>
+</span><span class=lnt id=hl-37-10><a class=lnlinks href=#hl-37-10>10</a>
+</span><span class=lnt id=hl-37-11><a class=lnlinks href=#hl-37-11>11</a>
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-lua data-lang=lua><span class=line><span class=cl><span class=kd>local</span> <span class=n>fun</span> <span class=o>=</span> <span class=kr>function</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>    <span class=n>print</span><span class=p>(</span><span class=s2>&#34;Lua函数Fun&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=kr>end</span>
+</span></span><span class=line><span class=cl><span class=n>obj.del</span> <span class=o>=</span> <span class=n>fun</span>
+</span></span><span class=line><span class=cl><span class=c1>-- 添加函数</span>
+</span></span><span class=line><span class=cl><span class=n>obj.del</span> <span class=o>=</span> <span class=n>obj.del</span> <span class=o>+</span> <span class=n>fun</span>
+</span></span><span class=line><span class=cl><span class=c1>-- 添加匿名函数</span>
+</span></span><span class=line><span class=cl><span class=c1>--不建议这样写 最好最好还是 先声明函数再加</span>
+</span></span><span class=line><span class=cl><span class=n>obj.del</span> <span class=o>=</span> <span class=n>obj.del</span> <span class=o>+</span> <span class=kr>function</span><span class=p>(</span> <span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=n>print</span><span class=p>(</span><span class=s2>&#34;临时申明的函数&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=kr>end</span></span></span></code></pre></td></tr></table></div></div><p><strong>委托执行</strong></p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt id=hl-38-1><a class=lnlinks href=#hl-38-1>1</a>
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-lua data-lang=lua><span class=line><span class=cl><span class=n>obj.del</span><span class=p>()</span></span></span></code></pre></td></tr></table></div></div><p><strong>委托减函数</strong></p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt id=hl-39-1><a class=lnlinks href=#hl-39-1>1</a>
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-lua data-lang=lua><span class=line><span class=cl><span class=n>obj.del</span> <span class=o>=</span> <span class=n>obj.del</span> <span class=o>-</span> <span class=n>fun</span></span></span></code></pre></td></tr></table></div></div><p><strong>清空所有存储的函数</strong></p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt id=hl-40-1><a class=lnlinks href=#hl-40-1>1</a>
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-lua data-lang=lua><span class=line><span class=cl><span class=n>obj.del</span> <span class=o>=</span> <span class=kc>nil</span></span></span></code></pre></td></tr></table></div></div><p><strong>事件加函数</strong></p><p>事件加减函数 和 委托非常不一样</p><p>lua中使用C#事件 加函数</p><p>有点类似使用成员方 冒号事件名("+", 函数变量)</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt id=hl-41-1><a class=lnlinks href=#hl-41-1>1</a>
+</span><span class=lnt id=hl-41-2><a class=lnlinks href=#hl-41-2>2</a>
+</span><span class=lnt id=hl-41-3><a class=lnlinks href=#hl-41-3>3</a>
+</span><span class=lnt id=hl-41-4><a class=lnlinks href=#hl-41-4>4</a>
+</span><span class=lnt id=hl-41-5><a class=lnlinks href=#hl-41-5>5</a>
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-lua data-lang=lua><span class=line><span class=cl><span class=n>obj</span><span class=p>:</span><span class=n>eventAction</span><span class=p>(</span><span class=s2>&#34;+&#34;</span><span class=p>,</span> <span class=n>fun2</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=c1>-- 添加匿名函数 最好不要这样写</span>
+</span></span><span class=line><span class=cl><span class=n>obj</span><span class=p>:</span><span class=n>eventAction</span><span class=p>(</span><span class=s2>&#34;+&#34;</span><span class=p>,</span> <span class=kr>function</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>    <span class=n>print</span><span class=p>(</span><span class=s2>&#34;事件加的匿名函数&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=kr>end</span><span class=p>)</span></span></span></code></pre></td></tr></table></div></div><p><strong>事件减函数</strong></p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt id=hl-42-1><a class=lnlinks href=#hl-42-1>1</a>
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-lua data-lang=lua><span class=line><span class=cl><span class=n>obj</span><span class=p>:</span><span class=n>eventAction</span><span class=p>(</span><span class=s2>&#34;-&#34;</span><span class=p>,</span> <span class=n>fun2</span><span class=p>)</span></span></span></code></pre></td></tr></table></div></div><p><strong>事件执行</strong></p><p>lua中不可以直接调用事件 需要在C#中实现对应的方法调用</p><p><strong>事件清空</strong></p><p>lua中不可以直接清空事件 可以在C#中实现对应的方法调用</p><h3 id=二维数组>二维数组
+<a class=header-anchor href=#%e4%ba%8c%e7%bb%b4%e6%95%b0%e7%bb%84></a></h3><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt id=hl-43-1><a class=lnlinks href=#hl-43-1>1</a>
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-lua data-lang=lua><span class=line><span class=cl><span class=n>public</span> <span class=n>int</span><span class=p>[,]</span> <span class=n>array</span> <span class=o>=</span> <span class=n>new</span> <span class=n>int</span><span class=p>[</span><span class=mi>2</span><span class=p>,</span><span class=mi>3</span><span class=p>]{{</span><span class=mi>1</span><span class=p>,</span><span class=mi>2</span><span class=p>,</span><span class=mi>3</span><span class=p>},{</span><span class=mi>4</span><span class=p>,</span><span class=mi>5</span><span class=p>,</span><span class=mi>6</span><span class=p>}};</span></span></span></code></pre></td></tr></table></div></div><p>lua中调用</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt id=hl-44-1><a class=lnlinks href=#hl-44-1>1</a>
+</span><span class=lnt id=hl-44-2><a class=lnlinks href=#hl-44-2>2</a>
+</span><span class=lnt id=hl-44-3><a class=lnlinks href=#hl-44-3>3</a>
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-lua data-lang=lua><span class=line><span class=cl><span class=kd>local</span> <span class=n>obj</span> <span class=o>=</span> <span class=n>CS.Test</span><span class=p>()</span>
+</span></span><span class=line><span class=cl><span class=c1>-- 不可以通过[0][0]来调用</span>
+</span></span><span class=line><span class=cl><span class=n>obj.array</span><span class=p>:</span><span class=n>GetValue</span><span class=p>(</span><span class=mi>0</span><span class=p>,</span><span class=mi>0</span><span class=p>)</span></span></span></code></pre></td></tr></table></div></div><h3 id=携程>携程
+<a class=header-anchor href=#%e6%90%ba%e7%a8%8b></a></h3><p>C# 中携程启动都是通过继承了<code>Mono</code>的类 通过里面的启动函数 <code>StartCoroutine</code></p><p><strong>开启和关闭携程</strong></p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt id=hl-45-1><a class=lnlinks href=#hl-45-1> 1</a>
+</span><span class=lnt id=hl-45-2><a class=lnlinks href=#hl-45-2> 2</a>
+</span><span class=lnt id=hl-45-3><a class=lnlinks href=#hl-45-3> 3</a>
+</span><span class=lnt id=hl-45-4><a class=lnlinks href=#hl-45-4> 4</a>
+</span><span class=lnt id=hl-45-5><a class=lnlinks href=#hl-45-5> 5</a>
+</span><span class=lnt id=hl-45-6><a class=lnlinks href=#hl-45-6> 6</a>
+</span><span class=lnt id=hl-45-7><a class=lnlinks href=#hl-45-7> 7</a>
+</span><span class=lnt id=hl-45-8><a class=lnlinks href=#hl-45-8> 8</a>
+</span><span class=lnt id=hl-45-9><a class=lnlinks href=#hl-45-9> 9</a>
+</span><span class=lnt id=hl-45-10><a class=lnlinks href=#hl-45-10>10</a>
+</span><span class=lnt id=hl-45-11><a class=lnlinks href=#hl-45-11>11</a>
+</span><span class=lnt id=hl-45-12><a class=lnlinks href=#hl-45-12>12</a>
+</span><span class=lnt id=hl-45-13><a class=lnlinks href=#hl-45-13>13</a>
+</span><span class=lnt id=hl-45-14><a class=lnlinks href=#hl-45-14>14</a>
+</span><span class=lnt id=hl-45-15><a class=lnlinks href=#hl-45-15>15</a>
+</span><span class=lnt id=hl-45-16><a class=lnlinks href=#hl-45-16>16</a>
+</span><span class=lnt id=hl-45-17><a class=lnlinks href=#hl-45-17>17</a>
+</span><span class=lnt id=hl-45-18><a class=lnlinks href=#hl-45-18>18</a>
+</span><span class=lnt id=hl-45-19><a class=lnlinks href=#hl-45-19>19</a>
+</span><span class=lnt id=hl-45-20><a class=lnlinks href=#hl-45-20>20</a>
+</span><span class=lnt id=hl-45-21><a class=lnlinks href=#hl-45-21>21</a>
+</span><span class=lnt id=hl-45-22><a class=lnlinks href=#hl-45-22>22</a>
+</span><span class=lnt id=hl-45-23><a class=lnlinks href=#hl-45-23>23</a>
+</span><span class=lnt id=hl-45-24><a class=lnlinks href=#hl-45-24>24</a>
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-lua data-lang=lua><span class=line><span class=cl><span class=n>GameObject</span> <span class=o>=</span> <span class=n>CS.UnityEngine</span><span class=p>.</span><span class=n>GameObject</span>
+</span></span><span class=line><span class=cl><span class=n>WaitForSeconds</span> <span class=o>=</span> <span class=n>CS.UntiyEngine</span><span class=p>.</span><span class=n>WaitForSeconds</span>
+</span></span><span class=line><span class=cl><span class=c1>-- Xlua提供了一个工具表</span>
+</span></span><span class=line><span class=cl><span class=c1>-- 里面有很多方法供我们使用</span>
+</span></span><span class=line><span class=cl><span class=n>util</span> <span class=o>=</span> <span class=n>require</span><span class=p>(</span><span class=s2>&#34;xlua.util&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=c1>-- 在场景中新建一个空物体 然后挂一个脚本上去</span>
+</span></span><span class=line><span class=cl><span class=kd>local</span> <span class=n>obj</span> <span class=o>=</span> <span class=n>GameObject</span><span class=p>(</span><span class=s2>&#34;携程&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=kd>local</span> <span class=n>mono</span> <span class=o>=</span> <span class=n>obj</span><span class=p>:</span><span class=n>AddComponent</span><span class=p>(</span><span class=n>typeof</span><span class=p>(</span><span class=n>CS.Test</span><span class=p>))</span>
+</span></span><span class=line><span class=cl><span class=c1>-- 希望被开启的携程函数</span>
+</span></span><span class=line><span class=cl><span class=n>fun</span> <span class=o>=</span> <span class=kr>function</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>    <span class=kd>local</span> <span class=n>a</span> <span class=o>=</span> <span class=mi>1</span>
+</span></span><span class=line><span class=cl>    <span class=kr>while</span> <span class=kc>true</span> <span class=kr>do</span>
+</span></span><span class=line><span class=cl>        <span class=n>coroutine.yield</span><span class=p>(</span><span class=n>WaitForSecond</span><span class=p>(</span><span class=mi>1</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>        <span class=n>print</span><span class=p>(</span><span class=n>a</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=n>a</span> <span class=o>=</span> <span class=n>a</span><span class=o>+</span><span class=mi>1</span>
+</span></span><span class=line><span class=cl>        <span class=kr>if</span> <span class=n>a</span> <span class=o>&gt;</span> <span class=mi>10</span> 
+</span></span><span class=line><span class=cl>            <span class=c1>--停止携程和C#中一样</span>
+</span></span><span class=line><span class=cl>            <span class=n>mono</span><span class=p>:</span><span class=n>StopCoroutine</span><span class=p>(</span><span class=n>b</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=kr>end</span>
+</span></span><span class=line><span class=cl><span class=kr>end</span>
+</span></span><span class=line><span class=cl><span class=c1>-- 不可以直接将lua函数传入到携程开启的方法中</span>
+</span></span><span class=line><span class=cl><span class=c1>-- mono:StartCoroution(fun)</span>
+</span></span><span class=line><span class=cl><span class=c1>-- 需要使用xlua.util中的cs_generator(lua函数)</span>
+</span></span><span class=line><span class=cl><span class=n>b</span> <span class=o>=</span> <span class=n>mono</span><span class=p>:</span><span class=n>StartCoroution</span><span class=p>(</span><span class=n>util.cs_generator</span><span class=p>(</span><span class=n>fun</span><span class=p>))</span></span></span></code></pre></td></tr></table></div></div><h3 id=调用泛型方法>调用泛型方法
+<a class=header-anchor href=#%e8%b0%83%e7%94%a8%e6%b3%9b%e5%9e%8b%e6%96%b9%e6%b3%95></a></h3><ul><li>lua支持 有约束 有参数 并且参数是泛型的泛型函数</li><li>lua中不支持 没有约束的泛型函数</li><li>lua中不支持有约束 但是没有参数的泛型函数</li><li>lua中不支持 非class的约束</li></ul><p>xlua提供了 让上面不支持使用的泛型函数 变得能用</p><p>得到通用函数 设置泛型类型 再使用</p><p><code>xlua.get_generic_method(类，函数名)</code></p><p><strong>注意：</strong></p><p>有一定的限制</p><ul><li>Mono打包 这种方式支持</li><li>il2cpp打包 泛型参数是引用类型 才可以使用</li><li>il2cpp打包 如果泛型参数是值类型 除非C#那边已经调用过了 同类型的泛型参数 lua中才可以被使用</li></ul><p>C#类：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt id=hl-46-1><a class=lnlinks href=#hl-46-1>1</a>
+</span><span class=lnt id=hl-46-2><a class=lnlinks href=#hl-46-2>2</a>
+</span><span class=lnt id=hl-46-3><a class=lnlinks href=#hl-46-3>3</a>
+</span><span class=lnt id=hl-46-4><a class=lnlinks href=#hl-46-4>4</a>
+</span><span class=lnt id=hl-46-5><a class=lnlinks href=#hl-46-5>5</a>
+</span><span class=lnt id=hl-46-6><a class=lnlinks href=#hl-46-6>6</a>
+</span><span class=lnt id=hl-46-7><a class=lnlinks href=#hl-46-7>7</a>
+</span><span class=lnt id=hl-46-8><a class=lnlinks href=#hl-46-8>8</a>
+</span><span class=lnt id=hl-46-9><a class=lnlinks href=#hl-46-9>9</a>
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-C# data-lang=C#><span class=line><span class=cl><span class=kd>public</span> <span class=k>class</span> <span class=nc>Test</span>
+</span></span><span class=line><span class=cl><span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=c1>//lua可以直接调用</span>
+</span></span><span class=line><span class=cl>    <span class=kd>public</span> <span class=k>void</span> <span class=n>TestFun1</span><span class=p>&lt;</span><span class=n>T</span><span class=p>&gt;(</span><span class=n>T</span> <span class=n>a</span><span class=p>)</span> <span class=k>where</span> <span class=n>T</span><span class=p>:</span><span class=n>GameObject</span> <span class=p>{</span><span class=n>Debug</span><span class=p>.</span><span class=n>Log</span><span class=p>(</span><span class=s>&#34;有参数有约束&#34;</span><span class=p>)}</span>
+</span></span><span class=line><span class=cl>    <span class=c1>//lua不可以直接调用的</span>
+</span></span><span class=line><span class=cl>    <span class=kd>public</span> <span class=k>void</span> <span class=n>TestFun2</span><span class=p>&lt;</span><span class=n>T</span><span class=p>&gt;(</span><span class=n>T</span> <span class=n>a</span><span class=p>){</span><span class=n>Debug</span><span class=p>.</span><span class=n>Log</span><span class=p>(</span><span class=s>&#34;有参数 没有约束&#34;</span><span class=p>)}</span>
+</span></span><span class=line><span class=cl>    <span class=kd>public</span> <span class=k>void</span> <span class=n>TestFun3</span><span class=p>&lt;</span><span class=n>T</span><span class=p>&gt;()</span> <span class=k>where</span> <span class=n>T</span><span class=p>:</span><span class=n>GameObject</span> <span class=p>{</span><span class=n>Debug</span><span class=p>.</span><span class=n>Log</span><span class=p>(</span><span class=s>&#34;无参数 有约束&#34;</span><span class=p>)}</span>
+</span></span><span class=line><span class=cl>    <span class=kd>public</span> <span class=k>void</span> <span class=n>TestFun4</span><span class=p>&lt;</span><span class=n>T</span><span class=p>&gt;(</span><span class=n>T</span> <span class=n>a</span><span class=p>)</span> <span class=k>where</span> <span class=n>T</span><span class=p>:</span><span class=n>IList</span> <span class=p>{</span><span class=n>Debug</span><span class=p>.</span><span class=n>Log</span><span class=p>(</span><span class=s>&#34;有参数和约束 但不是类&#34;</span><span class=p>)}</span>
+</span></span><span class=line><span class=cl><span class=p>}</span></span></span></code></pre></td></tr></table></div></div><p>lua类：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt id=hl-47-1><a class=lnlinks href=#hl-47-1>1</a>
+</span><span class=lnt id=hl-47-2><a class=lnlinks href=#hl-47-2>2</a>
+</span><span class=lnt id=hl-47-3><a class=lnlinks href=#hl-47-3>3</a>
+</span><span class=lnt id=hl-47-4><a class=lnlinks href=#hl-47-4>4</a>
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-lua data-lang=lua><span class=line><span class=cl><span class=kd>local</span> <span class=n>obj</span> <span class=o>=</span> <span class=n>CS.Test</span><span class=p>()</span>
+</span></span><span class=line><span class=cl><span class=kd>local</span> <span class=n>testFun2</span> <span class=o>=</span> <span class=n>xlua.get_generic_method</span><span class=p>(</span><span class=n>CS.Test</span><span class=p>,</span><span class=s2>&#34;TestFun2&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=kd>local</span> <span class=n>testFun2_R</span> <span class=o>=</span> <span class=n>testFun</span><span class=p>(</span><span class=n>CS.System</span><span class=p>.</span><span class=n>Int32</span><span class=p>)</span> <span class=c1>--指定泛型类型</span>
+</span></span><span class=line><span class=cl><span class=n>testFun2_R</span><span class=p>(</span><span class=n>obj</span><span class=p>,</span><span class=mi>2</span><span class=p>)</span> <span class=c1>-- 第一个参数传调用函数的对象 第二个参数传入参数</span></span></span></code></pre></td></tr></table></div></div><h2 id=特殊问题>特殊问题
+<a class=header-anchor href=#%e7%89%b9%e6%ae%8a%e9%97%ae%e9%a2%98></a></h2><h3 id=lua中的nil和cnull-不是相等的>lua中的nil和C#null 不是相等的
+<a class=header-anchor href=#lua%e4%b8%ad%e7%9a%84nil%e5%92%8ccnull-%e4%b8%8d%e6%98%af%e7%9b%b8%e7%ad%89%e7%9a%84></a></h3><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt id=hl-48-1><a class=lnlinks href=#hl-48-1> 1</a>
+</span><span class=lnt id=hl-48-2><a class=lnlinks href=#hl-48-2> 2</a>
+</span><span class=lnt id=hl-48-3><a class=lnlinks href=#hl-48-3> 3</a>
+</span><span class=lnt id=hl-48-4><a class=lnlinks href=#hl-48-4> 4</a>
+</span><span class=lnt id=hl-48-5><a class=lnlinks href=#hl-48-5> 5</a>
+</span><span class=lnt id=hl-48-6><a class=lnlinks href=#hl-48-6> 6</a>
+</span><span class=lnt id=hl-48-7><a class=lnlinks href=#hl-48-7> 7</a>
+</span><span class=lnt id=hl-48-8><a class=lnlinks href=#hl-48-8> 8</a>
+</span><span class=lnt id=hl-48-9><a class=lnlinks href=#hl-48-9> 9</a>
+</span><span class=lnt id=hl-48-10><a class=lnlinks href=#hl-48-10>10</a>
+</span><span class=lnt id=hl-48-11><a class=lnlinks href=#hl-48-11>11</a>
+</span><span class=lnt id=hl-48-12><a class=lnlinks href=#hl-48-12>12</a>
+</span><span class=lnt id=hl-48-13><a class=lnlinks href=#hl-48-13>13</a>
+</span><span class=lnt id=hl-48-14><a class=lnlinks href=#hl-48-14>14</a>
+</span><span class=lnt id=hl-48-15><a class=lnlinks href=#hl-48-15>15</a>
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-c# data-lang=c#><span class=line><span class=cl><span class=n>GameObject</span> <span class=p>=</span> <span class=n>CS</span><span class=p>.</span><span class=n>UnityEngine</span><span class=p>.</span><span class=n>GameObject</span>
+</span></span><span class=line><span class=cl><span class=n>Rigidbody</span> <span class=p>=</span> <span class=n>CS</span><span class=p>.</span><span class=n>UnityEngine</span><span class=p>.</span><span class=n>Rigibody</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>local</span> <span class=n>obj</span> <span class=p>=</span> <span class=n>GameObject</span><span class=p>(</span><span class=s>&#34;Test&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=n>local</span> <span class=n>rig</span> <span class=p>=</span> <span class=n>obj</span><span class=p>:</span><span class=n>GatComponent</span><span class=p>(</span><span class=k>typeof</span><span class=p>(</span><span class=n>Rigidbody</span><span class=p>))</span>
+</span></span><span class=line><span class=cl><span class=n>print</span><span class=p>(</span><span class=n>rig</span><span class=p>)</span> <span class=p>--</span><span class=kc>null</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>if</span> <span class=n>rig</span> <span class=p>==</span> <span class=n>nil</span> <span class=n>then</span>
+</span></span><span class=line><span class=cl>    <span class=n>rig</span> <span class=p>=</span> <span class=n>obj</span><span class=p>:</span><span class=n>AddComponent</span><span class=p>(</span><span class=k>typeof</span><span class=p>(</span><span class=n>Rigidbody</span><span class=p>))</span>
+</span></span><span class=line><span class=cl><span class=n>end</span>
+</span></span><span class=line><span class=cl><span class=n>print</span><span class=p>(</span><span class=n>rig</span><span class=p>)</span> <span class=p>--</span><span class=kc>null</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>if</span> <span class=n>rig</span><span class=p>:</span><span class=n>Equals</span><span class=p>(</span><span class=n>nil</span><span class=p>)</span> <span class=n>then</span>  <span class=p>--</span> <span class=err>调用</span><span class=n>Object中的方法Equals进行比较</span> <span class=err>前提是对象是一个</span><span class=n>Object</span>
+</span></span><span class=line><span class=cl>    <span class=n>rig</span> <span class=p>=</span> <span class=n>obj</span><span class=p>:</span><span class=n>AddComponent</span><span class=p>(</span><span class=k>typeof</span><span class=p>(</span><span class=n>Rigidbody</span><span class=p>))</span>
+</span></span><span class=line><span class=cl><span class=n>end</span></span></span></code></pre></td></tr></table></div></div><p>保险的判断方式</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt id=hl-49-1><a class=lnlinks href=#hl-49-1>1</a>
+</span><span class=lnt id=hl-49-2><a class=lnlinks href=#hl-49-2>2</a>
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-lua data-lang=lua><span class=line><span class=cl><span class=kr>if</span> <span class=n>rig</span> <span class=o>==</span> <span class=kc>nil</span> <span class=ow>or</span> <span class=n>rig</span><span class=p>:</span><span class=n>Equals</span><span class=p>(</span><span class=kc>nil</span><span class=p>)</span> <span class=kr>then</span>
+</span></span><span class=line><span class=cl><span class=kr>end</span></span></span></code></pre></td></tr></table></div></div><h3 id=让系统类型和lua互相访问>让系统类型和Lua互相访问
+<a class=header-anchor href=#%e8%ae%a9%e7%b3%bb%e7%bb%9f%e7%b1%bb%e5%9e%8b%e5%92%8clua%e4%ba%92%e7%9b%b8%e8%ae%bf%e9%97%ae></a></h3><p>在lua中为<code>Slider</code>添加事件 会报错</p><p>因为 <code>AddListener</code>中的参数类型为<code>UnityAction</code></p><p><code>UnityAction</code>是系统提供的委托 我们无法直接为系统类添加<code>[CSharpCallLua]</code>特性</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt id=hl-50-1><a class=lnlinks href=#hl-50-1> 1</a>
+</span><span class=lnt id=hl-50-2><a class=lnlinks href=#hl-50-2> 2</a>
+</span><span class=lnt id=hl-50-3><a class=lnlinks href=#hl-50-3> 3</a>
+</span><span class=lnt id=hl-50-4><a class=lnlinks href=#hl-50-4> 4</a>
+</span><span class=lnt id=hl-50-5><a class=lnlinks href=#hl-50-5> 5</a>
+</span><span class=lnt id=hl-50-6><a class=lnlinks href=#hl-50-6> 6</a>
+</span><span class=lnt id=hl-50-7><a class=lnlinks href=#hl-50-7> 7</a>
+</span><span class=lnt id=hl-50-8><a class=lnlinks href=#hl-50-8> 8</a>
+</span><span class=lnt id=hl-50-9><a class=lnlinks href=#hl-50-9> 9</a>
+</span><span class=lnt id=hl-50-10><a class=lnlinks href=#hl-50-10>10</a>
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-c# data-lang=c#><span class=line><span class=cl><span class=n>GameObject</span> <span class=p>=</span> <span class=n>CS</span><span class=p>.</span><span class=n>UnityEngine</span><span class=p>.</span><span class=n>GameObject</span>
+</span></span><span class=line><span class=cl><span class=n>UI</span> <span class=p>=</span> <span class=n>CS</span><span class=p>.</span><span class=n>UnityEngine</span><span class=p>.</span><span class=n>UI</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>local</span> <span class=n>slider</span> <span class=p>=</span> <span class=n>GameObject</span><span class=p>.</span><span class=n>Find</span><span class=p>(</span><span class=s>&#34;Slider&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=n>print</span><span class=p>(</span><span class=n>slider</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=n>local</span> <span class=n>sliderScript</span> <span class=p>=</span> <span class=n>slider</span><span class=p>:</span><span class=n>GetComponent</span><span class=p>(</span><span class=k>typeof</span><span class=p>(</span><span class=n>UI</span><span class=p>.</span><span class=n>Slider</span><span class=p>))</span>
+</span></span><span class=line><span class=cl><span class=n>print</span><span class=p>(</span><span class=n>sliderScript</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=n>sliderScript</span><span class=p>.</span><span class=n>onValueChanged</span><span class=p>:</span><span class=n>AddListener</span><span class=p>(</span><span class=n>function</span><span class=p>(</span><span class=n>f</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=n>print</span><span class=p>(</span><span class=n>f</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=n>end</span><span class=p>)</span></span></span></code></pre></td></tr></table></div></div><p>为系统类型添加特性</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt id=hl-51-1><a class=lnlinks href=#hl-51-1> 1</a>
+</span><span class=lnt id=hl-51-2><a class=lnlinks href=#hl-51-2> 2</a>
+</span><span class=lnt id=hl-51-3><a class=lnlinks href=#hl-51-3> 3</a>
+</span><span class=lnt id=hl-51-4><a class=lnlinks href=#hl-51-4> 4</a>
+</span><span class=lnt id=hl-51-5><a class=lnlinks href=#hl-51-5> 5</a>
+</span><span class=lnt id=hl-51-6><a class=lnlinks href=#hl-51-6> 6</a>
+</span><span class=lnt id=hl-51-7><a class=lnlinks href=#hl-51-7> 7</a>
+</span><span class=lnt id=hl-51-8><a class=lnlinks href=#hl-51-8> 8</a>
+</span><span class=lnt id=hl-51-9><a class=lnlinks href=#hl-51-9> 9</a>
+</span><span class=lnt id=hl-51-10><a class=lnlinks href=#hl-51-10>10</a>
+</span><span class=lnt id=hl-51-11><a class=lnlinks href=#hl-51-11>11</a>
+</span><span class=lnt id=hl-51-12><a class=lnlinks href=#hl-51-12>12</a>
+</span><span class=lnt id=hl-51-13><a class=lnlinks href=#hl-51-13>13</a>
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-c# data-lang=c#><span class=line><span class=cl><span class=kd>public</span> <span class=kd>static</span> <span class=k>class</span> <span class=nc>Test</span>
+</span></span><span class=line><span class=cl><span class=p>{</span>
+</span></span><span class=line><span class=cl><span class=na>    [CSharpCallLua]</span>
+</span></span><span class=line><span class=cl>    <span class=kd>public</span> <span class=kd>static</span> <span class=n>List</span><span class=p>&lt;</span><span class=n>Type</span><span class=p>&gt;</span> <span class=n>csharpCallLuaList</span> <span class=p>=</span> <span class=k>new</span> <span class=n>List</span><span class=p>&lt;</span><span class=n>Type</span><span class=p>&gt;()</span>
+</span></span><span class=line><span class=cl>    <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=k>typeof</span><span class=p>(</span><span class=n>UnityAction</span><span class=p>&lt;</span><span class=kt>float</span><span class=p>&gt;)</span>
+</span></span><span class=line><span class=cl>    <span class=p>};</span>
+</span></span><span class=line><span class=cl><span class=na>    [LuaCallCSharp]</span>
+</span></span><span class=line><span class=cl>    <span class=kd>public</span> <span class=kd>static</span> <span class=n>List</span><span class=p>&lt;</span><span class=n>Type</span><span class=p>&gt;</span> <span class=n>LuaCallCSharpList</span> <span class=p>=</span> <span class=k>new</span> <span class=n>List</span><span class=p>&lt;</span><span class=n>Type</span><span class=p>&gt;()</span>
+</span></span><span class=line><span class=cl>    <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=k>typeof</span><span class=p>(</span><span class=n>GameObject</span><span class=p>),</span><span class=k>typeof</span><span class=p>(</span><span class=n>Rigidbody</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=p>};</span>
+</span></span><span class=line><span class=cl><span class=p>}</span></span></span></code></pre></td></tr></table></div></div><p>注意：一定要是静态类 和静态List 并且要重新生成代码</p><h2 id=热补丁>热补丁
+<a class=header-anchor href=#%e7%83%ad%e8%a1%a5%e4%b8%81></a></h2><ol><li><p>在C#脚本中添加特性<code>[Hotfix]</code></p></li><li><p>添加宏 第一次开发热补丁时需要加<br>Project Settings->Player->Scritping Define Symbols->添加<code>HOTFIX_ENABLE</code></p></li><li><p>生成代码</p></li><li><p><code>hotfix</code> 注入 注入时可能报错 提示要引入tools</p><p>将Tools文件夹 拷贝到 Asset文件夹同级的目录下（工程文件夹根目录）</p></li></ol><p>热补丁的缺点：只要我们修改了热补丁类的代码，我们就需要重新执行第4步</p><p><strong>替换函数</strong></p><p>lua当中 热补丁代码固定写法</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt id=hl-52-1><a class=lnlinks href=#hl-52-1>1</a>
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-lua data-lang=lua><span class=line><span class=cl><span class=n>xlua.hotfix</span><span class=p>(</span><span class=err>类</span><span class=p>,</span> <span class=s2>&#34;函数名&#34;</span><span class=p>,</span> <span class=n>lua函数</span><span class=p>)</span><span class=c1>--如果是成员函数 在参数中添加self</span></span></span></code></pre></td></tr></table></div></div><p><strong>替换构造函数</strong></p><p>构造函数和别的函数不同 不是替换原有逻辑 而是先调用原有逻辑 在调用lua逻辑</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt id=hl-53-1><a class=lnlinks href=#hl-53-1>1</a>
+</span><span class=lnt id=hl-53-2><a class=lnlinks href=#hl-53-2>2</a>
+</span><span class=lnt id=hl-53-3><a class=lnlinks href=#hl-53-3>3</a>
+</span><span class=lnt id=hl-53-4><a class=lnlinks href=#hl-53-4>4</a>
+</span><span class=lnt id=hl-53-5><a class=lnlinks href=#hl-53-5>5</a>
+</span><span class=lnt id=hl-53-6><a class=lnlinks href=#hl-53-6>6</a>
+</span><span class=lnt id=hl-53-7><a class=lnlinks href=#hl-53-7>7</a>
+</span><span class=lnt id=hl-53-8><a class=lnlinks href=#hl-53-8>8</a>
+</span><span class=lnt id=hl-53-9><a class=lnlinks href=#hl-53-9>9</a>
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-c# data-lang=c#><span class=line><span class=cl><span class=n>xlua</span><span class=p>.</span><span class=n>hotfix</span><span class=p>(</span><span class=n>CS</span><span class=p>.</span><span class=n>HotfixTest</span><span class=p>,{--</span> <span class=err>替换多个函数</span> <span class=err>通过表</span>
+</span></span><span class=line><span class=cl><span class=na>        [&#34;.ctor&#34;]</span> <span class=p>=</span> <span class=n>function</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>            <span class=n>print</span><span class=p>(</span><span class=s>&#34;lua热补丁构造函数&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=n>end</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=p>--</span> <span class=err>析构函数</span>
+</span></span><span class=line><span class=cl>        <span class=n>Finalize</span> <span class=p>=</span> <span class=n>function</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>            <span class=n>print</span><span class=p>(</span><span class=s>&#34;lua热补丁析构函数&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=n>end</span>
+</span></span><span class=line><span class=cl><span class=p>})</span></span></span></code></pre></td></tr></table></div></div><p><strong>替换携程函数</strong></p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt id=hl-54-1><a class=lnlinks href=#hl-54-1> 1</a>
+</span><span class=lnt id=hl-54-2><a class=lnlinks href=#hl-54-2> 2</a>
+</span><span class=lnt id=hl-54-3><a class=lnlinks href=#hl-54-3> 3</a>
+</span><span class=lnt id=hl-54-4><a class=lnlinks href=#hl-54-4> 4</a>
+</span><span class=lnt id=hl-54-5><a class=lnlinks href=#hl-54-5> 5</a>
+</span><span class=lnt id=hl-54-6><a class=lnlinks href=#hl-54-6> 6</a>
+</span><span class=lnt id=hl-54-7><a class=lnlinks href=#hl-54-7> 7</a>
+</span><span class=lnt id=hl-54-8><a class=lnlinks href=#hl-54-8> 8</a>
+</span><span class=lnt id=hl-54-9><a class=lnlinks href=#hl-54-9> 9</a>
+</span><span class=lnt id=hl-54-10><a class=lnlinks href=#hl-54-10>10</a>
+</span><span class=lnt id=hl-54-11><a class=lnlinks href=#hl-54-11>11</a>
+</span><span class=lnt id=hl-54-12><a class=lnlinks href=#hl-54-12>12</a>
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-lua data-lang=lua><span class=line><span class=cl><span class=c1>-- 如果要使用携程函数 就要使用Xlua提供的工具表</span>
+</span></span><span class=line><span class=cl><span class=n>util</span> <span class=o>=</span> <span class=n>require</span><span class=p>(</span><span class=s2>&#34;xlua.util&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=n>xlua.hotfix</span><span class=p>(</span><span class=n>CS.HotfinxTest</span><span class=p>,{</span>
+</span></span><span class=line><span class=cl>    <span class=n>TestCoroution</span> <span class=o>=</span> <span class=kr>function</span><span class=p>(</span><span class=n>self</span><span class=p>)</span> <span class=c1>--携程函数也算是成员属性</span>
+</span></span><span class=line><span class=cl>        <span class=kr>return</span> <span class=n>util.cs_generator</span><span class=p>(</span><span class=kr>function</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>            <span class=kr>while</span> <span class=kc>true</span> <span class=kr>do</span>
+</span></span><span class=line><span class=cl>                <span class=n>coroutine.yield</span><span class=p>(</span><span class=n>CS.UnityEngine</span><span class=p>.</span><span class=n>WaitForSeconds</span><span class=p>(</span><span class=mi>1</span><span class=p>))</span> <span class=c1>--等1秒</span>
+</span></span><span class=line><span class=cl>                <span class=n>print</span><span class=p>(</span><span class=s2>&#34;lua替换c#的携程函数&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>            <span class=kr>end</span>
+</span></span><span class=line><span class=cl>        <span class=kr>end</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=kr>end</span>
+</span></span><span class=line><span class=cl><span class=p>})</span></span></span></code></pre></td></tr></table></div></div><p><strong>替换成员属性</strong></p><p>如果是属性进行热补丁重定向</p><ul><li>set_属性名 设置属性的方法</li><li>get_属性名 得到属性的方法</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt id=hl-55-1><a class=lnlinks href=#hl-55-1>1</a>
+</span><span class=lnt id=hl-55-2><a class=lnlinks href=#hl-55-2>2</a>
+</span><span class=lnt id=hl-55-3><a class=lnlinks href=#hl-55-3>3</a>
+</span><span class=lnt id=hl-55-4><a class=lnlinks href=#hl-55-4>4</a>
+</span><span class=lnt id=hl-55-5><a class=lnlinks href=#hl-55-5>5</a>
+</span><span class=lnt id=hl-55-6><a class=lnlinks href=#hl-55-6>6</a>
+</span><span class=lnt id=hl-55-7><a class=lnlinks href=#hl-55-7>7</a>
+</span><span class=lnt id=hl-55-8><a class=lnlinks href=#hl-55-8>8</a>
+</span><span class=lnt id=hl-55-9><a class=lnlinks href=#hl-55-9>9</a>
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-c# data-lang=c#><span class=line><span class=cl><span class=n>xlua</span><span class=p>.</span><span class=n>hotfix</span><span class=p>(</span><span class=n>CS</span><span class=p>.</span><span class=n>HotfinxTest</span><span class=p>,</span>
+</span></span><span class=line><span class=cl><span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=n>set_Age</span> <span class=p>=</span> <span class=n>function</span><span class=p>(</span><span class=n>self</span><span class=p>,</span><span class=n>v</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=n>print</span><span class=p>(</span><span class=s>&#34;lua重定向的属性&#34;</span><span class=p>..</span><span class=n>v</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=n>end</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>    <span class=n>get_Age</span> <span class=p>=</span> <span class=n>function</span><span class=p>(</span><span class=n>self</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=k>return</span> <span class=m>10</span>
+</span></span><span class=line><span class=cl>    <span class=n>end</span>
+</span></span><span class=line><span class=cl><span class=p>})</span></span></span></code></pre></td></tr></table></div></div><p><strong>替换索引器</strong></p><ul><li>set_Item 索引器设置</li><li>get_Item 索引器获取</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt id=hl-56-1><a class=lnlinks href=#hl-56-1> 1</a>
+</span><span class=lnt id=hl-56-2><a class=lnlinks href=#hl-56-2> 2</a>
+</span><span class=lnt id=hl-56-3><a class=lnlinks href=#hl-56-3> 3</a>
+</span><span class=lnt id=hl-56-4><a class=lnlinks href=#hl-56-4> 4</a>
+</span><span class=lnt id=hl-56-5><a class=lnlinks href=#hl-56-5> 5</a>
+</span><span class=lnt id=hl-56-6><a class=lnlinks href=#hl-56-6> 6</a>
+</span><span class=lnt id=hl-56-7><a class=lnlinks href=#hl-56-7> 7</a>
+</span><span class=lnt id=hl-56-8><a class=lnlinks href=#hl-56-8> 8</a>
+</span><span class=lnt id=hl-56-9><a class=lnlinks href=#hl-56-9> 9</a>
+</span><span class=lnt id=hl-56-10><a class=lnlinks href=#hl-56-10>10</a>
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-c# data-lang=c#><span class=line><span class=cl><span class=n>xlua</span><span class=p>.</span><span class=n>hotfix</span><span class=p>(</span><span class=n>CS</span><span class=p>.</span><span class=n>HotfinxTest</span><span class=p>,</span>
+</span></span><span class=line><span class=cl><span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=n>set_Item</span> <span class=p>=</span> <span class=n>function</span><span class=p>(</span><span class=n>self</span><span class=p>,</span><span class=n>index</span><span class=p>,</span><span class=n>v</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=n>print</span><span class=p>(</span><span class=s>&#34;设置索引器索引：&#34;</span><span class=p>..</span><span class=n>index</span><span class=p>..</span><span class=s>&#34;值&#34;</span><span class=p>..</span><span class=n>v</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=n>end</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>    <span class=n>get_Item</span> <span class=p>=</span> <span class=n>function</span><span class=p>(</span><span class=n>self</span><span class=p>,</span><span class=n>index</span><span class=p>,</span><span class=n>v</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=n>print</span><span class=p>(</span><span class=s>&#34;获取索引器索引：&#34;</span><span class=p>..</span><span class=n>index</span><span class=p>..</span><span class=s>&#34;值&#34;</span><span class=p>..</span><span class=n>v</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=k>return</span> <span class=m>99</span>
+</span></span><span class=line><span class=cl>    <span class=n>end</span>
+</span></span><span class=line><span class=cl><span class=p>})</span></span></span></code></pre></td></tr></table></div></div><p><strong>替换事件操作</strong></p><p>一般不会使用</p><ul><li>add_事件名 代表事件添加操作</li><li>remove_事件名 代表事件减操作</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt id=hl-57-1><a class=lnlinks href=#hl-57-1> 1</a>
+</span><span class=lnt id=hl-57-2><a class=lnlinks href=#hl-57-2> 2</a>
+</span><span class=lnt id=hl-57-3><a class=lnlinks href=#hl-57-3> 3</a>
+</span><span class=lnt id=hl-57-4><a class=lnlinks href=#hl-57-4> 4</a>
+</span><span class=lnt id=hl-57-5><a class=lnlinks href=#hl-57-5> 5</a>
+</span><span class=lnt id=hl-57-6><a class=lnlinks href=#hl-57-6> 6</a>
+</span><span class=lnt id=hl-57-7><a class=lnlinks href=#hl-57-7> 7</a>
+</span><span class=lnt id=hl-57-8><a class=lnlinks href=#hl-57-8> 8</a>
+</span><span class=lnt id=hl-57-9><a class=lnlinks href=#hl-57-9> 9</a>
+</span><span class=lnt id=hl-57-10><a class=lnlinks href=#hl-57-10>10</a>
+</span><span class=lnt id=hl-57-11><a class=lnlinks href=#hl-57-11>11</a>
+</span><span class=lnt id=hl-57-12><a class=lnlinks href=#hl-57-12>12</a>
+</span><span class=lnt id=hl-57-13><a class=lnlinks href=#hl-57-13>13</a>
+</span><span class=lnt id=hl-57-14><a class=lnlinks href=#hl-57-14>14</a>
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-c# data-lang=c#><span class=line><span class=cl><span class=n>xlua</span><span class=p>.</span><span class=n>hotfix</span><span class=p>(</span><span class=n>CS</span><span class=p>.</span><span class=n>HotfinxTest</span><span class=p>,</span>
+</span></span><span class=line><span class=cl><span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=n>add_myEvent</span> <span class=p>=</span> <span class=n>function</span><span class=p>(</span><span class=n>self</span><span class=p>,</span><span class=n>del</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=n>print</span><span class=p>(</span><span class=n>del</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=n>print</span><span class=p>(</span><span class=s>&#34;添加事件函数&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=p>--</span> <span class=err>不要把传入的函数往委托事件里存</span> <span class=err>不然会死循环</span>
+</span></span><span class=line><span class=cl>        <span class=p>--</span> <span class=n>self</span><span class=p>:</span><span class=n>myEvent</span><span class=p>(</span><span class=s>&#34;+&#34;</span><span class=p>,</span><span class=n>del</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=p>--</span> <span class=err>要把传入的函数存入</span><span class=n>lua中</span>
+</span></span><span class=line><span class=cl>    <span class=n>end</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>    <span class=n>remove_myEvent</span> <span class=p>=</span> <span class=n>function</span><span class=p>(</span><span class=n>self</span><span class=p>,</span><span class=n>del</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=n>print</span><span class=p>(</span><span class=n>del</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=n>print</span><span class=p>(</span><span class=s>&#34;减事件函数&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=n>end</span>
+</span></span><span class=line><span class=cl><span class=p>})</span></span></span></code></pre></td></tr></table></div></div><p><strong>替换泛型类</strong></p><p>lua中替换泛型类 要一个类型一个类型的来</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt id=hl-58-1><a class=lnlinks href=#hl-58-1>1</a>
+</span><span class=lnt id=hl-58-2><a class=lnlinks href=#hl-58-2>2</a>
+</span><span class=lnt id=hl-58-3><a class=lnlinks href=#hl-58-3>3</a>
+</span><span class=lnt id=hl-58-4><a class=lnlinks href=#hl-58-4>4</a>
+</span><span class=lnt id=hl-58-5><a class=lnlinks href=#hl-58-5>5</a>
+</span><span class=lnt id=hl-58-6><a class=lnlinks href=#hl-58-6>6</a>
+</span><span class=lnt id=hl-58-7><a class=lnlinks href=#hl-58-7>7</a>
+</span><span class=lnt id=hl-58-8><a class=lnlinks href=#hl-58-8>8</a>
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-c# data-lang=c#><span class=line><span class=cl><span class=na>[Hotfix]</span>
+</span></span><span class=line><span class=cl><span class=kd>public</span> <span class=k>class</span> <span class=nc>HotfixTest2</span><span class=p>&lt;</span><span class=n>T</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl><span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=kd>public</span> <span class=k>void</span> <span class=n>Test</span><span class=p>(</span><span class=n>T</span> <span class=n>str</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=n>Debug</span><span class=p>.</span><span class=n>Log</span><span class=p>(</span><span class=n>str</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>}</span></span></span></code></pre></td></tr></table></div></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt id=hl-59-1><a class=lnlinks href=#hl-59-1> 1</a>
+</span><span class=lnt id=hl-59-2><a class=lnlinks href=#hl-59-2> 2</a>
+</span><span class=lnt id=hl-59-3><a class=lnlinks href=#hl-59-3> 3</a>
+</span><span class=lnt id=hl-59-4><a class=lnlinks href=#hl-59-4> 4</a>
+</span><span class=lnt id=hl-59-5><a class=lnlinks href=#hl-59-5> 5</a>
+</span><span class=lnt id=hl-59-6><a class=lnlinks href=#hl-59-6> 6</a>
+</span><span class=lnt id=hl-59-7><a class=lnlinks href=#hl-59-7> 7</a>
+</span><span class=lnt id=hl-59-8><a class=lnlinks href=#hl-59-8> 8</a>
+</span><span class=lnt id=hl-59-9><a class=lnlinks href=#hl-59-9> 9</a>
+</span><span class=lnt id=hl-59-10><a class=lnlinks href=#hl-59-10>10</a>
+</span><span class=lnt id=hl-59-11><a class=lnlinks href=#hl-59-11>11</a>
+</span><span class=lnt id=hl-59-12><a class=lnlinks href=#hl-59-12>12</a>
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-c# data-lang=c#><span class=line><span class=cl><span class=n>xlua</span><span class=p>.</span><span class=n>hotfix</span><span class=p>(</span><span class=n>CS</span><span class=p>.</span><span class=n>HotfixTest</span><span class=p>(</span><span class=n>CS</span><span class=p>.</span><span class=n>System</span><span class=p>.</span><span class=n>String</span><span class=p>),</span>
+</span></span><span class=line><span class=cl>    <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=n>Test</span> <span class=p>=</span> <span class=n>function</span><span class=p>(</span><span class=n>self</span><span class=p>,</span> <span class=n>str</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>            <span class=n>print</span><span class=p>(</span><span class=s>&#34;lua中打的补丁&#34;</span><span class=p>..</span><span class=n>str</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=n>end</span>
+</span></span><span class=line><span class=cl>    <span class=p>})</span>
+</span></span><span class=line><span class=cl><span class=n>xlua</span><span class=p>.</span><span class=n>hotfix</span><span class=p>(</span><span class=n>CS</span><span class=p>.</span><span class=n>HotfixTest</span><span class=p>(</span><span class=n>CS</span><span class=p>.</span><span class=n>System</span><span class=p>.</span><span class=n>Int32</span><span class=p>),</span>
+</span></span><span class=line><span class=cl>    <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=n>Test</span> <span class=p>=</span> <span class=n>function</span><span class=p>(</span><span class=n>self</span><span class=p>,</span> <span class=n>str</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>            <span class=n>print</span><span class=p>(</span><span class=s>&#34;lua中打的补丁&#34;</span><span class=p>..</span><span class=n>str</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=n>end</span>
+</span></span><span class=line><span class=cl>    <span class=p>})</span></span></span></code></pre></td></tr></table></div></div></div><footer class=post-footer><div class=post-tags><a href=/tags/xlua/>xlua
+</a><a href=/tags/%E7%83%AD%E6%9B%B4%E6%96%B0/>热更新</a></div><hr><div class=post-copyright><img src=/imgs/cc/cc.svg class=cc-icon width=75 height=75 align=right alt=共享知识 title=共享知识><ul><li class=post-copyright-title><strong>文章标题：</strong>
+xlua</li><li class=post-copyright-author><strong>本文作者： </strong>Rise</li><li class=post-copyright-link><strong>本文链接：</strong>
+<a id=post-cr-link href=https://blogs.qipai360.cn/post/xlua/ title=xlua>https://blogs.qipai360.cn/post/xlua/</a></li><li class=post-copyright-license><strong>版权声明： </strong>本作品采用 <i class="fab fa-fw fa-creative-commons"></i><a target=_blank href=https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh-hans>BY-NC-SA</a> 许可协议。转载请注明出处！</li><li><div class=license-icons><a href=https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh-hans target=_blank><img src=/imgs/cc/big/by_nc_sa.svg alt=BY-NC-SA title=BY-NC-SA>
+</a><a href=https://notbyai.fyi target=_blank><img src=/imgs/notbyai/zh-hans/black.svg title="Not By AI"></a></div></li></ul></div><div class=followme><span>欢迎关注我的其它发布渠道</span><div class=social-list><div class=social-item><a target=_blank class=social-link href=https://www.zhihu.com/people/rise-worlds><span class=icon><i class="fa fa-book"></i>
+</span><span class=label>知乎</span></a></div><div class=social-item><a target=_blank class=social-link href=https://twitter.com/riseworlds><span class=icon><i class="fab fa-twitter"></i>
+</span><span class=label>Twitter</span></a></div><div class=social-item><a target=_blank class=social-link href=https://www.facebook.com/rise.worlds><span class=icon><i class="fab fa-facebook"></i>
+</span><span class=label>facebook</span></a></div><div class=social-item><a target=_blank class=social-link href=https://youtube.com/@YiXuan><span class=icon><i class="fab fa-youtube"></i>
+</span><span class=label>YouTube</span></a></div><div class=social-item><a target=_blank class=social-link href=https://instagram.com/rise.worlds><span class=icon><i class="fab fa-instagram"></i>
+</span><span class=label>Instagram</span></a></div><div class=social-item><a target=_blank class=social-link href=https://t.me/riseworlds><span class=icon><i class="fab fa-telegram"></i>
+</span><span class=label>Telegram</span></a></div></div></div><div class=post-nav><div class="post-nav-next post-nav-item"><a href=/post/set-proxy-with-wsl2/ rel=next title="为 WSL2 一键设置代理"><i class="fa fa-chevron-left"></i> 为 WSL2 一键设置代理</a></div><div class="post-nav-prev post-nav-item"><a href=/post/memoirs-guangzhou/ rel=prev title=回忆录-关于广州二三事>回忆录-关于广州二三事
+<i class="fa fa-chevron-right"></i></a></div></div></footer></article></div><div id=comments class=post-comments><div class=comment-head><div class=comment-headline><i class="fas fa-comments fa-fw"></i>
+<span>评论交流</span></div></div><div class=comment-wrap><div><div class=comment-loading><i class="fa fa-sync fa-spin"></i></div><div class=giscus-container></div></div></div></div></div></main><footer class=footer><div class=footer-inner><div class=copyright>&copy;
+<span itemprop=copyrightYear>2004 - 2026
+</span><span class=with-love><i class="fa fa-heart"></i>
+</span><span class=author itemprop=copyrightHolder>Rise</span></div><div class=powered-by>由 <a href=https://gohugo.io title=0.157.0 target=_blank>Hugo</a> & <a href=https://github.com/hugo-next/hugo-theme-next title=4.8.3 target=_blank>Hugo NexT.Gemini</a> 强力驱动</div><div class=beian><a href=https://beian.miit.gov.cn target=_blank>豫ICP备2021009490号</a>
+<img src=/imgs/gongan.png alt=豫公网安备>
+<a href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=41162302000074" target=_blank>豫公网安备 41162302000074 号</a></div></div></footer><script class=next-config data-name=page type=application/json>{"clipboard":{"js":{"alias":"clipboard","file":"dist/clipboard.min.js","name":"clipboard.js","version":"2.0.11"}},"comments":true,"expired":false,"isHome":false,"isPage":true,"path":"xlua","permalink":"https://blogs.qipai360.cn/post/xlua/","title":"xlua","toc":false,"waline3":{"pagecnt":{"alias":"@waline/client","alias_name":"waline","file":"dist/pageview.js","name":"pageview","version":"3.5.7"}}}</script><script type=text/javascript src=https://blogs.qipai360.cn/js/3rd/animejs/3.2.2/anime.min.js crossorigin=anonymous defer></script><script type=text/javascript src=https://blogs.qipai360.cn/js/3rd/viewerjs/1.11.6/viewer.min.js crossorigin=anonymous defer></script><script class=next-config data-name=main type=application/json>{"bookmark":{"color":"#222","enable":true,"save":"manual"},"copybtn":true,"darkmode":true,"giscus":{"cfg":{"category":"Announcements","categoryid":"DIC_kwDOA6L0YM4CiXf9","emit":false,"inputposition":"top","mapping":"title","reactions":false,"repo":"rise-worlds/rise-worlds.github.io","repoid":"MDEwOlJlcG9zaXRvcnk2MTAxMTA0MA==","theme":"transparent_dark"},"js":"https://giscus.app/client.js"},"hostname":"https://blogs.qipai360.cn/","i18n":{"ds_day":" 天前","ds_days":" 天 ","ds_hour":" 小时前","ds_hours":" 小时 ","ds_just":"刚刚","ds_min":" 分钟前","ds_mins":" 分钟","ds_month":" 个月前","ds_years":" 年 ","empty":"没有找到任何搜索结果：${query}","hits":"找到 ${hits} 个搜索结果","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","placeholder":"搜索..."},"isMultiLang":false,"lang":"zh-CN","lazyload":false,"motion":{"async":true,"enable":true,"transition":{"collheader":"fadeInLeft","postblock":"fadeIn","postbody":"fadeInDown","postheader":"fadeInDown","sidebar":"fadeInUp"}},"postmeta":{"comments":{"enable":false,"plugin":"waline3"},"views":{"enable":true,"plugin":"waline3"}},"root":"/","scheme":"Gemini","share":{"addtoany":{"js":"https://static.addtoany.com/menu/page.js","locale":"zh-CN","num":8},"enable":false},"sidebar":{"display":"post","offset":12,"padding":18,"position":"left","width":256},"vendor":{"plugins":"local","router":{"name":"local","type":"modern","url":"https://blogs.qipai360.cn/js/3rd"}},"version":"4.8.3","waline3":{"cfg":{"emoji":false,"imguploader":false,"placeholder":"请文明发言哟 ヾ(≧▽≦*)o 可用快捷键选取表情符号：😀😄😁🥳👻👽👀🚄 (Window系统：Win+.，Mac系统：Control+Command+Space)","reaction":true,"reactiontext":["点赞","踩一下","得意","不屑","尴尬","睡觉"],"reactiontitle":"你认为这篇文章怎么样？","requiredmeta":["nick","mail"],"search":true,"serverurl":"https://walinejs.comment.lithub.cc","sofa":"快来发表你的意见吧 (≧∀≦)ゞ","wordlimit":200},"css":{"alias":"@waline/client","file":"dist/waline.css","name":"waline","version":"3.5.7"},"js":{"alias":"@waline/client","file":"dist/waline.js","name":"waline","version":"3.5.7"}}}</script><script type=text/javascript src="/js/main.min.js?=1772265585" defer></script><script type=text/javascript src="/js/clipboard.min.js?=1772265590" defer></script></body></html>

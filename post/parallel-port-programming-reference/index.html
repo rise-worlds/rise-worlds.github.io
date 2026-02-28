@@ -1,0 +1,983 @@
+<!doctype html><html lang=zh-CN data-theme=dark><head><meta charset=UTF-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=theme-color content="#222" media="(prefers-color-scheme: dark)"><meta name=generator content="Hugo 0.157.0"><link rel="shortcut icon" type=image/x-icon href=/imgs/icons/favicon.ico><link rel=icon type=image/x-icon href=/imgs/icons/favicon.ico><link rel=icon type=image/png sizes=16x16 href=/imgs/icons/favicon_32_32_next.png><link rel=icon type=image/png sizes=32x32 href=/imgs/icons/favicon_128_128_next.png><link rel=apple-touch-icon sizes=180x180 href=/imgs/icons/apple_touch_icon_next.png><meta itemprop=name content="转：并口编程参考资料"><meta itemprop=description content="福兮祸兮，焉知所依？冬去冰泮，春来萌荣。朝生暮死，亦可惊鸿。知足者富，自足者强。"><meta name=description content="福兮祸兮，焉知所依？冬去冰泮，春来萌荣。朝生暮死，亦可惊鸿。知足者富，自足者强。"><meta itemprop=datePublished zgotmplz><meta itemprop=dateModified zgotmplz><meta itemprop=image content="https://blogs.qipai360.cn/imgs/avatar.jpg"><meta itemprop=keywords content="Rise,ZhangTuohui,技术,C++,Unity3D,Lua,NodeJS,C#,JavaScript,游戏开发,机器学习,深度学习,AI,编程,编程语言,编程技术,编程开发,游戏引擎,游戏设计,游戏制作,游戏开发者,游戏开发者博客,游戏开发者网站,游戏开发者工具,游戏开发者教程,游戏开发者学习,游戏开发者交流,游戏开发者分享,游戏开发者经验,游戏开发者心得,游戏开发者技巧,游戏开发者方法,游戏开发者思路,游戏开发者理念,游戏开发者文化,游戏开发者精神,游戏开发者信仰"><meta property="og:type" content="article"><meta property="og:title" content="转：并口编程参考资料"><meta property="og:description" content="福兮祸兮，焉知所依？冬去冰泮，春来萌荣。朝生暮死，亦可惊鸿。知足者富，自足者强。"><meta property="og:image" content="/imgs/avatar.jpg"><meta property="og:image:width" content="312"><meta property="og:image:height" content="312"><meta property="og:image:type" content="image/jpeg/png/svg/jpg"><meta property="og:url" content="https://blogs.qipai360.cn/post/parallel-port-programming-reference/"><meta property="og:site_name" content="Rise的自留地"><meta property="og:locale" content="zh-CN"><meta property="article:author" content="Rise"><meta property="article:published_time" content="2008-03-16 09:44:00 +0800 +0800"><meta property="article:modified_time" content="2008-03-16 09:44:00 +0800 +0800"><link type=text/css rel=stylesheet href=https://blogs.qipai360.cn/js/3rd/font-awesome/6.7.2/css/all.min.css><link type=text/css rel=stylesheet href=https://blogs.qipai360.cn/js/3rd/animate.css/3.1.1/animate.min.css><link type=text/css rel=stylesheet href=https://blogs.qipai360.cn/js/3rd/viewerjs/1.11.6/viewer.min.css><link rel=stylesheet href="/css/main.min.css?=1772265589"><style type=text/css>.post-footer hr:after{content:"~ 我可是有底线的哟 ~"}.flinks-list-footer hr:after{content:"~ 我可是有底线的哟 ~"}</style><script type=text/javascript>(function(){localDB={set:function(e,t,n){if(n===0)return;const s=new Date,o=n*864e5,i={value:t,expiry:s.getTime()+o};localStorage.setItem(e,JSON.stringify(i))},get:function(e){const t=localStorage.getItem(e);if(!t)return 0[0];const n=JSON.parse(t),s=new Date;return s.getTime()>n.expiry?(localStorage.removeItem(e),0[0]):n.value}},theme={active:function(){const e=localDB.get("theme");if(e==null)return;theme.toggle(e),window.matchMedia("(prefers-color-scheme: dark)").addListener(function(e){theme.toggle(e.matches?"dark":"light")})},toggle:function(e){document.documentElement.setAttribute("data-theme",e),localDB.set("theme",e,2);const t=document.querySelector("iframe.giscus-frame");if(t){const n={setConfig:{theme:e}};t.contentWindow.postMessage({giscus:n},"https://giscus.app")}}},theme.active()})(window)</script><script type=text/javascript>document.addEventListener("DOMContentLoaded",()=>{var e=document.createElement("script");e.charset="UTF-8",e.src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js",e.async=!1,e.defer=!0,document.head.appendChild(e),e.onload=function(){NexT.utils.fmtBusuanzi()}})</script><script defer src=https://static.cloudflareinsights.com/beacon.min.js data-cf-beacon='{"token": "2b23669184fc49269e400525ac2447d9"}'></script><title>转：并口编程参考资料 - Rise的自留地</title><noscript><link rel=stylesheet href=/css/noscript.css></noscript></head><body itemscope itemtype=http://schema.org/WebPage class=use-motion><div class=headband></div><main class=main><header class=header itemscope itemtype=http://schema.org/WPHeader><div class=header-inner><div class=site-brand-container><div class=site-nav-toggle><div class=toggle aria-label role=button><span class=toggle-line></span>
+<span class=toggle-line></span>
+<span class=toggle-line></span></div></div><div class=site-meta><a href=/ class=brand rel=start><i class=logo-line></i><h1 class=site-title>Rise的自留地</h1><i class=logo-line></i></a><p class=site-subtitle itemprop=description>记录生活中的点滴，分享编程技术和游戏开发经验。</p></div><div class=site-nav-right><div class="toggle popup-trigger"></div></div></div><nav class=site-nav><ul class="main-menu menu"><li class="menu-item menu-item-home"><a href=/ class=hvr-icon-pulse rel=section><i class="fa fa-home hvr-icon"></i>首页</a></li><li class="menu-item menu-item-about"><a href=/about.html class=hvr-icon-pulse rel=section><i class="fa fa-user hvr-icon"></i>关于</a></li><li class="menu-item menu-item-archives"><a href=/archives/ class=hvr-icon-pulse rel=section><i class="fa fa-archive hvr-icon"></i>归档
+<span class=badge>679</span></a></li><li class="menu-item menu-item-tags"><a href=/tags/ class=hvr-icon-pulse rel=section><i class="fa fa-tags hvr-icon"></i>标签</a></li><li class="menu-item menu-item-message"><a href=/message/ class=hvr-icon-pulse rel=section><i class="fa fa-comments hvr-icon"></i>留言板</a></li><li class="menu-item menu-item-commonweal"><a href=/404.html class=hvr-icon-pulse rel=section><i class="fa fa-heartbeat hvr-icon"></i>公益 404</a></li></ul></nav></div><div class="toggle sidebar-toggle" role=button><span class=toggle-line></span>
+<span class=toggle-line></span>
+<span class=toggle-line></span></div><aside class=sidebar><div class="sidebar-inner sidebar-overview-active"><ul class=sidebar-nav><li class=sidebar-nav-toc>文章目录</li><li class=sidebar-nav-overview>站点概览</li></ul><div class=sidebar-panel-container><div class="post-toc-wrap sidebar-panel"><div class="post-toc animated"><nav id=TableOfContents></nav></div></div><div class="site-overview-wrap sidebar-panel"><div class="site-author site-overview-item animated" itemprop=author itemscope itemtype=http://schema.org/Person><img class=site-author-image itemprop=image alt=Rise src=/imgs/img-lazy-loading.gif data-src=/imgs/avatar.jpg><p class=site-author-name itemprop=name>Rise</p><div class=site-description itemprop=description>福兮祸兮，焉知所依？冬去冰泮，春来萌荣。朝生暮死，亦可惊鸿。知足者富，自足者强。</div></div><div class="site-state-wrap site-overview-item animated"><nav class=site-state><div class="site-state-item site-state-posts"><a href=/archives/><span class=site-state-item-count>679</span>
+<span class=site-state-item-name>日志</span></a></div><div class="site-state-item site-state-categories"><a href=/categories/><span class=site-state-item-count>35</span>
+<span class=site-state-item-name>分类</span></a></div><div class="site-state-item site-state-tags"><a href=/tags/><span class=site-state-item-count>118</span>
+<span class=site-state-item-name>标签</span></a></div></nav></div><div class="links-of-social site-overview-item animated"><span class=links-of-social-item><a href=https://github.com/rise-worlds title="Github → https://github.com/rise-worlds" rel=noopener class=hvr-icon-pulse target=_blank><i class="fab fa-github fa-fw hvr-icon"></i>
+Github
+</a></span><span class=links-of-social-item><a href=mailto:rise.worlds@outlook.com title="E-Mail → mailto:rise.worlds@outlook.com" rel=noopener class=hvr-icon-pulse target=_blank><i class="fa fa-envelope fa-fw hvr-icon"></i>
+E-Mail
+</a></span><span class=links-of-social-item><a href=https://www.zhihu.com/people/rise-worlds title="知乎 → https://www.zhihu.com/people/rise-worlds" rel=noopener class=hvr-icon-pulse target=_blank><i class="fa fa-book fa-fw hvr-icon"></i>
+知乎
+</a></span><span class=links-of-social-item><a href=https://twitter.com/riseworlds title="Twitter → https://twitter.com/riseworlds" rel=noopener class=hvr-icon-pulse target=_blank><i class="fab fa-twitter fa-fw hvr-icon"></i>
+Twitter
+</a></span><span class=links-of-social-item><a href=https://www.facebook.com/rise.worlds title="facebook → https://www.facebook.com/rise.worlds" rel=noopener class=hvr-icon-pulse target=_blank><i class="fab fa-facebook fa-fw hvr-icon"></i>
+facebook
+</a></span><span class=links-of-social-item><a href=https://youtube.com/@YiXuan title="YouTube → https://youtube.com/@YiXuan" rel=noopener class=hvr-icon-pulse target=_blank><i class="fab fa-youtube fa-fw hvr-icon"></i>
+YouTube
+</a></span><span class=links-of-social-item><a href=https://instagram.com/rise.worlds title="Instagram → https://instagram.com/rise.worlds" rel=noopener class=hvr-icon-pulse target=_blank><i class="fab fa-instagram fa-fw hvr-icon"></i>
+Instagram
+</a></span><span class=links-of-social-item><a href=https://t.me/riseworlds title="Telegram → https://t.me/riseworlds" rel=noopener class=hvr-icon-pulse target=_blank><i class="fab fa-telegram fa-fw hvr-icon"></i>
+Telegram</a></span></div><div class="links-of-blogroll site-overview-item animated"><div class=links-of-blogroll-title><i class="fa fa-globe fa-fw"></i>
+友情链接</div><ul class=links-of-blogroll-list><li class=links-of-blogroll-item><a href=https://www.qipai360.cn title=https://www.qipai360.cn target=_blank>Qipai360</a></li><li class=links-of-blogroll-item><a href=https://www.cnblogs.com/flying_bat title=https://www.cnblogs.com/flying_bat target=_blank>博客园</a></li><li class=links-of-blogroll-item><a href=https://zishu.me title=https://zishu.me target=_blank>子舒的博客</a></li><li class=links-of-blogroll-item><a href=https://gitee.com/hugo-next/hugo-theme-next title=https://gitee.com/hugo-next/hugo-theme-next target=_blank>Hugo-NexT</a></li></ul></div></div></div></div><div id=siteinfo-card-widget class=sidebar-card-widget><div class=item-headline><i class="fas fa-chart-line"></i>
+<span>网站资讯</span></div><div class=siteinfo><div class=siteinfo-item><div class=item-name><i class="fa-solid fa-calendar-check"></i>已运行：</div><div class=item-count id=runTimes data-publishdate="2004-10-06 15:24:00 +0800 +0800"></div></div><div class=siteinfo-item><div class=item-name><i class="fas fa fa-user"></i>总访客数：</div><div class=item-count id=busuanzi_value_site_uv><i class="fa fa-sync fa-spin"></i></div></div><div class=siteinfo-item><div class=item-name><i class="fas fa fa-eye"></i>页面浏览：</div><div class=item-count id=busuanzi_value_site_pv><i class="fa fa-sync fa-spin"></i></div></div><div class=siteinfo-item><div class=item-name><i class="fa fa-font"></i>总字数：</div><div class=item-count id=wordsCount data-count=2423147></div></div><div class=siteinfo-item><div class=item-name><i class="fa fa-mug-hot"></i>阅读约：</div><div class=item-count id=readTimes data-times=5207></div></div><div class=siteinfo-item><div class=item-name><i class="fa fa-clock-rotate-left"></i>最后更新于：</div><div class=item-count id=last-push-date data-lastpushdate="2026-02-28 15:59:00 +0800 +0800"></div></div></div></div></aside><div class=sidebar-dimmer></div></header><div class=tool-buttons><div id=goto-comments class="button goto-comments" title=直达评论><i class="fas fa-comments"></i></div><div id=toggle-theme class=button title=深浅模式切换><i class="fas fa-adjust"></i></div><div class=back-to-top role=button title=返回顶部><i class="fa fa-arrow-up"></i>
+<span>0%</span></div></div><div class=reading-progress-bar></div><a role=button class="book-mark-link book-mark-link-fixed"></a><a href=https://github.com/rise-worlds rel="noopener external nofollow noreferrer" target=_blank title="Follow me on GitHub" class="exturl github-corner"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0 0 115 115h15l12 27L250 250V0z"/><path d="M128.3 109C113.8 99.7 119 89.6 119 89.6 122 82.7 120.5 78.6 120.5 78.6 119.2 72 123.4 76.3 123.4 76.3 127.3 80.9 125.5 87.3 125.5 87.3 122.9 97.6 130.6 101.9 134.4 103.2" fill="currentColor" style="transform-origin:130px 106px" class="octo-arm"/><path d="M115 115C114.9 115.1 118.7 116.5 119.8 115.4l13.9-13.8C136.9 99.2 139.9 98.4 142.2 98.6 133.8 88 127.5 74.4 143.8 58 148.5 53.4 154 51.2 159.7 51 160.3 49.4 163.2 43.6 171.4 40.1 171.4 40.1 176.1 42.5 178.8 56.2 183.1 58.6 187.2 61.8 190.9 65.4 194.5 69 197.7 73.2 200.1 77.6 213.8 80.2 216.3 84.9 216.3 84.9 212.7 93.1 206.9 96 205.4 96.6 205.1 102.4 203 107.8 198.3 112.5 181.9 128.9 168.3 122.5 157.7 114.1 157.9 116.9 156.7 120.9 152.7 124.9L141 136.5C139.8 137.7 141.6 141.9 141.8 141.8z" fill="currentColor" class="octo-body"/></svg></a><noscript><div class=noscript-warning>Theme NexT works best with JavaScript enabled</div></noscript><div class="main-inner post posts-expand"><div class=post-block><article itemscope itemtype=http://schema.org/Article class=post-content lang><link itemprop=mainEntityOfPage href=https://blogs.qipai360.cn/post/parallel-port-programming-reference/><span hidden itemprop=author itemscope itemtype=http://schema.org/Person><meta itemprop=image content="/imgs/avatar.jpg"><meta itemprop=name content="Rise"></span><span hidden itemprop=publisher itemscope itemtype=http://schema.org/Organization><meta itemprop=name content="Rise"><meta itemprop=description content="福兮祸兮，焉知所依？冬去冰泮，春来萌荣。朝生暮死，亦可惊鸿。知足者富，自足者强。"></span><span hidden itemprop=post itemscope itemtype=http://schema.org/CreativeWork><meta itemprop=name content="转：并口编程参考资料"><meta itemprop=description content="本文主要介绍并行端口的结构以及简单的对并口的读、写并以及如何获得端口的状态。   
+并行接口的分类: SPP(标准并行接口) ,EPP(增强型并行接口),ECP(扩展型并行端口)
+　　标准并行端口（SPP）也是最早的端口定义，主要功能如下，1：并行端口提供了8个数据线以进行并行的字节传输，2：计算机能够通过数据线向打印机发送选能信号，以通知打印机已经准备好接收数据，3：打印机招收到数据后，向计算机发送一个回应信号（NACK）。其各位信号线所代表的意义详见下表。"></span><header class=post-header><h1 class=post-title itemprop="name headline">转：并口编程参考资料</h1><div class=post-meta-container><div class=post-meta-items><span class=post-meta-item><span class=post-meta-item-icon><i class="fas fa-solid fa-calendar"></i>
+</span><span class=post-meta-item-text title=发表于>发表于：
+</span><time title="创建时间：2008年03月16日 09:44:00 CST" itemprop="dateCreated datePublished" datetime="2008-03-16 09:44:00 +0800 +0800">2008年03月16日
+</time></span><span class=post-meta-item><span class=post-meta-item-icon><i class="fas fa-solid fa-folder-open"></i>
+</span><span class=post-meta-item-text title=分类于>分类于：
+</span><span itemprop=about itemscope itemtype=http://schema.org/Thing><a href=/categories/toolstips/ itemprop=url rel=index><span itemprop=name>ToolsTips</span></a></span></span></div><div class=post-meta-items><span class=post-meta-item title=字数><span class=post-meta-item-icon><i class="fas fa-solid fa-file-word"></i>
+</span><span class=post-meta-item-text>字数：</span>
+<span>10700</span>
+</span><span class=post-meta-item title=阅读><span class=post-meta-item-icon><i class="fas fa-solid fa-clock"></i>
+</span><span class=post-meta-item-text>阅读：&ap;</span>
+<span>22分钟</span>
+</span><span class=post-meta-item title=浏览><span class=post-meta-item-icon><i class="fas fa-solid fa-eye"></i>
+</span><span class=post-meta-item-text>浏览：
+</span><span id=pageview-count data-path=/post/parallel-port-programming-reference/><i class="fa fa-sync fa-spin"></i></span></span></div></div></header><div class=post-body itemprop=articleBody><p><font color=#008000><font size=4>本文主要介绍并行端口的结构以及简单的对并口的读、写并以及如何获得端口的状态。</font><font size=5> </font></font>  </p><p><font color=#0000ff>并行接口的分类:</font> SPP(标准并行接口) ,EPP(增强型并行接口),ECP(扩展型并行端口)</p><p>　　标准并行端口（SPP）也是最早的端口定义，主要功能如下，1：并行端口提供了8个数据线以进行并行的字节传输，2：计算机能够通过数据线向打印机发送选能信号，以通知打印机已经准备好接收数据，3：打印机招收到数据后，向计算机发送一个回应信号（NACK）。其各位信号线所代表的意义详见下表。</p><a id=more></a><p>　　增强型并行端口（EPP）的出现提供了一种更高性能的连接方式，并东路向下兼容所有在此之前存在的并行接口及外设。与SPP不同之处在于原来17个信号中的重新定义，在这17个信号中，EPP使用了其中的14个信号进行传输，握手和选通，剩下的3个信号可以由外设设计者有来自定义。</p><p>&nbsp; <font color=#0000ff>并行接口的大致结构:<br><p>      </font>并行口一般有25个引脚,其中包括8位数据线,5位打印机状态线,4位控制线.下面将对这些引脚予以详细说明:<br></p><p>  (注:1:>出,表示由计算机发向打印机;入,表示由打印机发向计算机,<br></p><p>      2:>低电平有效信号用上划线或星号表示(如S7*),高电平有效信号则没有上划线或星号)<br></p><p>      </p></p><table style="border-right:none;border-top:none;border-left:none;border-bottom:none;border-collapse:collapse;mso-border-alt:solid windowtext .5pt;mso-padding-alt:0 5.4pt 0 5.4pt" cellspacing=0 cellpadding=0 width=829 border=1><pre><code>&lt;tbody&gt;
+
+    &lt;tr&gt;
+
+        &lt;td style=&quot;border-right: windowtext 0.5pt solid; padding-right: 5.4pt; border-top: windowtext 0.5pt solid; padding-left: 5.4pt; padding-bottom: 0cm; border-left: windowtext 0.5pt solid; padding-top: 0cm; border-bottom: windowtext 0.5pt solid&quot; width=&quot;101&quot;&gt;
+
+        &lt;p class=&quot;MsoNormal&quot; style=&quot;text-align: center&quot; align=&quot;center&quot;&gt;&lt;strong&gt;&lt;span style=&quot;font-family: 宋体; mso-ascii-font-family: 'Times New Roman'; mso-hansi-font-family: 'Times New Roman'&quot;&gt;引脚号&lt;/span&gt;&lt;span lang=&quot;EN-US&quot;&gt;&lt;O:P&gt; &lt;/O:P&gt;&lt;/span&gt;&lt;/strong&gt;&lt;/p&gt;
+
+        &lt;/td&gt;
+
+        &lt;td style=&quot;border-right: windowtext 0.5pt solid; padding-right: 5.4pt; border-top: windowtext 0.5pt solid; padding-left: 5.4pt; padding-bottom: 0cm; border-left: medium none; padding-top: 0cm; border-bottom: windowtext 0.5pt solid; mso-border-left-alt: solid windowtext .5pt&quot; width=&quot;101&quot;&gt;
+
+        &lt;p class=&quot;MsoNormal&quot; style=&quot;text-align: center&quot; align=&quot;center&quot;&gt;&lt;strong&gt;&lt;span style=&quot;font-family: 宋体; mso-ascii-font-family: 'Times New Roman'; mso-hansi-font-family: 'Times New Roman'&quot;&gt;名称&lt;/span&gt;&lt;span lang=&quot;EN-US&quot;&gt;&lt;O:P&gt; &lt;/O:P&gt;&lt;/span&gt;&lt;/strong&gt;&lt;/p&gt;
+
+        &lt;/td&gt;
+
+        &lt;td style=&quot;border-right: windowtext 0.5pt solid; padding-right: 5.4pt; border-top: windowtext 0.5pt solid; padding-left: 5.4pt; padding-bottom: 0cm; border-left: medium none; padding-top: 0cm; border-bottom: windowtext 0.5pt solid; mso-border-left-alt: solid windowtext .5pt&quot; width=&quot;101&quot;&gt;&lt;strong&gt;&lt;span style=&quot;font-family: 宋体; mso-ascii-font-family: Times New Roman; mso-hansi-font-family: Times New Roman&quot;&gt;数据位&lt;/span&gt;&lt;/strong&gt; &lt;/td&gt;
+
+        &lt;td style=&quot;border-right: windowtext 0.5pt solid; padding-right: 5.4pt; border-top: windowtext 0.5pt solid; padding-left: 5.4pt; padding-bottom: 0cm; border-left: medium none; padding-top: 0cm; border-bottom: windowtext 0.5pt solid; mso-border-left-alt: solid windowtext .5pt&quot; width=&quot;101&quot;&gt;&lt;strong&gt;&lt;span style=&quot;font-family: 宋体; mso-ascii-font-family: Times New Roman; mso-hansi-font-family: Times New Roman&quot;&gt;寄存器&lt;/span&gt;&lt;/strong&gt; &lt;/td&gt;
+
+        &lt;td style=&quot;border-right: windowtext 0.5pt solid; padding-right: 5.4pt; border-top: windowtext 0.5pt solid; padding-left: 5.4pt; padding-bottom: 0cm; border-left: medium none; padding-top: 0cm; border-bottom: windowtext 0.5pt solid; mso-border-left-alt: solid windowtext .5pt&quot; width=&quot;101&quot;&gt;
+
+        &lt;p class=&quot;MsoNormal&quot; style=&quot;text-align: center&quot; align=&quot;center&quot;&gt;&lt;strong&gt;&lt;span style=&quot;font-family: 宋体; mso-ascii-font-family: 'Times New Roman'; mso-hansi-font-family: 'Times New Roman'&quot;&gt;数据方向&lt;/span&gt;&lt;span lang=&quot;EN-US&quot;&gt;&lt;O:P&gt; &lt;/O:P&gt;&lt;/span&gt;&lt;/strong&gt;&lt;/p&gt;
+
+        &lt;/td&gt;
+
+        &lt;td style=&quot;border-right: windowtext 0.5pt solid; padding-right: 5.4pt; border-top: windowtext 0.5pt solid; padding-left: 5.4pt; padding-bottom: 0cm; border-left: medium none; padding-top: 0cm; border-bottom: windowtext 0.5pt solid; mso-border-left-alt: solid windowtext .5pt&quot; width=&quot;233&quot;&gt;
+
+        &lt;p class=&quot;MsoNormal&quot; style=&quot;text-align: center&quot; align=&quot;center&quot;&gt;&lt;strong&gt;&lt;span style=&quot;font-family: 宋体; mso-ascii-font-family: 'Times New Roman'; mso-hansi-font-family: 'Times New Roman'&quot;&gt;定义&lt;/span&gt;&lt;span lang=&quot;EN-US&quot;&gt;&lt;O:P&gt; &lt;/O:P&gt;&lt;/span&gt;&lt;/strong&gt;&lt;/p&gt;
+
+        &lt;/td&gt;
+
+    &lt;/tr&gt;
+
+    &lt;tr&gt;
+
+        &lt;td style=&quot;border-right: windowtext 0.5pt solid; padding-right: 5.4pt; border-top: medium none; padding-left: 5.4pt; padding-bottom: 0cm; border-left: windowtext 0.5pt solid; padding-top: 0cm; border-bottom: windowtext 0.5pt solid; mso-border-top-alt: solid windowtext .5pt&quot; width=&quot;101&quot;&gt;
+
+        &lt;p class=&quot;MsoNormal&quot; style=&quot;text-align: center&quot; align=&quot;center&quot;&gt;&lt;span lang=&quot;EN-US&quot;&gt;1&lt;/span&gt;&lt;/p&gt;
+
+        &lt;/td&gt;
+
+        &lt;td style=&quot;border-right: windowtext 0.5pt solid; padding-right: 5.4pt; border-top: medium none; padding-left: 5.4pt; padding-bottom: 0cm; border-left: medium none; padding-top: 0cm; border-bottom: windowtext 0.5pt solid; mso-border-left-alt: solid windowtext .5pt; mso-border-top-alt: solid windowtext .5pt&quot; width=&quot;101&quot;&gt;
+
+        &lt;p class=&quot;MsoNormal&quot; style=&quot;text-align: center&quot; align=&quot;center&quot;&gt;&lt;span lang=&quot;EN-US&quot;&gt;/STROBE&lt;/span&gt;&lt;/p&gt;
+
+        &lt;/td&gt;
+
+        &lt;td style=&quot;border-right: windowtext 0.5pt solid; padding-right: 5.4pt; border-top: medium none; padding-left: 5.4pt; padding-bottom: 0cm; border-left: medium none; padding-top: 0cm; border-bottom: windowtext 0.5pt solid; mso-border-left-alt: solid windowtext .5pt; mso-border-top-alt: solid windowtext .5pt&quot; width=&quot;101&quot;&gt;&lt;span style=&quot;font-family: 宋体; mso-ascii-font-family: Times New Roman; mso-hansi-font-family: Times New Roman&quot;&gt;C0*&lt;/span&gt; &lt;/td&gt;
+
+        &lt;td style=&quot;border-right: windowtext 0.5pt solid; padding-right: 5.4pt; border-top: medium none; padding-left: 5.4pt; padding-bottom: 0cm; border-left: medium none; padding-top: 0cm; border-bottom: windowtext 0.5pt solid; mso-border-left-alt: solid windowtext .5pt; mso-border-top-alt: solid windowtext .5pt&quot; width=&quot;101&quot;&gt;　 &lt;/td&gt;
+
+        &lt;td style=&quot;border-right: windowtext 0.5pt solid; padding-right: 5.4pt; border-top: medium none; padding-left: 5.4pt; padding-bottom: 0cm; border-left: medium none; padding-top: 0cm; border-bottom: windowtext 0.5pt solid; mso-border-left-alt: solid windowtext .5pt; mso-border-top-alt: solid windowtext .5pt&quot; width=&quot;101&quot;&gt;
+
+        &lt;p class=&quot;MsoNormal&quot; style=&quot;text-align: center&quot; align=&quot;center&quot;&gt;&lt;span style=&quot;font-family: 宋体; mso-ascii-font-family: 'Times New Roman'; mso-hansi-font-family: 'Times New Roman'&quot;&gt;出&lt;/span&gt;&lt;/p&gt;
+
+        &lt;/td&gt;
+
+        &lt;td style=&quot;border-right: windowtext 0.5pt solid; padding-right: 5.4pt; border-top: medium none; padding-left: 5.4pt; padding-bottom: 0cm; border-left: medium none; padding-top: 0cm; border-bottom: windowtext 0.5pt solid; mso-border-left-alt: solid windowtext .5pt; mso-border-top-alt: solid windowtext .5pt&quot; width=&quot;233&quot;&gt;
+
+        &lt;p class=&quot;MsoNormal&quot; style=&quot;text-align: center&quot; align=&quot;center&quot;&gt;&lt;span style=&quot;font-family: 宋体; mso-ascii-font-family: 'Times New Roman'; mso-hansi-font-family: 'Times New Roman'&quot;&gt;选通信号,低电平有效信号,表明线上有数据到达.&lt;/span&gt;&lt;/p&gt;
+
+        &lt;/td&gt;
+
+    &lt;/tr&gt;
+
+    &lt;tr&gt;
+
+        &lt;td style=&quot;border-right: windowtext 0.5pt solid; padding-right: 5.4pt; border-top: medium none; padding-left: 5.4pt; padding-bottom: 0cm; border-left: windowtext 0.5pt solid; padding-top: 0cm; border-bottom: windowtext 0.5pt solid; mso-border-top-alt: solid windowtext .5pt&quot; width=&quot;101&quot;&gt;
+
+        &lt;p class=&quot;MsoNormal&quot; style=&quot;text-align: center&quot; align=&quot;center&quot;&gt;&lt;span lang=&quot;EN-US&quot;&gt;2&lt;/span&gt;&lt;/p&gt;
+
+        &lt;/td&gt;
+
+        &lt;td style=&quot;border-right: windowtext 0.5pt solid; padding-right: 5.4pt; border-top: medium none; padding-left: 5.4pt; padding-bottom: 0cm; border-left: medium none; padding-top: 0cm; border-bottom: windowtext 0.5pt solid; mso-border-left-alt: solid windowtext .5pt; mso-border-top-alt: solid windowtext .5pt&quot; width=&quot;101&quot;&gt;
+
+        &lt;p class=&quot;MsoNormal&quot; style=&quot;text-align: center&quot; align=&quot;center&quot;&gt;&lt;span lang=&quot;EN-US&quot;&gt;D0&lt;/span&gt;&lt;/p&gt;
+
+        &lt;/td&gt;
+
+        &lt;td style=&quot;border-right: windowtext 0.5pt solid; padding-right: 5.4pt; border-top: medium none; padding-left: 5.4pt; padding-bottom: 0cm; border-left: medium none; padding-top: 0cm; border-bottom: windowtext 0.5pt solid; mso-border-left-alt: solid windowtext .5pt; mso-border-top-alt: solid windowtext .5pt&quot; width=&quot;101&quot; rowspan=&quot;8&quot;&gt;　DATA_1-DATA_8
+
+        &lt;p&gt;　&lt;/p&gt;
+
+        　
+
+        &lt;p&gt;　&lt;/p&gt;
+
+        　
+
+        &lt;p&gt;　&lt;/p&gt;
+
+        　
+
+        &lt;p&gt;&amp;nbsp;&lt;/p&gt;
+
+        &lt;/td&gt;
+
+        &lt;td style=&quot;border-right: windowtext 0.5pt solid; padding-right: 5.4pt; border-top: medium none; padding-left: 5.4pt; padding-bottom: 0cm; border-left: medium none; padding-top: 0cm; border-bottom: windowtext 0.5pt solid; mso-border-left-alt: solid windowtext .5pt; mso-border-top-alt: solid windowtext .5pt&quot; width=&quot;101&quot; rowspan=&quot;8&quot;&gt;D1-D8 &lt;/td&gt;
+
+        &lt;td style=&quot;border-right: windowtext 0.5pt solid; padding-right: 5.4pt; border-top: medium none; padding-left: 5.4pt; padding-bottom: 0cm; border-left: medium none; padding-top: 0cm; border-bottom: windowtext 0.5pt solid; mso-border-left-alt: solid windowtext .5pt; mso-border-top-alt: solid windowtext .5pt&quot; width=&quot;101&quot;&gt;
+
+        &lt;p class=&quot;MsoNormal&quot; style=&quot;text-align: center&quot; align=&quot;center&quot;&gt;&lt;span style=&quot;font-family: 宋体; mso-ascii-font-family: 'Times New Roman'; mso-hansi-font-family: 'Times New Roman'&quot;&gt;出&lt;/span&gt;&lt;/p&gt;
+
+        &lt;/td&gt;
+
+        &lt;td style=&quot;border-right: windowtext 0.5pt solid; padding-right: 5.4pt; border-top: medium none; padding-left: 5.4pt; padding-bottom: 0cm; border-left: medium none; padding-top: 0cm; border-bottom: windowtext 0.5pt solid; mso-border-left-alt: solid windowtext .5pt; mso-border-top-alt: solid windowtext .5pt&quot; width=&quot;233&quot; rowspan=&quot;7&quot;&gt;
+
+        &lt;p class=&quot;MsoNormal&quot; style=&quot;text-align: center&quot; align=&quot;center&quot;&gt;&amp;nbsp;&lt;span lang=&quot;EN-US&quot;&gt;&lt;O:P&gt; &lt;/O:P&gt;&lt;/span&gt;&lt;/p&gt;
+
+        &lt;p class=&quot;MsoNormal&quot; style=&quot;text-align: center&quot; align=&quot;center&quot;&gt;&amp;nbsp;&lt;span lang=&quot;EN-US&quot;&gt;&lt;O:P&gt; &lt;/O:P&gt;&lt;/span&gt;&lt;/p&gt;
+
+        &lt;p class=&quot;MsoNormal&quot; style=&quot;text-align: center&quot; align=&quot;center&quot;&gt;&amp;nbsp;&lt;span lang=&quot;EN-US&quot;&gt;&lt;O:P&gt; 八位数据线,只有在SPP指令下才有能输出数据.&lt;/O:P&gt; &lt;/span&gt;&lt;/p&gt;
+
+        &lt;p class=&quot;MsoNormal&quot; style=&quot;text-align: center&quot; align=&quot;center&quot;&gt;&amp;nbsp;&lt;span lang=&quot;EN-US&quot;&gt;&lt;O:P&gt; &lt;/O:P&gt;&lt;/span&gt;&lt;/p&gt;
+
+        &lt;p class=&quot;MsoNormal&quot; style=&quot;text-align: center&quot; align=&quot;center&quot;&gt;&amp;nbsp;&lt;span lang=&quot;EN-US&quot;&gt;&lt;O:P&gt; &lt;/O:P&gt;&lt;/span&gt;&lt;/p&gt;
+
+        &lt;p class=&quot;MsoNormal&quot; style=&quot;text-align: center&quot; align=&quot;center&quot;&gt;&amp;nbsp;&lt;span lang=&quot;EN-US&quot;&gt;&lt;O:P&gt; &lt;/O:P&gt;&lt;/span&gt;&lt;/p&gt;
+
+        &lt;p class=&quot;MsoNormal&quot; style=&quot;text-align: center&quot; align=&quot;center&quot;&gt;&amp;nbsp;&lt;span lang=&quot;EN-US&quot;&gt;&lt;O:P&gt; &lt;/O:P&gt;&lt;/span&gt;&lt;/p&gt;
+
+        &lt;/td&gt;
+
+    &lt;/tr&gt;
+
+    &lt;tr&gt;
+
+        &lt;td style=&quot;border-right: windowtext 0.5pt solid; padding-right: 5.4pt; border-top: medium none; padding-left: 5.4pt; padding-bottom: 0cm; border-left: windowtext 0.5pt solid; padding-top: 0cm; border-bottom: windowtext 0.5pt solid; mso-border-top-alt: solid windowtext .5pt&quot; width=&quot;101&quot;&gt;
+
+        &lt;p class=&quot;MsoNormal&quot; style=&quot;text-align: center&quot; align=&quot;center&quot;&gt;&lt;span lang=&quot;EN-US&quot;&gt;3&lt;/span&gt;&lt;/p&gt;
+
+        &lt;/td&gt;
+
+        &lt;td style=&quot;border-right: windowtext 0.5pt solid; padding-right: 5.4pt; border-top: medium none; padding-left: 5.4pt; padding-bottom: 0cm; border-left: medium none; padding-top: 0cm; border-bottom: windowtext 0.5pt solid; mso-border-left-alt: solid windowtext .5pt; mso-border-top-alt: solid windowtext .5pt&quot; width=&quot;101&quot;&gt;
+
+        &lt;p class=&quot;MsoNormal&quot; style=&quot;text-align: center&quot; align=&quot;center&quot;&gt;&lt;span lang=&quot;EN-US&quot;&gt;D1&lt;/span&gt;&lt;/p&gt;
+
+        &lt;/td&gt;
+
+        &lt;td style=&quot;border-right: windowtext 0.5pt solid; padding-right: 5.4pt; border-top: medium none; padding-left: 5.4pt; padding-bottom: 0cm; border-left: medium none; padding-top: 0cm; border-bottom: windowtext 0.5pt solid; mso-border-left-alt: solid windowtext .5pt; mso-border-top-alt: solid windowtext .5pt&quot; width=&quot;101&quot;&gt;
+
+        &lt;p class=&quot;MsoNormal&quot; style=&quot;text-align: center&quot; align=&quot;center&quot;&gt;&lt;span style=&quot;font-family: 宋体; mso-ascii-font-family: 'Times New Roman'; mso-hansi-font-family: 'Times New Roman'&quot;&gt;出&lt;/span&gt;&lt;strong&gt;&lt;span lang=&quot;EN-US&quot;&gt;&lt;O:P&gt; &lt;/O:P&gt;&lt;/span&gt;&lt;/strong&gt;&lt;/p&gt;
+
+        &lt;/td&gt;
+
+    &lt;/tr&gt;
+
+    &lt;tr&gt;
+
+        &lt;td style=&quot;border-right: windowtext 0.5pt solid; padding-right: 5.4pt; border-top: medium none; padding-left: 5.4pt; padding-bottom: 0cm; border-left: windowtext 0.5pt solid; padding-top: 0cm; border-bottom: windowtext 0.5pt solid; mso-border-top-alt: solid windowtext .5pt&quot; width=&quot;101&quot;&gt;
+
+        &lt;p class=&quot;MsoNormal&quot; style=&quot;text-align: center&quot; align=&quot;center&quot;&gt;&lt;span lang=&quot;EN-US&quot;&gt;4&lt;/span&gt;&lt;/p&gt;
+
+        &lt;/td&gt;
+
+        &lt;td style=&quot;border-right: windowtext 0.5pt solid; padding-right: 5.4pt; border-top: medium none; padding-left: 5.4pt; padding-bottom: 0cm; border-left: medium none; padding-top: 0cm; border-bottom: windowtext 0.5pt solid; mso-border-left-alt: solid windowtext .5pt; mso-border-top-alt: solid windowtext .5pt&quot; width=&quot;101&quot;&gt;
+
+        &lt;p class=&quot;MsoNormal&quot; style=&quot;text-align: center&quot; align=&quot;center&quot;&gt;&lt;span lang=&quot;EN-US&quot;&gt;D2&lt;/span&gt;&lt;/p&gt;
+
+        &lt;/td&gt;
+
+        &lt;td style=&quot;border-right: windowtext 0.5pt solid; padding-right: 5.4pt; border-top: medium none; padding-left: 5.4pt; padding-bottom: 0cm; border-left: medium none; padding-top: 0cm; border-bottom: windowtext 0.5pt solid; mso-border-left-alt: solid windowtext .5pt; mso-border-top-alt: solid windowtext .5pt&quot; width=&quot;101&quot;&gt;
+
+        &lt;p class=&quot;MsoNormal&quot; style=&quot;text-align: center&quot; align=&quot;center&quot;&gt;&lt;span style=&quot;font-family: 宋体; mso-ascii-font-family: 'Times New Roman'; mso-hansi-font-family: 'Times New Roman'&quot;&gt;出&lt;/span&gt;&lt;/p&gt;
+
+        &lt;/td&gt;
+
+    &lt;/tr&gt;
+
+    &lt;tr&gt;
+
+        &lt;td style=&quot;border-right: windowtext 0.5pt solid; padding-right: 5.4pt; border-top: medium none; padding-left: 5.4pt; padding-bottom: 0cm; border-left: windowtext 0.5pt solid; padding-top: 0cm; border-bottom: windowtext 0.5pt solid; mso-border-top-alt: solid windowtext .5pt&quot; width=&quot;101&quot;&gt;
+
+        &lt;p class=&quot;MsoNormal&quot; style=&quot;text-align: center&quot; align=&quot;center&quot;&gt;&lt;span lang=&quot;EN-US&quot;&gt;5&lt;/span&gt;&lt;/p&gt;
+
+        &lt;/td&gt;
+
+        &lt;td style=&quot;border-right: windowtext 0.5pt solid; padding-right: 5.4pt; border-top: medium none; padding-left: 5.4pt; padding-bottom: 0cm; border-left: medium none; padding-top: 0cm; border-bottom: windowtext 0.5pt solid; mso-border-left-alt: solid windowtext .5pt; mso-border-top-alt: solid windowtext .5pt&quot; width=&quot;101&quot;&gt;
+
+        &lt;p class=&quot;MsoNormal&quot; style=&quot;text-align: center&quot; align=&quot;center&quot;&gt;&lt;span lang=&quot;EN-US&quot;&gt;D3&lt;/span&gt;&lt;/p&gt;
+
+        &lt;/td&gt;
+
+        &lt;td style=&quot;border-right: windowtext 0.5pt solid; padding-right: 5.4pt; border-top: medium none; padding-left: 5.4pt; padding-bottom: 0cm; border-left: medium none; padding-top: 0cm; border-bottom: windowtext 0.5pt solid; mso-border-left-alt: solid windowtext .5pt; mso-border-top-alt: solid windowtext .5pt&quot; width=&quot;101&quot;&gt;
+
+        &lt;p class=&quot;MsoNormal&quot; style=&quot;text-align: center&quot; align=&quot;center&quot;&gt;&lt;span style=&quot;font-family: 宋体; mso-ascii-font-family: 'Times New Roman'; mso-hansi-font-family: 'Times New Roman'&quot;&gt;出&lt;/span&gt;&lt;/p&gt;
+
+        &lt;/td&gt;
+
+    &lt;/tr&gt;
+
+    &lt;tr&gt;
+
+        &lt;td style=&quot;border-right: windowtext 0.5pt solid; padding-right: 5.4pt; border-top: medium none; padding-left: 5.4pt; padding-bottom: 0cm; border-left: windowtext 0.5pt solid; padding-top: 0cm; border-bottom: windowtext 0.5pt solid; mso-border-top-alt: solid windowtext .5pt&quot; width=&quot;101&quot;&gt;
+
+        &lt;p class=&quot;MsoNormal&quot; style=&quot;text-align: center&quot; align=&quot;center&quot;&gt;&lt;span lang=&quot;EN-US&quot;&gt;6&lt;/span&gt;&lt;/p&gt;
+
+        &lt;/td&gt;
+
+        &lt;td style=&quot;border-right: windowtext 0.5pt solid; padding-right: 5.4pt; border-top: medium none; padding-left: 5.4pt; padding-bottom: 0cm; border-left: medium none; padding-top: 0cm; border-bottom: windowtext 0.5pt solid; mso-border-left-alt: solid windowtext .5pt; mso-border-top-alt: solid windowtext .5pt&quot; width=&quot;101&quot;&gt;
+
+        &lt;p class=&quot;MsoNormal&quot; style=&quot;text-align: center&quot; align=&quot;center&quot;&gt;&lt;span lang=&quot;EN-US&quot;&gt;D4&lt;/span&gt;&lt;/p&gt;
+
+        &lt;/td&gt;
+
+        &lt;td style=&quot;border-right: windowtext 0.5pt solid; padding-right: 5.4pt; border-top: medium none; padding-left: 5.4pt; padding-bottom: 0cm; border-left: medium none; padding-top: 0cm; border-bottom: windowtext 0.5pt solid; mso-border-left-alt: solid windowtext .5pt; mso-border-top-alt: solid windowtext .5pt&quot; width=&quot;101&quot;&gt;
+
+        &lt;p class=&quot;MsoNormal&quot; style=&quot;text-align: center&quot; align=&quot;center&quot;&gt;&lt;span style=&quot;font-family: 宋体; mso-ascii-font-family: 'Times New Roman'; mso-hansi-font-family: 'Times New Roman'&quot;&gt;出&lt;/span&gt;&lt;/p&gt;
+
+        &lt;/td&gt;
+
+    &lt;/tr&gt;
+
+    &lt;tr&gt;
+
+        &lt;td style=&quot;border-right: windowtext 0.5pt solid; padding-right: 5.4pt; border-top: medium none; padding-left: 5.4pt; padding-bottom: 0cm; border-left: windowtext 0.5pt solid; padding-top: 0cm; border-bottom: windowtext 0.5pt solid; mso-border-top-alt: solid windowtext .5pt&quot; width=&quot;101&quot;&gt;
+
+        &lt;p class=&quot;MsoNormal&quot; style=&quot;text-align: center&quot; align=&quot;center&quot;&gt;&lt;span lang=&quot;EN-US&quot;&gt;7&lt;/span&gt;&lt;/p&gt;
+
+        &lt;/td&gt;
+
+        &lt;td style=&quot;border-right: windowtext 0.5pt solid; padding-right: 5.4pt; border-top: medium none; padding-left: 5.4pt; padding-bottom: 0cm; border-left: medium none; padding-top: 0cm; border-bottom: windowtext 0.5pt solid; mso-border-left-alt: solid windowtext .5pt; mso-border-top-alt: solid windowtext .5pt&quot; width=&quot;101&quot;&gt;
+
+        &lt;p class=&quot;MsoNormal&quot; style=&quot;text-align: center&quot; align=&quot;center&quot;&gt;&lt;span lang=&quot;EN-US&quot;&gt;D5&lt;/span&gt;&lt;/p&gt;
+
+        &lt;/td&gt;
+
+        &lt;td style=&quot;border-right: windowtext 0.5pt solid; padding-right: 5.4pt; border-top: medium none; padding-left: 5.4pt; padding-bottom: 0cm; border-left: medium none; padding-top: 0cm; border-bottom: windowtext 0.5pt solid; mso-border-left-alt: solid windowtext .5pt; mso-border-top-alt: solid windowtext .5pt&quot; width=&quot;101&quot;&gt;
+
+        &lt;p class=&quot;MsoNormal&quot; style=&quot;text-align: center&quot; align=&quot;center&quot;&gt;&lt;span style=&quot;font-family: 宋体; mso-ascii-font-family: 'Times New Roman'; mso-hansi-font-family: 'Times New Roman'&quot;&gt;出&lt;/span&gt;&lt;/p&gt;
+
+        &lt;/td&gt;
+
+    &lt;/tr&gt;
+
+    &lt;tr&gt;
+
+        &lt;td style=&quot;border-right: windowtext 0.5pt solid; padding-right: 5.4pt; border-top: medium none; padding-left: 5.4pt; padding-bottom: 0cm; border-left: windowtext 0.5pt solid; padding-top: 0cm; border-bottom: windowtext 0.5pt solid; mso-border-top-alt: solid windowtext .5pt&quot; width=&quot;101&quot;&gt;
+
+        &lt;p class=&quot;MsoNormal&quot; style=&quot;text-align: center&quot; align=&quot;center&quot;&gt;&lt;span lang=&quot;EN-US&quot;&gt;8&lt;/span&gt;&lt;/p&gt;
+
+        &lt;/td&gt;
+
+        &lt;td style=&quot;border-right: windowtext 0.5pt solid; padding-right: 5.4pt; border-top: medium none; padding-left: 5.4pt; padding-bottom: 0cm; border-left: medium none; padding-top: 0cm; border-bottom: windowtext 0.5pt solid; mso-border-left-alt: solid windowtext .5pt; mso-border-top-alt: solid windowtext .5pt&quot; width=&quot;101&quot;&gt;
+
+        &lt;p class=&quot;MsoNormal&quot; style=&quot;text-align: center&quot; align=&quot;center&quot;&gt;&lt;span lang=&quot;EN-US&quot;&gt;D6&lt;/span&gt;&lt;/p&gt;
+
+        &lt;/td&gt;
+
+        &lt;td style=&quot;border-right: windowtext 0.5pt solid; padding-right: 5.4pt; border-top: medium none; padding-left: 5.4pt; padding-bottom: 0cm; border-left: medium none; padding-top: 0cm; border-bottom: windowtext 0.5pt solid; mso-border-left-alt: solid windowtext .5pt; mso-border-top-alt: solid windowtext .5pt&quot; width=&quot;101&quot;&gt;
+
+        &lt;p class=&quot;MsoNormal&quot; style=&quot;text-align: center&quot; align=&quot;center&quot;&gt;&lt;span style=&quot;font-family: 宋体; mso-ascii-font-family: 'Times New Roman'; mso-hansi-font-family: 'Times New Roman'&quot;&gt;出&lt;/span&gt;&lt;/p&gt;
+
+        &lt;/td&gt;
+
+    &lt;/tr&gt;
+
+    &lt;tr&gt;
+
+        &lt;td style=&quot;border-right: windowtext 0.5pt solid; padding-right: 5.4pt; border-top: medium none; padding-left: 5.4pt; padding-bottom: 0cm; border-left: windowtext 0.5pt solid; padding-top: 0cm; border-bottom: windowtext 0.5pt solid; mso-border-top-alt: solid windowtext .5pt&quot; width=&quot;101&quot;&gt;
+
+        &lt;p class=&quot;MsoNormal&quot; style=&quot;text-align: center&quot; align=&quot;center&quot;&gt;&lt;span lang=&quot;EN-US&quot;&gt;9&lt;/span&gt;&lt;/p&gt;
+
+        &lt;/td&gt;
+
+        &lt;td style=&quot;border-right: windowtext 0.5pt solid; padding-right: 5.4pt; border-top: medium none; padding-left: 5.4pt; padding-bottom: 0cm; border-left: medium none; padding-top: 0cm; border-bottom: windowtext 0.5pt solid; mso-border-left-alt: solid windowtext .5pt; mso-border-top-alt: solid windowtext .5pt&quot; width=&quot;101&quot;&gt;
+
+        &lt;p class=&quot;MsoNormal&quot; style=&quot;text-align: center&quot; align=&quot;center&quot;&gt;&lt;span lang=&quot;EN-US&quot;&gt;D7&lt;/span&gt;&lt;/p&gt;
+
+        &lt;/td&gt;
+
+        &lt;td style=&quot;border-right: windowtext 0.5pt solid; padding-right: 5.4pt; border-top: medium none; padding-left: 5.4pt; padding-bottom: 0cm; border-left: medium none; padding-top: 0cm; border-bottom: windowtext 0.5pt solid; mso-border-left-alt: solid windowtext .5pt; mso-border-top-alt: solid windowtext .5pt&quot; width=&quot;101&quot;&gt;
+
+        &lt;p class=&quot;MsoNormal&quot; style=&quot;text-align: center&quot; align=&quot;center&quot;&gt;&lt;span style=&quot;font-family: 宋体; mso-ascii-font-family: Times New Roman; mso-hansi-font-family: Times New Roman&quot;&gt;出&lt;/span&gt;&lt;/p&gt;
+
+        &lt;/td&gt;
+
+        &lt;td style=&quot;border-right: windowtext 0.5pt solid; padding-right: 5.4pt; border-top: medium none; padding-left: 5.4pt; padding-bottom: 0cm; border-left: medium none; padding-top: 0cm; border-bottom: windowtext 0.5pt solid; mso-border-left-alt: solid windowtext .5pt; mso-border-top-alt: solid windowtext .5pt&quot; width=&quot;233&quot;&gt;
+
+        &lt;p class=&quot;MsoNormal&quot; style=&quot;text-align: center&quot; align=&quot;center&quot;&gt;&amp;nbsp;&lt;span lang=&quot;EN-US&quot;&gt;&lt;O:P&gt; &lt;/O:P&gt;&lt;/span&gt;&lt;/p&gt;
+
+        &lt;/td&gt;
+
+    &lt;/tr&gt;
+
+    &lt;tr&gt;
+
+        &lt;td style=&quot;border-right: windowtext 0.5pt solid; padding-right: 5.4pt; border-top: medium none; padding-left: 5.4pt; padding-bottom: 0cm; border-left: windowtext 0.5pt solid; padding-top: 0cm; border-bottom: windowtext 0.5pt solid; mso-border-top-alt: solid windowtext .5pt&quot; width=&quot;101&quot;&gt;
+
+        &lt;p class=&quot;MsoNormal&quot; style=&quot;text-align: center&quot; align=&quot;center&quot;&gt;&lt;span lang=&quot;EN-US&quot;&gt;10&lt;/span&gt;&lt;/p&gt;
+
+        &lt;/td&gt;
+
+        &lt;td style=&quot;border-right: windowtext 0.5pt solid; padding-right: 5.4pt; border-top: medium none; padding-left: 5.4pt; padding-bottom: 0cm; border-left: medium none; padding-top: 0cm; border-bottom: windowtext 0.5pt solid; mso-border-left-alt: solid windowtext .5pt; mso-border-top-alt: solid windowtext .5pt&quot; width=&quot;101&quot;&gt;
+
+        &lt;p class=&quot;MsoNormal&quot; style=&quot;text-align: center&quot; align=&quot;center&quot;&gt;&lt;span lang=&quot;EN-US&quot;&gt;/ACK&lt;/span&gt;&lt;/p&gt;
+
+        &lt;/td&gt;
+
+        &lt;td style=&quot;border-right: windowtext 0.5pt solid; padding-right: 5.4pt; border-top: medium none; padding-left: 5.4pt; padding-bottom: 0cm; border-left: medium none; padding-top: 0cm; border-bottom: windowtext 0.5pt solid; mso-border-left-alt: solid windowtext .5pt; mso-border-top-alt: solid windowtext .5pt&quot; width=&quot;101&quot;&gt;　S6 &lt;/td&gt;
+
+        &lt;td style=&quot;border-right: windowtext 0.5pt solid; padding-right: 5.4pt; border-top: medium none; padding-left: 5.4pt; padding-bottom: 0cm; border-left: medium none; padding-top: 0cm; border-bottom: windowtext 0.5pt solid; mso-border-left-alt: solid windowtext .5pt; mso-border-top-alt: solid windowtext .5pt&quot; width=&quot;101&quot;&gt;Status &lt;/td&gt;
+
+        &lt;td style=&quot;border-right: windowtext 0.5pt solid; padding-right: 5.4pt; border-top: medium none; padding-left: 5.4pt; padding-bottom: 0cm; border-left: medium none; padding-top: 0cm; border-bottom: windowtext 0.5pt solid; mso-border-left-alt: solid windowtext .5pt; mso-border-top-alt: solid windowtext .5pt&quot; width=&quot;101&quot;&gt;
+
+        &lt;p class=&quot;MsoNormal&quot; style=&quot;text-align: center&quot; align=&quot;center&quot;&gt;&lt;span style=&quot;font-family: 宋体; mso-ascii-font-family: 'Times New Roman'; mso-hansi-font-family: 'Times New Roman'&quot;&gt;入&lt;/span&gt;&lt;/p&gt;
+
+        &lt;/td&gt;
+
+        &lt;td style=&quot;border-right: windowtext 0.5pt solid; padding-right: 5.4pt; border-top: medium none; padding-left: 5.4pt; padding-bottom: 0cm; border-left: medium none; padding-top: 0cm; border-bottom: windowtext 0.5pt solid; mso-border-left-alt: solid windowtext .5pt; mso-border-top-alt: solid windowtext .5pt&quot; width=&quot;233&quot;&gt;
+
+        &lt;p class=&quot;MsoNormal&quot; style=&quot;text-align: center&quot; align=&quot;center&quot;&gt;&lt;span style=&quot;font-family: 宋体; mso-ascii-font-family: 'Times New Roman'; mso-hansi-font-family: 'Times New Roman'&quot;&gt;应答,以插入低电平的形式出现，表明最后一个字符已招收完毕。&lt;/span&gt;&lt;/p&gt;
+
+        &lt;/td&gt;
+
+    &lt;/tr&gt;
+
+    &lt;tr&gt;
+
+        &lt;td style=&quot;border-right: windowtext 0.5pt solid; padding-right: 5.4pt; border-top: medium none; padding-left: 5.4pt; padding-bottom: 0cm; border-left: windowtext 0.5pt solid; padding-top: 0cm; border-bottom: windowtext 0.5pt solid; mso-border-top-alt: solid windowtext .5pt&quot; width=&quot;101&quot;&gt;
+
+        &lt;p class=&quot;MsoNormal&quot; style=&quot;text-align: center&quot; align=&quot;center&quot;&gt;&lt;span lang=&quot;EN-US&quot;&gt;11&lt;/span&gt;&lt;/p&gt;
+
+        &lt;/td&gt;
+
+        &lt;td style=&quot;border-right: windowtext 0.5pt solid; padding-right: 5.4pt; border-top: medium none; padding-left: 5.4pt; padding-bottom: 0cm; border-left: medium none; padding-top: 0cm; border-bottom: windowtext 0.5pt solid; mso-border-left-alt: solid windowtext .5pt; mso-border-top-alt: solid windowtext .5pt&quot; width=&quot;101&quot;&gt;
+
+        &lt;p class=&quot;MsoNormal&quot; style=&quot;text-align: center&quot; align=&quot;center&quot;&gt;&lt;span lang=&quot;EN-US&quot;&gt;BUSY&lt;/span&gt;&lt;/p&gt;
+
+        &lt;/td&gt;
+
+        &lt;td style=&quot;border-right: windowtext 0.5pt solid; padding-right: 5.4pt; border-top: medium none; padding-left: 5.4pt; padding-bottom: 0cm; border-left: medium none; padding-top: 0cm; border-bottom: windowtext 0.5pt solid; mso-border-left-alt: solid windowtext .5pt; mso-border-top-alt: solid windowtext .5pt&quot; width=&quot;101&quot;&gt;　
+
+        &lt;p&gt;S7*&lt;/p&gt;
+
+        &lt;/td&gt;
+
+        &lt;td style=&quot;border-right: windowtext 0.5pt solid; padding-right: 5.4pt; border-top: medium none; padding-left: 5.4pt; padding-bottom: 0cm; border-left: medium none; padding-top: 0cm; border-bottom: windowtext 0.5pt solid; mso-border-left-alt: solid windowtext .5pt; mso-border-top-alt: solid windowtext .5pt&quot; width=&quot;101&quot;&gt;Status &lt;/td&gt;
+
+        &lt;td style=&quot;border-right: windowtext 0.5pt solid; padding-right: 5.4pt; border-top: medium none; padding-left: 5.4pt; padding-bottom: 0cm; border-left: medium none; padding-top: 0cm; border-bottom: windowtext 0.5pt solid; mso-border-left-alt: solid windowtext .5pt; mso-border-top-alt: solid windowtext .5pt&quot; width=&quot;101&quot;&gt;
+
+        &lt;p class=&quot;MsoNormal&quot; style=&quot;text-align: center&quot; align=&quot;center&quot;&gt;&lt;span style=&quot;font-family: 宋体; mso-ascii-font-family: 'Times New Roman'; mso-hansi-font-family: 'Times New Roman'&quot;&gt;入&lt;/span&gt;&lt;/p&gt;
+
+        &lt;/td&gt;
+
+        &lt;td style=&quot;border-right: windowtext 0.5pt solid; padding-right: 5.4pt; border-top: medium none; padding-left: 5.4pt; padding-bottom: 0cm; border-left: medium none; padding-top: 0cm; border-bottom: windowtext 0.5pt solid; mso-border-left-alt: solid windowtext .5pt; mso-border-top-alt: solid windowtext .5pt&quot; width=&quot;233&quot;&gt;
+
+        &lt;p class=&quot;MsoNormal&quot; style=&quot;text-align: center&quot; align=&quot;center&quot;&gt;&lt;span style=&quot;font-family: 宋体; mso-ascii-font-family: 'Times New Roman'; mso-hansi-font-family: 'Times New Roman'&quot;&gt;繁忙通知，以插入高电平的方式出现，表明打印机处于忙状态不能再接收数据。&lt;/span&gt;&lt;/p&gt;
+
+        &lt;/td&gt;
+
+    &lt;/tr&gt;
+
+    &lt;tr&gt;
+
+        &lt;td style=&quot;border-right: windowtext 0.5pt solid; padding-right: 5.4pt; border-top: medium none; padding-left: 5.4pt; padding-bottom: 0cm; border-left: windowtext 0.5pt solid; padding-top: 0cm; border-bottom: windowtext 0.5pt solid; mso-border-top-alt: solid windowtext .5pt&quot; width=&quot;101&quot;&gt;
+
+        &lt;p class=&quot;MsoNormal&quot; style=&quot;text-align: center&quot; align=&quot;center&quot;&gt;&lt;span lang=&quot;EN-US&quot;&gt;12&lt;/span&gt;&lt;/p&gt;
+
+        &lt;/td&gt;
+
+        &lt;td style=&quot;border-right: windowtext 0.5pt solid; padding-right: 5.4pt; border-top: medium none; padding-left: 5.4pt; padding-bottom: 0cm; border-left: medium none; padding-top: 0cm; border-bottom: windowtext 0.5pt solid; mso-border-left-alt: solid windowtext .5pt; mso-border-top-alt: solid windowtext .5pt&quot; width=&quot;101&quot;&gt;
+
+        &lt;p class=&quot;MsoNormal&quot; style=&quot;text-align: center&quot; align=&quot;center&quot;&gt;&lt;span lang=&quot;EN-US&quot;&gt;PE&lt;/span&gt;&lt;/p&gt;
+
+        &lt;/td&gt;
+
+        &lt;td style=&quot;border-right: windowtext 0.5pt solid; padding-right: 5.4pt; border-top: medium none; padding-left: 5.4pt; padding-bottom: 0cm; border-left: medium none; padding-top: 0cm; border-bottom: windowtext 0.5pt solid; mso-border-left-alt: solid windowtext .5pt; mso-border-top-alt: solid windowtext .5pt&quot; width=&quot;101&quot;&gt;S5 &lt;/td&gt;
+
+        &lt;td style=&quot;border-right: windowtext 0.5pt solid; padding-right: 5.4pt; border-top: medium none; padding-left: 5.4pt; padding-bottom: 0cm; border-left: medium none; padding-top: 0cm; border-bottom: windowtext 0.5pt solid; mso-border-left-alt: solid windowtext .5pt; mso-border-top-alt: solid windowtext .5pt&quot; width=&quot;101&quot;&gt;Status &lt;/td&gt;
+
+        &lt;td style=&quot;border-right: windowtext 0.5pt solid; padding-right: 5.4pt; border-top: medium none; padding-left: 5.4pt; padding-bottom: 0cm; border-left: medium none; padding-top: 0cm; border-bottom: windowtext 0.5pt solid; mso-border-left-alt: solid windowtext .5pt; mso-border-top-alt: solid windowtext .5pt&quot; width=&quot;101&quot;&gt;
+
+        &lt;p class=&quot;MsoNormal&quot; style=&quot;text-align: center&quot; align=&quot;center&quot;&gt;&lt;span style=&quot;font-family: 宋体; mso-ascii-font-family: 'Times New Roman'; mso-hansi-font-family: 'Times New Roman'&quot;&gt;入&lt;/span&gt;&lt;/p&gt;
+
+        &lt;/td&gt;
+
+        &lt;td style=&quot;border-right: windowtext 0.5pt solid; padding-right: 5.4pt; border-top: medium none; padding-left: 5.4pt; padding-bottom: 0cm; border-left: medium none; padding-top: 0cm; border-bottom: windowtext 0.5pt solid; mso-border-left-alt: solid windowtext .5pt; mso-border-top-alt: solid windowtext .5pt&quot; width=&quot;233&quot;&gt;
+
+        &lt;p class=&quot;MsoNormal&quot; align=&quot;center&quot;&gt;&lt;span style=&quot;font-family: 宋体; mso-ascii-font-family: Times New Roman; mso-hansi-font-family: Times New Roman&quot;&gt;没有打印机纸。&lt;/span&gt; &lt;/p&gt;
+
+        &lt;/td&gt;
+
+    &lt;/tr&gt;
+
+    &lt;tr&gt;
+
+        &lt;td style=&quot;border-right: windowtext 0.5pt solid; padding-right: 5.4pt; border-top: medium none; padding-left: 5.4pt; padding-bottom: 0cm; border-left: windowtext 0.5pt solid; padding-top: 0cm; border-bottom: windowtext 0.5pt solid; mso-border-top-alt: solid windowtext .5pt&quot; width=&quot;101&quot;&gt;
+
+        &lt;p class=&quot;MsoNormal&quot; style=&quot;text-align: center&quot; align=&quot;center&quot;&gt;&lt;span lang=&quot;EN-US&quot;&gt;13&lt;/span&gt;&lt;/p&gt;
+
+        &lt;/td&gt;
+
+        &lt;td style=&quot;border-right: windowtext 0.5pt solid; padding-right: 5.4pt; border-top: medium none; padding-left: 5.4pt; padding-bottom: 0cm; border-left: medium none; padding-top: 0cm; border-bottom: windowtext 0.5pt solid; mso-border-left-alt: solid windowtext .5pt; mso-border-top-alt: solid windowtext .5pt&quot; width=&quot;101&quot;&gt;
+
+        &lt;p class=&quot;MsoNormal&quot; style=&quot;text-align: center&quot; align=&quot;center&quot;&gt;&lt;span lang=&quot;EN-US&quot;&gt;SELECT&lt;/span&gt;&lt;/p&gt;
+
+        &lt;/td&gt;
+
+        &lt;td style=&quot;border-right: windowtext 0.5pt solid; padding-right: 5.4pt; border-top: medium none; padding-left: 5.4pt; padding-bottom: 0cm; border-left: medium none; padding-top: 0cm; border-bottom: windowtext 0.5pt solid; mso-border-left-alt: solid windowtext .5pt; mso-border-top-alt: solid windowtext .5pt&quot; width=&quot;101&quot;&gt;　S4 &lt;/td&gt;
+
+        &lt;td style=&quot;border-right: windowtext 0.5pt solid; padding-right: 5.4pt; border-top: medium none; padding-left: 5.4pt; padding-bottom: 0cm; border-left: medium none; padding-top: 0cm; border-bottom: windowtext 0.5pt solid; mso-border-left-alt: solid windowtext .5pt; mso-border-top-alt: solid windowtext .5pt&quot; width=&quot;101&quot;&gt;Status &lt;/td&gt;
+
+        &lt;td style=&quot;border-right: windowtext 0.5pt solid; padding-right: 5.4pt; border-top: medium none; padding-left: 5.4pt; padding-bottom: 0cm; border-left: medium none; padding-top: 0cm; border-bottom: windowtext 0.5pt solid; mso-border-left-alt: solid windowtext .5pt; mso-border-top-alt: solid windowtext .5pt&quot; width=&quot;101&quot;&gt;
+
+        &lt;p class=&quot;MsoNormal&quot; style=&quot;text-align: center&quot; align=&quot;center&quot;&gt;&lt;span style=&quot;font-family: 宋体; mso-ascii-font-family: 'Times New Roman'; mso-hansi-font-family: 'Times New Roman'&quot;&gt;入&lt;/span&gt;&lt;/p&gt;
+
+        &lt;/td&gt;
+
+        &lt;td style=&quot;border-right: windowtext 0.5pt solid; padding-right: 5.4pt; border-top: medium none; padding-left: 5.4pt; padding-bottom: 0cm; border-left: medium none; padding-top: 0cm; border-bottom: windowtext 0.5pt solid; mso-border-left-alt: solid windowtext .5pt; mso-border-top-alt: solid windowtext .5pt&quot; width=&quot;233&quot;&gt;
+
+        &lt;p class=&quot;MsoNormal&quot; style=&quot;text-align: center&quot; align=&quot;center&quot;&gt;&lt;span style=&quot;font-family: 宋体; mso-ascii-font-family: 'Times New Roman'; mso-hansi-font-family: 'Times New Roman'&quot;&gt;选择输入,以插入高电平的方式出现，表明打印机处于在线待命状态。&lt;/span&gt;&lt;/p&gt;
+
+        &lt;/td&gt;
+
+    &lt;/tr&gt;
+
+    &lt;tr&gt;
+
+        &lt;td style=&quot;border-right: windowtext 0.5pt solid; padding-right: 5.4pt; border-top: medium none; padding-left: 5.4pt; padding-bottom: 0cm; border-left: windowtext 0.5pt solid; padding-top: 0cm; border-bottom: windowtext 0.5pt solid; mso-border-top-alt: solid windowtext .5pt&quot; width=&quot;101&quot;&gt;
+
+        &lt;p class=&quot;MsoNormal&quot; style=&quot;text-align: center&quot; align=&quot;center&quot;&gt;&lt;span lang=&quot;EN-US&quot;&gt;14&lt;/span&gt;&lt;/p&gt;
+
+        &lt;/td&gt;
+
+        &lt;td style=&quot;border-right: windowtext 0.5pt solid; padding-right: 5.4pt; border-top: medium none; padding-left: 5.4pt; padding-bottom: 0cm; border-left: medium none; padding-top: 0cm; border-bottom: windowtext 0.5pt solid; mso-border-left-alt: solid windowtext .5pt; mso-border-top-alt: solid windowtext .5pt&quot; width=&quot;101&quot;&gt;
+
+        &lt;p class=&quot;MsoNormal&quot; style=&quot;text-align: center&quot; align=&quot;center&quot;&gt;&lt;span lang=&quot;EN-US&quot;&gt;AUTO FEED&lt;/span&gt;&lt;/p&gt;
+
+        &lt;/td&gt;
+
+        &lt;td style=&quot;border-right: windowtext 0.5pt solid; padding-right: 5.4pt; border-top: medium none; padding-left: 5.4pt; padding-bottom: 0cm; border-left: medium none; padding-top: 0cm; border-bottom: windowtext 0.5pt solid; mso-border-left-alt: solid windowtext .5pt; mso-border-top-alt: solid windowtext .5pt&quot; width=&quot;101&quot;&gt;　C1* &lt;/td&gt;
+
+        &lt;td style=&quot;border-right: windowtext 0.5pt solid; padding-right: 5.4pt; border-top: medium none; padding-left: 5.4pt; padding-bottom: 0cm; border-left: medium none; padding-top: 0cm; border-bottom: windowtext 0.5pt solid; mso-border-left-alt: solid windowtext .5pt; mso-border-top-alt: solid windowtext .5pt&quot; width=&quot;101&quot;&gt;Control &lt;/td&gt;
+
+        &lt;td style=&quot;border-right: windowtext 0.5pt solid; padding-right: 5.4pt; border-top: medium none; padding-left: 5.4pt; padding-bottom: 0cm; border-left: medium none; padding-top: 0cm; border-bottom: windowtext 0.5pt solid; mso-border-left-alt: solid windowtext .5pt; mso-border-top-alt: solid windowtext .5pt&quot; width=&quot;101&quot;&gt;
+
+        &lt;p class=&quot;MsoNormal&quot; style=&quot;text-align: center&quot; align=&quot;center&quot;&gt;&lt;span style=&quot;font-family: 宋体; mso-ascii-font-family: 'Times New Roman'; mso-hansi-font-family: 'Times New Roman'&quot;&gt;出&lt;/span&gt;&lt;/p&gt;
+
+        &lt;/td&gt;
+
+        &lt;td style=&quot;border-right: windowtext 0.5pt solid; padding-right: 5.4pt; border-top: medium none; padding-left: 5.4pt; padding-bottom: 0cm; border-left: medium none; padding-top: 0cm; border-bottom: windowtext 0.5pt solid; mso-border-left-alt: solid windowtext .5pt; mso-border-top-alt: solid windowtext .5pt&quot; width=&quot;233&quot;&gt;
+
+        &lt;p class=&quot;MsoNormal&quot; style=&quot;text-align: center&quot; align=&quot;center&quot;&gt;&lt;span style=&quot;font-family: 宋体; mso-ascii-font-family: 'Times New Roman'; mso-hansi-font-family: 'Times New Roman'&quot;&gt;自动馈送,低电平有效信号民，通知打印机对于每遇到一个回车进行自动换行。&lt;/span&gt;&lt;/p&gt;
+
+        &lt;/td&gt;
+
+    &lt;/tr&gt;
+
+    &lt;tr&gt;
+
+        &lt;td style=&quot;border-right: windowtext 0.5pt solid; padding-right: 5.4pt; border-top: medium none; padding-left: 5.4pt; padding-bottom: 0cm; border-left: windowtext 0.5pt solid; padding-top: 0cm; border-bottom: windowtext 0.5pt solid; mso-border-top-alt: solid windowtext .5pt&quot; width=&quot;101&quot;&gt;
+
+        &lt;p class=&quot;MsoNormal&quot; style=&quot;text-align: center&quot; align=&quot;center&quot;&gt;&lt;span lang=&quot;EN-US&quot;&gt;15&lt;/span&gt;&lt;/p&gt;
+
+        &lt;/td&gt;
+
+        &lt;td style=&quot;border-right: windowtext 0.5pt solid; padding-right: 5.4pt; border-top: medium none; padding-left: 5.4pt; padding-bottom: 0cm; border-left: medium none; padding-top: 0cm; border-bottom: windowtext 0.5pt solid; mso-border-left-alt: solid windowtext .5pt; mso-border-top-alt: solid windowtext .5pt&quot; width=&quot;101&quot;&gt;
+
+        &lt;p class=&quot;MsoNormal&quot; style=&quot;text-align: center&quot; align=&quot;center&quot;&gt;&lt;span lang=&quot;EN-US&quot;&gt;/ERROR&lt;/span&gt;&lt;/p&gt;
+
+        &lt;/td&gt;
+
+        &lt;td style=&quot;border-right: windowtext 0.5pt solid; padding-right: 5.4pt; border-top: medium none; padding-left: 5.4pt; padding-bottom: 0cm; border-left: medium none; padding-top: 0cm; border-bottom: windowtext 0.5pt solid; mso-border-left-alt: solid windowtext .5pt; mso-border-top-alt: solid windowtext .5pt&quot; width=&quot;101&quot;&gt;S3 &lt;/td&gt;
+
+        &lt;td style=&quot;border-right: windowtext 0.5pt solid; padding-right: 5.4pt; border-top: medium none; padding-left: 5.4pt; padding-bottom: 0cm; border-left: medium none; padding-top: 0cm; border-bottom: windowtext 0.5pt solid; mso-border-left-alt: solid windowtext .5pt; mso-border-top-alt: solid windowtext .5pt&quot; width=&quot;101&quot;&gt;Status &lt;/td&gt;
+
+        &lt;td style=&quot;border-right: windowtext 0.5pt solid; padding-right: 5.4pt; border-top: medium none; padding-left: 5.4pt; padding-bottom: 0cm; border-left: medium none; padding-top: 0cm; border-bottom: windowtext 0.5pt solid; mso-border-left-alt: solid windowtext .5pt; mso-border-top-alt: solid windowtext .5pt&quot; width=&quot;101&quot;&gt;
+
+        &lt;p class=&quot;MsoNormal&quot; style=&quot;text-align: center&quot; align=&quot;center&quot;&gt;&lt;span style=&quot;font-family: 宋体; mso-ascii-font-family: 'Times New Roman'; mso-hansi-font-family: 'Times New Roman'&quot;&gt;入&lt;/span&gt;&lt;/p&gt;
+
+        &lt;/td&gt;
+
+        &lt;td style=&quot;border-right: windowtext 0.5pt solid; padding-right: 5.4pt; border-top: medium none; padding-left: 5.4pt; padding-bottom: 0cm; border-left: medium none; padding-top: 0cm; border-bottom: windowtext 0.5pt solid; mso-border-left-alt: solid windowtext .5pt; mso-border-top-alt: solid windowtext .5pt&quot; width=&quot;233&quot;&gt;
+
+        &lt;p class=&quot;MsoNormal&quot; style=&quot;text-align: center&quot; align=&quot;center&quot;&gt;&lt;span style=&quot;font-family: 宋体; mso-ascii-font-family: 'Times New Roman'; mso-hansi-font-family: 'Times New Roman'&quot;&gt;错误,该信号由打印机发向计算机，表明打印机处于错误状态。&lt;/span&gt;&lt;/p&gt;
+
+        &lt;/td&gt;
+
+    &lt;/tr&gt;
+
+    &lt;tr&gt;
+
+        &lt;td style=&quot;border-right: windowtext 0.5pt solid; padding-right: 5.4pt; border-top: medium none; padding-left: 5.4pt; padding-bottom: 0cm; border-left: windowtext 0.5pt solid; padding-top: 0cm; border-bottom: windowtext 0.5pt solid; mso-border-top-alt: solid windowtext .5pt&quot; width=&quot;101&quot;&gt;
+
+        &lt;p class=&quot;MsoNormal&quot; style=&quot;text-align: center&quot; align=&quot;center&quot;&gt;&lt;span lang=&quot;EN-US&quot;&gt;16&lt;/span&gt;&lt;/p&gt;
+
+        &lt;/td&gt;
+
+        &lt;td style=&quot;border-right: windowtext 0.5pt solid; padding-right: 5.4pt; border-top: medium none; padding-left: 5.4pt; padding-bottom: 0cm; border-left: medium none; padding-top: 0cm; border-bottom: windowtext 0.5pt solid; mso-border-left-alt: solid windowtext .5pt; mso-border-top-alt: solid windowtext .5pt&quot; width=&quot;101&quot;&gt;
+
+        &lt;p class=&quot;MsoNormal&quot; style=&quot;text-align: center&quot; align=&quot;center&quot;&gt;&lt;span lang=&quot;EN-US&quot;&gt;/INIT&lt;/span&gt;&lt;/p&gt;
+
+        &lt;/td&gt;
+
+        &lt;td style=&quot;border-right: windowtext 0.5pt solid; padding-right: 5.4pt; border-top: medium none; padding-left: 5.4pt; padding-bottom: 0cm; border-left: medium none; padding-top: 0cm; border-bottom: windowtext 0.5pt solid; mso-border-left-alt: solid windowtext .5pt; mso-border-top-alt: solid windowtext .5pt&quot; width=&quot;101&quot;&gt;　C2 &lt;/td&gt;
+
+        &lt;td style=&quot;border-right: windowtext 0.5pt solid; padding-right: 5.4pt; border-top: medium none; padding-left: 5.4pt; padding-bottom: 0cm; border-left: medium none; padding-top: 0cm; border-bottom: windowtext 0.5pt solid; mso-border-left-alt: solid windowtext .5pt; mso-border-top-alt: solid windowtext .5pt&quot; width=&quot;101&quot;&gt;Control &lt;/td&gt;
+
+        &lt;td style=&quot;border-right: windowtext 0.5pt solid; padding-right: 5.4pt; border-top: medium none; padding-left: 5.4pt; padding-bottom: 0cm; border-left: medium none; padding-top: 0cm; border-bottom: windowtext 0.5pt solid; mso-border-left-alt: solid windowtext .5pt; mso-border-top-alt: solid windowtext .5pt&quot; width=&quot;101&quot;&gt;
+
+        &lt;p class=&quot;MsoNormal&quot; style=&quot;text-align: center&quot; align=&quot;center&quot;&gt;&lt;span style=&quot;font-family: 宋体; mso-ascii-font-family: 'Times New Roman'; mso-hansi-font-family: 'Times New Roman'&quot;&gt;出&lt;/span&gt;&lt;/p&gt;
+
+        &lt;/td&gt;
+
+        &lt;td style=&quot;border-right: windowtext 0.5pt solid; padding-right: 5.4pt; border-top: medium none; padding-left: 5.4pt; padding-bottom: 0cm; border-left: medium none; padding-top: 0cm; border-bottom: windowtext 0.5pt solid; mso-border-left-alt: solid windowtext .5pt; mso-border-top-alt: solid windowtext .5pt&quot; width=&quot;233&quot;&gt;
+
+        &lt;p class=&quot;MsoNormal&quot; style=&quot;text-align: center&quot; align=&quot;center&quot;&gt;&lt;span style=&quot;font-family: 宋体; mso-ascii-font-family: 'Times New Roman'; mso-hansi-font-family: 'Times New Roman'&quot;&gt;初始化,低电平有效信号，该信号用来对打印机进行复位。&lt;/span&gt;&lt;/p&gt;
+
+        &lt;/td&gt;
+
+    &lt;/tr&gt;
+
+    &lt;tr&gt;
+
+        &lt;td style=&quot;border-right: windowtext 0.5pt solid; padding-right: 5.4pt; border-top: medium none; padding-left: 5.4pt; padding-bottom: 0cm; border-left: windowtext 0.5pt solid; padding-top: 0cm; border-bottom: windowtext 0.5pt solid; mso-border-top-alt: solid windowtext .5pt&quot; width=&quot;101&quot;&gt;
+
+        &lt;p class=&quot;MsoNormal&quot; style=&quot;text-align: center&quot; align=&quot;center&quot;&gt;&lt;span lang=&quot;EN-US&quot;&gt;17&lt;/span&gt;&lt;/p&gt;
+
+        &lt;/td&gt;
+
+        &lt;td style=&quot;border-right: windowtext 0.5pt solid; padding-right: 5.4pt; border-top: medium none; padding-left: 5.4pt; padding-bottom: 0cm; border-left: medium none; padding-top: 0cm; border-bottom: windowtext 0.5pt solid; mso-border-left-alt: solid windowtext .5pt; mso-border-top-alt: solid windowtext .5pt&quot; width=&quot;101&quot;&gt;
+
+        &lt;p class=&quot;MsoNormal&quot; style=&quot;text-align: center&quot; align=&quot;center&quot;&gt;&lt;span lang=&quot;EN-US&quot;&gt;/SELIN&lt;/span&gt;&lt;/p&gt;
+
+        &lt;/td&gt;
+
+        &lt;td style=&quot;border-right: windowtext 0.5pt solid; padding-right: 5.4pt; border-top: medium none; padding-left: 5.4pt; padding-bottom: 0cm; border-left: medium none; padding-top: 0cm; border-bottom: windowtext 0.5pt solid; mso-border-left-alt: solid windowtext .5pt; mso-border-top-alt: solid windowtext .5pt&quot; width=&quot;101&quot;&gt;　C3* &lt;/td&gt;
+
+        &lt;td style=&quot;border-right: windowtext 0.5pt solid; padding-right: 5.4pt; border-top: medium none; padding-left: 5.4pt; padding-bottom: 0cm; border-left: medium none; padding-top: 0cm; border-bottom: windowtext 0.5pt solid; mso-border-left-alt: solid windowtext .5pt; mso-border-top-alt: solid windowtext .5pt&quot; width=&quot;101&quot;&gt;Control &lt;/td&gt;
+
+        &lt;td style=&quot;border-right: windowtext 0.5pt solid; padding-right: 5.4pt; border-top: medium none; padding-left: 5.4pt; padding-bottom: 0cm; border-left: medium none; padding-top: 0cm; border-bottom: windowtext 0.5pt solid; mso-border-left-alt: solid windowtext .5pt; mso-border-top-alt: solid windowtext .5pt&quot; width=&quot;101&quot;&gt;
+
+        &lt;p class=&quot;MsoNormal&quot; style=&quot;text-align: center&quot; align=&quot;center&quot;&gt;&lt;span style=&quot;font-family: 宋体; mso-ascii-font-family: 'Times New Roman'; mso-hansi-font-family: 'Times New Roman'&quot;&gt;出&lt;/span&gt;&lt;/p&gt;
+
+        &lt;/td&gt;
+
+        &lt;td style=&quot;border-right: windowtext 0.5pt solid; padding-right: 5.4pt; border-top: medium none; padding-left: 5.4pt; padding-bottom: 0cm; border-left: medium none; padding-top: 0cm; border-bottom: windowtext 0.5pt solid; mso-border-left-alt: solid windowtext .5pt; mso-border-top-alt: solid windowtext .5pt&quot; width=&quot;233&quot;&gt;
+
+        &lt;p class=&quot;MsoNormal&quot; style=&quot;text-align: center&quot; align=&quot;center&quot;&gt;&lt;span style=&quot;font-family: 宋体; mso-ascii-font-family: 'Times New Roman'; mso-hansi-font-family: 'Times New Roman'&quot;&gt;选择输入，低电平有效信号，表明已经选中的打印机。&lt;/span&gt;&lt;/p&gt;
+
+        &lt;/td&gt;
+
+    &lt;/tr&gt;
+
+    &lt;tr&gt;
+
+        &lt;td style=&quot;border-right: windowtext 0.5pt solid; padding-right: 5.4pt; border-top: medium none; padding-left: 5.4pt; padding-bottom: 0cm; border-left: windowtext 0.5pt solid; padding-top: 0cm; border-bottom: windowtext 0.5pt solid; mso-border-top-alt: solid windowtext .5pt&quot; width=&quot;101&quot;&gt;
+
+        &lt;p class=&quot;MsoNormal&quot; style=&quot;text-align: center&quot; align=&quot;center&quot;&gt;&lt;span lang=&quot;EN-US&quot;&gt;18&lt;/span&gt;&lt;/p&gt;
+
+        &lt;/td&gt;
+
+        &lt;td style=&quot;border-right: windowtext 0.5pt solid; padding-right: 5.4pt; border-top: medium none; padding-left: 5.4pt; padding-bottom: 0cm; border-left: medium none; padding-top: 0cm; border-bottom: windowtext 0.5pt solid; mso-border-left-alt: solid windowtext .5pt; mso-border-top-alt: solid windowtext .5pt&quot; width=&quot;101&quot;&gt;
+
+        &lt;p class=&quot;MsoNormal&quot; style=&quot;text-align: center&quot; align=&quot;center&quot;&gt;&lt;span lang=&quot;EN-US&quot;&gt;GND&lt;/span&gt;&lt;/p&gt;
+
+        &lt;/td&gt;
+
+        &lt;td style=&quot;border-right: windowtext 0.5pt solid; padding-right: 5.4pt; border-top: medium none; padding-left: 5.4pt; padding-bottom: 0cm; border-left: medium none; padding-top: 0cm; border-bottom: windowtext 0.5pt solid; mso-border-left-alt: solid windowtext .5pt; mso-border-top-alt: solid windowtext .5pt&quot; width=&quot;101&quot;&gt;　 &lt;/td&gt;
+
+        &lt;td style=&quot;border-right: windowtext 0.5pt solid; padding-right: 5.4pt; border-top: medium none; padding-left: 5.4pt; padding-bottom: 0cm; border-left: medium none; padding-top: 0cm; border-bottom: windowtext 0.5pt solid; mso-border-left-alt: solid windowtext .5pt; mso-border-top-alt: solid windowtext .5pt&quot; width=&quot;101&quot;&gt;　 &lt;/td&gt;
+
+        &lt;td style=&quot;border-right: windowtext 0.5pt solid; padding-right: 5.4pt; border-top: medium none; padding-left: 5.4pt; padding-bottom: 0cm; border-left: medium none; padding-top: 0cm; border-bottom: windowtext 0.5pt solid; mso-border-left-alt: solid windowtext .5pt; mso-border-top-alt: solid windowtext .5pt&quot; width=&quot;101&quot;&gt;
+
+        &lt;p class=&quot;MsoNormal&quot; style=&quot;text-align: center&quot; align=&quot;center&quot;&gt;&lt;span lang=&quot;EN-US&quot;&gt;---&lt;/span&gt;&lt;/p&gt;
+
+        &lt;/td&gt;
+
+        &lt;td style=&quot;border-right: windowtext 0.5pt solid; padding-right: 5.4pt; border-top: medium none; padding-left: 5.4pt; padding-bottom: 0cm; border-left: medium none; padding-top: 0cm; border-bottom: windowtext 0.5pt solid; mso-border-left-alt: solid windowtext .5pt; mso-border-top-alt: solid windowtext .5pt&quot; width=&quot;233&quot;&gt;
+
+        &lt;p class=&quot;MsoNormal&quot; style=&quot;text-align: center&quot; align=&quot;center&quot;&gt;&lt;span style=&quot;font-family: 宋体; mso-ascii-font-family: 'Times New Roman'; mso-hansi-font-family: 'Times New Roman'&quot;&gt;信号接地&lt;/span&gt;&lt;/p&gt;
+
+        &lt;/td&gt;
+
+    &lt;/tr&gt;
+
+    &lt;tr&gt;
+
+        &lt;td style=&quot;border-right: windowtext 0.5pt solid; padding-right: 5.4pt; border-top: medium none; padding-left: 5.4pt; padding-bottom: 0cm; border-left: windowtext 0.5pt solid; padding-top: 0cm; border-bottom: windowtext 0.5pt solid; mso-border-top-alt: solid windowtext .5pt&quot; width=&quot;101&quot;&gt;
+
+        &lt;p class=&quot;MsoNormal&quot; style=&quot;text-align: center&quot; align=&quot;center&quot;&gt;&lt;span lang=&quot;EN-US&quot;&gt;19&lt;/span&gt;&lt;/p&gt;
+
+        &lt;/td&gt;
+
+        &lt;td style=&quot;border-right: windowtext 0.5pt solid; padding-right: 5.4pt; border-top: medium none; padding-left: 5.4pt; padding-bottom: 0cm; border-left: medium none; padding-top: 0cm; border-bottom: windowtext 0.5pt solid; mso-border-left-alt: solid windowtext .5pt; mso-border-top-alt: solid windowtext .5pt&quot; width=&quot;101&quot;&gt;
+
+        &lt;p class=&quot;MsoNormal&quot; style=&quot;text-align: center&quot; align=&quot;center&quot;&gt;&lt;span lang=&quot;EN-US&quot;&gt;GND&lt;/span&gt;&lt;/p&gt;
+
+        &lt;/td&gt;
+
+        &lt;td style=&quot;border-right: windowtext 0.5pt solid; padding-right: 5.4pt; border-top: medium none; padding-left: 5.4pt; padding-bottom: 0cm; border-left: medium none; padding-top: 0cm; border-bottom: windowtext 0.5pt solid; mso-border-left-alt: solid windowtext .5pt; mso-border-top-alt: solid windowtext .5pt&quot; width=&quot;101&quot;&gt;　 &lt;/td&gt;
+
+        &lt;td style=&quot;border-right: windowtext 0.5pt solid; padding-right: 5.4pt; border-top: medium none; padding-left: 5.4pt; padding-bottom: 0cm; border-left: medium none; padding-top: 0cm; border-bottom: windowtext 0.5pt solid; mso-border-left-alt: solid windowtext .5pt; mso-border-top-alt: solid windowtext .5pt&quot; width=&quot;101&quot;&gt;　 &lt;/td&gt;
+
+        &lt;td style=&quot;border-right: windowtext 0.5pt solid; padding-right: 5.4pt; border-top: medium none; padding-left: 5.4pt; padding-bottom: 0cm; border-left: medium none; padding-top: 0cm; border-bottom: windowtext 0.5pt solid; mso-border-left-alt: solid windowtext .5pt; mso-border-top-alt: solid windowtext .5pt&quot; width=&quot;101&quot;&gt;
+
+        &lt;p class=&quot;MsoNormal&quot; style=&quot;text-align: center&quot; align=&quot;center&quot;&gt;&lt;span lang=&quot;EN-US&quot;&gt;---&lt;/span&gt;&lt;/p&gt;
+
+        &lt;/td&gt;
+
+        &lt;td style=&quot;border-right: windowtext 0.5pt solid; padding-right: 5.4pt; border-top: medium none; padding-left: 5.4pt; padding-bottom: 0cm; border-left: medium none; padding-top: 0cm; border-bottom: windowtext 0.5pt solid; mso-border-left-alt: solid windowtext .5pt; mso-border-top-alt: solid windowtext .5pt&quot; width=&quot;233&quot;&gt;
+
+        &lt;p class=&quot;MsoNormal&quot; style=&quot;text-align: center&quot; align=&quot;center&quot;&gt;&lt;span style=&quot;font-family: 宋体; mso-ascii-font-family: 'Times New Roman'; mso-hansi-font-family: 'Times New Roman'&quot;&gt;信号接地&lt;/span&gt;&lt;/p&gt;
+
+        &lt;/td&gt;
+
+    &lt;/tr&gt;
+
+    &lt;tr&gt;
+
+        &lt;td style=&quot;border-right: windowtext 0.5pt solid; padding-right: 5.4pt; border-top: medium none; padding-left: 5.4pt; padding-bottom: 0cm; border-left: windowtext 0.5pt solid; padding-top: 0cm; border-bottom: windowtext 0.5pt solid; mso-border-top-alt: solid windowtext .5pt&quot; width=&quot;101&quot;&gt;
+
+        &lt;p class=&quot;MsoNormal&quot; style=&quot;text-align: center&quot; align=&quot;center&quot;&gt;&lt;span lang=&quot;EN-US&quot;&gt;20&lt;/span&gt;&lt;/p&gt;
+
+        &lt;/td&gt;
+
+        &lt;td style=&quot;border-right: windowtext 0.5pt solid; padding-right: 5.4pt; border-top: medium none; padding-left: 5.4pt; padding-bottom: 0cm; border-left: medium none; padding-top: 0cm; border-bottom: windowtext 0.5pt solid; mso-border-left-alt: solid windowtext .5pt; mso-border-top-alt: solid windowtext .5pt&quot; width=&quot;101&quot;&gt;
+
+        &lt;p class=&quot;MsoNormal&quot; style=&quot;text-align: center&quot; align=&quot;center&quot;&gt;&lt;span lang=&quot;EN-US&quot;&gt;GND&lt;/span&gt;&lt;/p&gt;
+
+        &lt;/td&gt;
+
+        &lt;td style=&quot;border-right: windowtext 0.5pt solid; padding-right: 5.4pt; border-top: medium none; padding-left: 5.4pt; padding-bottom: 0cm; border-left: medium none; padding-top: 0cm; border-bottom: windowtext 0.5pt solid; mso-border-left-alt: solid windowtext .5pt; mso-border-top-alt: solid windowtext .5pt&quot; width=&quot;101&quot;&gt;　 &lt;/td&gt;
+
+        &lt;td style=&quot;border-right: windowtext 0.5pt solid; padding-right: 5.4pt; border-top: medium none; padding-left: 5.4pt; padding-bottom: 0cm; border-left: medium none; padding-top: 0cm; border-bottom: windowtext 0.5pt solid; mso-border-left-alt: solid windowtext .5pt; mso-border-top-alt: solid windowtext .5pt&quot; width=&quot;101&quot;&gt;　 &lt;/td&gt;
+
+        &lt;td style=&quot;border-right: windowtext 0.5pt solid; padding-right: 5.4pt; border-top: medium none; padding-left: 5.4pt; padding-bottom: 0cm; border-left: medium none; padding-top: 0cm; border-bottom: windowtext 0.5pt solid; mso-border-left-alt: solid windowtext .5pt; mso-border-top-alt: solid windowtext .5pt&quot; width=&quot;101&quot;&gt;
+
+        &lt;p class=&quot;MsoNormal&quot; style=&quot;text-align: center&quot; align=&quot;center&quot;&gt;&lt;span lang=&quot;EN-US&quot;&gt;---&lt;/span&gt;&lt;/p&gt;
+
+        &lt;/td&gt;
+
+        &lt;td style=&quot;border-right: windowtext 0.5pt solid; padding-right: 5.4pt; border-top: medium none; padding-left: 5.4pt; padding-bottom: 0cm; border-left: medium none; padding-top: 0cm; border-bottom: windowtext 0.5pt solid; mso-border-left-alt: solid windowtext .5pt; mso-border-top-alt: solid windowtext .5pt&quot; width=&quot;233&quot;&gt;
+
+        &lt;p class=&quot;MsoNormal&quot; style=&quot;text-align: center&quot; align=&quot;center&quot;&gt;&lt;span style=&quot;font-family: 宋体; mso-ascii-font-family: 'Times New Roman'; mso-hansi-font-family: 'Times New Roman'&quot;&gt;信号接地&lt;/span&gt;&lt;/p&gt;
+
+        &lt;/td&gt;
+
+    &lt;/tr&gt;
+
+    &lt;tr&gt;
+
+        &lt;td style=&quot;border-right: windowtext 0.5pt solid; padding-right: 5.4pt; border-top: medium none; padding-left: 5.4pt; padding-bottom: 0cm; border-left: windowtext 0.5pt solid; padding-top: 0cm; border-bottom: windowtext 0.5pt solid; mso-border-top-alt: solid windowtext .5pt&quot; width=&quot;101&quot;&gt;
+
+        &lt;p class=&quot;MsoNormal&quot; style=&quot;text-align: center&quot; align=&quot;center&quot;&gt;&lt;span lang=&quot;EN-US&quot;&gt;21&lt;/span&gt;&lt;/p&gt;
+
+        &lt;/td&gt;
+
+        &lt;td style=&quot;border-right: windowtext 0.5pt solid; padding-right: 5.4pt; border-top: medium none; padding-left: 5.4pt; padding-bottom: 0cm; border-left: medium none; padding-top: 0cm; border-bottom: windowtext 0.5pt solid; mso-border-left-alt: solid windowtext .5pt; mso-border-top-alt: solid windowtext .5pt&quot; width=&quot;101&quot;&gt;
+
+        &lt;p class=&quot;MsoNormal&quot; style=&quot;text-align: center&quot; align=&quot;center&quot;&gt;&lt;span lang=&quot;EN-US&quot;&gt;GND&lt;/span&gt;&lt;/p&gt;
+
+        &lt;/td&gt;
+
+        &lt;td style=&quot;border-right: windowtext 0.5pt solid; padding-right: 5.4pt; border-top: medium none; padding-left: 5.4pt; padding-bottom: 0cm; border-left: medium none; padding-top: 0cm; border-bottom: windowtext 0.5pt solid; mso-border-left-alt: solid windowtext .5pt; mso-border-top-alt: solid windowtext .5pt&quot; width=&quot;101&quot;&gt;　 &lt;/td&gt;
+
+        &lt;td style=&quot;border-right: windowtext 0.5pt solid; padding-right: 5.4pt; border-top: medium none; padding-left: 5.4pt; padding-bottom: 0cm; border-left: medium none; padding-top: 0cm; border-bottom: windowtext 0.5pt solid; mso-border-left-alt: solid windowtext .5pt; mso-border-top-alt: solid windowtext .5pt&quot; width=&quot;101&quot;&gt;　 &lt;/td&gt;
+
+        &lt;td style=&quot;border-right: windowtext 0.5pt solid; padding-right: 5.4pt; border-top: medium none; padding-left: 5.4pt; padding-bottom: 0cm; border-left: medium none; padding-top: 0cm; border-bottom: windowtext 0.5pt solid; mso-border-left-alt: solid windowtext .5pt; mso-border-top-alt: solid windowtext .5pt&quot; width=&quot;101&quot;&gt;
+
+        &lt;p class=&quot;MsoNormal&quot; style=&quot;text-align: center&quot; align=&quot;center&quot;&gt;&lt;span lang=&quot;EN-US&quot;&gt;---&lt;/span&gt;&lt;/p&gt;
+
+        &lt;/td&gt;
+
+        &lt;td style=&quot;border-right: windowtext 0.5pt solid; padding-right: 5.4pt; border-top: medium none; padding-left: 5.4pt; padding-bottom: 0cm; border-left: medium none; padding-top: 0cm; border-bottom: windowtext 0.5pt solid; mso-border-left-alt: solid windowtext .5pt; mso-border-top-alt: solid windowtext .5pt&quot; width=&quot;233&quot;&gt;
+
+        &lt;p class=&quot;MsoNormal&quot; style=&quot;text-align: center&quot; align=&quot;center&quot;&gt;&lt;span style=&quot;font-family: 宋体; mso-ascii-font-family: 'Times New Roman'; mso-hansi-font-family: 'Times New Roman'&quot;&gt;信号接地&lt;/span&gt;&lt;/p&gt;
+
+        &lt;/td&gt;
+
+    &lt;/tr&gt;
+
+    &lt;tr&gt;
+
+        &lt;td style=&quot;border-right: windowtext 0.5pt solid; padding-right: 5.4pt; border-top: medium none; padding-left: 5.4pt; padding-bottom: 0cm; border-left: windowtext 0.5pt solid; padding-top: 0cm; border-bottom: windowtext 0.5pt solid; mso-border-top-alt: solid windowtext .5pt&quot; width=&quot;101&quot;&gt;
+
+        &lt;p class=&quot;MsoNormal&quot; style=&quot;text-align: center&quot; align=&quot;center&quot;&gt;&lt;span lang=&quot;EN-US&quot;&gt;22&lt;/span&gt;&lt;/p&gt;
+
+        &lt;/td&gt;
+
+        &lt;td style=&quot;border-right: windowtext 0.5pt solid; padding-right: 5.4pt; border-top: medium none; padding-left: 5.4pt; padding-bottom: 0cm; border-left: medium none; padding-top: 0cm; border-bottom: windowtext 0.5pt solid; mso-border-left-alt: solid windowtext .5pt; mso-border-top-alt: solid windowtext .5pt&quot; width=&quot;101&quot;&gt;
+
+        &lt;p class=&quot;MsoNormal&quot; style=&quot;text-align: center&quot; align=&quot;center&quot;&gt;&lt;span lang=&quot;EN-US&quot;&gt;GND&lt;/span&gt;&lt;/p&gt;
+
+        &lt;/td&gt;
+
+        &lt;td style=&quot;border-right: windowtext 0.5pt solid; padding-right: 5.4pt; border-top: medium none; padding-left: 5.4pt; padding-bottom: 0cm; border-left: medium none; padding-top: 0cm; border-bottom: windowtext 0.5pt solid; mso-border-left-alt: solid windowtext .5pt; mso-border-top-alt: solid windowtext .5pt&quot; width=&quot;101&quot;&gt;　 &lt;/td&gt;
+
+        &lt;td style=&quot;border-right: windowtext 0.5pt solid; padding-right: 5.4pt; border-top: medium none; padding-left: 5.4pt; padding-bottom: 0cm; border-left: medium none; padding-top: 0cm; border-bottom: windowtext 0.5pt solid; mso-border-left-alt: solid windowtext .5pt; mso-border-top-alt: solid windowtext .5pt&quot; width=&quot;101&quot;&gt;　 &lt;/td&gt;
+
+        &lt;td style=&quot;border-right: windowtext 0.5pt solid; padding-right: 5.4pt; border-top: medium none; padding-left: 5.4pt; padding-bottom: 0cm; border-left: medium none; padding-top: 0cm; border-bottom: windowtext 0.5pt solid; mso-border-left-alt: solid windowtext .5pt; mso-border-top-alt: solid windowtext .5pt&quot; width=&quot;101&quot;&gt;
+
+        &lt;p class=&quot;MsoNormal&quot; style=&quot;text-align: center&quot; align=&quot;center&quot;&gt;&lt;span lang=&quot;EN-US&quot;&gt;---&lt;/span&gt;&lt;/p&gt;
+
+        &lt;/td&gt;
+
+        &lt;td style=&quot;border-right: windowtext 0.5pt solid; padding-right: 5.4pt; border-top: medium none; padding-left: 5.4pt; padding-bottom: 0cm; border-left: medium none; padding-top: 0cm; border-bottom: windowtext 0.5pt solid; mso-border-left-alt: solid windowtext .5pt; mso-border-top-alt: solid windowtext .5pt&quot; width=&quot;233&quot;&gt;
+
+        &lt;p class=&quot;MsoNormal&quot; style=&quot;text-align: center&quot; align=&quot;center&quot;&gt;&lt;span style=&quot;font-family: 宋体; mso-ascii-font-family: 'Times New Roman'; mso-hansi-font-family: 'Times New Roman'&quot;&gt;信号接地&lt;/span&gt;&lt;/p&gt;
+
+        &lt;/td&gt;
+
+    &lt;/tr&gt;
+
+    &lt;tr&gt;
+
+        &lt;td style=&quot;border-right: windowtext 0.5pt solid; padding-right: 5.4pt; border-top: medium none; padding-left: 5.4pt; padding-bottom: 0cm; border-left: windowtext 0.5pt solid; padding-top: 0cm; border-bottom: windowtext 0.5pt solid; mso-border-top-alt: solid windowtext .5pt&quot; width=&quot;101&quot;&gt;
+
+        &lt;p class=&quot;MsoNormal&quot; style=&quot;text-align: center&quot; align=&quot;center&quot;&gt;&lt;span lang=&quot;EN-US&quot;&gt;23&lt;/span&gt;&lt;/p&gt;
+
+        &lt;/td&gt;
+
+        &lt;td style=&quot;border-right: windowtext 0.5pt solid; padding-right: 5.4pt; border-top: medium none; padding-left: 5.4pt; padding-bottom: 0cm; border-left: medium none; padding-top: 0cm; border-bottom: windowtext 0.5pt solid; mso-border-left-alt: solid windowtext .5pt; mso-border-top-alt: solid windowtext .5pt&quot; width=&quot;101&quot;&gt;
+
+        &lt;p class=&quot;MsoNormal&quot; style=&quot;text-align: center&quot; align=&quot;center&quot;&gt;&lt;span lang=&quot;EN-US&quot;&gt;GND&lt;/span&gt;&lt;/p&gt;
+
+        &lt;/td&gt;
+
+        &lt;td style=&quot;border-right: windowtext 0.5pt solid; padding-right: 5.4pt; border-top: medium none; padding-left: 5.4pt; padding-bottom: 0cm; border-left: medium none; padding-top: 0cm; border-bottom: windowtext 0.5pt solid; mso-border-left-alt: solid windowtext .5pt; mso-border-top-alt: solid windowtext .5pt&quot; width=&quot;101&quot;&gt;　 &lt;/td&gt;
+
+        &lt;td style=&quot;border-right: windowtext 0.5pt solid; padding-right: 5.4pt; border-top: medium none; padding-left: 5.4pt; padding-bottom: 0cm; border-left: medium none; padding-top: 0cm; border-bottom: windowtext 0.5pt solid; mso-border-left-alt: solid windowtext .5pt; mso-border-top-alt: solid windowtext .5pt&quot; width=&quot;101&quot;&gt;　 &lt;/td&gt;
+
+        &lt;td style=&quot;border-right: windowtext 0.5pt solid; padding-right: 5.4pt; border-top: medium none; padding-left: 5.4pt; padding-bottom: 0cm; border-left: medium none; padding-top: 0cm; border-bottom: windowtext 0.5pt solid; mso-border-left-alt: solid windowtext .5pt; mso-border-top-alt: solid windowtext .5pt&quot; width=&quot;101&quot;&gt;
+
+        &lt;p class=&quot;MsoNormal&quot; style=&quot;text-align: center&quot; align=&quot;center&quot;&gt;&lt;span lang=&quot;EN-US&quot;&gt;---&lt;/span&gt;&lt;/p&gt;
+
+        &lt;/td&gt;
+
+        &lt;td style=&quot;border-right: windowtext 0.5pt solid; padding-right: 5.4pt; border-top: medium none; padding-left: 5.4pt; padding-bottom: 0cm; border-left: medium none; padding-top: 0cm; border-bottom: windowtext 0.5pt solid; mso-border-left-alt: solid windowtext .5pt; mso-border-top-alt: solid windowtext .5pt&quot; width=&quot;233&quot;&gt;
+
+        &lt;p class=&quot;MsoNormal&quot; style=&quot;text-align: center&quot; align=&quot;center&quot;&gt;&lt;span style=&quot;font-family: 宋体; mso-ascii-font-family: 'Times New Roman'; mso-hansi-font-family: 'Times New Roman'&quot;&gt;信号接地&lt;/span&gt;&lt;/p&gt;
+
+        &lt;/td&gt;
+
+    &lt;/tr&gt;
+
+    &lt;tr&gt;
+
+        &lt;td style=&quot;border-right: windowtext 0.5pt solid; padding-right: 5.4pt; border-top: medium none; padding-left: 5.4pt; padding-bottom: 0cm; border-left: windowtext 0.5pt solid; padding-top: 0cm; border-bottom: windowtext 0.5pt solid; mso-border-top-alt: solid windowtext .5pt&quot; width=&quot;101&quot;&gt;
+
+        &lt;p class=&quot;MsoNormal&quot; style=&quot;text-align: center&quot; align=&quot;center&quot;&gt;&lt;span lang=&quot;EN-US&quot;&gt;24&lt;/span&gt;&lt;/p&gt;
+
+        &lt;/td&gt;
+
+        &lt;td style=&quot;border-right: windowtext 0.5pt solid; padding-right: 5.4pt; border-top: medium none; padding-left: 5.4pt; padding-bottom: 0cm; border-left: medium none; padding-top: 0cm; border-bottom: windowtext 0.5pt solid; mso-border-left-alt: solid windowtext .5pt; mso-border-top-alt: solid windowtext .5pt&quot; width=&quot;101&quot;&gt;
+
+        &lt;p class=&quot;MsoNormal&quot; style=&quot;text-align: center&quot; align=&quot;center&quot;&gt;&lt;span lang=&quot;EN-US&quot;&gt;GND&lt;/span&gt;&lt;/p&gt;
+
+        &lt;/td&gt;
+
+        &lt;td style=&quot;border-right: windowtext 0.5pt solid; padding-right: 5.4pt; border-top: medium none; padding-left: 5.4pt; padding-bottom: 0cm; border-left: medium none; padding-top: 0cm; border-bottom: windowtext 0.5pt solid; mso-border-left-alt: solid windowtext .5pt; mso-border-top-alt: solid windowtext .5pt&quot; width=&quot;101&quot;&gt;　 &lt;/td&gt;
+
+        &lt;td style=&quot;border-right: windowtext 0.5pt solid; padding-right: 5.4pt; border-top: medium none; padding-left: 5.4pt; padding-bottom: 0cm; border-left: medium none; padding-top: 0cm; border-bottom: windowtext 0.5pt solid; mso-border-left-alt: solid windowtext .5pt; mso-border-top-alt: solid windowtext .5pt&quot; width=&quot;101&quot;&gt;　 &lt;/td&gt;
+
+        &lt;td style=&quot;border-right: windowtext 0.5pt solid; padding-right: 5.4pt; border-top: medium none; padding-left: 5.4pt; padding-bottom: 0cm; border-left: medium none; padding-top: 0cm; border-bottom: windowtext 0.5pt solid; mso-border-left-alt: solid windowtext .5pt; mso-border-top-alt: solid windowtext .5pt&quot; width=&quot;101&quot;&gt;
+
+        &lt;p class=&quot;MsoNormal&quot; style=&quot;text-align: center&quot; align=&quot;center&quot;&gt;&lt;span lang=&quot;EN-US&quot;&gt;---&lt;/span&gt;&lt;/p&gt;
+
+        &lt;/td&gt;
+
+        &lt;td style=&quot;border-right: windowtext 0.5pt solid; padding-right: 5.4pt; border-top: medium none; padding-left: 5.4pt; padding-bottom: 0cm; border-left: medium none; padding-top: 0cm; border-bottom: windowtext 0.5pt solid; mso-border-left-alt: solid windowtext .5pt; mso-border-top-alt: solid windowtext .5pt&quot; width=&quot;233&quot;&gt;
+
+        &lt;p class=&quot;MsoNormal&quot; style=&quot;text-align: center&quot; align=&quot;center&quot;&gt;&lt;span style=&quot;font-family: 宋体; mso-ascii-font-family: 'Times New Roman'; mso-hansi-font-family: 'Times New Roman'&quot;&gt;信号接地&lt;/span&gt;&lt;/p&gt;
+
+        &lt;/td&gt;
+
+    &lt;/tr&gt;
+
+    &lt;tr&gt;
+
+        &lt;td style=&quot;border-right: windowtext 0.5pt solid; padding-right: 5.4pt; border-top: medium none; padding-left: 5.4pt; padding-bottom: 0cm; border-left: windowtext 0.5pt solid; padding-top: 0cm; border-bottom: windowtext 0.5pt solid; mso-border-top-alt: solid windowtext .5pt&quot; width=&quot;101&quot;&gt;
+
+        &lt;p class=&quot;MsoNormal&quot; style=&quot;text-align: center&quot; align=&quot;center&quot;&gt;&lt;span lang=&quot;EN-US&quot;&gt;25&lt;/span&gt;&lt;/p&gt;
+
+        &lt;/td&gt;
+
+        &lt;td style=&quot;border-right: windowtext 0.5pt solid; padding-right: 5.4pt; border-top: medium none; padding-left: 5.4pt; padding-bottom: 0cm; border-left: medium none; padding-top: 0cm; border-bottom: windowtext 0.5pt solid; mso-border-left-alt: solid windowtext .5pt; mso-border-top-alt: solid windowtext .5pt&quot; width=&quot;101&quot;&gt;
+
+        &lt;p class=&quot;MsoNormal&quot; style=&quot;text-align: center&quot; align=&quot;center&quot;&gt;&lt;span lang=&quot;EN-US&quot;&gt;GND&lt;/span&gt;&lt;/p&gt;
+
+        &lt;/td&gt;
+
+        &lt;td style=&quot;border-right: windowtext 0.5pt solid; padding-right: 5.4pt; border-top: medium none; padding-left: 5.4pt; padding-bottom: 0cm; border-left: medium none; padding-top: 0cm; border-bottom: windowtext 0.5pt solid; mso-border-left-alt: solid windowtext .5pt; mso-border-top-alt: solid windowtext .5pt&quot; width=&quot;101&quot;&gt;　 &lt;/td&gt;
+
+        &lt;td style=&quot;border-right: windowtext 0.5pt solid; padding-right: 5.4pt; border-top: medium none; padding-left: 5.4pt; padding-bottom: 0cm; border-left: medium none; padding-top: 0cm; border-bottom: windowtext 0.5pt solid; mso-border-left-alt: solid windowtext .5pt; mso-border-top-alt: solid windowtext .5pt&quot; width=&quot;101&quot;&gt;　 &lt;/td&gt;
+
+        &lt;td style=&quot;border-right: windowtext 0.5pt solid; padding-right: 5.4pt; border-top: medium none; padding-left: 5.4pt; padding-bottom: 0cm; border-left: medium none; padding-top: 0cm; border-bottom: windowtext 0.5pt solid; mso-border-left-alt: solid windowtext .5pt; mso-border-top-alt: solid windowtext .5pt&quot; width=&quot;101&quot;&gt;
+
+        &lt;p class=&quot;MsoNormal&quot; style=&quot;text-align: center&quot; align=&quot;center&quot;&gt;&lt;span lang=&quot;EN-US&quot;&gt;---&lt;/span&gt;&lt;/p&gt;
+
+        &lt;/td&gt;
+
+        &lt;td style=&quot;border-right: windowtext 0.5pt solid; padding-right: 5.4pt; border-top: medium none; padding-left: 5.4pt; padding-bottom: 0cm; border-left: medium none; padding-top: 0cm; border-bottom: windowtext 0.5pt solid; mso-border-left-alt: solid windowtext .5pt; mso-border-top-alt: solid windowtext .5pt&quot; width=&quot;233&quot;&gt;
+
+        &lt;p class=&quot;MsoNormal&quot; style=&quot;text-align: center&quot; align=&quot;center&quot;&gt;&lt;span style=&quot;font-family: 宋体; mso-ascii-font-family: 'Times New Roman'; mso-hansi-font-family: 'Times New Roman'&quot;&gt;信号接地&lt;/span&gt;&lt;/p&gt;
+
+        &lt;/td&gt;
+
+    &lt;/tr&gt;
+
+&lt;/tbody&gt;
+</code></pre></table><p><font color=#000000>&nbsp;&nbsp;&nbsp; 打印机常用端口: 对于LPT1:0X378 为数据发送地址,0X379为打印机状态地址,0X37A为计算机向打印机控制地址, 通常为了使程序具有通用性我们可以从注册表中取得这个地址</font>,对于WINDOWS CE 而言,这个值被存储在{HKEY_LOCAL_MACHINE//DRIVERS//BUILTIN//PARALLEL//IOBASE}<font color=#000000>.然后我们就可以通过对此三个端口进行控制达到简单的并口编程的目的.</font></p><p><font color=#000000>下面是对打印机状态端口及打印机控制端口作一详细解释：</font></p><p><font color=#008000>控制端口：</font></p><table style="border-right:none;border-top:none;border-left:none;border-bottom:none;border-collapse:collapse;mso-border-alt:solid windowtext .5pt;mso-padding-alt:0 5.4pt 0 5.4pt" cellspacing=0 cellpadding=0 border=1><pre><code>&lt;tbody&gt;
+
+    &lt;tr&gt;
+
+        &lt;td style=&quot;border-right: windowtext 0.5pt solid; padding-right: 5.4pt; border-top: windowtext 0.5pt solid; padding-left: 5.4pt; padding-bottom: 0cm; border-left: windowtext 0.5pt solid; width: 33.1pt; padding-top: 0cm; border-bottom: windowtext 0.5pt solid&quot; width=&quot;55&quot;&gt;
+
+        &lt;p class=&quot;MsoNormal&quot; style=&quot;text-align: center&quot; align=&quot;center&quot;&gt;&lt;span lang=&quot;EN-US&quot;&gt;0x37A&lt;/span&gt;&lt;/p&gt;
+
+        &lt;/td&gt;
+
+        &lt;td style=&quot;border-right: windowtext 0.5pt solid; padding-right: 5.4pt; border-top: windowtext 0.5pt solid; padding-left: 5.4pt; padding-bottom: 0cm; border-left: medium none; width: 33.1pt; padding-top: 0cm; border-bottom: windowtext 0.5pt solid; mso-border-left-alt: solid windowtext .5pt&quot; width=&quot;55&quot;&gt;
+
+        &lt;p class=&quot;MsoNormal&quot; style=&quot;text-align: center&quot; align=&quot;center&quot;&gt;&lt;span lang=&quot;EN-US&quot;&gt;1&lt;/span&gt;&lt;/p&gt;
+
+        &lt;/td&gt;
+
+        &lt;td style=&quot;border-right: windowtext 0.5pt solid; padding-right: 5.4pt; border-top: windowtext 0.5pt solid; padding-left: 5.4pt; padding-bottom: 0cm; border-left: medium none; width: 33.15pt; padding-top: 0cm; border-bottom: windowtext 0.5pt solid; mso-border-left-alt: solid windowtext .5pt&quot; width=&quot;55&quot;&gt;
+
+        &lt;p class=&quot;MsoNormal&quot; style=&quot;text-align: center&quot; align=&quot;center&quot;&gt;&lt;span lang=&quot;EN-US&quot;&gt;1&lt;/span&gt;&lt;/p&gt;
+
+        &lt;/td&gt;
+
+        &lt;td style=&quot;border-right: windowtext 0.5pt solid; padding-right: 5.4pt; border-top: windowtext 0.5pt solid; padding-left: 5.4pt; padding-bottom: 0cm; border-left: medium none; width: 33.1pt; padding-top: 0cm; border-bottom: windowtext 0.5pt solid; mso-border-left-alt: solid windowtext .5pt&quot; width=&quot;55&quot;&gt;
+
+        &lt;p class=&quot;MsoNormal&quot; style=&quot;text-align: center&quot; align=&quot;center&quot;&gt;&lt;span style=&quot;font-family: 宋体; mso-ascii-font-family: 'Times New Roman'; mso-hansi-font-family: 'Times New Roman'&quot;&gt;输入控制&lt;/span&gt;&lt;/p&gt;
+
+        &lt;/td&gt;
+
+        &lt;td style=&quot;border-right: windowtext 0.5pt solid; padding-right: 5.4pt; border-top: windowtext 0.5pt solid; padding-left: 5.4pt; padding-bottom: 0cm; border-left: medium none; width: 33.15pt; padding-top: 0cm; border-bottom: windowtext 0.5pt solid; mso-border-left-alt: solid windowtext .5pt&quot; width=&quot;55&quot;&gt;
+
+        &lt;p class=&quot;MsoNormal&quot; style=&quot;text-align: center&quot; align=&quot;center&quot;&gt;&lt;span style=&quot;font-family: 宋体; mso-ascii-font-family: 'Times New Roman'; mso-hansi-font-family: 'Times New Roman'&quot;&gt;中断&lt;/span&gt;&lt;/p&gt;
+
+        &lt;/td&gt;
+
+        &lt;td style=&quot;border-right: windowtext 0.5pt solid; padding-right: 5.4pt; border-top: windowtext 0.5pt solid; padding-left: 5.4pt; padding-bottom: 0cm; border-left: medium none; width: 33.1pt; padding-top: 0cm; border-bottom: windowtext 0.5pt solid; mso-border-left-alt: solid windowtext .5pt&quot; width=&quot;55&quot;&gt;
+
+        &lt;p class=&quot;MsoNormal&quot; style=&quot;text-align: center&quot; align=&quot;center&quot;&gt;&lt;span lang=&quot;EN-US&quot;&gt;17&lt;/span&gt;&lt;span style=&quot;font-family: 宋体; mso-ascii-font-family: 'Times New Roman'; mso-hansi-font-family: 'Times New Roman'&quot;&gt;线&lt;/span&gt;&lt;/p&gt;
+
+        &lt;/td&gt;
+
+        &lt;td style=&quot;border-right: windowtext 0.5pt solid; padding-right: 5.4pt; border-top: windowtext 0.5pt solid; padding-left: 5.4pt; padding-bottom: 0cm; border-left: medium none; width: 33.15pt; padding-top: 0cm; border-bottom: windowtext 0.5pt solid; mso-border-left-alt: solid windowtext .5pt&quot; width=&quot;55&quot;&gt;
+
+        &lt;p class=&quot;MsoNormal&quot; style=&quot;text-align: center&quot; align=&quot;center&quot;&gt;&lt;span lang=&quot;EN-US&quot;&gt;16 &lt;/span&gt;&lt;span style=&quot;font-family: 宋体; mso-ascii-font-family: 'Times New Roman'; mso-hansi-font-family: 'Times New Roman'&quot;&gt;线&lt;/span&gt;&lt;/p&gt;
+
+        &lt;/td&gt;
+
+        &lt;td style=&quot;border-right: windowtext 0.5pt solid; padding-right: 5.4pt; border-top: windowtext 0.5pt solid; padding-left: 5.4pt; padding-bottom: 0cm; border-left: medium none; width: 33.1pt; padding-top: 0cm; border-bottom: windowtext 0.5pt solid; mso-border-left-alt: solid windowtext .5pt&quot; width=&quot;55&quot;&gt;
+
+        &lt;p class=&quot;MsoNormal&quot; style=&quot;text-align: center&quot; align=&quot;center&quot;&gt;&lt;span lang=&quot;EN-US&quot;&gt;14 &lt;/span&gt;&lt;span style=&quot;font-family: 宋体; mso-ascii-font-family: 'Times New Roman'; mso-hansi-font-family: 'Times New Roman'&quot;&gt;线&lt;/span&gt;&lt;/p&gt;
+
+        &lt;/td&gt;
+
+        &lt;td style=&quot;border-right: windowtext 0.5pt solid; padding-right: 5.4pt; border-top: windowtext 0.5pt solid; padding-left: 5.4pt; padding-bottom: 0cm; border-left: medium none; width: 33.15pt; padding-top: 0cm; border-bottom: windowtext 0.5pt solid; mso-border-left-alt: solid windowtext .5pt&quot; width=&quot;55&quot;&gt;
+
+        &lt;p class=&quot;MsoNormal&quot; style=&quot;text-align: center&quot; align=&quot;center&quot;&gt;&lt;span lang=&quot;EN-US&quot;&gt;1&lt;span style=&quot;mso-spacerun: yes&quot;&gt;&amp;nbsp; &lt;/span&gt;&lt;/span&gt;&lt;span style=&quot;font-family: 宋体; mso-ascii-font-family: 'Times New Roman'; mso-hansi-font-family: 'Times New Roman'&quot;&gt;线&lt;/span&gt;&lt;/p&gt;
+
+        &lt;/td&gt;
+
+    &lt;/tr&gt;
+
+&lt;/tbody&gt;
+</code></pre></table><p class=MsoNormal><span style="font-family:宋体;mso-ascii-font-family:'Times New Roman';mso-hansi-font-family:'Times New Roman'">　　这个</span><span lang=EN-US>0x37A</span><span style="font-family:宋体;mso-ascii-font-family:'Times New Roman';mso-hansi-font-family:'Times New Roman'">计算机控制打印机的地址，可以产生对打印机进行控制的必要信号，可写，两高位(7和8)没什么用，第6位写</span><span lang=EN-US>1</span><span style="font-family:宋体;mso-ascii-font-family:'Times New Roman';mso-hansi-font-family:'Times New Roman'">表示可以向并口输出数据。第五位中断信号（IRQ　EN），利用此信号线，驱动程序可以在STATUS端口信号（nAck)的帮助下，使用该信号对中断信号的产生与否进行控制。第</span><span lang=EN-US>3</span><span style="font-family:宋体;mso-ascii-font-family:'Times New Roman';mso-hansi-font-family:'Times New Roman'">，</span><span lang=EN-US>2</span><span style="font-family:宋体;mso-ascii-font-family:'Times New Roman';mso-hansi-font-family:'Times New Roman'">，</span><span lang=EN-US>1</span><span style="font-family:宋体;mso-ascii-font-family:'Times New Roman';mso-hansi-font-family:'Times New Roman'">，</span><span lang=EN-US>0</span><span style="font-family:宋体;mso-ascii-font-family:'Times New Roman';mso-hansi-font-family:'Times New Roman'">位分别控制第</span><span lang=EN-US>17</span><span style="font-family:宋体;mso-ascii-font-family:'Times New Roman';mso-hansi-font-family:'Times New Roman'">线，第</span><span lang=EN-US>16</span><span style="font-family:宋体;mso-ascii-font-family:'Times New Roman';mso-hansi-font-family:'Times New Roman'">线，第</span><span lang=EN-US>14</span><span style="font-family:宋体;mso-ascii-font-family:'Times New Roman';mso-hansi-font-family:'Times New Roman'">线和第</span><span lang=EN-US>1</span><span style="font-family:宋体;mso-ascii-font-family:'Times New Roman';mso-hansi-font-family:'Times New Roman'">线。（可以控制它们的状态）具体作用可参见前表</span></p><p class=MsoNormal><font color=#008000>状态端口：</font></p><table style="border-right:none;border-top:none;border-left:none;border-bottom:none;border-collapse:collapse;mso-border-alt:solid windowtext .5pt;mso-padding-alt:0 5.4pt 0 5.4pt" cellspacing=0 cellpadding=0 border=1><pre><code>&lt;tbody&gt;
+
+    &lt;tr style=&quot;height: 18.05pt&quot;&gt;
+
+        &lt;td style=&quot;border-right: windowtext 0.5pt solid; padding-right: 5.4pt; border-top: windowtext 0.5pt solid; padding-left: 5.4pt; padding-bottom: 0cm; border-left: windowtext 0.5pt solid; width: 32.55pt; padding-top: 0cm; border-bottom: windowtext 0.5pt solid; height: 18.05pt&quot; width=&quot;54&quot;&gt;
+
+        &lt;p class=&quot;MsoNormal&quot; style=&quot;text-align: center&quot; align=&quot;center&quot;&gt;&lt;span lang=&quot;EN-US&quot;&gt;0x379&lt;/span&gt;&lt;/p&gt;
+
+        &lt;/td&gt;
+
+        &lt;td style=&quot;border-right: windowtext 0.5pt solid; padding-right: 5.4pt; border-top: windowtext 0.5pt solid; padding-left: 5.4pt; padding-bottom: 0cm; border-left: medium none; width: 33.75pt; padding-top: 0cm; border-bottom: windowtext 0.5pt solid; height: 18.05pt; mso-border-left-alt: solid windowtext .5pt&quot; width=&quot;56&quot;&gt;
+
+        &lt;p class=&quot;MsoNormal&quot; style=&quot;text-align: center&quot; align=&quot;center&quot;&gt;&lt;span lang=&quot;EN-US&quot;&gt;（S7）11 &lt;/span&gt;&lt;span style=&quot;font-family: 宋体; mso-ascii-font-family: 'Times New Roman'; mso-hansi-font-family: 'Times New Roman'&quot;&gt;忙&lt;/span&gt;&lt;/p&gt;
+
+        &lt;/td&gt;
+
+        &lt;td style=&quot;border-right: windowtext 0.5pt solid; padding-right: 5.4pt; border-top: windowtext 0.5pt solid; padding-left: 5.4pt; padding-bottom: 0cm; border-left: medium none; width: 33.75pt; padding-top: 0cm; border-bottom: windowtext 0.5pt solid; height: 18.05pt; mso-border-left-alt: solid windowtext .5pt&quot; width=&quot;56&quot;&gt;
+
+        &lt;p class=&quot;MsoNormal&quot; style=&quot;text-align: center&quot; align=&quot;center&quot;&gt;&lt;span style=&quot;font-family: 宋体; mso-ascii-font-family: Times New Roman; mso-hansi-font-family: Times New Roman&quot;&gt;（S6）10应答&lt;/span&gt;&lt;/p&gt;
+
+        &lt;/td&gt;
+
+        &lt;td style=&quot;border-right: windowtext 0.5pt solid; padding-right: 5.4pt; border-top: windowtext 0.5pt solid; padding-left: 5.4pt; padding-bottom: 0cm; border-left: medium none; width: 33.75pt; padding-top: 0cm; border-bottom: windowtext 0.5pt solid; height: 18.05pt; mso-border-left-alt: solid windowtext .5pt&quot; width=&quot;56&quot;&gt;
+
+        &lt;p class=&quot;MsoNormal&quot; style=&quot;text-align: center&quot; align=&quot;center&quot;&gt;&lt;span lang=&quot;EN-US&quot;&gt;（S5）12&lt;/span&gt;缺纸&lt;/p&gt;
+
+        &lt;/td&gt;
+
+        &lt;td style=&quot;border-right: windowtext 0.5pt solid; padding-right: 5.4pt; border-top: windowtext 0.5pt solid; padding-left: 5.4pt; padding-bottom: 0cm; border-left: medium none; width: 33.75pt; padding-top: 0cm; border-bottom: windowtext 0.5pt solid; height: 18.05pt; mso-border-left-alt: solid windowtext .5pt&quot; width=&quot;56&quot;&gt;
+
+        &lt;p class=&quot;MsoNormal&quot; style=&quot;text-align: center&quot; align=&quot;center&quot;&gt;（S4）13联机&lt;/p&gt;
+
+        &lt;/td&gt;
+
+        &lt;td style=&quot;border-right: windowtext 0.5pt solid; padding-right: 5.4pt; border-top: windowtext 0.5pt solid; padding-left: 5.4pt; padding-bottom: 0cm; border-left: medium none; width: 33.75pt; padding-top: 0cm; border-bottom: windowtext 0.5pt solid; height: 18.05pt; mso-border-left-alt: solid windowtext .5pt&quot; width=&quot;56&quot;&gt;
+
+        &lt;p class=&quot;MsoNormal&quot; style=&quot;text-align: center&quot; align=&quot;center&quot;&gt;&lt;span lang=&quot;EN-US&quot;&gt;（S3）15 &lt;/span&gt;&lt;span style=&quot;font-family: 宋体; mso-ascii-font-family: 'Times New Roman'; mso-hansi-font-family: 'Times New Roman'&quot;&gt;错误&lt;/span&gt;&lt;/p&gt;
+
+        &lt;/td&gt;
+
+        &lt;td style=&quot;border-right: windowtext 0.5pt solid; padding-right: 5.4pt; border-top: windowtext 0.5pt solid; padding-left: 5.4pt; padding-bottom: 0cm; border-left: medium none; width: 33.75pt; padding-top: 0cm; border-bottom: windowtext 0.5pt solid; height: 18.05pt; mso-border-left-alt: solid windowtext .5pt&quot; width=&quot;56&quot;&gt;
+
+        &lt;p class=&quot;MsoNormal&quot; style=&quot;text-align: center&quot; align=&quot;center&quot;&gt;&amp;nbsp;&lt;span lang=&quot;EN-US&quot;&gt;&lt;O:P&gt; S2&lt;/O:P&gt; &lt;/span&gt;&lt;/p&gt;
+
+        &lt;/td&gt;
+
+        &lt;td style=&quot;border-right: windowtext 0.5pt solid; padding-right: 5.4pt; border-top: windowtext 0.5pt solid; padding-left: 5.4pt; padding-bottom: 0cm; border-left: medium none; width: 33.75pt; padding-top: 0cm; border-bottom: windowtext 0.5pt solid; height: 18.05pt; mso-border-left-alt: solid windowtext .5pt&quot; width=&quot;56&quot;&gt;
+
+        &lt;p class=&quot;MsoNormal&quot; style=&quot;text-align: center&quot; align=&quot;center&quot;&gt;S1&amp;nbsp;&lt;span lang=&quot;EN-US&quot;&gt;&lt;O:P&gt; &lt;/O:P&gt;&lt;/span&gt;&lt;/p&gt;
+
+        &lt;/td&gt;
+
+        &lt;td style=&quot;border-right: windowtext 0.5pt solid; padding-right: 5.4pt; border-top: windowtext 0.5pt solid; padding-left: 5.4pt; padding-bottom: 0cm; border-left: medium none; width: 33.75pt; padding-top: 0cm; border-bottom: windowtext 0.5pt solid; height: 18.05pt; mso-border-left-alt: solid windowtext .5pt&quot; width=&quot;56&quot;&gt;
+
+        &lt;p class=&quot;MsoNormal&quot; style=&quot;text-align: center&quot; align=&quot;center&quot;&gt;S0&amp;nbsp;&lt;span lang=&quot;EN-US&quot;&gt;&lt;O:P&gt; &lt;/O:P&gt;&lt;/span&gt;&lt;/p&gt;
+
+        &lt;/td&gt;
+
+    &lt;/tr&gt;
+
+&lt;/tbody&gt;
+</code></pre></table><p class=MsoNormal><span lang=EN-US>&nbsp;<o:p> </span><span lang=EN-US>0x379</span><span style="font-family:宋体;mso-ascii-font-family:'Times New Roman';mso-hansi-font-family:'Times New Roman'">为打印机状态地址，可读，通过个端口打印机适配器可以很方便的读取打印机的状态。</span></p><p class=MsoNormal><span style="font-family:宋体;mso-ascii-font-family:Times New Roman;mso-hansi-font-family:Times New Roman">标记为S7的信号表示最高位，SO表示为最低位，只有S3－S7五个信号才是真正有用的信号。他们的具体信号功能解释如下：</span></p><p class=MsoNormal><span style="font-family:宋体;mso-ascii-font-family:Times New Roman;mso-hansi-font-family:Times New Roman">S7*(busy)：打印机使用该信号表示打印机正处于忙状态，不能再接收数据。需要强调的是，该信号通过适配器板时，进行了反相处理，因此连接器上的低电平到微处理器时就变成了高电平。</span></p><p class=MsoNormal><span style="font-family:宋体;mso-ascii-font-family:Times New Roman;mso-hansi-font-family:Times New Roman">S6（nAck):当适配器发出选通信号时，打印机就会产生该信号作为响应。通常情况下，该信号是高电平，选通打印机之后，打印机首先把该信号设为低电平，然后再返回高电平。</span></p><p class=MsoNormal><span style="font-family:宋体;mso-ascii-font-family:Times New Roman;mso-hansi-font-family:Times New Roman">S5（PE):当打印机缺纸时，它就会产生一个这样的信号，通常情况下，该信号由打印机保持为低电平，打印机纸使用完之后，该信号就会变成高电平。</span></p><p class=MsoNormal><span style="font-family:宋体;mso-ascii-font-family:Times New Roman;mso-hansi-font-family:Times New Roman">S4（SELECT）：当打印机恢复正常操作时，它就会插入一个高电平的该信号。当打印机处于无效状态时，访信号就会变成低电平。</span></p><p class=MsoNormal><span style="font-family:宋体;mso-ascii-font-family:Times New Roman;mso-hansi-font-family:Times New Roman">S3（NERROR）：当打印机出现错误时就会产生这种邮错信号。产生出错的原因很多，如打印纸堵了或产生了内部错误。产生错误时该信号就会设置成低电平。</span></p><p class=MsoNormal><span style="font-family:宋体;mso-ascii-font-family:Times New Roman;mso-hansi-font-family:Times New Roman">以下为在Windows CE 下打印机各种状态时，所对应的状态寄存器的（AL）的值：</span></p><p class=MsoNormal>1:>在没接入打印机时寄存器AL值为127，对应二进制是：1111111<br><p>2:>打印机在缺纸灯不亮时寄存器AL值为144，对应二进制是：10010000<br></p><p>3:>打印机在缺纸灯亮时寄存器AL值为 119;对应二进制值是：11101111<br></p><p>4:>打印机在不缺纸的情况下寄存器AL值 223，对应二进制值是：11011111<br></p><p>5:>打印机在没开机的情况下得到AH值为207，对应二进制值是：11001111　</p></p><p class=MsoNormal><font color=#0000ff>下面介绍对并口的编程控制：</font></p><p class=MsoNormal><span style="font-family:宋体;mso-ascii-font-family:Times New Roman;mso-hansi-font-family:Times New Roman">(编程控制示例）（为汇编代码）<br><p>// 此段代码为并口向打印机进行写数据，并发送控制信息。</span></p></p><p class=MsoNormal>#define LPT_CLEAR_MASK 0x40<br><p>#define LPT_STROBE_HI 0x0D<br></p><p>#define LPT_STROBE_LO 0x0C<br></p><br><p>#define LPT_STATUS_BITS 0xF8<br></p><p>#define LPT_BITS_INVERT 0x48<br></p><p>#define LPT_NOTBUSY 0x80<br></p><p>#define LPT_PAPEROUT 0x20<br></p><p>#define LPT_SELECT 0x10<br></p><p>#define LPT_NFAULT 0x08<br></p><br><p>#define LPT_TimeOut 0x01<br></p><br><p>void OutByte(ULONG dataport, BYTE databyte) {<br></p><p>#if x86<br></p><p>_asm {<br></p><p>mov dx, word ptr [dataport]<br></p><p>mov al, byte ptr [databyte]<br></p><p>out dx, al<br></p><p>out dx, al<br></p><p>add dx, 2<br></p><p>in al, dx<br></p><p>and al, LPT_CLEAR_MASK<br></p><p>mov cl, al<br></p><p>or al, LPT_STROBE_HI<br></p><p>out dx, al<br></p><p>out dx, al<br></p><p>out dx, al<br></p><p>out dx, al<br></p><p>or cl, LPT_STROBE_LO<br></p><p>mov al, cl<br></p><p>out dx, al<br></p><p>}<br></p><p>#else<br></p><br><br><p>WRITE_PORT_UCHAR((PUCHAR)dataport,databyte);<br></p><br><p>dataport+=2;<br></p><p>databyte = (READ_PORT_UCHAR((PUCHAR)dataport) & LPT_CLEAR_MASK)<br></p><p>| LPT_STROBE_HI;<br></p><p>WRITE_PORT_UCHAR((PUCHAR)dataport,databyte);<br></p><br><p>databyte = (READ_PORT_UCHAR((PUCHAR)dataport) & LPT_CLEAR_MASK)<br></p><p>| LPT_STROBE_LO;<br></p><p>WRITE_PORT_UCHAR((PUCHAR)dataport,databyte);<br></p><br><p>#endif<br></p><p>}</p></p><p class=MsoNormal>// 此段代码为读取打印机当前状态。<br><p>BYTE CheckStatus(unsigned port) {<br></p><p>BYTE bRet;<br></p><br><p>#if x86<br></p><p>_asm {<br></p><p>mov dx, word ptr[port]<br></p><p>Checkme:<br></p><p>in al, dx<br></p><p>mov ah, al<br></p><p>nop<br></p><p>nop<br></p><p>in al, dx<br></p><p>cmp al, ah<br></p><p>jnz Checkme<br></p><p>and ah, LPT_STATUS_BITS<br></p><p>xor ah, LPT_BITS_INVERT<br></p><p>test ah, LPT_PAPEROUT or LPT_NFAULT<br></p><p>jnz CS_HasError<br></p><p>test ah, LPT_SELECT<br></p><p>jz CS_HasError<br></p><p>and ah, LPT_NOTBUSY<br></p><p>jz CS_HasError<br></p><p>xor eax, eax<br></p><p>CS_HasError:<br></p><p>mov [bRet],al<br></p><p>}<br></p><p>#else<br></p><br><p>BYTE bStatus;<br></p><p>do {<br></p><p>bRet= bStatus= READ_PORT_UCHAR((PUCHAR)port);<br></p><p>} while (bStatus != READ_PORT_UCHAR((PUCHAR)port));<br></p><p>bStatus&= LPT_STATUS_BITS;<br></p><p>bStatus^= LPT_BITS_INVERT;<br></p><br><p>if (!(bStatus & (LPT_PAPEROUT | LPT_NFAULT)) &&<br></p><p>(bStatus & LPT_SELECT) && (bStatus & LPT_NOTBUSY))<br></p><p>bRet=0;<br></p><p>#endif<br></p><p>return bRet;<br></p><p>}</p></p><p>// The End</p><p>&lt;/O:P></p></div><footer class=post-footer><hr><div class=post-copyright><img src=/imgs/cc/cc.svg class=cc-icon width=75 height=75 align=right alt=共享知识 title=共享知识><ul><li class=post-copyright-title><strong>文章标题：</strong>
+转：并口编程参考资料</li><li class=post-copyright-author><strong>本文作者： </strong>Rise</li><li class=post-copyright-link><strong>本文链接：</strong>
+<a id=post-cr-link href=https://blogs.qipai360.cn/post/parallel-port-programming-reference/ title=转：并口编程参考资料>https://blogs.qipai360.cn/post/parallel-port-programming-reference/</a></li><li class=post-copyright-license><strong>版权声明： </strong>本作品采用 <i class="fab fa-fw fa-creative-commons"></i><a target=_blank href=https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh-hans>BY-NC-SA</a> 许可协议。转载请注明出处！</li><li><div class=license-icons><a href=https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh-hans target=_blank><img src=/imgs/cc/big/by_nc_sa.svg alt=BY-NC-SA title=BY-NC-SA>
+</a><a href=https://notbyai.fyi target=_blank><img src=/imgs/notbyai/zh-hans/black.svg title="Not By AI"></a></div></li></ul></div><div class=followme><span>欢迎关注我的其它发布渠道</span><div class=social-list><div class=social-item><a target=_blank class=social-link href=https://www.zhihu.com/people/rise-worlds><span class=icon><i class="fa fa-book"></i>
+</span><span class=label>知乎</span></a></div><div class=social-item><a target=_blank class=social-link href=https://twitter.com/riseworlds><span class=icon><i class="fab fa-twitter"></i>
+</span><span class=label>Twitter</span></a></div><div class=social-item><a target=_blank class=social-link href=https://www.facebook.com/rise.worlds><span class=icon><i class="fab fa-facebook"></i>
+</span><span class=label>facebook</span></a></div><div class=social-item><a target=_blank class=social-link href=https://youtube.com/@YiXuan><span class=icon><i class="fab fa-youtube"></i>
+</span><span class=label>YouTube</span></a></div><div class=social-item><a target=_blank class=social-link href=https://instagram.com/rise.worlds><span class=icon><i class="fab fa-instagram"></i>
+</span><span class=label>Instagram</span></a></div><div class=social-item><a target=_blank class=social-link href=https://t.me/riseworlds><span class=icon><i class="fab fa-telegram"></i>
+</span><span class=label>Telegram</span></a></div></div></div><div class=post-nav><div class="post-nav-next post-nav-item"><a href=/post/rendering-pipeline-part-3/ rel=next title=绘制流水线（3）><i class="fa fa-chevron-left"></i> 绘制流水线（3）</a></div><div class="post-nav-prev post-nav-item"><a href=/post/interesting-batch-processing/ rel=prev title=有意思的批处理>有意思的批处理
+<i class="fa fa-chevron-right"></i></a></div></div></footer></article></div><div id=comments class=post-comments><div class=comment-head><div class=comment-headline><i class="fas fa-comments fa-fw"></i>
+<span>评论交流</span></div></div><div class=comment-wrap><div><div class=comment-loading><i class="fa fa-sync fa-spin"></i></div><div class=giscus-container></div></div></div></div></div></main><footer class=footer><div class=footer-inner><div class=copyright>&copy;
+<span itemprop=copyrightYear>2004 - 2026
+</span><span class=with-love><i class="fa fa-heart"></i>
+</span><span class=author itemprop=copyrightHolder>Rise</span></div><div class=powered-by>由 <a href=https://gohugo.io title=0.157.0 target=_blank>Hugo</a> & <a href=https://github.com/hugo-next/hugo-theme-next title=4.8.3 target=_blank>Hugo NexT.Gemini</a> 强力驱动</div><div class=beian><a href=https://beian.miit.gov.cn target=_blank>豫ICP备2021009490号</a>
+<img src=/imgs/gongan.png alt=豫公网安备>
+<a href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=41162302000074" target=_blank>豫公网安备 41162302000074 号</a></div></div></footer><script class=next-config data-name=page type=application/json>{"comments":true,"expired":false,"isHome":false,"isPage":true,"path":"parallel-port-programming-reference","permalink":"https://blogs.qipai360.cn/post/parallel-port-programming-reference/","title":"转：并口编程参考资料","toc":false,"waline3":{"pagecnt":{"alias":"@waline/client","alias_name":"waline","file":"dist/pageview.js","name":"pageview","version":"3.5.7"}}}</script><script type=text/javascript src=https://blogs.qipai360.cn/js/3rd/animejs/3.2.2/anime.min.js crossorigin=anonymous defer></script><script type=text/javascript src=https://blogs.qipai360.cn/js/3rd/viewerjs/1.11.6/viewer.min.js crossorigin=anonymous defer></script><script class=next-config data-name=main type=application/json>{"bookmark":{"color":"#222","enable":true,"save":"manual"},"copybtn":true,"darkmode":true,"giscus":{"cfg":{"category":"Announcements","categoryid":"DIC_kwDOA6L0YM4CiXf9","emit":false,"inputposition":"top","mapping":"title","reactions":false,"repo":"rise-worlds/rise-worlds.github.io","repoid":"MDEwOlJlcG9zaXRvcnk2MTAxMTA0MA==","theme":"transparent_dark"},"js":"https://giscus.app/client.js"},"hostname":"https://blogs.qipai360.cn/","i18n":{"ds_day":" 天前","ds_days":" 天 ","ds_hour":" 小时前","ds_hours":" 小时 ","ds_just":"刚刚","ds_min":" 分钟前","ds_mins":" 分钟","ds_month":" 个月前","ds_years":" 年 ","empty":"没有找到任何搜索结果：${query}","hits":"找到 ${hits} 个搜索结果","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","placeholder":"搜索..."},"isMultiLang":false,"lang":"zh-CN","lazyload":false,"motion":{"async":true,"enable":true,"transition":{"collheader":"fadeInLeft","postblock":"fadeIn","postbody":"fadeInDown","postheader":"fadeInDown","sidebar":"fadeInUp"}},"postmeta":{"comments":{"enable":false,"plugin":"waline3"},"views":{"enable":true,"plugin":"waline3"}},"root":"/","scheme":"Gemini","share":{"addtoany":{"js":"https://static.addtoany.com/menu/page.js","locale":"zh-CN","num":8},"enable":false},"sidebar":{"display":"post","offset":12,"padding":18,"position":"left","width":256},"vendor":{"plugins":"local","router":{"name":"local","type":"modern","url":"https://blogs.qipai360.cn/js/3rd"}},"version":"4.8.3","waline3":{"cfg":{"emoji":false,"imguploader":false,"placeholder":"请文明发言哟 ヾ(≧▽≦*)o 可用快捷键选取表情符号：😀😄😁🥳👻👽👀🚄 (Window系统：Win+.，Mac系统：Control+Command+Space)","reaction":true,"reactiontext":["点赞","踩一下","得意","不屑","尴尬","睡觉"],"reactiontitle":"你认为这篇文章怎么样？","requiredmeta":["nick","mail"],"search":true,"serverurl":"https://walinejs.comment.lithub.cc","sofa":"快来发表你的意见吧 (≧∀≦)ゞ","wordlimit":200},"css":{"alias":"@waline/client","file":"dist/waline.css","name":"waline","version":"3.5.7"},"js":{"alias":"@waline/client","file":"dist/waline.js","name":"waline","version":"3.5.7"}}}</script><script type=text/javascript src="/js/main.min.js?=1772265585" defer></script></body></html>

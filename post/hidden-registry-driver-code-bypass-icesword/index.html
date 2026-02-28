@@ -1,0 +1,496 @@
+<!doctype html><html lang=zh-CN data-theme=dark><head><meta charset=UTF-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=theme-color content="#222" media="(prefers-color-scheme: dark)"><meta name=generator content="Hugo 0.157.0"><link rel="shortcut icon" type=image/x-icon href=/imgs/icons/favicon.ico><link rel=icon type=image/x-icon href=/imgs/icons/favicon.ico><link rel=icon type=image/png sizes=16x16 href=/imgs/icons/favicon_32_32_next.png><link rel=icon type=image/png sizes=32x32 href=/imgs/icons/favicon_128_128_next.png><link rel=apple-touch-icon sizes=180x180 href=/imgs/icons/apple_touch_icon_next.png><meta itemprop=name content="发一段隐藏注册表项的驱动代码，可以过目前最新的IceSword1.22"><meta itemprop=description content="福兮祸兮，焉知所依？冬去冰泮，春来萌荣。朝生暮死，亦可惊鸿。知足者富，自足者强。"><meta name=description content="福兮祸兮，焉知所依？冬去冰泮，春来萌荣。朝生暮死，亦可惊鸿。知足者富，自足者强。"><meta itemprop=datePublished zgotmplz><meta itemprop=dateModified zgotmplz><meta itemprop=image content="https://blogs.qipai360.cn/imgs/avatar.jpg"><meta itemprop=keywords content="Rise,ZhangTuohui,技术,C++,Unity3D,Lua,NodeJS,C#,JavaScript,游戏开发,机器学习,深度学习,AI,编程,编程语言,编程技术,编程开发,游戏引擎,游戏设计,游戏制作,游戏开发者,游戏开发者博客,游戏开发者网站,游戏开发者工具,游戏开发者教程,游戏开发者学习,游戏开发者交流,游戏开发者分享,游戏开发者经验,游戏开发者心得,游戏开发者技巧,游戏开发者方法,游戏开发者思路,游戏开发者理念,游戏开发者文化,游戏开发者精神,游戏开发者信仰"><meta property="og:type" content="article"><meta property="og:title" content="发一段隐藏注册表项的驱动代码，可以过目前最新的IceSword1.22"><meta property="og:description" content="福兮祸兮，焉知所依？冬去冰泮，春来萌荣。朝生暮死，亦可惊鸿。知足者富，自足者强。"><meta property="og:image" content="/imgs/avatar.jpg"><meta property="og:image:width" content="312"><meta property="og:image:height" content="312"><meta property="og:image:type" content="image/jpeg/png/svg/jpg"><meta property="og:url" content="https://blogs.qipai360.cn/post/hidden-registry-driver-code-bypass-icesword/"><meta property="og:site_name" content="Rise的自留地"><meta property="og:locale" content="zh-CN"><meta property="article:author" content="Rise"><meta property="article:published_time" content="2008-03-29 11:48:00 +0800 +0800"><meta property="article:modified_time" content="2008-03-29 11:50:00 +0800 +0800"><link type=text/css rel=stylesheet href=https://blogs.qipai360.cn/js/3rd/font-awesome/6.7.2/css/all.min.css><link type=text/css rel=stylesheet href=https://blogs.qipai360.cn/js/3rd/animate.css/3.1.1/animate.min.css><link type=text/css rel=stylesheet href=https://blogs.qipai360.cn/js/3rd/viewerjs/1.11.6/viewer.min.css><link rel=stylesheet href="/css/main.min.css?=1772265589"><style type=text/css>.post-footer hr:after{content:"~ 我可是有底线的哟 ~"}.flinks-list-footer hr:after{content:"~ 我可是有底线的哟 ~"}</style><script type=text/javascript>(function(){localDB={set:function(e,t,n){if(n===0)return;const s=new Date,o=n*864e5,i={value:t,expiry:s.getTime()+o};localStorage.setItem(e,JSON.stringify(i))},get:function(e){const t=localStorage.getItem(e);if(!t)return 0[0];const n=JSON.parse(t),s=new Date;return s.getTime()>n.expiry?(localStorage.removeItem(e),0[0]):n.value}},theme={active:function(){const e=localDB.get("theme");if(e==null)return;theme.toggle(e),window.matchMedia("(prefers-color-scheme: dark)").addListener(function(e){theme.toggle(e.matches?"dark":"light")})},toggle:function(e){document.documentElement.setAttribute("data-theme",e),localDB.set("theme",e,2);const t=document.querySelector("iframe.giscus-frame");if(t){const n={setConfig:{theme:e}};t.contentWindow.postMessage({giscus:n},"https://giscus.app")}}},theme.active()})(window)</script><script type=text/javascript>document.addEventListener("DOMContentLoaded",()=>{var e=document.createElement("script");e.charset="UTF-8",e.src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js",e.async=!1,e.defer=!0,document.head.appendChild(e),e.onload=function(){NexT.utils.fmtBusuanzi()}})</script><script defer src=https://static.cloudflareinsights.com/beacon.min.js data-cf-beacon='{"token": "2b23669184fc49269e400525ac2447d9"}'></script><title>发一段隐藏注册表项的驱动代码，可以过目前最新的IceSword1.22 - Rise的自留地</title><noscript><link rel=stylesheet href=/css/noscript.css></noscript></head><body itemscope itemtype=http://schema.org/WebPage class=use-motion><div class=headband></div><main class=main><header class=header itemscope itemtype=http://schema.org/WPHeader><div class=header-inner><div class=site-brand-container><div class=site-nav-toggle><div class=toggle aria-label role=button><span class=toggle-line></span>
+<span class=toggle-line></span>
+<span class=toggle-line></span></div></div><div class=site-meta><a href=/ class=brand rel=start><i class=logo-line></i><h1 class=site-title>Rise的自留地</h1><i class=logo-line></i></a><p class=site-subtitle itemprop=description>记录生活中的点滴，分享编程技术和游戏开发经验。</p></div><div class=site-nav-right><div class="toggle popup-trigger"></div></div></div><nav class=site-nav><ul class="main-menu menu"><li class="menu-item menu-item-home"><a href=/ class=hvr-icon-pulse rel=section><i class="fa fa-home hvr-icon"></i>首页</a></li><li class="menu-item menu-item-about"><a href=/about.html class=hvr-icon-pulse rel=section><i class="fa fa-user hvr-icon"></i>关于</a></li><li class="menu-item menu-item-archives"><a href=/archives/ class=hvr-icon-pulse rel=section><i class="fa fa-archive hvr-icon"></i>归档
+<span class=badge>679</span></a></li><li class="menu-item menu-item-tags"><a href=/tags/ class=hvr-icon-pulse rel=section><i class="fa fa-tags hvr-icon"></i>标签</a></li><li class="menu-item menu-item-message"><a href=/message/ class=hvr-icon-pulse rel=section><i class="fa fa-comments hvr-icon"></i>留言板</a></li><li class="menu-item menu-item-commonweal"><a href=/404.html class=hvr-icon-pulse rel=section><i class="fa fa-heartbeat hvr-icon"></i>公益 404</a></li></ul></nav></div><div class="toggle sidebar-toggle" role=button><span class=toggle-line></span>
+<span class=toggle-line></span>
+<span class=toggle-line></span></div><aside class=sidebar><div class="sidebar-inner sidebar-overview-active"><ul class=sidebar-nav><li class=sidebar-nav-toc>文章目录</li><li class=sidebar-nav-overview>站点概览</li></ul><div class=sidebar-panel-container><div class="post-toc-wrap sidebar-panel"><div class="post-toc animated"><nav id=TableOfContents></nav></div></div><div class="site-overview-wrap sidebar-panel"><div class="site-author site-overview-item animated" itemprop=author itemscope itemtype=http://schema.org/Person><img class=site-author-image itemprop=image alt=Rise src=/imgs/img-lazy-loading.gif data-src=/imgs/avatar.jpg><p class=site-author-name itemprop=name>Rise</p><div class=site-description itemprop=description>福兮祸兮，焉知所依？冬去冰泮，春来萌荣。朝生暮死，亦可惊鸿。知足者富，自足者强。</div></div><div class="site-state-wrap site-overview-item animated"><nav class=site-state><div class="site-state-item site-state-posts"><a href=/archives/><span class=site-state-item-count>679</span>
+<span class=site-state-item-name>日志</span></a></div><div class="site-state-item site-state-categories"><a href=/categories/><span class=site-state-item-count>35</span>
+<span class=site-state-item-name>分类</span></a></div><div class="site-state-item site-state-tags"><a href=/tags/><span class=site-state-item-count>118</span>
+<span class=site-state-item-name>标签</span></a></div></nav></div><div class="links-of-social site-overview-item animated"><span class=links-of-social-item><a href=https://github.com/rise-worlds title="Github → https://github.com/rise-worlds" rel=noopener class=hvr-icon-pulse target=_blank><i class="fab fa-github fa-fw hvr-icon"></i>
+Github
+</a></span><span class=links-of-social-item><a href=mailto:rise.worlds@outlook.com title="E-Mail → mailto:rise.worlds@outlook.com" rel=noopener class=hvr-icon-pulse target=_blank><i class="fa fa-envelope fa-fw hvr-icon"></i>
+E-Mail
+</a></span><span class=links-of-social-item><a href=https://www.zhihu.com/people/rise-worlds title="知乎 → https://www.zhihu.com/people/rise-worlds" rel=noopener class=hvr-icon-pulse target=_blank><i class="fa fa-book fa-fw hvr-icon"></i>
+知乎
+</a></span><span class=links-of-social-item><a href=https://twitter.com/riseworlds title="Twitter → https://twitter.com/riseworlds" rel=noopener class=hvr-icon-pulse target=_blank><i class="fab fa-twitter fa-fw hvr-icon"></i>
+Twitter
+</a></span><span class=links-of-social-item><a href=https://www.facebook.com/rise.worlds title="facebook → https://www.facebook.com/rise.worlds" rel=noopener class=hvr-icon-pulse target=_blank><i class="fab fa-facebook fa-fw hvr-icon"></i>
+facebook
+</a></span><span class=links-of-social-item><a href=https://youtube.com/@YiXuan title="YouTube → https://youtube.com/@YiXuan" rel=noopener class=hvr-icon-pulse target=_blank><i class="fab fa-youtube fa-fw hvr-icon"></i>
+YouTube
+</a></span><span class=links-of-social-item><a href=https://instagram.com/rise.worlds title="Instagram → https://instagram.com/rise.worlds" rel=noopener class=hvr-icon-pulse target=_blank><i class="fab fa-instagram fa-fw hvr-icon"></i>
+Instagram
+</a></span><span class=links-of-social-item><a href=https://t.me/riseworlds title="Telegram → https://t.me/riseworlds" rel=noopener class=hvr-icon-pulse target=_blank><i class="fab fa-telegram fa-fw hvr-icon"></i>
+Telegram</a></span></div><div class="links-of-blogroll site-overview-item animated"><div class=links-of-blogroll-title><i class="fa fa-globe fa-fw"></i>
+友情链接</div><ul class=links-of-blogroll-list><li class=links-of-blogroll-item><a href=https://www.qipai360.cn title=https://www.qipai360.cn target=_blank>Qipai360</a></li><li class=links-of-blogroll-item><a href=https://www.cnblogs.com/flying_bat title=https://www.cnblogs.com/flying_bat target=_blank>博客园</a></li><li class=links-of-blogroll-item><a href=https://zishu.me title=https://zishu.me target=_blank>子舒的博客</a></li><li class=links-of-blogroll-item><a href=https://gitee.com/hugo-next/hugo-theme-next title=https://gitee.com/hugo-next/hugo-theme-next target=_blank>Hugo-NexT</a></li></ul></div></div></div></div><div id=siteinfo-card-widget class=sidebar-card-widget><div class=item-headline><i class="fas fa-chart-line"></i>
+<span>网站资讯</span></div><div class=siteinfo><div class=siteinfo-item><div class=item-name><i class="fa-solid fa-calendar-check"></i>已运行：</div><div class=item-count id=runTimes data-publishdate="2004-10-06 15:24:00 +0800 +0800"></div></div><div class=siteinfo-item><div class=item-name><i class="fas fa fa-user"></i>总访客数：</div><div class=item-count id=busuanzi_value_site_uv><i class="fa fa-sync fa-spin"></i></div></div><div class=siteinfo-item><div class=item-name><i class="fas fa fa-eye"></i>页面浏览：</div><div class=item-count id=busuanzi_value_site_pv><i class="fa fa-sync fa-spin"></i></div></div><div class=siteinfo-item><div class=item-name><i class="fa fa-font"></i>总字数：</div><div class=item-count id=wordsCount data-count=2423147></div></div><div class=siteinfo-item><div class=item-name><i class="fa fa-mug-hot"></i>阅读约：</div><div class=item-count id=readTimes data-times=5207></div></div><div class=siteinfo-item><div class=item-name><i class="fa fa-clock-rotate-left"></i>最后更新于：</div><div class=item-count id=last-push-date data-lastpushdate="2026-02-28 15:59:00 +0800 +0800"></div></div></div></div></aside><div class=sidebar-dimmer></div></header><div class=tool-buttons><div id=goto-comments class="button goto-comments" title=直达评论><i class="fas fa-comments"></i></div><div id=toggle-theme class=button title=深浅模式切换><i class="fas fa-adjust"></i></div><div class=back-to-top role=button title=返回顶部><i class="fa fa-arrow-up"></i>
+<span>0%</span></div></div><div class=reading-progress-bar></div><a role=button class="book-mark-link book-mark-link-fixed"></a><a href=https://github.com/rise-worlds rel="noopener external nofollow noreferrer" target=_blank title="Follow me on GitHub" class="exturl github-corner"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0 0 115 115h15l12 27L250 250V0z"/><path d="M128.3 109C113.8 99.7 119 89.6 119 89.6 122 82.7 120.5 78.6 120.5 78.6 119.2 72 123.4 76.3 123.4 76.3 127.3 80.9 125.5 87.3 125.5 87.3 122.9 97.6 130.6 101.9 134.4 103.2" fill="currentColor" style="transform-origin:130px 106px" class="octo-arm"/><path d="M115 115C114.9 115.1 118.7 116.5 119.8 115.4l13.9-13.8C136.9 99.2 139.9 98.4 142.2 98.6 133.8 88 127.5 74.4 143.8 58 148.5 53.4 154 51.2 159.7 51 160.3 49.4 163.2 43.6 171.4 40.1 171.4 40.1 176.1 42.5 178.8 56.2 183.1 58.6 187.2 61.8 190.9 65.4 194.5 69 197.7 73.2 200.1 77.6 213.8 80.2 216.3 84.9 216.3 84.9 212.7 93.1 206.9 96 205.4 96.6 205.1 102.4 203 107.8 198.3 112.5 181.9 128.9 168.3 122.5 157.7 114.1 157.9 116.9 156.7 120.9 152.7 124.9L141 136.5C139.8 137.7 141.6 141.9 141.8 141.8z" fill="currentColor" class="octo-body"/></svg></a><noscript><div class=noscript-warning>Theme NexT works best with JavaScript enabled</div></noscript><div class="main-inner post posts-expand"><div class=post-block><article itemscope itemtype=http://schema.org/Article class=post-content lang><link itemprop=mainEntityOfPage href=https://blogs.qipai360.cn/post/hidden-registry-driver-code-bypass-icesword/><span hidden itemprop=author itemscope itemtype=http://schema.org/Person><meta itemprop=image content="/imgs/avatar.jpg"><meta itemprop=name content="Rise"></span><span hidden itemprop=publisher itemscope itemtype=http://schema.org/Organization><meta itemprop=name content="Rise"><meta itemprop=description content="福兮祸兮，焉知所依？冬去冰泮，春来萌荣。朝生暮死，亦可惊鸿。知足者富，自足者强。"></span><span hidden itemprop=post itemscope itemtype=http://schema.org/CreativeWork><meta itemprop=name content="发一段隐藏注册表项的驱动代码，可以过目前最新的IceSword1.22"><meta itemprop=description content="以前驱动开发网悬赏挑战IceSword时写的，不过最后没公开。那时流氓软件势头正劲，我可不想火上浇油。现在反流氓软件日渐成熟，也就没关系了。知道了原理，防御是非常容易的。"></span><header class=post-header><h1 class=post-title itemprop="name headline">发一段隐藏注册表项的驱动代码，可以过目前最新的IceSword1.22</h1><div class=post-meta-container><div class=post-meta-items><span class=post-meta-item><span class=post-meta-item-icon><i class="fas fa-solid fa-calendar"></i>
+</span><span class=post-meta-item-text title=发表于>发表于：
+</span><time title="创建时间：2008年03月29日 11:48:00 CST" itemprop="dateCreated datePublished" datetime="2008-03-29 11:48:00 +0800 +0800">2008年03月29日
+</time></span><span class=post-meta-item><span class=post-meta-item-icon><i class="fas fa-solid fa-calendar-check"></i>
+</span><span class=post-meta-item-text title=更新于>更新于：
+</span><time title="修改时间：2008年03月29日 11:50:00 CST" itemprop="dateModified dateLastmod" datetime="2008-03-29 11:50:00 +0800 +0800">2008年03月29日
+</time></span><span class=post-meta-item><span class=post-meta-item-icon><i class="fas fa-solid fa-folder-open"></i>
+</span><span class=post-meta-item-text title=分类于>分类于：
+</span><span itemprop=about itemscope itemtype=http://schema.org/Thing><a href=/categories/safe/ itemprop=url rel=index><span itemprop=name>dev/Safe</span></a></span></span></div><div class=post-meta-items><span class=post-meta-item title=字数><span class=post-meta-item-icon><i class="fas fa-solid fa-file-word"></i>
+</span><span class=post-meta-item-text>字数：</span>
+<span>1285</span>
+</span><span class=post-meta-item title=阅读><span class=post-meta-item-icon><i class="fas fa-solid fa-clock"></i>
+</span><span class=post-meta-item-text>阅读：&ap;</span>
+<span>3分钟</span>
+</span><span class=post-meta-item title=浏览><span class=post-meta-item-icon><i class="fas fa-solid fa-eye"></i>
+</span><span class=post-meta-item-text>浏览：
+</span><span id=pageview-count data-path=/post/hidden-registry-driver-code-bypass-icesword/><i class="fa fa-sync fa-spin"></i></span></span></div></div></header><div class=post-body itemprop=articleBody><p>以前驱动开发网悬赏挑战IceSword时写的，不过最后没公开。那时流氓软件势头正劲，我可不想火上浇油。现在反流氓软件日渐成熟，也就没关系了。知道了原理，防御是非常容易的。</p><a id=more></a><p>原理很简单，实现的代码也很短，啥都不用说，各位直接看示例代码吧。</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt id=hl-0-1><a class=lnlinks href=#hl-0-1>  1</a>
+</span><span class=lnt id=hl-0-2><a class=lnlinks href=#hl-0-2>  2</a>
+</span><span class=lnt id=hl-0-3><a class=lnlinks href=#hl-0-3>  3</a>
+</span><span class=lnt id=hl-0-4><a class=lnlinks href=#hl-0-4>  4</a>
+</span><span class=lnt id=hl-0-5><a class=lnlinks href=#hl-0-5>  5</a>
+</span><span class=lnt id=hl-0-6><a class=lnlinks href=#hl-0-6>  6</a>
+</span><span class=lnt id=hl-0-7><a class=lnlinks href=#hl-0-7>  7</a>
+</span><span class=lnt id=hl-0-8><a class=lnlinks href=#hl-0-8>  8</a>
+</span><span class=lnt id=hl-0-9><a class=lnlinks href=#hl-0-9>  9</a>
+</span><span class=lnt id=hl-0-10><a class=lnlinks href=#hl-0-10> 10</a>
+</span><span class=lnt id=hl-0-11><a class=lnlinks href=#hl-0-11> 11</a>
+</span><span class=lnt id=hl-0-12><a class=lnlinks href=#hl-0-12> 12</a>
+</span><span class=lnt id=hl-0-13><a class=lnlinks href=#hl-0-13> 13</a>
+</span><span class=lnt id=hl-0-14><a class=lnlinks href=#hl-0-14> 14</a>
+</span><span class=lnt id=hl-0-15><a class=lnlinks href=#hl-0-15> 15</a>
+</span><span class=lnt id=hl-0-16><a class=lnlinks href=#hl-0-16> 16</a>
+</span><span class=lnt id=hl-0-17><a class=lnlinks href=#hl-0-17> 17</a>
+</span><span class=lnt id=hl-0-18><a class=lnlinks href=#hl-0-18> 18</a>
+</span><span class=lnt id=hl-0-19><a class=lnlinks href=#hl-0-19> 19</a>
+</span><span class=lnt id=hl-0-20><a class=lnlinks href=#hl-0-20> 20</a>
+</span><span class=lnt id=hl-0-21><a class=lnlinks href=#hl-0-21> 21</a>
+</span><span class=lnt id=hl-0-22><a class=lnlinks href=#hl-0-22> 22</a>
+</span><span class=lnt id=hl-0-23><a class=lnlinks href=#hl-0-23> 23</a>
+</span><span class=lnt id=hl-0-24><a class=lnlinks href=#hl-0-24> 24</a>
+</span><span class=lnt id=hl-0-25><a class=lnlinks href=#hl-0-25> 25</a>
+</span><span class=lnt id=hl-0-26><a class=lnlinks href=#hl-0-26> 26</a>
+</span><span class=lnt id=hl-0-27><a class=lnlinks href=#hl-0-27> 27</a>
+</span><span class=lnt id=hl-0-28><a class=lnlinks href=#hl-0-28> 28</a>
+</span><span class=lnt id=hl-0-29><a class=lnlinks href=#hl-0-29> 29</a>
+</span><span class=lnt id=hl-0-30><a class=lnlinks href=#hl-0-30> 30</a>
+</span><span class=lnt id=hl-0-31><a class=lnlinks href=#hl-0-31> 31</a>
+</span><span class=lnt id=hl-0-32><a class=lnlinks href=#hl-0-32> 32</a>
+</span><span class=lnt id=hl-0-33><a class=lnlinks href=#hl-0-33> 33</a>
+</span><span class=lnt id=hl-0-34><a class=lnlinks href=#hl-0-34> 34</a>
+</span><span class=lnt id=hl-0-35><a class=lnlinks href=#hl-0-35> 35</a>
+</span><span class=lnt id=hl-0-36><a class=lnlinks href=#hl-0-36> 36</a>
+</span><span class=lnt id=hl-0-37><a class=lnlinks href=#hl-0-37> 37</a>
+</span><span class=lnt id=hl-0-38><a class=lnlinks href=#hl-0-38> 38</a>
+</span><span class=lnt id=hl-0-39><a class=lnlinks href=#hl-0-39> 39</a>
+</span><span class=lnt id=hl-0-40><a class=lnlinks href=#hl-0-40> 40</a>
+</span><span class=lnt id=hl-0-41><a class=lnlinks href=#hl-0-41> 41</a>
+</span><span class=lnt id=hl-0-42><a class=lnlinks href=#hl-0-42> 42</a>
+</span><span class=lnt id=hl-0-43><a class=lnlinks href=#hl-0-43> 43</a>
+</span><span class=lnt id=hl-0-44><a class=lnlinks href=#hl-0-44> 44</a>
+</span><span class=lnt id=hl-0-45><a class=lnlinks href=#hl-0-45> 45</a>
+</span><span class=lnt id=hl-0-46><a class=lnlinks href=#hl-0-46> 46</a>
+</span><span class=lnt id=hl-0-47><a class=lnlinks href=#hl-0-47> 47</a>
+</span><span class=lnt id=hl-0-48><a class=lnlinks href=#hl-0-48> 48</a>
+</span><span class=lnt id=hl-0-49><a class=lnlinks href=#hl-0-49> 49</a>
+</span><span class=lnt id=hl-0-50><a class=lnlinks href=#hl-0-50> 50</a>
+</span><span class=lnt id=hl-0-51><a class=lnlinks href=#hl-0-51> 51</a>
+</span><span class=lnt id=hl-0-52><a class=lnlinks href=#hl-0-52> 52</a>
+</span><span class=lnt id=hl-0-53><a class=lnlinks href=#hl-0-53> 53</a>
+</span><span class=lnt id=hl-0-54><a class=lnlinks href=#hl-0-54> 54</a>
+</span><span class=lnt id=hl-0-55><a class=lnlinks href=#hl-0-55> 55</a>
+</span><span class=lnt id=hl-0-56><a class=lnlinks href=#hl-0-56> 56</a>
+</span><span class=lnt id=hl-0-57><a class=lnlinks href=#hl-0-57> 57</a>
+</span><span class=lnt id=hl-0-58><a class=lnlinks href=#hl-0-58> 58</a>
+</span><span class=lnt id=hl-0-59><a class=lnlinks href=#hl-0-59> 59</a>
+</span><span class=lnt id=hl-0-60><a class=lnlinks href=#hl-0-60> 60</a>
+</span><span class=lnt id=hl-0-61><a class=lnlinks href=#hl-0-61> 61</a>
+</span><span class=lnt id=hl-0-62><a class=lnlinks href=#hl-0-62> 62</a>
+</span><span class=lnt id=hl-0-63><a class=lnlinks href=#hl-0-63> 63</a>
+</span><span class=lnt id=hl-0-64><a class=lnlinks href=#hl-0-64> 64</a>
+</span><span class=lnt id=hl-0-65><a class=lnlinks href=#hl-0-65> 65</a>
+</span><span class=lnt id=hl-0-66><a class=lnlinks href=#hl-0-66> 66</a>
+</span><span class=lnt id=hl-0-67><a class=lnlinks href=#hl-0-67> 67</a>
+</span><span class=lnt id=hl-0-68><a class=lnlinks href=#hl-0-68> 68</a>
+</span><span class=lnt id=hl-0-69><a class=lnlinks href=#hl-0-69> 69</a>
+</span><span class=lnt id=hl-0-70><a class=lnlinks href=#hl-0-70> 70</a>
+</span><span class=lnt id=hl-0-71><a class=lnlinks href=#hl-0-71> 71</a>
+</span><span class=lnt id=hl-0-72><a class=lnlinks href=#hl-0-72> 72</a>
+</span><span class=lnt id=hl-0-73><a class=lnlinks href=#hl-0-73> 73</a>
+</span><span class=lnt id=hl-0-74><a class=lnlinks href=#hl-0-74> 74</a>
+</span><span class=lnt id=hl-0-75><a class=lnlinks href=#hl-0-75> 75</a>
+</span><span class=lnt id=hl-0-76><a class=lnlinks href=#hl-0-76> 76</a>
+</span><span class=lnt id=hl-0-77><a class=lnlinks href=#hl-0-77> 77</a>
+</span><span class=lnt id=hl-0-78><a class=lnlinks href=#hl-0-78> 78</a>
+</span><span class=lnt id=hl-0-79><a class=lnlinks href=#hl-0-79> 79</a>
+</span><span class=lnt id=hl-0-80><a class=lnlinks href=#hl-0-80> 80</a>
+</span><span class=lnt id=hl-0-81><a class=lnlinks href=#hl-0-81> 81</a>
+</span><span class=lnt id=hl-0-82><a class=lnlinks href=#hl-0-82> 82</a>
+</span><span class=lnt id=hl-0-83><a class=lnlinks href=#hl-0-83> 83</a>
+</span><span class=lnt id=hl-0-84><a class=lnlinks href=#hl-0-84> 84</a>
+</span><span class=lnt id=hl-0-85><a class=lnlinks href=#hl-0-85> 85</a>
+</span><span class=lnt id=hl-0-86><a class=lnlinks href=#hl-0-86> 86</a>
+</span><span class=lnt id=hl-0-87><a class=lnlinks href=#hl-0-87> 87</a>
+</span><span class=lnt id=hl-0-88><a class=lnlinks href=#hl-0-88> 88</a>
+</span><span class=lnt id=hl-0-89><a class=lnlinks href=#hl-0-89> 89</a>
+</span><span class=lnt id=hl-0-90><a class=lnlinks href=#hl-0-90> 90</a>
+</span><span class=lnt id=hl-0-91><a class=lnlinks href=#hl-0-91> 91</a>
+</span><span class=lnt id=hl-0-92><a class=lnlinks href=#hl-0-92> 92</a>
+</span><span class=lnt id=hl-0-93><a class=lnlinks href=#hl-0-93> 93</a>
+</span><span class=lnt id=hl-0-94><a class=lnlinks href=#hl-0-94> 94</a>
+</span><span class=lnt id=hl-0-95><a class=lnlinks href=#hl-0-95> 95</a>
+</span><span class=lnt id=hl-0-96><a class=lnlinks href=#hl-0-96> 96</a>
+</span><span class=lnt id=hl-0-97><a class=lnlinks href=#hl-0-97> 97</a>
+</span><span class=lnt id=hl-0-98><a class=lnlinks href=#hl-0-98> 98</a>
+</span><span class=lnt id=hl-0-99><a class=lnlinks href=#hl-0-99> 99</a>
+</span><span class=lnt id=hl-0-100><a class=lnlinks href=#hl-0-100>100</a>
+</span><span class=lnt id=hl-0-101><a class=lnlinks href=#hl-0-101>101</a>
+</span><span class=lnt id=hl-0-102><a class=lnlinks href=#hl-0-102>102</a>
+</span><span class=lnt id=hl-0-103><a class=lnlinks href=#hl-0-103>103</a>
+</span><span class=lnt id=hl-0-104><a class=lnlinks href=#hl-0-104>104</a>
+</span><span class=lnt id=hl-0-105><a class=lnlinks href=#hl-0-105>105</a>
+</span><span class=lnt id=hl-0-106><a class=lnlinks href=#hl-0-106>106</a>
+</span><span class=lnt id=hl-0-107><a class=lnlinks href=#hl-0-107>107</a>
+</span><span class=lnt id=hl-0-108><a class=lnlinks href=#hl-0-108>108</a>
+</span><span class=lnt id=hl-0-109><a class=lnlinks href=#hl-0-109>109</a>
+</span><span class=lnt id=hl-0-110><a class=lnlinks href=#hl-0-110>110</a>
+</span><span class=lnt id=hl-0-111><a class=lnlinks href=#hl-0-111>111</a>
+</span><span class=lnt id=hl-0-112><a class=lnlinks href=#hl-0-112>112</a>
+</span><span class=lnt id=hl-0-113><a class=lnlinks href=#hl-0-113>113</a>
+</span><span class=lnt id=hl-0-114><a class=lnlinks href=#hl-0-114>114</a>
+</span><span class=lnt id=hl-0-115><a class=lnlinks href=#hl-0-115>115</a>
+</span><span class=lnt id=hl-0-116><a class=lnlinks href=#hl-0-116>116</a>
+</span><span class=lnt id=hl-0-117><a class=lnlinks href=#hl-0-117>117</a>
+</span><span class=lnt id=hl-0-118><a class=lnlinks href=#hl-0-118>118</a>
+</span><span class=lnt id=hl-0-119><a class=lnlinks href=#hl-0-119>119</a>
+</span><span class=lnt id=hl-0-120><a class=lnlinks href=#hl-0-120>120</a>
+</span><span class=lnt id=hl-0-121><a class=lnlinks href=#hl-0-121>121</a>
+</span><span class=lnt id=hl-0-122><a class=lnlinks href=#hl-0-122>122</a>
+</span><span class=lnt id=hl-0-123><a class=lnlinks href=#hl-0-123>123</a>
+</span><span class=lnt id=hl-0-124><a class=lnlinks href=#hl-0-124>124</a>
+</span><span class=lnt id=hl-0-125><a class=lnlinks href=#hl-0-125>125</a>
+</span><span class=lnt id=hl-0-126><a class=lnlinks href=#hl-0-126>126</a>
+</span><span class=lnt id=hl-0-127><a class=lnlinks href=#hl-0-127>127</a>
+</span><span class=lnt id=hl-0-128><a class=lnlinks href=#hl-0-128>128</a>
+</span><span class=lnt id=hl-0-129><a class=lnlinks href=#hl-0-129>129</a>
+</span><span class=lnt id=hl-0-130><a class=lnlinks href=#hl-0-130>130</a>
+</span><span class=lnt id=hl-0-131><a class=lnlinks href=#hl-0-131>131</a>
+</span><span class=lnt id=hl-0-132><a class=lnlinks href=#hl-0-132>132</a>
+</span><span class=lnt id=hl-0-133><a class=lnlinks href=#hl-0-133>133</a>
+</span><span class=lnt id=hl-0-134><a class=lnlinks href=#hl-0-134>134</a>
+</span><span class=lnt id=hl-0-135><a class=lnlinks href=#hl-0-135>135</a>
+</span><span class=lnt id=hl-0-136><a class=lnlinks href=#hl-0-136>136</a>
+</span><span class=lnt id=hl-0-137><a class=lnlinks href=#hl-0-137>137</a>
+</span><span class=lnt id=hl-0-138><a class=lnlinks href=#hl-0-138>138</a>
+</span><span class=lnt id=hl-0-139><a class=lnlinks href=#hl-0-139>139</a>
+</span><span class=lnt id=hl-0-140><a class=lnlinks href=#hl-0-140>140</a>
+</span><span class=lnt id=hl-0-141><a class=lnlinks href=#hl-0-141>141</a>
+</span><span class=lnt id=hl-0-142><a class=lnlinks href=#hl-0-142>142</a>
+</span><span class=lnt id=hl-0-143><a class=lnlinks href=#hl-0-143>143</a>
+</span><span class=lnt id=hl-0-144><a class=lnlinks href=#hl-0-144>144</a>
+</span><span class=lnt id=hl-0-145><a class=lnlinks href=#hl-0-145>145</a>
+</span><span class=lnt id=hl-0-146><a class=lnlinks href=#hl-0-146>146</a>
+</span><span class=lnt id=hl-0-147><a class=lnlinks href=#hl-0-147>147</a>
+</span><span class=lnt id=hl-0-148><a class=lnlinks href=#hl-0-148>148</a>
+</span><span class=lnt id=hl-0-149><a class=lnlinks href=#hl-0-149>149</a>
+</span><span class=lnt id=hl-0-150><a class=lnlinks href=#hl-0-150>150</a>
+</span><span class=lnt id=hl-0-151><a class=lnlinks href=#hl-0-151>151</a>
+</span><span class=lnt id=hl-0-152><a class=lnlinks href=#hl-0-152>152</a>
+</span><span class=lnt id=hl-0-153><a class=lnlinks href=#hl-0-153>153</a>
+</span><span class=lnt id=hl-0-154><a class=lnlinks href=#hl-0-154>154</a>
+</span><span class=lnt id=hl-0-155><a class=lnlinks href=#hl-0-155>155</a>
+</span><span class=lnt id=hl-0-156><a class=lnlinks href=#hl-0-156>156</a>
+</span><span class=lnt id=hl-0-157><a class=lnlinks href=#hl-0-157>157</a>
+</span><span class=lnt id=hl-0-158><a class=lnlinks href=#hl-0-158>158</a>
+</span><span class=lnt id=hl-0-159><a class=lnlinks href=#hl-0-159>159</a>
+</span><span class=lnt id=hl-0-160><a class=lnlinks href=#hl-0-160>160</a>
+</span><span class=lnt id=hl-0-161><a class=lnlinks href=#hl-0-161>161</a>
+</span><span class=lnt id=hl-0-162><a class=lnlinks href=#hl-0-162>162</a>
+</span><span class=lnt id=hl-0-163><a class=lnlinks href=#hl-0-163>163</a>
+</span><span class=lnt id=hl-0-164><a class=lnlinks href=#hl-0-164>164</a>
+</span><span class=lnt id=hl-0-165><a class=lnlinks href=#hl-0-165>165</a>
+</span><span class=lnt id=hl-0-166><a class=lnlinks href=#hl-0-166>166</a>
+</span><span class=lnt id=hl-0-167><a class=lnlinks href=#hl-0-167>167</a>
+</span><span class=lnt id=hl-0-168><a class=lnlinks href=#hl-0-168>168</a>
+</span><span class=lnt id=hl-0-169><a class=lnlinks href=#hl-0-169>169</a>
+</span><span class=lnt id=hl-0-170><a class=lnlinks href=#hl-0-170>170</a>
+</span><span class=lnt id=hl-0-171><a class=lnlinks href=#hl-0-171>171</a>
+</span><span class=lnt id=hl-0-172><a class=lnlinks href=#hl-0-172>172</a>
+</span><span class=lnt id=hl-0-173><a class=lnlinks href=#hl-0-173>173</a>
+</span><span class=lnt id=hl-0-174><a class=lnlinks href=#hl-0-174>174</a>
+</span><span class=lnt id=hl-0-175><a class=lnlinks href=#hl-0-175>175</a>
+</span><span class=lnt id=hl-0-176><a class=lnlinks href=#hl-0-176>176</a>
+</span><span class=lnt id=hl-0-177><a class=lnlinks href=#hl-0-177>177</a>
+</span><span class=lnt id=hl-0-178><a class=lnlinks href=#hl-0-178>178</a>
+</span><span class=lnt id=hl-0-179><a class=lnlinks href=#hl-0-179>179</a>
+</span><span class=lnt id=hl-0-180><a class=lnlinks href=#hl-0-180>180</a>
+</span><span class=lnt id=hl-0-181><a class=lnlinks href=#hl-0-181>181</a>
+</span><span class=lnt id=hl-0-182><a class=lnlinks href=#hl-0-182>182</a>
+</span><span class=lnt id=hl-0-183><a class=lnlinks href=#hl-0-183>183</a>
+</span><span class=lnt id=hl-0-184><a class=lnlinks href=#hl-0-184>184</a>
+</span><span class=lnt id=hl-0-185><a class=lnlinks href=#hl-0-185>185</a>
+</span><span class=lnt id=hl-0-186><a class=lnlinks href=#hl-0-186>186</a>
+</span><span class=lnt id=hl-0-187><a class=lnlinks href=#hl-0-187>187</a>
+</span><span class=lnt id=hl-0-188><a class=lnlinks href=#hl-0-188>188</a>
+</span><span class=lnt id=hl-0-189><a class=lnlinks href=#hl-0-189>189</a>
+</span><span class=lnt id=hl-0-190><a class=lnlinks href=#hl-0-190>190</a>
+</span><span class=lnt id=hl-0-191><a class=lnlinks href=#hl-0-191>191</a>
+</span><span class=lnt id=hl-0-192><a class=lnlinks href=#hl-0-192>192</a>
+</span><span class=lnt id=hl-0-193><a class=lnlinks href=#hl-0-193>193</a>
+</span><span class=lnt id=hl-0-194><a class=lnlinks href=#hl-0-194>194</a>
+</span><span class=lnt id=hl-0-195><a class=lnlinks href=#hl-0-195>195</a>
+</span><span class=lnt id=hl-0-196><a class=lnlinks href=#hl-0-196>196</a>
+</span><span class=lnt id=hl-0-197><a class=lnlinks href=#hl-0-197>197</a>
+</span><span class=lnt id=hl-0-198><a class=lnlinks href=#hl-0-198>198</a>
+</span><span class=lnt id=hl-0-199><a class=lnlinks href=#hl-0-199>199</a>
+</span><span class=lnt id=hl-0-200><a class=lnlinks href=#hl-0-200>200</a>
+</span><span class=lnt id=hl-0-201><a class=lnlinks href=#hl-0-201>201</a>
+</span><span class=lnt id=hl-0-202><a class=lnlinks href=#hl-0-202>202</a>
+</span><span class=lnt id=hl-0-203><a class=lnlinks href=#hl-0-203>203</a>
+</span><span class=lnt id=hl-0-204><a class=lnlinks href=#hl-0-204>204</a>
+</span><span class=lnt id=hl-0-205><a class=lnlinks href=#hl-0-205>205</a>
+</span><span class=lnt id=hl-0-206><a class=lnlinks href=#hl-0-206>206</a>
+</span><span class=lnt id=hl-0-207><a class=lnlinks href=#hl-0-207>207</a>
+</span><span class=lnt id=hl-0-208><a class=lnlinks href=#hl-0-208>208</a>
+</span><span class=lnt id=hl-0-209><a class=lnlinks href=#hl-0-209>209</a>
+</span><span class=lnt id=hl-0-210><a class=lnlinks href=#hl-0-210>210</a>
+</span><span class=lnt id=hl-0-211><a class=lnlinks href=#hl-0-211>211</a>
+</span><span class=lnt id=hl-0-212><a class=lnlinks href=#hl-0-212>212</a>
+</span><span class=lnt id=hl-0-213><a class=lnlinks href=#hl-0-213>213</a>
+</span><span class=lnt id=hl-0-214><a class=lnlinks href=#hl-0-214>214</a>
+</span><span class=lnt id=hl-0-215><a class=lnlinks href=#hl-0-215>215</a>
+</span><span class=lnt id=hl-0-216><a class=lnlinks href=#hl-0-216>216</a>
+</span><span class=lnt id=hl-0-217><a class=lnlinks href=#hl-0-217>217</a>
+</span><span class=lnt id=hl-0-218><a class=lnlinks href=#hl-0-218>218</a>
+</span><span class=lnt id=hl-0-219><a class=lnlinks href=#hl-0-219>219</a>
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=line><span class=cl><span class=cp>#include</span> <span class=cpf>&lt;ntddk.h&gt;</span><span class=cp>
+</span></span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=cp>#define GET_PTR(ptr, offset) ( *(PVOID*)( (ULONG)ptr + (offset##Offset) ) )
+</span></span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=cp>#define CM_KEY_INDEX_ROOT      0x6972         </span><span class=c1>// ir
+</span></span></span><span class=line><span class=cl><span class=cp>#define CM_KEY_INDEX_LEAF      0x696c         </span><span class=c1>// il
+</span></span></span><span class=line><span class=cl><span class=cp>#define CM_KEY_FAST_LEAF       0x666c         </span><span class=c1>// fl
+</span></span></span><span class=line><span class=cl><span class=cp>#define CM_KEY_HASH_LEAF       0x686c         </span><span class=c1>// hl
+</span></span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>// 一些CM的数据结构，只列出用到的开头部分
+</span></span></span><span class=line><span class=cl><span class=cp>#pragma pack(1)
+</span></span></span><span class=line><span class=cl><span class=k>typedef</span> <span class=k>struct</span> <span class=n>_CM_KEY_NODE</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>       <span class=n>USHORT</span> <span class=n>Signature</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>       <span class=n>USHORT</span> <span class=n>Flags</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>       <span class=n>LARGE_INTEGER</span> <span class=n>LastWriteTime</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>       <span class=n>ULONG</span> <span class=n>Spare</span><span class=p>;</span>               <span class=c1>// used to be TitleIndex
+</span></span></span><span class=line><span class=cl>       <span class=n>HANDLE</span> <span class=n>Parent</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>       <span class=n>ULONG</span> <span class=n>SubKeyCounts</span><span class=p>[</span><span class=mi>2</span><span class=p>];</span>     <span class=c1>// Stable and Volatile
+</span></span></span><span class=line><span class=cl>       <span class=n>HANDLE</span> <span class=n>SubKeyLists</span><span class=p>[</span><span class=mi>2</span><span class=p>];</span>     <span class=c1>// Stable and Volatile
+</span></span></span><span class=line><span class=cl>       <span class=c1>// ...
+</span></span></span><span class=line><span class=cl><span class=p>}</span> <span class=n>CM_KEY_NODE</span><span class=p>,</span> <span class=o>*</span><span class=n>PCM_KEY_NODE</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>typedef</span> <span class=k>struct</span> <span class=n>_CM_KEY_INDEX</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>       <span class=n>USHORT</span> <span class=n>Signature</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>       <span class=n>USHORT</span> <span class=n>Count</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>       <span class=n>HANDLE</span> <span class=n>List</span><span class=p>[</span><span class=mi>1</span><span class=p>];</span>
+</span></span><span class=line><span class=cl><span class=p>}</span> <span class=n>CM_KEY_INDEX</span><span class=p>,</span> <span class=o>*</span><span class=n>PCM_KEY_INDEX</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>typedef</span> <span class=k>struct</span> <span class=n>_CM_KEY_BODY</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>       <span class=n>ULONG</span> <span class=n>Type</span><span class=p>;</span>                <span class=c1>// &#34;ky02&#34;
+</span></span></span><span class=line><span class=cl>       <span class=n>PVOID</span> <span class=n>KeyControlBlock</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>       <span class=n>PVOID</span> <span class=n>NotifyBlock</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>       <span class=n>PEPROCESS</span> <span class=n>Process</span><span class=p>;</span>         <span class=c1>// the owner process
+</span></span></span><span class=line><span class=cl>       <span class=n>LIST_ENTRY</span> <span class=n>KeyBodyList</span><span class=p>;</span> <span class=c1>// key_nodes using the same kcb
+</span></span></span><span class=line><span class=cl><span class=p>}</span> <span class=n>CM_KEY_BODY</span><span class=p>,</span> <span class=o>*</span><span class=n>PCM_KEY_BODY</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>typedef</span> <span class=nf>PVOID</span> <span class=p>(</span><span class=kr>__stdcall</span> <span class=o>*</span><span class=n>PGET_CELL_ROUTINE</span><span class=p>)(</span><span class=n>PVOID</span><span class=p>,</span> <span class=n>HANDLE</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>typedef</span> <span class=k>struct</span> <span class=n>_HHIVE</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>       <span class=n>ULONG</span> <span class=n>Signature</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>       <span class=n>PGET_CELL_ROUTINE</span> <span class=n>GetCellRoutine</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>       <span class=c1>// ...
+</span></span></span><span class=line><span class=cl><span class=p>}</span> <span class=n>HHIVE</span><span class=p>,</span> <span class=o>*</span><span class=n>PHHIVE</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=cp>#pragma pack()
+</span></span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>// 需隐藏的主键名
+</span></span></span><span class=line><span class=cl><span class=n>WCHAR</span> <span class=n>g_HideKeyName</span><span class=p>[]</span> <span class=o>=</span> <span class=sa>L</span><span class=s>&#34;</span><span class=se>\\\\</span><span class=s>Registry</span><span class=se>\\\\</span><span class=s>Machine</span><span class=se>\\\\</span><span class=s>SYSTEM</span><span class=se>\\\\</span><span class=s>CurrentControlSet</span><span class=se>\\\\</span><span class=s>Services</span><span class=se>\\\\</span><span class=s>Beep&#34;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>PGET_CELL_ROUTINE</span> <span class=n>g_pGetCellRoutine</span> <span class=o>=</span> <span class=nb>NULL</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=n>PGET_CELL_ROUTINE</span><span class=o>*</span> <span class=n>g_ppGetCellRoutine</span> <span class=o>=</span> <span class=nb>NULL</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>PCM_KEY_NODE</span> <span class=n>g_HideNode</span> <span class=o>=</span> <span class=nb>NULL</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=n>PCM_KEY_NODE</span> <span class=n>g_LastNode</span> <span class=o>=</span> <span class=nb>NULL</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>// 打开指定名字的Key
+</span></span></span><span class=line><span class=cl><span class=n>HANDLE</span> <span class=nf>OpenKeyByName</span><span class=p>(</span><span class=n>PCWSTR</span> <span class=n>pwcsKeyName</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=p>{</span>
+</span></span><span class=line><span class=cl>       <span class=n>NTSTATUS</span> <span class=n>status</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>       <span class=n>UNICODE_STRING</span> <span class=n>uKeyName</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>       <span class=n>OBJECT_ATTRIBUTES</span> <span class=n>oa</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>       <span class=n>HANDLE</span> <span class=n>hKey</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>       <span class=nf>RtlInitUnicodeString</span><span class=p>(</span><span class=o>&amp;</span><span class=n>uKeyName</span><span class=p>,</span> <span class=n>pwcsKeyName</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>       <span class=nf>InitializeObjectAttributes</span><span class=p>(</span><span class=o>&amp;</span><span class=n>oa</span><span class=p>,</span> <span class=o>&amp;</span><span class=n>uKeyName</span><span class=p>,</span> <span class=n>OBJ_CASE_INSENSITIVE</span> <span class=o>|</span> <span class=n>OBJ_KERNEL_HANDLE</span><span class=p>,</span> <span class=nb>NULL</span><span class=p>,</span> <span class=nb>NULL</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>       <span class=n>status</span> <span class=o>=</span> <span class=nf>ZwOpenKey</span><span class=p>(</span><span class=o>&amp;</span><span class=n>hKey</span><span class=p>,</span> <span class=n>KEY_READ</span><span class=p>,</span> <span class=o>&amp;</span><span class=n>oa</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>       <span class=k>if</span> <span class=p>(</span><span class=o>!</span><span class=nf>NT_SUCCESS</span><span class=p>(</span><span class=n>status</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>       <span class=p>{</span>
+</span></span><span class=line><span class=cl>           <span class=nf>DbgPrint</span><span class=p>(</span><span class=s>&#34;ZwOpenKey Failed: %lx</span><span class=se>\\</span><span class=s>n&#34;</span><span class=p>,</span> <span class=n>status</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>           <span class=k>return</span> <span class=nb>NULL</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>       <span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>       <span class=k>return</span> <span class=n>hKey</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>// 获取指定Key句柄的KeyControlBlock
+</span></span></span><span class=line><span class=cl><span class=n>PVOID</span> <span class=nf>GetKeyControlBlock</span><span class=p>(</span><span class=n>HANDLE</span> <span class=n>hKey</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=p>{</span>
+</span></span><span class=line><span class=cl>       <span class=n>NTSTATUS</span> <span class=n>status</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>       <span class=n>PCM_KEY_BODY</span> <span class=n>KeyBody</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>       <span class=n>PVOID</span> <span class=n>KCB</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>       <span class=k>if</span> <span class=p>(</span><span class=n>hKey</span> <span class=o>==</span> <span class=nb>NULL</span><span class=p>)</span> <span class=k>return</span> <span class=nb>NULL</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>       <span class=c1>// 由Key句柄获取对象体
+</span></span></span><span class=line><span class=cl>       <span class=n>status</span> <span class=o>=</span> <span class=nf>ObReferenceObjectByHandle</span><span class=p>(</span><span class=n>hKey</span><span class=p>,</span> <span class=n>KEY_READ</span><span class=p>,</span> <span class=nb>NULL</span><span class=p>,</span> <span class=n>KernelMode</span><span class=p>,</span> <span class=o>&amp;</span><span class=n>KeyBody</span><span class=p>,</span> <span class=nb>NULL</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>       <span class=k>if</span> <span class=p>(</span><span class=o>!</span><span class=nf>NT_SUCCESS</span><span class=p>(</span><span class=n>status</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>       <span class=p>{</span>
+</span></span><span class=line><span class=cl>           <span class=nf>DbgPrint</span><span class=p>(</span><span class=s>&#34;ObReferenceObjectByHandle Failed: %lx</span><span class=se>\\</span><span class=s>n&#34;</span><span class=p>,</span> <span class=n>status</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>           <span class=k>return</span> <span class=nb>NULL</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>       <span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>       <span class=c1>// 对象体中含有KeyControlBlock
+</span></span></span><span class=line><span class=cl>       <span class=n>KCB</span> <span class=o>=</span> <span class=n>KeyBody</span><span class=o>-&gt;</span><span class=n>KeyControlBlock</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>       <span class=nf>DbgPrint</span><span class=p>(</span><span class=s>&#34;KeyControlBlock = %lx</span><span class=se>\\</span><span class=s>n&#34;</span><span class=p>,</span> <span class=n>KCB</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>       <span class=nf>ObDereferenceObject</span><span class=p>(</span><span class=n>KeyBody</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>       <span class=k>return</span> <span class=n>KCB</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>// 获取父键的最后一个子键的节点
+</span></span></span><span class=line><span class=cl><span class=n>PVOID</span> <span class=nf>GetLastKeyNode</span><span class=p>(</span><span class=n>PVOID</span> <span class=n>Hive</span><span class=p>,</span> <span class=n>PCM_KEY_NODE</span> <span class=n>Node</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=p>{</span>
+</span></span><span class=line><span class=cl>       <span class=c1>// 获取父键的节点
+</span></span></span><span class=line><span class=cl>       <span class=n>PCM_KEY_NODE</span> <span class=n>ParentNode</span> <span class=o>=</span> <span class=p>(</span><span class=n>PCM_KEY_NODE</span><span class=p>)</span><span class=nf>g_pGetCellRoutine</span><span class=p>(</span><span class=n>Hive</span><span class=p>,</span> <span class=n>Node</span><span class=o>-&gt;</span><span class=n>Parent</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>       <span class=c1>// 获取子键的索引
+</span></span></span><span class=line><span class=cl>       <span class=n>PCM_KEY_INDEX</span> <span class=n>Index</span> <span class=o>=</span> <span class=p>(</span><span class=n>PCM_KEY_INDEX</span><span class=p>)</span><span class=nf>g_pGetCellRoutine</span><span class=p>(</span><span class=n>Hive</span><span class=p>,</span> <span class=n>ParentNode</span><span class=o>-&gt;</span><span class=n>SubKeyLists</span><span class=p>[</span><span class=mi>0</span><span class=p>]);</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>       <span class=nf>DbgPrint</span><span class=p>(</span><span class=s>&#34;ParentNode = %lx</span><span class=se>\\</span><span class=s>nIndex = %lx</span><span class=se>\\</span><span class=s>n&#34;</span><span class=p>,</span> <span class=n>ParentNode</span><span class=p>,</span> <span class=n>Index</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>       <span class=c1>// 如果为根(二级)索引，获取最后一个索引
+</span></span></span><span class=line><span class=cl>       <span class=k>if</span> <span class=p>(</span><span class=n>Index</span><span class=o>-&gt;</span><span class=n>Signature</span> <span class=o>==</span> <span class=n>CM_KEY_INDEX_ROOT</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>       <span class=p>{</span>
+</span></span><span class=line><span class=cl>           <span class=n>Index</span> <span class=o>=</span> <span class=p>(</span><span class=n>PCM_KEY_INDEX</span><span class=p>)</span><span class=nf>g_pGetCellRoutine</span><span class=p>(</span><span class=n>Hive</span><span class=p>,</span> <span class=n>Index</span><span class=o>-&gt;</span><span class=n>List</span><span class=p>[</span><span class=n>Index</span><span class=o>-&gt;</span><span class=n>Count</span><span class=o>-</span><span class=mi>1</span><span class=p>]);</span>
+</span></span><span class=line><span class=cl>           <span class=nf>DbgPrint</span><span class=p>(</span><span class=s>&#34;Index = %lx</span><span class=se>\\</span><span class=s>n&#34;</span><span class=p>,</span> <span class=n>Index</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>       <span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>       <span class=k>if</span> <span class=p>(</span><span class=n>Index</span><span class=o>-&gt;</span><span class=n>Signature</span> <span class=o>==</span> <span class=n>CM_KEY_FAST_LEAF</span> <span class=o>||</span> <span class=n>Index</span><span class=o>-&gt;</span><span class=n>Signature</span> <span class=o>==</span> <span class=n>CM_KEY_HASH_LEAF</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>       <span class=p>{</span>
+</span></span><span class=line><span class=cl>           <span class=c1>// 快速叶索引(2k)或散列叶索引(XP/2k3)，返回最后的节点
+</span></span></span><span class=line><span class=cl>           <span class=k>return</span> <span class=nf>g_pGetCellRoutine</span><span class=p>(</span><span class=n>Hive</span><span class=p>,</span> <span class=n>Index</span><span class=o>-&gt;</span><span class=n>List</span><span class=p>[</span><span class=mi>2</span><span class=o>*</span><span class=p>(</span><span class=n>Index</span><span class=o>-&gt;</span><span class=n>Count</span><span class=o>-</span><span class=mi>1</span><span class=p>)]);</span>
+</span></span><span class=line><span class=cl>       <span class=p>}</span>
+</span></span><span class=line><span class=cl>       <span class=k>else</span>
+</span></span><span class=line><span class=cl>       <span class=p>{</span>
+</span></span><span class=line><span class=cl>           <span class=c1>// 一般叶索引，返回最后的节点
+</span></span></span><span class=line><span class=cl>           <span class=k>return</span> <span class=nf>g_pGetCellRoutine</span><span class=p>(</span><span class=n>Hive</span><span class=p>,</span> <span class=n>Index</span><span class=o>-&gt;</span><span class=n>List</span><span class=p>[</span><span class=n>Index</span><span class=o>-&gt;</span><span class=n>Count</span><span class=o>-</span><span class=mi>1</span><span class=p>]);</span>
+</span></span><span class=line><span class=cl>       <span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>// GetCell例程的钩子函数
+</span></span></span><span class=line><span class=cl><span class=n>PVOID</span> <span class=nf>MyGetCellRoutine</span><span class=p>(</span><span class=n>PVOID</span> <span class=n>Hive</span><span class=p>,</span> <span class=n>HANDLE</span> <span class=n>Cell</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=p>{</span>
+</span></span><span class=line><span class=cl>       <span class=c1>// 调用原函数
+</span></span></span><span class=line><span class=cl>       <span class=n>PVOID</span> <span class=n>pRet</span> <span class=o>=</span> <span class=nf>g_pGetCellRoutine</span><span class=p>(</span><span class=n>Hive</span><span class=p>,</span> <span class=n>Cell</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>       <span class=k>if</span> <span class=p>(</span><span class=n>pRet</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>       <span class=p>{</span>
+</span></span><span class=line><span class=cl>           <span class=c1>// 返回的是需要隐藏的节点
+</span></span></span><span class=line><span class=cl>           <span class=k>if</span> <span class=p>(</span><span class=n>pRet</span> <span class=o>==</span> <span class=n>g_HideNode</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>           <span class=p>{</span>
+</span></span><span class=line><span class=cl>               <span class=nf>DbgPrint</span><span class=p>(</span><span class=s>&#34;GetCellRoutine(%lx, %08lx) = %lx</span><span class=se>\\</span><span class=s>n&#34;</span><span class=p>,</span> <span class=n>Hive</span><span class=p>,</span> <span class=n>Cell</span><span class=p>,</span> <span class=n>pRet</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>               <span class=c1>// 查询、保存并返回其父键的最后一个子键的节点
+</span></span></span><span class=line><span class=cl>               <span class=n>pRet</span> <span class=o>=</span> <span class=n>g_LastNode</span> <span class=o>=</span> <span class=p>(</span><span class=n>PCM_KEY_NODE</span><span class=p>)</span><span class=nf>GetLastKeyNode</span><span class=p>(</span><span class=n>Hive</span><span class=p>,</span> <span class=n>g_HideNode</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>               <span class=nf>DbgPrint</span><span class=p>(</span><span class=s>&#34;g_LastNode = %lx</span><span class=se>\\</span><span class=s>n&#34;</span><span class=p>,</span> <span class=n>g_LastNode</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>               <span class=c1>// 隐藏的正是最后一个节点，返回空值
+</span></span></span><span class=line><span class=cl>               <span class=k>if</span> <span class=p>(</span><span class=n>pRet</span> <span class=o>==</span> <span class=n>g_HideNode</span><span class=p>)</span> <span class=n>pRet</span> <span class=o>=</span> <span class=nb>NULL</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>           <span class=p>}</span>
+</span></span><span class=line><span class=cl>           <span class=c1>// 返回的是先前保存的最后一个节点
+</span></span></span><span class=line><span class=cl>           <span class=k>else</span> <span class=k>if</span> <span class=p>(</span><span class=n>pRet</span> <span class=o>==</span> <span class=n>g_LastNode</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>           <span class=p>{</span>
+</span></span><span class=line><span class=cl>               <span class=nf>DbgPrint</span><span class=p>(</span><span class=s>&#34;GetCellRoutine(%lx, %08lx) = %lx</span><span class=se>\\</span><span class=s>n&#34;</span><span class=p>,</span> <span class=n>Hive</span><span class=p>,</span> <span class=n>Cell</span><span class=p>,</span> <span class=n>pRet</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>               <span class=c1>// 清空保存值，并返回空值
+</span></span></span><span class=line><span class=cl>               <span class=n>pRet</span> <span class=o>=</span> <span class=n>g_LastNode</span> <span class=o>=</span> <span class=nb>NULL</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>           <span class=p>}</span>
+</span></span><span class=line><span class=cl>       <span class=p>}</span>
+</span></span><span class=line><span class=cl>       <span class=k>return</span> <span class=n>pRet</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>NTSTATUS</span> <span class=nf>DriverUnload</span><span class=p>(</span><span class=n>PDRIVER_OBJECT</span> <span class=n>pDrvObj</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=p>{</span>
+</span></span><span class=line><span class=cl>       <span class=nf>DbgPrint</span><span class=p>(</span><span class=s>&#34;DriverUnload()</span><span class=se>\\</span><span class=s>n&#34;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>       <span class=c1>// 解除挂钩
+</span></span></span><span class=line><span class=cl>       <span class=k>if</span> <span class=p>(</span><span class=n>g_ppGetCellRoutine</span><span class=p>)</span> <span class=o>*</span><span class=n>g_ppGetCellRoutine</span> <span class=o>=</span> <span class=n>g_pGetCellRoutine</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>       <span class=k>return</span> <span class=n>STATUS_SUCCESS</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>NTSTATUS</span> <span class=nf>DriverEntry</span><span class=p>(</span><span class=n>PDRIVER_OBJECT</span> <span class=n>pDrvObj</span><span class=p>,</span> <span class=n>PUNICODE_STRING</span> <span class=n>pRegPath</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=p>{</span>
+</span></span><span class=line><span class=cl>       <span class=n>ULONG</span> <span class=n>BuildNumber</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>       <span class=n>ULONG</span> <span class=n>KeyHiveOffset</span><span class=p>;</span>       <span class=c1>// KeyControlBlock-&gt;KeyHive
+</span></span></span><span class=line><span class=cl>       <span class=n>ULONG</span> <span class=n>KeyCellOffset</span><span class=p>;</span>       <span class=c1>// KeyControlBlock-&gt;KeyCell
+</span></span></span><span class=line><span class=cl>       <span class=n>HANDLE</span> <span class=n>hKey</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>       <span class=n>PVOID</span> <span class=n>KCB</span><span class=p>,</span> <span class=n>Hive</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>       <span class=nf>DbgPrint</span><span class=p>(</span><span class=s>&#34;DriverEntry()</span><span class=se>\\</span><span class=s>n&#34;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>       <span class=n>pDrvObj</span><span class=o>-&gt;</span><span class=n>DriverUnload</span> <span class=o>=</span> <span class=n>DriverUnload</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>       <span class=c1>// 查询BuildNumber
+</span></span></span><span class=line><span class=cl>       <span class=k>if</span> <span class=p>(</span><span class=nf>PsGetVersion</span><span class=p>(</span><span class=nb>NULL</span><span class=p>,</span> <span class=nb>NULL</span><span class=p>,</span> <span class=o>&amp;</span><span class=n>BuildNumber</span><span class=p>,</span> <span class=nb>NULL</span><span class=p>))</span> <span class=k>return</span> <span class=n>STATUS_NOT_SUPPORTED</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>       <span class=nf>DbgPrint</span><span class=p>(</span><span class=s>&#34;BuildNumber = %d</span><span class=se>\\</span><span class=s>n&#34;</span><span class=p>,</span> <span class=n>BuildNumber</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>       <span class=c1>// KeyControlBlock结构各版本略有不同
+</span></span></span><span class=line><span class=cl>       <span class=c1>// Cell的值一般小于0x80000000，而Hive正相反，以此来判断也可以
+</span></span></span><span class=line><span class=cl>       <span class=k>switch</span> <span class=p>(</span><span class=n>BuildNumber</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>       <span class=p>{</span>
+</span></span><span class=line><span class=cl>           <span class=k>case</span> <span class=mi>2195</span><span class=o>:</span>     <span class=c1>// Win2000
+</span></span></span><span class=line><span class=cl>               <span class=n>KeyHiveOffset</span> <span class=o>=</span> <span class=mh>0xc</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>               <span class=n>KeyCellOffset</span> <span class=o>=</span> <span class=mh>0x10</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>               <span class=k>break</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>           <span class=k>case</span> <span class=mi>2600</span><span class=o>:</span>     <span class=c1>// WinXP
+</span></span></span><span class=line><span class=cl>           <span class=k>case</span> <span class=mi>3790</span><span class=o>:</span>     <span class=c1>// Win2003
+</span></span></span><span class=line><span class=cl>               <span class=n>KeyHiveOffset</span> <span class=o>=</span> <span class=mh>0x10</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>               <span class=n>KeyCellOffset</span> <span class=o>=</span> <span class=mh>0x14</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>               <span class=k>break</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>           <span class=k>default</span><span class=o>:</span>
+</span></span><span class=line><span class=cl>               <span class=k>return</span> <span class=n>STATUS_NOT_SUPPORTED</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>       <span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>       <span class=c1>// 打开需隐藏的键
+</span></span></span><span class=line><span class=cl>       <span class=n>hKey</span> <span class=o>=</span> <span class=nf>OpenKeyByName</span><span class=p>(</span><span class=n>g_HideKeyName</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>       <span class=c1>// 获取该键的KeyControlBlock
+</span></span></span><span class=line><span class=cl>       <span class=n>KCB</span> <span class=o>=</span> <span class=nf>GetKeyControlBlock</span><span class=p>(</span><span class=n>hKey</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>       <span class=k>if</span> <span class=p>(</span><span class=n>KCB</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>       <span class=p>{</span>
+</span></span><span class=line><span class=cl>           <span class=c1>// 由KCB得到Hive
+</span></span></span><span class=line><span class=cl>           <span class=n>PHHIVE</span> <span class=n>Hive</span> <span class=o>=</span> <span class=p>(</span><span class=n>PHHIVE</span><span class=p>)</span><span class=nf>GET_PTR</span><span class=p>(</span><span class=n>KCB</span><span class=p>,</span> <span class=n>KeyHive</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>           <span class=c1>// GetCellRoutine在KCB中，保存原地址
+</span></span></span><span class=line><span class=cl>           <span class=n>g_ppGetCellRoutine</span> <span class=o>=</span> <span class=o>&amp;</span><span class=n>Hive</span><span class=o>-&gt;</span><span class=n>GetCellRoutine</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>           <span class=n>g_pGetCellRoutine</span> <span class=o>=</span> <span class=n>Hive</span><span class=o>-&gt;</span><span class=n>GetCellRoutine</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>           <span class=nf>DbgPrint</span><span class=p>(</span><span class=s>&#34;GetCellRoutine = %lx</span><span class=se>\\</span><span class=s>n&#34;</span><span class=p>,</span> <span class=n>g_pGetCellRoutine</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>           <span class=c1>// 获取需隐藏的节点并保存
+</span></span></span><span class=line><span class=cl>           <span class=n>g_HideNode</span> <span class=o>=</span> <span class=p>(</span><span class=n>PCM_KEY_NODE</span><span class=p>)</span><span class=nf>g_pGetCellRoutine</span><span class=p>(</span><span class=n>Hive</span><span class=p>,</span> <span class=nf>GET_PTR</span><span class=p>(</span><span class=n>KCB</span><span class=p>,</span> <span class=n>KeyCell</span><span class=p>));</span>
+</span></span><span class=line><span class=cl>           <span class=c1>// 挂钩GetCell例程
+</span></span></span><span class=line><span class=cl>           <span class=n>Hive</span><span class=o>-&gt;</span><span class=n>GetCellRoutine</span> <span class=o>=</span> <span class=n>MyGetCellRoutine</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>       <span class=p>}</span>
+</span></span><span class=line><span class=cl>       <span class=nf>ZwClose</span><span class=p>(</span><span class=n>hKey</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>       <span class=k>return</span> <span class=n>STATUS_SUCCESS</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span></span></span></code></pre></td></tr></table></div></div></div><footer class=post-footer><hr><div class=post-copyright><img src=/imgs/cc/cc.svg class=cc-icon width=75 height=75 align=right alt=共享知识 title=共享知识><ul><li class=post-copyright-title><strong>文章标题：</strong>
+发一段隐藏注册表项的驱动代码，可以过目前最新的IceSword1.22</li><li class=post-copyright-author><strong>本文作者： </strong>Rise</li><li class=post-copyright-link><strong>本文链接：</strong>
+<a id=post-cr-link href=https://blogs.qipai360.cn/post/hidden-registry-driver-code-bypass-icesword/ title=发一段隐藏注册表项的驱动代码，可以过目前最新的IceSword1.22>https://blogs.qipai360.cn/post/hidden-registry-driver-code-bypass-icesword/</a></li><li class=post-copyright-license><strong>版权声明： </strong>本作品采用 <i class="fab fa-fw fa-creative-commons"></i><a target=_blank href=https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh-hans>BY-NC-SA</a> 许可协议。转载请注明出处！</li><li><div class=license-icons><a href=https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh-hans target=_blank><img src=/imgs/cc/big/by_nc_sa.svg alt=BY-NC-SA title=BY-NC-SA>
+</a><a href=https://notbyai.fyi target=_blank><img src=/imgs/notbyai/zh-hans/black.svg title="Not By AI"></a></div></li></ul></div><div class=followme><span>欢迎关注我的其它发布渠道</span><div class=social-list><div class=social-item><a target=_blank class=social-link href=https://www.zhihu.com/people/rise-worlds><span class=icon><i class="fa fa-book"></i>
+</span><span class=label>知乎</span></a></div><div class=social-item><a target=_blank class=social-link href=https://twitter.com/riseworlds><span class=icon><i class="fab fa-twitter"></i>
+</span><span class=label>Twitter</span></a></div><div class=social-item><a target=_blank class=social-link href=https://www.facebook.com/rise.worlds><span class=icon><i class="fab fa-facebook"></i>
+</span><span class=label>facebook</span></a></div><div class=social-item><a target=_blank class=social-link href=https://youtube.com/@YiXuan><span class=icon><i class="fab fa-youtube"></i>
+</span><span class=label>YouTube</span></a></div><div class=social-item><a target=_blank class=social-link href=https://instagram.com/rise.worlds><span class=icon><i class="fab fa-instagram"></i>
+</span><span class=label>Instagram</span></a></div><div class=social-item><a target=_blank class=social-link href=https://t.me/riseworlds><span class=icon><i class="fab fa-telegram"></i>
+</span><span class=label>Telegram</span></a></div></div></div><div class=post-nav><div class="post-nav-next post-nav-item"><a href=/post/driver-level-hide-files-registry-processes/ rel=next title=驱动级隐藏文件,注册表,进程><i class="fa fa-chevron-left"></i> 驱动级隐藏文件,注册表,进程</a></div><div class="post-nav-prev post-nav-item"><a href=/post/getting-full-path-from-file-handle/ rel=prev title=从文件句柄获得全路径>从文件句柄获得全路径
+<i class="fa fa-chevron-right"></i></a></div></div></footer></article></div><div id=comments class=post-comments><div class=comment-head><div class=comment-headline><i class="fas fa-comments fa-fw"></i>
+<span>评论交流</span></div></div><div class=comment-wrap><div><div class=comment-loading><i class="fa fa-sync fa-spin"></i></div><div class=giscus-container></div></div></div></div></div></main><footer class=footer><div class=footer-inner><div class=copyright>&copy;
+<span itemprop=copyrightYear>2004 - 2026
+</span><span class=with-love><i class="fa fa-heart"></i>
+</span><span class=author itemprop=copyrightHolder>Rise</span></div><div class=powered-by>由 <a href=https://gohugo.io title=0.157.0 target=_blank>Hugo</a> & <a href=https://github.com/hugo-next/hugo-theme-next title=4.8.3 target=_blank>Hugo NexT.Gemini</a> 强力驱动</div><div class=beian><a href=https://beian.miit.gov.cn target=_blank>豫ICP备2021009490号</a>
+<img src=/imgs/gongan.png alt=豫公网安备>
+<a href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=41162302000074" target=_blank>豫公网安备 41162302000074 号</a></div></div></footer><script class=next-config data-name=page type=application/json>{"clipboard":{"js":{"alias":"clipboard","file":"dist/clipboard.min.js","name":"clipboard.js","version":"2.0.11"}},"comments":true,"expired":false,"isHome":false,"isPage":true,"path":"hidden-registry-driver-code-bypass-icesword","permalink":"https://blogs.qipai360.cn/post/hidden-registry-driver-code-bypass-icesword/","title":"发一段隐藏注册表项的驱动代码，可以过目前最新的IceSword1.22","toc":false,"waline3":{"pagecnt":{"alias":"@waline/client","alias_name":"waline","file":"dist/pageview.js","name":"pageview","version":"3.5.7"}}}</script><script type=text/javascript src=https://blogs.qipai360.cn/js/3rd/animejs/3.2.2/anime.min.js crossorigin=anonymous defer></script><script type=text/javascript src=https://blogs.qipai360.cn/js/3rd/viewerjs/1.11.6/viewer.min.js crossorigin=anonymous defer></script><script class=next-config data-name=main type=application/json>{"bookmark":{"color":"#222","enable":true,"save":"manual"},"copybtn":true,"darkmode":true,"giscus":{"cfg":{"category":"Announcements","categoryid":"DIC_kwDOA6L0YM4CiXf9","emit":false,"inputposition":"top","mapping":"title","reactions":false,"repo":"rise-worlds/rise-worlds.github.io","repoid":"MDEwOlJlcG9zaXRvcnk2MTAxMTA0MA==","theme":"transparent_dark"},"js":"https://giscus.app/client.js"},"hostname":"https://blogs.qipai360.cn/","i18n":{"ds_day":" 天前","ds_days":" 天 ","ds_hour":" 小时前","ds_hours":" 小时 ","ds_just":"刚刚","ds_min":" 分钟前","ds_mins":" 分钟","ds_month":" 个月前","ds_years":" 年 ","empty":"没有找到任何搜索结果：${query}","hits":"找到 ${hits} 个搜索结果","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","placeholder":"搜索..."},"isMultiLang":false,"lang":"zh-CN","lazyload":false,"motion":{"async":true,"enable":true,"transition":{"collheader":"fadeInLeft","postblock":"fadeIn","postbody":"fadeInDown","postheader":"fadeInDown","sidebar":"fadeInUp"}},"postmeta":{"comments":{"enable":false,"plugin":"waline3"},"views":{"enable":true,"plugin":"waline3"}},"root":"/","scheme":"Gemini","share":{"addtoany":{"js":"https://static.addtoany.com/menu/page.js","locale":"zh-CN","num":8},"enable":false},"sidebar":{"display":"post","offset":12,"padding":18,"position":"left","width":256},"vendor":{"plugins":"local","router":{"name":"local","type":"modern","url":"https://blogs.qipai360.cn/js/3rd"}},"version":"4.8.3","waline3":{"cfg":{"emoji":false,"imguploader":false,"placeholder":"请文明发言哟 ヾ(≧▽≦*)o 可用快捷键选取表情符号：😀😄😁🥳👻👽👀🚄 (Window系统：Win+.，Mac系统：Control+Command+Space)","reaction":true,"reactiontext":["点赞","踩一下","得意","不屑","尴尬","睡觉"],"reactiontitle":"你认为这篇文章怎么样？","requiredmeta":["nick","mail"],"search":true,"serverurl":"https://walinejs.comment.lithub.cc","sofa":"快来发表你的意见吧 (≧∀≦)ゞ","wordlimit":200},"css":{"alias":"@waline/client","file":"dist/waline.css","name":"waline","version":"3.5.7"},"js":{"alias":"@waline/client","file":"dist/waline.js","name":"waline","version":"3.5.7"}}}</script><script type=text/javascript src="/js/main.min.js?=1772265585" defer></script><script type=text/javascript src="/js/clipboard.min.js?=1772265589" defer></script></body></html>

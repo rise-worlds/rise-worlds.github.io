@@ -1,0 +1,835 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>C++ on Rise的自留地</title><link>https://blogs.qipai360.cn/tags/c++/</link><description>Recent content in C++ on Rise的自留地</description><generator>Hugo</generator><language>zh-CN</language><lastBuildDate>Wed, 05 Mar 2025 12:29:00 +0800</lastBuildDate><atom:link href="https://blogs.qipai360.cn/tags/c++/rss.xml" rel="self" type="application/rss+xml"/><item><title>格式化革命：std::format的12个隐藏技巧</title><link>https://blogs.qipai360.cn/post/formatting-revolution--12-hidden-tips-for-std-format/</link><pubDate>Wed, 05 Mar 2025 12:29:00 +0800</pubDate><guid>https://blogs.qipai360.cn/post/formatting-revolution--12-hidden-tips-for-std-format/</guid><description>&lt;p&gt;C++格式化输出很常见，从简单地打印些调试信息，到搭建复杂的日志系统，再到整出用户看着特舒服的输出界面，格式化输出那真是无处不在。而在C++的神奇世界里，&lt;code&gt;std::format&lt;/code&gt;就宛如一个超厉害的魔法小道具，能帮咱们轻轻松松搞定各种格式化需求。不过，你可能不知道，这小道具可藏着好多超牛的隐藏技能。今天咱就来好好深挖一下，保证让你收获满满，代码功力更上一层楼💎！&lt;/p&gt;</description></item><item><title>reinterpret_cast和其它cast的区别</title><link>https://blogs.qipai360.cn/post/reinterpret_cast-is-different-from-other-casts/</link><pubDate>Sat, 20 Jan 2024 10:11:31 +0800</pubDate><guid>https://blogs.qipai360.cn/post/reinterpret_cast-is-different-from-other-casts/</guid><description>&lt;p&gt;在&lt;code&gt;C++&lt;/code&gt;中，有四种类型转换操作符：&lt;code&gt;static_cast&lt;/code&gt;, &lt;code&gt;dynamic_cast&lt;/code&gt;, &lt;code&gt;const_cast&lt;/code&gt;和&lt;code&gt;reinterpret_cast&lt;/code&gt;。它们的作用和区别是什么呢？&lt;/p&gt;</description></item><item><title>c++四舍五入到小数点后N位</title><link>https://blogs.qipai360.cn/post/c-round-to-n-decimal-places/</link><pubDate>Sat, 08 Apr 2023 18:12:10 +0800</pubDate><guid>https://blogs.qipai360.cn/post/c-round-to-n-decimal-places/</guid><description>&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt" id="hl-0-1"&gt;&lt;a class="lnlinks" href="#hl-0-1"&gt;1&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-2"&gt;&lt;a class="lnlinks" href="#hl-0-2"&gt;2&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-3"&gt;&lt;a class="lnlinks" href="#hl-0-3"&gt;3&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-4"&gt;&lt;a class="lnlinks" href="#hl-0-4"&gt;4&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-5"&gt;&lt;a class="lnlinks" href="#hl-0-5"&gt;5&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-6"&gt;&lt;a class="lnlinks" href="#hl-0-6"&gt;6&lt;/a&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-c++" data-lang="c++"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="kt"&gt;double&lt;/span&gt; &lt;span class="nf"&gt;round&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;double&lt;/span&gt; &lt;span class="n"&gt;value&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="kt"&gt;unsigned&lt;/span&gt; &lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;decimal_places&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="kt"&gt;double&lt;/span&gt; &lt;span class="n"&gt;multiplier&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mf"&gt;1.00&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;decimal_places&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;multiplier&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;std&lt;/span&gt;&lt;span class="o"&gt;::&lt;/span&gt;&lt;span class="n"&gt;pow&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;10&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;decimal_places&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;std&lt;/span&gt;&lt;span class="o"&gt;::&lt;/span&gt;&lt;span class="n"&gt;floor&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;value&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="n"&gt;multiplier&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="mf"&gt;0.5&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt; &lt;span class="n"&gt;multiplier&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;</description></item><item><title>理解 C++ 11 右值引用和std::move</title><link>https://blogs.qipai360.cn/post/understand-c-11-rvalue-references-and-std-move/</link><pubDate>Wed, 23 Dec 2020 12:35:25 +0800</pubDate><guid>https://blogs.qipai360.cn/post/understand-c-11-rvalue-references-and-std-move/</guid><description>&lt;pre&gt;&lt;code&gt;凡有名者，皆为左值
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id="1-什么是左值右值"&gt;1. 什么是左值、右值
+&lt;a class="header-anchor" href="#1-%e4%bb%80%e4%b9%88%e6%98%af%e5%b7%a6%e5%80%bc%e5%8f%b3%e5%80%bc"&gt;&lt;/a&gt;
+&lt;/h3&gt;&lt;p&gt;首先不考虑引用以减少干扰，可以从2个角度判断：左值&lt;strong&gt;可以取地址、位于等号左边&lt;/strong&gt;；而右值&lt;strong&gt;没法取地址，位于等号右边&lt;/strong&gt;。&lt;/p&gt;</description></item><item><title>c++ 默认构造函数 不同编译器debug和release的区别</title><link>https://blogs.qipai360.cn/post/cpp-default-constructors-debug-and-release-differences-between-compilers/</link><pubDate>Thu, 12 Nov 2020 10:20:14 +0800</pubDate><guid>https://blogs.qipai360.cn/post/cpp-default-constructors-debug-and-release-differences-between-compilers/</guid><description>&lt;p&gt;这几年一直在linux上开发，用的gcc版本比较高，最近把gcc降到4.8.5（centos 7默认版本）后，出现了一些成员变量初始化的问题。&lt;/p&gt;
+&lt;p&gt;看示例：&lt;/p&gt;</description></item><item><title>#pragma 用法</title><link>https://blogs.qipai360.cn/post/usage-pragma/</link><pubDate>Wed, 23 Apr 2008 15:50:00 +0800</pubDate><guid>https://blogs.qipai360.cn/post/usage-pragma/</guid><description>&lt;p&gt;今天刚开始调试windows核心编程中的例程就感觉十分难懂，原因是自己的c++基本功力实在太弱了，首先在windows编程的过程中大量的使用宏的问题。&lt;br&gt;
+#pragma 的用法
+在所有的预处理指令中，&lt;code&gt;#Pragma&lt;/code&gt; 指令可能是最复杂的了，它的作用是设定编译器的状态或者是指示编译器完成一些特定的动作。#pragma指令对每个编译器给出了一个方法,在保持与C和C ++语言完全兼容的情况下,给出主机或操作系统专有的特征。依据定义,编译指示是机器或操作系统专有的,且对于每个编译器都是不同的。其格式一般为: &lt;code&gt;#Pragma Para&lt;/code&gt;
+其中Para 为参数，下面来看一些常用的参数。
+(1)message 参数。 Message 参数是我最喜欢的一个参数，它能够在编译信息输出窗口中输出相应的信息，这对于源代码信息的控制是非常重要的。其使用方法为：
+#Pragma message(“消息文本”)
+当编译器遇到这条指令时就在编译输出窗口中将消息文本打印出来。当我们在程序中定义了许多宏来控制源代码版本的时候，我们自己有可能都会忘记有没有正确的设置这些宏，此时我们可以用这条指令在编译的时候就进行检查。假设我们希望判断自己有没有在源代码的什么地方定义了_X86这个宏可以用下面的方法&lt;/p&gt;</description></item><item><title>#pragma 预处理指令详解</title><link>https://blogs.qipai360.cn/post/pragma-preprocessing-instructions-detailed/</link><pubDate>Sat, 14 Jul 2007 13:32:00 +0800</pubDate><guid>https://blogs.qipai360.cn/post/pragma-preprocessing-instructions-detailed/</guid><description>&lt;p&gt;在所有的预处理指令中，&lt;code&gt;#Pragma&lt;/code&gt; 指令可能是最复杂的了，它的作用是设定编译器的状态或者是指示编译器完成一些特定的动作。#pragma指令对每个编译器给出了一个方法,在保持与C和C ++语言完全兼容的情况下,给出主机或操作系统专有的特征。依据定义,编译指示是机器或操作系统专有的,且对于每个编译器都是不同的。
+其格式一般为: &lt;code&gt;#Pragma Para&lt;/code&gt; 其中Para 为参数，下面来看一些常用的参数。&lt;/p&gt;</description></item><item><title>Sleep(0)</title><link>https://blogs.qipai360.cn/post/sleep0/</link><pubDate>Thu, 31 May 2007 08:53:00 +0800</pubDate><guid>https://blogs.qipai360.cn/post/sleep0/</guid><description>&lt;p&gt;以前在同一个进程里，特别钟爱用&lt;code&gt;Sleep(0)&lt;/code&gt;来做一些情况下的线程同步。譬如当线城池工作时，主线程使用&lt;code&gt;Sleep(0)&lt;/code&gt;来等待线程池里所有的线程都完成运行。当线程池线程非常多的时候，这种方法确实是一种非常有效的节省cpu的方式，因为它节省了在线程里使用内核来进行同步的开销。而且很重要的，它运作的很好，可以说完全在我的控制之内。&lt;/p&gt;</description></item><item><title>ping的源代码</title><link>https://blogs.qipai360.cn/post/ping-source-code/</link><pubDate>Sun, 12 Mar 2006 11:15:00 +0800</pubDate><guid>https://blogs.qipai360.cn/post/ping-source-code/</guid><description>&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt" id="hl-0-1"&gt;&lt;a class="lnlinks" href="#hl-0-1"&gt; 1&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-2"&gt;&lt;a class="lnlinks" href="#hl-0-2"&gt; 2&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-3"&gt;&lt;a class="lnlinks" href="#hl-0-3"&gt; 3&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-4"&gt;&lt;a class="lnlinks" href="#hl-0-4"&gt; 4&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-5"&gt;&lt;a class="lnlinks" href="#hl-0-5"&gt; 5&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-6"&gt;&lt;a class="lnlinks" href="#hl-0-6"&gt; 6&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-7"&gt;&lt;a class="lnlinks" href="#hl-0-7"&gt; 7&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-8"&gt;&lt;a class="lnlinks" href="#hl-0-8"&gt; 8&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-9"&gt;&lt;a class="lnlinks" href="#hl-0-9"&gt; 9&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-10"&gt;&lt;a class="lnlinks" href="#hl-0-10"&gt; 10&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-11"&gt;&lt;a class="lnlinks" href="#hl-0-11"&gt; 11&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-12"&gt;&lt;a class="lnlinks" href="#hl-0-12"&gt; 12&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-13"&gt;&lt;a class="lnlinks" href="#hl-0-13"&gt; 13&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-14"&gt;&lt;a class="lnlinks" href="#hl-0-14"&gt; 14&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-15"&gt;&lt;a class="lnlinks" href="#hl-0-15"&gt; 15&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-16"&gt;&lt;a class="lnlinks" href="#hl-0-16"&gt; 16&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-17"&gt;&lt;a class="lnlinks" href="#hl-0-17"&gt; 17&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-18"&gt;&lt;a class="lnlinks" href="#hl-0-18"&gt; 18&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-19"&gt;&lt;a class="lnlinks" href="#hl-0-19"&gt; 19&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-20"&gt;&lt;a class="lnlinks" href="#hl-0-20"&gt; 20&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-21"&gt;&lt;a class="lnlinks" href="#hl-0-21"&gt; 21&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-22"&gt;&lt;a class="lnlinks" href="#hl-0-22"&gt; 22&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-23"&gt;&lt;a class="lnlinks" href="#hl-0-23"&gt; 23&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-24"&gt;&lt;a class="lnlinks" href="#hl-0-24"&gt; 24&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-25"&gt;&lt;a class="lnlinks" href="#hl-0-25"&gt; 25&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-26"&gt;&lt;a class="lnlinks" href="#hl-0-26"&gt; 26&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-27"&gt;&lt;a class="lnlinks" href="#hl-0-27"&gt; 27&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-28"&gt;&lt;a class="lnlinks" href="#hl-0-28"&gt; 28&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-29"&gt;&lt;a class="lnlinks" href="#hl-0-29"&gt; 29&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-30"&gt;&lt;a class="lnlinks" href="#hl-0-30"&gt; 30&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-31"&gt;&lt;a class="lnlinks" href="#hl-0-31"&gt; 31&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-32"&gt;&lt;a class="lnlinks" href="#hl-0-32"&gt; 32&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-33"&gt;&lt;a class="lnlinks" href="#hl-0-33"&gt; 33&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-34"&gt;&lt;a class="lnlinks" href="#hl-0-34"&gt; 34&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-35"&gt;&lt;a class="lnlinks" href="#hl-0-35"&gt; 35&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-36"&gt;&lt;a class="lnlinks" href="#hl-0-36"&gt; 36&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-37"&gt;&lt;a class="lnlinks" href="#hl-0-37"&gt; 37&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-38"&gt;&lt;a class="lnlinks" href="#hl-0-38"&gt; 38&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-39"&gt;&lt;a class="lnlinks" href="#hl-0-39"&gt; 39&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-40"&gt;&lt;a class="lnlinks" href="#hl-0-40"&gt; 40&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-41"&gt;&lt;a class="lnlinks" href="#hl-0-41"&gt; 41&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-42"&gt;&lt;a class="lnlinks" href="#hl-0-42"&gt; 42&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-43"&gt;&lt;a class="lnlinks" href="#hl-0-43"&gt; 43&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-44"&gt;&lt;a class="lnlinks" href="#hl-0-44"&gt; 44&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-45"&gt;&lt;a class="lnlinks" href="#hl-0-45"&gt; 45&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-46"&gt;&lt;a class="lnlinks" href="#hl-0-46"&gt; 46&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-47"&gt;&lt;a class="lnlinks" href="#hl-0-47"&gt; 47&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-48"&gt;&lt;a class="lnlinks" href="#hl-0-48"&gt; 48&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-49"&gt;&lt;a class="lnlinks" href="#hl-0-49"&gt; 49&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-50"&gt;&lt;a class="lnlinks" href="#hl-0-50"&gt; 50&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-51"&gt;&lt;a class="lnlinks" href="#hl-0-51"&gt; 51&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-52"&gt;&lt;a class="lnlinks" href="#hl-0-52"&gt; 52&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-53"&gt;&lt;a class="lnlinks" href="#hl-0-53"&gt; 53&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-54"&gt;&lt;a class="lnlinks" href="#hl-0-54"&gt; 54&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-55"&gt;&lt;a class="lnlinks" href="#hl-0-55"&gt; 55&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-56"&gt;&lt;a class="lnlinks" href="#hl-0-56"&gt; 56&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-57"&gt;&lt;a class="lnlinks" href="#hl-0-57"&gt; 57&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-58"&gt;&lt;a class="lnlinks" href="#hl-0-58"&gt; 58&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-59"&gt;&lt;a class="lnlinks" href="#hl-0-59"&gt; 59&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-60"&gt;&lt;a class="lnlinks" href="#hl-0-60"&gt; 60&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-61"&gt;&lt;a class="lnlinks" href="#hl-0-61"&gt; 61&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-62"&gt;&lt;a class="lnlinks" href="#hl-0-62"&gt; 62&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-63"&gt;&lt;a class="lnlinks" href="#hl-0-63"&gt; 63&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-64"&gt;&lt;a class="lnlinks" href="#hl-0-64"&gt; 64&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-65"&gt;&lt;a class="lnlinks" href="#hl-0-65"&gt; 65&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-66"&gt;&lt;a class="lnlinks" href="#hl-0-66"&gt; 66&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-67"&gt;&lt;a class="lnlinks" href="#hl-0-67"&gt; 67&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-68"&gt;&lt;a class="lnlinks" href="#hl-0-68"&gt; 68&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-69"&gt;&lt;a class="lnlinks" href="#hl-0-69"&gt; 69&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-70"&gt;&lt;a class="lnlinks" href="#hl-0-70"&gt; 70&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-71"&gt;&lt;a class="lnlinks" href="#hl-0-71"&gt; 71&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-72"&gt;&lt;a class="lnlinks" href="#hl-0-72"&gt; 72&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-73"&gt;&lt;a class="lnlinks" href="#hl-0-73"&gt; 73&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-74"&gt;&lt;a class="lnlinks" href="#hl-0-74"&gt; 74&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-75"&gt;&lt;a class="lnlinks" href="#hl-0-75"&gt; 75&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-76"&gt;&lt;a class="lnlinks" href="#hl-0-76"&gt; 76&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-77"&gt;&lt;a class="lnlinks" href="#hl-0-77"&gt; 77&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-78"&gt;&lt;a class="lnlinks" href="#hl-0-78"&gt; 78&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-79"&gt;&lt;a class="lnlinks" href="#hl-0-79"&gt; 79&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-80"&gt;&lt;a class="lnlinks" href="#hl-0-80"&gt; 80&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-81"&gt;&lt;a class="lnlinks" href="#hl-0-81"&gt; 81&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-82"&gt;&lt;a class="lnlinks" href="#hl-0-82"&gt; 82&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-83"&gt;&lt;a class="lnlinks" href="#hl-0-83"&gt; 83&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-84"&gt;&lt;a class="lnlinks" href="#hl-0-84"&gt; 84&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-85"&gt;&lt;a class="lnlinks" href="#hl-0-85"&gt; 85&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-86"&gt;&lt;a class="lnlinks" href="#hl-0-86"&gt; 86&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-87"&gt;&lt;a class="lnlinks" href="#hl-0-87"&gt; 87&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-88"&gt;&lt;a class="lnlinks" href="#hl-0-88"&gt; 88&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-89"&gt;&lt;a class="lnlinks" href="#hl-0-89"&gt; 89&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-90"&gt;&lt;a class="lnlinks" href="#hl-0-90"&gt; 90&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-91"&gt;&lt;a class="lnlinks" href="#hl-0-91"&gt; 91&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-92"&gt;&lt;a class="lnlinks" href="#hl-0-92"&gt; 92&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-93"&gt;&lt;a class="lnlinks" href="#hl-0-93"&gt; 93&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-94"&gt;&lt;a class="lnlinks" href="#hl-0-94"&gt; 94&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-95"&gt;&lt;a class="lnlinks" href="#hl-0-95"&gt; 95&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-96"&gt;&lt;a class="lnlinks" href="#hl-0-96"&gt; 96&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-97"&gt;&lt;a class="lnlinks" href="#hl-0-97"&gt; 97&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-98"&gt;&lt;a class="lnlinks" href="#hl-0-98"&gt; 98&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-99"&gt;&lt;a class="lnlinks" href="#hl-0-99"&gt; 99&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-100"&gt;&lt;a class="lnlinks" href="#hl-0-100"&gt;100&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-101"&gt;&lt;a class="lnlinks" href="#hl-0-101"&gt;101&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-102"&gt;&lt;a class="lnlinks" href="#hl-0-102"&gt;102&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-103"&gt;&lt;a class="lnlinks" href="#hl-0-103"&gt;103&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-104"&gt;&lt;a class="lnlinks" href="#hl-0-104"&gt;104&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-105"&gt;&lt;a class="lnlinks" href="#hl-0-105"&gt;105&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-106"&gt;&lt;a class="lnlinks" href="#hl-0-106"&gt;106&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-107"&gt;&lt;a class="lnlinks" href="#hl-0-107"&gt;107&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-108"&gt;&lt;a class="lnlinks" href="#hl-0-108"&gt;108&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-109"&gt;&lt;a class="lnlinks" href="#hl-0-109"&gt;109&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-110"&gt;&lt;a class="lnlinks" href="#hl-0-110"&gt;110&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-111"&gt;&lt;a class="lnlinks" href="#hl-0-111"&gt;111&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-112"&gt;&lt;a class="lnlinks" href="#hl-0-112"&gt;112&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-113"&gt;&lt;a class="lnlinks" href="#hl-0-113"&gt;113&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-114"&gt;&lt;a class="lnlinks" href="#hl-0-114"&gt;114&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-115"&gt;&lt;a class="lnlinks" href="#hl-0-115"&gt;115&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-116"&gt;&lt;a class="lnlinks" href="#hl-0-116"&gt;116&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-117"&gt;&lt;a class="lnlinks" href="#hl-0-117"&gt;117&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-118"&gt;&lt;a class="lnlinks" href="#hl-0-118"&gt;118&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-119"&gt;&lt;a class="lnlinks" href="#hl-0-119"&gt;119&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-120"&gt;&lt;a class="lnlinks" href="#hl-0-120"&gt;120&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-121"&gt;&lt;a class="lnlinks" href="#hl-0-121"&gt;121&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-122"&gt;&lt;a class="lnlinks" href="#hl-0-122"&gt;122&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-123"&gt;&lt;a class="lnlinks" href="#hl-0-123"&gt;123&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-124"&gt;&lt;a class="lnlinks" href="#hl-0-124"&gt;124&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-125"&gt;&lt;a class="lnlinks" href="#hl-0-125"&gt;125&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-126"&gt;&lt;a class="lnlinks" href="#hl-0-126"&gt;126&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-127"&gt;&lt;a class="lnlinks" href="#hl-0-127"&gt;127&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-128"&gt;&lt;a class="lnlinks" href="#hl-0-128"&gt;128&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-129"&gt;&lt;a class="lnlinks" href="#hl-0-129"&gt;129&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-130"&gt;&lt;a class="lnlinks" href="#hl-0-130"&gt;130&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-131"&gt;&lt;a class="lnlinks" href="#hl-0-131"&gt;131&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-132"&gt;&lt;a class="lnlinks" href="#hl-0-132"&gt;132&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-133"&gt;&lt;a class="lnlinks" href="#hl-0-133"&gt;133&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-134"&gt;&lt;a class="lnlinks" href="#hl-0-134"&gt;134&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-135"&gt;&lt;a class="lnlinks" href="#hl-0-135"&gt;135&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-136"&gt;&lt;a class="lnlinks" href="#hl-0-136"&gt;136&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-137"&gt;&lt;a class="lnlinks" href="#hl-0-137"&gt;137&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-138"&gt;&lt;a class="lnlinks" href="#hl-0-138"&gt;138&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-139"&gt;&lt;a class="lnlinks" href="#hl-0-139"&gt;139&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-140"&gt;&lt;a class="lnlinks" href="#hl-0-140"&gt;140&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-141"&gt;&lt;a class="lnlinks" href="#hl-0-141"&gt;141&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-142"&gt;&lt;a class="lnlinks" href="#hl-0-142"&gt;142&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-143"&gt;&lt;a class="lnlinks" href="#hl-0-143"&gt;143&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-144"&gt;&lt;a class="lnlinks" href="#hl-0-144"&gt;144&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-145"&gt;&lt;a class="lnlinks" href="#hl-0-145"&gt;145&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-146"&gt;&lt;a class="lnlinks" href="#hl-0-146"&gt;146&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-147"&gt;&lt;a class="lnlinks" href="#hl-0-147"&gt;147&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-148"&gt;&lt;a class="lnlinks" href="#hl-0-148"&gt;148&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-149"&gt;&lt;a class="lnlinks" href="#hl-0-149"&gt;149&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-150"&gt;&lt;a class="lnlinks" href="#hl-0-150"&gt;150&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-151"&gt;&lt;a class="lnlinks" href="#hl-0-151"&gt;151&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-152"&gt;&lt;a class="lnlinks" href="#hl-0-152"&gt;152&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-153"&gt;&lt;a class="lnlinks" href="#hl-0-153"&gt;153&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-154"&gt;&lt;a class="lnlinks" href="#hl-0-154"&gt;154&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-155"&gt;&lt;a class="lnlinks" href="#hl-0-155"&gt;155&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-156"&gt;&lt;a class="lnlinks" href="#hl-0-156"&gt;156&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-157"&gt;&lt;a class="lnlinks" href="#hl-0-157"&gt;157&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-158"&gt;&lt;a class="lnlinks" href="#hl-0-158"&gt;158&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-159"&gt;&lt;a class="lnlinks" href="#hl-0-159"&gt;159&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-160"&gt;&lt;a class="lnlinks" href="#hl-0-160"&gt;160&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-161"&gt;&lt;a class="lnlinks" href="#hl-0-161"&gt;161&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-162"&gt;&lt;a class="lnlinks" href="#hl-0-162"&gt;162&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-163"&gt;&lt;a class="lnlinks" href="#hl-0-163"&gt;163&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-164"&gt;&lt;a class="lnlinks" href="#hl-0-164"&gt;164&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-165"&gt;&lt;a class="lnlinks" href="#hl-0-165"&gt;165&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-166"&gt;&lt;a class="lnlinks" href="#hl-0-166"&gt;166&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-167"&gt;&lt;a class="lnlinks" href="#hl-0-167"&gt;167&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-168"&gt;&lt;a class="lnlinks" href="#hl-0-168"&gt;168&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-169"&gt;&lt;a class="lnlinks" href="#hl-0-169"&gt;169&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-170"&gt;&lt;a class="lnlinks" href="#hl-0-170"&gt;170&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-171"&gt;&lt;a class="lnlinks" href="#hl-0-171"&gt;171&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-172"&gt;&lt;a class="lnlinks" href="#hl-0-172"&gt;172&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-173"&gt;&lt;a class="lnlinks" href="#hl-0-173"&gt;173&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-174"&gt;&lt;a class="lnlinks" href="#hl-0-174"&gt;174&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-175"&gt;&lt;a class="lnlinks" href="#hl-0-175"&gt;175&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-176"&gt;&lt;a class="lnlinks" href="#hl-0-176"&gt;176&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-177"&gt;&lt;a class="lnlinks" href="#hl-0-177"&gt;177&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-178"&gt;&lt;a class="lnlinks" href="#hl-0-178"&gt;178&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-179"&gt;&lt;a class="lnlinks" href="#hl-0-179"&gt;179&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-180"&gt;&lt;a class="lnlinks" href="#hl-0-180"&gt;180&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-181"&gt;&lt;a class="lnlinks" href="#hl-0-181"&gt;181&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-182"&gt;&lt;a class="lnlinks" href="#hl-0-182"&gt;182&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-183"&gt;&lt;a class="lnlinks" href="#hl-0-183"&gt;183&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-184"&gt;&lt;a class="lnlinks" href="#hl-0-184"&gt;184&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-185"&gt;&lt;a class="lnlinks" href="#hl-0-185"&gt;185&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-186"&gt;&lt;a class="lnlinks" href="#hl-0-186"&gt;186&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-187"&gt;&lt;a class="lnlinks" href="#hl-0-187"&gt;187&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-188"&gt;&lt;a class="lnlinks" href="#hl-0-188"&gt;188&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-189"&gt;&lt;a class="lnlinks" href="#hl-0-189"&gt;189&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-190"&gt;&lt;a class="lnlinks" href="#hl-0-190"&gt;190&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-191"&gt;&lt;a class="lnlinks" href="#hl-0-191"&gt;191&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-192"&gt;&lt;a class="lnlinks" href="#hl-0-192"&gt;192&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-193"&gt;&lt;a class="lnlinks" href="#hl-0-193"&gt;193&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-194"&gt;&lt;a class="lnlinks" href="#hl-0-194"&gt;194&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-195"&gt;&lt;a class="lnlinks" href="#hl-0-195"&gt;195&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-196"&gt;&lt;a class="lnlinks" href="#hl-0-196"&gt;196&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-197"&gt;&lt;a class="lnlinks" href="#hl-0-197"&gt;197&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-198"&gt;&lt;a class="lnlinks" href="#hl-0-198"&gt;198&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-199"&gt;&lt;a class="lnlinks" href="#hl-0-199"&gt;199&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-200"&gt;&lt;a class="lnlinks" href="#hl-0-200"&gt;200&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-201"&gt;&lt;a class="lnlinks" href="#hl-0-201"&gt;201&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-202"&gt;&lt;a class="lnlinks" href="#hl-0-202"&gt;202&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-203"&gt;&lt;a class="lnlinks" href="#hl-0-203"&gt;203&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-204"&gt;&lt;a class="lnlinks" href="#hl-0-204"&gt;204&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-205"&gt;&lt;a class="lnlinks" href="#hl-0-205"&gt;205&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-206"&gt;&lt;a class="lnlinks" href="#hl-0-206"&gt;206&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-207"&gt;&lt;a class="lnlinks" href="#hl-0-207"&gt;207&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-208"&gt;&lt;a class="lnlinks" href="#hl-0-208"&gt;208&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-209"&gt;&lt;a class="lnlinks" href="#hl-0-209"&gt;209&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-210"&gt;&lt;a class="lnlinks" href="#hl-0-210"&gt;210&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-211"&gt;&lt;a class="lnlinks" href="#hl-0-211"&gt;211&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-212"&gt;&lt;a class="lnlinks" href="#hl-0-212"&gt;212&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-213"&gt;&lt;a class="lnlinks" href="#hl-0-213"&gt;213&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-214"&gt;&lt;a class="lnlinks" href="#hl-0-214"&gt;214&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-215"&gt;&lt;a class="lnlinks" href="#hl-0-215"&gt;215&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-216"&gt;&lt;a class="lnlinks" href="#hl-0-216"&gt;216&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-217"&gt;&lt;a class="lnlinks" href="#hl-0-217"&gt;217&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-218"&gt;&lt;a class="lnlinks" href="#hl-0-218"&gt;218&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-219"&gt;&lt;a class="lnlinks" href="#hl-0-219"&gt;219&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-220"&gt;&lt;a class="lnlinks" href="#hl-0-220"&gt;220&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-221"&gt;&lt;a class="lnlinks" href="#hl-0-221"&gt;221&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-222"&gt;&lt;a class="lnlinks" href="#hl-0-222"&gt;222&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-223"&gt;&lt;a class="lnlinks" href="#hl-0-223"&gt;223&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-224"&gt;&lt;a class="lnlinks" href="#hl-0-224"&gt;224&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-225"&gt;&lt;a class="lnlinks" href="#hl-0-225"&gt;225&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-226"&gt;&lt;a class="lnlinks" href="#hl-0-226"&gt;226&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-227"&gt;&lt;a class="lnlinks" href="#hl-0-227"&gt;227&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-228"&gt;&lt;a class="lnlinks" href="#hl-0-228"&gt;228&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-229"&gt;&lt;a class="lnlinks" href="#hl-0-229"&gt;229&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-230"&gt;&lt;a class="lnlinks" href="#hl-0-230"&gt;230&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-231"&gt;&lt;a class="lnlinks" href="#hl-0-231"&gt;231&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-232"&gt;&lt;a class="lnlinks" href="#hl-0-232"&gt;232&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-233"&gt;&lt;a class="lnlinks" href="#hl-0-233"&gt;233&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-234"&gt;&lt;a class="lnlinks" href="#hl-0-234"&gt;234&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-235"&gt;&lt;a class="lnlinks" href="#hl-0-235"&gt;235&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-236"&gt;&lt;a class="lnlinks" href="#hl-0-236"&gt;236&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-237"&gt;&lt;a class="lnlinks" href="#hl-0-237"&gt;237&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-238"&gt;&lt;a class="lnlinks" href="#hl-0-238"&gt;238&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-239"&gt;&lt;a class="lnlinks" href="#hl-0-239"&gt;239&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-240"&gt;&lt;a class="lnlinks" href="#hl-0-240"&gt;240&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-241"&gt;&lt;a class="lnlinks" href="#hl-0-241"&gt;241&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-242"&gt;&lt;a class="lnlinks" href="#hl-0-242"&gt;242&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-243"&gt;&lt;a class="lnlinks" href="#hl-0-243"&gt;243&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-244"&gt;&lt;a class="lnlinks" href="#hl-0-244"&gt;244&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-245"&gt;&lt;a class="lnlinks" href="#hl-0-245"&gt;245&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-246"&gt;&lt;a class="lnlinks" href="#hl-0-246"&gt;246&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-247"&gt;&lt;a class="lnlinks" href="#hl-0-247"&gt;247&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-248"&gt;&lt;a class="lnlinks" href="#hl-0-248"&gt;248&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-249"&gt;&lt;a class="lnlinks" href="#hl-0-249"&gt;249&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-250"&gt;&lt;a class="lnlinks" href="#hl-0-250"&gt;250&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-251"&gt;&lt;a class="lnlinks" href="#hl-0-251"&gt;251&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-252"&gt;&lt;a class="lnlinks" href="#hl-0-252"&gt;252&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-253"&gt;&lt;a class="lnlinks" href="#hl-0-253"&gt;253&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-254"&gt;&lt;a class="lnlinks" href="#hl-0-254"&gt;254&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-255"&gt;&lt;a class="lnlinks" href="#hl-0-255"&gt;255&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-256"&gt;&lt;a class="lnlinks" href="#hl-0-256"&gt;256&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-257"&gt;&lt;a class="lnlinks" href="#hl-0-257"&gt;257&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-258"&gt;&lt;a class="lnlinks" href="#hl-0-258"&gt;258&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-259"&gt;&lt;a class="lnlinks" href="#hl-0-259"&gt;259&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-260"&gt;&lt;a class="lnlinks" href="#hl-0-260"&gt;260&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-261"&gt;&lt;a class="lnlinks" href="#hl-0-261"&gt;261&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-262"&gt;&lt;a class="lnlinks" href="#hl-0-262"&gt;262&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-263"&gt;&lt;a class="lnlinks" href="#hl-0-263"&gt;263&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-264"&gt;&lt;a class="lnlinks" href="#hl-0-264"&gt;264&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-265"&gt;&lt;a class="lnlinks" href="#hl-0-265"&gt;265&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-266"&gt;&lt;a class="lnlinks" href="#hl-0-266"&gt;266&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-267"&gt;&lt;a class="lnlinks" href="#hl-0-267"&gt;267&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-268"&gt;&lt;a class="lnlinks" href="#hl-0-268"&gt;268&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-269"&gt;&lt;a class="lnlinks" href="#hl-0-269"&gt;269&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-270"&gt;&lt;a class="lnlinks" href="#hl-0-270"&gt;270&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-271"&gt;&lt;a class="lnlinks" href="#hl-0-271"&gt;271&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-272"&gt;&lt;a class="lnlinks" href="#hl-0-272"&gt;272&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-273"&gt;&lt;a class="lnlinks" href="#hl-0-273"&gt;273&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-274"&gt;&lt;a class="lnlinks" href="#hl-0-274"&gt;274&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-275"&gt;&lt;a class="lnlinks" href="#hl-0-275"&gt;275&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-276"&gt;&lt;a class="lnlinks" href="#hl-0-276"&gt;276&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-277"&gt;&lt;a class="lnlinks" href="#hl-0-277"&gt;277&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-278"&gt;&lt;a class="lnlinks" href="#hl-0-278"&gt;278&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-279"&gt;&lt;a class="lnlinks" href="#hl-0-279"&gt;279&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-280"&gt;&lt;a class="lnlinks" href="#hl-0-280"&gt;280&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-281"&gt;&lt;a class="lnlinks" href="#hl-0-281"&gt;281&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-282"&gt;&lt;a class="lnlinks" href="#hl-0-282"&gt;282&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-283"&gt;&lt;a class="lnlinks" href="#hl-0-283"&gt;283&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-284"&gt;&lt;a class="lnlinks" href="#hl-0-284"&gt;284&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-285"&gt;&lt;a class="lnlinks" href="#hl-0-285"&gt;285&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-286"&gt;&lt;a class="lnlinks" href="#hl-0-286"&gt;286&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-287"&gt;&lt;a class="lnlinks" href="#hl-0-287"&gt;287&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-288"&gt;&lt;a class="lnlinks" href="#hl-0-288"&gt;288&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-289"&gt;&lt;a class="lnlinks" href="#hl-0-289"&gt;289&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-290"&gt;&lt;a class="lnlinks" href="#hl-0-290"&gt;290&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-291"&gt;&lt;a class="lnlinks" href="#hl-0-291"&gt;291&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-292"&gt;&lt;a class="lnlinks" href="#hl-0-292"&gt;292&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-293"&gt;&lt;a class="lnlinks" href="#hl-0-293"&gt;293&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-294"&gt;&lt;a class="lnlinks" href="#hl-0-294"&gt;294&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-295"&gt;&lt;a class="lnlinks" href="#hl-0-295"&gt;295&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-296"&gt;&lt;a class="lnlinks" href="#hl-0-296"&gt;296&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-297"&gt;&lt;a class="lnlinks" href="#hl-0-297"&gt;297&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-298"&gt;&lt;a class="lnlinks" href="#hl-0-298"&gt;298&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-299"&gt;&lt;a class="lnlinks" href="#hl-0-299"&gt;299&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-300"&gt;&lt;a class="lnlinks" href="#hl-0-300"&gt;300&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-301"&gt;&lt;a class="lnlinks" href="#hl-0-301"&gt;301&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-302"&gt;&lt;a class="lnlinks" href="#hl-0-302"&gt;302&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-303"&gt;&lt;a class="lnlinks" href="#hl-0-303"&gt;303&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-304"&gt;&lt;a class="lnlinks" href="#hl-0-304"&gt;304&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-305"&gt;&lt;a class="lnlinks" href="#hl-0-305"&gt;305&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-306"&gt;&lt;a class="lnlinks" href="#hl-0-306"&gt;306&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-307"&gt;&lt;a class="lnlinks" href="#hl-0-307"&gt;307&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-308"&gt;&lt;a class="lnlinks" href="#hl-0-308"&gt;308&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-309"&gt;&lt;a class="lnlinks" href="#hl-0-309"&gt;309&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-310"&gt;&lt;a class="lnlinks" href="#hl-0-310"&gt;310&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-311"&gt;&lt;a class="lnlinks" href="#hl-0-311"&gt;311&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-312"&gt;&lt;a class="lnlinks" href="#hl-0-312"&gt;312&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-313"&gt;&lt;a class="lnlinks" href="#hl-0-313"&gt;313&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-314"&gt;&lt;a class="lnlinks" href="#hl-0-314"&gt;314&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-315"&gt;&lt;a class="lnlinks" href="#hl-0-315"&gt;315&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-316"&gt;&lt;a class="lnlinks" href="#hl-0-316"&gt;316&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-317"&gt;&lt;a class="lnlinks" href="#hl-0-317"&gt;317&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-318"&gt;&lt;a class="lnlinks" href="#hl-0-318"&gt;318&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-319"&gt;&lt;a class="lnlinks" href="#hl-0-319"&gt;319&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-320"&gt;&lt;a class="lnlinks" href="#hl-0-320"&gt;320&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-321"&gt;&lt;a class="lnlinks" href="#hl-0-321"&gt;321&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-322"&gt;&lt;a class="lnlinks" href="#hl-0-322"&gt;322&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-323"&gt;&lt;a class="lnlinks" href="#hl-0-323"&gt;323&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-324"&gt;&lt;a class="lnlinks" href="#hl-0-324"&gt;324&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-325"&gt;&lt;a class="lnlinks" href="#hl-0-325"&gt;325&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-326"&gt;&lt;a class="lnlinks" href="#hl-0-326"&gt;326&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-327"&gt;&lt;a class="lnlinks" href="#hl-0-327"&gt;327&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-328"&gt;&lt;a class="lnlinks" href="#hl-0-328"&gt;328&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-329"&gt;&lt;a class="lnlinks" href="#hl-0-329"&gt;329&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-330"&gt;&lt;a class="lnlinks" href="#hl-0-330"&gt;330&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-331"&gt;&lt;a class="lnlinks" href="#hl-0-331"&gt;331&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-332"&gt;&lt;a class="lnlinks" href="#hl-0-332"&gt;332&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-333"&gt;&lt;a class="lnlinks" href="#hl-0-333"&gt;333&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-334"&gt;&lt;a class="lnlinks" href="#hl-0-334"&gt;334&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-335"&gt;&lt;a class="lnlinks" href="#hl-0-335"&gt;335&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-336"&gt;&lt;a class="lnlinks" href="#hl-0-336"&gt;336&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-337"&gt;&lt;a class="lnlinks" href="#hl-0-337"&gt;337&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-338"&gt;&lt;a class="lnlinks" href="#hl-0-338"&gt;338&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-339"&gt;&lt;a class="lnlinks" href="#hl-0-339"&gt;339&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-340"&gt;&lt;a class="lnlinks" href="#hl-0-340"&gt;340&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-341"&gt;&lt;a class="lnlinks" href="#hl-0-341"&gt;341&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-342"&gt;&lt;a class="lnlinks" href="#hl-0-342"&gt;342&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-343"&gt;&lt;a class="lnlinks" href="#hl-0-343"&gt;343&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-344"&gt;&lt;a class="lnlinks" href="#hl-0-344"&gt;344&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-345"&gt;&lt;a class="lnlinks" href="#hl-0-345"&gt;345&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-346"&gt;&lt;a class="lnlinks" href="#hl-0-346"&gt;346&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-347"&gt;&lt;a class="lnlinks" href="#hl-0-347"&gt;347&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-348"&gt;&lt;a class="lnlinks" href="#hl-0-348"&gt;348&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-349"&gt;&lt;a class="lnlinks" href="#hl-0-349"&gt;349&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-350"&gt;&lt;a class="lnlinks" href="#hl-0-350"&gt;350&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-351"&gt;&lt;a class="lnlinks" href="#hl-0-351"&gt;351&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-352"&gt;&lt;a class="lnlinks" href="#hl-0-352"&gt;352&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-353"&gt;&lt;a class="lnlinks" href="#hl-0-353"&gt;353&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-354"&gt;&lt;a class="lnlinks" href="#hl-0-354"&gt;354&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-355"&gt;&lt;a class="lnlinks" href="#hl-0-355"&gt;355&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-356"&gt;&lt;a class="lnlinks" href="#hl-0-356"&gt;356&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-357"&gt;&lt;a class="lnlinks" href="#hl-0-357"&gt;357&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-358"&gt;&lt;a class="lnlinks" href="#hl-0-358"&gt;358&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-359"&gt;&lt;a class="lnlinks" href="#hl-0-359"&gt;359&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-360"&gt;&lt;a class="lnlinks" href="#hl-0-360"&gt;360&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-361"&gt;&lt;a class="lnlinks" href="#hl-0-361"&gt;361&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-362"&gt;&lt;a class="lnlinks" href="#hl-0-362"&gt;362&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-363"&gt;&lt;a class="lnlinks" href="#hl-0-363"&gt;363&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-364"&gt;&lt;a class="lnlinks" href="#hl-0-364"&gt;364&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-365"&gt;&lt;a class="lnlinks" href="#hl-0-365"&gt;365&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-366"&gt;&lt;a class="lnlinks" href="#hl-0-366"&gt;366&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-367"&gt;&lt;a class="lnlinks" href="#hl-0-367"&gt;367&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-368"&gt;&lt;a class="lnlinks" href="#hl-0-368"&gt;368&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-369"&gt;&lt;a class="lnlinks" href="#hl-0-369"&gt;369&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-370"&gt;&lt;a class="lnlinks" href="#hl-0-370"&gt;370&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-371"&gt;&lt;a class="lnlinks" href="#hl-0-371"&gt;371&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-372"&gt;&lt;a class="lnlinks" href="#hl-0-372"&gt;372&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-373"&gt;&lt;a class="lnlinks" href="#hl-0-373"&gt;373&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-374"&gt;&lt;a class="lnlinks" href="#hl-0-374"&gt;374&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-375"&gt;&lt;a class="lnlinks" href="#hl-0-375"&gt;375&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-376"&gt;&lt;a class="lnlinks" href="#hl-0-376"&gt;376&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-377"&gt;&lt;a class="lnlinks" href="#hl-0-377"&gt;377&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-378"&gt;&lt;a class="lnlinks" href="#hl-0-378"&gt;378&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-379"&gt;&lt;a class="lnlinks" href="#hl-0-379"&gt;379&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-380"&gt;&lt;a class="lnlinks" href="#hl-0-380"&gt;380&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-381"&gt;&lt;a class="lnlinks" href="#hl-0-381"&gt;381&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-382"&gt;&lt;a class="lnlinks" href="#hl-0-382"&gt;382&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-383"&gt;&lt;a class="lnlinks" href="#hl-0-383"&gt;383&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-384"&gt;&lt;a class="lnlinks" href="#hl-0-384"&gt;384&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-385"&gt;&lt;a class="lnlinks" href="#hl-0-385"&gt;385&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-386"&gt;&lt;a class="lnlinks" href="#hl-0-386"&gt;386&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-387"&gt;&lt;a class="lnlinks" href="#hl-0-387"&gt;387&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-388"&gt;&lt;a class="lnlinks" href="#hl-0-388"&gt;388&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-389"&gt;&lt;a class="lnlinks" href="#hl-0-389"&gt;389&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-390"&gt;&lt;a class="lnlinks" href="#hl-0-390"&gt;390&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-391"&gt;&lt;a class="lnlinks" href="#hl-0-391"&gt;391&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-392"&gt;&lt;a class="lnlinks" href="#hl-0-392"&gt;392&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-393"&gt;&lt;a class="lnlinks" href="#hl-0-393"&gt;393&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-394"&gt;&lt;a class="lnlinks" href="#hl-0-394"&gt;394&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-395"&gt;&lt;a class="lnlinks" href="#hl-0-395"&gt;395&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-396"&gt;&lt;a class="lnlinks" href="#hl-0-396"&gt;396&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-397"&gt;&lt;a class="lnlinks" href="#hl-0-397"&gt;397&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-398"&gt;&lt;a class="lnlinks" href="#hl-0-398"&gt;398&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-399"&gt;&lt;a class="lnlinks" href="#hl-0-399"&gt;399&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-400"&gt;&lt;a class="lnlinks" href="#hl-0-400"&gt;400&lt;/a&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-c++" data-lang="c++"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;// Module Name: Ping.c
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;//
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;// Code by Rise
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;//
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;// Command Line Options/Parameters:
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;// Ping [host] [packet-size]
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;//
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;// host String name of host to ping
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;// packet-size Integer size of packet to send (smaller than 1024 bytes)
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;//
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;//#pragma pack(1)
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="cp"&gt;#define WIN32_LEAN_AND_MEAN
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="cp"&gt;#include&lt;/span&gt; &lt;span class="cpf"&gt;&amp;lt;winsock2.h&amp;gt;&lt;/span&gt;&lt;span class="cp"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="cp"&gt;#include&lt;/span&gt; &lt;span class="cpf"&gt;&amp;lt;ws2tcpip.h&amp;gt;&lt;/span&gt;&lt;span class="cp"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="cp"&gt;#include&lt;/span&gt; &lt;span class="cpf"&gt;&amp;lt;stdio.h&amp;gt;&lt;/span&gt;&lt;span class="cp"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="cp"&gt;#include&lt;/span&gt; &lt;span class="cpf"&gt;&amp;lt;stdlib.h&amp;gt;&lt;/span&gt;&lt;span class="cp"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="cp"&gt;#define IP_RECORD_ROUTE 0x7
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;//
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;// IP header structure
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;//
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="k"&gt;typedef&lt;/span&gt; &lt;span class="k"&gt;struct&lt;/span&gt; &lt;span class="nc"&gt;_iphdr&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="kt"&gt;unsigned&lt;/span&gt; &lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="nl"&gt;h_len&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;4&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="c1"&gt;// Length of the header
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="kt"&gt;unsigned&lt;/span&gt; &lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="nl"&gt;version&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;4&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="c1"&gt;// Version of IP
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="kt"&gt;unsigned&lt;/span&gt; &lt;span class="kt"&gt;char&lt;/span&gt; &lt;span class="n"&gt;tos&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="c1"&gt;// Type of service
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="kt"&gt;unsigned&lt;/span&gt; &lt;span class="kt"&gt;short&lt;/span&gt; &lt;span class="n"&gt;total_len&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="c1"&gt;// Total length of the packet
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="kt"&gt;unsigned&lt;/span&gt; &lt;span class="kt"&gt;short&lt;/span&gt; &lt;span class="n"&gt;ident&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="c1"&gt;// Unique identifier
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="kt"&gt;unsigned&lt;/span&gt; &lt;span class="kt"&gt;short&lt;/span&gt; &lt;span class="n"&gt;frag_and_flags&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="c1"&gt;// Flags
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="kt"&gt;unsigned&lt;/span&gt; &lt;span class="kt"&gt;short&lt;/span&gt; &lt;span class="n"&gt;ttl&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="c1"&gt;// Time to live
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="kt"&gt;unsigned&lt;/span&gt; &lt;span class="kt"&gt;short&lt;/span&gt; &lt;span class="n"&gt;proto&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="c1"&gt;// Protocol (TCP, UDP, etc.)
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="kt"&gt;unsigned&lt;/span&gt; &lt;span class="kt"&gt;short&lt;/span&gt; &lt;span class="n"&gt;checksum&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="c1"&gt;// IP checksum
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="kt"&gt;unsigned&lt;/span&gt; &lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;sourceIP&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="kt"&gt;unsigned&lt;/span&gt; &lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;destIP&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="n"&gt;IpHeader&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="cp"&gt;#define ICMP_ECHO 8
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="cp"&gt;#define ICMP_ECHOREPLY 0
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="cp"&gt;#define ICMP_MIN 8 &lt;/span&gt;&lt;span class="c1"&gt;// Minimun 8-byte ICMP packet (header)
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;//
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;// ICMP header structure
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;//
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="k"&gt;typedef&lt;/span&gt; &lt;span class="k"&gt;struct&lt;/span&gt; &lt;span class="nc"&gt;_icmphdr&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;BYTE&lt;/span&gt; &lt;span class="n"&gt;i_type&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;BYTE&lt;/span&gt; &lt;span class="n"&gt;i_code&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="c1"&gt;// Type sub code
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;USHORT&lt;/span&gt; &lt;span class="n"&gt;i_cksum&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;USHORT&lt;/span&gt; &lt;span class="n"&gt;i_id&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;USHORT&lt;/span&gt; &lt;span class="n"&gt;i_seq&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="c1"&gt;// This is not the standard header, but we reserve space for time
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;ULONG&lt;/span&gt; &lt;span class="n"&gt;timestamp&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="n"&gt;IcmpHeader&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;//
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;// IP option header – use with socket option IP_OPTIONS
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;//
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="k"&gt;typedef&lt;/span&gt; &lt;span class="k"&gt;struct&lt;/span&gt; &lt;span class="nc"&gt;_ipoptionhdr&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="kt"&gt;unsigned&lt;/span&gt; &lt;span class="kt"&gt;char&lt;/span&gt; &lt;span class="n"&gt;code&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="c1"&gt;// Option type
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="kt"&gt;unsigned&lt;/span&gt; &lt;span class="kt"&gt;char&lt;/span&gt; &lt;span class="n"&gt;len&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="c1"&gt;// Length of option hdr
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="kt"&gt;unsigned&lt;/span&gt; &lt;span class="kt"&gt;char&lt;/span&gt; &lt;span class="n"&gt;prt&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="c1"&gt;// Offset into options
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="kt"&gt;unsigned&lt;/span&gt; &lt;span class="kt"&gt;long&lt;/span&gt; &lt;span class="n"&gt;addr&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;9&lt;/span&gt;&lt;span class="p"&gt;];&lt;/span&gt; &lt;span class="c1"&gt;// List of IP addrs
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="n"&gt;IpOptionHeader&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="cp"&gt;#define DEF_PACKET_SIZE 32 &lt;/span&gt;&lt;span class="c1"&gt;// Default packet size
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="cp"&gt;#define MAX_PACKET 1024 &lt;/span&gt;&lt;span class="c1"&gt;// Max ICMP packet size
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="cp"&gt;#define MAX_IP_HDR_SIZE 60 &lt;/span&gt;&lt;span class="c1"&gt;// Max IP header size w/options
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;BOOL&lt;/span&gt; &lt;span class="n"&gt;bRecordRoute&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;datasize&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="kt"&gt;char&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="n"&gt;lpdest&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;//
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;// Function: usage
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;//
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;// Description:
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;// Print usage information
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;//
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="kt"&gt;void&lt;/span&gt; &lt;span class="nf"&gt;usage&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;char&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="n"&gt;progname&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;printf&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="err"&gt;“&lt;/span&gt;&lt;span class="nl"&gt;usage&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;ping&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;r&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;host&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;data&lt;/span&gt; &lt;span class="n"&gt;size&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="err"&gt;\&lt;/span&gt;&lt;span class="n"&gt;n&lt;/span&gt;&lt;span class="err"&gt;”&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;printf&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="err"&gt;“&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;r&lt;/span&gt; &lt;span class="n"&gt;record&lt;/span&gt; &lt;span class="n"&gt;route&lt;/span&gt;&lt;span class="err"&gt;\&lt;/span&gt;&lt;span class="n"&gt;n&lt;/span&gt;&lt;span class="err"&gt;”&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;printf&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="err"&gt;“&lt;/span&gt; &lt;span class="n"&gt;host&lt;/span&gt; &lt;span class="n"&gt;remote&lt;/span&gt; &lt;span class="n"&gt;machine&lt;/span&gt; &lt;span class="n"&gt;to&lt;/span&gt; &lt;span class="n"&gt;Ping&lt;/span&gt;&lt;span class="err"&gt;\&lt;/span&gt;&lt;span class="n"&gt;n&lt;/span&gt;&lt;span class="err"&gt;”&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;printf&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="err"&gt;“&lt;/span&gt; &lt;span class="n"&gt;datasize&lt;/span&gt; &lt;span class="n"&gt;can&lt;/span&gt; &lt;span class="n"&gt;be&lt;/span&gt; &lt;span class="n"&gt;up&lt;/span&gt; &lt;span class="n"&gt;to&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt; &lt;span class="n"&gt;KB&lt;/span&gt;&lt;span class="err"&gt;\&lt;/span&gt;&lt;span class="n"&gt;n&lt;/span&gt;&lt;span class="err"&gt;”&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;ExitProcess&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;//
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;// Function: FillICMPData
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;//
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;// Description:
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;// Helper function to fill in various fields for our ICMP request
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;//
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="kt"&gt;void&lt;/span&gt; &lt;span class="nf"&gt;FillICMPData&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;char&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="n"&gt;icmp_data&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;datasize&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;IcmpHeader&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="n"&gt;icmp_hdr&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;NULL&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="kt"&gt;char&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="n"&gt;datapart&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;NULL&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;icmp_hdr&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;IcmpHeader&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="n"&gt;icmp_data&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;icmp_hdr&lt;/span&gt;&lt;span class="o"&gt;-&amp;gt;&lt;/span&gt;&lt;span class="n"&gt;i_type&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;ICMP_ECHO&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="c1"&gt;// Request an ICMP echo
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;icmp_hdr&lt;/span&gt;&lt;span class="o"&gt;-&amp;gt;&lt;/span&gt;&lt;span class="n"&gt;i_code&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;icmp_hdr&lt;/span&gt;&lt;span class="o"&gt;-&amp;gt;&lt;/span&gt;&lt;span class="n"&gt;i_id&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;USHORT&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="n"&gt;GetCurrentProcessId&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;icmp_hdr&lt;/span&gt;&lt;span class="o"&gt;-&amp;gt;&lt;/span&gt;&lt;span class="n"&gt;i_cksum&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;icmp_hdr&lt;/span&gt;&lt;span class="o"&gt;-&amp;gt;&lt;/span&gt;&lt;span class="n"&gt;i_seq&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;datapart&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;icmp_data&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="k"&gt;sizeof&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;IcmpHeader&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="c1"&gt;//
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="c1"&gt;// Place some junk in the buffer
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="c1"&gt;//
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;memset&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;datapart&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="err"&gt;‘&lt;/span&gt;&lt;span class="n"&gt;E&lt;/span&gt;&lt;span class="err"&gt;’&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;datasize&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="k"&gt;sizeof&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;IcmpHeader&lt;/span&gt;&lt;span class="p"&gt;));&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;//
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;// Function: checksum
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;//
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;// Description:
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;// This funcion calculates the 16-bit one’s complement sum
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;// of the supplied buffer (ICMP)header
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;//
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;USHORT&lt;/span&gt; &lt;span class="nf"&gt;checksum&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;USHORT&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="n"&gt;buffer&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;size&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="kt"&gt;unsigned&lt;/span&gt; &lt;span class="kt"&gt;long&lt;/span&gt; &lt;span class="n"&gt;cksum&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt; &lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="k"&gt;while&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;size&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;cksum&lt;/span&gt; &lt;span class="o"&gt;+=&lt;/span&gt; &lt;span class="n"&gt;buffer&lt;/span&gt;&lt;span class="o"&gt;++&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;size&lt;/span&gt; &lt;span class="o"&gt;-=&lt;/span&gt; &lt;span class="k"&gt;sizeof&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;USHORT&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="k"&gt;if&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;size&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;cksum&lt;/span&gt; &lt;span class="o"&gt;+=&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;UCHAR&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="n"&gt;buffer&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;cksum&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;cksum&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&amp;gt;&lt;/span&gt;&lt;span class="mi"&gt;16&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;cksum&lt;/span&gt;&lt;span class="o"&gt;&amp;amp;&lt;/span&gt;&lt;span class="mh"&gt;0xffff&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;cksum&lt;/span&gt; &lt;span class="o"&gt;+=&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;cksum&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&amp;gt;&lt;/span&gt;&lt;span class="mi"&gt;16&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;USHORT&lt;/span&gt;&lt;span class="p"&gt;)(&lt;/span&gt;&lt;span class="o"&gt;~&lt;/span&gt;&lt;span class="n"&gt;cksum&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;//
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;// Function: DecodeIPOptions
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;//
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;// Description:
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;// If the IP option header is present. find the IP options
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;// within the IP header and print the record route option
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;// values
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;//
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="kt"&gt;void&lt;/span&gt; &lt;span class="nf"&gt;DecodeIPOptions&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;charbuf&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;bytes&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;IpOptionHeader&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="n"&gt;ipopt&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;NULL&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;IN_ADDR&lt;/span&gt; &lt;span class="n"&gt;inaddr&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;HOSTENT&lt;/span&gt; &lt;span class="n"&gt;host&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;NULL&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;ipopt&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;IpOptionHeader&lt;/span&gt;&lt;span class="p"&gt;)(&lt;/span&gt;&lt;span class="n"&gt;buf&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="mi"&gt;20&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;printf&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="err"&gt;“&lt;/span&gt;&lt;span class="nl"&gt;RR&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="err"&gt;”&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="k"&gt;for&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;ipopt&lt;/span&gt;&lt;span class="o"&gt;-&amp;gt;&lt;/span&gt;&lt;span class="n"&gt;prt&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="mi"&gt;4&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="o"&gt;++&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;inaddr&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;S_un&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;S_addr&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;ipopt&lt;/span&gt;&lt;span class="o"&gt;-&amp;gt;&lt;/span&gt;&lt;span class="n"&gt;addr&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;];&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="k"&gt;if&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="o"&gt;!=&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt; &lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;printf&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="err"&gt;“&lt;/span&gt; &lt;span class="err"&gt;”&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;host&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;gethostbyaddr&lt;/span&gt;&lt;span class="p"&gt;((&lt;/span&gt;&lt;span class="kt"&gt;char&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;&amp;amp;&lt;/span&gt;&lt;span class="n"&gt;inaddr&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;S_un&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;S_addr&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="k"&gt;sizeof&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;inaddr&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;S_un&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;S_addr&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="n"&gt;AF_INET&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="k"&gt;if&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;host&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;printf&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="err"&gt;“&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;%-&lt;/span&gt;&lt;span class="mi"&gt;15&lt;/span&gt;&lt;span class="n"&gt;s&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;%&lt;/span&gt;&lt;span class="n"&gt;s&lt;/span&gt;&lt;span class="err"&gt;\&lt;/span&gt;&lt;span class="n"&gt;n&lt;/span&gt;&lt;span class="err"&gt;”&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;inet_ntoa&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;inaddr&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="n"&gt;host&lt;/span&gt;&lt;span class="o"&gt;-&amp;gt;&lt;/span&gt;&lt;span class="n"&gt;h_name&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="k"&gt;else&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;printf&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="err"&gt;“&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;%-&lt;/span&gt;&lt;span class="mi"&gt;15&lt;/span&gt;&lt;span class="n"&gt;s&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="err"&gt;\&lt;/span&gt;&lt;span class="n"&gt;n&lt;/span&gt;&lt;span class="err"&gt;”&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;inet_ntoa&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;inaddr&lt;/span&gt;&lt;span class="p"&gt;));&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="k"&gt;return&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;//
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;// Function: DecodeICMPHeader
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;//
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;// Description:
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;// The response is an IP packet. We must decode the IP header to locate the ICMP data.
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;//
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="kt"&gt;void&lt;/span&gt; &lt;span class="nf"&gt;DecodeICMPHeader&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;char&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="n"&gt;buf&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;bytes&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="k"&gt;struct&lt;/span&gt; &lt;span class="nc"&gt;sockaddr_in&lt;/span&gt; &lt;span class="n"&gt;from&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;IpHeader&lt;/span&gt; &lt;span class="n"&gt;iphdr&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;NULL&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;IcmpHeader&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="n"&gt;icmphdr&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;NULL&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="kt"&gt;unsigned&lt;/span&gt; &lt;span class="kt"&gt;short&lt;/span&gt; &lt;span class="n"&gt;iphdrlen&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;DWORD&lt;/span&gt; &lt;span class="n"&gt;tick&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="k"&gt;static&lt;/span&gt; &lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;icmpcount&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;iphdr&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;IpHeader&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="n"&gt;buf&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="c1"&gt;// Number of 32-bit words * 4 = bytes
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;iphdrlen&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;iphdr&lt;/span&gt;&lt;span class="o"&gt;-&amp;gt;&lt;/span&gt;&lt;span class="n"&gt;h_len&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="mi"&gt;4&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;tick&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;GetTickCount&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="k"&gt;if&lt;/span&gt;&lt;span class="p"&gt;((&lt;/span&gt;&lt;span class="n"&gt;iphdrlen&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="n"&gt;MAX_IP_HDR_SIZE&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;!&lt;/span&gt;&lt;span class="n"&gt;icmpcount&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;DecodeIPOptions&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;buf&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;bytes&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="k"&gt;if&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;bytes&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt; &lt;span class="n"&gt;iphdrlen&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;ICMP_MIN&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;printf&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="err"&gt;“&lt;/span&gt;&lt;span class="n"&gt;Too&lt;/span&gt; &lt;span class="n"&gt;Few&lt;/span&gt; &lt;span class="n"&gt;bytes&lt;/span&gt; &lt;span class="n"&gt;from&lt;/span&gt; &lt;span class="o"&gt;%&lt;/span&gt;&lt;span class="n"&gt;s&lt;/span&gt;&lt;span class="err"&gt;\&lt;/span&gt;&lt;span class="n"&gt;n&lt;/span&gt;&lt;span class="err"&gt;”&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;inet_ntoa&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;from&lt;/span&gt;&lt;span class="o"&gt;-&amp;gt;&lt;/span&gt;&lt;span class="n"&gt;sin_addr&lt;/span&gt;&lt;span class="p"&gt;));&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;icmphdr&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;IcmpHeader&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="p"&gt;)(&lt;/span&gt;&lt;span class="n"&gt;buf&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;iphdrlen&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="k"&gt;if&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;icmphdr&lt;/span&gt;&lt;span class="o"&gt;-&amp;gt;&lt;/span&gt;&lt;span class="n"&gt;i_type&lt;/span&gt; &lt;span class="o"&gt;!=&lt;/span&gt; &lt;span class="n"&gt;ICMP_ECHOREPLY&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;printf&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="err"&gt;“&lt;/span&gt;&lt;span class="n"&gt;nonecho&lt;/span&gt; &lt;span class="n"&gt;type&lt;/span&gt; &lt;span class="o"&gt;%&lt;/span&gt;&lt;span class="n"&gt;d&lt;/span&gt; &lt;span class="n"&gt;recvd&lt;/span&gt;&lt;span class="err"&gt;\&lt;/span&gt;&lt;span class="n"&gt;n&lt;/span&gt;&lt;span class="err"&gt;”&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;icmphdr&lt;/span&gt;&lt;span class="o"&gt;-&amp;gt;&lt;/span&gt;&lt;span class="n"&gt;i_type&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="k"&gt;return&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="c1"&gt;// Make sure this is an ICMP reply to something we sent!
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="c1"&gt;//
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="k"&gt;if&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;icmphdr&lt;/span&gt;&lt;span class="o"&gt;-&amp;gt;&lt;/span&gt;&lt;span class="n"&gt;i_id&lt;/span&gt; &lt;span class="o"&gt;!=&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;USHORT&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="n"&gt;GetCurrentProcessId&lt;/span&gt;&lt;span class="p"&gt;())&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;printf&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="err"&gt;“&lt;/span&gt;&lt;span class="n"&gt;someone&lt;/span&gt; &lt;span class="k"&gt;else&lt;/span&gt;&lt;span class="err"&gt;’&lt;/span&gt;&lt;span class="n"&gt;s&lt;/span&gt; &lt;span class="n"&gt;packet&lt;/span&gt;&lt;span class="o"&gt;!&lt;/span&gt;&lt;span class="err"&gt;\&lt;/span&gt;&lt;span class="n"&gt;n&lt;/span&gt;&lt;span class="err"&gt;”&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="k"&gt;return&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;printf&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="err"&gt;“&lt;/span&gt;&lt;span class="o"&gt;%&lt;/span&gt;&lt;span class="n"&gt;d&lt;/span&gt; &lt;span class="n"&gt;bytes&lt;/span&gt; &lt;span class="n"&gt;from&lt;/span&gt; &lt;span class="o"&gt;%&lt;/span&gt;&lt;span class="nl"&gt;s&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="err"&gt;”&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;bytes&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;inet_ntoa&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;from&lt;/span&gt;&lt;span class="o"&gt;-&amp;gt;&lt;/span&gt;&lt;span class="n"&gt;sin_addr&lt;/span&gt;&lt;span class="p"&gt;));&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;printf&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="err"&gt;“&lt;/span&gt; &lt;span class="n"&gt;icmp&lt;/span&gt;&lt;span class="o"&gt;-&amp;gt;&lt;/span&gt;&lt;span class="n"&gt;seq&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="o"&gt;%&lt;/span&gt;&lt;span class="n"&gt;d&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="err"&gt;”&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;icmphdr&lt;/span&gt;&lt;span class="o"&gt;-&amp;gt;&lt;/span&gt;&lt;span class="n"&gt;i_seq&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;printf&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="err"&gt;“&lt;/span&gt; &lt;span class="nl"&gt;time&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="o"&gt;%&lt;/span&gt;&lt;span class="n"&gt;d&lt;/span&gt; &lt;span class="n"&gt;ms&lt;/span&gt;&lt;span class="err"&gt;”&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;tick&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;icmphdr&lt;/span&gt;&lt;span class="o"&gt;-&amp;gt;&lt;/span&gt;&lt;span class="n"&gt;timestamp&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;printf&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="err"&gt;“\&lt;/span&gt;&lt;span class="n"&gt;n&lt;/span&gt;&lt;span class="err"&gt;”&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;icmpcount&lt;/span&gt;&lt;span class="o"&gt;++&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="k"&gt;return&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="kt"&gt;void&lt;/span&gt; &lt;span class="nf"&gt;ValidateArgs&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;argc&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="kt"&gt;char&lt;/span&gt; &lt;span class="n"&gt;argv&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;bRecordRoute&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;FALSE&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;lpdest&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;NULL&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;datasize&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;DEF_PACKET_SIZE&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="k"&gt;for&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt; &lt;span class="n"&gt;argc&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="o"&gt;++&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="k"&gt;if&lt;/span&gt;&lt;span class="p"&gt;((&lt;/span&gt;&lt;span class="n"&gt;argv&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;][&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="err"&gt;‘&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="err"&gt;‘&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;||&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;argv&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;][&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="err"&gt;‘&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="err"&gt;‘&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="k"&gt;switch&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;tolower&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;argv&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;][&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;]))&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="k"&gt;case&lt;/span&gt; &lt;span class="err"&gt;‘&lt;/span&gt;&lt;span class="n"&gt;r&lt;/span&gt;&lt;span class="err"&gt;’&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="c1"&gt;// Record route option
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;bRecordRoute&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;TRUE&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="k"&gt;break&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="k"&gt;default&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;usage&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;argv&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;]);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="k"&gt;break&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="k"&gt;else&lt;/span&gt; &lt;span class="k"&gt;if&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;isdigit&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;argv&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;][&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;]))&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;datasize&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;atoi&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;argv&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;]);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="k"&gt;else&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;lpdest&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;argv&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;];&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;//
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;// Function: main
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;//
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;// Description
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;// Set up the ICMP raw socket, and create the ICMP header. Add
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;// the appropriate IP ooption header, and start sending ICMP
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;// echo requests to the endpoint. For each send and receive.
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;// we set a timeout value so that we don’t wait forever for a
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;// response in case the endpoint is not responding. When we
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;// receive a packet. decode it.
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;//
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="nf"&gt;main&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;argc&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="kt"&gt;char&lt;/span&gt; &lt;span class="n"&gt;argv&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;WSADATA&lt;/span&gt; &lt;span class="n"&gt;wsaData&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;SOCKET&lt;/span&gt; &lt;span class="n"&gt;sockRaw&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;INVALID_SOCKET&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="k"&gt;struct&lt;/span&gt; &lt;span class="nc"&gt;sockaddr_in&lt;/span&gt; &lt;span class="n"&gt;dest&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;from&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;bread&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;fromlen&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;sizeof&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;from&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="n"&gt;timeout&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;1000&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;ret&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="kt"&gt;char&lt;/span&gt; &lt;span class="n"&gt;icmp_data&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;NULL&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;recvbuf&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;NULL&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="kt"&gt;unsigned&lt;/span&gt; &lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;addr&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;USHORT&lt;/span&gt; &lt;span class="n"&gt;seq_no&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="k"&gt;struct&lt;/span&gt; &lt;span class="nc"&gt;hostent&lt;/span&gt; &lt;span class="n"&gt;hp&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;NULL&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;IpOptionHeader&lt;/span&gt; &lt;span class="n"&gt;ipopt&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="k"&gt;if&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;WSAStartup&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;MAKEWORD&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="o"&gt;&amp;amp;&lt;/span&gt;&lt;span class="n"&gt;wsaData&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;!=&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;printf&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="err"&gt;“&lt;/span&gt;&lt;span class="n"&gt;WSAStartup&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="nl"&gt;failed&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="o"&gt;%&lt;/span&gt;&lt;span class="n"&gt;d&lt;/span&gt;&lt;span class="err"&gt;\&lt;/span&gt;&lt;span class="n"&gt;n&lt;/span&gt;&lt;span class="err"&gt;”&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;GetLastError&lt;/span&gt;&lt;span class="p"&gt;());&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;ValidateArgs&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;argc&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;argv&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;sockRaw&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;WSASocket&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;AF_INET&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;SOCK_RAW&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;IPPROTO_ICMP&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nb"&gt;NULL&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;WSA_FLAG_OVERLAPPED&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="k"&gt;if&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;sockRaw&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="n"&gt;INVALID_SOCKET&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;printf&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="err"&gt;“&lt;/span&gt;&lt;span class="n"&gt;WSASocket&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="nl"&gt;failed&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="o"&gt;%&lt;/span&gt;&lt;span class="n"&gt;d&lt;/span&gt;&lt;span class="err"&gt;\&lt;/span&gt;&lt;span class="n"&gt;n&lt;/span&gt;&lt;span class="err"&gt;”&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;WSAGetLastError&lt;/span&gt;&lt;span class="p"&gt;());&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="k"&gt;if&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;bRecordRoute&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="c1"&gt;// Setup the IP option header to go out on every ICMP packet
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="c1"&gt;//
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;ZeroMemory&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;&amp;amp;&lt;/span&gt;&lt;span class="n"&gt;ipopt&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="k"&gt;sizeof&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;ipopt&lt;/span&gt;&lt;span class="p"&gt;));&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;ipopt&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;code&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;IP_RECORD_ROUTE&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="c1"&gt;// Record route option
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;ipopt&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;prt&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;4&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="c1"&gt;// Point to the first addr offset
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;ipopt&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;len&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;39&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="c1"&gt;// Length of option header
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;ret&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;setsockopt&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;sockRaw&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;IPPROTO_IP&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;IP_OPTIONS&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;char&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;&amp;amp;&lt;/span&gt;&lt;span class="n"&gt;ipopt&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="k"&gt;sizeof&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;ipopt&lt;/span&gt;&lt;span class="p"&gt;));&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="k"&gt;if&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;ret&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="n"&gt;SOCKET_ERROR&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;printf&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="err"&gt;“&lt;/span&gt;&lt;span class="n"&gt;setsockopt&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;IP_OPTIONs&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="nl"&gt;failed&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="o"&gt;%&lt;/span&gt;&lt;span class="n"&gt;d&lt;/span&gt;&lt;span class="err"&gt;\&lt;/span&gt;&lt;span class="n"&gt;n&lt;/span&gt;&lt;span class="err"&gt;”&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;WSAGetLastError&lt;/span&gt;&lt;span class="p"&gt;());&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="c1"&gt;// Set the send/recv timeout values
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="c1"&gt;//
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;bread&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;setsockopt&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;sockRaw&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;SOL_SOCKET&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;SO_RCVTIMEO&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;char&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;&amp;amp;&lt;/span&gt;&lt;span class="n"&gt;timeout&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="k"&gt;sizeof&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;timeout&lt;/span&gt;&lt;span class="p"&gt;));&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="k"&gt;if&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;bread&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="n"&gt;SOCKET_ERROR&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;printf&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="err"&gt;“&lt;/span&gt;&lt;span class="n"&gt;setsockopt&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;SO_RCVTIME0&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="nl"&gt;failed&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="o"&gt;%&lt;/span&gt;&lt;span class="n"&gt;d&lt;/span&gt;&lt;span class="err"&gt;\&lt;/span&gt;&lt;span class="n"&gt;n&lt;/span&gt;&lt;span class="err"&gt;”&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;WSAGetLastError&lt;/span&gt;&lt;span class="p"&gt;());&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;timeout&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;1000&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;bread&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;setsockopt&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;sockRaw&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;SOL_SOCKET&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;SO_SNDTIMEO&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;char&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;&amp;amp;&lt;/span&gt;&lt;span class="n"&gt;timeout&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="k"&gt;sizeof&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;timeout&lt;/span&gt;&lt;span class="p"&gt;));&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="k"&gt;if&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;bread&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="n"&gt;SOCKET_ERROR&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;printf&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="err"&gt;“&lt;/span&gt;&lt;span class="n"&gt;setsockopt&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;SO_SNDTIME0&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="nl"&gt;failed&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="o"&gt;%&lt;/span&gt;&lt;span class="n"&gt;d&lt;/span&gt;&lt;span class="err"&gt;\&lt;/span&gt;&lt;span class="n"&gt;n&lt;/span&gt;&lt;span class="err"&gt;”&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;WSAGetLastError&lt;/span&gt;&lt;span class="p"&gt;());&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;memset&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;&amp;amp;&lt;/span&gt;&lt;span class="n"&gt;dest&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="k"&gt;sizeof&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;dest&lt;/span&gt;&lt;span class="p"&gt;));&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="c1"&gt;//
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="c1"&gt;// Resolve the endpoint`s name if necessary
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="c1"&gt;//
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;dest&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;sin_family&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;AF_INET&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="k"&gt;if&lt;/span&gt;&lt;span class="p"&gt;((&lt;/span&gt;&lt;span class="n"&gt;dest&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;sin_addr&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;s_addr&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;inet_addr&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;lpdest&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="n"&gt;INADDR_NONE&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="k"&gt;if&lt;/span&gt;&lt;span class="p"&gt;((&lt;/span&gt;&lt;span class="n"&gt;hp&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;gethostbyname&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;lpdest&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt; &lt;span class="o"&gt;!=&lt;/span&gt; &lt;span class="nb"&gt;NULL&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;memcpy&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;&amp;amp;&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;dest&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;sin_addr&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="n"&gt;hp&lt;/span&gt;&lt;span class="o"&gt;-&amp;gt;&lt;/span&gt;&lt;span class="n"&gt;h_addr&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;hp&lt;/span&gt;&lt;span class="o"&gt;-&amp;gt;&lt;/span&gt;&lt;span class="n"&gt;h_length&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;dest&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;sin_family&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;hp&lt;/span&gt;&lt;span class="o"&gt;-&amp;gt;&lt;/span&gt;&lt;span class="n"&gt;h_addrtype&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;printf&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="err"&gt;“&lt;/span&gt;&lt;span class="n"&gt;dest&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;sin_addr&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="o"&gt;%&lt;/span&gt;&lt;span class="n"&gt;s&lt;/span&gt;&lt;span class="err"&gt;\&lt;/span&gt;&lt;span class="n"&gt;n&lt;/span&gt;&lt;span class="err"&gt;”&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;inet_ntoa&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;dest&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;sin_addr&lt;/span&gt;&lt;span class="p"&gt;));&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="k"&gt;else&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;printf&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="err"&gt;“&lt;/span&gt;&lt;span class="n"&gt;gethostbyname&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="nl"&gt;failed&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="o"&gt;%&lt;/span&gt;&lt;span class="n"&gt;d&lt;/span&gt;&lt;span class="err"&gt;\&lt;/span&gt;&lt;span class="n"&gt;n&lt;/span&gt;&lt;span class="err"&gt;”&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;WSAGetLastError&lt;/span&gt;&lt;span class="p"&gt;());&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="c1"&gt;//
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="c1"&gt;// Create the ICMP packet
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="c1"&gt;//
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;datasize&lt;/span&gt; &lt;span class="o"&gt;+=&lt;/span&gt; &lt;span class="k"&gt;sizeof&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;IcmpHeader&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;icmp_data&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;HeapAlloc&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;GetProcessHeap&lt;/span&gt;&lt;span class="p"&gt;(),&lt;/span&gt; &lt;span class="n"&gt;HEAP_ZERO_MEMORY&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;MAX_PACKET&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;recvbuf&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;HeapAlloc&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;GetProcessHeap&lt;/span&gt;&lt;span class="p"&gt;(),&lt;/span&gt; &lt;span class="n"&gt;HEAP_ZERO_MEMORY&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;MAX_PACKET&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="k"&gt;if&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;!&lt;/span&gt;&lt;span class="n"&gt;icmp_data&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;printf&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="err"&gt;“&lt;/span&gt;&lt;span class="n"&gt;HeapAlloc&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="nl"&gt;failed&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="o"&gt;%&lt;/span&gt;&lt;span class="n"&gt;d&lt;/span&gt;&lt;span class="err"&gt;\&lt;/span&gt;&lt;span class="n"&gt;n&lt;/span&gt;&lt;span class="err"&gt;”&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;GetLastError&lt;/span&gt;&lt;span class="p"&gt;());&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;memset&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;icmp_data&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;MAX_PACKET&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;FillICMPData&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;icmp_data&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;datasize&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="c1"&gt;//
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="c1"&gt;// Start sending/receiving ICMP packets
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="c1"&gt;//
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="k"&gt;while&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="k"&gt;static&lt;/span&gt; &lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;nCount&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;bwrote&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="k"&gt;if&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;nCount&lt;/span&gt;&lt;span class="o"&gt;++&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt;&lt;span class="mi"&gt;4&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="k"&gt;break&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="p"&gt;((&lt;/span&gt;&lt;span class="n"&gt;IcmpHeader&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="n"&gt;icmp_data&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;-&amp;gt;&lt;/span&gt;&lt;span class="n"&gt;i_cksum&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="p"&gt;((&lt;/span&gt;&lt;span class="n"&gt;IcmpHeader&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="n"&gt;icmp_data&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;-&amp;gt;&lt;/span&gt;&lt;span class="n"&gt;timestamp&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;GetTickCount&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="p"&gt;((&lt;/span&gt;&lt;span class="n"&gt;IcmpHeader&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="n"&gt;icmp_data&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;-&amp;gt;&lt;/span&gt;&lt;span class="n"&gt;i_seq&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;seq_no&lt;/span&gt;&lt;span class="o"&gt;++&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="p"&gt;((&lt;/span&gt;&lt;span class="n"&gt;IcmpHeader&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="n"&gt;icmp_data&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;-&amp;gt;&lt;/span&gt;&lt;span class="n"&gt;i_cksum&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;checksum&lt;/span&gt;&lt;span class="p"&gt;((&lt;/span&gt;&lt;span class="n"&gt;USHORT&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="n"&gt;icmp_data&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;datasize&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;struct&lt;/span&gt; &lt;span class="nc"&gt;sockaddr&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;&amp;amp;&lt;/span&gt;&lt;span class="n"&gt;dest&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="k"&gt;sizeof&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;dest&lt;/span&gt;&lt;span class="p"&gt;));&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;bwrote&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;sendto&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;sockRaw&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;icmp_data&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;datasize&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;struct&lt;/span&gt; &lt;span class="nc"&gt;sockaddr&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;&amp;amp;&lt;/span&gt;&lt;span class="n"&gt;dest&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="k"&gt;sizeof&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;dest&lt;/span&gt;&lt;span class="p"&gt;));&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="k"&gt;if&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;bwrote&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="n"&gt;SOCKET_ERROR&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="k"&gt;if&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;WSAGetLastError&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="n"&gt;WSAETIMEDOUT&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;printf&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="err"&gt;“&lt;/span&gt;&lt;span class="n"&gt;timed&lt;/span&gt; &lt;span class="n"&gt;out&lt;/span&gt;&lt;span class="err"&gt;\&lt;/span&gt;&lt;span class="n"&gt;n&lt;/span&gt;&lt;span class="err"&gt;”&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="k"&gt;continue&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;printf&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="err"&gt;“&lt;/span&gt;&lt;span class="n"&gt;recvfrom&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="nl"&gt;failed&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="o"&gt;%&lt;/span&gt;&lt;span class="n"&gt;d&lt;/span&gt;&lt;span class="err"&gt;\&lt;/span&gt;&lt;span class="n"&gt;n&lt;/span&gt;&lt;span class="err"&gt;”&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;WSAGetLastError&lt;/span&gt;&lt;span class="p"&gt;());&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="k"&gt;if&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;bwrote&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt; &lt;span class="n"&gt;datasize&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;printf&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="err"&gt;“&lt;/span&gt;&lt;span class="n"&gt;Wrote&lt;/span&gt; &lt;span class="o"&gt;%&lt;/span&gt;&lt;span class="n"&gt;d&lt;/span&gt; &lt;span class="n"&gt;bytes&lt;/span&gt;&lt;span class="err"&gt;\&lt;/span&gt;&lt;span class="n"&gt;n&lt;/span&gt;&lt;span class="err"&gt;”&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;bwrote&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;bread&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;recvfrom&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;sockRaw&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;recvbuf&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;MAX_PACKET&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;struct&lt;/span&gt; &lt;span class="nc"&gt;sockaddr&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;&amp;amp;&lt;/span&gt;&lt;span class="n"&gt;from&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;&amp;amp;&lt;/span&gt;&lt;span class="n"&gt;fromlen&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="k"&gt;if&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;bread&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="n"&gt;SOCKET_ERROR&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="k"&gt;if&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;WSAGetLastError&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="n"&gt;WSAETIMEDOUT&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;printf&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="err"&gt;“&lt;/span&gt;&lt;span class="n"&gt;timed&lt;/span&gt; &lt;span class="n"&gt;out&lt;/span&gt;&lt;span class="err"&gt;\&lt;/span&gt;&lt;span class="n"&gt;n&lt;/span&gt;&lt;span class="err"&gt;”&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="k"&gt;continue&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;printf&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="err"&gt;“&lt;/span&gt;&lt;span class="n"&gt;recvfrom&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="nl"&gt;failed&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="o"&gt;%&lt;/span&gt;&lt;span class="n"&gt;d&lt;/span&gt;&lt;span class="err"&gt;\&lt;/span&gt;&lt;span class="n"&gt;n&lt;/span&gt;&lt;span class="err"&gt;”&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;WSAGetLastError&lt;/span&gt;&lt;span class="p"&gt;());&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;DecodeICMPHeader&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;recvbuf&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;bread&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;&amp;amp;&lt;/span&gt;&lt;span class="n"&gt;from&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;Sleep&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;1000&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="c1"&gt;//Cleanup
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="c1"&gt;//
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="k"&gt;if&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;sockRaw&lt;/span&gt; &lt;span class="o"&gt;!=&lt;/span&gt; &lt;span class="n"&gt;INVALID_SOCKET&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;closesocket&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;sockRaw&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;HeapFree&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;GetProcessHeap&lt;/span&gt;&lt;span class="p"&gt;(),&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;recvbuf&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;HeapFree&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;GetProcessHeap&lt;/span&gt;&lt;span class="p"&gt;(),&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;icmp_data&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;WSACleanup&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;</description></item></channel></rss>

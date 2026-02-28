@@ -1,0 +1,442 @@
+<!doctype html><html lang=zh-CN data-theme=dark><head><meta charset=UTF-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=theme-color content="#222" media="(prefers-color-scheme: dark)"><meta name=generator content="Hugo 0.157.0"><link rel="shortcut icon" type=image/x-icon href=/imgs/icons/favicon.ico><link rel=icon type=image/x-icon href=/imgs/icons/favicon.ico><link rel=icon type=image/png sizes=16x16 href=/imgs/icons/favicon_32_32_next.png><link rel=icon type=image/png sizes=32x32 href=/imgs/icons/favicon_128_128_next.png><link rel=apple-touch-icon sizes=180x180 href=/imgs/icons/apple_touch_icon_next.png><meta itemprop=name content="Posts"><meta itemprop=description content="福兮祸兮，焉知所依？冬去冰泮，春来萌荣。朝生暮死，亦可惊鸿。知足者富，自足者强。"><meta name=description content="福兮祸兮，焉知所依？冬去冰泮，春来萌荣。朝生暮死，亦可惊鸿。知足者富，自足者强。"><meta itemprop=image content="https://blogs.qipai360.cn/imgs/avatar.jpg"><meta itemprop=keywords content="Rise,ZhangTuohui,技术,C++,Unity3D,Lua,NodeJS,C#,JavaScript,游戏开发,机器学习,深度学习,AI,编程,编程语言,编程技术,编程开发,游戏引擎,游戏设计,游戏制作,游戏开发者,游戏开发者博客,游戏开发者网站,游戏开发者工具,游戏开发者教程,游戏开发者学习,游戏开发者交流,游戏开发者分享,游戏开发者经验,游戏开发者心得,游戏开发者技巧,游戏开发者方法,游戏开发者思路,游戏开发者理念,游戏开发者文化,游戏开发者精神,游戏开发者信仰"><meta property="og:type" content="website"><meta property="og:title" content="Posts"><meta property="og:description" content="福兮祸兮，焉知所依？冬去冰泮，春来萌荣。朝生暮死，亦可惊鸿。知足者富，自足者强。"><meta property="og:image" content="/imgs/avatar.jpg"><meta property="og:image:width" content="312"><meta property="og:image:height" content="312"><meta property="og:image:type" content="image/jpeg/png/svg/jpg"><meta property="og:url" content="https://blogs.qipai360.cn/post/"><meta property="og:site_name" content="Rise的自留地"><meta property="og:locale" content="zh-CN"><link type=text/css rel=stylesheet href=https://blogs.qipai360.cn/js/3rd/font-awesome/6.7.2/css/all.min.css><link type=text/css rel=stylesheet href=https://blogs.qipai360.cn/js/3rd/animate.css/3.1.1/animate.min.css><link type=text/css rel=stylesheet href=https://blogs.qipai360.cn/js/3rd/viewerjs/1.11.6/viewer.min.css><link rel=stylesheet href="/css/main.min.css?=1772265586"><style type=text/css>.post-footer hr:after{content:"~ 我可是有底线的哟 ~"}.flinks-list-footer hr:after{content:"~ 我可是有底线的哟 ~"}</style><script type=text/javascript>(function(){localDB={set:function(e,t,n){if(n===0)return;const s=new Date,o=n*864e5,i={value:t,expiry:s.getTime()+o};localStorage.setItem(e,JSON.stringify(i))},get:function(e){const t=localStorage.getItem(e);if(!t)return 0[0];const n=JSON.parse(t),s=new Date;return s.getTime()>n.expiry?(localStorage.removeItem(e),0[0]):n.value}},theme={active:function(){const e=localDB.get("theme");if(e==null)return;theme.toggle(e),window.matchMedia("(prefers-color-scheme: dark)").addListener(function(e){theme.toggle(e.matches?"dark":"light")})},toggle:function(e){document.documentElement.setAttribute("data-theme",e),localDB.set("theme",e,2);const t=document.querySelector("iframe.giscus-frame");if(t){const n={setConfig:{theme:e}};t.contentWindow.postMessage({giscus:n},"https://giscus.app")}}},theme.active()})(window)</script><script type=text/javascript>document.addEventListener("DOMContentLoaded",()=>{var e=document.createElement("script");e.charset="UTF-8",e.src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js",e.async=!1,e.defer=!0,document.head.appendChild(e),e.onload=function(){NexT.utils.fmtBusuanzi()}})</script><script defer src=https://static.cloudflareinsights.com/beacon.min.js data-cf-beacon='{"token": "2b23669184fc49269e400525ac2447d9"}'></script><title>post - Rise的自留地</title><noscript><link rel=stylesheet href=/css/noscript.css></noscript></head><body itemscope itemtype=http://schema.org/WebPage class=use-motion><div class=headband></div><main class=main><header class=header itemscope itemtype=http://schema.org/WPHeader><div class=header-inner><div class=site-brand-container><div class=site-nav-toggle><div class=toggle aria-label role=button><span class=toggle-line></span>
+<span class=toggle-line></span>
+<span class=toggle-line></span></div></div><div class=site-meta><a href=/ class=brand rel=start><i class=logo-line></i><h1 class=site-title>Rise的自留地</h1><i class=logo-line></i></a><p class=site-subtitle itemprop=description>记录生活中的点滴，分享编程技术和游戏开发经验。</p></div><div class=site-nav-right><div class="toggle popup-trigger"></div></div></div><nav class=site-nav><ul class="main-menu menu"><li class="menu-item menu-item-home"><a href=/ class=hvr-icon-pulse rel=section><i class="fa fa-home hvr-icon"></i>首页</a></li><li class="menu-item menu-item-about"><a href=/about.html class=hvr-icon-pulse rel=section><i class="fa fa-user hvr-icon"></i>关于</a></li><li class="menu-item menu-item-archives"><a href=/archives/ class=hvr-icon-pulse rel=section><i class="fa fa-archive hvr-icon"></i>归档
+<span class=badge>679</span></a></li><li class="menu-item menu-item-tags"><a href=/tags/ class=hvr-icon-pulse rel=section><i class="fa fa-tags hvr-icon"></i>标签</a></li><li class="menu-item menu-item-message"><a href=/message/ class=hvr-icon-pulse rel=section><i class="fa fa-comments hvr-icon"></i>留言板</a></li><li class="menu-item menu-item-commonweal"><a href=/404.html class=hvr-icon-pulse rel=section><i class="fa fa-heartbeat hvr-icon"></i>公益 404</a></li></ul></nav></div><div class="toggle sidebar-toggle" role=button><span class=toggle-line></span>
+<span class=toggle-line></span>
+<span class=toggle-line></span></div><aside class=sidebar><div class="sidebar-inner sidebar-overview-active"><ul class=sidebar-nav><li class=sidebar-nav-toc>文章目录</li><li class=sidebar-nav-overview>站点概览</li></ul><div class=sidebar-panel-container><div class="post-toc-wrap sidebar-panel"><div class="post-toc animated"><nav id=TableOfContents></nav></div></div><div class="site-overview-wrap sidebar-panel"><div class="site-author site-overview-item animated" itemprop=author itemscope itemtype=http://schema.org/Person><img class=site-author-image itemprop=image alt=Rise src=/imgs/img-lazy-loading.gif data-src=/imgs/avatar.jpg><p class=site-author-name itemprop=name>Rise</p><div class=site-description itemprop=description>福兮祸兮，焉知所依？冬去冰泮，春来萌荣。朝生暮死，亦可惊鸿。知足者富，自足者强。</div></div><div class="site-state-wrap site-overview-item animated"><nav class=site-state><div class="site-state-item site-state-posts"><a href=/archives/><span class=site-state-item-count>679</span>
+<span class=site-state-item-name>日志</span></a></div><div class="site-state-item site-state-categories"><a href=/categories/><span class=site-state-item-count>35</span>
+<span class=site-state-item-name>分类</span></a></div><div class="site-state-item site-state-tags"><a href=/tags/><span class=site-state-item-count>118</span>
+<span class=site-state-item-name>标签</span></a></div></nav></div><div class="links-of-social site-overview-item animated"><span class=links-of-social-item><a href=https://github.com/rise-worlds title="Github → https://github.com/rise-worlds" rel=noopener class=hvr-icon-pulse target=_blank><i class="fab fa-github fa-fw hvr-icon"></i>
+Github
+</a></span><span class=links-of-social-item><a href=mailto:rise.worlds@outlook.com title="E-Mail → mailto:rise.worlds@outlook.com" rel=noopener class=hvr-icon-pulse target=_blank><i class="fa fa-envelope fa-fw hvr-icon"></i>
+E-Mail
+</a></span><span class=links-of-social-item><a href=https://www.zhihu.com/people/rise-worlds title="知乎 → https://www.zhihu.com/people/rise-worlds" rel=noopener class=hvr-icon-pulse target=_blank><i class="fa fa-book fa-fw hvr-icon"></i>
+知乎
+</a></span><span class=links-of-social-item><a href=https://twitter.com/riseworlds title="Twitter → https://twitter.com/riseworlds" rel=noopener class=hvr-icon-pulse target=_blank><i class="fab fa-twitter fa-fw hvr-icon"></i>
+Twitter
+</a></span><span class=links-of-social-item><a href=https://www.facebook.com/rise.worlds title="facebook → https://www.facebook.com/rise.worlds" rel=noopener class=hvr-icon-pulse target=_blank><i class="fab fa-facebook fa-fw hvr-icon"></i>
+facebook
+</a></span><span class=links-of-social-item><a href=https://youtube.com/@YiXuan title="YouTube → https://youtube.com/@YiXuan" rel=noopener class=hvr-icon-pulse target=_blank><i class="fab fa-youtube fa-fw hvr-icon"></i>
+YouTube
+</a></span><span class=links-of-social-item><a href=https://instagram.com/rise.worlds title="Instagram → https://instagram.com/rise.worlds" rel=noopener class=hvr-icon-pulse target=_blank><i class="fab fa-instagram fa-fw hvr-icon"></i>
+Instagram
+</a></span><span class=links-of-social-item><a href=https://t.me/riseworlds title="Telegram → https://t.me/riseworlds" rel=noopener class=hvr-icon-pulse target=_blank><i class="fab fa-telegram fa-fw hvr-icon"></i>
+Telegram</a></span></div><div class="links-of-blogroll site-overview-item animated"><div class=links-of-blogroll-title><i class="fa fa-globe fa-fw"></i>
+友情链接</div><ul class=links-of-blogroll-list><li class=links-of-blogroll-item><a href=https://www.qipai360.cn title=https://www.qipai360.cn target=_blank>Qipai360</a></li><li class=links-of-blogroll-item><a href=https://www.cnblogs.com/flying_bat title=https://www.cnblogs.com/flying_bat target=_blank>博客园</a></li><li class=links-of-blogroll-item><a href=https://zishu.me title=https://zishu.me target=_blank>子舒的博客</a></li><li class=links-of-blogroll-item><a href=https://gitee.com/hugo-next/hugo-theme-next title=https://gitee.com/hugo-next/hugo-theme-next target=_blank>Hugo-NexT</a></li></ul></div></div></div></div><div id=siteinfo-card-widget class=sidebar-card-widget><div class=item-headline><i class="fas fa-chart-line"></i>
+<span>网站资讯</span></div><div class=siteinfo><div class=siteinfo-item><div class=item-name><i class="fa-solid fa-calendar-check"></i>已运行：</div><div class=item-count id=runTimes data-publishdate="2004-10-06 15:24:00 +0800 +0800"></div></div><div class=siteinfo-item><div class=item-name><i class="fas fa fa-user"></i>总访客数：</div><div class=item-count id=busuanzi_value_site_uv><i class="fa fa-sync fa-spin"></i></div></div><div class=siteinfo-item><div class=item-name><i class="fas fa fa-eye"></i>页面浏览：</div><div class=item-count id=busuanzi_value_site_pv><i class="fa fa-sync fa-spin"></i></div></div><div class=siteinfo-item><div class=item-name><i class="fa fa-font"></i>总字数：</div><div class=item-count id=wordsCount data-count=2423147></div></div><div class=siteinfo-item><div class=item-name><i class="fa fa-mug-hot"></i>阅读约：</div><div class=item-count id=readTimes data-times=5207></div></div><div class=siteinfo-item><div class=item-name><i class="fa fa-clock-rotate-left"></i>最后更新于：</div><div class=item-count id=last-push-date data-lastpushdate="2026-02-28 15:59:00 +0800 +0800"></div></div></div></div></aside><div class=sidebar-dimmer></div></header><div class=tool-buttons><div id=goto-comments class="button goto-comments" title=直达评论><i class="fas fa-comments"></i></div><div id=toggle-theme class=button title=深浅模式切换><i class="fas fa-adjust"></i></div><div class=back-to-top role=button title=返回顶部><i class="fa fa-arrow-up"></i>
+<span>0%</span></div></div><div class=reading-progress-bar></div><a role=button class="book-mark-link book-mark-link-fixed"></a><a href=https://github.com/rise-worlds rel="noopener external nofollow noreferrer" target=_blank title="Follow me on GitHub" class="exturl github-corner"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0 0 115 115h15l12 27L250 250V0z"/><path d="M128.3 109C113.8 99.7 119 89.6 119 89.6 122 82.7 120.5 78.6 120.5 78.6 119.2 72 123.4 76.3 123.4 76.3 127.3 80.9 125.5 87.3 125.5 87.3 122.9 97.6 130.6 101.9 134.4 103.2" fill="currentColor" style="transform-origin:130px 106px" class="octo-arm"/><path d="M115 115C114.9 115.1 118.7 116.5 119.8 115.4l13.9-13.8C136.9 99.2 139.9 98.4 142.2 98.6 133.8 88 127.5 74.4 143.8 58 148.5 53.4 154 51.2 159.7 51 160.3 49.4 163.2 43.6 171.4 40.1 171.4 40.1 176.1 42.5 178.8 56.2 183.1 58.6 187.2 61.8 190.9 65.4 194.5 69 197.7 73.2 200.1 77.6 213.8 80.2 216.3 84.9 216.3 84.9 212.7 93.1 206.9 96 205.4 96.6 205.1 102.4 203 107.8 198.3 112.5 181.9 128.9 168.3 122.5 157.7 114.1 157.9 116.9 156.7 120.9 152.7 124.9L141 136.5C139.8 137.7 141.6 141.9 141.8 141.8z" fill="currentColor" class="octo-body"/></svg></a><noscript><div class=noscript-warning>Theme NexT works best with JavaScript enabled</div></noscript><div class="main-inner index posts-expand"><div class=post-block><article itemscope itemtype=http://schema.org/Article class=post-content lang><link itemprop=mainEntityOfPage href=https://blogs.qipai360.cn/post/linux-windows-dual-boot-time-sync/><span hidden itemprop=author itemscope itemtype=http://schema.org/Person><meta itemprop=image content="/imgs/avatar.jpg"><meta itemprop=name content="Rise"></span><span hidden itemprop=publisher itemscope itemtype=http://schema.org/Organization><meta itemprop=name content="Rise"><meta itemprop=description content="福兮祸兮，焉知所依？冬去冰泮，春来萌荣。朝生暮死，亦可惊鸿。知足者富，自足者强。"></span><span hidden itemprop=post itemscope itemtype=http://schema.org/CreativeWork><meta itemprop=name content="linux与windows双系统保持时间同步"><meta itemprop=description content="linux和windows需要同时启用UTC，或者linux单独禁用UTC
+修改Linux时区为UTC
+
+
+
+
+1
+2
+
+
+sudo mv /etc/localtime  /etc/localtime.bak
+sudo ln -s /usr/share/zoneinfo/UTC /etc/localtime
+
+
+
+使用 ntpdate 更新系统时间
+
+
+
+
+ 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+
+
+# ubuntu 
+sudo apt install ntpdate ntp -y
+sudo timedatectl set-timezone UTC
+sudo ntpdate -u time.windows.com
+sudo hwclock --systohc # 写入硬件
+# 启动ntpd服务
+sudo systemctl enable ntp # ubuntu
+sudo systemctl start ntp
+
+# centos
+sudo yum install ntpdate ntp -y # centos
+sudo timedatectl set-timezone UTC
+sudo ntpdate -u time.windows.com
+sudo hwclock --systohc # 写入硬件
+# 启动ntpd服务
+sudo systemctl enable ntpd # centos
+sudo systemctl start ntpd
+
+
+
+Linux禁用UTC
+
+
+
+
+1
+2
+
+
+sudo timedatectl set-local-rtc 1
+sudo hwclock --localtime --systohc
+
+
+
+windows启用UTC
+
+
+
+
+1
+
+
+reg add HKLM\SYSTEM\CurrentControlSet\Control\TimeZoneInformation /v RealTimeIsUniversal /t REG_DWORD /d 1
+
+"></span><header class=post-header><h2 class=post-title itemprop="name headline"><a href=/post/linux-windows-dual-boot-time-sync/ itemprop=url class=post-title-link>linux与windows双系统保持时间同步</a></h2><div class=post-meta-container><div class=post-meta-items><span class=post-meta-item><span class=post-meta-item-icon><i class="fas fa-solid fa-calendar"></i>
+</span><span class=post-meta-item-text title=发表于>发表于：
+</span><time title="创建时间：2021年03月01日 10:08:00 CST" itemprop="dateCreated datePublished" datetime="2021-03-01 10:08:00 +0800 +0800">2021年03月01日
+</time></span><span class=post-meta-item><span class=post-meta-item-icon><i class="fas fa-solid fa-folder-open"></i>
+</span><span class=post-meta-item-text title=分类于>分类于：
+</span><span itemprop=about itemscope itemtype=http://schema.org/Thing><a href=/categories/linux/ itemprop=url rel=index><span itemprop=name>Linux</span>
+</a></span></span><span class=post-meta-item title=浏览><span class=post-meta-item-icon><i class="fas fa-solid fa-eye"></i>
+</span><span class=post-meta-item-text>浏览：
+</span><span id=pageview-count data-path=/post/linux-windows-dual-boot-time-sync/><i class="fa fa-sync fa-spin"></i></span></span></div></div></header><div class=post-body itemprop=articleBody><p>linux和windows需要同时启用UTC，或者linux单独禁用UTC</p><h4 id=修改linux时区为utc>修改Linux时区为UTC
+<a class=header-anchor href=#%e4%bf%ae%e6%94%b9linux%e6%97%b6%e5%8c%ba%e4%b8%bautc></a></h4><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt id=hl-0-1><a class=lnlinks href=#hl-0-1>1</a>
+</span><span class=lnt id=hl-0-2><a class=lnlinks href=#hl-0-2>2</a>
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>sudo mv /etc/localtime  /etc/localtime.bak
+</span></span><span class=line><span class=cl>sudo ln -s /usr/share/zoneinfo/UTC /etc/localtime</span></span></code></pre></td></tr></table></div></div><h4 id=使用-ntpdate-更新系统时间>使用 ntpdate 更新系统时间
+<a class=header-anchor href=#%e4%bd%bf%e7%94%a8-ntpdate-%e6%9b%b4%e6%96%b0%e7%b3%bb%e7%bb%9f%e6%97%b6%e9%97%b4></a></h4><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt id=hl-1-1><a class=lnlinks href=#hl-1-1> 1</a>
+</span><span class=lnt id=hl-1-2><a class=lnlinks href=#hl-1-2> 2</a>
+</span><span class=lnt id=hl-1-3><a class=lnlinks href=#hl-1-3> 3</a>
+</span><span class=lnt id=hl-1-4><a class=lnlinks href=#hl-1-4> 4</a>
+</span><span class=lnt id=hl-1-5><a class=lnlinks href=#hl-1-5> 5</a>
+</span><span class=lnt id=hl-1-6><a class=lnlinks href=#hl-1-6> 6</a>
+</span><span class=lnt id=hl-1-7><a class=lnlinks href=#hl-1-7> 7</a>
+</span><span class=lnt id=hl-1-8><a class=lnlinks href=#hl-1-8> 8</a>
+</span><span class=lnt id=hl-1-9><a class=lnlinks href=#hl-1-9> 9</a>
+</span><span class=lnt id=hl-1-10><a class=lnlinks href=#hl-1-10>10</a>
+</span><span class=lnt id=hl-1-11><a class=lnlinks href=#hl-1-11>11</a>
+</span><span class=lnt id=hl-1-12><a class=lnlinks href=#hl-1-12>12</a>
+</span><span class=lnt id=hl-1-13><a class=lnlinks href=#hl-1-13>13</a>
+</span><span class=lnt id=hl-1-14><a class=lnlinks href=#hl-1-14>14</a>
+</span><span class=lnt id=hl-1-15><a class=lnlinks href=#hl-1-15>15</a>
+</span><span class=lnt id=hl-1-16><a class=lnlinks href=#hl-1-16>16</a>
+</span><span class=lnt id=hl-1-17><a class=lnlinks href=#hl-1-17>17</a>
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=c1># ubuntu </span>
+</span></span><span class=line><span class=cl>sudo apt install ntpdate ntp -y
+</span></span><span class=line><span class=cl>sudo timedatectl set-timezone UTC
+</span></span><span class=line><span class=cl>sudo ntpdate -u time.windows.com
+</span></span><span class=line><span class=cl>sudo hwclock --systohc <span class=c1># 写入硬件</span>
+</span></span><span class=line><span class=cl><span class=c1># 启动ntpd服务</span>
+</span></span><span class=line><span class=cl>sudo systemctl <span class=nb>enable</span> ntp <span class=c1># ubuntu</span>
+</span></span><span class=line><span class=cl>sudo systemctl start ntp
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># centos</span>
+</span></span><span class=line><span class=cl>sudo yum install ntpdate ntp -y <span class=c1># centos</span>
+</span></span><span class=line><span class=cl>sudo timedatectl set-timezone UTC
+</span></span><span class=line><span class=cl>sudo ntpdate -u time.windows.com
+</span></span><span class=line><span class=cl>sudo hwclock --systohc <span class=c1># 写入硬件</span>
+</span></span><span class=line><span class=cl><span class=c1># 启动ntpd服务</span>
+</span></span><span class=line><span class=cl>sudo systemctl <span class=nb>enable</span> ntpd <span class=c1># centos</span>
+</span></span><span class=line><span class=cl>sudo systemctl start ntpd</span></span></code></pre></td></tr></table></div></div><h4 id=linux禁用utc>Linux禁用UTC
+<a class=header-anchor href=#linux%e7%a6%81%e7%94%a8utc></a></h4><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt id=hl-2-1><a class=lnlinks href=#hl-2-1>1</a>
+</span><span class=lnt id=hl-2-2><a class=lnlinks href=#hl-2-2>2</a>
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>sudo timedatectl set-local-rtc <span class=m>1</span>
+</span></span><span class=line><span class=cl>sudo hwclock --localtime --systohc</span></span></code></pre></td></tr></table></div></div><h4 id=windows启用utc>windows启用UTC
+<a class=header-anchor href=#windows%e5%90%af%e7%94%a8utc></a></h4><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt id=hl-3-1><a class=lnlinks href=#hl-3-1>1</a>
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-cmd data-lang=cmd><span class=line><span class=cl>reg add HKLM\SYSTEM\CurrentControlSet\Control\TimeZoneInformation /v RealTimeIsUniversal /t REG_DWORD /d 1</span></span></code></pre></td></tr></table></div></div></div><footer class=post-footer><div class=post-button><a class=btn href=/post/linux-windows-dual-boot-time-sync/#more rel=contents>阅读全文 &#187;</a></div><div class=post-eof></div></footer></article></div><div class=post-block><article itemscope itemtype=http://schema.org/Article class=post-content lang><link itemprop=mainEntityOfPage href=https://blogs.qipai360.cn/post/puppeteer-wait-for-new-page/><span hidden itemprop=author itemscope itemtype=http://schema.org/Person><meta itemprop=image content="/imgs/avatar.jpg"><meta itemprop=name content="Rise"></span><span hidden itemprop=publisher itemscope itemtype=http://schema.org/Organization><meta itemprop=name content="Rise"><meta itemprop=description content="福兮祸兮，焉知所依？冬去冰泮，春来萌荣。朝生暮死，亦可惊鸿。知足者富，自足者强。"></span><span hidden itemprop=post itemscope itemtype=http://schema.org/CreativeWork><meta itemprop=name content="Puppeteer： 等待打开一个新页面"><meta itemprop=description content="对于点击 <a target='_blank'> 标签打开新 tab 页的场景，Puppeteer目前（2019-03，v1.13.0）没有现成的 API 支持。因此需要一些 walkaround 来解决。有几个方案。
+提取 href，手动打开新 page 去访问
+
+
+
+
+1
+2
+3
+4
+
+
+url = await page.evaluate('() => $(&#34;a&#34;).attr(&#34;href&#34;)')
+detail_page = await browser.newPage()
+# goto 带了 waitForNavigation 的作用
+await detail_page.goto(detail_page_url)
+
+
+
+使用点击，再去轮徇 pages
+
+代码如下。这个方案的问题在于，拿到 detail_page 时并不知道页面是否 load 完成了，在这个时候调用 .waitForNavigation() 可能会超时报错（因为没有 load 事件被 fire）。如果页面有 AJAX 请求，你可能需要写额外的 waitForSelector 来确保你要的数据已经在页面上。"></span><header class=post-header><h2 class=post-title itemprop="name headline"><a href=/post/puppeteer-wait-for-new-page/ itemprop=url class=post-title-link>Puppeteer： 等待打开一个新页面</a></h2><div class=post-meta-container><div class=post-meta-items><span class=post-meta-item><span class=post-meta-item-icon><i class="fas fa-solid fa-calendar"></i>
+</span><span class=post-meta-item-text title=发表于>发表于：
+</span><time title="创建时间：2021年01月10日 22:10:00 CST" itemprop="dateCreated datePublished" datetime="2021-01-10 22:10:00 +0800 +0800">2021年01月10日
+</time></span><span class=post-meta-item><span class=post-meta-item-icon><i class="fas fa-solid fa-folder-open"></i>
+</span><span class=post-meta-item-text title=分类于>分类于：
+</span><span itemprop=about itemscope itemtype=http://schema.org/Thing><a href=/categories/dev/ itemprop=url rel=index><span itemprop=name>dev</span>
+</a></span></span><span class=post-meta-item title=浏览><span class=post-meta-item-icon><i class="fas fa-solid fa-eye"></i>
+</span><span class=post-meta-item-text>浏览：
+</span><span id=pageview-count data-path=/post/puppeteer-wait-for-new-page/><i class="fa fa-sync fa-spin"></i></span></span></div></div></header><div class=post-body itemprop=articleBody><p>对于点击 <code>&lt;a target='_blank'></code> 标签打开新 tab 页的场景，Puppeteer目前（2019-03，v1.13.0）没有现成的 API 支持。因此需要一些 walkaround 来解决。有几个方案。</p><h3 id=提取-href手动打开新-page-去访问>提取 href，手动打开新 page 去访问
+<a class=header-anchor href=#%e6%8f%90%e5%8f%96-href%e6%89%8b%e5%8a%a8%e6%89%93%e5%bc%80%e6%96%b0-page-%e5%8e%bb%e8%ae%bf%e9%97%ae></a></h3><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt id=hl-0-1><a class=lnlinks href=#hl-0-1>1</a>
+</span><span class=lnt id=hl-0-2><a class=lnlinks href=#hl-0-2>2</a>
+</span><span class=lnt id=hl-0-3><a class=lnlinks href=#hl-0-3>3</a>
+</span><span class=lnt id=hl-0-4><a class=lnlinks href=#hl-0-4>4</a>
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=n>url</span> <span class=o>=</span> <span class=k>await</span> <span class=n>page</span><span class=o>.</span><span class=n>evaluate</span><span class=p>(</span><span class=s1>&#39;() =&gt; $(&#34;a&#34;).attr(&#34;href&#34;)&#39;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=n>detail_page</span> <span class=o>=</span> <span class=k>await</span> <span class=n>browser</span><span class=o>.</span><span class=n>newPage</span><span class=p>()</span>
+</span></span><span class=line><span class=cl><span class=c1># goto 带了 waitForNavigation 的作用</span>
+</span></span><span class=line><span class=cl><span class=k>await</span> <span class=n>detail_page</span><span class=o>.</span><span class=n>goto</span><span class=p>(</span><span class=n>detail_page_url</span><span class=p>)</span></span></span></code></pre></td></tr></table></div></div><h3 id=使用点击再去轮徇-pages>使用点击，再去轮徇 pages
+<a class=header-anchor href=#%e4%bd%bf%e7%94%a8%e7%82%b9%e5%87%bb%e5%86%8d%e5%8e%bb%e8%bd%ae%e5%be%87-pages></a></h3><p>代码如下。这个方案的问题在于，拿到 <code>detail_page</code> 时并不知道页面是否 <code>load</code> 完成了，在这个时候调用 <code>.waitForNavigation()</code> 可能会超时报错（因为没有 <code>load</code> 事件被 <code>fire</code>）。如果页面有 AJAX 请求，你可能需要写额外的 <code>waitForSelector</code> 来确保你要的数据已经在页面上。</p></div><footer class=post-footer><div class=post-button><a class=btn href=/post/puppeteer-wait-for-new-page/#more rel=contents>阅读全文 &#187;</a></div><div class=post-eof></div></footer></article></div><div class=post-block><article itemscope itemtype=http://schema.org/Article class=post-content lang><link itemprop=mainEntityOfPage href=https://blogs.qipai360.cn/post/vscode-find-and-replace-regex-escape-characters-collection/><span hidden itemprop=author itemscope itemtype=http://schema.org/Person><meta itemprop=image content="/imgs/avatar.jpg"><meta itemprop=name content="Rise"></span><span hidden itemprop=publisher itemscope itemtype=http://schema.org/Organization><meta itemprop=name content="Rise"><meta itemprop=description content="福兮祸兮，焉知所依？冬去冰泮，春来萌荣。朝生暮死，亦可惊鸿。知足者富，自足者强。"></span><span hidden itemprop=post itemscope itemtype=http://schema.org/CreativeWork><meta itemprop=name content="VSCode查找和替换正则表达式转义字符整理"><meta itemprop=description content="使用VSCode进行查找、替换时，经常需要用到正则表达式，一段时间不用就忘了，每次要用的时候都要耽误很多时间去查找，所以整理了一份很全的放在这里。这个其实是.NET使用的正则表达式，VSCode也是一样的，微软系的产品（比如Visual Studio等）应该都是使用这个标准的。"></span><header class=post-header><h2 class=post-title itemprop="name headline"><a href=/post/vscode-find-and-replace-regex-escape-characters-collection/ itemprop=url class=post-title-link>VSCode查找和替换正则表达式转义字符整理</a></h2><div class=post-meta-container><div class=post-meta-items><span class=post-meta-item><span class=post-meta-item-icon><i class="fas fa-solid fa-calendar"></i>
+</span><span class=post-meta-item-text title=发表于>发表于：
+</span><time title="创建时间：2021年01月10日 16:48:00 CST" itemprop="dateCreated datePublished" datetime="2021-01-10 16:48:00 +0800 +0800">2021年01月10日
+</time></span><span class=post-meta-item><span class=post-meta-item-icon><i class="fas fa-solid fa-calendar-check"></i>
+</span><span class=post-meta-item-text title=更新于>更新于：
+</span><time title="修改时间：2021年01月10日 16:50:00 CST" itemprop="dateModified dateLastmod" datetime="2021-01-10 16:50:00 +0800 +0800">2021年01月10日
+</time></span><span class=post-meta-item><span class=post-meta-item-icon><i class="fas fa-solid fa-folder-open"></i>
+</span><span class=post-meta-item-text title=分类于>分类于：
+</span><span itemprop=about itemscope itemtype=http://schema.org/Thing><a href=/categories/toolstips/ itemprop=url rel=index><span itemprop=name>ToolsTips</span>
+</a></span></span><span class=post-meta-item title=浏览><span class=post-meta-item-icon><i class="fas fa-solid fa-eye"></i>
+</span><span class=post-meta-item-text>浏览：
+</span><span id=pageview-count data-path=/post/vscode-find-and-replace-regex-escape-characters-collection/><i class="fa fa-sync fa-spin"></i></span></span></div></div></header><div class=post-body itemprop=articleBody><p>使用VSCode进行查找、替换时，经常需要用到正则表达式，一段时间不用就忘了，每次要用的时候都要耽误很多时间去查找，所以整理了一份很全的放在这里。这个其实是.NET使用的正则表达式，VSCode也是一样的，微软系的产品（比如Visual Studio等）应该都是使用这个标准的。</p></div><footer class=post-footer><div class=post-button><a class=btn href=/post/vscode-find-and-replace-regex-escape-characters-collection/#more rel=contents>阅读全文 &#187;</a></div><div class=post-eof></div></footer></article></div><div class=post-block><article itemscope itemtype=http://schema.org/Article class=post-content lang><link itemprop=mainEntityOfPage href=https://blogs.qipai360.cn/post/understand-c-11-rvalue-references-and-std-move/><span hidden itemprop=author itemscope itemtype=http://schema.org/Person><meta itemprop=image content="/imgs/avatar.jpg"><meta itemprop=name content="Rise"></span><span hidden itemprop=publisher itemscope itemtype=http://schema.org/Organization><meta itemprop=name content="Rise"><meta itemprop=description content="福兮祸兮，焉知所依？冬去冰泮，春来萌荣。朝生暮死，亦可惊鸿。知足者富，自足者强。"></span><span hidden itemprop=post itemscope itemtype=http://schema.org/CreativeWork><meta itemprop=name content="理解 C++ 11 右值引用和std::move"><meta itemprop=description content="凡有名者，皆为左值
+
+1. 什么是左值、右值
+
+首先不考虑引用以减少干扰，可以从2个角度判断：左值可以取地址、位于等号左边；而右值没法取地址，位于等号右边。"></span><header class=post-header><h2 class=post-title itemprop="name headline"><a href=/post/understand-c-11-rvalue-references-and-std-move/ itemprop=url class=post-title-link>理解 C++ 11 右值引用和std::move</a></h2><div class=post-meta-container><div class=post-meta-items><span class=post-meta-item><span class=post-meta-item-icon><i class="fas fa-solid fa-calendar"></i>
+</span><span class=post-meta-item-text title=发表于>发表于：
+</span><time title="创建时间：2020年12月23日 12:35:25 CST" itemprop="dateCreated datePublished" datetime="2020-12-23 12:35:25 +0800 +0800">2020年12月23日
+</time></span><span class=post-meta-item title=浏览><span class=post-meta-item-icon><i class="fas fa-solid fa-eye"></i>
+</span><span class=post-meta-item-text>浏览：
+</span><span id=pageview-count data-path=/post/understand-c-11-rvalue-references-and-std-move/><i class="fa fa-sync fa-spin"></i></span></span></div></div></header><div class=post-body itemprop=articleBody><pre><code>凡有名者，皆为左值
+</code></pre><h3 id=1-什么是左值右值>1. 什么是左值、右值
+<a class=header-anchor href=#1-%e4%bb%80%e4%b9%88%e6%98%af%e5%b7%a6%e5%80%bc%e5%8f%b3%e5%80%bc></a></h3><p>首先不考虑引用以减少干扰，可以从2个角度判断：左值<strong>可以取地址、位于等号左边</strong>；而右值<strong>没法取地址，位于等号右边</strong>。</p></div><footer class=post-footer><div class=post-button><a class=btn href=/post/understand-c-11-rvalue-references-and-std-move/#more rel=contents>阅读全文 &#187;</a></div><div class=post-eof></div></footer></article></div><div class=post-block><article itemscope itemtype=http://schema.org/Article class=post-content lang><link itemprop=mainEntityOfPage href=https://blogs.qipai360.cn/post/commonly-used-gdb-command-chinese-quick-view/><span hidden itemprop=author itemscope itemtype=http://schema.org/Person><meta itemprop=image content="/imgs/avatar.jpg"><meta itemprop=name content="Rise"></span><span hidden itemprop=publisher itemscope itemtype=http://schema.org/Organization><meta itemprop=name content="Rise"><meta itemprop=description content="福兮祸兮，焉知所依？冬去冰泮，春来萌荣。朝生暮死，亦可惊鸿。知足者富，自足者强。"></span><span hidden itemprop=post itemscope itemtype=http://schema.org/CreativeWork><meta itemprop=name content="常用 GDB 命令中文速览"><meta itemprop=description content="英文：Fsf，翻译：Linux中国/robot527
+
+
+    原始地址
+    
+
+• break — 在指定的行或函数处设置断点，缩写为 b
+• info breakpoints — 打印未删除的所有断点，观察点和捕获点的列表，缩写为 i b
+• disable — 禁用断点，缩写为 dis
+• enable — 启用断点
+• clear — 清除指定行或函数处的断点
+• delete — 删除断点，缩写为 d
+• tbreak — 设置临时断点，参数同 break，但在程序第一次停住后会被自动删除
+• watch — 为表达式（或变量）设置观察点，当表达式（或变量）的值有变化时，暂停程序执行
+• step — 单步跟踪，如果有函数调用，会进入该函数，缩写为 s
+• reverse-step — 反向单步跟踪，如果有函数调用，会进入该函数
+• next — 单步跟踪，如果有函数调用，不会进入该函数，缩写为 n
+• reverse-next — 反向单步跟踪，如果有函数调用，不会进入该函数
+• return — 使选定的栈帧返回到其调用者
+• finish — 执行直到选择的栈帧返回，缩写为 fin
+• until — 执行直到达到当前栈帧中当前行后的某一行（用于跳过循环、递归函数调用），缩写为 u
+• continue — 恢复程序执行，缩写为 c
+• print — 打印表达式 EXP 的值，缩写为 p
+• x — 查看内存
+• display — 每次程序停止时打印表达式 EXP 的值（自动显示）
+• info display — 打印早先设置为自动显示的表达式列表
+• disable display — 禁用自动显示
+• enable display — 启用自动显示
+• undisplay — 删除自动显示项
+• help — 打印命令列表（带参数时查找命令的帮助），缩写为 h
+• attach — 挂接到已在运行的进程来调试
+• run — 启动被调试的程序，缩写为 r
+• backtrace — 查看程序调用栈的信息，缩写为 bt
+• ptype — 打印类型 TYPE 的定义
+
+break
+
+使用 break 命令（缩写 b）来设置断点。"></span><header class=post-header><h2 class=post-title itemprop="name headline"><a href=/post/commonly-used-gdb-command-chinese-quick-view/ itemprop=url class=post-title-link>常用 GDB 命令中文速览</a></h2><div class=post-meta-container><div class=post-meta-items><span class=post-meta-item><span class=post-meta-item-icon><i class="fas fa-solid fa-calendar"></i>
+</span><span class=post-meta-item-text title=发表于>发表于：
+</span><time title="创建时间：2020年12月03日 04:08:47 CST" itemprop="dateCreated datePublished" datetime="2020-12-03 04:08:47 +0800 +0800">2020年12月03日
+</time></span><span class=post-meta-item title=浏览><span class=post-meta-item-icon><i class="fas fa-solid fa-eye"></i>
+</span><span class=post-meta-item-text>浏览：
+</span><span id=pageview-count data-path=/post/commonly-used-gdb-command-chinese-quick-view/><i class="fa fa-sync fa-spin"></i></span></span></div></div></header><div class=post-body itemprop=articleBody><p>英文：Fsf，翻译：Linux中国/robot527
+<a href=linux.cn/article-8900-1.html title=原始地址>原始地址</a></p><pre><code>• break — 在指定的行或函数处设置断点，缩写为 b
+• info breakpoints — 打印未删除的所有断点，观察点和捕获点的列表，缩写为 i b
+• disable — 禁用断点，缩写为 dis
+• enable — 启用断点
+• clear — 清除指定行或函数处的断点
+• delete — 删除断点，缩写为 d
+• tbreak — 设置临时断点，参数同 break，但在程序第一次停住后会被自动删除
+• watch — 为表达式（或变量）设置观察点，当表达式（或变量）的值有变化时，暂停程序执行
+• step — 单步跟踪，如果有函数调用，会进入该函数，缩写为 s
+• reverse-step — 反向单步跟踪，如果有函数调用，会进入该函数
+• next — 单步跟踪，如果有函数调用，不会进入该函数，缩写为 n
+• reverse-next — 反向单步跟踪，如果有函数调用，不会进入该函数
+• return — 使选定的栈帧返回到其调用者
+• finish — 执行直到选择的栈帧返回，缩写为 fin
+• until — 执行直到达到当前栈帧中当前行后的某一行（用于跳过循环、递归函数调用），缩写为 u
+• continue — 恢复程序执行，缩写为 c
+• print — 打印表达式 EXP 的值，缩写为 p
+• x — 查看内存
+• display — 每次程序停止时打印表达式 EXP 的值（自动显示）
+• info display — 打印早先设置为自动显示的表达式列表
+• disable display — 禁用自动显示
+• enable display — 启用自动显示
+• undisplay — 删除自动显示项
+• help — 打印命令列表（带参数时查找命令的帮助），缩写为 h
+• attach — 挂接到已在运行的进程来调试
+• run — 启动被调试的程序，缩写为 r
+• backtrace — 查看程序调用栈的信息，缩写为 bt
+• ptype — 打印类型 TYPE 的定义
+</code></pre><h3 id=break>break
+<a class=header-anchor href=#break></a></h3><p>使用 break 命令（缩写 b）来设置断点。</p></div><footer class=post-footer><div class=post-button><a class=btn href=/post/commonly-used-gdb-command-chinese-quick-view/#more rel=contents>阅读全文 &#187;</a></div><div class=post-eof></div></footer></article></div><div class=post-block><article itemscope itemtype=http://schema.org/Article class=post-content lang><link itemprop=mainEntityOfPage href=https://blogs.qipai360.cn/post/c++-default-constructor-debug-vs-release-differences-across-compilers/><span hidden itemprop=author itemscope itemtype=http://schema.org/Person><meta itemprop=image content="/imgs/avatar.jpg"><meta itemprop=name content="Rise"></span><span hidden itemprop=publisher itemscope itemtype=http://schema.org/Organization><meta itemprop=name content="Rise"><meta itemprop=description content="福兮祸兮，焉知所依？冬去冰泮，春来萌荣。朝生暮死，亦可惊鸿。知足者富，自足者强。"></span><span hidden itemprop=post itemscope itemtype=http://schema.org/CreativeWork><meta itemprop=name content="c++ 默认构造函数 不同编译器debug和release的区别"><meta itemprop=description content="这几年一直在linux上开发，用的gcc版本比较高，最近把gcc降到4.8.5（centos 7默认版本）后，出现了一些成员变量初始化的问题。
+看示例："></span><header class=post-header><h2 class=post-title itemprop="name headline"><a href=/post/c++-default-constructor-debug-vs-release-differences-across-compilers/ itemprop=url class=post-title-link>c++ 默认构造函数 不同编译器debug和release的区别</a></h2><div class=post-meta-container><div class=post-meta-items><span class=post-meta-item><span class=post-meta-item-icon><i class="fas fa-solid fa-calendar"></i>
+</span><span class=post-meta-item-text title=发表于>发表于：
+</span><time title="创建时间：2020年11月28日 20:29:00 CST" itemprop="dateCreated datePublished" datetime="2020-11-28 20:29:00 +0800 +0800">2020年11月28日
+</time></span><span class=post-meta-item><span class=post-meta-item-icon><i class="fas fa-solid fa-calendar-check"></i>
+</span><span class=post-meta-item-text title=更新于>更新于：
+</span><time title="修改时间：2020年11月28日 22:22:00 CST" itemprop="dateModified dateLastmod" datetime="2020-11-28 22:22:00 +0800 +0800">2020年11月28日
+</time></span><span class=post-meta-item><span class=post-meta-item-icon><i class="fas fa-solid fa-folder-open"></i>
+</span><span class=post-meta-item-text title=分类于>分类于：
+</span><span itemprop=about itemscope itemtype=http://schema.org/Thing><a href=/categories/c++/ itemprop=url rel=index><span itemprop=name>dev/c++</span>
+</a></span></span><span class=post-meta-item title=浏览><span class=post-meta-item-icon><i class="fas fa-solid fa-eye"></i>
+</span><span class=post-meta-item-text>浏览：
+</span><span id=pageview-count data-path=/post/c++-default-constructor-debug-vs-release-differences-across-compilers/><i class="fa fa-sync fa-spin"></i></span></span></div></div></header><div class=post-body itemprop=articleBody><p>这几年一直在linux上开发，用的gcc版本比较高，最近把gcc降到4.8.5（centos 7默认版本）后，出现了一些成员变量初始化的问题。</p><p>看示例：</p></div><footer class=post-footer><div class=post-button><a class=btn href=/post/c++-default-constructor-debug-vs-release-differences-across-compilers/#more rel=contents>阅读全文 &#187;</a></div><div class=post-eof></div></footer></article></div><div class=post-block><article itemscope itemtype=http://schema.org/Article class=post-content lang><link itemprop=mainEntityOfPage href=https://blogs.qipai360.cn/post/windows-c++-program-crash-report-tool/><span hidden itemprop=author itemscope itemtype=http://schema.org/Person><meta itemprop=image content="/imgs/avatar.jpg"><meta itemprop=name content="Rise"></span><span hidden itemprop=publisher itemscope itemtype=http://schema.org/Organization><meta itemprop=name content="Rise"><meta itemprop=description content="福兮祸兮，焉知所依？冬去冰泮，春来萌荣。朝生暮死，亦可惊鸿。知足者富，自足者强。"></span><span hidden itemprop=post itemscope itemtype=http://schema.org/CreativeWork><meta itemprop=name content="Windows C++ 程序崩溃收集工具"><meta itemprop=description content="说明
+
+MiniDumper(LPCTSTR DumpFileNamePrefix)
+MiniDumper(LPCTSTR DumpFileNamePrefix, LPCTSTR CmdLine, LPCTSTR ExeNameToReboot /* = NULL */)
+DumpFileNamePrefix 崩溃文件名前缀
+CmdLine 生成崩溃文件后执行命令（包含参数）
+ExeNameToReboot 生成崩溃文件后执行指定程序
+使用示例
+
+在崩溃时调用指定的程序，下面的示例是调用CrashReport.exe上传到指定的服务器"></span><header class=post-header><h2 class=post-title itemprop="name headline"><a href=/post/windows-c++-program-crash-report-tool/ itemprop=url class=post-title-link>Windows C++ 程序崩溃收集工具</a></h2><div class=post-meta-container><div class=post-meta-items><span class=post-meta-item><span class=post-meta-item-icon><i class="fas fa-solid fa-calendar"></i>
+</span><span class=post-meta-item-text title=发表于>发表于：
+</span><time title="创建时间：2020年11月28日 19:37:00 CST" itemprop="dateCreated datePublished" datetime="2020-11-28 19:37:00 +0800 +0800">2020年11月28日
+</time></span><span class=post-meta-item><span class=post-meta-item-icon><i class="fas fa-solid fa-folder-open"></i>
+</span><span class=post-meta-item-text title=分类于>分类于：
+</span><span itemprop=about itemscope itemtype=http://schema.org/Thing><a href=/categories/win32dev/ itemprop=url rel=index><span itemprop=name>dev/Win32Dev</span>
+</a></span></span><span class=post-meta-item title=浏览><span class=post-meta-item-icon><i class="fas fa-solid fa-eye"></i>
+</span><span class=post-meta-item-text>浏览：
+</span><span id=pageview-count data-path=/post/windows-c++-program-crash-report-tool/><i class="fa fa-sync fa-spin"></i></span></span></div></div></header><div class=post-body itemprop=articleBody><h3 id=说明>说明
+<a class=header-anchor href=#%e8%af%b4%e6%98%8e></a></h3><p>MiniDumper(LPCTSTR DumpFileNamePrefix)</p><p>MiniDumper(LPCTSTR DumpFileNamePrefix, LPCTSTR CmdLine, LPCTSTR ExeNameToReboot /* = NULL */)</p><p><code>DumpFileNamePrefix</code> 崩溃文件名前缀</p><p><code>CmdLine</code> 生成崩溃文件后执行命令（包含参数）</p><p><code>ExeNameToReboot</code> 生成崩溃文件后执行指定程序</p><h3 id=使用示例>使用示例
+<a class=header-anchor href=#%e4%bd%bf%e7%94%a8%e7%a4%ba%e4%be%8b></a></h3><p>在崩溃时调用指定的程序，下面的示例是调用<code>CrashReport.exe</code>上传到指定的服务器</p></div><footer class=post-footer><div class=post-button><a class=btn href=/post/windows-c++-program-crash-report-tool/#more rel=contents>阅读全文 &#187;</a></div><div class=post-eof></div></footer></article></div><div class=post-block><article itemscope itemtype=http://schema.org/Article class=post-content lang><link itemprop=mainEntityOfPage href=https://blogs.qipai360.cn/post/difference-between-memcpy-and-memmove/><span hidden itemprop=author itemscope itemtype=http://schema.org/Person><meta itemprop=image content="/imgs/avatar.jpg"><meta itemprop=name content="Rise"></span><span hidden itemprop=publisher itemscope itemtype=http://schema.org/Organization><meta itemprop=name content="Rise"><meta itemprop=description content="福兮祸兮，焉知所依？冬去冰泮，春来萌荣。朝生暮死，亦可惊鸿。知足者富，自足者强。"></span><span hidden itemprop=post itemscope itemtype=http://schema.org/CreativeWork><meta itemprop=name content="memcpy和memmove的区别"><meta itemprop=description content="其实很早就知道两个函数其中有一个在面临内存覆盖时行为有点特别, 但是工作中很少用到此场景, 也就没有深究. 现在居然面试遇到了, 那就把研究清楚吧.
+
+memcpy 简单粗暴, 不考虑内存重叠问题. 后果程序员自负
+memmove 比memcpy多了层检查内存重叠的考虑,如果发现重叠, 则反向拷贝, 性能和memcpy基本一样. 就是多了个检查是否重叠的代码.
+
+综上所述, 以后干脆就用memmove吧. 省的那么多事. 反正性能几乎没有损失."></span><header class=post-header><h2 class=post-title itemprop="name headline"><a href=/post/difference-between-memcpy-and-memmove/ itemprop=url class=post-title-link>memcpy和memmove的区别</a></h2><div class=post-meta-container><div class=post-meta-items><span class=post-meta-item><span class=post-meta-item-icon><i class="fas fa-solid fa-calendar"></i>
+</span><span class=post-meta-item-text title=发表于>发表于：
+</span><time title="创建时间：2020年11月28日 11:00:35 CST" itemprop="dateCreated datePublished" datetime="2020-11-28 11:00:35 +0800 +0800">2020年11月28日
+</time></span><span class=post-meta-item title=浏览><span class=post-meta-item-icon><i class="fas fa-solid fa-eye"></i>
+</span><span class=post-meta-item-text>浏览：
+</span><span id=pageview-count data-path=/post/difference-between-memcpy-and-memmove/><i class="fa fa-sync fa-spin"></i></span></span></div></div></header><div class=post-body itemprop=articleBody><p>其实很早就知道两个函数其中有一个在面临内存覆盖时行为有点特别, 但是工作中很少用到此场景, 也就没有深究. 现在居然面试遇到了, 那就把研究清楚吧.</p><ul><li>memcpy 简单粗暴, 不考虑内存重叠问题. 后果程序员自负</li><li>memmove 比memcpy多了层检查内存重叠的考虑,如果发现重叠, 则反向拷贝, 性能和memcpy基本一样. 就是多了个检查是否重叠的代码.</li></ul><p>综上所述, 以后干脆就用memmove吧. 省的那么多事. 反正性能几乎没有损失.</p></div><footer class=post-footer><div class=post-button><a class=btn href=/post/difference-between-memcpy-and-memmove/#more rel=contents>阅读全文 &#187;</a></div><div class=post-eof></div></footer></article></div><div class=post-block><article itemscope itemtype=http://schema.org/Article class=post-content lang><link itemprop=mainEntityOfPage href=https://blogs.qipai360.cn/post/crash-dump-file-generation-and-debugging/><span hidden itemprop=author itemscope itemtype=http://schema.org/Person><meta itemprop=image content="/imgs/avatar.jpg"><meta itemprop=name content="Rise"></span><span hidden itemprop=publisher itemscope itemtype=http://schema.org/Organization><meta itemprop=name content="Rise"><meta itemprop=description content="福兮祸兮，焉知所依？冬去冰泮，春来萌荣。朝生暮死，亦可惊鸿。知足者富，自足者强。"></span><span hidden itemprop=post itemscope itemtype=http://schema.org/CreativeWork><meta itemprop=name content="崩溃文件生成及调试"><meta itemprop=description content="linux & mac
+
+
+产生core文件方法
+
+
+在当前环境下生成coredump文件，运行 ulimit -c unlimited
+永久生成coredump文件，在 /etc/profile 文件中追加一行 ulimit-c unlimited
+
+
+默认coredump文件生成在当前工作目录，修改文件 /proc/sys/kernel/core_pattern 为 /data/coredump/core.%e.%p
+其中%e表示程序名，%p表示进程id，路径为/data/coredump目录
+编译时要加上-g选项，这个才能用gdb调试的coredump
+linux使用加载gdb加载coredump文件进行调试
+
+
+
+
+1
+2
+3
+4
+5
+
+
+gdb coredumpfile
+#或者
+gdb execfile
+#加载完成后再输入
+core-file coredumpfile
+
+
+
+
+mac使用lldb加载coredump文件进行调试
+
+
+
+1
+2
+
+
+cd /cores
+lldb -c coredumpfile
+
+
+
+
+
+
+ulimit -c 显示核心转储文件大小的最大值，如果这里是零：禁止核心转储（对于本进程和它的子进程）。
+默认情况下，mac core文件均存在/cores目录下，linux core文件存在当前工作目录。
+
+可以通过ulimit -c unlimited来设置core文件生成路径。
+可以通过ulimit -c size来设置core文件大小。
+可以通过ulimit -c 0来禁止生成core文件。
+
+
+
+windows
+
+windows 请查看这篇文章
+
+    Windows C++ 程序崩溃收集工具
+    
+"></span><header class=post-header><h2 class=post-title itemprop="name headline"><a href=/post/crash-dump-file-generation-and-debugging/ itemprop=url class=post-title-link>崩溃文件生成及调试</a></h2><div class=post-meta-container><div class=post-meta-items><span class=post-meta-item><span class=post-meta-item-icon><i class="fas fa-solid fa-calendar"></i>
+</span><span class=post-meta-item-text title=发表于>发表于：
+</span><time title="创建时间：2020年11月27日 11:03:57 CST" itemprop="dateCreated datePublished" datetime="2020-11-27 11:03:57 +0800 +0800">2020年11月27日
+</time></span><span class=post-meta-item title=浏览><span class=post-meta-item-icon><i class="fas fa-solid fa-eye"></i>
+</span><span class=post-meta-item-text>浏览：
+</span><span id=pageview-count data-path=/post/crash-dump-file-generation-and-debugging/><i class="fa fa-sync fa-spin"></i></span></span></div></div></header><div class=post-body itemprop=articleBody><h3 id=linux--mac>linux & mac
+<a class=header-anchor href=#linux--mac></a></h3><ol><li>产生core文件方法</li></ol><ul><li>在当前环境下生成coredump文件，运行 <code>ulimit -c unlimited</code></li><li>永久生成coredump文件，在 <code>/etc/profile</code> 文件中追加一行 <code>ulimit-c unlimited</code></li></ul><ol start=2><li>默认coredump文件生成在当前工作目录，修改文件 <code>/proc/sys/kernel/core_pattern</code> 为 <code>/data/coredump/core.%e.%p</code>
+其中%e表示程序名，%p表示进程id，路径为/data/coredump目录</li><li>编译时要加上<code>-g</code>选项，这个才能用gdb调试的coredump</li><li><code>linux</code>使用加载<code>gdb</code>加载coredump文件进行调试</li></ol><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt id=hl-0-1><a class=lnlinks href=#hl-0-1>1</a>
+</span><span class=lnt id=hl-0-2><a class=lnlinks href=#hl-0-2>2</a>
+</span><span class=lnt id=hl-0-3><a class=lnlinks href=#hl-0-3>3</a>
+</span><span class=lnt id=hl-0-4><a class=lnlinks href=#hl-0-4>4</a>
+</span><span class=lnt id=hl-0-5><a class=lnlinks href=#hl-0-5>5</a>
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>gdb coredumpfile
+</span></span><span class=line><span class=cl><span class=c1>#或者</span>
+</span></span><span class=line><span class=cl>gdb execfile
+</span></span><span class=line><span class=cl><span class=c1>#加载完成后再输入</span>
+</span></span><span class=line><span class=cl>core-file coredumpfile</span></span></code></pre></td></tr></table></div></div><ol start=5><li><code>mac</code>使用<code>lldb</code>加载coredump文件进行调试<div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt id=hl-1-1><a class=lnlinks href=#hl-1-1>1</a>
+</span><span class=lnt id=hl-1-2><a class=lnlinks href=#hl-1-2>2</a>
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=nb>cd</span> /cores
+</span></span><span class=line><span class=cl>lldb -c coredumpfile</span></span></code></pre></td></tr></table></div></div></li></ol><ul><li>ulimit -c 显示核心转储文件大小的最大值，如果这里是零：禁止核心转储（对于本进程和它的子进程）。</li><li>默认情况下，<code>mac</code> core文件均存在/cores目录下，<code>linux</code> core文件存在当前工作目录。<ul><li>可以通过<code>ulimit -c unlimited</code>来设置core文件生成路径。</li><li>可以通过<code>ulimit -c size</code>来设置core文件大小。</li><li>可以通过<code>ulimit -c 0</code>来禁止生成core文件。</li></ul></li></ul><h3 id=windows>windows
+<a class=header-anchor href=#windows></a></h3><p>windows 请查看这篇文章
+<a href=https://github.com/rise-worlds/game/blob/master/tools/PostMortem/README.md title="Windows C++ 程序崩溃收集工具" rel="noopener external nofollow noreferrer" target=_blank class=exturl>Windows C++ 程序崩溃收集工具</a></p></div><footer class=post-footer><div class=post-button><a class=btn href=/post/crash-dump-file-generation-and-debugging/#more rel=contents>阅读全文 &#187;</a></div><div class=post-eof></div></footer></article></div><div class=post-block><article itemscope itemtype=http://schema.org/Article class=post-content lang><link itemprop=mainEntityOfPage href=https://blogs.qipai360.cn/post/cpp-default-constructors-debug-and-release-differences-between-compilers/><span hidden itemprop=author itemscope itemtype=http://schema.org/Person><meta itemprop=image content="/imgs/avatar.jpg"><meta itemprop=name content="Rise"></span><span hidden itemprop=publisher itemscope itemtype=http://schema.org/Organization><meta itemprop=name content="Rise"><meta itemprop=description content="福兮祸兮，焉知所依？冬去冰泮，春来萌荣。朝生暮死，亦可惊鸿。知足者富，自足者强。"></span><span hidden itemprop=post itemscope itemtype=http://schema.org/CreativeWork><meta itemprop=name content="c++ 默认构造函数 不同编译器debug和release的区别"><meta itemprop=description content="这几年一直在linux上开发，用的gcc版本比较高，最近把gcc降到4.8.5（centos 7默认版本）后，出现了一些成员变量初始化的问题。
+看示例："></span><header class=post-header><h2 class=post-title itemprop="name headline"><a href=/post/cpp-default-constructors-debug-and-release-differences-between-compilers/ itemprop=url class=post-title-link>c++ 默认构造函数 不同编译器debug和release的区别</a></h2><div class=post-meta-container><div class=post-meta-items><span class=post-meta-item><span class=post-meta-item-icon><i class="fas fa-solid fa-calendar"></i>
+</span><span class=post-meta-item-text title=发表于>发表于：
+</span><time title="创建时间：2020年11月12日 10:20:14 CST" itemprop="dateCreated datePublished" datetime="2020-11-12 10:20:14 +0800 +0800">2020年11月12日
+</time></span><span class=post-meta-item title=浏览><span class=post-meta-item-icon><i class="fas fa-solid fa-eye"></i>
+</span><span class=post-meta-item-text>浏览：
+</span><span id=pageview-count data-path=/post/cpp-default-constructors-debug-and-release-differences-between-compilers/><i class="fa fa-sync fa-spin"></i></span></span></div></div></header><div class=post-body itemprop=articleBody><p>这几年一直在linux上开发，用的gcc版本比较高，最近把gcc降到4.8.5（centos 7默认版本）后，出现了一些成员变量初始化的问题。</p><p>看示例：</p></div><footer class=post-footer><div class=post-button><a class=btn href=/post/cpp-default-constructors-debug-and-release-differences-between-compilers/#more rel=contents>阅读全文 &#187;</a></div><div class=post-eof></div></footer></article></div><nav class=pagination><a class="extend prev" rel=prev href=/post/page/6/><i class="fa fa-angle-left"></i>
+</a><a class=page-number href=/post/page/3/>3</a>
+<a class=page-number href=/post/page/4/>4</a>
+<a class=page-number href=/post/page/5/>5</a>
+<a class=page-number href=/post/page/6/>6</a>
+<span class="page-number current">7</span>
+<a class=page-number href=/post/page/8/>8</a>
+<a class=page-number href=/post/page/9/>9</a>
+<a class=page-number href=/post/page/10/>10</a>
+<a class=page-number href=/post/page/11/>11</a>
+<a class="extend next" rel=next href=/post/page/8/><i class="fa fa-angle-right"></i></a></nav></div></main><footer class=footer><div class=footer-inner><div class=copyright>&copy;
+<span itemprop=copyrightYear>2004 - 2026
+</span><span class=with-love><i class="fa fa-heart"></i>
+</span><span class=author itemprop=copyrightHolder>Rise</span></div><div class=powered-by>由 <a href=https://gohugo.io title=0.157.0 target=_blank>Hugo</a> & <a href=https://github.com/hugo-next/hugo-theme-next title=4.8.3 target=_blank>Hugo NexT.Gemini</a> 强力驱动</div><div class=beian><a href=https://beian.miit.gov.cn target=_blank>豫ICP备2021009490号</a>
+<img src=/imgs/gongan.png alt=豫公网安备>
+<a href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=41162302000074" target=_blank>豫公网安备 41162302000074 号</a></div></div></footer><script class=next-config data-name=page type=application/json>{"comments":true,"expired":false,"isHome":false,"isPage":false,"path":"post","permalink":"https://blogs.qipai360.cn/post/","title":"Posts","toc":false,"waline3":{"pagecnt":{"alias":"@waline/client","alias_name":"waline","file":"dist/pageview.js","name":"pageview","version":"3.5.7"}}}</script><script type=text/javascript src=https://blogs.qipai360.cn/js/3rd/animejs/3.2.2/anime.min.js crossorigin=anonymous defer></script><script type=text/javascript src=https://blogs.qipai360.cn/js/3rd/viewerjs/1.11.6/viewer.min.js crossorigin=anonymous defer></script><script class=next-config data-name=main type=application/json>{"bookmark":{"color":"#222","enable":true,"save":"manual"},"copybtn":true,"darkmode":true,"giscus":{"cfg":{"category":"Announcements","categoryid":"DIC_kwDOA6L0YM4CiXf9","emit":false,"inputposition":"top","mapping":"title","reactions":false,"repo":"rise-worlds/rise-worlds.github.io","repoid":"MDEwOlJlcG9zaXRvcnk2MTAxMTA0MA==","theme":"transparent_dark"},"js":"https://giscus.app/client.js"},"hostname":"https://blogs.qipai360.cn/","i18n":{"ds_day":" 天前","ds_days":" 天 ","ds_hour":" 小时前","ds_hours":" 小时 ","ds_just":"刚刚","ds_min":" 分钟前","ds_mins":" 分钟","ds_month":" 个月前","ds_years":" 年 ","empty":"没有找到任何搜索结果：${query}","hits":"找到 ${hits} 个搜索结果","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","placeholder":"搜索..."},"isMultiLang":false,"lang":"zh-CN","lazyload":false,"motion":{"async":true,"enable":true,"transition":{"collheader":"fadeInLeft","postblock":"fadeIn","postbody":"fadeInDown","postheader":"fadeInDown","sidebar":"fadeInUp"}},"postmeta":{"comments":{"enable":false,"plugin":"waline3"},"views":{"enable":true,"plugin":"waline3"}},"root":"/","scheme":"Gemini","share":{"addtoany":{"js":"https://static.addtoany.com/menu/page.js","locale":"zh-CN","num":8},"enable":false},"sidebar":{"display":"post","offset":12,"padding":18,"position":"left","width":256},"vendor":{"plugins":"local","router":{"name":"local","type":"modern","url":"https://blogs.qipai360.cn/js/3rd"}},"version":"4.8.3","waline3":{"cfg":{"emoji":false,"imguploader":false,"placeholder":"请文明发言哟 ヾ(≧▽≦*)o 可用快捷键选取表情符号：😀😄😁🥳👻👽👀🚄 (Window系统：Win+.，Mac系统：Control+Command+Space)","reaction":true,"reactiontext":["点赞","踩一下","得意","不屑","尴尬","睡觉"],"reactiontitle":"你认为这篇文章怎么样？","requiredmeta":["nick","mail"],"search":true,"serverurl":"https://walinejs.comment.lithub.cc","sofa":"快来发表你的意见吧 (≧∀≦)ゞ","wordlimit":200},"css":{"alias":"@waline/client","file":"dist/waline.css","name":"waline","version":"3.5.7"},"js":{"alias":"@waline/client","file":"dist/waline.js","name":"waline","version":"3.5.7"}}}</script><script type=text/javascript src="/js/main.min.js?=1772265585" defer></script></body></html>

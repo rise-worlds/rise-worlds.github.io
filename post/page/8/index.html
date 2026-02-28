@@ -1,0 +1,628 @@
+<!doctype html><html lang=zh-CN data-theme=dark><head><meta charset=UTF-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=theme-color content="#222" media="(prefers-color-scheme: dark)"><meta name=generator content="Hugo 0.157.0"><link rel="shortcut icon" type=image/x-icon href=/imgs/icons/favicon.ico><link rel=icon type=image/x-icon href=/imgs/icons/favicon.ico><link rel=icon type=image/png sizes=16x16 href=/imgs/icons/favicon_32_32_next.png><link rel=icon type=image/png sizes=32x32 href=/imgs/icons/favicon_128_128_next.png><link rel=apple-touch-icon sizes=180x180 href=/imgs/icons/apple_touch_icon_next.png><meta itemprop=name content="Posts"><meta itemprop=description content="福兮祸兮，焉知所依？冬去冰泮，春来萌荣。朝生暮死，亦可惊鸿。知足者富，自足者强。"><meta name=description content="福兮祸兮，焉知所依？冬去冰泮，春来萌荣。朝生暮死，亦可惊鸿。知足者富，自足者强。"><meta itemprop=image content="https://blogs.qipai360.cn/imgs/avatar.jpg"><meta itemprop=keywords content="Rise,ZhangTuohui,技术,C++,Unity3D,Lua,NodeJS,C#,JavaScript,游戏开发,机器学习,深度学习,AI,编程,编程语言,编程技术,编程开发,游戏引擎,游戏设计,游戏制作,游戏开发者,游戏开发者博客,游戏开发者网站,游戏开发者工具,游戏开发者教程,游戏开发者学习,游戏开发者交流,游戏开发者分享,游戏开发者经验,游戏开发者心得,游戏开发者技巧,游戏开发者方法,游戏开发者思路,游戏开发者理念,游戏开发者文化,游戏开发者精神,游戏开发者信仰"><meta property="og:type" content="website"><meta property="og:title" content="Posts"><meta property="og:description" content="福兮祸兮，焉知所依？冬去冰泮，春来萌荣。朝生暮死，亦可惊鸿。知足者富，自足者强。"><meta property="og:image" content="/imgs/avatar.jpg"><meta property="og:image:width" content="312"><meta property="og:image:height" content="312"><meta property="og:image:type" content="image/jpeg/png/svg/jpg"><meta property="og:url" content="https://blogs.qipai360.cn/post/"><meta property="og:site_name" content="Rise的自留地"><meta property="og:locale" content="zh-CN"><link type=text/css rel=stylesheet href=https://blogs.qipai360.cn/js/3rd/font-awesome/6.7.2/css/all.min.css><link type=text/css rel=stylesheet href=https://blogs.qipai360.cn/js/3rd/animate.css/3.1.1/animate.min.css><link type=text/css rel=stylesheet href=https://blogs.qipai360.cn/js/3rd/viewerjs/1.11.6/viewer.min.css><link rel=stylesheet href="/css/main.min.css?=1772265586"><style type=text/css>.post-footer hr:after{content:"~ 我可是有底线的哟 ~"}.flinks-list-footer hr:after{content:"~ 我可是有底线的哟 ~"}</style><script type=text/javascript>(function(){localDB={set:function(e,t,n){if(n===0)return;const s=new Date,o=n*864e5,i={value:t,expiry:s.getTime()+o};localStorage.setItem(e,JSON.stringify(i))},get:function(e){const t=localStorage.getItem(e);if(!t)return 0[0];const n=JSON.parse(t),s=new Date;return s.getTime()>n.expiry?(localStorage.removeItem(e),0[0]):n.value}},theme={active:function(){const e=localDB.get("theme");if(e==null)return;theme.toggle(e),window.matchMedia("(prefers-color-scheme: dark)").addListener(function(e){theme.toggle(e.matches?"dark":"light")})},toggle:function(e){document.documentElement.setAttribute("data-theme",e),localDB.set("theme",e,2);const t=document.querySelector("iframe.giscus-frame");if(t){const n={setConfig:{theme:e}};t.contentWindow.postMessage({giscus:n},"https://giscus.app")}}},theme.active()})(window)</script><script type=text/javascript>document.addEventListener("DOMContentLoaded",()=>{var e=document.createElement("script");e.charset="UTF-8",e.src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js",e.async=!1,e.defer=!0,document.head.appendChild(e),e.onload=function(){NexT.utils.fmtBusuanzi()}})</script><script defer src=https://static.cloudflareinsights.com/beacon.min.js data-cf-beacon='{"token": "2b23669184fc49269e400525ac2447d9"}'></script><title>post - Rise的自留地</title><noscript><link rel=stylesheet href=/css/noscript.css></noscript></head><body itemscope itemtype=http://schema.org/WebPage class=use-motion><div class=headband></div><main class=main><header class=header itemscope itemtype=http://schema.org/WPHeader><div class=header-inner><div class=site-brand-container><div class=site-nav-toggle><div class=toggle aria-label role=button><span class=toggle-line></span>
+<span class=toggle-line></span>
+<span class=toggle-line></span></div></div><div class=site-meta><a href=/ class=brand rel=start><i class=logo-line></i><h1 class=site-title>Rise的自留地</h1><i class=logo-line></i></a><p class=site-subtitle itemprop=description>记录生活中的点滴，分享编程技术和游戏开发经验。</p></div><div class=site-nav-right><div class="toggle popup-trigger"></div></div></div><nav class=site-nav><ul class="main-menu menu"><li class="menu-item menu-item-home"><a href=/ class=hvr-icon-pulse rel=section><i class="fa fa-home hvr-icon"></i>首页</a></li><li class="menu-item menu-item-about"><a href=/about.html class=hvr-icon-pulse rel=section><i class="fa fa-user hvr-icon"></i>关于</a></li><li class="menu-item menu-item-archives"><a href=/archives/ class=hvr-icon-pulse rel=section><i class="fa fa-archive hvr-icon"></i>归档
+<span class=badge>679</span></a></li><li class="menu-item menu-item-tags"><a href=/tags/ class=hvr-icon-pulse rel=section><i class="fa fa-tags hvr-icon"></i>标签</a></li><li class="menu-item menu-item-message"><a href=/message/ class=hvr-icon-pulse rel=section><i class="fa fa-comments hvr-icon"></i>留言板</a></li><li class="menu-item menu-item-commonweal"><a href=/404.html class=hvr-icon-pulse rel=section><i class="fa fa-heartbeat hvr-icon"></i>公益 404</a></li></ul></nav></div><div class="toggle sidebar-toggle" role=button><span class=toggle-line></span>
+<span class=toggle-line></span>
+<span class=toggle-line></span></div><aside class=sidebar><div class="sidebar-inner sidebar-overview-active"><ul class=sidebar-nav><li class=sidebar-nav-toc>文章目录</li><li class=sidebar-nav-overview>站点概览</li></ul><div class=sidebar-panel-container><div class="post-toc-wrap sidebar-panel"><div class="post-toc animated"><nav id=TableOfContents></nav></div></div><div class="site-overview-wrap sidebar-panel"><div class="site-author site-overview-item animated" itemprop=author itemscope itemtype=http://schema.org/Person><img class=site-author-image itemprop=image alt=Rise src=/imgs/img-lazy-loading.gif data-src=/imgs/avatar.jpg><p class=site-author-name itemprop=name>Rise</p><div class=site-description itemprop=description>福兮祸兮，焉知所依？冬去冰泮，春来萌荣。朝生暮死，亦可惊鸿。知足者富，自足者强。</div></div><div class="site-state-wrap site-overview-item animated"><nav class=site-state><div class="site-state-item site-state-posts"><a href=/archives/><span class=site-state-item-count>679</span>
+<span class=site-state-item-name>日志</span></a></div><div class="site-state-item site-state-categories"><a href=/categories/><span class=site-state-item-count>35</span>
+<span class=site-state-item-name>分类</span></a></div><div class="site-state-item site-state-tags"><a href=/tags/><span class=site-state-item-count>118</span>
+<span class=site-state-item-name>标签</span></a></div></nav></div><div class="links-of-social site-overview-item animated"><span class=links-of-social-item><a href=https://github.com/rise-worlds title="Github → https://github.com/rise-worlds" rel=noopener class=hvr-icon-pulse target=_blank><i class="fab fa-github fa-fw hvr-icon"></i>
+Github
+</a></span><span class=links-of-social-item><a href=mailto:rise.worlds@outlook.com title="E-Mail → mailto:rise.worlds@outlook.com" rel=noopener class=hvr-icon-pulse target=_blank><i class="fa fa-envelope fa-fw hvr-icon"></i>
+E-Mail
+</a></span><span class=links-of-social-item><a href=https://www.zhihu.com/people/rise-worlds title="知乎 → https://www.zhihu.com/people/rise-worlds" rel=noopener class=hvr-icon-pulse target=_blank><i class="fa fa-book fa-fw hvr-icon"></i>
+知乎
+</a></span><span class=links-of-social-item><a href=https://twitter.com/riseworlds title="Twitter → https://twitter.com/riseworlds" rel=noopener class=hvr-icon-pulse target=_blank><i class="fab fa-twitter fa-fw hvr-icon"></i>
+Twitter
+</a></span><span class=links-of-social-item><a href=https://www.facebook.com/rise.worlds title="facebook → https://www.facebook.com/rise.worlds" rel=noopener class=hvr-icon-pulse target=_blank><i class="fab fa-facebook fa-fw hvr-icon"></i>
+facebook
+</a></span><span class=links-of-social-item><a href=https://youtube.com/@YiXuan title="YouTube → https://youtube.com/@YiXuan" rel=noopener class=hvr-icon-pulse target=_blank><i class="fab fa-youtube fa-fw hvr-icon"></i>
+YouTube
+</a></span><span class=links-of-social-item><a href=https://instagram.com/rise.worlds title="Instagram → https://instagram.com/rise.worlds" rel=noopener class=hvr-icon-pulse target=_blank><i class="fab fa-instagram fa-fw hvr-icon"></i>
+Instagram
+</a></span><span class=links-of-social-item><a href=https://t.me/riseworlds title="Telegram → https://t.me/riseworlds" rel=noopener class=hvr-icon-pulse target=_blank><i class="fab fa-telegram fa-fw hvr-icon"></i>
+Telegram</a></span></div><div class="links-of-blogroll site-overview-item animated"><div class=links-of-blogroll-title><i class="fa fa-globe fa-fw"></i>
+友情链接</div><ul class=links-of-blogroll-list><li class=links-of-blogroll-item><a href=https://www.qipai360.cn title=https://www.qipai360.cn target=_blank>Qipai360</a></li><li class=links-of-blogroll-item><a href=https://www.cnblogs.com/flying_bat title=https://www.cnblogs.com/flying_bat target=_blank>博客园</a></li><li class=links-of-blogroll-item><a href=https://zishu.me title=https://zishu.me target=_blank>子舒的博客</a></li><li class=links-of-blogroll-item><a href=https://gitee.com/hugo-next/hugo-theme-next title=https://gitee.com/hugo-next/hugo-theme-next target=_blank>Hugo-NexT</a></li></ul></div></div></div></div><div id=siteinfo-card-widget class=sidebar-card-widget><div class=item-headline><i class="fas fa-chart-line"></i>
+<span>网站资讯</span></div><div class=siteinfo><div class=siteinfo-item><div class=item-name><i class="fa-solid fa-calendar-check"></i>已运行：</div><div class=item-count id=runTimes data-publishdate="2004-10-06 15:24:00 +0800 +0800"></div></div><div class=siteinfo-item><div class=item-name><i class="fas fa fa-user"></i>总访客数：</div><div class=item-count id=busuanzi_value_site_uv><i class="fa fa-sync fa-spin"></i></div></div><div class=siteinfo-item><div class=item-name><i class="fas fa fa-eye"></i>页面浏览：</div><div class=item-count id=busuanzi_value_site_pv><i class="fa fa-sync fa-spin"></i></div></div><div class=siteinfo-item><div class=item-name><i class="fa fa-font"></i>总字数：</div><div class=item-count id=wordsCount data-count=2423147></div></div><div class=siteinfo-item><div class=item-name><i class="fa fa-mug-hot"></i>阅读约：</div><div class=item-count id=readTimes data-times=5207></div></div><div class=siteinfo-item><div class=item-name><i class="fa fa-clock-rotate-left"></i>最后更新于：</div><div class=item-count id=last-push-date data-lastpushdate="2026-02-28 15:59:00 +0800 +0800"></div></div></div></div></aside><div class=sidebar-dimmer></div></header><div class=tool-buttons><div id=goto-comments class="button goto-comments" title=直达评论><i class="fas fa-comments"></i></div><div id=toggle-theme class=button title=深浅模式切换><i class="fas fa-adjust"></i></div><div class=back-to-top role=button title=返回顶部><i class="fa fa-arrow-up"></i>
+<span>0%</span></div></div><div class=reading-progress-bar></div><a role=button class="book-mark-link book-mark-link-fixed"></a><a href=https://github.com/rise-worlds rel="noopener external nofollow noreferrer" target=_blank title="Follow me on GitHub" class="exturl github-corner"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0 0 115 115h15l12 27L250 250V0z"/><path d="M128.3 109C113.8 99.7 119 89.6 119 89.6 122 82.7 120.5 78.6 120.5 78.6 119.2 72 123.4 76.3 123.4 76.3 127.3 80.9 125.5 87.3 125.5 87.3 122.9 97.6 130.6 101.9 134.4 103.2" fill="currentColor" style="transform-origin:130px 106px" class="octo-arm"/><path d="M115 115C114.9 115.1 118.7 116.5 119.8 115.4l13.9-13.8C136.9 99.2 139.9 98.4 142.2 98.6 133.8 88 127.5 74.4 143.8 58 148.5 53.4 154 51.2 159.7 51 160.3 49.4 163.2 43.6 171.4 40.1 171.4 40.1 176.1 42.5 178.8 56.2 183.1 58.6 187.2 61.8 190.9 65.4 194.5 69 197.7 73.2 200.1 77.6 213.8 80.2 216.3 84.9 216.3 84.9 212.7 93.1 206.9 96 205.4 96.6 205.1 102.4 203 107.8 198.3 112.5 181.9 128.9 168.3 122.5 157.7 114.1 157.9 116.9 156.7 120.9 152.7 124.9L141 136.5C139.8 137.7 141.6 141.9 141.8 141.8z" fill="currentColor" class="octo-body"/></svg></a><noscript><div class=noscript-warning>Theme NexT works best with JavaScript enabled</div></noscript><div class="main-inner index posts-expand"><div class=post-block><article itemscope itemtype=http://schema.org/Article class=post-content lang><link itemprop=mainEntityOfPage href=https://blogs.qipai360.cn/post/mac-compile-android-8.1/><span hidden itemprop=author itemscope itemtype=http://schema.org/Person><meta itemprop=image content="/imgs/avatar.jpg"><meta itemprop=name content="Rise"></span><span hidden itemprop=publisher itemscope itemtype=http://schema.org/Organization><meta itemprop=name content="Rise"><meta itemprop=description content="福兮祸兮，焉知所依？冬去冰泮，春来萌荣。朝生暮死，亦可惊鸿。知足者富，自足者强。"></span><span hidden itemprop=post itemscope itemtype=http://schema.org/CreativeWork><meta itemprop=name content="Mac编译Android 8.1"><meta itemprop=description content='一、配置环境
+• 安装XCode
+
+
+    https://developer.apple.com/xcode/
+    
+
+xcode-select --install
+• 安装JDK
+
+
+    https://docs.oracle.com/javase/8/docs/technotes/guides/install/mac_jdk.html
+    
+
+• 安装Homebrew
+/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+• 安装工具
+brew install git python make curl
+• 安装MacPort
+
+
+    https://www.macports.org/install.php
+    
+
+• 安装工具
+POSIXLY_CORRECT=1 sudo port install gmake libsdl git gnupg
+二、创建磁盘镜像'></span><header class=post-header><h2 class=post-title itemprop="name headline"><a href=/post/mac-compile-android-8.1/ itemprop=url class=post-title-link>Mac编译Android 8.1</a></h2><div class=post-meta-container><div class=post-meta-items><span class=post-meta-item><span class=post-meta-item-icon><i class="fas fa-solid fa-calendar"></i>
+</span><span class=post-meta-item-text title=发表于>发表于：
+</span><time title="创建时间：2020年08月14日 16:19:00 CST" itemprop="dateCreated datePublished" datetime="2020-08-14 16:19:00 +0800 +0800">2020年08月14日
+</time></span><span class=post-meta-item><span class=post-meta-item-icon><i class="fas fa-solid fa-calendar-check"></i>
+</span><span class=post-meta-item-text title=更新于>更新于：
+</span><time title="修改时间：2020年08月14日 16:22:00 CST" itemprop="dateModified dateLastmod" datetime="2020-08-14 16:22:00 +0800 +0800">2020年08月14日
+</time></span><span class=post-meta-item><span class=post-meta-item-icon><i class="fas fa-solid fa-folder-open"></i>
+</span><span class=post-meta-item-text title=分类于>分类于：
+</span><span itemprop=about itemscope itemtype=http://schema.org/Thing><a href=/categories/android/ itemprop=url rel=index><span itemprop=name>dev/Android</span>
+</a></span></span><span class=post-meta-item title=浏览><span class=post-meta-item-icon><i class="fas fa-solid fa-eye"></i>
+</span><span class=post-meta-item-text>浏览：
+</span><span id=pageview-count data-path=/post/mac-compile-android-8.1/><i class="fa fa-sync fa-spin"></i></span></span></div></div></header><div class=post-body itemprop=articleBody><p>一、配置环境
+• 安装XCode
+<a href=https://developer.apple.com/xcode/ title=https://developer.apple.com/xcode/ rel="noopener external nofollow noreferrer" target=_blank class=exturl>https://developer.apple.com/xcode/
+</a><code>xcode-select --install</code>
+• 安装JDK
+<a href=https://docs.oracle.com/javase/8/docs/technotes/guides/install/mac_jdk.html title=https://docs.oracle.com/javase/8/docs/technotes/guides/install/mac_jdk.html rel="noopener external nofollow noreferrer" target=_blank class=exturl>https://docs.oracle.com/javase/8/docs/technotes/guides/install/mac_jdk.html
+</a>• 安装Homebrew
+<code>/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"</code>
+• 安装工具
+<code>brew install git python make curl</code>
+• 安装MacPort
+<a href=https://www.macports.org/install.php title=https://www.macports.org/install.php rel="noopener external nofollow noreferrer" target=_blank class=exturl>https://www.macports.org/install.php
+</a>• 安装工具
+<code>POSIXLY_CORRECT=1 sudo port install gmake libsdl git gnupg</code>
+二、创建磁盘镜像</p></div><footer class=post-footer><div class=post-button><a class=btn href=/post/mac-compile-android-8.1/#more rel=contents>阅读全文 &#187;</a></div><div class=post-eof></div></footer></article></div><div class=post-block><article itemscope itemtype=http://schema.org/Article class=post-content lang><link itemprop=mainEntityOfPage href=https://blogs.qipai360.cn/post/ubuntu-20.04-build-android-8.1/><span hidden itemprop=author itemscope itemtype=http://schema.org/Person><meta itemprop=image content="/imgs/avatar.jpg"><meta itemprop=name content="Rise"></span><span hidden itemprop=publisher itemscope itemtype=http://schema.org/Organization><meta itemprop=name content="Rise"><meta itemprop=description content="福兮祸兮，焉知所依？冬去冰泮，春来萌荣。朝生暮死，亦可惊鸿。知足者富，自足者强。"></span><span hidden itemprop=post itemscope itemtype=http://schema.org/CreativeWork><meta itemprop=name content="Ubuntu 20.04编译Android 8.1"><meta itemprop=description content="一、配置环境
+
+
+
+1
+2
+3
+4
+
+
+sudo apt install git-core gnupg flex bison gperf build-essential \
+      zip curl zlib1g-dev gcc-multilib g++-multilib libc6-dev-i386 \
+      lib32ncurses5-dev x11proto-core-dev libx11-dev lib32z-dev libgl1-mesa-dev \
+      libncurses5 libxml2-utils python xsltproc unzip
+
+
+
+二、配置环境变量.bash_profile
+
+
+
+1
+2
+3
+4
+5
+6
+7
+
+
+# Compiler cache
+export USE_CCACHE=1
+export PATH=&#34;/opt/local/bin:/opt/local/sbin:$PATH&#34;
+export PATH=~/Documents/android/bin:$PATH
+export ANDROID_JAVA_HOME=$(/usr/libexec/java_home -v 1.8)
+export PATH=$ANDROID_JAVA_HOME/bin:$PATH
+export REPO_URL='https://mirrors.tuna.tsinghua.edu.cn/git/git-repo/'
+
+
+
+四、下载AOSP源代码
+• 下载repo并设置权限"></span><header class=post-header><h2 class=post-title itemprop="name headline"><a href=/post/ubuntu-20.04-build-android-8.1/ itemprop=url class=post-title-link>Ubuntu 20.04编译Android 8.1</a></h2><div class=post-meta-container><div class=post-meta-items><span class=post-meta-item><span class=post-meta-item-icon><i class="fas fa-solid fa-calendar"></i>
+</span><span class=post-meta-item-text title=发表于>发表于：
+</span><time title="创建时间：2020年08月14日 16:10:00 CST" itemprop="dateCreated datePublished" datetime="2020-08-14 16:10:00 +0800 +0800">2020年08月14日
+</time></span><span class=post-meta-item><span class=post-meta-item-icon><i class="fas fa-solid fa-calendar-check"></i>
+</span><span class=post-meta-item-text title=更新于>更新于：
+</span><time title="修改时间：2020年08月14日 16:12:00 CST" itemprop="dateModified dateLastmod" datetime="2020-08-14 16:12:00 +0800 +0800">2020年08月14日
+</time></span><span class=post-meta-item><span class=post-meta-item-icon><i class="fas fa-solid fa-folder-open"></i>
+</span><span class=post-meta-item-text title=分类于>分类于：
+</span><span itemprop=about itemscope itemtype=http://schema.org/Thing><a href=/categories/android/ itemprop=url rel=index><span itemprop=name>dev/android</span>
+</a></span></span><span class=post-meta-item title=浏览><span class=post-meta-item-icon><i class="fas fa-solid fa-eye"></i>
+</span><span class=post-meta-item-text>浏览：
+</span><span id=pageview-count data-path=/post/ubuntu-20.04-build-android-8.1/><i class="fa fa-sync fa-spin"></i></span></span></div></div></header><div class=post-body itemprop=articleBody><p>一、配置环境</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt id=hl-0-1><a class=lnlinks href=#hl-0-1>1</a>
+</span><span class=lnt id=hl-0-2><a class=lnlinks href=#hl-0-2>2</a>
+</span><span class=lnt id=hl-0-3><a class=lnlinks href=#hl-0-3>3</a>
+</span><span class=lnt id=hl-0-4><a class=lnlinks href=#hl-0-4>4</a>
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>sudo apt install git-core gnupg flex bison gperf build-essential <span class=se>\
+</span></span></span><span class=line><span class=cl>      zip curl zlib1g-dev gcc-multilib g++-multilib libc6-dev-i386 <span class=se>\
+</span></span></span><span class=line><span class=cl>      lib32ncurses5-dev x11proto-core-dev libx11-dev lib32z-dev libgl1-mesa-dev <span class=se>\
+</span></span></span><span class=line><span class=cl>      libncurses5 libxml2-utils python xsltproc unzip</span></span></code></pre></td></tr></table></div></div><p>二、配置环境变量<code>.bash_profile</code></p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt id=hl-1-1><a class=lnlinks href=#hl-1-1>1</a>
+</span><span class=lnt id=hl-1-2><a class=lnlinks href=#hl-1-2>2</a>
+</span><span class=lnt id=hl-1-3><a class=lnlinks href=#hl-1-3>3</a>
+</span><span class=lnt id=hl-1-4><a class=lnlinks href=#hl-1-4>4</a>
+</span><span class=lnt id=hl-1-5><a class=lnlinks href=#hl-1-5>5</a>
+</span><span class=lnt id=hl-1-6><a class=lnlinks href=#hl-1-6>6</a>
+</span><span class=lnt id=hl-1-7><a class=lnlinks href=#hl-1-7>7</a>
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=c1># Compiler cache</span>
+</span></span><span class=line><span class=cl><span class=nb>export</span> <span class=nv>USE_CCACHE</span><span class=o>=</span><span class=m>1</span>
+</span></span><span class=line><span class=cl><span class=nb>export</span> <span class=nv>PATH</span><span class=o>=</span><span class=s2>&#34;/opt/local/bin:/opt/local/sbin:</span><span class=nv>$PATH</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl><span class=nb>export</span> <span class=nv>PATH</span><span class=o>=</span>~/Documents/android/bin:<span class=nv>$PATH</span>
+</span></span><span class=line><span class=cl><span class=nb>export</span> <span class=nv>ANDROID_JAVA_HOME</span><span class=o>=</span><span class=k>$(</span>/usr/libexec/java_home -v 1.8<span class=k>)</span>
+</span></span><span class=line><span class=cl><span class=nb>export</span> <span class=nv>PATH</span><span class=o>=</span><span class=nv>$ANDROID_JAVA_HOME</span>/bin:<span class=nv>$PATH</span>
+</span></span><span class=line><span class=cl><span class=nb>export</span> <span class=nv>REPO_URL</span><span class=o>=</span><span class=s1>&#39;https://mirrors.tuna.tsinghua.edu.cn/git/git-repo/&#39;</span></span></span></code></pre></td></tr></table></div></div><p>四、下载AOSP源代码
+• 下载repo并设置权限</p></div><footer class=post-footer><div class=post-button><a class=btn href=/post/ubuntu-20.04-build-android-8.1/#more rel=contents>阅读全文 &#187;</a></div><div class=post-eof></div></footer></article></div><div class=post-block><article itemscope itemtype=http://schema.org/Article class=post-content lang><link itemprop=mainEntityOfPage href=https://blogs.qipai360.cn/post/android-precompiled-third-party-library/><span hidden itemprop=author itemscope itemtype=http://schema.org/Person><meta itemprop=image content="/imgs/avatar.jpg"><meta itemprop=name content="Rise"></span><span hidden itemprop=publisher itemscope itemtype=http://schema.org/Organization><meta itemprop=name content="Rise"><meta itemprop=description content="福兮祸兮，焉知所依？冬去冰泮，春来萌荣。朝生暮死，亦可惊鸿。知足者富，自足者强。"></span><span hidden itemprop=post itemscope itemtype=http://schema.org/CreativeWork><meta itemprop=name content="Android预编译调用第三方库"><meta itemprop=description content="在同一个Android.mk中编写就行：
+
+
+
+ 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+
+
+LOCAL_PATH:= $(call my-dir)
+
+#此段是预编译第三方库部分
+include $(CLEAR_VARS)
+LOCAL_MODULE := libaspmodule
+LOCAL_MODULE_TAGS := optional
+#LOCAL_SRC_FILES := libaspmodule.so
+#32位、64位两者都编译
+LOCAL_MULTILIB := both 
+LOCAL_SRC_FILES_arm:= armeabi-v7a/libaspmodule.so
+LOCAL_SRC_FILES_arm64:= arm64-v8a/libaspmodule.so
+LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)
+LOCAL_MODULE_STEM :=$(LOCAL_MODULE)
+LOCAL_MODULE_SUFFIX := $(suffix $(LOCAL_SRC_FILES))
+LOCAL_MODULE_CLASS := SHARED_LIBRARIES
+include $(BUILD_PREBUILT)
+
+#此段是预编译第三方静态库部分
+include $(CLEAR_VARS)
+LOCAL_MODULE := libnexsound
+#LOCAL_SRC_FILES := libnexsound.a
+#32位、64位两者都编译
+LOCAL_MULTILIB := both 
+LOCAL_SRC_FILES_arm:= armeabi-v7a/libnexsound.a
+LOCAL_SRC_FILES_arm64:= arm64-v8a/libnexsound.a
+LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)
+LOCAL_MODULE_CLASS := STATIC_LIBRARIES
+LOCAL_MODULE_SUFFIX:=.a
+include $(BUILD_PREBUILT)
+
+#此段是调用前面第三方库编译JNI生成a和so部分
+include $(CLEAR_VARS)
+LOCAL_C_INCLUDES:= external/tinyalsa/include
+LOCAL_SRC_FILES:= com_ecovacs_lib_digmic_DigMic.c
+LOCAL_MODULE := libdigmic
+LOCAL_SHARED_LIBRARIES:= libcutils libutils libtinyalsa libaspmodule
+LOCAL_STATIC_LIBRARIES := libnexsound
+LOCAL_MODULE_TAGS := optional
+include $(BUILD_SHARED_LIBRARY)
+
+"></span><header class=post-header><h2 class=post-title itemprop="name headline"><a href=/post/android-precompiled-third-party-library/ itemprop=url class=post-title-link>Android预编译调用第三方库</a></h2><div class=post-meta-container><div class=post-meta-items><span class=post-meta-item><span class=post-meta-item-icon><i class="fas fa-solid fa-calendar"></i>
+</span><span class=post-meta-item-text title=发表于>发表于：
+</span><time title="创建时间：2020年08月11日 23:54:00 CST" itemprop="dateCreated datePublished" datetime="2020-08-11 23:54:00 +0800 +0800">2020年08月11日
+</time></span><span class=post-meta-item><span class=post-meta-item-icon><i class="fas fa-solid fa-calendar-check"></i>
+</span><span class=post-meta-item-text title=更新于>更新于：
+</span><time title="修改时间：2020年08月12日 00:07:00 CST" itemprop="dateModified dateLastmod" datetime="2020-08-12 00:07:00 +0800 +0800">2020年08月12日
+</time></span><span class=post-meta-item><span class=post-meta-item-icon><i class="fas fa-solid fa-folder-open"></i>
+</span><span class=post-meta-item-text title=分类于>分类于：
+</span><span itemprop=about itemscope itemtype=http://schema.org/Thing><a href=/categories/android/ itemprop=url rel=index><span itemprop=name>dev/android</span>
+</a></span></span><span class=post-meta-item title=浏览><span class=post-meta-item-icon><i class="fas fa-solid fa-eye"></i>
+</span><span class=post-meta-item-text>浏览：
+</span><span id=pageview-count data-path=/post/android-precompiled-third-party-library/><i class="fa fa-sync fa-spin"></i></span></span></div></div></header><div class=post-body itemprop=articleBody><p>在同一个<code>Android.mk</code>中编写就行：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt id=hl-0-1><a class=lnlinks href=#hl-0-1> 1</a>
+</span><span class=lnt id=hl-0-2><a class=lnlinks href=#hl-0-2> 2</a>
+</span><span class=lnt id=hl-0-3><a class=lnlinks href=#hl-0-3> 3</a>
+</span><span class=lnt id=hl-0-4><a class=lnlinks href=#hl-0-4> 4</a>
+</span><span class=lnt id=hl-0-5><a class=lnlinks href=#hl-0-5> 5</a>
+</span><span class=lnt id=hl-0-6><a class=lnlinks href=#hl-0-6> 6</a>
+</span><span class=lnt id=hl-0-7><a class=lnlinks href=#hl-0-7> 7</a>
+</span><span class=lnt id=hl-0-8><a class=lnlinks href=#hl-0-8> 8</a>
+</span><span class=lnt id=hl-0-9><a class=lnlinks href=#hl-0-9> 9</a>
+</span><span class=lnt id=hl-0-10><a class=lnlinks href=#hl-0-10>10</a>
+</span><span class=lnt id=hl-0-11><a class=lnlinks href=#hl-0-11>11</a>
+</span><span class=lnt id=hl-0-12><a class=lnlinks href=#hl-0-12>12</a>
+</span><span class=lnt id=hl-0-13><a class=lnlinks href=#hl-0-13>13</a>
+</span><span class=lnt id=hl-0-14><a class=lnlinks href=#hl-0-14>14</a>
+</span><span class=lnt id=hl-0-15><a class=lnlinks href=#hl-0-15>15</a>
+</span><span class=lnt id=hl-0-16><a class=lnlinks href=#hl-0-16>16</a>
+</span><span class=lnt id=hl-0-17><a class=lnlinks href=#hl-0-17>17</a>
+</span><span class=lnt id=hl-0-18><a class=lnlinks href=#hl-0-18>18</a>
+</span><span class=lnt id=hl-0-19><a class=lnlinks href=#hl-0-19>19</a>
+</span><span class=lnt id=hl-0-20><a class=lnlinks href=#hl-0-20>20</a>
+</span><span class=lnt id=hl-0-21><a class=lnlinks href=#hl-0-21>21</a>
+</span><span class=lnt id=hl-0-22><a class=lnlinks href=#hl-0-22>22</a>
+</span><span class=lnt id=hl-0-23><a class=lnlinks href=#hl-0-23>23</a>
+</span><span class=lnt id=hl-0-24><a class=lnlinks href=#hl-0-24>24</a>
+</span><span class=lnt id=hl-0-25><a class=lnlinks href=#hl-0-25>25</a>
+</span><span class=lnt id=hl-0-26><a class=lnlinks href=#hl-0-26>26</a>
+</span><span class=lnt id=hl-0-27><a class=lnlinks href=#hl-0-27>27</a>
+</span><span class=lnt id=hl-0-28><a class=lnlinks href=#hl-0-28>28</a>
+</span><span class=lnt id=hl-0-29><a class=lnlinks href=#hl-0-29>29</a>
+</span><span class=lnt id=hl-0-30><a class=lnlinks href=#hl-0-30>30</a>
+</span><span class=lnt id=hl-0-31><a class=lnlinks href=#hl-0-31>31</a>
+</span><span class=lnt id=hl-0-32><a class=lnlinks href=#hl-0-32>32</a>
+</span><span class=lnt id=hl-0-33><a class=lnlinks href=#hl-0-33>33</a>
+</span><span class=lnt id=hl-0-34><a class=lnlinks href=#hl-0-34>34</a>
+</span><span class=lnt id=hl-0-35><a class=lnlinks href=#hl-0-35>35</a>
+</span><span class=lnt id=hl-0-36><a class=lnlinks href=#hl-0-36>36</a>
+</span><span class=lnt id=hl-0-37><a class=lnlinks href=#hl-0-37>37</a>
+</span><span class=lnt id=hl-0-38><a class=lnlinks href=#hl-0-38>38</a>
+</span><span class=lnt id=hl-0-39><a class=lnlinks href=#hl-0-39>39</a>
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-Makefile data-lang=Makefile><span class=line><span class=cl><span class=nv>LOCAL_PATH</span><span class=o>:=</span> <span class=k>$(</span>call my-dir<span class=k>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c>#此段是预编译第三方库部分
+</span></span></span><span class=line><span class=cl><span class=err>include</span> <span class=k>$(</span><span class=nv>CLEAR_VARS</span><span class=k>)</span>
+</span></span><span class=line><span class=cl><span class=nv>LOCAL_MODULE</span> <span class=o>:=</span> libaspmodule
+</span></span><span class=line><span class=cl><span class=nv>LOCAL_MODULE_TAGS</span> <span class=o>:=</span> optional
+</span></span><span class=line><span class=cl><span class=c>#LOCAL_SRC_FILES := libaspmodule.so
+</span></span></span><span class=line><span class=cl><span class=c>#32位、64位两者都编译
+</span></span></span><span class=line><span class=cl><span class=nv>LOCAL_MULTILIB</span> <span class=o>:=</span> both 
+</span></span><span class=line><span class=cl><span class=nv>LOCAL_SRC_FILES_arm</span><span class=o>:=</span> armeabi-v7a/libaspmodule.so
+</span></span><span class=line><span class=cl><span class=nv>LOCAL_SRC_FILES_arm64</span><span class=o>:=</span> arm64-v8a/libaspmodule.so
+</span></span><span class=line><span class=cl><span class=nv>LOCAL_EXPORT_C_INCLUDES</span> <span class=o>:=</span> <span class=k>$(</span>LOCAL_PATH<span class=k>)</span>
+</span></span><span class=line><span class=cl><span class=nv>LOCAL_MODULE_STEM</span> <span class=o>:=</span><span class=k>$(</span>LOCAL_MODULE<span class=k>)</span>
+</span></span><span class=line><span class=cl><span class=nv>LOCAL_MODULE_SUFFIX</span> <span class=o>:=</span> <span class=k>$(</span>suffix <span class=k>$(</span>LOCAL_SRC_FILES<span class=k>))</span>
+</span></span><span class=line><span class=cl><span class=nv>LOCAL_MODULE_CLASS</span> <span class=o>:=</span> SHARED_LIBRARIES
+</span></span><span class=line><span class=cl><span class=err>include</span> <span class=k>$(</span><span class=nv>BUILD_PREBUILT</span><span class=k>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c>#此段是预编译第三方静态库部分
+</span></span></span><span class=line><span class=cl><span class=err>include</span> <span class=k>$(</span><span class=nv>CLEAR_VARS</span><span class=k>)</span>
+</span></span><span class=line><span class=cl><span class=nv>LOCAL_MODULE</span> <span class=o>:=</span> libnexsound
+</span></span><span class=line><span class=cl><span class=c>#LOCAL_SRC_FILES := libnexsound.a
+</span></span></span><span class=line><span class=cl><span class=c>#32位、64位两者都编译
+</span></span></span><span class=line><span class=cl><span class=nv>LOCAL_MULTILIB</span> <span class=o>:=</span> both 
+</span></span><span class=line><span class=cl><span class=nv>LOCAL_SRC_FILES_arm</span><span class=o>:=</span> armeabi-v7a/libnexsound.a
+</span></span><span class=line><span class=cl><span class=nv>LOCAL_SRC_FILES_arm64</span><span class=o>:=</span> arm64-v8a/libnexsound.a
+</span></span><span class=line><span class=cl><span class=nv>LOCAL_EXPORT_C_INCLUDES</span> <span class=o>:=</span> <span class=k>$(</span>LOCAL_PATH<span class=k>)</span>
+</span></span><span class=line><span class=cl><span class=nv>LOCAL_MODULE_CLASS</span> <span class=o>:=</span> STATIC_LIBRARIES
+</span></span><span class=line><span class=cl><span class=nv>LOCAL_MODULE_SUFFIX</span><span class=o>:=</span>.a
+</span></span><span class=line><span class=cl><span class=err>include</span> <span class=k>$(</span><span class=nv>BUILD_PREBUILT</span><span class=k>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c>#此段是调用前面第三方库编译JNI生成a和so部分
+</span></span></span><span class=line><span class=cl><span class=err>include</span> <span class=k>$(</span><span class=nv>CLEAR_VARS</span><span class=k>)</span>
+</span></span><span class=line><span class=cl><span class=nv>LOCAL_C_INCLUDES</span><span class=o>:=</span> external/tinyalsa/include
+</span></span><span class=line><span class=cl><span class=nv>LOCAL_SRC_FILES</span><span class=o>:=</span> com_ecovacs_lib_digmic_DigMic.c
+</span></span><span class=line><span class=cl><span class=nv>LOCAL_MODULE</span> <span class=o>:=</span> libdigmic
+</span></span><span class=line><span class=cl><span class=nv>LOCAL_SHARED_LIBRARIES</span><span class=o>:=</span> libcutils libutils libtinyalsa libaspmodule
+</span></span><span class=line><span class=cl><span class=nv>LOCAL_STATIC_LIBRARIES</span> <span class=o>:=</span> libnexsound
+</span></span><span class=line><span class=cl><span class=nv>LOCAL_MODULE_TAGS</span> <span class=o>:=</span> optional
+</span></span><span class=line><span class=cl><span class=err>include</span> <span class=k>$(</span><span class=nv>BUILD_SHARED_LIBRARY</span><span class=k>)</span></span></span></code></pre></td></tr></table></div></div></div><footer class=post-footer><div class=post-button><a class=btn href=/post/android-precompiled-third-party-library/#more rel=contents>阅读全文 &#187;</a></div><div class=post-eof></div></footer></article></div><div class=post-block><article itemscope itemtype=http://schema.org/Article class=post-content lang><link itemprop=mainEntityOfPage href=https://blogs.qipai360.cn/post/linux-auto-time-sync-script/><span hidden itemprop=author itemscope itemtype=http://schema.org/Person><meta itemprop=image content="/imgs/avatar.jpg"><meta itemprop=name content="Rise"></span><span hidden itemprop=publisher itemscope itemtype=http://schema.org/Organization><meta itemprop=name content="Rise"><meta itemprop=description content="福兮祸兮，焉知所依？冬去冰泮，春来萌荣。朝生暮死，亦可惊鸿。知足者富，自足者强。"></span><span hidden itemprop=post itemscope itemtype=http://schema.org/CreativeWork><meta itemprop=name content="linux 自动同步时间脚本"><meta itemprop=description content='
+
+ 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+
+
+#!/bin/bash
+
+OS_NAME=$( cat /etc/os-release | grep ^NAME | cut -d&#39;=&#39; -f2 | sed &#39;s/\"//gI&#39; )
+
+case "$OS_NAME" in
+    "CentOS Linux")
+        sudo yum install ntpdate ntp -y
+
+        sudo timedatectl set-timezone UTC
+        sudo ntpdate -u ntp.aliyun.com time.windows.com time.apple.com time.google.com time.cloudflare.com
+        sudo hwclock --systohc # 写入硬件
+
+        sudo systemctl enable ntpd
+        sudo systemctl start ntpd
+        ;;
+    "Ubuntu" | "Linux Mint")
+        sudo apt install ntpdate ntp -y
+
+        sudo timedatectl set-timezone UTC
+        sudo ntpdate -u ntp.aliyun.com time.windows.com time.apple.com time.google.com time.cloudflare.com
+        sudo hwclock --systohc # 写入硬件
+
+        sudo systemctl enable ntp
+        sudo systemctl start ntp
+        ;;
+esac
+
+'></span><header class=post-header><h2 class=post-title itemprop="name headline"><a href=/post/linux-auto-time-sync-script/ itemprop=url class=post-title-link>linux 自动同步时间脚本</a></h2><div class=post-meta-container><div class=post-meta-items><span class=post-meta-item><span class=post-meta-item-icon><i class="fas fa-solid fa-calendar"></i>
+</span><span class=post-meta-item-text title=发表于>发表于：
+</span><time title="创建时间：2020年06月29日 20:31:00 CST" itemprop="dateCreated datePublished" datetime="2020-06-29 20:31:00 +0800 +0800">2020年06月29日
+</time></span><span class=post-meta-item><span class=post-meta-item-icon><i class="fas fa-solid fa-folder-open"></i>
+</span><span class=post-meta-item-text title=分类于>分类于：
+</span><span itemprop=about itemscope itemtype=http://schema.org/Thing><a href=/categories/linux/ itemprop=url rel=index><span itemprop=name>Linux</span>
+</a></span></span><span class=post-meta-item title=浏览><span class=post-meta-item-icon><i class="fas fa-solid fa-eye"></i>
+</span><span class=post-meta-item-text>浏览：
+</span><span id=pageview-count data-path=/post/linux-auto-time-sync-script/><i class="fa fa-sync fa-spin"></i></span></span></div></div></header><div class=post-body itemprop=articleBody><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt id=hl-0-1><a class=lnlinks href=#hl-0-1> 1</a>
+</span><span class=lnt id=hl-0-2><a class=lnlinks href=#hl-0-2> 2</a>
+</span><span class=lnt id=hl-0-3><a class=lnlinks href=#hl-0-3> 3</a>
+</span><span class=lnt id=hl-0-4><a class=lnlinks href=#hl-0-4> 4</a>
+</span><span class=lnt id=hl-0-5><a class=lnlinks href=#hl-0-5> 5</a>
+</span><span class=lnt id=hl-0-6><a class=lnlinks href=#hl-0-6> 6</a>
+</span><span class=lnt id=hl-0-7><a class=lnlinks href=#hl-0-7> 7</a>
+</span><span class=lnt id=hl-0-8><a class=lnlinks href=#hl-0-8> 8</a>
+</span><span class=lnt id=hl-0-9><a class=lnlinks href=#hl-0-9> 9</a>
+</span><span class=lnt id=hl-0-10><a class=lnlinks href=#hl-0-10>10</a>
+</span><span class=lnt id=hl-0-11><a class=lnlinks href=#hl-0-11>11</a>
+</span><span class=lnt id=hl-0-12><a class=lnlinks href=#hl-0-12>12</a>
+</span><span class=lnt id=hl-0-13><a class=lnlinks href=#hl-0-13>13</a>
+</span><span class=lnt id=hl-0-14><a class=lnlinks href=#hl-0-14>14</a>
+</span><span class=lnt id=hl-0-15><a class=lnlinks href=#hl-0-15>15</a>
+</span><span class=lnt id=hl-0-16><a class=lnlinks href=#hl-0-16>16</a>
+</span><span class=lnt id=hl-0-17><a class=lnlinks href=#hl-0-17>17</a>
+</span><span class=lnt id=hl-0-18><a class=lnlinks href=#hl-0-18>18</a>
+</span><span class=lnt id=hl-0-19><a class=lnlinks href=#hl-0-19>19</a>
+</span><span class=lnt id=hl-0-20><a class=lnlinks href=#hl-0-20>20</a>
+</span><span class=lnt id=hl-0-21><a class=lnlinks href=#hl-0-21>21</a>
+</span><span class=lnt id=hl-0-22><a class=lnlinks href=#hl-0-22>22</a>
+</span><span class=lnt id=hl-0-23><a class=lnlinks href=#hl-0-23>23</a>
+</span><span class=lnt id=hl-0-24><a class=lnlinks href=#hl-0-24>24</a>
+</span><span class=lnt id=hl-0-25><a class=lnlinks href=#hl-0-25>25</a>
+</span><span class=lnt id=hl-0-26><a class=lnlinks href=#hl-0-26>26</a>
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=cp>#!/bin/bash
+</span></span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=nv>OS_NAME</span><span class=o>=</span><span class=k>$(</span> cat /etc/os-release <span class=p>|</span> grep ^NAME <span class=p>|</span> cut -d<span class=s1>&#39;=&#39;</span> -f2 <span class=p>|</span> sed <span class=s1>&#39;s/\&#34;//gI&#39;</span> <span class=k>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>case</span> <span class=s2>&#34;</span><span class=nv>$OS_NAME</span><span class=s2>&#34;</span> in
+</span></span><span class=line><span class=cl>    <span class=s2>&#34;CentOS Linux&#34;</span><span class=o>)</span>
+</span></span><span class=line><span class=cl>        sudo yum install ntpdate ntp -y
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        sudo timedatectl set-timezone UTC
+</span></span><span class=line><span class=cl>        sudo ntpdate -u ntp.aliyun.com time.windows.com time.apple.com time.google.com time.cloudflare.com
+</span></span><span class=line><span class=cl>        sudo hwclock --systohc <span class=c1># 写入硬件</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        sudo systemctl <span class=nb>enable</span> ntpd
+</span></span><span class=line><span class=cl>        sudo systemctl start ntpd
+</span></span><span class=line><span class=cl>        <span class=p>;;</span>
+</span></span><span class=line><span class=cl>    <span class=s2>&#34;Ubuntu&#34;</span> <span class=p>|</span> <span class=s2>&#34;Linux Mint&#34;</span><span class=o>)</span>
+</span></span><span class=line><span class=cl>        sudo apt install ntpdate ntp -y
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        sudo timedatectl set-timezone UTC
+</span></span><span class=line><span class=cl>        sudo ntpdate -u ntp.aliyun.com time.windows.com time.apple.com time.google.com time.cloudflare.com
+</span></span><span class=line><span class=cl>        sudo hwclock --systohc <span class=c1># 写入硬件</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        sudo systemctl <span class=nb>enable</span> ntp
+</span></span><span class=line><span class=cl>        sudo systemctl start ntp
+</span></span><span class=line><span class=cl>        <span class=p>;;</span>
+</span></span><span class=line><span class=cl><span class=k>esac</span></span></span></code></pre></td></tr></table></div></div></div><footer class=post-footer><div class=post-button><a class=btn href=/post/linux-auto-time-sync-script/#more rel=contents>阅读全文 &#187;</a></div><div class=post-eof></div></footer></article></div><div class=post-block><article itemscope itemtype=http://schema.org/Article class=post-content lang><link itemprop=mainEntityOfPage href=https://blogs.qipai360.cn/post/linux-command-killall/><span hidden itemprop=author itemscope itemtype=http://schema.org/Person><meta itemprop=image content="/imgs/avatar.jpg"><meta itemprop=name content="Rise"></span><span hidden itemprop=publisher itemscope itemtype=http://schema.org/Organization><meta itemprop=name content="Rise"><meta itemprop=description content="福兮祸兮，焉知所依？冬去冰泮，春来萌荣。朝生暮死，亦可惊鸿。知足者富，自足者强。"></span><span hidden itemprop=post itemscope itemtype=http://schema.org/CreativeWork><meta itemprop=name content="killall命令"><meta itemprop=description content="killall命令使用进程的名称来杀死进程，使用此指令可以杀死一组同名进程。我们可以使用kill命令杀死指定进程PID的进程，如果要找到我们需要杀死的进程，我们还需要在之前使用ps等命令再配合grep来查找进程，而killall把这两个过程合二为一，是一个很好用的命令。"></span><header class=post-header><h2 class=post-title itemprop="name headline"><a href=/post/linux-command-killall/ itemprop=url class=post-title-link>killall命令</a></h2><div class=post-meta-container><div class=post-meta-items><span class=post-meta-item><span class=post-meta-item-icon><i class="fas fa-solid fa-calendar"></i>
+</span><span class=post-meta-item-text title=发表于>发表于：
+</span><time title="创建时间：2020年04月21日 16:09:00 CST" itemprop="dateCreated datePublished" datetime="2020-04-21 16:09:00 +0800 +0800">2020年04月21日
+</time></span><span class=post-meta-item><span class=post-meta-item-icon><i class="fas fa-solid fa-folder-open"></i>
+</span><span class=post-meta-item-text title=分类于>分类于：
+</span><span itemprop=about itemscope itemtype=http://schema.org/Thing><a href=/categories/linux/ itemprop=url rel=index><span itemprop=name>Linux</span>
+</a></span></span><span class=post-meta-item title=浏览><span class=post-meta-item-icon><i class="fas fa-solid fa-eye"></i>
+</span><span class=post-meta-item-text>浏览：
+</span><span id=pageview-count data-path=/post/linux-command-killall/><i class="fa fa-sync fa-spin"></i></span></span></div></div></header><div class=post-body itemprop=articleBody><p><code>killall</code>命令使用进程的名称来杀死进程，使用此指令可以杀死一组同名进程。我们可以使用kill命令杀死指定进程PID的进程，如果要找到我们需要杀死的进程，我们还需要在之前使用<code>ps</code>等命令再配合<code>grep</code>来查找进程，而<code>killall</code>把这两个过程合二为一，是一个很好用的命令。</p></div><footer class=post-footer><div class=post-button><a class=btn href=/post/linux-command-killall/#more rel=contents>阅读全文 &#187;</a></div><div class=post-eof></div></footer></article></div><div class=post-block><article itemscope itemtype=http://schema.org/Article class=post-content lang><link itemprop=mainEntityOfPage href=https://blogs.qipai360.cn/post/linux-command-pgrep/><span hidden itemprop=author itemscope itemtype=http://schema.org/Person><meta itemprop=image content="/imgs/avatar.jpg"><meta itemprop=name content="Rise"></span><span hidden itemprop=publisher itemscope itemtype=http://schema.org/Organization><meta itemprop=name content="Rise"><meta itemprop=description content="福兮祸兮，焉知所依？冬去冰泮，春来萌荣。朝生暮死，亦可惊鸿。知足者富，自足者强。"></span><span hidden itemprop=post itemscope itemtype=http://schema.org/CreativeWork><meta itemprop=name content="pgrep命令"><meta itemprop=description content="pgrep命令以名称为依据从运行进程队列中查找进程，并显示查找到的进程id。每一个进程ID以一个十进制数表示，通过一个分割字符串和下一个ID分开，默认的分割字符串是一个新行。对于每个属性选项，用户可以在命令行上指定一个以逗号分割的可能值的集合。"></span><header class=post-header><h2 class=post-title itemprop="name headline"><a href=/post/linux-command-pgrep/ itemprop=url class=post-title-link>pgrep命令</a></h2><div class=post-meta-container><div class=post-meta-items><span class=post-meta-item><span class=post-meta-item-icon><i class="fas fa-solid fa-calendar"></i>
+</span><span class=post-meta-item-text title=发表于>发表于：
+</span><time title="创建时间：2020年04月21日 16:05:00 CST" itemprop="dateCreated datePublished" datetime="2020-04-21 16:05:00 +0800 +0800">2020年04月21日
+</time></span><span class=post-meta-item><span class=post-meta-item-icon><i class="fas fa-solid fa-folder-open"></i>
+</span><span class=post-meta-item-text title=分类于>分类于：
+</span><span itemprop=about itemscope itemtype=http://schema.org/Thing><a href=/categories/linux/ itemprop=url rel=index><span itemprop=name>Linux</span>
+</a></span></span><span class=post-meta-item title=浏览><span class=post-meta-item-icon><i class="fas fa-solid fa-eye"></i>
+</span><span class=post-meta-item-text>浏览：
+</span><span id=pageview-count data-path=/post/linux-command-pgrep/><i class="fa fa-sync fa-spin"></i></span></span></div></div></header><div class=post-body itemprop=articleBody><p>pgrep命令以名称为依据从运行进程队列中查找进程，并显示查找到的进程id。每一个进程ID以一个十进制数表示，通过一个分割字符串和下一个ID分开，默认的分割字符串是一个新行。对于每个属性选项，用户可以在命令行上指定一个以逗号分割的可能值的集合。</p></div><footer class=post-footer><div class=post-button><a class=btn href=/post/linux-command-pgrep/#more rel=contents>阅读全文 &#187;</a></div><div class=post-eof></div></footer></article></div><div class=post-block><article itemscope itemtype=http://schema.org/Article class=post-content lang><link itemprop=mainEntityOfPage href=https://blogs.qipai360.cn/post/what-is-ideal/><span hidden itemprop=author itemscope itemtype=http://schema.org/Person><meta itemprop=image content="/imgs/avatar.jpg"><meta itemprop=name content="Rise"></span><span hidden itemprop=publisher itemscope itemtype=http://schema.org/Organization><meta itemprop=name content="Rise"><meta itemprop=description content="福兮祸兮，焉知所依？冬去冰泮，春来萌荣。朝生暮死，亦可惊鸿。知足者富，自足者强。"></span><span hidden itemprop=post itemscope itemtype=http://schema.org/CreativeWork><meta itemprop=name content="什么是理想？"><meta itemprop=description content="今天下班后收拾东西时，看到很久没有使用的移动硬盘，通电后在资料中翻出这样一段话，从04年到11年的几乎每个压缩包中都有。
+但从12年往后就越来越少，最近这几年就不在加这个注释，一是压缩软件由之前的winrar换成了7zip，系统慢慢换成linux，二是一直在忙于生计，似乎离理想越来越远。
+今年碰到疫情，在老家待了几个月，觉得现在的状态似乎不是自己想要的，其实包括最近这两年，似乎一直有这样的想法。
+那么自己的想要的到底是什么呢？
+十岁时的电视里成功经理人的梦想？还是十五岁时看到的介绍比尔盖茨的用技术改变世界的梦想？
+是刚工作时的CTO？还是最近的多多赚钱？
+似乎都是，又似乎都不是。
+没工作时，想着先找个工作，养家糊口。
+有工作时，想着能不能做的更好一些，最后发现努力半天，因为诸多原因一次次报废。"></span><header class=post-header><h2 class=post-title itemprop="name headline"><a href=/post/what-is-ideal/ itemprop=url class=post-title-link>什么是理想？</a></h2><div class=post-meta-container><div class=post-meta-items><span class=post-meta-item><span class=post-meta-item-icon><i class="fas fa-solid fa-calendar"></i>
+</span><span class=post-meta-item-text title=发表于>发表于：
+</span><time title="创建时间：2020年04月21日 01:24:00 CST" itemprop="dateCreated datePublished" datetime="2020-04-21 01:24:00 +0800 +0800">2020年04月21日
+</time></span><span class=post-meta-item><span class=post-meta-item-icon><i class="fas fa-solid fa-calendar-check"></i>
+</span><span class=post-meta-item-text title=更新于>更新于：
+</span><time title="修改时间：2020年04月21日 01:57:00 CST" itemprop="dateModified dateLastmod" datetime="2020-04-21 01:57:00 +0800 +0800">2020年04月21日
+</time></span><span class=post-meta-item><span class=post-meta-item-icon><i class="fas fa-solid fa-folder-open"></i>
+</span><span class=post-meta-item-text title=分类于>分类于：
+</span><span itemprop=about itemscope itemtype=http://schema.org/Thing><a href=/categories/capricethink/ itemprop=url rel=index><span itemprop=name>CapriceThink</span>
+</a></span></span><span class=post-meta-item title=浏览><span class=post-meta-item-icon><i class="fas fa-solid fa-eye"></i>
+</span><span class=post-meta-item-text>浏览：
+</span><span id=pageview-count data-path=/post/what-is-ideal/><i class="fa fa-sync fa-spin"></i></span></span></div></div></header><div class=post-body itemprop=articleBody><p>今天下班后收拾东西时，看到很久没有使用的移动硬盘，通电后在资料中翻出这样一段话，从04年到11年的几乎每个压缩包中都有。
+但从12年往后就越来越少，最近这几年就不在加这个注释，一是压缩软件由之前的winrar换成了7zip，系统慢慢换成linux，二是一直在忙于生计，似乎离理想越来越远。
+今年碰到疫情，在老家待了几个月，觉得现在的状态似乎不是自己想要的，其实包括最近这两年，似乎一直有这样的想法。
+那么自己的想要的到底是什么呢？
+十岁时的电视里成功经理人的梦想？还是十五岁时看到的介绍比尔盖茨的用技术改变世界的梦想？
+是刚工作时的CTO？还是最近的多多赚钱？
+似乎都是，又似乎都不是。
+没工作时，想着先找个工作，养家糊口。
+有工作时，想着能不能做的更好一些，最后发现努力半天，因为诸多原因一次次报废。</p></div><footer class=post-footer><div class=post-button><a class=btn href=/post/what-is-ideal/#more rel=contents>阅读全文 &#187;</a></div><div class=post-eof></div></footer></article></div><div class=post-block><article itemscope itemtype=http://schema.org/Article class=post-content lang><link itemprop=mainEntityOfPage href=https://blogs.qipai360.cn/post/leetcode-62-unique-paths-dp-and-optimize-both-100/><span hidden itemprop=author itemscope itemtype=http://schema.org/Person><meta itemprop=image content="/imgs/avatar.jpg"><meta itemprop=name content="Rise"></span><span hidden itemprop=publisher itemscope itemtype=http://schema.org/Organization><meta itemprop=name content="Rise"><meta itemprop=description content="福兮祸兮，焉知所依？冬去冰泮，春来萌荣。朝生暮死，亦可惊鸿。知足者富，自足者强。"></span><span hidden itemprop=post itemscope itemtype=http://schema.org/CreativeWork><meta itemprop=name content="leetcode 62. 不同路径-动态规划及优化，双100%"><meta itemprop=description content="
+
+    62. 不同路径
+    
+
+
+一个机器人位于一个 m x n 网格的左上角 （起始点在下图中标记为“Start” ）。
+机器人每次只能向下或者向右移动一步。机器人试图达到网格的右下角（在下图中标记为“Finish”）。"></span><header class=post-header><h2 class=post-title itemprop="name headline"><a href=/post/leetcode-62-unique-paths-dp-and-optimize-both-100/ itemprop=url class=post-title-link>leetcode 62. 不同路径-动态规划及优化，双100%</a></h2><div class=post-meta-container><div class=post-meta-items><span class=post-meta-item><span class=post-meta-item-icon><i class="fas fa-solid fa-calendar"></i>
+</span><span class=post-meta-item-text title=发表于>发表于：
+</span><time title="创建时间：2020年04月20日 14:54:00 CST" itemprop="dateCreated datePublished" datetime="2020-04-20 14:54:00 +0800 +0800">2020年04月20日
+</time></span><span class=post-meta-item><span class=post-meta-item-icon><i class="fas fa-solid fa-calendar-check"></i>
+</span><span class=post-meta-item-text title=更新于>更新于：
+</span><time title="修改时间：2020年04月20日 14:55:00 CST" itemprop="dateModified dateLastmod" datetime="2020-04-20 14:55:00 +0800 +0800">2020年04月20日
+</time></span><span class=post-meta-item><span class=post-meta-item-icon><i class="fas fa-solid fa-folder-open"></i>
+</span><span class=post-meta-item-text title=分类于>分类于：
+</span><span itemprop=about itemscope itemtype=http://schema.org/Thing><a href=/categories/algorithm/ itemprop=url rel=index><span itemprop=name>dev/Algorithm</span>
+</a></span></span><span class=post-meta-item title=浏览><span class=post-meta-item-icon><i class="fas fa-solid fa-eye"></i>
+</span><span class=post-meta-item-text>浏览：
+</span><span id=pageview-count data-path=/post/leetcode-62-unique-paths-dp-and-optimize-both-100/><i class="fa fa-sync fa-spin"></i></span></span></div></div></header><div class=post-body itemprop=articleBody><h2 id=62-不同路径><a href=https://leetcode-cn.com/problems/unique-paths/ title="62. 不同路径" rel="noopener external nofollow noreferrer" target=_blank class=exturl>62. 不同路径
+</a><a class=header-anchor href=#62-%e4%b8%8d%e5%90%8c%e8%b7%af%e5%be%84></a></h2><p>一个机器人位于一个 m x n 网格的左上角 （起始点在下图中标记为“Start” ）。</p><p>机器人每次只能向下或者向右移动一步。机器人试图达到网格的右下角（在下图中标记为“Finish”）。</p></div><footer class=post-footer><div class=post-button><a class=btn href=/post/leetcode-62-unique-paths-dp-and-optimize-both-100/#more rel=contents>阅读全文 &#187;</a></div><div class=post-eof></div></footer></article></div><div class=post-block><article itemscope itemtype=http://schema.org/Article class=post-content lang><link itemprop=mainEntityOfPage href=https://blogs.qipai360.cn/post/two-pointers-implement-strstr/><span hidden itemprop=author itemscope itemtype=http://schema.org/Person><meta itemprop=image content="/imgs/avatar.jpg"><meta itemprop=name content="Rise"></span><span hidden itemprop=publisher itemscope itemtype=http://schema.org/Organization><meta itemprop=name content="Rise"><meta itemprop=description content="福兮祸兮，焉知所依？冬去冰泮，春来萌荣。朝生暮死，亦可惊鸿。知足者富，自足者强。"></span><span hidden itemprop=post itemscope itemtype=http://schema.org/CreativeWork><meta itemprop=name content="使用双指针暴力解决力扣28题《实现 strStr()》"><meta itemprop=description content="
+
+ 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+
+
+class Solution {
+public:
+    int strStr(string haystack, string needle) {
+        int n = haystack.size(), m = needle.size();
+        if (!m) return 0;
+        if (!n) return -1;
+        for (int i = 0; i < n - m + 1; ++i)
+        {
+            int j = 0;
+            for( ; j < m; ++j)
+            {
+                if(haystack[i + j] !=  needle[j])
+                    break;
+            }
+            if (j == m)
+                return i;
+        }
+        return -1;
+    }
+};
+
+
+
+时间复杂度 $O(M*N)$"></span><header class=post-header><h2 class=post-title itemprop="name headline"><a href=/post/two-pointers-implement-strstr/ itemprop=url class=post-title-link>使用双指针暴力解决力扣28题《实现 strStr()》</a></h2><div class=post-meta-container><div class=post-meta-items><span class=post-meta-item><span class=post-meta-item-icon><i class="fas fa-solid fa-calendar"></i>
+</span><span class=post-meta-item-text title=发表于>发表于：
+</span><time title="创建时间：2020年03月24日 15:33:00 CST" itemprop="dateCreated datePublished" datetime="2020-03-24 15:33:00 +0800 +0800">2020年03月24日
+</time></span><span class=post-meta-item><span class=post-meta-item-icon><i class="fas fa-solid fa-folder-open"></i>
+</span><span class=post-meta-item-text title=分类于>分类于：
+</span><span itemprop=about itemscope itemtype=http://schema.org/Thing><a href=/categories/algorithm/ itemprop=url rel=index><span itemprop=name>dev/Algorithm</span>
+</a></span></span><span class=post-meta-item title=浏览><span class=post-meta-item-icon><i class="fas fa-solid fa-eye"></i>
+</span><span class=post-meta-item-text>浏览：
+</span><span id=pageview-count data-path=/post/two-pointers-implement-strstr/><i class="fa fa-sync fa-spin"></i></span></span></div></div></header><div class=post-body itemprop=articleBody><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt id=hl-0-1><a class=lnlinks href=#hl-0-1> 1</a>
+</span><span class=lnt id=hl-0-2><a class=lnlinks href=#hl-0-2> 2</a>
+</span><span class=lnt id=hl-0-3><a class=lnlinks href=#hl-0-3> 3</a>
+</span><span class=lnt id=hl-0-4><a class=lnlinks href=#hl-0-4> 4</a>
+</span><span class=lnt id=hl-0-5><a class=lnlinks href=#hl-0-5> 5</a>
+</span><span class=lnt id=hl-0-6><a class=lnlinks href=#hl-0-6> 6</a>
+</span><span class=lnt id=hl-0-7><a class=lnlinks href=#hl-0-7> 7</a>
+</span><span class=lnt id=hl-0-8><a class=lnlinks href=#hl-0-8> 8</a>
+</span><span class=lnt id=hl-0-9><a class=lnlinks href=#hl-0-9> 9</a>
+</span><span class=lnt id=hl-0-10><a class=lnlinks href=#hl-0-10>10</a>
+</span><span class=lnt id=hl-0-11><a class=lnlinks href=#hl-0-11>11</a>
+</span><span class=lnt id=hl-0-12><a class=lnlinks href=#hl-0-12>12</a>
+</span><span class=lnt id=hl-0-13><a class=lnlinks href=#hl-0-13>13</a>
+</span><span class=lnt id=hl-0-14><a class=lnlinks href=#hl-0-14>14</a>
+</span><span class=lnt id=hl-0-15><a class=lnlinks href=#hl-0-15>15</a>
+</span><span class=lnt id=hl-0-16><a class=lnlinks href=#hl-0-16>16</a>
+</span><span class=lnt id=hl-0-17><a class=lnlinks href=#hl-0-17>17</a>
+</span><span class=lnt id=hl-0-18><a class=lnlinks href=#hl-0-18>18</a>
+</span><span class=lnt id=hl-0-19><a class=lnlinks href=#hl-0-19>19</a>
+</span><span class=lnt id=hl-0-20><a class=lnlinks href=#hl-0-20>20</a>
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-c++ data-lang=c++><span class=line><span class=cl><span class=k>class</span> <span class=nc>Solution</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl><span class=k>public</span><span class=o>:</span>
+</span></span><span class=line><span class=cl>    <span class=kt>int</span> <span class=n>strStr</span><span class=p>(</span><span class=n>string</span> <span class=n>haystack</span><span class=p>,</span> <span class=n>string</span> <span class=n>needle</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=kt>int</span> <span class=n>n</span> <span class=o>=</span> <span class=n>haystack</span><span class=p>.</span><span class=n>size</span><span class=p>(),</span> <span class=n>m</span> <span class=o>=</span> <span class=n>needle</span><span class=p>.</span><span class=n>size</span><span class=p>();</span>
+</span></span><span class=line><span class=cl>        <span class=k>if</span> <span class=p>(</span><span class=o>!</span><span class=n>m</span><span class=p>)</span> <span class=k>return</span> <span class=mi>0</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=k>if</span> <span class=p>(</span><span class=o>!</span><span class=n>n</span><span class=p>)</span> <span class=k>return</span> <span class=o>-</span><span class=mi>1</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=k>for</span> <span class=p>(</span><span class=kt>int</span> <span class=n>i</span> <span class=o>=</span> <span class=mi>0</span><span class=p>;</span> <span class=n>i</span> <span class=o>&lt;</span> <span class=n>n</span> <span class=o>-</span> <span class=n>m</span> <span class=o>+</span> <span class=mi>1</span><span class=p>;</span> <span class=o>++</span><span class=n>i</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=p>{</span>
+</span></span><span class=line><span class=cl>            <span class=kt>int</span> <span class=n>j</span> <span class=o>=</span> <span class=mi>0</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>            <span class=k>for</span><span class=p>(</span> <span class=p>;</span> <span class=n>j</span> <span class=o>&lt;</span> <span class=n>m</span><span class=p>;</span> <span class=o>++</span><span class=n>j</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>            <span class=p>{</span>
+</span></span><span class=line><span class=cl>                <span class=k>if</span><span class=p>(</span><span class=n>haystack</span><span class=p>[</span><span class=n>i</span> <span class=o>+</span> <span class=n>j</span><span class=p>]</span> <span class=o>!=</span>  <span class=n>needle</span><span class=p>[</span><span class=n>j</span><span class=p>])</span>
+</span></span><span class=line><span class=cl>                    <span class=k>break</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>            <span class=p>}</span>
+</span></span><span class=line><span class=cl>            <span class=k>if</span> <span class=p>(</span><span class=n>j</span> <span class=o>==</span> <span class=n>m</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>                <span class=k>return</span> <span class=n>i</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=p>}</span>
+</span></span><span class=line><span class=cl>        <span class=k>return</span> <span class=o>-</span><span class=mi>1</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>};</span></span></span></code></pre></td></tr></table></div></div><p>时间复杂度 $O(M*N)$</p></div><footer class=post-footer><div class=post-button><a class=btn href=/post/two-pointers-implement-strstr/#more rel=contents>阅读全文 &#187;</a></div><div class=post-eof></div></footer></article></div><div class=post-block><article itemscope itemtype=http://schema.org/Article class=post-content lang><link itemprop=mainEntityOfPage href=https://blogs.qipai360.cn/post/two-pointers-remove-element/><span hidden itemprop=author itemscope itemtype=http://schema.org/Person><meta itemprop=image content="/imgs/avatar.jpg"><meta itemprop=name content="Rise"></span><span hidden itemprop=publisher itemscope itemtype=http://schema.org/Organization><meta itemprop=name content="Rise"><meta itemprop=description content="福兮祸兮，焉知所依？冬去冰泮，春来萌荣。朝生暮死，亦可惊鸿。知足者富，自足者强。"></span><span hidden itemprop=post itemscope itemtype=http://schema.org/CreativeWork><meta itemprop=name content="使用双指针解决力扣27题《移除元素》"><meta itemprop=description content="
+
+    力扣27题《移除元素》
+    
+
+题目描述不允许使用额外的数组空间，所以只能在原数组上操作。
+我们使用两个指针，一个快指针 i 和一个慢指针 k 。i 每次移动一步，而 k 只在添加新的被需要的值时才移动一步。"></span><header class=post-header><h2 class=post-title itemprop="name headline"><a href=/post/two-pointers-remove-element/ itemprop=url class=post-title-link>使用双指针解决力扣27题《移除元素》</a></h2><div class=post-meta-container><div class=post-meta-items><span class=post-meta-item><span class=post-meta-item-icon><i class="fas fa-solid fa-calendar"></i>
+</span><span class=post-meta-item-text title=发表于>发表于：
+</span><time title="创建时间：2020年03月23日 19:17:00 CST" itemprop="dateCreated datePublished" datetime="2020-03-23 19:17:00 +0800 +0800">2020年03月23日
+</time></span><span class=post-meta-item><span class=post-meta-item-icon><i class="fas fa-solid fa-calendar-check"></i>
+</span><span class=post-meta-item-text title=更新于>更新于：
+</span><time title="修改时间：2020年03月23日 19:18:00 CST" itemprop="dateModified dateLastmod" datetime="2020-03-23 19:18:00 +0800 +0800">2020年03月23日
+</time></span><span class=post-meta-item><span class=post-meta-item-icon><i class="fas fa-solid fa-folder-open"></i>
+</span><span class=post-meta-item-text title=分类于>分类于：
+</span><span itemprop=about itemscope itemtype=http://schema.org/Thing><a href=/categories/algorithm/ itemprop=url rel=index><span itemprop=name>dev/Algorithm</span>
+</a></span></span><span class=post-meta-item title=浏览><span class=post-meta-item-icon><i class="fas fa-solid fa-eye"></i>
+</span><span class=post-meta-item-text>浏览：
+</span><span id=pageview-count data-path=/post/two-pointers-remove-element/><i class="fa fa-sync fa-spin"></i></span></span></div></div></header><div class=post-body itemprop=articleBody><p><a href=https://leetcode-cn.com/problems/remove-element/ title=力扣27题《移除元素》 rel="noopener external nofollow noreferrer" target=_blank class=exturl>力扣27题《移除元素》</a></p><p>题目描述不允许使用额外的数组空间，所以只能在原数组上操作。</p><p>我们使用两个指针，一个快指针 i 和一个慢指针 k 。i 每次移动一步，而 k 只在添加新的被需要的值时才移动一步。</p></div><footer class=post-footer><div class=post-button><a class=btn href=/post/two-pointers-remove-element/#more rel=contents>阅读全文 &#187;</a></div><div class=post-eof></div></footer></article></div><nav class=pagination><a class="extend prev" rel=prev href=/post/page/7/><i class="fa fa-angle-left"></i>
+</a><a class=page-number href=/post/page/4/>4</a>
+<a class=page-number href=/post/page/5/>5</a>
+<a class=page-number href=/post/page/6/>6</a>
+<a class=page-number href=/post/page/7/>7</a>
+<span class="page-number current">8</span>
+<a class=page-number href=/post/page/9/>9</a>
+<a class=page-number href=/post/page/10/>10</a>
+<a class=page-number href=/post/page/11/>11</a>
+<a class=page-number href=/post/page/12/>12</a>
+<a class="extend next" rel=next href=/post/page/9/><i class="fa fa-angle-right"></i></a></nav></div></main><footer class=footer><div class=footer-inner><div class=copyright>&copy;
+<span itemprop=copyrightYear>2004 - 2026
+</span><span class=with-love><i class="fa fa-heart"></i>
+</span><span class=author itemprop=copyrightHolder>Rise</span></div><div class=powered-by>由 <a href=https://gohugo.io title=0.157.0 target=_blank>Hugo</a> & <a href=https://github.com/hugo-next/hugo-theme-next title=4.8.3 target=_blank>Hugo NexT.Gemini</a> 强力驱动</div><div class=beian><a href=https://beian.miit.gov.cn target=_blank>豫ICP备2021009490号</a>
+<img src=/imgs/gongan.png alt=豫公网安备>
+<a href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=41162302000074" target=_blank>豫公网安备 41162302000074 号</a></div></div></footer><script class=next-config data-name=page type=application/json>{"comments":true,"expired":false,"isHome":false,"isPage":false,"path":"post","permalink":"https://blogs.qipai360.cn/post/","title":"Posts","toc":false,"waline3":{"pagecnt":{"alias":"@waline/client","alias_name":"waline","file":"dist/pageview.js","name":"pageview","version":"3.5.7"}}}</script><script type=text/javascript src=https://blogs.qipai360.cn/js/3rd/animejs/3.2.2/anime.min.js crossorigin=anonymous defer></script><script type=text/javascript src=https://blogs.qipai360.cn/js/3rd/viewerjs/1.11.6/viewer.min.js crossorigin=anonymous defer></script><script class=next-config data-name=main type=application/json>{"bookmark":{"color":"#222","enable":true,"save":"manual"},"copybtn":true,"darkmode":true,"giscus":{"cfg":{"category":"Announcements","categoryid":"DIC_kwDOA6L0YM4CiXf9","emit":false,"inputposition":"top","mapping":"title","reactions":false,"repo":"rise-worlds/rise-worlds.github.io","repoid":"MDEwOlJlcG9zaXRvcnk2MTAxMTA0MA==","theme":"transparent_dark"},"js":"https://giscus.app/client.js"},"hostname":"https://blogs.qipai360.cn/","i18n":{"ds_day":" 天前","ds_days":" 天 ","ds_hour":" 小时前","ds_hours":" 小时 ","ds_just":"刚刚","ds_min":" 分钟前","ds_mins":" 分钟","ds_month":" 个月前","ds_years":" 年 ","empty":"没有找到任何搜索结果：${query}","hits":"找到 ${hits} 个搜索结果","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","placeholder":"搜索..."},"isMultiLang":false,"lang":"zh-CN","lazyload":false,"motion":{"async":true,"enable":true,"transition":{"collheader":"fadeInLeft","postblock":"fadeIn","postbody":"fadeInDown","postheader":"fadeInDown","sidebar":"fadeInUp"}},"postmeta":{"comments":{"enable":false,"plugin":"waline3"},"views":{"enable":true,"plugin":"waline3"}},"root":"/","scheme":"Gemini","share":{"addtoany":{"js":"https://static.addtoany.com/menu/page.js","locale":"zh-CN","num":8},"enable":false},"sidebar":{"display":"post","offset":12,"padding":18,"position":"left","width":256},"vendor":{"plugins":"local","router":{"name":"local","type":"modern","url":"https://blogs.qipai360.cn/js/3rd"}},"version":"4.8.3","waline3":{"cfg":{"emoji":false,"imguploader":false,"placeholder":"请文明发言哟 ヾ(≧▽≦*)o 可用快捷键选取表情符号：😀😄😁🥳👻👽👀🚄 (Window系统：Win+.，Mac系统：Control+Command+Space)","reaction":true,"reactiontext":["点赞","踩一下","得意","不屑","尴尬","睡觉"],"reactiontitle":"你认为这篇文章怎么样？","requiredmeta":["nick","mail"],"search":true,"serverurl":"https://walinejs.comment.lithub.cc","sofa":"快来发表你的意见吧 (≧∀≦)ゞ","wordlimit":200},"css":{"alias":"@waline/client","file":"dist/waline.css","name":"waline","version":"3.5.7"},"js":{"alias":"@waline/client","file":"dist/waline.js","name":"waline","version":"3.5.7"}}}</script><script type=text/javascript src="/js/main.min.js?=1772265585" defer></script></body></html>

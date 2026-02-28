@@ -1,0 +1,395 @@
+<!doctype html><html lang=zh-CN data-theme=dark><head><meta charset=UTF-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=theme-color content="#222" media="(prefers-color-scheme: dark)"><meta name=generator content="Hugo 0.157.0"><link rel="shortcut icon" type=image/x-icon href=/imgs/icons/favicon.ico><link rel=icon type=image/x-icon href=/imgs/icons/favicon.ico><link rel=icon type=image/png sizes=16x16 href=/imgs/icons/favicon_32_32_next.png><link rel=icon type=image/png sizes=32x32 href=/imgs/icons/favicon_128_128_next.png><link rel=apple-touch-icon sizes=180x180 href=/imgs/icons/apple_touch_icon_next.png><meta itemprop=name content="用完成端口开发大响应规模的Winsock应用程序"><meta itemprop=description content="福兮祸兮，焉知所依？冬去冰泮，春来萌荣。朝生暮死，亦可惊鸿。知足者富，自足者强。"><meta name=description content="福兮祸兮，焉知所依？冬去冰泮，春来萌荣。朝生暮死，亦可惊鸿。知足者富，自足者强。"><meta itemprop=datePublished zgotmplz><meta itemprop=dateModified zgotmplz><meta itemprop=image content="https://blogs.qipai360.cn/imgs/avatar.jpg"><meta itemprop=keywords content="Reprint"><meta property="og:type" content="article"><meta property="og:title" content="用完成端口开发大响应规模的Winsock应用程序"><meta property="og:description" content="福兮祸兮，焉知所依？冬去冰泮，春来萌荣。朝生暮死，亦可惊鸿。知足者富，自足者强。"><meta property="og:image" content="/imgs/avatar.jpg"><meta property="og:image:width" content="312"><meta property="og:image:height" content="312"><meta property="og:image:type" content="image/jpeg/png/svg/jpg"><meta property="og:url" content="https://blogs.qipai360.cn/post/develop-winsock-apps-with-using-completion-ports/"><meta property="og:site_name" content="Rise的自留地"><meta property="og:locale" content="zh-CN"><meta property="article:author" content="Rise"><meta property="article:published_time" content="2007-04-24 22:23:00 +0800 +0800"><meta property="article:modified_time" content="2007-04-24 22:23:00 +0800 +0800"><link type=text/css rel=stylesheet href=https://blogs.qipai360.cn/js/3rd/font-awesome/6.7.2/css/all.min.css><link type=text/css rel=stylesheet href=https://blogs.qipai360.cn/js/3rd/animate.css/3.1.1/animate.min.css><link type=text/css rel=stylesheet href=https://blogs.qipai360.cn/js/3rd/viewerjs/1.11.6/viewer.min.css><link rel=stylesheet href="/css/main.min.css?=1772265588"><style type=text/css>.post-footer hr:after{content:"~ 我可是有底线的哟 ~"}.flinks-list-footer hr:after{content:"~ 我可是有底线的哟 ~"}</style><script type=text/javascript>(function(){localDB={set:function(e,t,n){if(n===0)return;const s=new Date,o=n*864e5,i={value:t,expiry:s.getTime()+o};localStorage.setItem(e,JSON.stringify(i))},get:function(e){const t=localStorage.getItem(e);if(!t)return 0[0];const n=JSON.parse(t),s=new Date;return s.getTime()>n.expiry?(localStorage.removeItem(e),0[0]):n.value}},theme={active:function(){const e=localDB.get("theme");if(e==null)return;theme.toggle(e),window.matchMedia("(prefers-color-scheme: dark)").addListener(function(e){theme.toggle(e.matches?"dark":"light")})},toggle:function(e){document.documentElement.setAttribute("data-theme",e),localDB.set("theme",e,2);const t=document.querySelector("iframe.giscus-frame");if(t){const n={setConfig:{theme:e}};t.contentWindow.postMessage({giscus:n},"https://giscus.app")}}},theme.active()})(window)</script><script type=text/javascript>document.addEventListener("DOMContentLoaded",()=>{var e=document.createElement("script");e.charset="UTF-8",e.src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js",e.async=!1,e.defer=!0,document.head.appendChild(e),e.onload=function(){NexT.utils.fmtBusuanzi()}})</script><script defer src=https://static.cloudflareinsights.com/beacon.min.js data-cf-beacon='{"token": "2b23669184fc49269e400525ac2447d9"}'></script><title>用完成端口开发大响应规模的Winsock应用程序 - Rise的自留地</title><noscript><link rel=stylesheet href=/css/noscript.css></noscript></head><body itemscope itemtype=http://schema.org/WebPage class=use-motion><div class=headband></div><main class=main><header class=header itemscope itemtype=http://schema.org/WPHeader><div class=header-inner><div class=site-brand-container><div class=site-nav-toggle><div class=toggle aria-label role=button><span class=toggle-line></span>
+<span class=toggle-line></span>
+<span class=toggle-line></span></div></div><div class=site-meta><a href=/ class=brand rel=start><i class=logo-line></i><h1 class=site-title>Rise的自留地</h1><i class=logo-line></i></a><p class=site-subtitle itemprop=description>记录生活中的点滴，分享编程技术和游戏开发经验。</p></div><div class=site-nav-right><div class="toggle popup-trigger"></div></div></div><nav class=site-nav><ul class="main-menu menu"><li class="menu-item menu-item-home"><a href=/ class=hvr-icon-pulse rel=section><i class="fa fa-home hvr-icon"></i>首页</a></li><li class="menu-item menu-item-about"><a href=/about.html class=hvr-icon-pulse rel=section><i class="fa fa-user hvr-icon"></i>关于</a></li><li class="menu-item menu-item-archives"><a href=/archives/ class=hvr-icon-pulse rel=section><i class="fa fa-archive hvr-icon"></i>归档
+<span class=badge>679</span></a></li><li class="menu-item menu-item-tags"><a href=/tags/ class=hvr-icon-pulse rel=section><i class="fa fa-tags hvr-icon"></i>标签</a></li><li class="menu-item menu-item-message"><a href=/message/ class=hvr-icon-pulse rel=section><i class="fa fa-comments hvr-icon"></i>留言板</a></li><li class="menu-item menu-item-commonweal"><a href=/404.html class=hvr-icon-pulse rel=section><i class="fa fa-heartbeat hvr-icon"></i>公益 404</a></li></ul></nav></div><div class="toggle sidebar-toggle" role=button><span class=toggle-line></span>
+<span class=toggle-line></span>
+<span class=toggle-line></span></div><aside class=sidebar><div class="sidebar-inner sidebar-overview-active"><ul class=sidebar-nav><li class=sidebar-nav-toc>文章目录</li><li class=sidebar-nav-overview>站点概览</li></ul><div class=sidebar-panel-container><div class="post-toc-wrap sidebar-panel"><div class="post-toc animated"><nav id=TableOfContents></nav></div></div><div class="site-overview-wrap sidebar-panel"><div class="site-author site-overview-item animated" itemprop=author itemscope itemtype=http://schema.org/Person><img class=site-author-image itemprop=image alt=Rise src=/imgs/img-lazy-loading.gif data-src=/imgs/avatar.jpg><p class=site-author-name itemprop=name>Rise</p><div class=site-description itemprop=description>福兮祸兮，焉知所依？冬去冰泮，春来萌荣。朝生暮死，亦可惊鸿。知足者富，自足者强。</div></div><div class="site-state-wrap site-overview-item animated"><nav class=site-state><div class="site-state-item site-state-posts"><a href=/archives/><span class=site-state-item-count>679</span>
+<span class=site-state-item-name>日志</span></a></div><div class="site-state-item site-state-categories"><a href=/categories/><span class=site-state-item-count>35</span>
+<span class=site-state-item-name>分类</span></a></div><div class="site-state-item site-state-tags"><a href=/tags/><span class=site-state-item-count>118</span>
+<span class=site-state-item-name>标签</span></a></div></nav></div><div class="links-of-social site-overview-item animated"><span class=links-of-social-item><a href=https://github.com/rise-worlds title="Github → https://github.com/rise-worlds" rel=noopener class=hvr-icon-pulse target=_blank><i class="fab fa-github fa-fw hvr-icon"></i>
+Github
+</a></span><span class=links-of-social-item><a href=mailto:rise.worlds@outlook.com title="E-Mail → mailto:rise.worlds@outlook.com" rel=noopener class=hvr-icon-pulse target=_blank><i class="fa fa-envelope fa-fw hvr-icon"></i>
+E-Mail
+</a></span><span class=links-of-social-item><a href=https://www.zhihu.com/people/rise-worlds title="知乎 → https://www.zhihu.com/people/rise-worlds" rel=noopener class=hvr-icon-pulse target=_blank><i class="fa fa-book fa-fw hvr-icon"></i>
+知乎
+</a></span><span class=links-of-social-item><a href=https://twitter.com/riseworlds title="Twitter → https://twitter.com/riseworlds" rel=noopener class=hvr-icon-pulse target=_blank><i class="fab fa-twitter fa-fw hvr-icon"></i>
+Twitter
+</a></span><span class=links-of-social-item><a href=https://www.facebook.com/rise.worlds title="facebook → https://www.facebook.com/rise.worlds" rel=noopener class=hvr-icon-pulse target=_blank><i class="fab fa-facebook fa-fw hvr-icon"></i>
+facebook
+</a></span><span class=links-of-social-item><a href=https://youtube.com/@YiXuan title="YouTube → https://youtube.com/@YiXuan" rel=noopener class=hvr-icon-pulse target=_blank><i class="fab fa-youtube fa-fw hvr-icon"></i>
+YouTube
+</a></span><span class=links-of-social-item><a href=https://instagram.com/rise.worlds title="Instagram → https://instagram.com/rise.worlds" rel=noopener class=hvr-icon-pulse target=_blank><i class="fab fa-instagram fa-fw hvr-icon"></i>
+Instagram
+</a></span><span class=links-of-social-item><a href=https://t.me/riseworlds title="Telegram → https://t.me/riseworlds" rel=noopener class=hvr-icon-pulse target=_blank><i class="fab fa-telegram fa-fw hvr-icon"></i>
+Telegram</a></span></div><div class="links-of-blogroll site-overview-item animated"><div class=links-of-blogroll-title><i class="fa fa-globe fa-fw"></i>
+友情链接</div><ul class=links-of-blogroll-list><li class=links-of-blogroll-item><a href=https://www.qipai360.cn title=https://www.qipai360.cn target=_blank>Qipai360</a></li><li class=links-of-blogroll-item><a href=https://www.cnblogs.com/flying_bat title=https://www.cnblogs.com/flying_bat target=_blank>博客园</a></li><li class=links-of-blogroll-item><a href=https://zishu.me title=https://zishu.me target=_blank>子舒的博客</a></li><li class=links-of-blogroll-item><a href=https://gitee.com/hugo-next/hugo-theme-next title=https://gitee.com/hugo-next/hugo-theme-next target=_blank>Hugo-NexT</a></li></ul></div></div></div></div><div id=siteinfo-card-widget class=sidebar-card-widget><div class=item-headline><i class="fas fa-chart-line"></i>
+<span>网站资讯</span></div><div class=siteinfo><div class=siteinfo-item><div class=item-name><i class="fa-solid fa-calendar-check"></i>已运行：</div><div class=item-count id=runTimes data-publishdate="2004-10-06 15:24:00 +0800 +0800"></div></div><div class=siteinfo-item><div class=item-name><i class="fas fa fa-user"></i>总访客数：</div><div class=item-count id=busuanzi_value_site_uv><i class="fa fa-sync fa-spin"></i></div></div><div class=siteinfo-item><div class=item-name><i class="fas fa fa-eye"></i>页面浏览：</div><div class=item-count id=busuanzi_value_site_pv><i class="fa fa-sync fa-spin"></i></div></div><div class=siteinfo-item><div class=item-name><i class="fa fa-font"></i>总字数：</div><div class=item-count id=wordsCount data-count=2423147></div></div><div class=siteinfo-item><div class=item-name><i class="fa fa-mug-hot"></i>阅读约：</div><div class=item-count id=readTimes data-times=5207></div></div><div class=siteinfo-item><div class=item-name><i class="fa fa-clock-rotate-left"></i>最后更新于：</div><div class=item-count id=last-push-date data-lastpushdate="2026-02-28 15:59:00 +0800 +0800"></div></div></div></div></aside><div class=sidebar-dimmer></div></header><div class=tool-buttons><div id=goto-comments class="button goto-comments" title=直达评论><i class="fas fa-comments"></i></div><div id=toggle-theme class=button title=深浅模式切换><i class="fas fa-adjust"></i></div><div class=back-to-top role=button title=返回顶部><i class="fa fa-arrow-up"></i>
+<span>0%</span></div></div><div class=reading-progress-bar></div><a role=button class="book-mark-link book-mark-link-fixed"></a><a href=https://github.com/rise-worlds rel="noopener external nofollow noreferrer" target=_blank title="Follow me on GitHub" class="exturl github-corner"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0 0 115 115h15l12 27L250 250V0z"/><path d="M128.3 109C113.8 99.7 119 89.6 119 89.6 122 82.7 120.5 78.6 120.5 78.6 119.2 72 123.4 76.3 123.4 76.3 127.3 80.9 125.5 87.3 125.5 87.3 122.9 97.6 130.6 101.9 134.4 103.2" fill="currentColor" style="transform-origin:130px 106px" class="octo-arm"/><path d="M115 115C114.9 115.1 118.7 116.5 119.8 115.4l13.9-13.8C136.9 99.2 139.9 98.4 142.2 98.6 133.8 88 127.5 74.4 143.8 58 148.5 53.4 154 51.2 159.7 51 160.3 49.4 163.2 43.6 171.4 40.1 171.4 40.1 176.1 42.5 178.8 56.2 183.1 58.6 187.2 61.8 190.9 65.4 194.5 69 197.7 73.2 200.1 77.6 213.8 80.2 216.3 84.9 216.3 84.9 212.7 93.1 206.9 96 205.4 96.6 205.1 102.4 203 107.8 198.3 112.5 181.9 128.9 168.3 122.5 157.7 114.1 157.9 116.9 156.7 120.9 152.7 124.9L141 136.5C139.8 137.7 141.6 141.9 141.8 141.8z" fill="currentColor" class="octo-body"/></svg></a><noscript><div class=noscript-warning>Theme NexT works best with JavaScript enabled</div></noscript><div class="main-inner post posts-expand"><div class=post-block><article itemscope itemtype=http://schema.org/Article class=post-content lang><link itemprop=mainEntityOfPage href=https://blogs.qipai360.cn/post/develop-winsock-apps-with-using-completion-ports/><span hidden itemprop=author itemscope itemtype=http://schema.org/Person><meta itemprop=image content="/imgs/avatar.jpg"><meta itemprop=name content="Rise"></span><span hidden itemprop=publisher itemscope itemtype=http://schema.org/Organization><meta itemprop=name content="Rise"><meta itemprop=description content="福兮祸兮，焉知所依？冬去冰泮，春来萌荣。朝生暮死，亦可惊鸿。知足者富，自足者强。"></span><span hidden itemprop=post itemscope itemtype=http://schema.org/CreativeWork><meta itemprop=name content="用完成端口开发大响应规模的Winsock应用程序"><meta itemprop=description content="原文出处：
+
+    http://msdn.microsoft.com/msdnmag/issues/1000/Winsock/
+    
+
+通常要开发网络应用程序并不是一件轻松的事情，不过，实际上只要掌握几个关键的原则也就可以了——创建和连接一个套接字，尝试进行连接，然后收发数据。真正难的是要写出一个可以接纳少则一个，多则数千个连接的网络应用程序。本文将讨论如何通过Winsock2在Windows NT 和 Windows 2000上开发高扩展能力的Winsock应用程序。文章主要的焦点在客户机/服务器模型的服务器这一方，当然，其中的许多要点对模型的双方都适用。"></span><header class=post-header><h1 class=post-title itemprop="name headline">用完成端口开发大响应规模的Winsock应用程序</h1><div class=post-meta-container><div class=post-meta-items><span class=post-meta-item><span class=post-meta-item-icon><i class="fas fa-solid fa-calendar"></i>
+</span><span class=post-meta-item-text title=发表于>发表于：
+</span><time title="创建时间：2007年04月24日 22:23:00 CST" itemprop="dateCreated datePublished" datetime="2007-04-24 22:23:00 +0800 +0800">2007年04月24日
+</time></span><span class=post-meta-item><span class=post-meta-item-icon><i class="fas fa-solid fa-folder-open"></i>
+</span><span class=post-meta-item-text title=分类于>分类于：
+</span><span itemprop=about itemscope itemtype=http://schema.org/Thing><a href=/categories/win32dev/ itemprop=url rel=index><span itemprop=name>dev/Win32Dev</span></a></span></span></div><div class=post-meta-items><span class=post-meta-item title=字数><span class=post-meta-item-icon><i class="fas fa-solid fa-file-word"></i>
+</span><span class=post-meta-item-text>字数：</span>
+<span>10357</span>
+</span><span class=post-meta-item title=阅读><span class=post-meta-item-icon><i class="fas fa-solid fa-clock"></i>
+</span><span class=post-meta-item-text>阅读：&ap;</span>
+<span>21分钟</span>
+</span><span class=post-meta-item title=浏览><span class=post-meta-item-icon><i class="fas fa-solid fa-eye"></i>
+</span><span class=post-meta-item-text>浏览：
+</span><span id=pageview-count data-path=/post/develop-winsock-apps-with-using-completion-ports/><i class="fa fa-sync fa-spin"></i></span></span></div></div></header><div class=post-body itemprop=articleBody><p>原文出处：
+<a href=http://msdn.microsoft.com/msdnmag/issues/1000/Winsock/ title=http://msdn.microsoft.com/msdnmag/issues/1000/Winsock/ rel="noopener external nofollow noreferrer" target=_blank class=exturl>http://msdn.microsoft.com/msdnmag/issues/1000/Winsock/</a></p><p>通常要开发网络应用程序并不是一件轻松的事情，不过，实际上只要掌握几个关键的原则也就可以了——创建和连接一个套接字，尝试进行连接，然后收发数据。真正难的是要写出一个可以接纳少则一个，多则数千个连接的网络应用程序。本文将讨论如何通过Winsock2在Windows NT 和 Windows 2000上开发高扩展能力的Winsock应用程序。文章主要的焦点在客户机/服务器模型的服务器这一方，当然，其中的许多要点对模型的双方都适用。</p><a id=more></a><p><strong>API与响应规模</strong></p><p>通过Win32的重叠I/O机制，应用程序可以提请一项I/O操作，重叠的操作请求在后台完成，而同一时间提请操作的线程去做其他的事情。等重叠操作完成后线程收到有关的通知。这种机制对那些耗时的操作而言特别有用。不过，像Windows 3.1上的WSAAsyncSelect()及Unix下的select()那样的函数虽然易于使用，但是它们不能满足响应规模的需要。而完成端口机制是针对操作系统内部进行了优化，在Windows NT 和 Windows 2000上，使用了完成端口的重叠I/O机制才能够真正扩大系统的响应规模。</p><p><strong>完成端口</strong></p><p>一个完成端口其实就是一个通知队列，由操作系统把已经完成的重叠I/O请求的通知放入其中。当某项I/O操作一旦完成，某个可以对该操作结果进行处理的工作者线程就会收到一则通知。而套接字在被创建后，可以在任何时候与某个完成端口进行关联。</p><p>通常情况下，我们会在应用程序中创建一定数量的工作者线程来处理这些通知。线程数量取决于应用程序的特定需要。理想的情况是，线程数量等于处理器的数量，不过这也要求任何线程都不应该执行诸如同步读写、等待事件通知等阻塞型的操作，以免线程阻塞。每个线程都将分到一定的CPU时间，在此期间该线程可以运行，然后另一个线程将分到一个时间片并开始执行。如果某个线程执行了阻塞型的操作，操作系统将剥夺其未使用的剩余时间片并让其它线程开始执行。也就是说，前一个线程没有充分使用其时间片，当发生这样的情况时，应用程序应该准备其它线程来充分利用这些时间片。</p><p>完成端口的使用分为两步。首先创建完成端口，如以下代码所示：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt id=hl-0-1><a class=lnlinks href=#hl-0-1> 1</a>
+</span><span class=lnt id=hl-0-2><a class=lnlinks href=#hl-0-2> 2</a>
+</span><span class=lnt id=hl-0-3><a class=lnlinks href=#hl-0-3> 3</a>
+</span><span class=lnt id=hl-0-4><a class=lnlinks href=#hl-0-4> 4</a>
+</span><span class=lnt id=hl-0-5><a class=lnlinks href=#hl-0-5> 5</a>
+</span><span class=lnt id=hl-0-6><a class=lnlinks href=#hl-0-6> 6</a>
+</span><span class=lnt id=hl-0-7><a class=lnlinks href=#hl-0-7> 7</a>
+</span><span class=lnt id=hl-0-8><a class=lnlinks href=#hl-0-8> 8</a>
+</span><span class=lnt id=hl-0-9><a class=lnlinks href=#hl-0-9> 9</a>
+</span><span class=lnt id=hl-0-10><a class=lnlinks href=#hl-0-10>10</a>
+</span><span class=lnt id=hl-0-11><a class=lnlinks href=#hl-0-11>11</a>
+</span><span class=lnt id=hl-0-12><a class=lnlinks href=#hl-0-12>12</a>
+</span><span class=lnt id=hl-0-13><a class=lnlinks href=#hl-0-13>13</a>
+</span><span class=lnt id=hl-0-14><a class=lnlinks href=#hl-0-14>14</a>
+</span><span class=lnt id=hl-0-15><a class=lnlinks href=#hl-0-15>15</a>
+</span><span class=lnt id=hl-0-16><a class=lnlinks href=#hl-0-16>16</a>
+</span><span class=lnt id=hl-0-17><a class=lnlinks href=#hl-0-17>17</a>
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=line><span class=cl><span class=n>HANDLE</span>    <span class=n>hIocp</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>hIocp</span> <span class=o>=</span> <span class=nf>CreateIoCompletionPort</span><span class=p>(</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>INVALID_HANDLE_VALUE</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=nb>NULL</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=p>(</span><span class=n>ULONG_PTR</span><span class=p>)</span><span class=mi>0</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=mi>0</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>if</span> <span class=p>(</span><span class=n>hIocp</span> <span class=o>==</span> <span class=nb>NULL</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>// Error
+</span></span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=p>}</span></span></span></code></pre></td></tr></table></div></div><p>完成端口创建后，要把将使用该完成端口的套接字与之关联起来。方法是再次调用CreateIoCompletionPort ()函数，第一个参数FileHandle设为套接字的句柄，第二个参数ExistingCompletionPort 设为刚刚创建的那个完成端口的句柄。<br>以下代码创建了一个套接字，并把它和前面创建的完成端口关联起来：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt id=hl-1-1><a class=lnlinks href=#hl-1-1> 1</a>
+</span><span class=lnt id=hl-1-2><a class=lnlinks href=#hl-1-2> 2</a>
+</span><span class=lnt id=hl-1-3><a class=lnlinks href=#hl-1-3> 3</a>
+</span><span class=lnt id=hl-1-4><a class=lnlinks href=#hl-1-4> 4</a>
+</span><span class=lnt id=hl-1-5><a class=lnlinks href=#hl-1-5> 5</a>
+</span><span class=lnt id=hl-1-6><a class=lnlinks href=#hl-1-6> 6</a>
+</span><span class=lnt id=hl-1-7><a class=lnlinks href=#hl-1-7> 7</a>
+</span><span class=lnt id=hl-1-8><a class=lnlinks href=#hl-1-8> 8</a>
+</span><span class=lnt id=hl-1-9><a class=lnlinks href=#hl-1-9> 9</a>
+</span><span class=lnt id=hl-1-10><a class=lnlinks href=#hl-1-10>10</a>
+</span><span class=lnt id=hl-1-11><a class=lnlinks href=#hl-1-11>11</a>
+</span><span class=lnt id=hl-1-12><a class=lnlinks href=#hl-1-12>12</a>
+</span><span class=lnt id=hl-1-13><a class=lnlinks href=#hl-1-13>13</a>
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=line><span class=cl><span class=n>SOCKET</span>    <span class=n>s</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=n>s</span> <span class=o>=</span> <span class=nf>socket</span><span class=p>(</span><span class=n>AF_INET</span><span class=p>,</span> <span class=n>SOCK_STREAM</span><span class=p>,</span> <span class=mi>0</span><span class=p>);</span>
+</span></span><span class=line><span class=cl><span class=k>if</span> <span class=p>(</span><span class=n>s</span> <span class=o>==</span> <span class=n>INVALID_SOCKET</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=c1>// Error
+</span></span></span><span class=line><span class=cl>    <span class=k>if</span> <span class=p>(</span><span class=nf>CreateIoCompletionPort</span><span class=p>((</span><span class=n>HANDLE</span><span class=p>)</span><span class=n>s</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=n>hIocp</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=p>(</span><span class=n>ULONG_PTR</span><span class=p>)</span><span class=mi>0</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=mi>1</span><span class=p>)</span> <span class=o>==</span> <span class=nb>NULL</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=c1>// Error
+</span></span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>    <span class=p>...</span>
+</span></span><span class=line><span class=cl><span class=p>}</span></span></span></code></pre></td></tr></table></div></div><p>这时就完成了套接字与完成端口的关联操作。在这个套接字上进行的任何重叠操作都将通过完成端口发出完成通知。注意，CreateIoCompletionPort()函数中的第三个参数用来设置一个与该套接字相关的“完成键(completion key)”(译者注：完成键可以是任何数据类型)。每当完成通知到来时，应用程序可以读取相应的完成键，因此，完成键可用来给套接字传递一些背景信息。</p><p>在创建了完成端口、将一个或多个套接字与之相关联之后，我们就要创建若干个线程来处理完成通知。这些线程不断循环调用GetQueuedCompletionStatus ()函数并返回完成通知。</p><p>下面，我们先来看看应用程序如何跟踪这些重叠操作。当应用程序调用一个重叠操作函数时，要把指向一个overlapped结构的指针包括在其参数中。当操作完成后，我们可以通过GetQueuedCompletionStatus()函数中拿回这个指针。不过，单是根据这个指针所指向的overlapped结构，应用程序并不能分辨究竟完成的是哪个操作。要实现对操作的跟踪，你可以自己定义一个OVERLAPPED结构，在其中加入所需的跟踪信息。</p><p>无论何时调用重叠操作函数时，总是会通过其lpOverlapped参数传递一个OVERLAPPEDPLUS结构(例如WSASend、 WSARecv等函数)。这就允许你为每一个重叠调用操作设置某些操作状态信息，当操作结束后，你可以通过GetQueuedCompletionStatus()函数获得你自定义结构的指针。注意OVERLAPPED字段不要求一定是这个扩展后的结构的第一个字段。当得到了指向OVERLAPPED结构的指针以后，可以用CONTAINING_RECORD宏取出其中指向扩展结构的指针。</p><p>OVERLAPPED 结构的定义如下：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt id=hl-2-1><a class=lnlinks href=#hl-2-1> 1</a>
+</span><span class=lnt id=hl-2-2><a class=lnlinks href=#hl-2-2> 2</a>
+</span><span class=lnt id=hl-2-3><a class=lnlinks href=#hl-2-3> 3</a>
+</span><span class=lnt id=hl-2-4><a class=lnlinks href=#hl-2-4> 4</a>
+</span><span class=lnt id=hl-2-5><a class=lnlinks href=#hl-2-5> 5</a>
+</span><span class=lnt id=hl-2-6><a class=lnlinks href=#hl-2-6> 6</a>
+</span><span class=lnt id=hl-2-7><a class=lnlinks href=#hl-2-7> 7</a>
+</span><span class=lnt id=hl-2-8><a class=lnlinks href=#hl-2-8> 8</a>
+</span><span class=lnt id=hl-2-9><a class=lnlinks href=#hl-2-9> 9</a>
+</span><span class=lnt id=hl-2-10><a class=lnlinks href=#hl-2-10>10</a>
+</span><span class=lnt id=hl-2-11><a class=lnlinks href=#hl-2-11>11</a>
+</span><span class=lnt id=hl-2-12><a class=lnlinks href=#hl-2-12>12</a>
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=line><span class=cl><span class=k>typedef</span> <span class=k>struct</span> <span class=n>_OVERLAPPEDPLUS</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl><span class=n>OVERLAPPED</span>        <span class=n>ol</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=n>SOCKET</span>            <span class=n>s</span><span class=p>,</span> <span class=n>sclient</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=kt>int</span>               <span class=n>OpCode</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=n>WSABUF</span>            <span class=n>wbuf</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=n>DWORD</span>             <span class=n>dwBytes</span><span class=p>,</span> <span class=n>dwFlags</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=c1>// 其它有用的信息
+</span></span></span><span class=line><span class=cl><span class=p>}</span> <span class=n>OVERLAPPEDPLUS</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=cp>#define OP_READ     0
+</span></span></span><span class=line><span class=cl><span class=cp>#define OP_WRITE    1
+</span></span></span><span class=line><span class=cl><span class=cp>#define OP_ACCEPT   2</span></span></span></code></pre></td></tr></table></div></div><p>下面让我们来看看工作者线程的情况。</p><p>工作线程WorkerThread代码：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt id=hl-3-1><a class=lnlinks href=#hl-3-1>  1</a>
+</span><span class=lnt id=hl-3-2><a class=lnlinks href=#hl-3-2>  2</a>
+</span><span class=lnt id=hl-3-3><a class=lnlinks href=#hl-3-3>  3</a>
+</span><span class=lnt id=hl-3-4><a class=lnlinks href=#hl-3-4>  4</a>
+</span><span class=lnt id=hl-3-5><a class=lnlinks href=#hl-3-5>  5</a>
+</span><span class=lnt id=hl-3-6><a class=lnlinks href=#hl-3-6>  6</a>
+</span><span class=lnt id=hl-3-7><a class=lnlinks href=#hl-3-7>  7</a>
+</span><span class=lnt id=hl-3-8><a class=lnlinks href=#hl-3-8>  8</a>
+</span><span class=lnt id=hl-3-9><a class=lnlinks href=#hl-3-9>  9</a>
+</span><span class=lnt id=hl-3-10><a class=lnlinks href=#hl-3-10> 10</a>
+</span><span class=lnt id=hl-3-11><a class=lnlinks href=#hl-3-11> 11</a>
+</span><span class=lnt id=hl-3-12><a class=lnlinks href=#hl-3-12> 12</a>
+</span><span class=lnt id=hl-3-13><a class=lnlinks href=#hl-3-13> 13</a>
+</span><span class=lnt id=hl-3-14><a class=lnlinks href=#hl-3-14> 14</a>
+</span><span class=lnt id=hl-3-15><a class=lnlinks href=#hl-3-15> 15</a>
+</span><span class=lnt id=hl-3-16><a class=lnlinks href=#hl-3-16> 16</a>
+</span><span class=lnt id=hl-3-17><a class=lnlinks href=#hl-3-17> 17</a>
+</span><span class=lnt id=hl-3-18><a class=lnlinks href=#hl-3-18> 18</a>
+</span><span class=lnt id=hl-3-19><a class=lnlinks href=#hl-3-19> 19</a>
+</span><span class=lnt id=hl-3-20><a class=lnlinks href=#hl-3-20> 20</a>
+</span><span class=lnt id=hl-3-21><a class=lnlinks href=#hl-3-21> 21</a>
+</span><span class=lnt id=hl-3-22><a class=lnlinks href=#hl-3-22> 22</a>
+</span><span class=lnt id=hl-3-23><a class=lnlinks href=#hl-3-23> 23</a>
+</span><span class=lnt id=hl-3-24><a class=lnlinks href=#hl-3-24> 24</a>
+</span><span class=lnt id=hl-3-25><a class=lnlinks href=#hl-3-25> 25</a>
+</span><span class=lnt id=hl-3-26><a class=lnlinks href=#hl-3-26> 26</a>
+</span><span class=lnt id=hl-3-27><a class=lnlinks href=#hl-3-27> 27</a>
+</span><span class=lnt id=hl-3-28><a class=lnlinks href=#hl-3-28> 28</a>
+</span><span class=lnt id=hl-3-29><a class=lnlinks href=#hl-3-29> 29</a>
+</span><span class=lnt id=hl-3-30><a class=lnlinks href=#hl-3-30> 30</a>
+</span><span class=lnt id=hl-3-31><a class=lnlinks href=#hl-3-31> 31</a>
+</span><span class=lnt id=hl-3-32><a class=lnlinks href=#hl-3-32> 32</a>
+</span><span class=lnt id=hl-3-33><a class=lnlinks href=#hl-3-33> 33</a>
+</span><span class=lnt id=hl-3-34><a class=lnlinks href=#hl-3-34> 34</a>
+</span><span class=lnt id=hl-3-35><a class=lnlinks href=#hl-3-35> 35</a>
+</span><span class=lnt id=hl-3-36><a class=lnlinks href=#hl-3-36> 36</a>
+</span><span class=lnt id=hl-3-37><a class=lnlinks href=#hl-3-37> 37</a>
+</span><span class=lnt id=hl-3-38><a class=lnlinks href=#hl-3-38> 38</a>
+</span><span class=lnt id=hl-3-39><a class=lnlinks href=#hl-3-39> 39</a>
+</span><span class=lnt id=hl-3-40><a class=lnlinks href=#hl-3-40> 40</a>
+</span><span class=lnt id=hl-3-41><a class=lnlinks href=#hl-3-41> 41</a>
+</span><span class=lnt id=hl-3-42><a class=lnlinks href=#hl-3-42> 42</a>
+</span><span class=lnt id=hl-3-43><a class=lnlinks href=#hl-3-43> 43</a>
+</span><span class=lnt id=hl-3-44><a class=lnlinks href=#hl-3-44> 44</a>
+</span><span class=lnt id=hl-3-45><a class=lnlinks href=#hl-3-45> 45</a>
+</span><span class=lnt id=hl-3-46><a class=lnlinks href=#hl-3-46> 46</a>
+</span><span class=lnt id=hl-3-47><a class=lnlinks href=#hl-3-47> 47</a>
+</span><span class=lnt id=hl-3-48><a class=lnlinks href=#hl-3-48> 48</a>
+</span><span class=lnt id=hl-3-49><a class=lnlinks href=#hl-3-49> 49</a>
+</span><span class=lnt id=hl-3-50><a class=lnlinks href=#hl-3-50> 50</a>
+</span><span class=lnt id=hl-3-51><a class=lnlinks href=#hl-3-51> 51</a>
+</span><span class=lnt id=hl-3-52><a class=lnlinks href=#hl-3-52> 52</a>
+</span><span class=lnt id=hl-3-53><a class=lnlinks href=#hl-3-53> 53</a>
+</span><span class=lnt id=hl-3-54><a class=lnlinks href=#hl-3-54> 54</a>
+</span><span class=lnt id=hl-3-55><a class=lnlinks href=#hl-3-55> 55</a>
+</span><span class=lnt id=hl-3-56><a class=lnlinks href=#hl-3-56> 56</a>
+</span><span class=lnt id=hl-3-57><a class=lnlinks href=#hl-3-57> 57</a>
+</span><span class=lnt id=hl-3-58><a class=lnlinks href=#hl-3-58> 58</a>
+</span><span class=lnt id=hl-3-59><a class=lnlinks href=#hl-3-59> 59</a>
+</span><span class=lnt id=hl-3-60><a class=lnlinks href=#hl-3-60> 60</a>
+</span><span class=lnt id=hl-3-61><a class=lnlinks href=#hl-3-61> 61</a>
+</span><span class=lnt id=hl-3-62><a class=lnlinks href=#hl-3-62> 62</a>
+</span><span class=lnt id=hl-3-63><a class=lnlinks href=#hl-3-63> 63</a>
+</span><span class=lnt id=hl-3-64><a class=lnlinks href=#hl-3-64> 64</a>
+</span><span class=lnt id=hl-3-65><a class=lnlinks href=#hl-3-65> 65</a>
+</span><span class=lnt id=hl-3-66><a class=lnlinks href=#hl-3-66> 66</a>
+</span><span class=lnt id=hl-3-67><a class=lnlinks href=#hl-3-67> 67</a>
+</span><span class=lnt id=hl-3-68><a class=lnlinks href=#hl-3-68> 68</a>
+</span><span class=lnt id=hl-3-69><a class=lnlinks href=#hl-3-69> 69</a>
+</span><span class=lnt id=hl-3-70><a class=lnlinks href=#hl-3-70> 70</a>
+</span><span class=lnt id=hl-3-71><a class=lnlinks href=#hl-3-71> 71</a>
+</span><span class=lnt id=hl-3-72><a class=lnlinks href=#hl-3-72> 72</a>
+</span><span class=lnt id=hl-3-73><a class=lnlinks href=#hl-3-73> 73</a>
+</span><span class=lnt id=hl-3-74><a class=lnlinks href=#hl-3-74> 74</a>
+</span><span class=lnt id=hl-3-75><a class=lnlinks href=#hl-3-75> 75</a>
+</span><span class=lnt id=hl-3-76><a class=lnlinks href=#hl-3-76> 76</a>
+</span><span class=lnt id=hl-3-77><a class=lnlinks href=#hl-3-77> 77</a>
+</span><span class=lnt id=hl-3-78><a class=lnlinks href=#hl-3-78> 78</a>
+</span><span class=lnt id=hl-3-79><a class=lnlinks href=#hl-3-79> 79</a>
+</span><span class=lnt id=hl-3-80><a class=lnlinks href=#hl-3-80> 80</a>
+</span><span class=lnt id=hl-3-81><a class=lnlinks href=#hl-3-81> 81</a>
+</span><span class=lnt id=hl-3-82><a class=lnlinks href=#hl-3-82> 82</a>
+</span><span class=lnt id=hl-3-83><a class=lnlinks href=#hl-3-83> 83</a>
+</span><span class=lnt id=hl-3-84><a class=lnlinks href=#hl-3-84> 84</a>
+</span><span class=lnt id=hl-3-85><a class=lnlinks href=#hl-3-85> 85</a>
+</span><span class=lnt id=hl-3-86><a class=lnlinks href=#hl-3-86> 86</a>
+</span><span class=lnt id=hl-3-87><a class=lnlinks href=#hl-3-87> 87</a>
+</span><span class=lnt id=hl-3-88><a class=lnlinks href=#hl-3-88> 88</a>
+</span><span class=lnt id=hl-3-89><a class=lnlinks href=#hl-3-89> 89</a>
+</span><span class=lnt id=hl-3-90><a class=lnlinks href=#hl-3-90> 90</a>
+</span><span class=lnt id=hl-3-91><a class=lnlinks href=#hl-3-91> 91</a>
+</span><span class=lnt id=hl-3-92><a class=lnlinks href=#hl-3-92> 92</a>
+</span><span class=lnt id=hl-3-93><a class=lnlinks href=#hl-3-93> 93</a>
+</span><span class=lnt id=hl-3-94><a class=lnlinks href=#hl-3-94> 94</a>
+</span><span class=lnt id=hl-3-95><a class=lnlinks href=#hl-3-95> 95</a>
+</span><span class=lnt id=hl-3-96><a class=lnlinks href=#hl-3-96> 96</a>
+</span><span class=lnt id=hl-3-97><a class=lnlinks href=#hl-3-97> 97</a>
+</span><span class=lnt id=hl-3-98><a class=lnlinks href=#hl-3-98> 98</a>
+</span><span class=lnt id=hl-3-99><a class=lnlinks href=#hl-3-99> 99</a>
+</span><span class=lnt id=hl-3-100><a class=lnlinks href=#hl-3-100>100</a>
+</span><span class=lnt id=hl-3-101><a class=lnlinks href=#hl-3-101>101</a>
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=line><span class=cl><span class=n>DWORD</span> <span class=n>WINAPI</span> <span class=nf>WorkerThread</span><span class=p>(</span><span class=n>LPVOID</span> <span class=n>lpParam</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=n>ULONG_PTR</span>       <span class=o>*</span><span class=n>PerHandleKey</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=n>OVERLAPPED</span>      <span class=o>*</span><span class=n>Overlap</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=n>OVERLAPPEDPLUS</span>  <span class=o>*</span><span class=n>OverlapPlus</span><span class=p>,</span> <span class=o>*</span><span class=n>newolp</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=n>DWORD</span>           <span class=n>dwBytesXfered</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=k>while</span> <span class=p>(</span><span class=mi>1</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=n>ret</span> <span class=o>=</span> <span class=nf>GetQueuedCompletionStatus</span><span class=p>(</span>
+</span></span><span class=line><span class=cl>            <span class=n>hIocp</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>            <span class=o>&amp;</span><span class=n>dwBytesXfered</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>            <span class=p>(</span><span class=n>PULONG_PTR</span><span class=p>)</span><span class=o>&amp;</span><span class=n>PerHandleKey</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>            <span class=o>&amp;</span><span class=n>Overlap</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>            <span class=n>INFINITE</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        <span class=k>if</span> <span class=p>(</span><span class=n>ret</span> <span class=o>==</span> <span class=mi>0</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=p>{</span>
+</span></span><span class=line><span class=cl>            <span class=c1>// Operation failed
+</span></span></span><span class=line><span class=cl>            <span class=k>continue</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        <span class=n>OverlapPlus</span> <span class=o>=</span> <span class=nf>CONTAINING_RECORD</span><span class=p>(</span><span class=n>Overlap</span><span class=p>,</span> <span class=n>OVERLAPPEDPLUS</span><span class=p>,</span> <span class=n>ol</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>        <span class=k>switch</span> <span class=p>(</span><span class=n>OverlapPlus</span><span class=o>-&gt;</span><span class=n>OpCode</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=k>case</span> <span class=nl>OP_ACCEPT</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>            <span class=c1>// Client socket is contained in OverlapPlus.sclient
+</span></span></span><span class=line><span class=cl>            <span class=c1>// Add client to completion port
+</span></span></span><span class=line><span class=cl>            <span class=nf>CreateIoCompletionPort</span><span class=p>(</span>
+</span></span><span class=line><span class=cl>            <span class=p>(</span><span class=n>HANDLE</span><span class=p>)</span><span class=n>OverlapPlus</span><span class=o>-&gt;</span><span class=n>sclient</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>                <span class=n>hIocp</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>                <span class=p>(</span><span class=n>ULONG_PTR</span><span class=p>)</span><span class=mi>0</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>                <span class=mi>0</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>            <span class=c1>//  Need a new OVERLAPPEDPLUS structure
+</span></span></span><span class=line><span class=cl>            <span class=c1>//  for the newly accepted socket. Perhaps
+</span></span></span><span class=line><span class=cl>            <span class=c1>//  keep a look aside list of free structures.
+</span></span></span><span class=line><span class=cl>            <span class=n>newolp</span> <span class=o>=</span> <span class=nf>AllocateOverlappedPlus</span><span class=p>();</span>
+</span></span><span class=line><span class=cl>            <span class=k>if</span> <span class=p>(</span><span class=o>!</span><span class=n>newolp</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>            <span class=p>{</span>
+</span></span><span class=line><span class=cl>                <span class=c1>// Error
+</span></span></span><span class=line><span class=cl>            <span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>            <span class=n>newolp</span><span class=o>-&gt;</span><span class=n>s</span> <span class=o>=</span> <span class=n>OverlapPlus</span><span class=o>-&gt;</span><span class=n>sclient</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>            <span class=n>newolp</span><span class=o>-&gt;</span><span class=n>OpCode</span> <span class=o>=</span> <span class=n>OP_READ</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>            <span class=c1>// This function prepares the data to be sent
+</span></span></span><span class=line><span class=cl>            <span class=nf>PrepareSendBuffer</span><span class=p>(</span><span class=o>&amp;</span><span class=n>newolp</span><span class=o>-&gt;</span><span class=n>wbuf</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>            <span class=n>ret</span> <span class=o>=</span> <span class=nf>WSASend</span><span class=p>(</span>
+</span></span><span class=line><span class=cl>                <span class=n>newolp</span><span class=o>-&gt;</span><span class=n>s</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>                <span class=o>&amp;</span><span class=n>newolp</span><span class=o>-&gt;</span><span class=n>wbuf</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>                <span class=mi>1</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>                <span class=o>&amp;</span><span class=n>newolp</span><span class=o>-&gt;</span><span class=n>dwBytes</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>                <span class=mi>0</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>                <span class=o>&amp;</span><span class=n>newolp</span><span class=p>.</span><span class=n>ol</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>                <span class=nb>NULL</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>            <span class=k>if</span> <span class=p>(</span><span class=n>ret</span> <span class=o>==</span> <span class=n>SOCKET_ERROR</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>            <span class=p>{</span>
+</span></span><span class=line><span class=cl>                <span class=k>if</span> <span class=p>(</span><span class=nf>WSAGetLastError</span><span class=p>()</span> <span class=o>!=</span> <span class=n>WSA_IO_PENDING</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>                <span class=p>{</span>
+</span></span><span class=line><span class=cl>                <span class=c1>// Error
+</span></span></span><span class=line><span class=cl>                <span class=p>}</span>
+</span></span><span class=line><span class=cl>            <span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>            <span class=c1>// Put structure in look aside list for later use
+</span></span></span><span class=line><span class=cl>            <span class=nf>FreeOverlappedPlus</span><span class=p>(</span><span class=n>OverlapPlus</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>            <span class=c1>// Signal accept thread to issue another AcceptEx
+</span></span></span><span class=line><span class=cl>            <span class=nf>SetEvent</span><span class=p>(</span><span class=n>hAcceptThread</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>            <span class=k>break</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=k>case</span> <span class=nl>OP_READ</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>            <span class=c1>// Process the data read
+</span></span></span><span class=line><span class=cl>            <span class=c1>// ...
+</span></span></span><span class=line><span class=cl>            <span class=c1>// Repost the read if necessary, reusing the same
+</span></span></span><span class=line><span class=cl>            <span class=c1>// receive buffer as before
+</span></span></span><span class=line><span class=cl>            <span class=nf>memset</span><span class=p>(</span><span class=o>&amp;</span><span class=n>OverlapPlus</span><span class=o>-&gt;</span><span class=n>ol</span><span class=p>,</span> <span class=mi>0</span><span class=p>,</span> <span class=k>sizeof</span><span class=p>(</span><span class=n>OVERLAPPED</span><span class=p>));</span>
+</span></span><span class=line><span class=cl>            <span class=n>ret</span> <span class=o>=</span> <span class=nf>WSARecv</span><span class=p>(</span>
+</span></span><span class=line><span class=cl>                <span class=n>OverlapPlus</span><span class=o>-&gt;</span><span class=n>s</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>                <span class=o>&amp;</span><span class=n>OverlapPlus</span><span class=o>-&gt;</span><span class=n>wbuf</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>                <span class=mi>1</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>                <span class=o>&amp;</span><span class=n>OverlapPlus</span><span class=o>-&gt;</span><span class=n>dwBytes</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>                <span class=o>&amp;</span><span class=n>OverlapPlus</span><span class=o>-&gt;</span><span class=n>dwFlags</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>                <span class=o>&amp;</span><span class=n>OverlapPlus</span><span class=o>-&gt;</span><span class=n>ol</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>                <span class=nb>NULL</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>            <span class=k>if</span> <span class=p>(</span><span class=n>ret</span> <span class=o>==</span> <span class=n>SOCKET_ERROR</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>            <span class=p>{</span>
+</span></span><span class=line><span class=cl>                <span class=k>if</span> <span class=p>(</span><span class=nf>WSAGetLastError</span><span class=p>()</span> <span class=o>!=</span> <span class=n>WSA_IO_PENDING</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>                <span class=p>{</span>
+</span></span><span class=line><span class=cl>                <span class=c1>// Error
+</span></span></span><span class=line><span class=cl>                <span class=p>}</span>
+</span></span><span class=line><span class=cl>            <span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>            <span class=k>break</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=k>case</span> <span class=nl>OP_WRITE</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>            <span class=c1>// Process the data sent, etc.
+</span></span></span><span class=line><span class=cl>            <span class=k>break</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=p>}</span> <span class=c1>// switch
+</span></span></span><span class=line><span class=cl>    <span class=p>}</span> <span class=c1>// while
+</span></span></span><span class=line><span class=cl><span class=p>}</span>  <span class=c1>// WorkerThread
+</span></span></span></code></pre></td></tr></table></div></div><p>其中每句柄键(PerHandleKey)变量的内容，是在把完成端口与套接字进行关联时所设置的完成键参数；Overlap参数返回的是一个指向发出重叠操作时所使用的那个OVERLAPPEDPLUS结构的指针。</p><p>要记住，如果重叠操作调用失败时(也就是说，返回值是SOCKET_ERROR，并且错误原因不是WSA_IO_PENDING)，那么完成端口将不会收到任何完成通知。如果重叠操作调用成功，或者发生原因是WSA_IO_PENDING的错误时，完成端口将总是能够收到完成通知。</p><p><strong>Windows NT和Windows 2000的套接字架构</strong></p><p>对于开发大响应规模的Winsock应用程序而言，对Windows NT和Windows 2000的套接字架构有基本的了解是很有帮助的。下图是Windows 2000中的Winsock架构：<br><img src=/imgs/img-lazy-loading.gif data-src=http://www.vckbase.net/document/journal/vckbase50/images/winsockfig03.gif alt></p><p>与其它类型操作系统不同，Windows NT和Windows 2000的传输协议没有一种风格像套接字那样的、可以和应用程序直接交谈的界面，而是采用了一种更为底层的API，叫做传输驱动程序界面(Transport Driver Interface,TDI)。Winsock的核心模式驱动程序负责连接和缓冲区管理，以便向应用程序提供套接字仿真(在AFD.SYS文件中实现)，同时负责与底层传输驱动程序对话。</p><p><strong>谁来负责管理缓冲区？</strong></p><p>正如上面所说的，应用程序通过Winsock来和传输协议驱动程序交谈，而AFD.SYS负责为应用程序进行缓冲区管理。也就是说，当应用程序调用send()或WSASend()函数来发送数据时，AFD.SYS将把数据拷贝进它自己的内部缓冲区(取决于SO_SNDBUF设定值)，然后send()或WSASend()函数立即返回。也可以这么说，AFD.SYS在后台负责把数据发送出去。不过，如果应用程序要求发出的数据超过了SO_SNDBUF设定的缓冲区大小，那么WSASend()函数会阻塞，直至所有数据发送完毕。</p><p>从远程客户端接收数据的情况也类似。只要不用从应用程序那里接收大量的数据，而且没有超出SO_RCVBUF设定的值，AFD.SYS将把数据先拷贝到其内部缓冲区中。当应用程序调用recv()或WSARecv()函数时，数据将从内部缓冲拷贝到应用程序提供的缓冲区。</p><p>多数情况下，这样的架构运行良好，特别在是应用程序采用传统的套接字下非重叠的send()和receive()模式编写的时候。不过程序员要小心的是，尽管可以通过setsockopt()这个API来把SO_SNDBUF和SO_RCVBUF选项值设成0(关闭内部缓冲区)，但是程序员必须十分清楚把AFD.SYS的内部缓冲区关掉会造成什么后果，避免收发数据时有关的缓冲区拷贝可能引起的系统崩溃。</p><p>举例来说，一个应用程序通过设定SO_SNDBUF为0把缓冲区关闭，然后发出一个阻塞send()调用。在这样的情况下，系统内核会把应用程序的缓冲区锁定，直到接收方确认收到了整个缓冲区后send()调用才返回。似乎这是一种判定你的数据是否已经为对方全部收到的简洁的方法，实际上却并非如此。想想看，即使远端TCP通知数据已经收到，其实也根本不代表数据已经成功送给客户端应用程序，比如对方可能发生资源不足的情况，导致AFD.SYS不能把数据拷贝给应用程序。另一个更要紧的问题是，在每个线程中每次只能进行一次发送调用，效率极其低下。</p><p>把SO_RCVBUF设为0，关闭AFD.SYS的接收缓冲区也不能让性能得到提升，这只会迫使接收到的数据在比Winsock更低的层次进行缓冲，当你发出receive调用时，同样要进行缓冲区拷贝，因此你本来想避免缓冲区拷贝的阴谋不会得逞。</p><p>现在我们应该清楚了，关闭缓冲区对于多数应用程序而言并不是什么好主意。只要要应用程序注意随时在某个连接上保持几个WSARecvs重叠调用，那么通常没有必要关闭接收缓冲区。如果AFD.SYS总是有由应用程序提供的缓冲区可用，那么它将没有必要使用内部缓冲区。</p><p>高性能的服务器应用程序可以关闭发送缓冲区，同时不会损失性能。不过，这样的应用程序必须十分小心，保证它总是发出多个重叠发送调用，而不是等待某个重叠发送结束了才发出下一个。如果应用程序是按一个发完再发下一个的顺序来操作，那浪费掉两次发送中间的空档时间，总之是要保证传输驱动程序在发送完一个缓冲区后，立刻可以转向另一个缓冲区。</p><p><strong>资源的限制条件</strong></p><p>在设计任何服务器应用程序时，其强健性是主要的目标。也就是说，</p><p>你的应用程序要能够应对任何突发的问题，例如并发客户请求数达到峰值、可用内存临时出现不足、以及其它短时间的现象。这就要求程序的设计者注意Windows NT和2000系统下的资源限制条件的问题，从容地处理突发性事件。</p><p>你可以直接控制的、最基本的资源就是网络带宽。通常，使用用户数据报协议(UDP)的应用程序都可能会比较注意带宽方面的限制，以最大限度地减少包的丢失。然而，在使用TCP连接时，服务器必须十分小心地控制好，防止网络带宽过载超过一定的时间，否则将需要重发大量的包或造成大量连接中断。关于带宽管理的方法应根据不同的应用程序而定，这超出了本文讨论的范围。</p><p>虚拟内存的使用也必须很小心地管理。通过谨慎地申请和释放内存，或者应用lookaside lists(一种高速缓存)技术来重新使用已分配的内存，将有助于控制服务器应用程序的内存开销(原文为“让服务器应用程序留下的脚印小一点”)，避免操作系统频繁地将应用程序申请的物理内存交换到虚拟内存中(原文为“让操作系统能够总是把更多的应用程序地址空间更多地保留在内存中”)。你也可以通过SetWorkingSetSize()这个Win32 API让操作系统分配给你的应用程序更多的物理内存。</p><p>在使用Winsock时还可能碰到另外两个非直接的资源不足情况。一个是被锁定的内存页面的极限。如果你把AFD.SYS的缓冲关闭，当应用程序收发数据时，应用程序缓冲区的所有页面将被锁定到物理内存中。这是因为内核驱动程序需要访问这些内存，在此期间这些页面不能交换出去。如果操作系统需要给其它应用程序分配一些可分页的物理内存，而又没有足够的内存时就会发生问题。我们的目标是要防止写出一个病态的、锁定所有物理内存、让系统崩溃的程序。也就是说，你的程序锁定内存时，不要超出系统规定的内存分页极限。</p><p>在Windows NT和2000系统上，所有应用程序总共可以锁定的内存大约是物理内存的1/8(不过这只是一个大概的估计，不是你计算内存的依据)。如果你的应用程序不注意这一点，当你的发出太多的重叠收发调用，而且I/O没来得及完成时，就可能偶尔发生ERROR_INSUFFICIENT_RESOURCES的错误。在这种情况下你要避免过度锁定内存。同时要注意，系统会锁定包含你的缓冲区所在的整个内存页面，因此缓冲区靠近页边界时是有代价的(译者理解，缓冲区如果正好超过页面边界，那怕是1个字节，超出的这个字节所在的页面也会被锁定)。</p><p>另外一个限制是你的程序可能会遇到系统未分页池资源不足的情况。所谓未分页池是一块永远不被交换出去的内存区域，这块内存用来存储一些供各种内核组件访问的数据，其中有的内核组件是不能访问那些被交换出去的页面空间的。Windows NT和2000的驱动程序能够从这个特定的未分页池分配内存。</p><p>当应用程序创建一个套接字(或者是类似的打开某个文件)时，内核会从未分页池中分配一定数量的内存，而且在绑定、连接套接字时，内核又会从未分页池中再分配一些内存。当你注意观察这种行为时你将发现，如果你发出某些I/O请求时(例如收发数据)，你会从未分页池里再分配多一些内存(比如要追踪某个待决的I/O操作，你可能需要给这个操作添加一个自定义结构，如前文所提及的)。最后这就可能会造成一定的问题，操作系统会限制未分页内存的用量。</p><p>在Windows NT和2000这两种操作系统上，给每个连接分配的未分页内存的具体数量是不同的，未来版本的Windows很可能也不同。为了使应用程序的生命期更长，你就不应该计算对未分页池内存的具体需求量。</p><p>你的程序必须防止消耗到未分页池的极限。当系统中未分页池剩余空间太小时，某些与你的应用程序毫无关系的内核驱动就会发疯，甚至造成系统崩溃，特别是当系统中有第三方设备或驱动程序时，更容易发生这样的惨剧(而且无法预测)。同时你还要记住，同一台电脑上还可能运行有其它同样消耗未分页池的其它应用程序，因此在设计你的应用程序时，对资源量的预估要特别保守和谨慎。</p><p>处理资源不足的问题是十分复杂的，因为发生上述情况时你不会收到特别的错误代码，通常你只能收到一般性的WSAENOBUFS或者ERROR_INSUFFICIENT_RESOURCES 错误。要处理这些错误，首先，把你的应用程序工作配置调整到合理的最大值(译者注：所谓工作配置，是指应用程序各部分运行中所需的内存用量，请参考
+<a href=http://msdn.microsoft.com/msdnmag/issues/1000/Bugslayer/Bugslayer1000.asp title=http://msdn.microsoft.com/msdnmag/issues/1000/Bugslayer/Bugslayer1000.asp rel="noopener external nofollow noreferrer" target=_blank class=exturl>http://msdn.microsoft.com/msdnmag/issues/1000/Bugslayer/Bugslayer1000.asp
+</a>，关于内存优化，译者另有译文)，如果错误继续出现，那么注意检查是否是网络带宽不足的问题。之后，请确认你没有同时发出太多的收发调用。最后，如果还是收到资源不足的错误，那就很可能是遇到了未分页内存池不足的问题了。要释放未分页内存池空间，请关闭应用程序中相当部分的连接，等待系统自行渡过和修正这个瞬时的错误。</p><p><strong>接受连接请求</strong></p><p>服务器要做的最普通的事情之一就是接受来自客户端的连接请求。在套接字上使用重叠I/O接受连接的惟一API就是AcceptEx()函数。有趣的是，通常的同步接受函数accept()的返回值是一个新的套接字，而AcceptEx()函数则需要另外一个套接字作为它的参数之一。这是因为AcceptEx()是一个重叠操作，所以你需要事先创建一个套接字(但不要绑定或连接它)，并把这个套接字通过参数传给AcceptEx()。以下是一小段典型的使用AcceptEx()的伪代码：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt id=hl-4-1><a class=lnlinks href=#hl-4-1>1</a>
+</span><span class=lnt id=hl-4-2><a class=lnlinks href=#hl-4-2>2</a>
+</span><span class=lnt id=hl-4-3><a class=lnlinks href=#hl-4-3>3</a>
+</span><span class=lnt id=hl-4-4><a class=lnlinks href=#hl-4-4>4</a>
+</span><span class=lnt id=hl-4-5><a class=lnlinks href=#hl-4-5>5</a>
+</span><span class=lnt id=hl-4-6><a class=lnlinks href=#hl-4-6>6</a>
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=line><span class=cl><span class=k>do</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl><span class=o>-</span><span class=err>等待上一个</span> <span class=n>AcceptEx</span> <span class=err>完成</span>
+</span></span><span class=line><span class=cl><span class=o>-</span><span class=err>创建一个新套接字并与完成端口进行关联</span>
+</span></span><span class=line><span class=cl><span class=o>-</span><span class=err>设置背景结构等等</span>
+</span></span><span class=line><span class=cl><span class=o>-</span><span class=err>发出一个</span> <span class=n>AcceptEx</span> <span class=err>请求</span>
+</span></span><span class=line><span class=cl><span class=p>}</span><span class=k>while</span><span class=p>(</span><span class=n>TRUE</span><span class=p>);</span></span></span></code></pre></td></tr></table></div></div><p>作为一个高响应能力的服务器，它必须发出足够的AcceptEx调用，守候着，一旦出现客户端连接请求就立刻响应。至于发出多少个AcceptEx才够，就取决于你的服务器程序所期待的通信交通类型。比如，如果进入连接率高的情况(因为连接持续时间较短，或者出现交通高峰)，那么所需要守候的AcceptEx当然要比那些偶尔进入的客户端连接的情况要多。聪明的做法是，由应用程序来分析交通状况，并调整AcceptEx守候的数量，而不是固定在某个数量上。</p><p>对于Windows2000，Winsock提供了一些机制，帮助你判定AcceptEx的数量是否足够。这就是，在创建监听套接字时创建一个事件，通过WSAEventSelect()这个API并注册FD_ACCEPT事件通知来把套接字和这个事件关联起来。一旦系统收到一个连接请求，如果系统中没有AcceptEx()正在等待接受连接，那么上面的事件将收到一个信号。通过这个事件，你就可以判断你有没有发出足够的AcceptEx()，或者检测出一个非正常的客户请求(下文述)。这种机制对Windows NT 4.0不适用。</p><p>使用AcceptEx()的一大好处是，你可以通过一次调用就完成接受客户端连接请求和接受数据(通过传送lpOutputBuffer参数)两件事情。也就是说，如果客户端在发出连接的同时传输数据，你的AcceptEx()调用在连接创建并接收了客户端数据后就可以立刻返回。这样可能是很有用的，但是也可能会引发问题，因为AcceptEx()必须等全部客户端数据都收到了才返回。具体来说，如果你在发出AcceptEx()调用的同时传递了lpOutputBuffer参数，那么AcceptEx()不再是一项原子型的操作，而是分成了两步：接受客户连接，等待接收数据。当缺少一种机制来通知你的应用程序所发生的这种情况：“连接已经建立了，正在等待客户端数据”，这将意味着有可能出现客户端只发出连接请求，但是不发送数据。如果你的服务器收到太多这种类型的连接时，它将拒绝连接更多的合法客户端请求。这就是黑客进行“拒绝服务”攻击的常见手法。</p><p>要预防此类攻击，接受连接的线程应该不时地通过调用getsockopt()函数(选项参数为SO_CONNECT_TIME)来检查AcceptEx()里守候的套接字。getsockopt()函数的选项值将被设置为套接字被连接的时间，或者设置为-1(代表套接字尚未建立连接)。这时，WSAEventSelect()的特性就可以很好地利用来做这种检查。如果发现连接已经建立，但是很久都没有收到数据的情况，那么就应该终止连接，方法就是关闭作为参数提供给AcceptEx()的那个套接字。注意，在多数非紧急情况下，如果套接字已经传递给AcceptEx()并开始守候，但还未建立连接，那么你的应用程序不应该关闭它们。这是因为即使关闭了这些套接字，出于提高系统性能的考虑，在连接进入之前，或者监听套接字自身被关闭之前，相应的内核模式的数据结构也不会被干净地清除。</p><p>发出AcceptEx()调用的线程，似乎与那个进行完成端口关联操作、处理其它I/O完成通知的线程是同一个，但是，别忘记线程里应该尽力避免执行阻塞型的操作。Winsock2分层结构的一个副作用是调用socket()或WSASocket() API的上层架构可能很重要(译者不太明白原文意思，抱歉)。每个AcceptEx()调用都需要创建一个新套接字，所以最好有一个独立的线程专门调用AcceptEx()，而不参与其它I/O处理。你也可以利用这个线程来执行其它任务，比如事件记录。</p><p>有关AcceptEx()的最后一个注意事项：要实现这些API，并不需要其它提供商提供的Winsock2实现。这一点对微软特有的其它API也同样适用，比如TransmitFile()和GetAcceptExSockAddrs()，以及其它可能会被加入到新版Windows的API. 在Windows NT和2000上，这些API是在微软的底层提供者DLL(mswsock.dll)中实现的，可通过与mswsock.lib编译连接进行调用，或者通过WSAIoctl() (选项参数为SIO_GET_EXTENSION_FUNCTION_POINTER)动态获得函数的指针。</p><p>如果在没有事先获得函数指针的情况下直接调用函数(也就是说，编译时静态连接mswsock.lib，在程序中直接调用函数)，那么性能将很受影响。因为AcceptEx()被置于Winsock2架构之外，每次调用时它都被迫通过WSAIoctl()取得函数指针。要避免这种性能损失，需要使用这些API的应用程序应该通过调用WSAIoctl()直接从底层的提供者那里取得函数的指针。</p><p>参见下图套接字架构：<br><img src=/imgs/img-lazy-loading.gif data-src=http://www.vckbase.net/document/journal/vckbase50/images/winsockfig03.gif alt></p><p><strong>TransmitFile 和 TransmitPackets</strong></p><p>Winsock 提供两个专门为文件和内存数据传输进行了优化的函数。其中TransmitFile()这个API函数在Windows NT 4.0 和 Windows 2000上都可以使用，而TransmitPackets()则将在未来版本的Windows中实现。</p><p>TransmitFile()用来把文件内容通过Winsock进行传输。通常发送文件的做法是，先调用CreateFile()打开一个文件，然后不断循环调用ReadFile() 和WSASend ()直至数据发送完毕。但是这种方法很没有效率，因为每次调用ReadFile() 和 WSASend ()都会涉及一次从用户模式到内核模式的转换。如果换成TransmitFile()，那么只需要给它一个已打开文件的句柄和要发送的字节数，而所涉及的模式转换操作将只在调用CreateFile()打开文件时发生一次，然后TransmitFile()时再发生一次。这样效率就高多了。</p><p>TransmitPackets()比TransmitFile()更进一步，它允许用户只调用一次就可以发送指定的多个文件和内存缓冲区。函数原型如下：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt id=hl-5-1><a class=lnlinks href=#hl-5-1>1</a>
+</span><span class=lnt id=hl-5-2><a class=lnlinks href=#hl-5-2>2</a>
+</span><span class=lnt id=hl-5-3><a class=lnlinks href=#hl-5-3>3</a>
+</span><span class=lnt id=hl-5-4><a class=lnlinks href=#hl-5-4>4</a>
+</span><span class=lnt id=hl-5-5><a class=lnlinks href=#hl-5-5>5</a>
+</span><span class=lnt id=hl-5-6><a class=lnlinks href=#hl-5-6>6</a>
+</span><span class=lnt id=hl-5-7><a class=lnlinks href=#hl-5-7>7</a>
+</span><span class=lnt id=hl-5-8><a class=lnlinks href=#hl-5-8>8</a>
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=line><span class=cl><span class=n>BOOL</span> <span class=nf>TransmitPackets</span><span class=p>(</span>
+</span></span><span class=line><span class=cl>    <span class=n>SOCKET</span> <span class=n>hSocket</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>    <span class=n>LPTRANSMIT_PACKET_ELEMENT</span> <span class=n>lpPacketArray</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>    <span class=n>DWORD</span> <span class=n>nElementCount</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>    <span class=n>DWORD</span> <span class=n>nSendSize</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>    <span class=n>LPOVERLAPPED</span> <span class=n>lpOverlapped</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>    <span class=n>DWORD</span> <span class=n>dwFlags</span>
+</span></span><span class=line><span class=cl>    <span class=p>);</span> 
+</span></span></code></pre></td></tr></table></div></div><p>其中，lpPacketArray是一个结构的数组，其中的每个元素既可以是一个文件句柄或者内存缓冲区，该结构定义如下：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt id=hl-6-1><a class=lnlinks href=#hl-6-1> 1</a>
+</span><span class=lnt id=hl-6-2><a class=lnlinks href=#hl-6-2> 2</a>
+</span><span class=lnt id=hl-6-3><a class=lnlinks href=#hl-6-3> 3</a>
+</span><span class=lnt id=hl-6-4><a class=lnlinks href=#hl-6-4> 4</a>
+</span><span class=lnt id=hl-6-5><a class=lnlinks href=#hl-6-5> 5</a>
+</span><span class=lnt id=hl-6-6><a class=lnlinks href=#hl-6-6> 6</a>
+</span><span class=lnt id=hl-6-7><a class=lnlinks href=#hl-6-7> 7</a>
+</span><span class=lnt id=hl-6-8><a class=lnlinks href=#hl-6-8> 8</a>
+</span><span class=lnt id=hl-6-9><a class=lnlinks href=#hl-6-9> 9</a>
+</span><span class=lnt id=hl-6-10><a class=lnlinks href=#hl-6-10>10</a>
+</span><span class=lnt id=hl-6-11><a class=lnlinks href=#hl-6-11>11</a>
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=line><span class=cl><span class=k>typedef</span> <span class=k>struct</span> <span class=n>_TRANSMIT_PACKETS_ELEMENT</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=n>DWORD</span> <span class=n>dwElFlags</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=n>DWORD</span> <span class=n>cLength</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=k>union</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=k>struct</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=n>LARGE_INTEGER</span>     <span class=n>nFileOffset</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=n>HANDLE</span>            <span class=n>hFile</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=p>};</span>
+</span></span><span class=line><span class=cl>        <span class=n>PVOID</span>             <span class=n>pBuffer</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=p>};</span>
+</span></span><span class=line><span class=cl><span class=p>}</span> <span class=n>TRANSMIT_FILE_BUFFERS</span><span class=p>;</span></span></span></code></pre></td></tr></table></div></div><p>其中各字段是自描述型的(self explanatory)。<br>dwElFlags字段：指定当前元素是一个文件句柄还是内存缓冲区(分别通过常量TF_ELEMENT_FILE 和TF_ELEMENT_MEMORY指定)；<br>cLength字段：指定将从数据源发送的字节数(如果是文件，这个字段值为0表示发送整个文件)；<br>结构中的无名联合体：包含文件句柄的内存缓冲区(以及可能的偏移量)。</p><p>使用这两个API的另一个好处，是可以通过指定TF_REUSE_SOCKET和TF_DISCONNECT标志来重用套接字句柄。每当API完成数据的传输工作后，就会在传输层级别断开连接，这样这个套接字就又可以重新提供给AcceptEx()使用。采用这种优化的方法编程，将减轻那个专门做接受操作的线程创建套接字的压力(前文述及)。</p><p>这两个API也都有一个共同的弱点：Windows NT Workstation 或 Windows 2000 专业版中，函数每次只能处理两个调用请求，只有在Windows NT、Windows 2000服务器版、Windows 2000高级服务器版或 Windows 2000 Data Center中才获得完全支持。</p><p><strong>放在一起看看</strong></p><p>以上各节中，我们讨论了开发高性能的、大响应规模的应用程序所需的函数、方法和可能遇到的资源瓶颈问题。这些对你意味着什么呢？其实，这取决于你如何构造你的服务器和客户端。当你能够在服务器和客户端设计上进行更好地控制时，那么你越能够避开瓶颈问题。</p><p>来看一个示范的环境。我们要设计一个服务器来响应客户端的连接、发送请求、接收数据以及断开连接。那么，服务器将需要创建一个监听套接字，把它与某个完成端口进行关联，为每颗CPU创建一个工作线程。再创建一个线程专门用来发出AcceptEx()。我们知道客户端会在发出连接请求后立刻传送数据，所以如果我们准备好接收缓冲区会使事情变得更为容易。当然，不要忘记不时地轮询AcceptEx()调用中使用的套接字(使用SO_CONNECT_TIME选项参数)来确保没有恶意超时的连接。</p><p>该设计中有一个重要的问题要考虑，我们应该允许多少个AcceptEx()进行守候。这是因为，每发出一个AcceptEx()时我们都同时需要为它提供一个接收缓冲区，那么内存中将会出现很多被锁定的页面(前文说过了，每个重叠操作都会消耗一小部分未分页内存池，同时还会锁定所有涉及的缓冲区)。这个问题很难回答，没有一个确切的答案。最好的方法是把这个值做成可以调整的，通过反复做性能测试，你就可以得出在典型应用环境中最佳的值。</p><p>好了，当你测算清楚后，下面就是发送数据的问题了，考虑的重点是你希望服务器同时处理多少个并发的连接。通常情况下，服务器应该限制并发连接的数量以及等候处理的发送调用。因为并发连接数量越多，所消耗的未分页内存池也越多；等候处理的发送调用越多，被锁定的内存页面也越多(小心别超过了极限)。这同样也需要反复测试才知道答案。</p><p>对于上述环境，通常不需要关闭单个套接字的缓冲区，因为只在AcceptEx()中有一次接收数据的操作，而要保证给每个到来的连接提供接收缓冲区并不是太难的事情。但是，如果客户机与服务器交互的方式变一变，客户机在发送了一次数据之后，还需要发送更多的数据，在这种情况下关闭接收缓冲就不太妙了，除非你想办法保证在每个连接上都发出了重叠接收调用来接收更多的数据。</p><p><strong>结论</strong></p><p>开发大响应规模的Winsock服务器并不是很可怕，其实也就是设置一个监听套接字、接受连接请求和进行重叠收发调用。通过设置合理的进行守候的重叠调用的数量，防止出现未分页内存池被耗尽，这才是最主要的挑战。按照我们前面讨论的一些原则，你就可以开发出大响应规模的服务器应用程序。</p></div><footer class=post-footer><div class=post-tags><a href=/tags/reprint/>Reprint</a></div><hr><div class=post-copyright><img src=/imgs/cc/cc.svg class=cc-icon width=75 height=75 align=right alt=共享知识 title=共享知识><ul><li class=post-copyright-title><strong>文章标题：</strong>
+用完成端口开发大响应规模的Winsock应用程序</li><li class=post-copyright-author><strong>本文作者： </strong>Rise</li><li class=post-copyright-link><strong>本文链接：</strong>
+<a id=post-cr-link href=https://blogs.qipai360.cn/post/develop-winsock-apps-with-using-completion-ports/ title=用完成端口开发大响应规模的Winsock应用程序>https://blogs.qipai360.cn/post/develop-winsock-apps-with-using-completion-ports/</a></li><li class=post-copyright-license><strong>版权声明： </strong>本作品采用 <i class="fab fa-fw fa-creative-commons"></i><a target=_blank href=https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh-hans>BY-NC-SA</a> 许可协议。转载请注明出处！</li><li><div class=license-icons><a href=https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh-hans target=_blank><img src=/imgs/cc/big/by_nc_sa.svg alt=BY-NC-SA title=BY-NC-SA>
+</a><a href=https://notbyai.fyi target=_blank><img src=/imgs/notbyai/zh-hans/black.svg title="Not By AI"></a></div></li></ul></div><div class=followme><span>欢迎关注我的其它发布渠道</span><div class=social-list><div class=social-item><a target=_blank class=social-link href=https://www.zhihu.com/people/rise-worlds><span class=icon><i class="fa fa-book"></i>
+</span><span class=label>知乎</span></a></div><div class=social-item><a target=_blank class=social-link href=https://twitter.com/riseworlds><span class=icon><i class="fab fa-twitter"></i>
+</span><span class=label>Twitter</span></a></div><div class=social-item><a target=_blank class=social-link href=https://www.facebook.com/rise.worlds><span class=icon><i class="fab fa-facebook"></i>
+</span><span class=label>facebook</span></a></div><div class=social-item><a target=_blank class=social-link href=https://youtube.com/@YiXuan><span class=icon><i class="fab fa-youtube"></i>
+</span><span class=label>YouTube</span></a></div><div class=social-item><a target=_blank class=social-link href=https://instagram.com/rise.worlds><span class=icon><i class="fab fa-instagram"></i>
+</span><span class=label>Instagram</span></a></div><div class=social-item><a target=_blank class=social-link href=https://t.me/riseworlds><span class=icon><i class="fab fa-telegram"></i>
+</span><span class=label>Telegram</span></a></div></div></div><div class=post-nav><div class="post-nav-next post-nav-item"><a href=/post/vs2005-sp1-installation-notes/ rel=next title="VS2005 SP1安装注意事项"><i class="fa fa-chevron-left"></i> VS2005 SP1安装注意事项</a></div><div class="post-nav-prev post-nav-item"><a href=/post/linux-sales-representative-protest-repost/ rel=prev title="Linux销售代表的“抗议” [转]">Linux销售代表的“抗议” [转]
+<i class="fa fa-chevron-right"></i></a></div></div></footer></article></div><div id=comments class=post-comments><div class=comment-head><div class=comment-headline><i class="fas fa-comments fa-fw"></i>
+<span>评论交流</span></div></div><div class=comment-wrap><div><div class=comment-loading><i class="fa fa-sync fa-spin"></i></div><div class=giscus-container></div></div></div></div></div></main><footer class=footer><div class=footer-inner><div class=copyright>&copy;
+<span itemprop=copyrightYear>2004 - 2026
+</span><span class=with-love><i class="fa fa-heart"></i>
+</span><span class=author itemprop=copyrightHolder>Rise</span></div><div class=powered-by>由 <a href=https://gohugo.io title=0.157.0 target=_blank>Hugo</a> & <a href=https://github.com/hugo-next/hugo-theme-next title=4.8.3 target=_blank>Hugo NexT.Gemini</a> 强力驱动</div><div class=beian><a href=https://beian.miit.gov.cn target=_blank>豫ICP备2021009490号</a>
+<img src=/imgs/gongan.png alt=豫公网安备>
+<a href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=41162302000074" target=_blank>豫公网安备 41162302000074 号</a></div></div></footer><script class=next-config data-name=page type=application/json>{"clipboard":{"js":{"alias":"clipboard","file":"dist/clipboard.min.js","name":"clipboard.js","version":"2.0.11"}},"comments":true,"expired":false,"isHome":false,"isPage":true,"path":"develop-winsock-apps-with-using-completion-ports","permalink":"https://blogs.qipai360.cn/post/develop-winsock-apps-with-using-completion-ports/","title":"用完成端口开发大响应规模的Winsock应用程序","toc":false,"waline3":{"pagecnt":{"alias":"@waline/client","alias_name":"waline","file":"dist/pageview.js","name":"pageview","version":"3.5.7"}}}</script><script type=text/javascript src=https://blogs.qipai360.cn/js/3rd/animejs/3.2.2/anime.min.js crossorigin=anonymous defer></script><script type=text/javascript src=https://blogs.qipai360.cn/js/3rd/viewerjs/1.11.6/viewer.min.js crossorigin=anonymous defer></script><script class=next-config data-name=main type=application/json>{"bookmark":{"color":"#222","enable":true,"save":"manual"},"copybtn":true,"darkmode":true,"giscus":{"cfg":{"category":"Announcements","categoryid":"DIC_kwDOA6L0YM4CiXf9","emit":false,"inputposition":"top","mapping":"title","reactions":false,"repo":"rise-worlds/rise-worlds.github.io","repoid":"MDEwOlJlcG9zaXRvcnk2MTAxMTA0MA==","theme":"transparent_dark"},"js":"https://giscus.app/client.js"},"hostname":"https://blogs.qipai360.cn/","i18n":{"ds_day":" 天前","ds_days":" 天 ","ds_hour":" 小时前","ds_hours":" 小时 ","ds_just":"刚刚","ds_min":" 分钟前","ds_mins":" 分钟","ds_month":" 个月前","ds_years":" 年 ","empty":"没有找到任何搜索结果：${query}","hits":"找到 ${hits} 个搜索结果","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","placeholder":"搜索..."},"isMultiLang":false,"lang":"zh-CN","lazyload":false,"motion":{"async":true,"enable":true,"transition":{"collheader":"fadeInLeft","postblock":"fadeIn","postbody":"fadeInDown","postheader":"fadeInDown","sidebar":"fadeInUp"}},"postmeta":{"comments":{"enable":false,"plugin":"waline3"},"views":{"enable":true,"plugin":"waline3"}},"root":"/","scheme":"Gemini","share":{"addtoany":{"js":"https://static.addtoany.com/menu/page.js","locale":"zh-CN","num":8},"enable":false},"sidebar":{"display":"post","offset":12,"padding":18,"position":"left","width":256},"vendor":{"plugins":"local","router":{"name":"local","type":"modern","url":"https://blogs.qipai360.cn/js/3rd"}},"version":"4.8.3","waline3":{"cfg":{"emoji":false,"imguploader":false,"placeholder":"请文明发言哟 ヾ(≧▽≦*)o 可用快捷键选取表情符号：😀😄😁🥳👻👽👀🚄 (Window系统：Win+.，Mac系统：Control+Command+Space)","reaction":true,"reactiontext":["点赞","踩一下","得意","不屑","尴尬","睡觉"],"reactiontitle":"你认为这篇文章怎么样？","requiredmeta":["nick","mail"],"search":true,"serverurl":"https://walinejs.comment.lithub.cc","sofa":"快来发表你的意见吧 (≧∀≦)ゞ","wordlimit":200},"css":{"alias":"@waline/client","file":"dist/waline.css","name":"waline","version":"3.5.7"},"js":{"alias":"@waline/client","file":"dist/waline.js","name":"waline","version":"3.5.7"}}}</script><script type=text/javascript src="/js/main.min.js?=1772265585" defer></script><script type=text/javascript src="/js/clipboard.min.js?=1772265588" defer></script></body></html>

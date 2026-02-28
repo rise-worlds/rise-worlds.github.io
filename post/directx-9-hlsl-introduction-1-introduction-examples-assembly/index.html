@@ -1,0 +1,211 @@
+<!doctype html><html lang=zh-CN data-theme=dark><head><meta charset=UTF-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=theme-color content="#222" media="(prefers-color-scheme: dark)"><meta name=generator content="Hugo 0.157.0"><link rel="shortcut icon" type=image/x-icon href=/imgs/icons/favicon.ico><link rel=icon type=image/x-icon href=/imgs/icons/favicon.ico><link rel=icon type=image/png sizes=16x16 href=/imgs/icons/favicon_32_32_next.png><link rel=icon type=image/png sizes=32x32 href=/imgs/icons/favicon_128_128_next.png><link rel=apple-touch-icon sizes=180x180 href=/imgs/icons/apple_touch_icon_next.png><meta itemprop=name content="DirectX 9高层着色语言介绍1——引言、简单例子、汇编语言和编译对象"><meta itemprop=description content="福兮祸兮，焉知所依？冬去冰泮，春来萌荣。朝生暮死，亦可惊鸿。知足者富，自足者强。"><meta name=description content="福兮祸兮，焉知所依？冬去冰泮，春来萌荣。朝生暮死，亦可惊鸿。知足者富，自足者强。"><meta itemprop=datePublished zgotmplz><meta itemprop=dateModified zgotmplz><meta itemprop=image content="https://blogs.qipai360.cn/imgs/avatar.jpg"><meta itemprop=keywords content="direct3d,graphics"><meta property="og:type" content="article"><meta property="og:title" content="DirectX 9高层着色语言介绍1——引言、简单例子、汇编语言和编译对象"><meta property="og:description" content="福兮祸兮，焉知所依？冬去冰泮，春来萌荣。朝生暮死，亦可惊鸿。知足者富，自足者强。"><meta property="og:image" content="/imgs/avatar.jpg"><meta property="og:image:width" content="312"><meta property="og:image:height" content="312"><meta property="og:image:type" content="image/jpeg/png/svg/jpg"><meta property="og:url" content="https://blogs.qipai360.cn/post/directx-9-hlsl-introduction-1-introduction-examples-assembly/"><meta property="og:site_name" content="Rise的自留地"><meta property="og:locale" content="zh-CN"><meta property="article:author" content="Rise"><meta property="article:published_time" content="2007-11-29 16:00:00 +0800 +0800"><meta property="article:modified_time" content="2007-11-29 16:00:00 +0800 +0800"><link type=text/css rel=stylesheet href=https://blogs.qipai360.cn/js/3rd/font-awesome/6.7.2/css/all.min.css><link type=text/css rel=stylesheet href=https://blogs.qipai360.cn/js/3rd/animate.css/3.1.1/animate.min.css><link type=text/css rel=stylesheet href=https://blogs.qipai360.cn/js/3rd/viewerjs/1.11.6/viewer.min.css><link rel=stylesheet href="/css/main.min.css?=1772265588"><style type=text/css>.post-footer hr:after{content:"~ 我可是有底线的哟 ~"}.flinks-list-footer hr:after{content:"~ 我可是有底线的哟 ~"}</style><script type=text/javascript>(function(){localDB={set:function(e,t,n){if(n===0)return;const s=new Date,o=n*864e5,i={value:t,expiry:s.getTime()+o};localStorage.setItem(e,JSON.stringify(i))},get:function(e){const t=localStorage.getItem(e);if(!t)return 0[0];const n=JSON.parse(t),s=new Date;return s.getTime()>n.expiry?(localStorage.removeItem(e),0[0]):n.value}},theme={active:function(){const e=localDB.get("theme");if(e==null)return;theme.toggle(e),window.matchMedia("(prefers-color-scheme: dark)").addListener(function(e){theme.toggle(e.matches?"dark":"light")})},toggle:function(e){document.documentElement.setAttribute("data-theme",e),localDB.set("theme",e,2);const t=document.querySelector("iframe.giscus-frame");if(t){const n={setConfig:{theme:e}};t.contentWindow.postMessage({giscus:n},"https://giscus.app")}}},theme.active()})(window)</script><script type=text/javascript>document.addEventListener("DOMContentLoaded",()=>{var e=document.createElement("script");e.charset="UTF-8",e.src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js",e.async=!1,e.defer=!0,document.head.appendChild(e),e.onload=function(){NexT.utils.fmtBusuanzi()}})</script><script defer src=https://static.cloudflareinsights.com/beacon.min.js data-cf-beacon='{"token": "2b23669184fc49269e400525ac2447d9"}'></script><title>DirectX 9高层着色语言介绍1——引言、简单例子、汇编语言和编译对象 - Rise的自留地</title><noscript><link rel=stylesheet href=/css/noscript.css></noscript></head><body itemscope itemtype=http://schema.org/WebPage class=use-motion><div class=headband></div><main class=main><header class=header itemscope itemtype=http://schema.org/WPHeader><div class=header-inner><div class=site-brand-container><div class=site-nav-toggle><div class=toggle aria-label role=button><span class=toggle-line></span>
+<span class=toggle-line></span>
+<span class=toggle-line></span></div></div><div class=site-meta><a href=/ class=brand rel=start><i class=logo-line></i><h1 class=site-title>Rise的自留地</h1><i class=logo-line></i></a><p class=site-subtitle itemprop=description>记录生活中的点滴，分享编程技术和游戏开发经验。</p></div><div class=site-nav-right><div class="toggle popup-trigger"></div></div></div><nav class=site-nav><ul class="main-menu menu"><li class="menu-item menu-item-home"><a href=/ class=hvr-icon-pulse rel=section><i class="fa fa-home hvr-icon"></i>首页</a></li><li class="menu-item menu-item-about"><a href=/about.html class=hvr-icon-pulse rel=section><i class="fa fa-user hvr-icon"></i>关于</a></li><li class="menu-item menu-item-archives"><a href=/archives/ class=hvr-icon-pulse rel=section><i class="fa fa-archive hvr-icon"></i>归档
+<span class=badge>679</span></a></li><li class="menu-item menu-item-tags"><a href=/tags/ class=hvr-icon-pulse rel=section><i class="fa fa-tags hvr-icon"></i>标签</a></li><li class="menu-item menu-item-message"><a href=/message/ class=hvr-icon-pulse rel=section><i class="fa fa-comments hvr-icon"></i>留言板</a></li><li class="menu-item menu-item-commonweal"><a href=/404.html class=hvr-icon-pulse rel=section><i class="fa fa-heartbeat hvr-icon"></i>公益 404</a></li></ul></nav></div><div class="toggle sidebar-toggle" role=button><span class=toggle-line></span>
+<span class=toggle-line></span>
+<span class=toggle-line></span></div><aside class=sidebar><div class="sidebar-inner sidebar-overview-active"><ul class=sidebar-nav><li class=sidebar-nav-toc>文章目录</li><li class=sidebar-nav-overview>站点概览</li></ul><div class=sidebar-panel-container><div class="post-toc-wrap sidebar-panel"><div class="post-toc animated"><nav id=TableOfContents></nav></div></div><div class="site-overview-wrap sidebar-panel"><div class="site-author site-overview-item animated" itemprop=author itemscope itemtype=http://schema.org/Person><img class=site-author-image itemprop=image alt=Rise src=/imgs/img-lazy-loading.gif data-src=/imgs/avatar.jpg><p class=site-author-name itemprop=name>Rise</p><div class=site-description itemprop=description>福兮祸兮，焉知所依？冬去冰泮，春来萌荣。朝生暮死，亦可惊鸿。知足者富，自足者强。</div></div><div class="site-state-wrap site-overview-item animated"><nav class=site-state><div class="site-state-item site-state-posts"><a href=/archives/><span class=site-state-item-count>679</span>
+<span class=site-state-item-name>日志</span></a></div><div class="site-state-item site-state-categories"><a href=/categories/><span class=site-state-item-count>35</span>
+<span class=site-state-item-name>分类</span></a></div><div class="site-state-item site-state-tags"><a href=/tags/><span class=site-state-item-count>118</span>
+<span class=site-state-item-name>标签</span></a></div></nav></div><div class="links-of-social site-overview-item animated"><span class=links-of-social-item><a href=https://github.com/rise-worlds title="Github → https://github.com/rise-worlds" rel=noopener class=hvr-icon-pulse target=_blank><i class="fab fa-github fa-fw hvr-icon"></i>
+Github
+</a></span><span class=links-of-social-item><a href=mailto:rise.worlds@outlook.com title="E-Mail → mailto:rise.worlds@outlook.com" rel=noopener class=hvr-icon-pulse target=_blank><i class="fa fa-envelope fa-fw hvr-icon"></i>
+E-Mail
+</a></span><span class=links-of-social-item><a href=https://www.zhihu.com/people/rise-worlds title="知乎 → https://www.zhihu.com/people/rise-worlds" rel=noopener class=hvr-icon-pulse target=_blank><i class="fa fa-book fa-fw hvr-icon"></i>
+知乎
+</a></span><span class=links-of-social-item><a href=https://twitter.com/riseworlds title="Twitter → https://twitter.com/riseworlds" rel=noopener class=hvr-icon-pulse target=_blank><i class="fab fa-twitter fa-fw hvr-icon"></i>
+Twitter
+</a></span><span class=links-of-social-item><a href=https://www.facebook.com/rise.worlds title="facebook → https://www.facebook.com/rise.worlds" rel=noopener class=hvr-icon-pulse target=_blank><i class="fab fa-facebook fa-fw hvr-icon"></i>
+facebook
+</a></span><span class=links-of-social-item><a href=https://youtube.com/@YiXuan title="YouTube → https://youtube.com/@YiXuan" rel=noopener class=hvr-icon-pulse target=_blank><i class="fab fa-youtube fa-fw hvr-icon"></i>
+YouTube
+</a></span><span class=links-of-social-item><a href=https://instagram.com/rise.worlds title="Instagram → https://instagram.com/rise.worlds" rel=noopener class=hvr-icon-pulse target=_blank><i class="fab fa-instagram fa-fw hvr-icon"></i>
+Instagram
+</a></span><span class=links-of-social-item><a href=https://t.me/riseworlds title="Telegram → https://t.me/riseworlds" rel=noopener class=hvr-icon-pulse target=_blank><i class="fab fa-telegram fa-fw hvr-icon"></i>
+Telegram</a></span></div><div class="links-of-blogroll site-overview-item animated"><div class=links-of-blogroll-title><i class="fa fa-globe fa-fw"></i>
+友情链接</div><ul class=links-of-blogroll-list><li class=links-of-blogroll-item><a href=https://www.qipai360.cn title=https://www.qipai360.cn target=_blank>Qipai360</a></li><li class=links-of-blogroll-item><a href=https://www.cnblogs.com/flying_bat title=https://www.cnblogs.com/flying_bat target=_blank>博客园</a></li><li class=links-of-blogroll-item><a href=https://zishu.me title=https://zishu.me target=_blank>子舒的博客</a></li><li class=links-of-blogroll-item><a href=https://gitee.com/hugo-next/hugo-theme-next title=https://gitee.com/hugo-next/hugo-theme-next target=_blank>Hugo-NexT</a></li></ul></div></div></div></div><div id=siteinfo-card-widget class=sidebar-card-widget><div class=item-headline><i class="fas fa-chart-line"></i>
+<span>网站资讯</span></div><div class=siteinfo><div class=siteinfo-item><div class=item-name><i class="fa-solid fa-calendar-check"></i>已运行：</div><div class=item-count id=runTimes data-publishdate="2004-10-06 15:24:00 +0800 +0800"></div></div><div class=siteinfo-item><div class=item-name><i class="fas fa fa-user"></i>总访客数：</div><div class=item-count id=busuanzi_value_site_uv><i class="fa fa-sync fa-spin"></i></div></div><div class=siteinfo-item><div class=item-name><i class="fas fa fa-eye"></i>页面浏览：</div><div class=item-count id=busuanzi_value_site_pv><i class="fa fa-sync fa-spin"></i></div></div><div class=siteinfo-item><div class=item-name><i class="fa fa-font"></i>总字数：</div><div class=item-count id=wordsCount data-count=2423147></div></div><div class=siteinfo-item><div class=item-name><i class="fa fa-mug-hot"></i>阅读约：</div><div class=item-count id=readTimes data-times=5207></div></div><div class=siteinfo-item><div class=item-name><i class="fa fa-clock-rotate-left"></i>最后更新于：</div><div class=item-count id=last-push-date data-lastpushdate="2026-02-28 15:59:00 +0800 +0800"></div></div></div></div></aside><div class=sidebar-dimmer></div></header><div class=tool-buttons><div id=goto-comments class="button goto-comments" title=直达评论><i class="fas fa-comments"></i></div><div id=toggle-theme class=button title=深浅模式切换><i class="fas fa-adjust"></i></div><div class=back-to-top role=button title=返回顶部><i class="fa fa-arrow-up"></i>
+<span>0%</span></div></div><div class=reading-progress-bar></div><a role=button class="book-mark-link book-mark-link-fixed"></a><a href=https://github.com/rise-worlds rel="noopener external nofollow noreferrer" target=_blank title="Follow me on GitHub" class="exturl github-corner"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0 0 115 115h15l12 27L250 250V0z"/><path d="M128.3 109C113.8 99.7 119 89.6 119 89.6 122 82.7 120.5 78.6 120.5 78.6 119.2 72 123.4 76.3 123.4 76.3 127.3 80.9 125.5 87.3 125.5 87.3 122.9 97.6 130.6 101.9 134.4 103.2" fill="currentColor" style="transform-origin:130px 106px" class="octo-arm"/><path d="M115 115C114.9 115.1 118.7 116.5 119.8 115.4l13.9-13.8C136.9 99.2 139.9 98.4 142.2 98.6 133.8 88 127.5 74.4 143.8 58 148.5 53.4 154 51.2 159.7 51 160.3 49.4 163.2 43.6 171.4 40.1 171.4 40.1 176.1 42.5 178.8 56.2 183.1 58.6 187.2 61.8 190.9 65.4 194.5 69 197.7 73.2 200.1 77.6 213.8 80.2 216.3 84.9 216.3 84.9 212.7 93.1 206.9 96 205.4 96.6 205.1 102.4 203 107.8 198.3 112.5 181.9 128.9 168.3 122.5 157.7 114.1 157.9 116.9 156.7 120.9 152.7 124.9L141 136.5C139.8 137.7 141.6 141.9 141.8 141.8z" fill="currentColor" class="octo-body"/></svg></a><noscript><div class=noscript-warning>Theme NexT works best with JavaScript enabled</div></noscript><div class="main-inner post posts-expand"><div class=post-block><article itemscope itemtype=http://schema.org/Article class=post-content lang><link itemprop=mainEntityOfPage href=https://blogs.qipai360.cn/post/directx-9-hlsl-introduction-1-introduction-examples-assembly/><span hidden itemprop=author itemscope itemtype=http://schema.org/Person><meta itemprop=image content="/imgs/avatar.jpg"><meta itemprop=name content="Rise"></span><span hidden itemprop=publisher itemscope itemtype=http://schema.org/Organization><meta itemprop=name content="Rise"><meta itemprop=description content="福兮祸兮，焉知所依？冬去冰泮，春来萌荣。朝生暮死，亦可惊鸿。知足者富，自足者强。"></span><span hidden itemprop=post itemscope itemtype=http://schema.org/CreativeWork><meta itemprop=name content="DirectX 9高层着色语言介绍1——引言、简单例子、汇编语言和编译对象"><meta itemprop=description content="original address: 
+
+    http://blog.csdn.net/starflash2003/archive/2004/10/08/128688.aspx
+    
+
+
+引言
+高层着色语言(HLSL)是DirectX&#174; 9最为强力的新组件之一。使用这种标准的高级语言, 在进行着色时编写者可以专注于算法而不用再去理会诸如寄存器的分配，寄存器读端口限制, 并行处理指令等等硬件细节. 除了把开发者从硬件细节中解放出来之外，HLSL 也具有高级语言所有的全部优势，诸如：代码重用容易, 可读性增强以及存在一个优化过的编译器。本书和 ShaderX2 - Shader Tips & Tricks 这本书的许多章节就用到了HLSL编写的着色器. 阅读完本章引言后，你会很容易理解那些着色器并在工作中用到它们。"></span><header class=post-header><h1 class=post-title itemprop="name headline">DirectX 9高层着色语言介绍1——引言、简单例子、汇编语言和编译对象</h1><div class=post-meta-container><div class=post-meta-items><span class=post-meta-item><span class=post-meta-item-icon><i class="fas fa-solid fa-calendar"></i>
+</span><span class=post-meta-item-text title=发表于>发表于：
+</span><time title="创建时间：2007年11月29日 16:00:00 CST" itemprop="dateCreated datePublished" datetime="2007-11-29 16:00:00 +0800 +0800">2007年11月29日
+</time></span><span class=post-meta-item><span class=post-meta-item-icon><i class="fas fa-solid fa-folder-open"></i>
+</span><span class=post-meta-item-text title=分类于>分类于：
+</span><span itemprop=about itemscope itemtype=http://schema.org/Thing><a href=/categories/gamedev/ itemprop=url rel=index><span itemprop=name>dev/GameDev</span></a></span></span></div><div class=post-meta-items><span class=post-meta-item title=字数><span class=post-meta-item-icon><i class="fas fa-solid fa-file-word"></i>
+</span><span class=post-meta-item-text>字数：</span>
+<span>4349</span>
+</span><span class=post-meta-item title=阅读><span class=post-meta-item-icon><i class="fas fa-solid fa-clock"></i>
+</span><span class=post-meta-item-text>阅读：&ap;</span>
+<span>9分钟</span>
+</span><span class=post-meta-item title=浏览><span class=post-meta-item-icon><i class="fas fa-solid fa-eye"></i>
+</span><span class=post-meta-item-text>浏览：
+</span><span id=pageview-count data-path=/post/directx-9-hlsl-introduction-1-introduction-examples-assembly/><i class="fa fa-sync fa-spin"></i></span></span></div></div></header><div class=post-body itemprop=articleBody><p>original address: <a href=http://blog.csdn.net/starflash2003/archive/2004/10/08/128688.aspx><a href=http://blog.csdn.net/starflash2003/archive/2004/10/08/128688.aspx title=http://blog.csdn.net/starflash2003/archive/2004/10/08/128688.aspx rel="noopener external nofollow noreferrer" target=_blank class=exturl>http://blog.csdn.net/starflash2003/archive/2004/10/08/128688.aspx</a></a><br></p><br><h2 class=dtH1>引言</h2><p>高层着色语言(HLSL)是DirectX&#174; 9最为强力的新组件之一。使用这种标准的高级语言, 在进行着色时编写者可以专注于算法而不用再去理会诸如寄存器的分配，寄存器读端口限制, 并行处理指令等等硬件细节. 除了把开发者从硬件细节中解放出来之外，HLSL 也具有高级语言所有的全部优势，诸如：代码重用容易, 可读性增强以及存在一个优化过的编译器。本书和 ShaderX<sup>2</sup> - Shader Tips & Tricks 这本书的许多章节就用到了HLSL编写的着色器. 阅读完本章引言后，你会很容易理解那些着色器并在工作中用到它们。</p><a id=more></a><p>这一章, 我们概述语言本身的基本结构以及将HLSL集成到你的应用程序中的方法。</p><h2 class=dtH1>一个简单的示例</h2><p>在彻底描述HLSL之前, 让我们先看一下程序中HLSL顶点着色和HLSL像素着色的实现，这个程序渲染简单的木纹。下边显示的第一个HLSL着色是一个简单的顶点着色:</p><pre class=CODE>
+
+<div style="border-right:#ccc 1px solid;padding-right:5px;border-top:#ccc 1px solid;padding-left:4px;font-size:13px;padding-bottom:4px;border-left:#ccc 1px solid;width:98%;word-break:break-all;padding-top:4px;border-bottom:#ccc 1px solid;background-color:#eee"><span style=color:#000>float4x4&nbsp;view_proj_matrix;<br>
+
+float4x4&nbsp;texture_matrix0;<br>
+
+</span><span style=color:#00f>struct</span><span style=color:#000>&nbsp;VS_OUTPUT<br>
+
+{&nbsp;&nbsp;&nbsp;float4&nbsp;Pos&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;POSITION;<br>
+
+&nbsp;&nbsp;&nbsp;float3&nbsp;Pshade&nbsp;&nbsp;:&nbsp;TEXCOORD0;<br>
+
+};<br>
+
+VS_OUTPUT&nbsp;main&nbsp;(float4&nbsp;vPosition&nbsp;:&nbsp;POSITION)<br>
+
+{&nbsp;&nbsp;<br>
+
+&nbsp;VS_OUTPUT&nbsp;Out&nbsp;</span><span style=color:#000>=</span><span style=color:#000>&nbsp;(VS_OUTPUT)&nbsp;</span><span style=color:#000>0</span><span style=color:#000>;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style=color:green>//</span><span style=color:green>Transform&nbsp;position&nbsp;to&nbsp;clip&nbsp;space&nbsp;&nbsp;&nbsp;</span><span style=color:green><br>
+
+</span><span style=color:#000>Out.Pos&nbsp;</span><span style=color:#000>=</span><span style=color:#000>&nbsp;mul&nbsp;(view_proj_matrix,&nbsp;vPosition);&nbsp;&nbsp;&nbsp;</span><span style=color:green>//</span><span style=color:green>&nbsp;Transform&nbsp;Pshade&nbsp;&nbsp;&nbsp;Out.Pshade&nbsp;=&nbsp;mul&nbsp;(texture_matrix0,&nbsp;vPosition);&nbsp;</span><span style=color:green><br>
+
+</span><span style=color:#000>&nbsp;&nbsp;</span><span style=color:#00f>return</span><span style=color:#000>&nbsp;Out;}</span></div>
+
+</pre><p>最开始两行声明了一对4&#215;4的矩阵，分别命名为view_proj_matrix和texture_matrix0。在全局矩阵之后，声明了一个结构体。这个<code class=ce>VS_OUTPUT</code>有两个成员：Pos和Pshade。</p><p>该着色器的main函数接受一个单精度float4类型的输入参数并返回一个VS_OUTPUT结构体。float4类型的vPosition是着色器唯一的输入，返回的VS_OUTPUT结构体定义了该顶点着色器的输出。目前不必关心在参数和结构体之后的关键字POSITION和TEXCOORD0。它们被称为语义，他们的含义将在本章后边讨论。</p><p>看一下main函数的实际代码部分，你可以看到一个内部函数mul，它被用来把输入的向量vPosition和矩阵view_proj_matrix相乘。在顶点着色器中这个函数最常被用来执行顶点-矩阵的乘法。就这样，vPosition被作为列向量，因为它是mul的第二个参数。如果向量 vPosition是mul的第一个参数，它将被作为行向量。内部函数mul以及其他内部函数将在本章后边更详细的讨论。在把输入的vPosition的位置转换换到裁减空间之后，vPosition与另一个矩阵texture_matrix0相乘以产生3D纹理坐标。两次转换的结果写入返回的结构体 VS_OUTPUT。一个顶点着色器必须总是以最小值输出到一个裁减空间位置。任何从顶点着色器输出的额外值都是通过贯穿光栅化多边型插值得到的，也可用来输入到像素着色器。就这样，通过一个内插器， 三维的Pshade从顶点着色器被传递到像素着色器。</p><p>下边，我们看到一个简单的HLSL木纹像素着色器。这个像素着色器和刚才我们描述的顶点着色器一起工作，它将被编译成模型ps_2_0。<br></p><pre class=CODE>&nbsp;
+
+<div style="border-right:#ccc 1px solid;padding-right:5px;border-top:#ccc 1px solid;padding-left:4px;font-size:13px;padding-bottom:4px;border-left:#ccc 1px solid;width:98%;word-break:break-all;padding-top:4px;border-bottom:#ccc 1px solid;background-color:#eee"><span style=color:#000>float4&nbsp;lightWood;&nbsp;</span><span style=color:green>//</span><span style=color:green>&nbsp;xyz&nbsp;==&nbsp;Light&nbsp;Wood&nbsp;</span><span style=color:green><br>
+
+</span><span style=color:#000>Colorfloat4&nbsp;darkWood;&nbsp;&nbsp;</span><span style=color:green>//</span><span style=color:green>&nbsp;xyz&nbsp;==&nbsp;Dark&nbsp;Wood&nbsp;</span><span style=color:green><br>
+
+</span><span style=color:#000>Colorfloat&nbsp;&nbsp;ringFreq;&nbsp;&nbsp;</span><span style=color:green>//</span><span style=color:green>&nbsp;ring</span><span style=color:green><br>
+
+</span><span style=color:#000>&nbsp;frequencysampler&nbsp;PulseTrainSampler;<br>
+
+float4&nbsp;hlsl_rings&nbsp;(float4&nbsp;Pshade&nbsp;:&nbsp;TEXCOORD0)&nbsp;:&nbsp;COLOR<br>
+
+{&nbsp;&nbsp;&nbsp;<br>
+
+&nbsp;</span><span style=color:#00f>float</span><span style=color:#000>&nbsp;scaledDistFromZAxis&nbsp;</span><span style=color:#000>=</span><span style=color:#000>&nbsp;sqrt(dot(Pshade.xy,&nbsp;Pshade.xy))&nbsp;</span><span style=color:#000>*</span><span style=color:#000>&nbsp;ringFreq;&nbsp;<br>
+
+&nbsp;&nbsp;&nbsp;</span><span style=color:#00f>float</span><span style=color:#000>&nbsp;blendFactor&nbsp;</span><span style=color:#000>=</span><span style=color:#000>&nbsp;tex1D&nbsp;(PulseTrainSampler,&nbsp;scaledDistFromZAxis);&nbsp;<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;</span><span style=color:#00f>return</span><span style=color:#000>&nbsp;lerp&nbsp;(darkWood,&nbsp;lightWood,&nbsp;blendFactor);<br>
+
+}<br>
+
+</span></div>
+
+</pre><pre class=CODE>最开始几行在全局范围内声明了一对浮点类型的四元数组和一个浮点变量。在这些变量之后，声明了一个被称为PulseTrainSampler的取样器。取样器将在章节后边讨论，目前你可以把它看成一个在显存中的窗口，它与过滤状态和纹理坐标寻址模式发生关联。在变量和取样器声明后边是着色器代码的主体部分。你可以看到有一个输入参数Pshade，它是贯穿多边形插值得到的。它的值是由顶点着色器计算每一个顶点得出的。在像素着色器中，把着色空间Z轴上的笛卡尔距离作为一维纹理坐标来计算，衡量，使用，以存取绑定于PulseTrainSampler的纹理。tex1D()取样函数返回的颜色标量被用作混合因子，以混合在着色器全局范围内声明的两种相反颜色。像素着色器最终输出一个混合的四元向量结果。所有的像素着色器至少必须返回一个四元 RGBA 颜色。我们将在稍后章节中讨论像素着色器的附加选项。</pre><h2 class=dtH1>汇编语言和编译对象</h2><p>既然我们已经了解了一些HLSL着色器，这里简要讨论一下如何在代码中涉及Direct3D，D3DX，汇编着色器模型和你的程序。DirectX 8中第一次把着色器引入了Direct3D。在那个时候，这些虚拟着色器是这样定义的——每一个大致相当于一个特殊的3D硬件商生产的图形处理器。每个虚拟着色器都设计有汇编语言。在DirectX 8.0和DirectX 8.1中，编写这些着色器模型的程序(被命名为vs_1_1以及ps_1_1直到ps_1_4)相对短小并且一般由开发者直接用合适的汇编语言编写。如图 1左所示，凭借D3DXAssembleShader()程序把人们可读的汇编语言代码传递给D3DX库并返回着色器的二进制表示，该二进制表示由 CreatePixelShader()或CreateVertexShader()依次传递给Direct3D。更多传统汇编着色模型的细节，请参考在线和离线资源，包括<em>Shader X</em> 和DirectX SDK。</p><p class=fig><code><a href=file:///C:/Documents%20and%20Settings/Administrator/&#230;&#161;&#233;&#162;/dx8dx9_blockleveldiagram.gif></a></code>&nbsp;</p><p class=label><strong>图1. Use of D3DX for Assembly and Compilation in DirectX 8 and DirectX 9</strong></p><p>如图1右所示，在DirectX 9中的情形非常相似，凭借D3DXCompileShader() API，程序把HLSL着色器传递给D3DX并返回编译后着色器的二进制表示，该二进制表示由CreatePixelShader()或 CreateVertexShader()轮流传递给Direct3D。生成的二进制汇编代码是一个函数，它只取决于选择的编译对象，而不是什么用户或开发者系统上的特殊图形设备。就是说，生成的二进制汇编程序与平台无关，即可在任何地方编译或运行。事实上，Direct3D运行时本身并不知道HLSL的任何内容，除了二进制汇编着色器模型。这样做很有好处因为这就意味着 HLSL编译器的更新不必依赖于Direct3D运行时。事实上，在2003年夏季末本书截稿与首印期之间，Microsoft开始计划发布含有更新过的 HLSL编译器的DirectX SDK更新。</p><p>除了D3DX中HLSL编译器的开发之外，DirectX 9.0也提出了另外的汇编层着色器模型以展示最新的3D图形硬件的功能。直接使用汇编语言为新的模型(vs_2_0，vs_3_0，ps_2_0和ps_3_0) 做开发，程序开发人员会感到自由，不过我们希望绝大多数开发人员都转移到HLSL从而专注于着色器的开发。</p><h3 class=dtH1>实际的硬件</h3><p>当然，仅仅因为你可以写一个HLSL程序来表达一个特殊的着色算法不等于它能够在硬件上运行。前面已经讨论过，应用程序通过调用D3DX中的 D3DXCompileShader() API把HLSL着色器编译成二进制汇编程序。这个API的入口参数之一是这样一个参数：它定义了HLSL编译器使用哪一个汇编语言模型(或编译对象)来表示最终着色器代码。如果一个程序在运行时执行HLSL着色器编译，程序会检测Direct3D设备的性能并选择匹配的编译对象。如果HLSL着色器中的算法太复杂以至于不能在选择的编译对象上执行，编译将会失败。这意味着尽管HLSL大大有利于着色器的开发，却不会把开发人员从这么一个现实中解放出来：把游戏封装后给拥有各种性能图形设备的用户。作为一个游戏开发人员，你仍然得为你的图像处理好一系列步骤，为更好的显示卡编写更好的着色器，为较老的卡编写更基本的。不过，有了编写完善的HLSL，负担可以大大减轻。</p><h3 class=dtH1>编译失败</h3><p>如上所述, 给定的HLSL着色器编译特殊对象的失败说明对于编译对象来说着色器太过复杂。这就意味着着色器需要大量的资源或是需要一些诸如动态分支(不被所选编译对象所支持)的功能。例如，某个HLSL着色器可能被编写用于在一个着色器内存取所给定的六重纹理贴图。如果这个着色器被编译成ps_1_1, 编译将会失败，因为ps_1_1模型只支持四重纹理。其他编译失败的通常原因是超过了所选编译对象的最大指令计数器。某个HLSL中表示的算法也许仅仅需要大量指令而使得给定的编译对象不能被执行。</p><p>要重点注意的是所选编译对象不会限定编写人员所使用的HLSL语法。例如，着色器编写人员会使用'for'循环，子程序，'if-else'等等语句，编译本身不支持循换，分支或'if-else'语句的对象。这种情况下，编译器将展开循环，内联函数调用并同时执行'if-else'语句的两个分支(译者注：即if与else后的语句全都执行)，根据'if-else'语句中所使用的原始值选择合适的结果。当然，如果最后所得到的着色器(程序)太长或相反超出了编译对象的资源，编译将失败。</p><h3 class=dtH1>命令行编译器: FXC</h3><p>许多开发人员选择在着色器被封装之前把它从HLSL编译成二进制汇编语言，而不是在正在使用D3DX的客户机器上当程序载入时或首次运行时编译HLSL着色器。这保证了HLSL源代码不被窥视，同时也确保所有其程序能够永久运行的着色器已经通过其内部质量确认流程。在DirectX 9.0 SDK中提供了一个方便的命令行编译程序fxc允许开发人员脱机编译着色器。该程序有许多方便的选项，你不但可以以命令行方式编译你的着色器，也能产生指定编译对象的反汇编代码。如果你想优化你的着色器或只是想更详细的了解虚拟着色器的性能，在开发期间研究输出的反汇编代码是非常有用的。表1列出了这些命令行选项。</p><p class=label><strong>表1. FXC 命令行选项</strong></p><table class=data id=table573><pre><code>&lt;tbody&gt;
+
+    &lt;tr valign=&quot;top&quot;&gt;
+
+        &lt;td class=&quot;data&quot; width=&quot;34%&quot;&gt;&lt;code class=&quot;ce&quot;&gt;-T &lt;/code&gt;&lt;em&gt;target&lt;/em&gt;&lt;/td&gt;
+
+        &lt;td class=&quot;data&quot; width=&quot;66%&quot;&gt;编译对象 (默认: vs_2_0)&lt;/td&gt;
+
+    &lt;/tr&gt;
+
+    &lt;tr valign=&quot;top&quot;&gt;
+
+        &lt;td class=&quot;data&quot; width=&quot;34%&quot;&gt;&lt;code class=&quot;ce&quot;&gt;-E &lt;/code&gt;&lt;em&gt;name&lt;/em&gt;&lt;/td&gt;
+
+        &lt;td class=&quot;data&quot; width=&quot;66%&quot;&gt;入口点 &lt;em&gt;name &lt;/em&gt;(默认: main)&lt;/td&gt;
+
+    &lt;/tr&gt;
+
+    &lt;tr valign=&quot;top&quot;&gt;
+
+        &lt;td class=&quot;data&quot; width=&quot;34%&quot;&gt;&lt;code class=&quot;ce&quot;&gt;-Od&lt;/code&gt;&lt;/td&gt;
+
+        &lt;td class=&quot;data&quot; width=&quot;66%&quot;&gt;禁止优化&lt;/td&gt;
+
+    &lt;/tr&gt;
+
+    &lt;tr valign=&quot;top&quot;&gt;
+
+        &lt;td class=&quot;data&quot; width=&quot;34%&quot;&gt;&lt;code class=&quot;ce&quot;&gt;-Vd&lt;/code&gt;&lt;/td&gt;
+
+        &lt;td class=&quot;data&quot; width=&quot;66%&quot;&gt;禁止确认&lt;/td&gt;
+
+    &lt;/tr&gt;
+
+    &lt;tr valign=&quot;top&quot;&gt;
+
+        &lt;td class=&quot;data&quot; width=&quot;34%&quot;&gt;&lt;code class=&quot;ce&quot;&gt;-Zi&lt;/code&gt;&lt;/td&gt;
+
+        &lt;td class=&quot;data&quot; width=&quot;66%&quot;&gt;允许调试信息&lt;/td&gt;
+
+    &lt;/tr&gt;
+
+    &lt;tr valign=&quot;top&quot;&gt;
+
+        &lt;td class=&quot;data&quot; width=&quot;34%&quot;&gt;&lt;code class=&quot;ce&quot;&gt;-Zpr&lt;/code&gt;&lt;/td&gt;
+
+        &lt;td class=&quot;data&quot; width=&quot;66%&quot;&gt;按照行顺序挑选矩阵&lt;/td&gt;
+
+    &lt;/tr&gt;
+
+    &lt;tr valign=&quot;top&quot;&gt;
+
+        &lt;td class=&quot;data&quot; width=&quot;34%&quot;&gt;&lt;code class=&quot;ce&quot;&gt;-Zpc&lt;/code&gt;&lt;/td&gt;
+
+        &lt;td class=&quot;data&quot; width=&quot;66%&quot;&gt;按照列顺序挑选矩阵&lt;/td&gt;
+
+    &lt;/tr&gt;
+
+    &lt;tr valign=&quot;top&quot;&gt;
+
+        &lt;td class=&quot;data&quot; width=&quot;34%&quot;&gt;&lt;code class=&quot;ce&quot;&gt;-Fo &lt;/code&gt;&lt;em&gt;file&lt;/em&gt;&lt;/td&gt;
+
+        &lt;td class=&quot;data&quot; width=&quot;66%&quot;&gt;输出目标文件&lt;/td&gt;
+
+    &lt;/tr&gt;
+
+    &lt;tr valign=&quot;top&quot;&gt;
+
+        &lt;td class=&quot;data&quot; width=&quot;34%&quot;&gt;&lt;code class=&quot;ce&quot;&gt;-Fc &lt;/code&gt;&lt;em&gt;file&lt;/em&gt;&lt;/td&gt;
+
+        &lt;td class=&quot;data&quot; width=&quot;66%&quot;&gt;输出所生成代码的列表&lt;/td&gt;
+
+    &lt;/tr&gt;
+
+    &lt;tr valign=&quot;top&quot;&gt;
+
+        &lt;td class=&quot;data&quot; width=&quot;34%&quot;&gt;&lt;code class=&quot;ce&quot;&gt;-Fh &lt;/code&gt;&lt;em&gt;file&lt;/em&gt;&lt;/td&gt;
+
+        &lt;td class=&quot;data&quot; width=&quot;66%&quot;&gt;输出含有生成代码的头部&lt;/td&gt;
+
+    &lt;/tr&gt;
+
+    &lt;tr valign=&quot;top&quot;&gt;
+
+        &lt;td class=&quot;data&quot; width=&quot;34%&quot;&gt;&lt;code class=&quot;ce&quot;&gt;-D &lt;/code&gt;&lt;em&gt;id=text&lt;/em&gt;&lt;/td&gt;
+
+        &lt;td class=&quot;data&quot; width=&quot;66%&quot;&gt;定义宏&lt;/td&gt;
+
+    &lt;/tr&gt;
+
+    &lt;tr valign=&quot;top&quot;&gt;
+
+        &lt;td class=&quot;data&quot; width=&quot;34%&quot;&gt;&lt;code class=&quot;ce&quot;&gt;-nologo&lt;/code&gt;&lt;/td&gt;
+
+        &lt;td class=&quot;data&quot; width=&quot;66%&quot;&gt;没有版权信息&lt;/td&gt;
+
+    &lt;/tr&gt;
+
+&lt;/tbody&gt;
+</code></pre></table><p>&nbsp;</p><p>既然你了解了用于着色器开发的HLSL编译器的内容，我们就可以讨论实际的语言结构了。 在我们继续下面内容的时候，头脑里要一直保留着编译对象的概念以及潜在的汇编着色器模型的不同性能，这很重要。</p></div><footer class=post-footer><div class=post-tags><a href=/tags/direct3d/>direct3d
+</a><a href=/tags/graphics/>graphics</a></div><hr><div class=post-copyright><img src=/imgs/cc/cc.svg class=cc-icon width=75 height=75 align=right alt=共享知识 title=共享知识><ul><li class=post-copyright-title><strong>文章标题：</strong>
+DirectX 9高层着色语言介绍1——引言、简单例子、汇编语言和编译对象</li><li class=post-copyright-author><strong>本文作者： </strong>Rise</li><li class=post-copyright-link><strong>本文链接：</strong>
+<a id=post-cr-link href=https://blogs.qipai360.cn/post/directx-9-hlsl-introduction-1-introduction-examples-assembly/ title="DirectX 9高层着色语言介绍1——引言、简单例子、汇编语言和编译对象">https://blogs.qipai360.cn/post/directx-9-hlsl-introduction-1-introduction-examples-assembly/</a></li><li class=post-copyright-license><strong>版权声明： </strong>本作品采用 <i class="fab fa-fw fa-creative-commons"></i><a target=_blank href=https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh-hans>BY-NC-SA</a> 许可协议。转载请注明出处！</li><li><div class=license-icons><a href=https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh-hans target=_blank><img src=/imgs/cc/big/by_nc_sa.svg alt=BY-NC-SA title=BY-NC-SA>
+</a><a href=https://notbyai.fyi target=_blank><img src=/imgs/notbyai/zh-hans/black.svg title="Not By AI"></a></div></li></ul></div><div class=followme><span>欢迎关注我的其它发布渠道</span><div class=social-list><div class=social-item><a target=_blank class=social-link href=https://www.zhihu.com/people/rise-worlds><span class=icon><i class="fa fa-book"></i>
+</span><span class=label>知乎</span></a></div><div class=social-item><a target=_blank class=social-link href=https://twitter.com/riseworlds><span class=icon><i class="fab fa-twitter"></i>
+</span><span class=label>Twitter</span></a></div><div class=social-item><a target=_blank class=social-link href=https://www.facebook.com/rise.worlds><span class=icon><i class="fab fa-facebook"></i>
+</span><span class=label>facebook</span></a></div><div class=social-item><a target=_blank class=social-link href=https://youtube.com/@YiXuan><span class=icon><i class="fab fa-youtube"></i>
+</span><span class=label>YouTube</span></a></div><div class=social-item><a target=_blank class=social-link href=https://instagram.com/rise.worlds><span class=icon><i class="fab fa-instagram"></i>
+</span><span class=label>Instagram</span></a></div><div class=social-item><a target=_blank class=social-link href=https://t.me/riseworlds><span class=icon><i class="fab fa-telegram"></i>
+</span><span class=label>Telegram</span></a></div></div></div><div class=post-nav><div class="post-nav-next post-nav-item"><a href=/post/directx-9-hlsl-introduction-2-language-basics-1/ rel=next title="DirectX 9高层着色语言介绍2——语言基础（1）"><i class="fa fa-chevron-left"></i> DirectX 9高层着色语言介绍2——语言基础（1）</a></div><div class="post-nav-prev post-nav-item"><a href=/post/timing-in-drive/ rel=prev title=驱动中定时>驱动中定时
+<i class="fa fa-chevron-right"></i></a></div></div></footer></article></div><div id=comments class=post-comments><div class=comment-head><div class=comment-headline><i class="fas fa-comments fa-fw"></i>
+<span>评论交流</span></div></div><div class=comment-wrap><div><div class=comment-loading><i class="fa fa-sync fa-spin"></i></div><div class=giscus-container></div></div></div></div></div></main><footer class=footer><div class=footer-inner><div class=copyright>&copy;
+<span itemprop=copyrightYear>2004 - 2026
+</span><span class=with-love><i class="fa fa-heart"></i>
+</span><span class=author itemprop=copyrightHolder>Rise</span></div><div class=powered-by>由 <a href=https://gohugo.io title=0.157.0 target=_blank>Hugo</a> & <a href=https://github.com/hugo-next/hugo-theme-next title=4.8.3 target=_blank>Hugo NexT.Gemini</a> 强力驱动</div><div class=beian><a href=https://beian.miit.gov.cn target=_blank>豫ICP备2021009490号</a>
+<img src=/imgs/gongan.png alt=豫公网安备>
+<a href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=41162302000074" target=_blank>豫公网安备 41162302000074 号</a></div></div></footer><script class=next-config data-name=page type=application/json>{"comments":true,"expired":false,"isHome":false,"isPage":true,"path":"directx-9-hlsl-introduction-1-introduction-examples-assembly","permalink":"https://blogs.qipai360.cn/post/directx-9-hlsl-introduction-1-introduction-examples-assembly/","title":"DirectX 9高层着色语言介绍1——引言、简单例子、汇编语言和编译对象","toc":false,"waline3":{"pagecnt":{"alias":"@waline/client","alias_name":"waline","file":"dist/pageview.js","name":"pageview","version":"3.5.7"}}}</script><script type=text/javascript src=https://blogs.qipai360.cn/js/3rd/animejs/3.2.2/anime.min.js crossorigin=anonymous defer></script><script type=text/javascript src=https://blogs.qipai360.cn/js/3rd/viewerjs/1.11.6/viewer.min.js crossorigin=anonymous defer></script><script class=next-config data-name=main type=application/json>{"bookmark":{"color":"#222","enable":true,"save":"manual"},"copybtn":true,"darkmode":true,"giscus":{"cfg":{"category":"Announcements","categoryid":"DIC_kwDOA6L0YM4CiXf9","emit":false,"inputposition":"top","mapping":"title","reactions":false,"repo":"rise-worlds/rise-worlds.github.io","repoid":"MDEwOlJlcG9zaXRvcnk2MTAxMTA0MA==","theme":"transparent_dark"},"js":"https://giscus.app/client.js"},"hostname":"https://blogs.qipai360.cn/","i18n":{"ds_day":" 天前","ds_days":" 天 ","ds_hour":" 小时前","ds_hours":" 小时 ","ds_just":"刚刚","ds_min":" 分钟前","ds_mins":" 分钟","ds_month":" 个月前","ds_years":" 年 ","empty":"没有找到任何搜索结果：${query}","hits":"找到 ${hits} 个搜索结果","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","placeholder":"搜索..."},"isMultiLang":false,"lang":"zh-CN","lazyload":false,"motion":{"async":true,"enable":true,"transition":{"collheader":"fadeInLeft","postblock":"fadeIn","postbody":"fadeInDown","postheader":"fadeInDown","sidebar":"fadeInUp"}},"postmeta":{"comments":{"enable":false,"plugin":"waline3"},"views":{"enable":true,"plugin":"waline3"}},"root":"/","scheme":"Gemini","share":{"addtoany":{"js":"https://static.addtoany.com/menu/page.js","locale":"zh-CN","num":8},"enable":false},"sidebar":{"display":"post","offset":12,"padding":18,"position":"left","width":256},"vendor":{"plugins":"local","router":{"name":"local","type":"modern","url":"https://blogs.qipai360.cn/js/3rd"}},"version":"4.8.3","waline3":{"cfg":{"emoji":false,"imguploader":false,"placeholder":"请文明发言哟 ヾ(≧▽≦*)o 可用快捷键选取表情符号：😀😄😁🥳👻👽👀🚄 (Window系统：Win+.，Mac系统：Control+Command+Space)","reaction":true,"reactiontext":["点赞","踩一下","得意","不屑","尴尬","睡觉"],"reactiontitle":"你认为这篇文章怎么样？","requiredmeta":["nick","mail"],"search":true,"serverurl":"https://walinejs.comment.lithub.cc","sofa":"快来发表你的意见吧 (≧∀≦)ゞ","wordlimit":200},"css":{"alias":"@waline/client","file":"dist/waline.css","name":"waline","version":"3.5.7"},"js":{"alias":"@waline/client","file":"dist/waline.js","name":"waline","version":"3.5.7"}}}</script><script type=text/javascript src="/js/main.min.js?=1772265585" defer></script></body></html>

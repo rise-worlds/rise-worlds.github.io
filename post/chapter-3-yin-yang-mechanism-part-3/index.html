@@ -1,0 +1,141 @@
+<!doctype html><html lang=zh-CN data-theme=dark><head><meta charset=UTF-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=theme-color content="#222" media="(prefers-color-scheme: dark)"><meta name=generator content="Hugo 0.157.0"><link rel="shortcut icon" type=image/x-icon href=/imgs/icons/favicon.ico><link rel=icon type=image/x-icon href=/imgs/icons/favicon.ico><link rel=icon type=image/png sizes=16x16 href=/imgs/icons/favicon_32_32_next.png><link rel=icon type=image/png sizes=32x32 href=/imgs/icons/favicon_128_128_next.png><link rel=apple-touch-icon sizes=180x180 href=/imgs/icons/apple_touch_icon_next.png><meta itemprop=name content="第三章 阴阳的工作机制（3）"><meta itemprop=description content="福兮祸兮，焉知所依？冬去冰泮，春来萌荣。朝生暮死，亦可惊鸿。知足者富，自足者强。"><meta name=description content="福兮祸兮，焉知所依？冬去冰泮，春来萌荣。朝生暮死，亦可惊鸿。知足者富，自足者强。"><meta itemprop=datePublished zgotmplz><meta itemprop=dateModified zgotmplz><meta itemprop=image content="https://blogs.qipai360.cn/imgs/avatar.jpg"><meta itemprop=keywords content="Rise,ZhangTuohui,技术,C++,Unity3D,Lua,NodeJS,C#,JavaScript,游戏开发,机器学习,深度学习,AI,编程,编程语言,编程技术,编程开发,游戏引擎,游戏设计,游戏制作,游戏开发者,游戏开发者博客,游戏开发者网站,游戏开发者工具,游戏开发者教程,游戏开发者学习,游戏开发者交流,游戏开发者分享,游戏开发者经验,游戏开发者心得,游戏开发者技巧,游戏开发者方法,游戏开发者思路,游戏开发者理念,游戏开发者文化,游戏开发者精神,游戏开发者信仰"><meta property="og:type" content="article"><meta property="og:title" content="第三章 阴阳的工作机制（3）"><meta property="og:description" content="福兮祸兮，焉知所依？冬去冰泮，春来萌荣。朝生暮死，亦可惊鸿。知足者富，自足者强。"><meta property="og:image" content="/imgs/avatar.jpg"><meta property="og:image:width" content="312"><meta property="og:image:height" content="312"><meta property="og:image:type" content="image/jpeg/png/svg/jpg"><meta property="og:url" content="https://blogs.qipai360.cn/post/chapter-3-yin-yang-mechanism-part-3/"><meta property="og:site_name" content="Rise的自留地"><meta property="og:locale" content="zh-CN"><meta property="article:author" content="Rise"><meta property="article:published_time" content="2007-08-24 19:03:00 +0800 +0800"><meta property="article:modified_time" content="2007-08-27 17:00:00 +0800 +0800"><link type=text/css rel=stylesheet href=https://blogs.qipai360.cn/js/3rd/font-awesome/6.7.2/css/all.min.css><link type=text/css rel=stylesheet href=https://blogs.qipai360.cn/js/3rd/animate.css/3.1.1/animate.min.css><link type=text/css rel=stylesheet href=https://blogs.qipai360.cn/js/3rd/viewerjs/1.11.6/viewer.min.css><link rel=stylesheet href="/css/main.min.css?=1772265588"><style type=text/css>.post-footer hr:after{content:"~ 我可是有底线的哟 ~"}.flinks-list-footer hr:after{content:"~ 我可是有底线的哟 ~"}</style><script type=text/javascript>(function(){localDB={set:function(e,t,n){if(n===0)return;const s=new Date,o=n*864e5,i={value:t,expiry:s.getTime()+o};localStorage.setItem(e,JSON.stringify(i))},get:function(e){const t=localStorage.getItem(e);if(!t)return 0[0];const n=JSON.parse(t),s=new Date;return s.getTime()>n.expiry?(localStorage.removeItem(e),0[0]):n.value}},theme={active:function(){const e=localDB.get("theme");if(e==null)return;theme.toggle(e),window.matchMedia("(prefers-color-scheme: dark)").addListener(function(e){theme.toggle(e.matches?"dark":"light")})},toggle:function(e){document.documentElement.setAttribute("data-theme",e),localDB.set("theme",e,2);const t=document.querySelector("iframe.giscus-frame");if(t){const n={setConfig:{theme:e}};t.contentWindow.postMessage({giscus:n},"https://giscus.app")}}},theme.active()})(window)</script><script type=text/javascript>document.addEventListener("DOMContentLoaded",()=>{var e=document.createElement("script");e.charset="UTF-8",e.src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js",e.async=!1,e.defer=!0,document.head.appendChild(e),e.onload=function(){NexT.utils.fmtBusuanzi()}})</script><script defer src=https://static.cloudflareinsights.com/beacon.min.js data-cf-beacon='{"token": "2b23669184fc49269e400525ac2447d9"}'></script><title>第三章 阴阳的工作机制（3） - Rise的自留地</title><noscript><link rel=stylesheet href=/css/noscript.css></noscript></head><body itemscope itemtype=http://schema.org/WebPage class=use-motion><div class=headband></div><main class=main><header class=header itemscope itemtype=http://schema.org/WPHeader><div class=header-inner><div class=site-brand-container><div class=site-nav-toggle><div class=toggle aria-label role=button><span class=toggle-line></span>
+<span class=toggle-line></span>
+<span class=toggle-line></span></div></div><div class=site-meta><a href=/ class=brand rel=start><i class=logo-line></i><h1 class=site-title>Rise的自留地</h1><i class=logo-line></i></a><p class=site-subtitle itemprop=description>记录生活中的点滴，分享编程技术和游戏开发经验。</p></div><div class=site-nav-right><div class="toggle popup-trigger"></div></div></div><nav class=site-nav><ul class="main-menu menu"><li class="menu-item menu-item-home"><a href=/ class=hvr-icon-pulse rel=section><i class="fa fa-home hvr-icon"></i>首页</a></li><li class="menu-item menu-item-about"><a href=/about.html class=hvr-icon-pulse rel=section><i class="fa fa-user hvr-icon"></i>关于</a></li><li class="menu-item menu-item-archives"><a href=/archives/ class=hvr-icon-pulse rel=section><i class="fa fa-archive hvr-icon"></i>归档
+<span class=badge>679</span></a></li><li class="menu-item menu-item-tags"><a href=/tags/ class=hvr-icon-pulse rel=section><i class="fa fa-tags hvr-icon"></i>标签</a></li><li class="menu-item menu-item-message"><a href=/message/ class=hvr-icon-pulse rel=section><i class="fa fa-comments hvr-icon"></i>留言板</a></li><li class="menu-item menu-item-commonweal"><a href=/404.html class=hvr-icon-pulse rel=section><i class="fa fa-heartbeat hvr-icon"></i>公益 404</a></li></ul></nav></div><div class="toggle sidebar-toggle" role=button><span class=toggle-line></span>
+<span class=toggle-line></span>
+<span class=toggle-line></span></div><aside class=sidebar><div class="sidebar-inner sidebar-overview-active"><ul class=sidebar-nav><li class=sidebar-nav-toc>文章目录</li><li class=sidebar-nav-overview>站点概览</li></ul><div class=sidebar-panel-container><div class="post-toc-wrap sidebar-panel"><div class="post-toc animated"><nav id=TableOfContents></nav></div></div><div class="site-overview-wrap sidebar-panel"><div class="site-author site-overview-item animated" itemprop=author itemscope itemtype=http://schema.org/Person><img class=site-author-image itemprop=image alt=Rise src=/imgs/img-lazy-loading.gif data-src=/imgs/avatar.jpg><p class=site-author-name itemprop=name>Rise</p><div class=site-description itemprop=description>福兮祸兮，焉知所依？冬去冰泮，春来萌荣。朝生暮死，亦可惊鸿。知足者富，自足者强。</div></div><div class="site-state-wrap site-overview-item animated"><nav class=site-state><div class="site-state-item site-state-posts"><a href=/archives/><span class=site-state-item-count>679</span>
+<span class=site-state-item-name>日志</span></a></div><div class="site-state-item site-state-categories"><a href=/categories/><span class=site-state-item-count>35</span>
+<span class=site-state-item-name>分类</span></a></div><div class="site-state-item site-state-tags"><a href=/tags/><span class=site-state-item-count>118</span>
+<span class=site-state-item-name>标签</span></a></div></nav></div><div class="links-of-social site-overview-item animated"><span class=links-of-social-item><a href=https://github.com/rise-worlds title="Github → https://github.com/rise-worlds" rel=noopener class=hvr-icon-pulse target=_blank><i class="fab fa-github fa-fw hvr-icon"></i>
+Github
+</a></span><span class=links-of-social-item><a href=mailto:rise.worlds@outlook.com title="E-Mail → mailto:rise.worlds@outlook.com" rel=noopener class=hvr-icon-pulse target=_blank><i class="fa fa-envelope fa-fw hvr-icon"></i>
+E-Mail
+</a></span><span class=links-of-social-item><a href=https://www.zhihu.com/people/rise-worlds title="知乎 → https://www.zhihu.com/people/rise-worlds" rel=noopener class=hvr-icon-pulse target=_blank><i class="fa fa-book fa-fw hvr-icon"></i>
+知乎
+</a></span><span class=links-of-social-item><a href=https://twitter.com/riseworlds title="Twitter → https://twitter.com/riseworlds" rel=noopener class=hvr-icon-pulse target=_blank><i class="fab fa-twitter fa-fw hvr-icon"></i>
+Twitter
+</a></span><span class=links-of-social-item><a href=https://www.facebook.com/rise.worlds title="facebook → https://www.facebook.com/rise.worlds" rel=noopener class=hvr-icon-pulse target=_blank><i class="fab fa-facebook fa-fw hvr-icon"></i>
+facebook
+</a></span><span class=links-of-social-item><a href=https://youtube.com/@YiXuan title="YouTube → https://youtube.com/@YiXuan" rel=noopener class=hvr-icon-pulse target=_blank><i class="fab fa-youtube fa-fw hvr-icon"></i>
+YouTube
+</a></span><span class=links-of-social-item><a href=https://instagram.com/rise.worlds title="Instagram → https://instagram.com/rise.worlds" rel=noopener class=hvr-icon-pulse target=_blank><i class="fab fa-instagram fa-fw hvr-icon"></i>
+Instagram
+</a></span><span class=links-of-social-item><a href=https://t.me/riseworlds title="Telegram → https://t.me/riseworlds" rel=noopener class=hvr-icon-pulse target=_blank><i class="fab fa-telegram fa-fw hvr-icon"></i>
+Telegram</a></span></div><div class="links-of-blogroll site-overview-item animated"><div class=links-of-blogroll-title><i class="fa fa-globe fa-fw"></i>
+友情链接</div><ul class=links-of-blogroll-list><li class=links-of-blogroll-item><a href=https://www.qipai360.cn title=https://www.qipai360.cn target=_blank>Qipai360</a></li><li class=links-of-blogroll-item><a href=https://www.cnblogs.com/flying_bat title=https://www.cnblogs.com/flying_bat target=_blank>博客园</a></li><li class=links-of-blogroll-item><a href=https://zishu.me title=https://zishu.me target=_blank>子舒的博客</a></li><li class=links-of-blogroll-item><a href=https://gitee.com/hugo-next/hugo-theme-next title=https://gitee.com/hugo-next/hugo-theme-next target=_blank>Hugo-NexT</a></li></ul></div></div></div></div><div id=siteinfo-card-widget class=sidebar-card-widget><div class=item-headline><i class="fas fa-chart-line"></i>
+<span>网站资讯</span></div><div class=siteinfo><div class=siteinfo-item><div class=item-name><i class="fa-solid fa-calendar-check"></i>已运行：</div><div class=item-count id=runTimes data-publishdate="2004-10-06 15:24:00 +0800 +0800"></div></div><div class=siteinfo-item><div class=item-name><i class="fas fa fa-user"></i>总访客数：</div><div class=item-count id=busuanzi_value_site_uv><i class="fa fa-sync fa-spin"></i></div></div><div class=siteinfo-item><div class=item-name><i class="fas fa fa-eye"></i>页面浏览：</div><div class=item-count id=busuanzi_value_site_pv><i class="fa fa-sync fa-spin"></i></div></div><div class=siteinfo-item><div class=item-name><i class="fa fa-font"></i>总字数：</div><div class=item-count id=wordsCount data-count=2423147></div></div><div class=siteinfo-item><div class=item-name><i class="fa fa-mug-hot"></i>阅读约：</div><div class=item-count id=readTimes data-times=5207></div></div><div class=siteinfo-item><div class=item-name><i class="fa fa-clock-rotate-left"></i>最后更新于：</div><div class=item-count id=last-push-date data-lastpushdate="2026-02-28 15:59:00 +0800 +0800"></div></div></div></div></aside><div class=sidebar-dimmer></div></header><div class=tool-buttons><div id=goto-comments class="button goto-comments" title=直达评论><i class="fas fa-comments"></i></div><div id=toggle-theme class=button title=深浅模式切换><i class="fas fa-adjust"></i></div><div class=back-to-top role=button title=返回顶部><i class="fa fa-arrow-up"></i>
+<span>0%</span></div></div><div class=reading-progress-bar></div><a role=button class="book-mark-link book-mark-link-fixed"></a><a href=https://github.com/rise-worlds rel="noopener external nofollow noreferrer" target=_blank title="Follow me on GitHub" class="exturl github-corner"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0 0 115 115h15l12 27L250 250V0z"/><path d="M128.3 109C113.8 99.7 119 89.6 119 89.6 122 82.7 120.5 78.6 120.5 78.6 119.2 72 123.4 76.3 123.4 76.3 127.3 80.9 125.5 87.3 125.5 87.3 122.9 97.6 130.6 101.9 134.4 103.2" fill="currentColor" style="transform-origin:130px 106px" class="octo-arm"/><path d="M115 115C114.9 115.1 118.7 116.5 119.8 115.4l13.9-13.8C136.9 99.2 139.9 98.4 142.2 98.6 133.8 88 127.5 74.4 143.8 58 148.5 53.4 154 51.2 159.7 51 160.3 49.4 163.2 43.6 171.4 40.1 171.4 40.1 176.1 42.5 178.8 56.2 183.1 58.6 187.2 61.8 190.9 65.4 194.5 69 197.7 73.2 200.1 77.6 213.8 80.2 216.3 84.9 216.3 84.9 212.7 93.1 206.9 96 205.4 96.6 205.1 102.4 203 107.8 198.3 112.5 181.9 128.9 168.3 122.5 157.7 114.1 157.9 116.9 156.7 120.9 152.7 124.9L141 136.5C139.8 137.7 141.6 141.9 141.8 141.8z" fill="currentColor" class="octo-body"/></svg></a><noscript><div class=noscript-warning>Theme NexT works best with JavaScript enabled</div></noscript><div class="main-inner post posts-expand"><div class=post-block><article itemscope itemtype=http://schema.org/Article class=post-content lang><link itemprop=mainEntityOfPage href=https://blogs.qipai360.cn/post/chapter-3-yin-yang-mechanism-part-3/><span hidden itemprop=author itemscope itemtype=http://schema.org/Person><meta itemprop=image content="/imgs/avatar.jpg"><meta itemprop=name content="Rise"></span><span hidden itemprop=publisher itemscope itemtype=http://schema.org/Organization><meta itemprop=name content="Rise"><meta itemprop=description content="福兮祸兮，焉知所依？冬去冰泮，春来萌荣。朝生暮死，亦可惊鸿。知足者富，自足者强。"></span><span hidden itemprop=post itemscope itemtype=http://schema.org/CreativeWork><meta itemprop=name content="第三章 阴阳的工作机制（3）"><meta itemprop=description content="3.开合枢病变
+开合枢的正常功用 我们讨论过了，这些功用失常就会产生病变。所以，六经病变
+说实在的，就是开合枢的失调，就是开合枢的病变。"></span><header class=post-header><h1 class=post-title itemprop="name headline">第三章 阴阳的工作机制（3）</h1><div class=post-meta-container><div class=post-meta-items><span class=post-meta-item><span class=post-meta-item-icon><i class="fas fa-solid fa-calendar"></i>
+</span><span class=post-meta-item-text title=发表于>发表于：
+</span><time title="创建时间：2007年08月24日 19:03:00 CST" itemprop="dateCreated datePublished" datetime="2007-08-24 19:03:00 +0800 +0800">2007年08月24日
+</time></span><span class=post-meta-item><span class=post-meta-item-icon><i class="fas fa-solid fa-calendar-check"></i>
+</span><span class=post-meta-item-text title=更新于>更新于：
+</span><time title="修改时间：2007年08月27日 17:00:00 CST" itemprop="dateModified dateLastmod" datetime="2007-08-27 17:00:00 +0800 +0800">2007年08月27日
+</time></span><span class=post-meta-item><span class=post-meta-item-icon><i class="fas fa-solid fa-folder-open"></i>
+</span><span class=post-meta-item-text title=分类于>分类于：
+</span><span itemprop=about itemscope itemtype=http://schema.org/Thing><a href=/categories/tcm/ itemprop=url rel=index><span itemprop=name>TCM</span></a></span></span></div><div class=post-meta-items><span class=post-meta-item title=字数><span class=post-meta-item-icon><i class="fas fa-solid fa-file-word"></i>
+</span><span class=post-meta-item-text>字数：</span>
+<span>3250</span>
+</span><span class=post-meta-item title=阅读><span class=post-meta-item-icon><i class="fas fa-solid fa-clock"></i>
+</span><span class=post-meta-item-text>阅读：&ap;</span>
+<span>7分钟</span>
+</span><span class=post-meta-item title=浏览><span class=post-meta-item-icon><i class="fas fa-solid fa-eye"></i>
+</span><span class=post-meta-item-text>浏览：
+</span><span id=pageview-count data-path=/post/chapter-3-yin-yang-mechanism-part-3/><i class="fa fa-sync fa-spin"></i></span></span></div></div></header><div class=post-body itemprop=articleBody><p><span style=font-weight:700>3.开合枢病变</span></p><p>开合枢的正常功用 我们讨论过了，这些功用失常就会产生病变。所以，六经病变
+说实在的，就是开合枢的失调，就是开合枢的病变。</p><a id=more></a><p><span style=font-weight:700>（1）太阳开机的病变</span> 太阳主开，负责阳门的开启，太阳的开机为什么会发生异常
+呢？这个原因可能来自内部，也可能来自外部，或兼而有之。外部的因素往往比较典型，
+如我们常见的伤寒、中风，就是因为外邪侵袭，障碍、束缚了这个开机，使阳气的开发
+受限，于是太阳病就发生了。除了外因，内在有哪些因素呢？有阳气虚，本身的力量不
+足，太阳这个开的作用会成问题，或者由于水饮、湿等因素障碍了阳气的外出，太阳的
+开机也会出现问题。总而言之，太阳开机的功能是帮助阳气外出，帮助阳气发挥作用。
+而阳气的作用前面讨论过，有宣发，有卫外，有气化等等，如果太阳开机出现障碍，阳
+气的作用就会受到影响，太阳病的发生就与这些影响直接相关。如太阳篇见得最多的是
+表病，表病就是因为阳不卫外，遭受外邪侵袭所致。另外，阳不化气，水液的代谢就会
+失调，从而导致水液代谢障碍相关的疾病。我们看看整个太阳篇，表证、水气、痰饮、
+蓄水占了绝大多数，这些都是与阳用障碍有关，都与太阳开机不利有关。因此，从太阳
+开机不利的角度去理解太阳病，就抓住了它的纲领。</p><p><span style=font-weight:700>（2）阳明合机病变</span> 太阳的开是要使阳气升发，阳明的合是使阳气收降。阳气收降
+以后，天气变燥、变凉，所以阳明与秋天相应。现在阳明的合机发生障碍，阳气该收不
+收，该降不降，就会出现热，就会有不降的情况。所以，阳明病最大的特征就是两个，
+一个是热，一个是不降。热表现在经证里，不降表现在腑证里。当然热与不降，经证与
+腑证都可以相互影响。我们看阳明的经证用白虎汤，这就很有意思。白虎是什么？白虎
+是西方的神，主宰西方变化的东西就叫白虎。西方的变化是什么？主要是阳气的收与降。
+所以，从阳明病用白虎汤，就说明阳气的收降出了问题。</p><p><span style=font-weight:700>（3）少阳枢病</span> 少阳主枢，负责调节开合，如果开合没有问题，你很难发现枢机的
+毛病。我们看一看三阳篇，太阳篇占179 条，阳明的篇幅也不少，而少阳则仅仅十来条。
+是不是少阳不重要呢？绝对不是！少阳主枢，关乎太阳、阳明的开合，怎么会不重要呢？
+这个篇幅上的差距，很重要的一个原因是，少阳枢机的病变很多都体现在太阳和阳明篇
+里面。比如小柴胡汤大家都公认它是少阳病的主方，可是小柴胡汤在少阳病篇的运用只
+有一次，而其他大量的运用是在太阳和阳明病篇。枢机主管开合，因而枢机的病变往往
+也要从开合上看。这是枢机病变的一个特色。前面讲伤寒和杂病概念的时候，我们曾经
+说过，世间上的疾病，如果从发热与非发热这个角度去划分，则可以分为两类，一类是
+伤寒，一类就是杂病。那么，现在我们从开合的角度讲，世间的疾病也不外乎两个，一
+个是开的问题，一个是合的问题。为什么这么说呢？因为人体的生理主要就靠这个阴阳
+的升降出入。升降出入正常，一切都正常；而一旦升降出入异常，一切相关的疾病就会
+发生。那么，升降出入靠什么把持呢？就靠这个开合。所以，从这个层面去思维，我们
+把天下的疾病分开合两类，应该是如理如法的。依着上面的这个思路再深入一步，我们
+又发现，开合的作用是由枢机的转动来维系的。因此，调节枢机便能调节开合，调节开
+合便能调节升降出入。所以，枢机对于整个机体来说，真可谓触一发而动万机。历史上
+有许多医家善用柴胡剂，一个是小柴胡调阳枢，一个是四逆散调阴枢。利用柴胡剂加减
+化裁，通治临床各科的疾病。比如北京中医学院已故元老陈慎吾先生，现尚健在的四川
+乐山名医江尔逊都是善用柴胡剂者。历史上往往将这些善用柴胡剂的医家称为柴胡派，
+善用一个方，就能成就一个派，这真是不简单的事。这个现象很值得思考。为什么柴胡
+剂的化裁能够治疗这么多的疾病？根本的一个原因就在于它对枢机的特别作用。所以，
+我们不要看到少阳篇只有十条条文，就以为它不重要，应该考虑到枢机的特殊性。枢机
+影响到开的一面它的病变就表现在太阳里，枢机影响到合的一面，它的病变就表现在阳
+明里。所以，临床上见到许多太阳、阳明的病变，你从本经去治，效果不理想，这个时
+候如果调一调枢，往往就迎刃而解。</p><p><span style=font-weight:700>（4）太阴开机病变</span> 接下来是太阴，太阴也主开，这个开是使阴门开启（收藏之门），
+阳气内入转入收藏。如果太阴开机产生障碍，就会影响到阳气的内入。阳气内入有两个
+作用：一方面是为了阳气本身休养生息；另一方面是内入的阳气可以温养脏腑。所以，
+阳气内入障碍以后就有两方面的不妥，一是阳气得不到休养，二是脏腑得不到温养。脏
+失温养就会产生太阴病。因此，整个太阴病的主导，就像太阴病提纲条文所说的：&ldquo;太阴
+之为病，腹满而吐，食不下，自利益甚，时腹自痛，若下之，必胸下结硬。&ldquo;都是由于脏
+失温养的缘故，都是由于脏塞的缘故。就如227 条所云：&ldquo;自利不渴者，属太阴，以其藏
+有寒故也，当温之，宜服四逆辈。&ldquo;这些都说明了，脏腑失去温养是太阴病的主导。如果
+太阴开机失调，阳气得不到很好的休养，人体的能量得不到贮养、蓄积，阳气就会真正
+衰少，这个时候情况就会严重，就会转入少阴病。我们从太阴病治疗主要用温养的方法，
+如四逆辈等，也可以说明这一点。太阴属脾土，土是主养藏的。藏什么呢？就是藏阳气。
+土能生养万物，它靠什么来生养，靠的就是所藏的这个阳气。所以，土之所以能生养这
+些形形色色的万物，与它的这个"开&rdquo;，与它的这个"藏"是分不开的。如果开机有障碍，
+接下来的藏，接下来的生养就会有问题。</p><p><span style=font-weight:700>（5）少阴枢病</span> 少阴也主枢，它的作用也是或影响开，或影响合。少阴枢机的重要
+性比少阳枢又进了一步，它主导水与火的枢转。少阴是水火之脏，这个枢就对水火的调
+节起作用。水火并非不相容，它们需要相互接触、相互依转、相互调和。如果枢机出了
+问题，就会影响到水火的调和，或者就会出现水太过，水太过必寒；或者会出现火太过，
+火太过必热。所以，少阴篇的核心，就是一个寒化与热化的问题。少阴这一经真正关系
+到阳的体，我们说三阴为体，三阳为用，体阴用阳。三阳的病变主要是阳用发生障碍，
+用有障碍了，这个问题还不太大，用现代医学的术语这还是功能性病变的阶段。所以，
+三阳的病很少死人。而病变到了三阴，这就危及到"体"了，按西医的说法就是器质性的
+损害。体与用，一个讲器质，一个讲功用。少阳的枢只是对用的枢转，而少阴的枢则是
+对体的枢转。体能不能得到真正的蓄养，这就要看少阴枢的功能。所以，少阴的枢转是
+很重要很重要的，为什么少阴病死证这么多？就是因为少阴不好，阳之体就没有办法保
+养。</p><p><span style=font-weight:700>（6）厥阴合机病变</span> 前面讲过厥阴是主合的，当阳气蓄养到一定的时候，这个合机
+就要启动，从而结束这个蓄养状态，开始一个新的状态。所以，厥阴又是罢极之本，罢
+极就是使这个藏的状态结束，进入生的状态，进而生长收藏。前面的太阴、少阴都在收
+藏，到了厥阴就要结束这个过程，使阳气转入到升发的状态，出的状态。如果这个过程
+障碍了，那会出现什么结果？阳气当出不出，就会产生热。但，这个热与阳明的热不同，
+阳明的热是阳气在外，当降不降产生热；厥阴的热是阳气在里，当出不出而热。所以，
+阳明热与厥阴热的区别，一个是外热，一个是内热；一个是气热，一个是血热。那么，
+什么原因最容易引起这个厥阴合机的障碍呢？也就是说上述这个收藏状态结束转为升发
+状态的过程，或者说阳出的过程最容易受什么因素影响？是什么因素能跟这个过程相
+对？当然是寒，寒主收引，因此，最容易引起这个障碍。大家看到，厥阴篇的大量篇幅
+都在讨论寒热错杂，用药方面，既有大苦大寒的川连、黄柏，又有大辛大热的川椒、细
+辛、附子、桂枝、干姜。看上去很矛盾，但，实际上厥阴的本身就是这个情况，就是寒
+热错杂。过去都认为厥阴篇是《伤寒论》最头痛的一篇，可是，你从合机的角度去分析，
+就会发现厥阴篇并不困难。以上我们从开合枢来谈了三阴三阳，谈了六经病，这虽然是
+一个比较粗略的勾画，但是，六经病的脉络已然非常明晰地摆在我们面前，因此，大家
+应该认识到，从这个角度，从这个层面去学习《伤寒论》，是一个比较方便的法门。</p></div><footer class=post-footer><hr><div class=post-copyright><img src=/imgs/cc/cc.svg class=cc-icon width=75 height=75 align=right alt=共享知识 title=共享知识><ul><li class=post-copyright-title><strong>文章标题：</strong>
+第三章 阴阳的工作机制（3）</li><li class=post-copyright-author><strong>本文作者： </strong>Rise</li><li class=post-copyright-link><strong>本文链接：</strong>
+<a id=post-cr-link href=https://blogs.qipai360.cn/post/chapter-3-yin-yang-mechanism-part-3/ title="第三章 阴阳的工作机制（3）">https://blogs.qipai360.cn/post/chapter-3-yin-yang-mechanism-part-3/</a></li><li class=post-copyright-license><strong>版权声明： </strong>本作品采用 <i class="fab fa-fw fa-creative-commons"></i><a target=_blank href=https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh-hans>BY-NC-SA</a> 许可协议。转载请注明出处！</li><li><div class=license-icons><a href=https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh-hans target=_blank><img src=/imgs/cc/big/by_nc_sa.svg alt=BY-NC-SA title=BY-NC-SA>
+</a><a href=https://notbyai.fyi target=_blank><img src=/imgs/notbyai/zh-hans/black.svg title="Not By AI"></a></div></li></ul></div><div class=followme><span>欢迎关注我的其它发布渠道</span><div class=social-list><div class=social-item><a target=_blank class=social-link href=https://www.zhihu.com/people/rise-worlds><span class=icon><i class="fa fa-book"></i>
+</span><span class=label>知乎</span></a></div><div class=social-item><a target=_blank class=social-link href=https://twitter.com/riseworlds><span class=icon><i class="fab fa-twitter"></i>
+</span><span class=label>Twitter</span></a></div><div class=social-item><a target=_blank class=social-link href=https://www.facebook.com/rise.worlds><span class=icon><i class="fab fa-facebook"></i>
+</span><span class=label>facebook</span></a></div><div class=social-item><a target=_blank class=social-link href=https://youtube.com/@YiXuan><span class=icon><i class="fab fa-youtube"></i>
+</span><span class=label>YouTube</span></a></div><div class=social-item><a target=_blank class=social-link href=https://instagram.com/rise.worlds><span class=icon><i class="fab fa-instagram"></i>
+</span><span class=label>Instagram</span></a></div><div class=social-item><a target=_blank class=social-link href=https://t.me/riseworlds><span class=icon><i class="fab fa-telegram"></i>
+</span><span class=label>Telegram</span></a></div></div></div><div class=post-nav><div class="post-nav-next post-nav-item"><a href=/post/chapter-3-yin-yang-mechanism-part-4/ rel=next title="第三章 阴阳的工作机制（4）"><i class="fa fa-chevron-left"></i> 第三章 阴阳的工作机制（4）</a></div><div class="post-nav-prev post-nav-item"><a href=/post/chapter-3-yin-yang-mechanism-part-2/ rel=prev title="第三章 阴阳的工作机制（2）">第三章 阴阳的工作机制（2）
+<i class="fa fa-chevron-right"></i></a></div></div></footer></article></div><div id=comments class=post-comments><div class=comment-head><div class=comment-headline><i class="fas fa-comments fa-fw"></i>
+<span>评论交流</span></div></div><div class=comment-wrap><div><div class=comment-loading><i class="fa fa-sync fa-spin"></i></div><div class=giscus-container></div></div></div></div></div></main><footer class=footer><div class=footer-inner><div class=copyright>&copy;
+<span itemprop=copyrightYear>2004 - 2026
+</span><span class=with-love><i class="fa fa-heart"></i>
+</span><span class=author itemprop=copyrightHolder>Rise</span></div><div class=powered-by>由 <a href=https://gohugo.io title=0.157.0 target=_blank>Hugo</a> & <a href=https://github.com/hugo-next/hugo-theme-next title=4.8.3 target=_blank>Hugo NexT.Gemini</a> 强力驱动</div><div class=beian><a href=https://beian.miit.gov.cn target=_blank>豫ICP备2021009490号</a>
+<img src=/imgs/gongan.png alt=豫公网安备>
+<a href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=41162302000074" target=_blank>豫公网安备 41162302000074 号</a></div></div></footer><script class=next-config data-name=page type=application/json>{"comments":true,"expired":false,"isHome":false,"isPage":true,"path":"chapter-3-yin-yang-mechanism-part-3","permalink":"https://blogs.qipai360.cn/post/chapter-3-yin-yang-mechanism-part-3/","title":"第三章 阴阳的工作机制（3）","toc":false,"waline3":{"pagecnt":{"alias":"@waline/client","alias_name":"waline","file":"dist/pageview.js","name":"pageview","version":"3.5.7"}}}</script><script type=text/javascript src=https://blogs.qipai360.cn/js/3rd/animejs/3.2.2/anime.min.js crossorigin=anonymous defer></script><script type=text/javascript src=https://blogs.qipai360.cn/js/3rd/viewerjs/1.11.6/viewer.min.js crossorigin=anonymous defer></script><script class=next-config data-name=main type=application/json>{"bookmark":{"color":"#222","enable":true,"save":"manual"},"copybtn":true,"darkmode":true,"giscus":{"cfg":{"category":"Announcements","categoryid":"DIC_kwDOA6L0YM4CiXf9","emit":false,"inputposition":"top","mapping":"title","reactions":false,"repo":"rise-worlds/rise-worlds.github.io","repoid":"MDEwOlJlcG9zaXRvcnk2MTAxMTA0MA==","theme":"transparent_dark"},"js":"https://giscus.app/client.js"},"hostname":"https://blogs.qipai360.cn/","i18n":{"ds_day":" 天前","ds_days":" 天 ","ds_hour":" 小时前","ds_hours":" 小时 ","ds_just":"刚刚","ds_min":" 分钟前","ds_mins":" 分钟","ds_month":" 个月前","ds_years":" 年 ","empty":"没有找到任何搜索结果：${query}","hits":"找到 ${hits} 个搜索结果","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","placeholder":"搜索..."},"isMultiLang":false,"lang":"zh-CN","lazyload":false,"motion":{"async":true,"enable":true,"transition":{"collheader":"fadeInLeft","postblock":"fadeIn","postbody":"fadeInDown","postheader":"fadeInDown","sidebar":"fadeInUp"}},"postmeta":{"comments":{"enable":false,"plugin":"waline3"},"views":{"enable":true,"plugin":"waline3"}},"root":"/","scheme":"Gemini","share":{"addtoany":{"js":"https://static.addtoany.com/menu/page.js","locale":"zh-CN","num":8},"enable":false},"sidebar":{"display":"post","offset":12,"padding":18,"position":"left","width":256},"vendor":{"plugins":"local","router":{"name":"local","type":"modern","url":"https://blogs.qipai360.cn/js/3rd"}},"version":"4.8.3","waline3":{"cfg":{"emoji":false,"imguploader":false,"placeholder":"请文明发言哟 ヾ(≧▽≦*)o 可用快捷键选取表情符号：😀😄😁🥳👻👽👀🚄 (Window系统：Win+.，Mac系统：Control+Command+Space)","reaction":true,"reactiontext":["点赞","踩一下","得意","不屑","尴尬","睡觉"],"reactiontitle":"你认为这篇文章怎么样？","requiredmeta":["nick","mail"],"search":true,"serverurl":"https://walinejs.comment.lithub.cc","sofa":"快来发表你的意见吧 (≧∀≦)ゞ","wordlimit":200},"css":{"alias":"@waline/client","file":"dist/waline.css","name":"waline","version":"3.5.7"},"js":{"alias":"@waline/client","file":"dist/waline.js","name":"waline","version":"3.5.7"}}}</script><script type=text/javascript src="/js/main.min.js?=1772265585" defer></script></body></html>

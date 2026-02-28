@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Dota2 on Rise的自留地</title><link>https://blogs.qipai360.cn/tags/dota2/</link><description>Recent content in Dota2 on Rise的自留地</description><generator>Hugo</generator><language>zh-CN</language><lastBuildDate>Wed, 27 Nov 2024 18:58:00 +0800</lastBuildDate><atom:link href="https://blogs.qipai360.cn/tags/dota2/rss.xml" rel="self" type="application/rss+xml"/><item><title>DOTA2参数收集</title><link>https://blogs.qipai360.cn/post/dota2-parameter-collection/</link><pubDate>Thu, 12 Sep 2013 22:58:00 +0800</pubDate><guid>https://blogs.qipai360.cn/post/dota2-parameter-collection/</guid><description>&lt;ul&gt;
+&lt;li&gt;
+&lt;pre&gt;&lt;code&gt;-language schinese 显示中文界面（使用英文语音的同学使用）
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;pre&gt;&lt;code&gt;-perfectworld 登陆国服（Steam平台）
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;pre&gt;&lt;code&gt;-novid 不显示启动动画
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;pre&gt;&lt;code&gt;-dx9/-dx11
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;pre&gt;&lt;code&gt;-gl 使用 opengl
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;pre&gt;&lt;code&gt;-vulkan 使用 vulkan
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;
+&lt;a href="01.png" title="" &gt;
+ &lt;img src="https://blogs.qipai360.cn/imgs/img-lazy-loading.gif" data-src="01.png" alt="" /&gt;
+ 
+&lt;/a&gt;&lt;/p&gt;</description></item><item><title>Win8和Win2012R2如何支持DOTA2输入法</title><link>https://blogs.qipai360.cn/post/win8-win2012r2-support-dota2-input-method/</link><pubDate>Thu, 12 Sep 2013 10:58:00 +0800</pubDate><guid>https://blogs.qipai360.cn/post/win8-win2012r2-support-dota2-input-method/</guid><description>&lt;p&gt;微软自带的拼音和五笔就不用看了,没研究过,下面的方法应该不支持.&lt;/p&gt;
+&lt;p&gt;其实方法很简单运行下&lt;code&gt;ctfmon.exe&lt;/code&gt;就可以了,这个原来旧输入模式的基础,测试可以支持&lt;code&gt;QQ五笔&lt;/code&gt;.&lt;/p&gt;</description></item></channel></rss>

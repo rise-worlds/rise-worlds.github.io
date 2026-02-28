@@ -1,0 +1,616 @@
+<!doctype html><html lang=zh-CN data-theme=dark><head><meta charset=UTF-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=theme-color content="#222" media="(prefers-color-scheme: dark)"><meta name=generator content="Hugo 0.157.0"><link rel="shortcut icon" type=image/x-icon href=/imgs/icons/favicon.ico><link rel=icon type=image/x-icon href=/imgs/icons/favicon.ico><link rel=icon type=image/png sizes=16x16 href=/imgs/icons/favicon_32_32_next.png><link rel=icon type=image/png sizes=32x32 href=/imgs/icons/favicon_128_128_next.png><link rel=apple-touch-icon sizes=180x180 href=/imgs/icons/apple_touch_icon_next.png><meta itemprop=name content="Rise的自留地"><meta itemprop=description content="福兮祸兮，焉知所依？冬去冰泮，春来萌荣。朝生暮死，亦可惊鸿。知足者富，自足者强。"><meta name=description content="福兮祸兮，焉知所依？冬去冰泮，春来萌荣。朝生暮死，亦可惊鸿。知足者富，自足者强。"><meta itemprop=image content="https://blogs.qipai360.cn/imgs/avatar.jpg"><meta itemprop=keywords content="Rise,ZhangTuohui,技术,C++,Unity3D,Lua,NodeJS,C#,JavaScript,游戏开发,机器学习,深度学习,AI,编程,编程语言,编程技术,编程开发,游戏引擎,游戏设计,游戏制作,游戏开发者,游戏开发者博客,游戏开发者网站,游戏开发者工具,游戏开发者教程,游戏开发者学习,游戏开发者交流,游戏开发者分享,游戏开发者经验,游戏开发者心得,游戏开发者技巧,游戏开发者方法,游戏开发者思路,游戏开发者理念,游戏开发者文化,游戏开发者精神,游戏开发者信仰"><meta property="og:type" content="website"><meta property="og:title" content="Rise的自留地"><meta property="og:description" content="福兮祸兮，焉知所依？冬去冰泮，春来萌荣。朝生暮死，亦可惊鸿。知足者富，自足者强。"><meta property="og:image" content="/imgs/avatar.jpg"><meta property="og:image:width" content="312"><meta property="og:image:height" content="312"><meta property="og:image:type" content="image/jpeg/png/svg/jpg"><meta property="og:url" content="https://blogs.qipai360.cn/"><meta property="og:site_name" content="Rise的自留地"><meta property="og:locale" content="zh-CN"><link type=text/css rel=stylesheet href=https://blogs.qipai360.cn/js/3rd/font-awesome/6.7.2/css/all.min.css><link type=text/css rel=stylesheet href=https://blogs.qipai360.cn/js/3rd/animate.css/3.1.1/animate.min.css><link type=text/css rel=stylesheet href=https://blogs.qipai360.cn/js/3rd/viewerjs/1.11.6/viewer.min.css><link rel=stylesheet href="/css/main.min.css?=1772265582"><style type=text/css>.post-footer hr:after{content:"~ 我可是有底线的哟 ~"}.flinks-list-footer hr:after{content:"~ 我可是有底线的哟 ~"}</style><script type=text/javascript>(function(){localDB={set:function(e,t,n){if(n===0)return;const s=new Date,o=n*864e5,i={value:t,expiry:s.getTime()+o};localStorage.setItem(e,JSON.stringify(i))},get:function(e){const t=localStorage.getItem(e);if(!t)return 0[0];const n=JSON.parse(t),s=new Date;return s.getTime()>n.expiry?(localStorage.removeItem(e),0[0]):n.value}},theme={active:function(){const e=localDB.get("theme");if(e==null)return;theme.toggle(e),window.matchMedia("(prefers-color-scheme: dark)").addListener(function(e){theme.toggle(e.matches?"dark":"light")})},toggle:function(e){document.documentElement.setAttribute("data-theme",e),localDB.set("theme",e,2);const t=document.querySelector("iframe.giscus-frame");if(t){const n={setConfig:{theme:e}};t.contentWindow.postMessage({giscus:n},"https://giscus.app")}}},theme.active()})(window)</script><script type=text/javascript>document.addEventListener("DOMContentLoaded",()=>{var e=document.createElement("script");e.charset="UTF-8",e.src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js",e.async=!1,e.defer=!0,document.head.appendChild(e),e.onload=function(){NexT.utils.fmtBusuanzi()}})</script><script defer src=https://static.cloudflareinsights.com/beacon.min.js data-cf-beacon='{"token": "2b23669184fc49269e400525ac2447d9"}'></script><title>Rise的自留地</title><noscript><link rel=stylesheet href=/css/noscript.css></noscript></head><body itemscope itemtype=http://schema.org/WebPage class=use-motion><div class=headband></div><main class=main><header class=header itemscope itemtype=http://schema.org/WPHeader><div class=header-inner><div class=site-brand-container><div class=site-nav-toggle><div class=toggle aria-label role=button><span class=toggle-line></span>
+<span class=toggle-line></span>
+<span class=toggle-line></span></div></div><div class=site-meta><a href=/ class=brand rel=start><i class=logo-line></i><h1 class=site-title>Rise的自留地</h1><i class=logo-line></i></a><p class=site-subtitle itemprop=description>记录生活中的点滴，分享编程技术和游戏开发经验。</p></div><div class=site-nav-right><div class="toggle popup-trigger"></div></div></div><nav class=site-nav><ul class="main-menu menu"><li class="menu-item menu-item-home"><a href=/ class="hvr-icon-pulse menu-item-active" rel=section><i class="fa fa-home hvr-icon"></i>首页</a></li><li class="menu-item menu-item-about"><a href=/about.html class=hvr-icon-pulse rel=section><i class="fa fa-user hvr-icon"></i>关于</a></li><li class="menu-item menu-item-archives"><a href=/archives/ class=hvr-icon-pulse rel=section><i class="fa fa-archive hvr-icon"></i>归档
+<span class=badge>679</span></a></li><li class="menu-item menu-item-tags"><a href=/tags/ class=hvr-icon-pulse rel=section><i class="fa fa-tags hvr-icon"></i>标签</a></li><li class="menu-item menu-item-message"><a href=/message/ class=hvr-icon-pulse rel=section><i class="fa fa-comments hvr-icon"></i>留言板</a></li><li class="menu-item menu-item-commonweal"><a href=/404.html class=hvr-icon-pulse rel=section><i class="fa fa-heartbeat hvr-icon"></i>公益 404</a></li></ul></nav></div><div class="toggle sidebar-toggle" role=button><span class=toggle-line></span>
+<span class=toggle-line></span>
+<span class=toggle-line></span></div><aside class=sidebar><div class="sidebar-inner sidebar-overview-active"><ul class=sidebar-nav><li class=sidebar-nav-toc>文章目录</li><li class=sidebar-nav-overview>站点概览</li></ul><div class=sidebar-panel-container><div class="post-toc-wrap sidebar-panel"><div class="post-toc animated"><nav id=TableOfContents></nav></div></div><div class="site-overview-wrap sidebar-panel"><div class="site-author site-overview-item animated" itemprop=author itemscope itemtype=http://schema.org/Person><img class=site-author-image itemprop=image alt=Rise src=/imgs/img-lazy-loading.gif data-src=/imgs/avatar.jpg><p class=site-author-name itemprop=name>Rise</p><div class=site-description itemprop=description>福兮祸兮，焉知所依？冬去冰泮，春来萌荣。朝生暮死，亦可惊鸿。知足者富，自足者强。</div></div><div class="site-state-wrap site-overview-item animated"><nav class=site-state><div class="site-state-item site-state-posts"><a href=/archives/><span class=site-state-item-count>679</span>
+<span class=site-state-item-name>日志</span></a></div><div class="site-state-item site-state-categories"><a href=/categories/><span class=site-state-item-count>35</span>
+<span class=site-state-item-name>分类</span></a></div><div class="site-state-item site-state-tags"><a href=/tags/><span class=site-state-item-count>118</span>
+<span class=site-state-item-name>标签</span></a></div></nav></div><div class="links-of-social site-overview-item animated"><span class=links-of-social-item><a href=https://github.com/rise-worlds title="Github → https://github.com/rise-worlds" rel=noopener class=hvr-icon-pulse target=_blank><i class="fab fa-github fa-fw hvr-icon"></i>
+Github
+</a></span><span class=links-of-social-item><a href=mailto:rise.worlds@outlook.com title="E-Mail → mailto:rise.worlds@outlook.com" rel=noopener class=hvr-icon-pulse target=_blank><i class="fa fa-envelope fa-fw hvr-icon"></i>
+E-Mail
+</a></span><span class=links-of-social-item><a href=https://www.zhihu.com/people/rise-worlds title="知乎 → https://www.zhihu.com/people/rise-worlds" rel=noopener class=hvr-icon-pulse target=_blank><i class="fa fa-book fa-fw hvr-icon"></i>
+知乎
+</a></span><span class=links-of-social-item><a href=https://twitter.com/riseworlds title="Twitter → https://twitter.com/riseworlds" rel=noopener class=hvr-icon-pulse target=_blank><i class="fab fa-twitter fa-fw hvr-icon"></i>
+Twitter
+</a></span><span class=links-of-social-item><a href=https://www.facebook.com/rise.worlds title="facebook → https://www.facebook.com/rise.worlds" rel=noopener class=hvr-icon-pulse target=_blank><i class="fab fa-facebook fa-fw hvr-icon"></i>
+facebook
+</a></span><span class=links-of-social-item><a href=https://youtube.com/@YiXuan title="YouTube → https://youtube.com/@YiXuan" rel=noopener class=hvr-icon-pulse target=_blank><i class="fab fa-youtube fa-fw hvr-icon"></i>
+YouTube
+</a></span><span class=links-of-social-item><a href=https://instagram.com/rise.worlds title="Instagram → https://instagram.com/rise.worlds" rel=noopener class=hvr-icon-pulse target=_blank><i class="fab fa-instagram fa-fw hvr-icon"></i>
+Instagram
+</a></span><span class=links-of-social-item><a href=https://t.me/riseworlds title="Telegram → https://t.me/riseworlds" rel=noopener class=hvr-icon-pulse target=_blank><i class="fab fa-telegram fa-fw hvr-icon"></i>
+Telegram</a></span></div><div class="links-of-blogroll site-overview-item animated"><div class=links-of-blogroll-title><i class="fa fa-globe fa-fw"></i>
+友情链接</div><ul class=links-of-blogroll-list><li class=links-of-blogroll-item><a href=https://www.qipai360.cn title=https://www.qipai360.cn target=_blank>Qipai360</a></li><li class=links-of-blogroll-item><a href=https://www.cnblogs.com/flying_bat title=https://www.cnblogs.com/flying_bat target=_blank>博客园</a></li><li class=links-of-blogroll-item><a href=https://zishu.me title=https://zishu.me target=_blank>子舒的博客</a></li><li class=links-of-blogroll-item><a href=https://gitee.com/hugo-next/hugo-theme-next title=https://gitee.com/hugo-next/hugo-theme-next target=_blank>Hugo-NexT</a></li></ul></div></div></div></div><div id=siteinfo-card-widget class=sidebar-card-widget><div class=item-headline><i class="fas fa-chart-line"></i>
+<span>网站资讯</span></div><div class=siteinfo><div class=siteinfo-item><div class=item-name><i class="fa-solid fa-calendar-check"></i>已运行：</div><div class=item-count id=runTimes data-publishdate="2004-10-06 15:24:00 +0800 +0800"></div></div><div class=siteinfo-item><div class=item-name><i class="fas fa fa-user"></i>总访客数：</div><div class=item-count id=busuanzi_value_site_uv><i class="fa fa-sync fa-spin"></i></div></div><div class=siteinfo-item><div class=item-name><i class="fas fa fa-eye"></i>页面浏览：</div><div class=item-count id=busuanzi_value_site_pv><i class="fa fa-sync fa-spin"></i></div></div><div class=siteinfo-item><div class=item-name><i class="fa fa-font"></i>总字数：</div><div class=item-count id=wordsCount data-count=2423147></div></div><div class=siteinfo-item><div class=item-name><i class="fa fa-mug-hot"></i>阅读约：</div><div class=item-count id=readTimes data-times=5207></div></div><div class=siteinfo-item><div class=item-name><i class="fa fa-clock-rotate-left"></i>最后更新于：</div><div class=item-count id=last-push-date data-lastpushdate="2026-02-28 15:59:00 +0800 +0800"></div></div></div></div></aside><div class=sidebar-dimmer></div></header><div class=tool-buttons><div id=goto-comments class="button goto-comments" title=直达评论><i class="fas fa-comments"></i></div><div id=toggle-theme class=button title=深浅模式切换><i class="fas fa-adjust"></i></div><div class=back-to-top role=button title=返回顶部><i class="fa fa-arrow-up"></i>
+<span>0%</span></div></div><div class=reading-progress-bar></div><a role=button class="book-mark-link book-mark-link-fixed"></a><a href=https://github.com/rise-worlds rel="noopener external nofollow noreferrer" target=_blank title="Follow me on GitHub" class="exturl github-corner"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0 0 115 115h15l12 27L250 250V0z"/><path d="M128.3 109C113.8 99.7 119 89.6 119 89.6 122 82.7 120.5 78.6 120.5 78.6 119.2 72 123.4 76.3 123.4 76.3 127.3 80.9 125.5 87.3 125.5 87.3 122.9 97.6 130.6 101.9 134.4 103.2" fill="currentColor" style="transform-origin:130px 106px" class="octo-arm"/><path d="M115 115C114.9 115.1 118.7 116.5 119.8 115.4l13.9-13.8C136.9 99.2 139.9 98.4 142.2 98.6 133.8 88 127.5 74.4 143.8 58 148.5 53.4 154 51.2 159.7 51 160.3 49.4 163.2 43.6 171.4 40.1 171.4 40.1 176.1 42.5 178.8 56.2 183.1 58.6 187.2 61.8 190.9 65.4 194.5 69 197.7 73.2 200.1 77.6 213.8 80.2 216.3 84.9 216.3 84.9 212.7 93.1 206.9 96 205.4 96.6 205.1 102.4 203 107.8 198.3 112.5 181.9 128.9 168.3 122.5 157.7 114.1 157.9 116.9 156.7 120.9 152.7 124.9L141 136.5C139.8 137.7 141.6 141.9 141.8 141.8z" fill="currentColor" class="octo-body"/></svg></a><noscript><div class=noscript-warning>Theme NexT works best with JavaScript enabled</div></noscript><div class="main-inner index posts-expand"><div class=post-block><article itemscope itemtype=http://schema.org/Article class=post-content lang><link itemprop=mainEntityOfPage href=https://blogs.qipai360.cn/post/untitled-poems/><span hidden itemprop=author itemscope itemtype=http://schema.org/Person><meta itemprop=image content="/imgs/avatar.jpg"><meta itemprop=name content="Rise"></span><span hidden itemprop=publisher itemscope itemtype=http://schema.org/Organization><meta itemprop=name content="Rise"><meta itemprop=description content="福兮祸兮，焉知所依？冬去冰泮，春来萌荣。朝生暮死，亦可惊鸿。知足者富，自足者强。"></span><span hidden itemprop=post itemscope itemtype=http://schema.org/CreativeWork><meta itemprop=name content="无题"><meta itemprop=description content="福兮祸兮，焉知所依？
+冬去冰泮，春来萌荣。
+朝生暮死，亦可惊鸿。
+知足者富，自足者强。"></span><header class=post-header><h2 class=post-title itemprop="name headline"><span class=post-sticky-flag title=置顶><i class="fa fa-thumbtack"></i>
+</span><a href=/post/untitled-poems/ itemprop=url class=post-title-link>无题</a></h2><div class=post-meta-container><div class=post-meta-items><span class=post-meta-item><span class=post-meta-item-icon><i class="fas fa-solid fa-calendar"></i>
+</span><span class=post-meta-item-text title=发表于>发表于：
+</span><time title="创建时间：2025年05月25日 21:34:00 CST" itemprop="dateCreated datePublished" datetime="2025-05-25 21:34:00 +0800 +0800">2025年05月25日
+</time></span><span class=post-meta-item><span class=post-meta-item-icon><i class="fas fa-solid fa-folder-open"></i>
+</span><span class=post-meta-item-text title=分类于>分类于：
+</span><span itemprop=about itemscope itemtype=http://schema.org/Thing><a href=/categories/capricethink/ itemprop=url rel=index><span itemprop=name>CapriceThink</span>
+</a></span></span><span class=post-meta-item title=浏览><span class=post-meta-item-icon><i class="fas fa-solid fa-eye"></i>
+</span><span class=post-meta-item-text>浏览：
+</span><span id=pageview-count data-path=/post/untitled-poems/><i class="fa fa-sync fa-spin"></i></span></span></div></div></header><div class=post-body itemprop=articleBody><p>福兮祸兮，焉知所依？</p><p>冬去冰泮，春来萌荣。</p><p>朝生暮死，亦可惊鸿。</p><p>知足者富，自足者强。</p></div><footer class=post-footer><div class=post-button><a class=btn href=/post/untitled-poems/#more rel=contents>阅读全文 &#187;</a></div><div class=post-eof></div></footer></article></div><div class=post-block><article itemscope itemtype=http://schema.org/Article class=post-content lang><link itemprop=mainEntityOfPage href=https://blogs.qipai360.cn/post/detailed-comparison-of-mainstream-jdk-distributions/><span hidden itemprop=author itemscope itemtype=http://schema.org/Person><meta itemprop=image content="/imgs/avatar.jpg"><meta itemprop=name content="Rise"></span><span hidden itemprop=publisher itemscope itemtype=http://schema.org/Organization><meta itemprop=name content="Rise"><meta itemprop=description content="福兮祸兮，焉知所依？冬去冰泮，春来萌荣。朝生暮死，亦可惊鸿。知足者富，自足者强。"></span><span hidden itemprop=post itemscope itemtype=http://schema.org/CreativeWork><meta itemprop=name content="主流 JDK 发行版 的详细对比"><meta itemprop=description content="一、基础关系与生态定位
+
+Java生态经过多年发展，已形成以OpenJDK为上游源码，多家厂商和社区提供下游发行版的格局。所有主流JDK发行版都基于OpenJDK源码构建，并通过Java Technology Compatibility Kit (TCK)认证，确保Java SE规范兼容性。"></span><header class=post-header><h2 class=post-title itemprop="name headline"><a href=/post/detailed-comparison-of-mainstream-jdk-distributions/ itemprop=url class=post-title-link>主流 JDK 发行版 的详细对比</a></h2><div class=post-meta-container><div class=post-meta-items><span class=post-meta-item><span class=post-meta-item-icon><i class="fas fa-solid fa-calendar"></i>
+</span><span class=post-meta-item-text title=发表于>发表于：
+</span><time title="创建时间：2026年02月28日 14:57:00 CST" itemprop="dateCreated datePublished" datetime="2026-02-28 14:57:00 +0800 +0800">2026年02月28日
+</time></span><span class=post-meta-item><span class=post-meta-item-icon><i class="fas fa-solid fa-calendar-check"></i>
+</span><span class=post-meta-item-text title=更新于>更新于：
+</span><time title="修改时间：2026年02月28日 15:59:00 CST" itemprop="dateModified dateLastmod" datetime="2026-02-28 15:59:00 +0800 +0800">2026年02月28日
+</time></span><span class=post-meta-item><span class=post-meta-item-icon><i class="fas fa-solid fa-folder-open"></i>
+</span><span class=post-meta-item-text title=分类于>分类于：
+</span><span itemprop=about itemscope itemtype=http://schema.org/Thing><a href=/categories/java/ itemprop=url rel=index><span itemprop=name>java</span>
+</a></span></span><span class=post-meta-item title=浏览><span class=post-meta-item-icon><i class="fas fa-solid fa-eye"></i>
+</span><span class=post-meta-item-text>浏览：
+</span><span id=pageview-count data-path=/post/detailed-comparison-of-mainstream-jdk-distributions/><i class="fa fa-sync fa-spin"></i></span></span></div></div></header><div class=post-body itemprop=articleBody><h2 id=一基础关系与生态定位>一、基础关系与生态定位
+<a class=header-anchor href=#%e4%b8%80%e5%9f%ba%e7%a1%80%e5%85%b3%e7%b3%bb%e4%b8%8e%e7%94%9f%e6%80%81%e5%ae%9a%e4%bd%8d></a></h2><p>Java生态经过多年发展，已形成以OpenJDK为上游源码，多家厂商和社区提供下游发行版的格局。所有主流JDK发行版都基于OpenJDK源码构建，并通过Java Technology Compatibility Kit (TCK)认证，确保Java SE规范兼容性。</p></div><footer class=post-footer><div class=post-button><a class=btn href=/post/detailed-comparison-of-mainstream-jdk-distributions/#more rel=contents>阅读全文 &#187;</a></div><div class=post-eof></div></footer></article></div><div class=post-block><article itemscope itemtype=http://schema.org/Article class=post-content lang><link itemprop=mainEntityOfPage href=https://blogs.qipai360.cn/post/ms-office-gvlk/><span hidden itemprop=author itemscope itemtype=http://schema.org/Person><meta itemprop=image content="/imgs/avatar.jpg"><meta itemprop=name content="Rise"></span><span hidden itemprop=publisher itemscope itemtype=http://schema.org/Organization><meta itemprop=name content="Rise"><meta itemprop=description content="福兮祸兮，焉知所依？冬去冰泮，春来萌荣。朝生暮死，亦可惊鸿。知足者富，自足者强。"></span><span hidden itemprop=post itemscope itemtype=http://schema.org/CreativeWork><meta itemprop=name content="Micrsoft Office GLVK"><meta itemprop=description content="GVLK for Office LTSC 2024
+
+
+  
+      
+          产品
+          GVLK
+      
+  
+  
+      
+          Office LTSC 专业增强版 2024
+          XJ2XN-FW8RK-P4HMP-DKDBV-GCVGB
+      
+      
+          Office LTSC 标准版 2024
+          V28N4-JG22K-W66P8-VTMGK-H6HGR
+      
+      
+          Project Professional 2024
+          FQQ23-N4YCY-73HQ3-FM9WC-76HF4
+      
+      
+          Project Standard 2024
+          PD3TT-NTHQQ-VC7CY-MFXK3-G87F8
+      
+      
+          Visio LTSC Professional 2024
+          B7TN8-FJ8V3-7QYCP-HQPMV-YY89G
+      
+      
+          Visio LTSC Standard 2024
+          JMMVY-XFNQC-KK4HK-9H7R3-WQQTV
+      
+      
+          Access LTSC 2024
+          82FTR-NCHR7-W3944-MGRHM-JMCWD
+      
+      
+          Excel LTSC 2024
+          F4DYN-89BP2-WQTWJ-GR8YC-CKGJG
+      
+      
+          Outlook LTSC 2024
+          D2F8D-N3Q3B-J28PV-X27HD-RJWB9
+      
+      
+          PowerPoint LTSC 2024
+          CW94N-K6GJH-9CTXY-MG2VC-FYCWP
+      
+      
+          Skype for Business LTSC 2024
+          4NKHF-9HBQF-Q3B6C-7YV34-F64P3
+      
+      
+          Word LTSC 2024
+          MQ84N-7VYDM-FXV7C-6K7CC-VFW9J
+      
+  
+
+GVLK for Office LTSC 2021
+
+
+  
+      
+          产品
+          GVLK
+      
+  
+  
+      
+          Office LTSC Professional Plus 2021
+          FXYTK-NJJ8C-GB6DW-3DYQT-6F7TH
+      
+      
+          Office LTSC Standard 2021
+          KDX7X-BNVR8-TXXGX-4Q7Y8-78VT3
+      
+      
+          Project Professional 2021
+          FTNWT-C6WBT-8HMGF-K9PRX-QV9H8
+      
+      
+          Project Standard 2021
+          J2JDC-NJCYY-9RGQ4-YXWMH-T3D4T
+      
+      
+          Visio LTSC Professional 2021
+          KNH8D-FGHT4-T8RK3-CTDYJ-K2HT4
+      
+      
+          Visio LTSC Standard 2021
+          MJVNY-BYWPY-CWV6J-2RKRT-4M8QG
+      
+      
+          Access LTSC 2021
+          WM8YG-YNGDD-4JHDC-PG3F4-FC4T4
+      
+      
+          Excel LTSC 2021
+          NWG3X-87C9K-TC7YY-BC2G7-G6RVC
+      
+      
+          Outlook LTSC 2021
+          C9FM6-3N72F-HFJXB-TM3V9-T86R9
+      
+      
+          PowerPoint LTSC 2021
+          TY7XF-NFRBR-KJ44C-G83KF-GX27K
+      
+      
+          Publisher LTSC 2021
+          2MW9D-N4BXM-9VBPG-Q7W6M-KFBGQ
+      
+      
+          Skype for Business LTSC 2021
+          HWCXN-K3WBT-WJBKY-R8BD9-XK29P
+      
+      
+          Word LTSC 2021
+          TN8H9-M34D3-Y64V9-TR72V-X79KV
+      
+  
+
+Office 2019 的 GVLK
+
+
+  
+      
+          产品
+          GVLK
+      
+  
+  
+      
+          Office 专业增强版 2019
+          NMMKJ-6RK4F-KMJVX-8D9MJ-6MWKP
+      
+      
+          2019 Office Standard
+          6NWWJ-YQWMR-QKGCB-6TMB3-9D9HK
+      
+      
+          Project Professional 2019
+          B4NPR-3FKK7-T2MBV-FRQ4W-PKD2B
+      
+      
+          2019 Project Standard
+          C4F7P-NCP8C-6CQPT-MQHV9-JXD2M
+      
+      
+          2019 Visio Professional
+          9BGNQ-K37YR-RQHF2-38RQ3-7VCBB
+      
+      
+          2019 Visio Standard
+          7TQNQ-K3YQQ-3PFH7-CCPPM-X4VQ2
+      
+      
+          Access 2019
+          9N9PT-27V4Y-VJ2PD-YXFMF-YTFQT
+      
+      
+          Excel 2019
+          TMJWT-YYNMB-3BKTF-644FC-RVXBD
+      
+      
+          Outlook 2019
+          7HD7K-N4PVK-BHBCQ-YWQRW-XW4VK
+      
+      
+          PowerPoint 2019
+          RRNCX-C64HY-W2MM7-MCH9G-TJHMQ
+      
+      
+          Publisher 2019
+          G2KWX-3NW6P-PY93R-JXK2T-C9Y9V
+      
+      
+          Skype for Business 2019
+          NCJ33-JHBBY-HTK98-MYCV8-HMKHJ
+      
+      
+          Word 2019
+          PBX3G-NWMT6-Q7XBW-PYJGG-WXD33
+      
+  
+
+Office 2016 的 GVLK
+
+
+  
+      
+          产品
+          GVLK
+      
+  
+  
+      
+          Office Professional Plus 2016
+          XQNVK-8JYDB-WJ9W3-YJ8YR-WFG99
+      
+      
+          Office Standard 2016
+          JNRGM-WHDWX-FJJG3-K47QV-DRTFM
+      
+      
+          Project Professional 2016
+          YG9NW-3K39V-2T3HJ-93F3Q-G83KT
+      
+      
+          Project Standard 2016
+          GNFHQ-F6YQM-KQDGJ-327XX-KQBVC
+      
+      
+          Visio Professional 2016
+          PD3PC-RHNGV-FXJ29-8JK7D-RJRJK
+      
+      
+          Visio Standard 2016
+          7WHWN-4T7MP-G96JF-G33KR-W8GF4
+      
+      
+          Access 2016
+          GNH9Y-D2J4T-FJHGG-QRVH7-QPFDW
+      
+      
+          Excel 2016
+          9C2PK-NWTVB-JMPW8-BFT28-7FTBF
+      
+      
+          OneNote 2016
+          DR92N-9HTF2-97XKM-XW2WJ-XW3J6
+      
+      
+          Outlook 2016
+          R69KK-NTPKF-7M3Q4-QYBHW-6MT9B
+      
+      
+          PowerPoint 2016
+          J7MQP-HNJ4Y-WJ7YM-PFYGF-BY6C6
+      
+      
+          Publisher 2016
+          F47MM-N3XJP-TQXJ9-BP99D-8 837 K
+      
+      
+          Skype for Business 2016
+          869NQ-FJ69K-466HW-QYCP2-DDBV6
+      
+      
+          Word 2016
+          WXY84-JN2Q9-RBCCQ-3Q3J3-3PFJ6
+      
+  
+
+Office 2013 的 GVLK
+
+
+  
+      
+          产品
+          GVLK
+      
+  
+  
+      
+          Office 2013 Professional Plus
+          YC7DK-G2NP3-2QQC3-J6H88-GVGXT
+      
+      
+          Office 2013 Standard
+          KBKQT-2NMXY-JJWGP-M62JB-92CD4
+      
+      
+          Project 2013 Professional
+          FN8TT-7WMH6-2D4X9-M337T-2342K
+      
+      
+          Project 2013 Standard
+          6NTH3-CW976-3G3Y2-JK3TX-8QHTT
+      
+      
+          Visio 2013 Professional
+          C2FG9-N6J68-H8BTJ-BW3QX-RM3B3
+      
+      
+          Visio 2013 Standard
+          J484Y-4NKBF-W2HMG-DBMJC-PGWR7
+      
+      
+          Access 2013
+          NG2JY-H4JBT-HQXYP-78QH9-4JM2D
+      
+      
+          Excel 2013
+          VGPNG-Y7HQW-9RHP7-TKPV3-BG7GB
+      
+      
+          InfoPath 2013
+          DKT8B-N7VXH-D963P-Q4PHY-F8894
+      
+      
+          Lync 2013
+          2MG3G-3BNTT-3MFW9-KDQW3-TCK7R
+      
+      
+          OneNote 2013
+          TGN6P-8MMBC-37P2F-XHXXK-P34VW
+      
+      
+          Outlook 2013
+          QPN8Q-BJBTJ-334K3-93TGY-2PMBT
+      
+      
+          PowerPoint 2013
+          4NT99-8RJFH-Q2VDH-KYG2C-4RD4F
+      
+      
+          Publisher 2013
+          PN2WF-29XG2-T9HJ7-JQPJR-FCXK4
+      
+      
+          Word 2013
+          6Q7VD-NX8JD-WJ2VH-88V73-4GBJ7
+      
+  
+
+Office 2010 的 GVLK
+
+
+  
+      
+          产品
+          GVLK
+      
+  
+  
+      
+          Office Professional Plus 2010
+          VYBBJ-TRJPB-QFQRF-QFT4D-H3GVB
+      
+      
+          Office Standard 2010
+          V7QKV-4XVVR-XYV4D-F7DFM-8R6BM
+      
+      
+          Office Home and Business 2010
+          D6QFG-VBYP2-XQHM7-J97RH-VVRCK
+      
+      
+          Project Professional 2010
+          YGX6F-PGV49-PGW3J-9BTGG-VHKC6
+      
+      
+          Project Standard 2010
+          4HP3K-88W3F-W2K3D-6677X-F9PGB
+      
+      
+          Visio Premium 2010
+          D9DWC-HPYVV-JGF4P-BTWQB-WX8BJ
+      
+      
+          Visio Professional 2010
+          7MCW8-VRQVK-G677T-PDJCM-Q8TCP
+      
+      
+          Visio Standard 2010
+          767HD-QGMWX-8QTDB-9G3R2-KHFGJ
+      
+      
+          Access 2010
+          V7Y44-9T38C-R2VJK-666HK-T7DDX
+      
+      
+          Excel 2010
+          H62QG-HXVKF-PP4HP-66KMR-CW9BM
+      
+      
+          SharePoint Workspace 2010
+          QYYW6-QP4CB-MBV6G-HYMCJ-4T3J4
+      
+      
+          InfoPath 2010
+          K96W8-67RPQ-62T9Y-J8FQJ-BT37T
+      
+      
+          OneNote 2010
+          Q4Y4M-RHWJM-PY37F-MTKWH-D3XHX
+      
+      
+          Outlook 2010
+          7YDC2-CWM8M-RRTJC-8MDVC-X3DWQ
+      
+      
+          PowerPoint 2010
+          RC8FX-88JRY-3PF7C-X8P67-P4VTT
+      
+      
+          Publisher 2010
+          BFK7F-9MYHM-V68C7-DRQ66-83YTP
+      
+      
+          Word 2010
+          HVHB3-C6FV7-KQX9W-YQG79-CRY7T
+      
+  
+
+
+
+
+  
+    
+      
+      
+        
+          注意
+        
+      
+    
+    
+      本文所有产品密钥均来自微软官方文档：
+
+    MSDN
+    
+
+KMS 主机列表: 
+
+    KMS
+    
+"></span><header class=post-header><h2 class=post-title itemprop="name headline"><a href=/post/ms-office-gvlk/ itemprop=url class=post-title-link>Micrsoft Office GLVK</a></h2><div class=post-meta-container><div class=post-meta-items><span class=post-meta-item><span class=post-meta-item-icon><i class="fas fa-solid fa-calendar"></i>
+</span><span class=post-meta-item-text title=发表于>发表于：
+</span><time title="创建时间：2025年10月29日 09:58:00 CST" itemprop="dateCreated datePublished" datetime="2025-10-29 09:58:00 +0800 +0800">2025年10月29日
+</time></span><span class=post-meta-item><span class=post-meta-item-icon><i class="fas fa-solid fa-calendar-check"></i>
+</span><span class=post-meta-item-text title=更新于>更新于：
+</span><time title="修改时间：2025年11月01日 14:55:00 CST" itemprop="dateModified dateLastmod" datetime="2025-11-01 14:55:00 +0800 +0800">2025年11月01日
+</time></span><span class=post-meta-item><span class=post-meta-item-icon><i class="fas fa-solid fa-folder-open"></i>
+</span><span class=post-meta-item-text title=分类于>分类于：
+</span><span itemprop=about itemscope itemtype=http://schema.org/Thing><a href=/categories/glvk/ itemprop=url rel=index><span itemprop=name>ToolsTips/GLVK</span>
+</a></span></span><span class=post-meta-item title=浏览><span class=post-meta-item-icon><i class="fas fa-solid fa-eye"></i>
+</span><span class=post-meta-item-text>浏览：
+</span><span id=pageview-count data-path=/post/ms-office-gvlk/><i class="fa fa-sync fa-spin"></i></span></span></div></div></header><div class=post-body itemprop=articleBody><h4 id=gvlk-for-office-ltsc-2024>GVLK for Office LTSC 2024
+<a class=header-anchor href=#gvlk-for-office-ltsc-2024></a></h4><table><thead><tr><th>产品</th><th>GVLK</th></tr></thead><tbody><tr><td>Office LTSC 专业增强版 2024</td><td>XJ2XN-FW8RK-P4HMP-DKDBV-GCVGB</td></tr><tr><td>Office LTSC 标准版 2024</td><td>V28N4-JG22K-W66P8-VTMGK-H6HGR</td></tr><tr><td>Project Professional 2024</td><td>FQQ23-N4YCY-73HQ3-FM9WC-76HF4</td></tr><tr><td>Project Standard 2024</td><td>PD3TT-NTHQQ-VC7CY-MFXK3-G87F8</td></tr><tr><td>Visio LTSC Professional 2024</td><td>B7TN8-FJ8V3-7QYCP-HQPMV-YY89G</td></tr><tr><td>Visio LTSC Standard 2024</td><td>JMMVY-XFNQC-KK4HK-9H7R3-WQQTV</td></tr><tr><td>Access LTSC 2024</td><td>82FTR-NCHR7-W3944-MGRHM-JMCWD</td></tr><tr><td>Excel LTSC 2024</td><td>F4DYN-89BP2-WQTWJ-GR8YC-CKGJG</td></tr><tr><td>Outlook LTSC 2024</td><td>D2F8D-N3Q3B-J28PV-X27HD-RJWB9</td></tr><tr><td>PowerPoint LTSC 2024</td><td>CW94N-K6GJH-9CTXY-MG2VC-FYCWP</td></tr><tr><td>Skype for Business LTSC 2024</td><td>4NKHF-9HBQF-Q3B6C-7YV34-F64P3</td></tr><tr><td>Word LTSC 2024</td><td>MQ84N-7VYDM-FXV7C-6K7CC-VFW9J</td></tr></tbody></table><h4 id=gvlk-for-office-ltsc-2021>GVLK for Office LTSC 2021
+<a class=header-anchor href=#gvlk-for-office-ltsc-2021></a></h4><table><thead><tr><th>产品</th><th>GVLK</th></tr></thead><tbody><tr><td>Office LTSC Professional Plus 2021</td><td>FXYTK-NJJ8C-GB6DW-3DYQT-6F7TH</td></tr><tr><td>Office LTSC Standard 2021</td><td>KDX7X-BNVR8-TXXGX-4Q7Y8-78VT3</td></tr><tr><td>Project Professional 2021</td><td>FTNWT-C6WBT-8HMGF-K9PRX-QV9H8</td></tr><tr><td>Project Standard 2021</td><td>J2JDC-NJCYY-9RGQ4-YXWMH-T3D4T</td></tr><tr><td>Visio LTSC Professional 2021</td><td>KNH8D-FGHT4-T8RK3-CTDYJ-K2HT4</td></tr><tr><td>Visio LTSC Standard 2021</td><td>MJVNY-BYWPY-CWV6J-2RKRT-4M8QG</td></tr><tr><td>Access LTSC 2021</td><td>WM8YG-YNGDD-4JHDC-PG3F4-FC4T4</td></tr><tr><td>Excel LTSC 2021</td><td>NWG3X-87C9K-TC7YY-BC2G7-G6RVC</td></tr><tr><td>Outlook LTSC 2021</td><td>C9FM6-3N72F-HFJXB-TM3V9-T86R9</td></tr><tr><td>PowerPoint LTSC 2021</td><td>TY7XF-NFRBR-KJ44C-G83KF-GX27K</td></tr><tr><td>Publisher LTSC 2021</td><td>2MW9D-N4BXM-9VBPG-Q7W6M-KFBGQ</td></tr><tr><td>Skype for Business LTSC 2021</td><td>HWCXN-K3WBT-WJBKY-R8BD9-XK29P</td></tr><tr><td>Word LTSC 2021</td><td>TN8H9-M34D3-Y64V9-TR72V-X79KV</td></tr></tbody></table><h4 id=office-2019-的-gvlk>Office 2019 的 GVLK
+<a class=header-anchor href=#office-2019-%e7%9a%84-gvlk></a></h4><table><thead><tr><th>产品</th><th>GVLK</th></tr></thead><tbody><tr><td>Office 专业增强版 2019</td><td>NMMKJ-6RK4F-KMJVX-8D9MJ-6MWKP</td></tr><tr><td>2019 Office Standard</td><td>6NWWJ-YQWMR-QKGCB-6TMB3-9D9HK</td></tr><tr><td>Project Professional 2019</td><td>B4NPR-3FKK7-T2MBV-FRQ4W-PKD2B</td></tr><tr><td>2019 Project Standard</td><td>C4F7P-NCP8C-6CQPT-MQHV9-JXD2M</td></tr><tr><td>2019 Visio Professional</td><td>9BGNQ-K37YR-RQHF2-38RQ3-7VCBB</td></tr><tr><td>2019 Visio Standard</td><td>7TQNQ-K3YQQ-3PFH7-CCPPM-X4VQ2</td></tr><tr><td>Access 2019</td><td>9N9PT-27V4Y-VJ2PD-YXFMF-YTFQT</td></tr><tr><td>Excel 2019</td><td>TMJWT-YYNMB-3BKTF-644FC-RVXBD</td></tr><tr><td>Outlook 2019</td><td>7HD7K-N4PVK-BHBCQ-YWQRW-XW4VK</td></tr><tr><td>PowerPoint 2019</td><td>RRNCX-C64HY-W2MM7-MCH9G-TJHMQ</td></tr><tr><td>Publisher 2019</td><td>G2KWX-3NW6P-PY93R-JXK2T-C9Y9V</td></tr><tr><td>Skype for Business 2019</td><td>NCJ33-JHBBY-HTK98-MYCV8-HMKHJ</td></tr><tr><td>Word 2019</td><td>PBX3G-NWMT6-Q7XBW-PYJGG-WXD33</td></tr></tbody></table><h4 id=office-2016-的-gvlk>Office 2016 的 GVLK
+<a class=header-anchor href=#office-2016-%e7%9a%84-gvlk></a></h4><table><thead><tr><th>产品</th><th>GVLK</th></tr></thead><tbody><tr><td>Office Professional Plus 2016</td><td>XQNVK-8JYDB-WJ9W3-YJ8YR-WFG99</td></tr><tr><td>Office Standard 2016</td><td>JNRGM-WHDWX-FJJG3-K47QV-DRTFM</td></tr><tr><td>Project Professional 2016</td><td>YG9NW-3K39V-2T3HJ-93F3Q-G83KT</td></tr><tr><td>Project Standard 2016</td><td>GNFHQ-F6YQM-KQDGJ-327XX-KQBVC</td></tr><tr><td>Visio Professional 2016</td><td>PD3PC-RHNGV-FXJ29-8JK7D-RJRJK</td></tr><tr><td>Visio Standard 2016</td><td>7WHWN-4T7MP-G96JF-G33KR-W8GF4</td></tr><tr><td>Access 2016</td><td>GNH9Y-D2J4T-FJHGG-QRVH7-QPFDW</td></tr><tr><td>Excel 2016</td><td>9C2PK-NWTVB-JMPW8-BFT28-7FTBF</td></tr><tr><td>OneNote 2016</td><td>DR92N-9HTF2-97XKM-XW2WJ-XW3J6</td></tr><tr><td>Outlook 2016</td><td>R69KK-NTPKF-7M3Q4-QYBHW-6MT9B</td></tr><tr><td>PowerPoint 2016</td><td>J7MQP-HNJ4Y-WJ7YM-PFYGF-BY6C6</td></tr><tr><td>Publisher 2016</td><td>F47MM-N3XJP-TQXJ9-BP99D-8 837 K</td></tr><tr><td>Skype for Business 2016</td><td>869NQ-FJ69K-466HW-QYCP2-DDBV6</td></tr><tr><td>Word 2016</td><td>WXY84-JN2Q9-RBCCQ-3Q3J3-3PFJ6</td></tr></tbody></table><h4 id=office-2013-的-gvlk>Office 2013 的 GVLK
+<a class=header-anchor href=#office-2013-%e7%9a%84-gvlk></a></h4><table><thead><tr><th>产品</th><th>GVLK</th></tr></thead><tbody><tr><td>Office 2013 Professional Plus</td><td>YC7DK-G2NP3-2QQC3-J6H88-GVGXT</td></tr><tr><td>Office 2013 Standard</td><td>KBKQT-2NMXY-JJWGP-M62JB-92CD4</td></tr><tr><td>Project 2013 Professional</td><td>FN8TT-7WMH6-2D4X9-M337T-2342K</td></tr><tr><td>Project 2013 Standard</td><td>6NTH3-CW976-3G3Y2-JK3TX-8QHTT</td></tr><tr><td>Visio 2013 Professional</td><td>C2FG9-N6J68-H8BTJ-BW3QX-RM3B3</td></tr><tr><td>Visio 2013 Standard</td><td>J484Y-4NKBF-W2HMG-DBMJC-PGWR7</td></tr><tr><td>Access 2013</td><td>NG2JY-H4JBT-HQXYP-78QH9-4JM2D</td></tr><tr><td>Excel 2013</td><td>VGPNG-Y7HQW-9RHP7-TKPV3-BG7GB</td></tr><tr><td>InfoPath 2013</td><td>DKT8B-N7VXH-D963P-Q4PHY-F8894</td></tr><tr><td>Lync 2013</td><td>2MG3G-3BNTT-3MFW9-KDQW3-TCK7R</td></tr><tr><td>OneNote 2013</td><td>TGN6P-8MMBC-37P2F-XHXXK-P34VW</td></tr><tr><td>Outlook 2013</td><td>QPN8Q-BJBTJ-334K3-93TGY-2PMBT</td></tr><tr><td>PowerPoint 2013</td><td>4NT99-8RJFH-Q2VDH-KYG2C-4RD4F</td></tr><tr><td>Publisher 2013</td><td>PN2WF-29XG2-T9HJ7-JQPJR-FCXK4</td></tr><tr><td>Word 2013</td><td>6Q7VD-NX8JD-WJ2VH-88V73-4GBJ7</td></tr></tbody></table><h4 id=office-2010-的-gvlk>Office 2010 的 GVLK
+<a class=header-anchor href=#office-2010-%e7%9a%84-gvlk></a></h4><table><thead><tr><th>产品</th><th>GVLK</th></tr></thead><tbody><tr><td>Office Professional Plus 2010</td><td>VYBBJ-TRJPB-QFQRF-QFT4D-H3GVB</td></tr><tr><td>Office Standard 2010</td><td>V7QKV-4XVVR-XYV4D-F7DFM-8R6BM</td></tr><tr><td>Office Home and Business 2010</td><td>D6QFG-VBYP2-XQHM7-J97RH-VVRCK</td></tr><tr><td>Project Professional 2010</td><td>YGX6F-PGV49-PGW3J-9BTGG-VHKC6</td></tr><tr><td>Project Standard 2010</td><td>4HP3K-88W3F-W2K3D-6677X-F9PGB</td></tr><tr><td>Visio Premium 2010</td><td>D9DWC-HPYVV-JGF4P-BTWQB-WX8BJ</td></tr><tr><td>Visio Professional 2010</td><td>7MCW8-VRQVK-G677T-PDJCM-Q8TCP</td></tr><tr><td>Visio Standard 2010</td><td>767HD-QGMWX-8QTDB-9G3R2-KHFGJ</td></tr><tr><td>Access 2010</td><td>V7Y44-9T38C-R2VJK-666HK-T7DDX</td></tr><tr><td>Excel 2010</td><td>H62QG-HXVKF-PP4HP-66KMR-CW9BM</td></tr><tr><td>SharePoint Workspace 2010</td><td>QYYW6-QP4CB-MBV6G-HYMCJ-4T3J4</td></tr><tr><td>InfoPath 2010</td><td>K96W8-67RPQ-62T9Y-J8FQJ-BT37T</td></tr><tr><td>OneNote 2010</td><td>Q4Y4M-RHWJM-PY37F-MTKWH-D3XHX</td></tr><tr><td>Outlook 2010</td><td>7YDC2-CWM8M-RRTJC-8MDVC-X3DWQ</td></tr><tr><td>PowerPoint 2010</td><td>RC8FX-88JRY-3PF7C-X8P67-P4VTT</td></tr><tr><td>Publisher 2010</td><td>BFK7F-9MYHM-V68C7-DRQ66-83YTP</td></tr><tr><td>Word 2010</td><td>HVHB3-C6FV7-KQX9W-YQG79-CRY7T</td></tr></tbody></table><div class=post-alert-note><div class=post-alert-title><i class="fa-solid fa-bell"></i>
+<span>注意</span></div><div class=post-alert-content><p>本文所有产品密钥均来自微软官方文档：
+<a href="https://learn.microsoft.com/zh-cn/office/volume-license-activation/gvlks?redirectedfrom=MSDN" title=MSDN rel="noopener external nofollow noreferrer" target=_blank class=exturl>MSDN
+</a>KMS 主机列表:
+<a href=https://www.coolhub.top/tech-articles/kms_list.html title=KMS rel="noopener external nofollow noreferrer" target=_blank class=exturl>KMS</a></p></div><footer class=post-footer><div class=post-button><a class=btn href=/post/ms-office-gvlk/#more rel=contents>阅读全文 &#187;</a></div><div class=post-eof></div></footer></article></div><div class=post-block><article itemscope itemtype=http://schema.org/Article class=post-content lang><link itemprop=mainEntityOfPage href=https://blogs.qipai360.cn/post/set-proxy-with-wsl2/><span hidden itemprop=author itemscope itemtype=http://schema.org/Person><meta itemprop=image content="/imgs/avatar.jpg"><meta itemprop=name content="Rise"></span><span hidden itemprop=publisher itemscope itemtype=http://schema.org/Organization><meta itemprop=name content="Rise"><meta itemprop=description content="福兮祸兮，焉知所依？冬去冰泮，春来萌荣。朝生暮死，亦可惊鸿。知足者富，自足者强。"></span><span hidden itemprop=post itemscope itemtype=http://schema.org/CreativeWork><meta itemprop=name content="为 WSL2 一键设置代理"><meta itemprop=description content="在 WSL2 环境中 clone 一个很大的 git 项目，不走代理速度很慢，所以研究了一下怎么让 WSL2 走 Windows 的代理客户端。
+WSL1 和 WSL2 网络的区别
+
+在 WSL1 时代，由于 Linux 子系统和 Windows 共享了网络端口，所以访问 Windows 的代理非常简单。例如 Windows 的代理客户端监听了 8000 端口，那么只需要在 Linux 子系统中执行如下命令，就可以让当前 session 中的请求通过代理访问互联网。"></span><header class=post-header><h2 class=post-title itemprop="name headline"><a href=/post/set-proxy-with-wsl2/ itemprop=url class=post-title-link>为 WSL2 一键设置代理</a></h2><div class=post-meta-container><div class=post-meta-items><span class=post-meta-item><span class=post-meta-item-icon><i class="fas fa-solid fa-calendar"></i>
+</span><span class=post-meta-item-text title=发表于>发表于：
+</span><time title="创建时间：2025年05月25日 21:34:00 CST" itemprop="dateCreated datePublished" datetime="2025-05-25 21:34:00 +0800 +0800">2025年05月25日
+</time></span><span class=post-meta-item title=浏览><span class=post-meta-item-icon><i class="fas fa-solid fa-eye"></i>
+</span><span class=post-meta-item-text>浏览：
+</span><span id=pageview-count data-path=/post/set-proxy-with-wsl2/><i class="fa fa-sync fa-spin"></i></span></span></div></div></header><div class=post-body itemprop=articleBody><p>在 WSL2 环境中 clone 一个很大的 git 项目，不走代理速度很慢，所以研究了一下怎么让 WSL2 走 Windows 的代理客户端。</p><h3 id=wsl1-和-wsl2-网络的区别>WSL1 和 WSL2 网络的区别
+<a class=header-anchor href=#wsl1-%e5%92%8c-wsl2-%e7%bd%91%e7%bb%9c%e7%9a%84%e5%8c%ba%e5%88%ab></a></h3><p>在 WSL1 时代，由于 Linux 子系统和 Windows 共享了网络端口，所以访问 Windows 的代理非常简单。例如 Windows 的代理客户端监听了 8000 端口，那么只需要在 Linux 子系统中执行如下命令，就可以让当前 session 中的请求通过代理访问互联网。</p></div><footer class=post-footer><div class=post-button><a class=btn href=/post/set-proxy-with-wsl2/#more rel=contents>阅读全文 &#187;</a></div><div class=post-eof></div></footer></article></div><div class=post-block><article itemscope itemtype=http://schema.org/Article class=post-content lang><link itemprop=mainEntityOfPage href=https://blogs.qipai360.cn/post/xlua/><span hidden itemprop=author itemscope itemtype=http://schema.org/Person><meta itemprop=image content="/imgs/avatar.jpg"><meta itemprop=name content="Rise"></span><span hidden itemprop=publisher itemscope itemtype=http://schema.org/Organization><meta itemprop=name content="Rise"><meta itemprop=description content="福兮祸兮，焉知所依？冬去冰泮，春来萌荣。朝生暮死，亦可惊鸿。知足者富，自足者强。"></span><span hidden itemprop=post itemscope itemtype=http://schema.org/CreativeWork><meta itemprop=name content="xlua"><meta itemprop=description content="Lua解析器
+
+Lua解析器能够让我们在Unity中执行Lua
+默认的Lua脚本放在Resources文件夹下，并且要加上.txt后缀 才能被执行
+
+
+
+1
+2
+3
+4
+
+
+LuaEnv env = new LuaEnv();
+env.DoString(&#34;print('你好世界')&#34;);
+//执行一个lua脚本
+env.DoString(&#34;require('Main')&#34;);
+
+
+
+垃圾回收"></span><header class=post-header><h2 class=post-title itemprop="name headline"><a href=/post/xlua/ itemprop=url class=post-title-link>xlua</a></h2><div class=post-meta-container><div class=post-meta-items><span class=post-meta-item><span class=post-meta-item-icon><i class="fas fa-solid fa-calendar"></i>
+</span><span class=post-meta-item-text title=发表于>发表于：
+</span><time title="创建时间：2025年05月10日 14:37:27 CST" itemprop="dateCreated datePublished" datetime="2025-05-10 14:37:27 +0800 +0800">2025年05月10日
+</time></span><span class=post-meta-item><span class=post-meta-item-icon><i class="fas fa-solid fa-folder-open"></i>
+</span><span class=post-meta-item-text title=分类于>分类于：
+</span><span itemprop=about itemscope itemtype=http://schema.org/Thing><a href=/categories/xlua/ itemprop=url rel=index><span itemprop=name>dev/lua/xlua</span>
+</a></span></span><span class=post-meta-item title=浏览><span class=post-meta-item-icon><i class="fas fa-solid fa-eye"></i>
+</span><span class=post-meta-item-text>浏览：
+</span><span id=pageview-count data-path=/post/xlua/><i class="fa fa-sync fa-spin"></i></span></span></div></div></header><div class=post-body itemprop=articleBody><h2 id=lua解析器>Lua解析器
+<a class=header-anchor href=#lua%e8%a7%a3%e6%9e%90%e5%99%a8></a></h2><p>Lua解析器能够让我们在Unity中执行Lua</p><p>默认的Lua脚本放在<code>Resources</code>文件夹下，并且要加上<code>.txt</code>后缀 才能被执行</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt id=hl-0-1><a class=lnlinks href=#hl-0-1>1</a>
+</span><span class=lnt id=hl-0-2><a class=lnlinks href=#hl-0-2>2</a>
+</span><span class=lnt id=hl-0-3><a class=lnlinks href=#hl-0-3>3</a>
+</span><span class=lnt id=hl-0-4><a class=lnlinks href=#hl-0-4>4</a>
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-c# data-lang=c#><span class=line><span class=cl><span class=n>LuaEnv</span> <span class=n>env</span> <span class=p>=</span> <span class=k>new</span> <span class=n>LuaEnv</span><span class=p>();</span>
+</span></span><span class=line><span class=cl><span class=n>env</span><span class=p>.</span><span class=n>DoString</span><span class=p>(</span><span class=s>&#34;print(&#39;你好世界&#39;)&#34;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl><span class=c1>//执行一个lua脚本</span>
+</span></span><span class=line><span class=cl><span class=n>env</span><span class=p>.</span><span class=n>DoString</span><span class=p>(</span><span class=s>&#34;require(&#39;Main&#39;)&#34;</span><span class=p>);</span></span></span></code></pre></td></tr></table></div></div><p><strong>垃圾回收</strong></p></div><footer class=post-footer><div class=post-button><a class=btn href=/post/xlua/#more rel=contents>阅读全文 &#187;</a></div><div class=post-eof></div></footer></article></div><div class=post-block><article itemscope itemtype=http://schema.org/Article class=post-content lang><link itemprop=mainEntityOfPage href=https://blogs.qipai360.cn/post/memoirs-guangzhou/><span hidden itemprop=author itemscope itemtype=http://schema.org/Person><meta itemprop=image content="/imgs/avatar.jpg"><meta itemprop=name content="Rise"></span><span hidden itemprop=publisher itemscope itemtype=http://schema.org/Organization><meta itemprop=name content="Rise"><meta itemprop=description content="福兮祸兮，焉知所依？冬去冰泮，春来萌荣。朝生暮死，亦可惊鸿。知足者富，自足者强。"></span><span hidden itemprop=post itemscope itemtype=http://schema.org/CreativeWork><meta itemprop=name content="回忆录-关于广州二三事"><meta itemprop=description content="一直想写点什么，关于过往，可能是真的老了吧。
+最近在看电视剧《黄雀》，想起一些有关于广州的回忆。
+2005年春节后，父亲癌症术后已经有一年多的时间，在郑州工作每个月也挣不多少钱，就想着去南方打工试试。"></span><header class=post-header><h2 class=post-title itemprop="name headline"><a href=/post/memoirs-guangzhou/ itemprop=url class=post-title-link>回忆录-关于广州二三事</a></h2><div class=post-meta-container><div class=post-meta-items><span class=post-meta-item><span class=post-meta-item-icon><i class="fas fa-solid fa-calendar"></i>
+</span><span class=post-meta-item-text title=发表于>发表于：
+</span><time title="创建时间：2025年04月22日 23:00:00 CST" itemprop="dateCreated datePublished" datetime="2025-04-22 23:00:00 +0800 +0800">2025年04月22日
+</time></span><span class=post-meta-item><span class=post-meta-item-icon><i class="fas fa-solid fa-calendar-check"></i>
+</span><span class=post-meta-item-text title=更新于>更新于：
+</span><time title="修改时间：2025年04月24日 00:15:00 CST" itemprop="dateModified dateLastmod" datetime="2025-04-24 00:15:00 +0800 +0800">2025年04月24日
+</time></span><span class=post-meta-item><span class=post-meta-item-icon><i class="fas fa-solid fa-folder-open"></i>
+</span><span class=post-meta-item-text title=分类于>分类于：
+</span><span itemprop=about itemscope itemtype=http://schema.org/Thing><a href=/categories/memoirs/ itemprop=url rel=index><span itemprop=name>Memoirs</span>
+</a></span></span><span class=post-meta-item title=浏览><span class=post-meta-item-icon><i class="fas fa-solid fa-eye"></i>
+</span><span class=post-meta-item-text>浏览：
+</span><span id=pageview-count data-path=/post/memoirs-guangzhou/><i class="fa fa-sync fa-spin"></i></span></span></div></div></header><div class=post-body itemprop=articleBody><p>一直想写点什么，关于过往，可能是真的老了吧。
+最近在看电视剧《黄雀》，想起一些有关于广州的回忆。</p><p>2005年春节后，父亲癌症术后已经有一年多的时间，在郑州工作每个月也挣不多少钱，就想着去南方打工试试。</p></div><footer class=post-footer><div class=post-button><a class=btn href=/post/memoirs-guangzhou/#more rel=contents>阅读全文 &#187;</a></div><div class=post-eof></div></footer></article></div><div class=post-block><article itemscope itemtype=http://schema.org/Article class=post-content lang><link itemprop=mainEntityOfPage href=https://blogs.qipai360.cn/post/mind-wanderings-20250406-from-childish-views-to-self-reflection/><span hidden itemprop=author itemscope itemtype=http://schema.org/Person><meta itemprop=image content="/imgs/avatar.jpg"><meta itemprop=name content="Rise"></span><span hidden itemprop=publisher itemscope itemtype=http://schema.org/Organization><meta itemprop=name content="Rise"><meta itemprop=description content="福兮祸兮，焉知所依？冬去冰泮，春来萌荣。朝生暮死，亦可惊鸿。知足者富，自足者强。"></span><span hidden itemprop=post itemscope itemtype=http://schema.org/CreativeWork><meta itemprop=name content="随想 20250406 从童稚之见，到自我省思"><meta itemprop=description content="无根树，花正幽，贪恋荣华谁肯休。浮生事，苦海舟，荡去漂来不自由。 - 张三丰《无根树》"></span><header class=post-header><h2 class=post-title itemprop="name headline"><a href=/post/mind-wanderings-20250406-from-childish-views-to-self-reflection/ itemprop=url class=post-title-link>随想 20250406 从童稚之见，到自我省思</a></h2><div class=post-meta-container><div class=post-meta-items><span class=post-meta-item><span class=post-meta-item-icon><i class="fas fa-solid fa-calendar"></i>
+</span><span class=post-meta-item-text title=发表于>发表于：
+</span><time title="创建时间：2025年04月06日 15:53:00 CST" itemprop="dateCreated datePublished" datetime="2025-04-06 15:53:00 +0800 +0800">2025年04月06日
+</time></span><span class=post-meta-item><span class=post-meta-item-icon><i class="fas fa-solid fa-folder-open"></i>
+</span><span class=post-meta-item-text title=分类于>分类于：
+</span><span itemprop=about itemscope itemtype=http://schema.org/Thing><a href=/categories/capricethink/ itemprop=url rel=index><span itemprop=name>CapriceThink</span>
+</a></span></span><span class=post-meta-item title=浏览><span class=post-meta-item-icon><i class="fas fa-solid fa-eye"></i>
+</span><span class=post-meta-item-text>浏览：
+</span><span id=pageview-count data-path=/post/mind-wanderings-20250406-from-childish-views-to-self-reflection/><i class="fa fa-sync fa-spin"></i></span></span></div></div></header><div class=post-body itemprop=articleBody><p><a href=01.jpg title><img src=/imgs/img-lazy-loading.gif data-src=header.jpg alt></a></p><p>小时候，约莫六七岁，在老家上一二年级。夏日清晨，踏入那散发着异味的旱厕，便能瞧见蛆虫们为了些许粑粑疯狂涌动，蜂拥而上的场景。彼时，那一幕深深烙印在我的脑海，竟让我不自觉地将其与老家的大人们联系起来。我曾目睹大人们为了一点蝇头小利，就争得面红耳赤，甚至不惜大打出手，他们急切争抢的模样，与旱厕里的蛆虫毫无二致。在孩子的世界里，一切都简单纯粹，快乐或许只是一颗糖果、一次游戏，没有过多的物质欲望和功名利禄的纷扰。我们用清澈的眼眸打量着这个世界，对大人们那些看似疯狂的行为感到不解与困惑。正如庄子笔下的 “鹪鹩巢于深林，不过一枝；偃鼠饮河，不过满腹”，孩童的内心，正如同那鹪鹩与偃鼠，所求甚少，内心自足。庄子垂钓濮水，楚王派两位大夫前来邀请他出仕，许以高官厚禄，庄子却持竿不顾，以神龟 “宁其生而曳尾于涂中” 为喻，婉拒了世俗的功名利禄诱惑，一心守护内心的自由与宁静，这与孩童内心的纯粹不谋而合。</p></div><footer class=post-footer><div class=post-button><a class=btn href=/post/mind-wanderings-20250406-from-childish-views-to-self-reflection/#more rel=contents>阅读全文 &#187;</a></div><div class=post-eof></div></footer></article></div><div class=post-block><article itemscope itemtype=http://schema.org/Article class=post-content lang><link itemprop=mainEntityOfPage href=https://blogs.qipai360.cn/post/mind-wanderings-2025030902/><span hidden itemprop=author itemscope itemtype=http://schema.org/Person><meta itemprop=image content="/imgs/avatar.jpg"><meta itemprop=name content="Rise"></span><span hidden itemprop=publisher itemscope itemtype=http://schema.org/Organization><meta itemprop=name content="Rise"><meta itemprop=description content="福兮祸兮，焉知所依？冬去冰泮，春来萌荣。朝生暮死，亦可惊鸿。知足者富，自足者强。"></span><span hidden itemprop=post itemscope itemtype=http://schema.org/CreativeWork><meta itemprop=name content="随想 20250309 见天地，见自己，见众生：一场打破传统顺序的认知觉醒"><meta itemprop=description content="引言：当直觉与传统碰撞
+
+“见自己、见天地、见众生”，这句源自东方哲学的经典命题，常被视为人生修行的三重境界。然而，当我第一次读到它时，内心却隐约抗拒：​为何一定要从“见自己”开始？
+在现实中，我们往往先被抛入浩瀚的世界：仰望星空时感受到渺小，经历社会规则后认知到局限，目睹众生百态后触发反思……这些体验让我相信：​或许真正的觉醒，始于“见天地”，终于“见众生”，而“见自己”恰恰是两者之间的桥梁。
+这种顺序的颠覆并非对传统的否定，而是一种更贴近现代人认知路径的探索——它关乎我们如何从外部经验中校准内心，又如何将内心觉醒转化为对世界的共情。"></span><header class=post-header><h2 class=post-title itemprop="name headline"><a href=/post/mind-wanderings-2025030902/ itemprop=url class=post-title-link>随想 20250309 见天地，见自己，见众生：一场打破传统顺序的认知觉醒</a></h2><div class=post-meta-container><div class=post-meta-items><span class=post-meta-item><span class=post-meta-item-icon><i class="fas fa-solid fa-calendar"></i>
+</span><span class=post-meta-item-text title=发表于>发表于：
+</span><time title="创建时间：2025年03月09日 16:22:00 CST" itemprop="dateCreated datePublished" datetime="2025-03-09 16:22:00 +0800 +0800">2025年03月09日
+</time></span><span class=post-meta-item><span class=post-meta-item-icon><i class="fas fa-solid fa-calendar-check"></i>
+</span><span class=post-meta-item-text title=更新于>更新于：
+</span><time title="修改时间：2025年03月09日 22:22:00 CST" itemprop="dateModified dateLastmod" datetime="2025-03-09 22:22:00 +0800 +0800">2025年03月09日
+</time></span><span class=post-meta-item><span class=post-meta-item-icon><i class="fas fa-solid fa-folder-open"></i>
+</span><span class=post-meta-item-text title=分类于>分类于：
+</span><span itemprop=about itemscope itemtype=http://schema.org/Thing><a href=/categories/capricethink/ itemprop=url rel=index><span itemprop=name>CapriceThink</span>
+</a></span></span><span class=post-meta-item title=浏览><span class=post-meta-item-icon><i class="fas fa-solid fa-eye"></i>
+</span><span class=post-meta-item-text>浏览：
+</span><span id=pageview-count data-path=/post/mind-wanderings-2025030902/><i class="fa fa-sync fa-spin"></i></span></span></div></div></header><div class=post-body itemprop=articleBody><h3 id=引言当直觉与传统碰撞>引言：当直觉与传统碰撞
+<a class=header-anchor href=#%e5%bc%95%e8%a8%80%e5%bd%93%e7%9b%b4%e8%a7%89%e4%b8%8e%e4%bc%a0%e7%bb%9f%e7%a2%b0%e6%92%9e></a></h3><p>“见自己、见天地、见众生”，这句源自东方哲学的经典命题，常被视为人生修行的三重境界。然而，当我第一次读到它时，内心却隐约抗拒：​<strong>为何一定要从“见自己”开始？</strong><br>在现实中，我们往往先被抛入浩瀚的世界：仰望星空时感受到渺小，经历社会规则后认知到局限，目睹众生百态后触发反思……这些体验让我相信：​<strong>或许真正的觉醒，始于“见天地”，终于“见众生”，而“见自己”恰恰是两者之间的桥梁</strong>。<br>这种顺序的颠覆并非对传统的否定，而是一种更贴近现代人认知路径的探索——它关乎我们如何从外部经验中校准内心，又如何将内心觉醒转化为对世界的共情。</p></div><footer class=post-footer><div class=post-button><a class=btn href=/post/mind-wanderings-2025030902/#more rel=contents>阅读全文 &#187;</a></div><div class=post-eof></div></footer></article></div><div class=post-block><article itemscope itemtype=http://schema.org/Article class=post-content lang><link itemprop=mainEntityOfPage href=https://blogs.qipai360.cn/post/mind-wanderings-20250309/><span hidden itemprop=author itemscope itemtype=http://schema.org/Person><meta itemprop=image content="/imgs/avatar.jpg"><meta itemprop=name content="Rise"></span><span hidden itemprop=publisher itemscope itemtype=http://schema.org/Organization><meta itemprop=name content="Rise"><meta itemprop=description content="福兮祸兮，焉知所依？冬去冰泮，春来萌荣。朝生暮死，亦可惊鸿。知足者富，自足者强。"></span><span hidden itemprop=post itemscope itemtype=http://schema.org/CreativeWork><meta itemprop=name content="随想 20250309 平衡和光同尘与向上追求的力量"><meta itemprop=description content="这种平衡的本质是“在入世中修行”：既非逃避现实的清高，亦非盲目逐利的迷失，而是以“光”指引方向，以“尘”锤炼心性。正如六祖慧能所言“本来无一物，何处惹尘埃”，最高境界的追求，恰是褪去执着后的自然生长——向上追求的力量因“和光同尘”的智慧而更具韧性，后者又因前者的驱动而避免陷入消极。"></span><header class=post-header><h2 class=post-title itemprop="name headline"><a href=/post/mind-wanderings-20250309/ itemprop=url class=post-title-link>随想 20250309 平衡和光同尘与向上追求的力量</a></h2><div class=post-meta-container><div class=post-meta-items><span class=post-meta-item><span class=post-meta-item-icon><i class="fas fa-solid fa-calendar"></i>
+</span><span class=post-meta-item-text title=发表于>发表于：
+</span><time title="创建时间：2025年03月09日 11:59:00 CST" itemprop="dateCreated datePublished" datetime="2025-03-09 11:59:00 +0800 +0800">2025年03月09日
+</time></span><span class=post-meta-item><span class=post-meta-item-icon><i class="fas fa-solid fa-folder-open"></i>
+</span><span class=post-meta-item-text title=分类于>分类于：
+</span><span itemprop=about itemscope itemtype=http://schema.org/Thing><a href=/categories/capricethink/ itemprop=url rel=index><span itemprop=name>CapriceThink</span>
+</a></span></span><span class=post-meta-item title=浏览><span class=post-meta-item-icon><i class="fas fa-solid fa-eye"></i>
+</span><span class=post-meta-item-text>浏览：
+</span><span id=pageview-count data-path=/post/mind-wanderings-20250309/><i class="fa fa-sync fa-spin"></i></span></span></div></div></header><div class=post-body itemprop=articleBody><p>在生活的舞台上，我们常常面临着两种看似矛盾的力量拉扯：一方面，我们被教导要和光同尘，顺应环境，不锋芒毕露，以平和的姿态融入周围的世界；另一方面，内心深处又涌动着向上追求的渴望，想要突破现状，实现自我价值，创造属于自己的辉煌。那么，究竟该如何在这两者之间找到平衡，走出一条既和谐又充满进取精神的人生道路呢？</p></div><footer class=post-footer><div class=post-button><a class=btn href=/post/mind-wanderings-20250309/#more rel=contents>阅读全文 &#187;</a></div><div class=post-eof></div></footer></article></div><div class=post-block><article itemscope itemtype=http://schema.org/Article class=post-content lang><link itemprop=mainEntityOfPage href=https://blogs.qipai360.cn/post/formatting-revolution--12-hidden-tips-for-std-format/><span hidden itemprop=author itemscope itemtype=http://schema.org/Person><meta itemprop=image content="/imgs/avatar.jpg"><meta itemprop=name content="Rise"></span><span hidden itemprop=publisher itemscope itemtype=http://schema.org/Organization><meta itemprop=name content="Rise"><meta itemprop=description content="福兮祸兮，焉知所依？冬去冰泮，春来萌荣。朝生暮死，亦可惊鸿。知足者富，自足者强。"></span><span hidden itemprop=post itemscope itemtype=http://schema.org/CreativeWork><meta itemprop=name content="格式化革命：std::format的12个隐藏技巧"><meta itemprop=description content="C++格式化输出很常见，从简单地打印些调试信息，到搭建复杂的日志系统，再到整出用户看着特舒服的输出界面，格式化输出那真是无处不在。而在C++的神奇世界里，std::format就宛如一个超厉害的魔法小道具，能帮咱们轻轻松松搞定各种格式化需求。不过，你可能不知道，这小道具可藏着好多超牛的隐藏技能。今天咱就来好好深挖一下，保证让你收获满满，代码功力更上一层楼💎！"></span><header class=post-header><h2 class=post-title itemprop="name headline"><a href=/post/formatting-revolution--12-hidden-tips-for-std-format/ itemprop=url class=post-title-link>格式化革命：std::format的12个隐藏技巧</a></h2><div class=post-meta-container><div class=post-meta-items><span class=post-meta-item><span class=post-meta-item-icon><i class="fas fa-solid fa-calendar"></i>
+</span><span class=post-meta-item-text title=发表于>发表于：
+</span><time title="创建时间：2025年03月05日 12:29:00 CST" itemprop="dateCreated datePublished" datetime="2025-03-05 12:29:00 +0800 +0800">2025年03月05日
+</time></span><span class=post-meta-item><span class=post-meta-item-icon><i class="fas fa-solid fa-folder-open"></i>
+</span><span class=post-meta-item-text title=分类于>分类于：
+</span><span itemprop=about itemscope itemtype=http://schema.org/Thing><a href=/categories/c++/ itemprop=url rel=index><span itemprop=name>dev/c++</span>
+</a></span></span><span class=post-meta-item title=浏览><span class=post-meta-item-icon><i class="fas fa-solid fa-eye"></i>
+</span><span class=post-meta-item-text>浏览：
+</span><span id=pageview-count data-path=/post/formatting-revolution--12-hidden-tips-for-std-format/><i class="fa fa-sync fa-spin"></i></span></span></div></div></header><div class=post-body itemprop=articleBody><p>C++格式化输出很常见，从简单地打印些调试信息，到搭建复杂的日志系统，再到整出用户看着特舒服的输出界面，格式化输出那真是无处不在。而在C++的神奇世界里，<code>std::format</code>就宛如一个超厉害的魔法小道具，能帮咱们轻轻松松搞定各种格式化需求。不过，你可能不知道，这小道具可藏着好多超牛的隐藏技能。今天咱就来好好深挖一下，保证让你收获满满，代码功力更上一层楼💎！</p></div><footer class=post-footer><div class=post-button><a class=btn href=/post/formatting-revolution--12-hidden-tips-for-std-format/#more rel=contents>阅读全文 &#187;</a></div><div class=post-eof></div></footer></article></div><nav class=pagination><span class="page-number current">1</span>
+<a class=page-number href=/page/2/>2</a>
+<a class=page-number href=/page/3/>3</a>
+<a class=page-number href=/page/4/>4</a>
+<a class=page-number href=/page/5/>5</a>
+<a class=page-number href=/page/6/>6</a>
+<a class=page-number href=/page/7/>7</a>
+<a class=page-number href=/page/8/>8</a>
+<a class="extend next" rel=next href=/page/2/><i class="fa fa-angle-right"></i></a></nav></div></main><footer class=footer><div class=footer-inner><div class=copyright>&copy;
+<span itemprop=copyrightYear>2004 - 2026
+</span><span class=with-love><i class="fa fa-heart"></i>
+</span><span class=author itemprop=copyrightHolder>Rise</span></div><div class=powered-by>由 <a href=https://gohugo.io title=0.157.0 target=_blank>Hugo</a> & <a href=https://github.com/hugo-next/hugo-theme-next title=4.8.3 target=_blank>Hugo NexT.Gemini</a> 强力驱动</div><div class=beian><a href=https://beian.miit.gov.cn target=_blank>豫ICP备2021009490号</a>
+<img src=/imgs/gongan.png alt=豫公网安备>
+<a href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=41162302000074" target=_blank>豫公网安备 41162302000074 号</a></div></div></footer><script class=next-config data-name=page type=application/json>{"comments":true,"expired":false,"isHome":true,"isPage":false,"path":"blogs.qipai360.cn","permalink":"https://blogs.qipai360.cn/","title":"Rise的自留地","toc":false,"waline3":{"pagecnt":{"alias":"@waline/client","alias_name":"waline","file":"dist/pageview.js","name":"pageview","version":"3.5.7"}}}</script><script type=text/javascript src=https://blogs.qipai360.cn/js/3rd/animejs/3.2.2/anime.min.js crossorigin=anonymous defer></script><script type=text/javascript src=https://blogs.qipai360.cn/js/3rd/viewerjs/1.11.6/viewer.min.js crossorigin=anonymous defer></script><script class=next-config data-name=main type=application/json>{"bookmark":{"color":"#222","enable":true,"save":"manual"},"copybtn":true,"darkmode":true,"giscus":{"cfg":{"category":"Announcements","categoryid":"DIC_kwDOA6L0YM4CiXf9","emit":false,"inputposition":"top","mapping":"title","reactions":false,"repo":"rise-worlds/rise-worlds.github.io","repoid":"MDEwOlJlcG9zaXRvcnk2MTAxMTA0MA==","theme":"transparent_dark"},"js":"https://giscus.app/client.js"},"hostname":"https://blogs.qipai360.cn/","i18n":{"ds_day":" 天前","ds_days":" 天 ","ds_hour":" 小时前","ds_hours":" 小时 ","ds_just":"刚刚","ds_min":" 分钟前","ds_mins":" 分钟","ds_month":" 个月前","ds_years":" 年 ","empty":"没有找到任何搜索结果：${query}","hits":"找到 ${hits} 个搜索结果","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","placeholder":"搜索..."},"isMultiLang":false,"lang":"zh-CN","lazyload":false,"motion":{"async":true,"enable":true,"transition":{"collheader":"fadeInLeft","postblock":"fadeIn","postbody":"fadeInDown","postheader":"fadeInDown","sidebar":"fadeInUp"}},"postmeta":{"comments":{"enable":false,"plugin":"waline3"},"views":{"enable":true,"plugin":"waline3"}},"root":"/","scheme":"Gemini","share":{"addtoany":{"js":"https://static.addtoany.com/menu/page.js","locale":"zh-CN","num":8},"enable":false},"sidebar":{"display":"post","offset":12,"padding":18,"position":"left","width":256},"vendor":{"plugins":"local","router":{"name":"local","type":"modern","url":"https://blogs.qipai360.cn/js/3rd"}},"version":"4.8.3","waline3":{"cfg":{"emoji":false,"imguploader":false,"placeholder":"请文明发言哟 ヾ(≧▽≦*)o 可用快捷键选取表情符号：😀😄😁🥳👻👽👀🚄 (Window系统：Win+.，Mac系统：Control+Command+Space)","reaction":true,"reactiontext":["点赞","踩一下","得意","不屑","尴尬","睡觉"],"reactiontitle":"你认为这篇文章怎么样？","requiredmeta":["nick","mail"],"search":true,"serverurl":"https://walinejs.comment.lithub.cc","sofa":"快来发表你的意见吧 (≧∀≦)ゞ","wordlimit":200},"css":{"alias":"@waline/client","file":"dist/waline.css","name":"waline","version":"3.5.7"},"js":{"alias":"@waline/client","file":"dist/waline.js","name":"waline","version":"3.5.7"}}}</script><script type=text/javascript src="/js/main.min.js?=1772265585" defer></script></body></html>

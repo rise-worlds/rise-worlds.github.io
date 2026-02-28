@@ -1,0 +1,490 @@
+<!doctype html><html lang=zh-CN data-theme=dark><head><meta charset=UTF-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=theme-color content="#222" media="(prefers-color-scheme: dark)"><meta name=generator content="Hugo 0.157.0"><link rel="shortcut icon" type=image/x-icon href=/imgs/icons/favicon.ico><link rel=icon type=image/x-icon href=/imgs/icons/favicon.ico><link rel=icon type=image/png sizes=16x16 href=/imgs/icons/favicon_32_32_next.png><link rel=icon type=image/png sizes=32x32 href=/imgs/icons/favicon_128_128_next.png><link rel=apple-touch-icon sizes=180x180 href=/imgs/icons/apple_touch_icon_next.png><meta itemprop=name content="Posts"><meta itemprop=description content="福兮祸兮，焉知所依？冬去冰泮，春来萌荣。朝生暮死，亦可惊鸿。知足者富，自足者强。"><meta name=description content="福兮祸兮，焉知所依？冬去冰泮，春来萌荣。朝生暮死，亦可惊鸿。知足者富，自足者强。"><meta itemprop=image content="https://blogs.qipai360.cn/imgs/avatar.jpg"><meta itemprop=keywords content="Rise,ZhangTuohui,技术,C++,Unity3D,Lua,NodeJS,C#,JavaScript,游戏开发,机器学习,深度学习,AI,编程,编程语言,编程技术,编程开发,游戏引擎,游戏设计,游戏制作,游戏开发者,游戏开发者博客,游戏开发者网站,游戏开发者工具,游戏开发者教程,游戏开发者学习,游戏开发者交流,游戏开发者分享,游戏开发者经验,游戏开发者心得,游戏开发者技巧,游戏开发者方法,游戏开发者思路,游戏开发者理念,游戏开发者文化,游戏开发者精神,游戏开发者信仰"><meta property="og:type" content="website"><meta property="og:title" content="Posts"><meta property="og:description" content="福兮祸兮，焉知所依？冬去冰泮，春来萌荣。朝生暮死，亦可惊鸿。知足者富，自足者强。"><meta property="og:image" content="/imgs/avatar.jpg"><meta property="og:image:width" content="312"><meta property="og:image:height" content="312"><meta property="og:image:type" content="image/jpeg/png/svg/jpg"><meta property="og:url" content="https://blogs.qipai360.cn/post/"><meta property="og:site_name" content="Rise的自留地"><meta property="og:locale" content="zh-CN"><link type=text/css rel=stylesheet href=https://blogs.qipai360.cn/js/3rd/font-awesome/6.7.2/css/all.min.css><link type=text/css rel=stylesheet href=https://blogs.qipai360.cn/js/3rd/animate.css/3.1.1/animate.min.css><link type=text/css rel=stylesheet href=https://blogs.qipai360.cn/js/3rd/viewerjs/1.11.6/viewer.min.css><link rel=stylesheet href="/css/main.min.css?=1772265587"><style type=text/css>.post-footer hr:after{content:"~ 我可是有底线的哟 ~"}.flinks-list-footer hr:after{content:"~ 我可是有底线的哟 ~"}</style><script type=text/javascript>(function(){localDB={set:function(e,t,n){if(n===0)return;const s=new Date,o=n*864e5,i={value:t,expiry:s.getTime()+o};localStorage.setItem(e,JSON.stringify(i))},get:function(e){const t=localStorage.getItem(e);if(!t)return 0[0];const n=JSON.parse(t),s=new Date;return s.getTime()>n.expiry?(localStorage.removeItem(e),0[0]):n.value}},theme={active:function(){const e=localDB.get("theme");if(e==null)return;theme.toggle(e),window.matchMedia("(prefers-color-scheme: dark)").addListener(function(e){theme.toggle(e.matches?"dark":"light")})},toggle:function(e){document.documentElement.setAttribute("data-theme",e),localDB.set("theme",e,2);const t=document.querySelector("iframe.giscus-frame");if(t){const n={setConfig:{theme:e}};t.contentWindow.postMessage({giscus:n},"https://giscus.app")}}},theme.active()})(window)</script><script type=text/javascript>document.addEventListener("DOMContentLoaded",()=>{var e=document.createElement("script");e.charset="UTF-8",e.src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js",e.async=!1,e.defer=!0,document.head.appendChild(e),e.onload=function(){NexT.utils.fmtBusuanzi()}})</script><script defer src=https://static.cloudflareinsights.com/beacon.min.js data-cf-beacon='{"token": "2b23669184fc49269e400525ac2447d9"}'></script><title>post - Rise的自留地</title><noscript><link rel=stylesheet href=/css/noscript.css></noscript></head><body itemscope itemtype=http://schema.org/WebPage class=use-motion><div class=headband></div><main class=main><header class=header itemscope itemtype=http://schema.org/WPHeader><div class=header-inner><div class=site-brand-container><div class=site-nav-toggle><div class=toggle aria-label role=button><span class=toggle-line></span>
+<span class=toggle-line></span>
+<span class=toggle-line></span></div></div><div class=site-meta><a href=/ class=brand rel=start><i class=logo-line></i><h1 class=site-title>Rise的自留地</h1><i class=logo-line></i></a><p class=site-subtitle itemprop=description>记录生活中的点滴，分享编程技术和游戏开发经验。</p></div><div class=site-nav-right><div class="toggle popup-trigger"></div></div></div><nav class=site-nav><ul class="main-menu menu"><li class="menu-item menu-item-home"><a href=/ class=hvr-icon-pulse rel=section><i class="fa fa-home hvr-icon"></i>首页</a></li><li class="menu-item menu-item-about"><a href=/about.html class=hvr-icon-pulse rel=section><i class="fa fa-user hvr-icon"></i>关于</a></li><li class="menu-item menu-item-archives"><a href=/archives/ class=hvr-icon-pulse rel=section><i class="fa fa-archive hvr-icon"></i>归档
+<span class=badge>679</span></a></li><li class="menu-item menu-item-tags"><a href=/tags/ class=hvr-icon-pulse rel=section><i class="fa fa-tags hvr-icon"></i>标签</a></li><li class="menu-item menu-item-message"><a href=/message/ class=hvr-icon-pulse rel=section><i class="fa fa-comments hvr-icon"></i>留言板</a></li><li class="menu-item menu-item-commonweal"><a href=/404.html class=hvr-icon-pulse rel=section><i class="fa fa-heartbeat hvr-icon"></i>公益 404</a></li></ul></nav></div><div class="toggle sidebar-toggle" role=button><span class=toggle-line></span>
+<span class=toggle-line></span>
+<span class=toggle-line></span></div><aside class=sidebar><div class="sidebar-inner sidebar-overview-active"><ul class=sidebar-nav><li class=sidebar-nav-toc>文章目录</li><li class=sidebar-nav-overview>站点概览</li></ul><div class=sidebar-panel-container><div class="post-toc-wrap sidebar-panel"><div class="post-toc animated"><nav id=TableOfContents></nav></div></div><div class="site-overview-wrap sidebar-panel"><div class="site-author site-overview-item animated" itemprop=author itemscope itemtype=http://schema.org/Person><img class=site-author-image itemprop=image alt=Rise src=/imgs/img-lazy-loading.gif data-src=/imgs/avatar.jpg><p class=site-author-name itemprop=name>Rise</p><div class=site-description itemprop=description>福兮祸兮，焉知所依？冬去冰泮，春来萌荣。朝生暮死，亦可惊鸿。知足者富，自足者强。</div></div><div class="site-state-wrap site-overview-item animated"><nav class=site-state><div class="site-state-item site-state-posts"><a href=/archives/><span class=site-state-item-count>679</span>
+<span class=site-state-item-name>日志</span></a></div><div class="site-state-item site-state-categories"><a href=/categories/><span class=site-state-item-count>35</span>
+<span class=site-state-item-name>分类</span></a></div><div class="site-state-item site-state-tags"><a href=/tags/><span class=site-state-item-count>118</span>
+<span class=site-state-item-name>标签</span></a></div></nav></div><div class="links-of-social site-overview-item animated"><span class=links-of-social-item><a href=https://github.com/rise-worlds title="Github → https://github.com/rise-worlds" rel=noopener class=hvr-icon-pulse target=_blank><i class="fab fa-github fa-fw hvr-icon"></i>
+Github
+</a></span><span class=links-of-social-item><a href=mailto:rise.worlds@outlook.com title="E-Mail → mailto:rise.worlds@outlook.com" rel=noopener class=hvr-icon-pulse target=_blank><i class="fa fa-envelope fa-fw hvr-icon"></i>
+E-Mail
+</a></span><span class=links-of-social-item><a href=https://www.zhihu.com/people/rise-worlds title="知乎 → https://www.zhihu.com/people/rise-worlds" rel=noopener class=hvr-icon-pulse target=_blank><i class="fa fa-book fa-fw hvr-icon"></i>
+知乎
+</a></span><span class=links-of-social-item><a href=https://twitter.com/riseworlds title="Twitter → https://twitter.com/riseworlds" rel=noopener class=hvr-icon-pulse target=_blank><i class="fab fa-twitter fa-fw hvr-icon"></i>
+Twitter
+</a></span><span class=links-of-social-item><a href=https://www.facebook.com/rise.worlds title="facebook → https://www.facebook.com/rise.worlds" rel=noopener class=hvr-icon-pulse target=_blank><i class="fab fa-facebook fa-fw hvr-icon"></i>
+facebook
+</a></span><span class=links-of-social-item><a href=https://youtube.com/@YiXuan title="YouTube → https://youtube.com/@YiXuan" rel=noopener class=hvr-icon-pulse target=_blank><i class="fab fa-youtube fa-fw hvr-icon"></i>
+YouTube
+</a></span><span class=links-of-social-item><a href=https://instagram.com/rise.worlds title="Instagram → https://instagram.com/rise.worlds" rel=noopener class=hvr-icon-pulse target=_blank><i class="fab fa-instagram fa-fw hvr-icon"></i>
+Instagram
+</a></span><span class=links-of-social-item><a href=https://t.me/riseworlds title="Telegram → https://t.me/riseworlds" rel=noopener class=hvr-icon-pulse target=_blank><i class="fab fa-telegram fa-fw hvr-icon"></i>
+Telegram</a></span></div><div class="links-of-blogroll site-overview-item animated"><div class=links-of-blogroll-title><i class="fa fa-globe fa-fw"></i>
+友情链接</div><ul class=links-of-blogroll-list><li class=links-of-blogroll-item><a href=https://www.qipai360.cn title=https://www.qipai360.cn target=_blank>Qipai360</a></li><li class=links-of-blogroll-item><a href=https://www.cnblogs.com/flying_bat title=https://www.cnblogs.com/flying_bat target=_blank>博客园</a></li><li class=links-of-blogroll-item><a href=https://zishu.me title=https://zishu.me target=_blank>子舒的博客</a></li><li class=links-of-blogroll-item><a href=https://gitee.com/hugo-next/hugo-theme-next title=https://gitee.com/hugo-next/hugo-theme-next target=_blank>Hugo-NexT</a></li></ul></div></div></div></div><div id=siteinfo-card-widget class=sidebar-card-widget><div class=item-headline><i class="fas fa-chart-line"></i>
+<span>网站资讯</span></div><div class=siteinfo><div class=siteinfo-item><div class=item-name><i class="fa-solid fa-calendar-check"></i>已运行：</div><div class=item-count id=runTimes data-publishdate="2004-10-06 15:24:00 +0800 +0800"></div></div><div class=siteinfo-item><div class=item-name><i class="fas fa fa-user"></i>总访客数：</div><div class=item-count id=busuanzi_value_site_uv><i class="fa fa-sync fa-spin"></i></div></div><div class=siteinfo-item><div class=item-name><i class="fas fa fa-eye"></i>页面浏览：</div><div class=item-count id=busuanzi_value_site_pv><i class="fa fa-sync fa-spin"></i></div></div><div class=siteinfo-item><div class=item-name><i class="fa fa-font"></i>总字数：</div><div class=item-count id=wordsCount data-count=2423147></div></div><div class=siteinfo-item><div class=item-name><i class="fa fa-mug-hot"></i>阅读约：</div><div class=item-count id=readTimes data-times=5207></div></div><div class=siteinfo-item><div class=item-name><i class="fa fa-clock-rotate-left"></i>最后更新于：</div><div class=item-count id=last-push-date data-lastpushdate="2026-02-28 15:59:00 +0800 +0800"></div></div></div></div></aside><div class=sidebar-dimmer></div></header><div class=tool-buttons><div id=goto-comments class="button goto-comments" title=直达评论><i class="fas fa-comments"></i></div><div id=toggle-theme class=button title=深浅模式切换><i class="fas fa-adjust"></i></div><div class=back-to-top role=button title=返回顶部><i class="fa fa-arrow-up"></i>
+<span>0%</span></div></div><div class=reading-progress-bar></div><a role=button class="book-mark-link book-mark-link-fixed"></a><a href=https://github.com/rise-worlds rel="noopener external nofollow noreferrer" target=_blank title="Follow me on GitHub" class="exturl github-corner"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0 0 115 115h15l12 27L250 250V0z"/><path d="M128.3 109C113.8 99.7 119 89.6 119 89.6 122 82.7 120.5 78.6 120.5 78.6 119.2 72 123.4 76.3 123.4 76.3 127.3 80.9 125.5 87.3 125.5 87.3 122.9 97.6 130.6 101.9 134.4 103.2" fill="currentColor" style="transform-origin:130px 106px" class="octo-arm"/><path d="M115 115C114.9 115.1 118.7 116.5 119.8 115.4l13.9-13.8C136.9 99.2 139.9 98.4 142.2 98.6 133.8 88 127.5 74.4 143.8 58 148.5 53.4 154 51.2 159.7 51 160.3 49.4 163.2 43.6 171.4 40.1 171.4 40.1 176.1 42.5 178.8 56.2 183.1 58.6 187.2 61.8 190.9 65.4 194.5 69 197.7 73.2 200.1 77.6 213.8 80.2 216.3 84.9 216.3 84.9 212.7 93.1 206.9 96 205.4 96.6 205.1 102.4 203 107.8 198.3 112.5 181.9 128.9 168.3 122.5 157.7 114.1 157.9 116.9 156.7 120.9 152.7 124.9L141 136.5C139.8 137.7 141.6 141.9 141.8 141.8z" fill="currentColor" class="octo-body"/></svg></a><noscript><div class=noscript-warning>Theme NexT works best with JavaScript enabled</div></noscript><div class="main-inner index posts-expand"><div class=post-block><article itemscope itemtype=http://schema.org/Article class=post-content lang><link itemprop=mainEntityOfPage href=https://blogs.qipai360.cn/post/file-self-deletion-using-remote-threading/><span hidden itemprop=author itemscope itemtype=http://schema.org/Person><meta itemprop=image content="/imgs/avatar.jpg"><meta itemprop=name content="Rise"></span><span hidden itemprop=publisher itemscope itemtype=http://schema.org/Organization><meta itemprop=name content="Rise"><meta itemprop=description content="福兮祸兮，焉知所依？冬去冰泮，春来萌荣。朝生暮死，亦可惊鸿。知足者富，自足者强。"></span><span hidden itemprop=post itemscope itemtype=http://schema.org/CreativeWork><meta itemprop=name content="用远线程实现文件自删除"><meta itemprop=description content='点这里下载示例代码 实现文件自删除不是一个特别新的话题了，不过貌似一直没有特别完美的解决方式。从早先Gary Nebbett的堆栈溢出版本到后来的批处理、临时文件等方式，无不存在着各样瑕疵：如堆栈溢出不支持XP，临时文件（批处理）不够优雅等等。 当然，还有用驱动发IRP的方式，不过这只是一个自删除，杀鸡焉用牛刀？于是这个方案在我这儿亦不讨论。 李马讨论的，只是一个2005年的老调重提：远线程注入。2005年李马提到的DLL远程注入技术只是远线程的最简单应用，局限很多，能做的事情很少；下面的自删除示例，则是如何让远线程能够做更多的事，也可以说是一个补充材料，不必记入原创文档了吧就。 言归正传。首先，我们假定这个线程函数是这样的： DWORD&nbsp;WINAPI&nbsp;DelProc(LPVOID&nbsp;lpParam){&nbsp;&nbsp;&nbsp;&nbsp;Sleep(50);&nbsp;&nbsp;&nbsp;&nbsp;DeleteFileA((LPCSTR)lpParam);return&nbsp;0;} 解释一下，先用Sleep等待要删除的程序结束，之后调用DeleteFile删除目标文件。 现在，你可以在VC的Project Settings->C/C++->Category: Listing Files->Listing file type中，设置输出文件的类型为“Assembly, Machine Code, and Source”或“Assembly with Machine Code”，这样就会在编译完成后生成带有汇编代码和指令机器码的附属文件供你下一步对照。——当然，如果你极熟悉汇编，这一步可以跳过。 在查看附属文件后，我们可以提取出对我们有用的汇编代码： push 50call Sleepmov&nbsp; eax, [esp + 4]push eaxcall DeleteFileAret&nbsp; 4 之后，对照着对应的机器码，构造下面的结构： #pragma pack(push,&nbsp;1)typedef struct&nbsp;_tagDeleteStruct&nbsp;{&nbsp;&nbsp;&nbsp;&nbsp;BYTE&nbsp;&nbsp;byPush;&nbsp;&nbsp;&nbsp;&nbsp;DWORD&nbsp;dwTime;&nbsp;&nbsp;&nbsp;&nbsp;BYTE&nbsp;&nbsp;wCall1;&nbsp;&nbsp;&nbsp;&nbsp;DWORD&nbsp;dwSleep;&nbsp;&nbsp;&nbsp;&nbsp;DWORD&nbsp;dwMov;&nbsp;&nbsp;&nbsp;&nbsp;BYTE&nbsp;&nbsp;byPushEax;&nbsp;&nbsp;&nbsp;&nbsp;BYTE&nbsp;&nbsp;wCall2;&nbsp;&nbsp;&nbsp;&nbsp;DWORD&nbsp;dwDeleteFileA;&nbsp;&nbsp;&nbsp;&nbsp;BYTE&nbsp;&nbsp;byRet;&nbsp;&nbsp;&nbsp;&nbsp;WORD&nbsp;&nbsp;w4;&nbsp;&nbsp;&nbsp;&nbsp;CHAR&nbsp;&nbsp;szFile[1];}&nbsp;DELETESTRUCT,&nbsp;*PDELETESTRUCT;#pragma pack(pop) 最后的szFile域，就是用来放置文件名的。其余的就不解释了，因为下面就要填充它了。远线程函数还是很模式化的代码，改造自两年前我的RemoteLoadLibrary： BOOL&nbsp;RemoteDel(DWORD&nbsp;dwProcessID,&nbsp;LPCSTR&nbsp;lpszFileName,&nbsp;DWORD&nbsp;dwTime){//&nbsp;打开目标进程&nbsp;&nbsp;&nbsp;&nbsp;HANDLE&nbsp;hProcess&nbsp;=&nbsp;OpenProcess(&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PROCESS_CREATE_THREAD&nbsp;|&nbsp;PROCESS_VM_OPERATION&nbsp;|&nbsp;PROCESS_VM_WRITE,&nbsp;FALSE,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dwProcessID);if&nbsp;(NULL&nbsp;==&nbsp;hProcess)return&nbsp;FALSE;//&nbsp;向目标进程地址空间写入删除信息&nbsp;&nbsp;&nbsp;&nbsp;DWORD&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dwSize&nbsp;=&nbsp;sizeof(DELETESTRUCT)&nbsp;+&nbsp;lstrlenA(lpszFileName);&nbsp;&nbsp;&nbsp;&nbsp;PDELETESTRUCT&nbsp;pDel&nbsp;&nbsp;&nbsp;=&nbsp;(PDELETESTRUCT)GlobalAlloc(GPTR,&nbsp;dwSize);&nbsp;&nbsp;&nbsp;&nbsp;HMODULE&nbsp;hKernel32&nbsp;=&nbsp;GetModuleHandle(_T("kernel32.dll"));//&nbsp;push&nbsp;dwTime&nbsp;&nbsp;&nbsp;&nbsp;pDel->byPush&nbsp;=&nbsp;0x68;&nbsp;&nbsp;&nbsp;&nbsp;pDel->dwTime&nbsp;=&nbsp;dwTime;//&nbsp;call&nbsp;Sleep&nbsp;&nbsp;&nbsp;&nbsp;pDel->wCall1&nbsp;&nbsp;=&nbsp;0xe8;&nbsp;&nbsp;&nbsp;&nbsp;pDel->dwSleep&nbsp;=&nbsp;(DWORD)GetProcAddress(hKernel32,&nbsp;"Sleep");//&nbsp;mov&nbsp;&nbsp;eax,&nbsp;[esp&nbsp;+&nbsp;4]&nbsp;&nbsp;&nbsp;&nbsp;pDel->dwMov&nbsp;=&nbsp;0x0424448b;//&nbsp;push&nbsp;eax&nbsp;&nbsp;&nbsp;&nbsp;pDel->byPushEax&nbsp;=&nbsp;0x50;//&nbsp;call&nbsp;DeleteFileA&nbsp;&nbsp;&nbsp;&nbsp;pDel->wCall2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;0xe8;&nbsp;&nbsp;&nbsp;&nbsp;pDel->dwDeleteFileA&nbsp;=&nbsp;(DWORD)GetProcAddress(hKernel32,&nbsp;"DeleteFileA");//&nbsp;ret&nbsp;&nbsp;4&nbsp;&nbsp;&nbsp;&nbsp;pDel->byRet&nbsp;=&nbsp;0xc2;&nbsp;&nbsp;&nbsp;&nbsp;pDel->w4&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;0x0004;&nbsp;&nbsp;&nbsp;&nbsp;lstrcpyA(pDel->szFile,&nbsp;lpszFileName);&nbsp;&nbsp;&nbsp;&nbsp;LPVOID&nbsp;lpBuf&nbsp;=&nbsp;VirtualAllocEx(hProcess,&nbsp;NULL,&nbsp;dwSize,&nbsp;MEM_COMMIT,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PAGE_READWRITE);if&nbsp;(NULL&nbsp;==&nbsp;lpBuf)&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;GlobalFree((HGLOBAL)pDel);&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CloseHandle(hProcess);return&nbsp;FALSE;&nbsp;&nbsp;&nbsp;&nbsp;}//&nbsp;修正近调用&nbsp;&nbsp;&nbsp;&nbsp;pDel->dwSleep&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-=&nbsp;(DWORD)lpBuf&nbsp;+&nbsp;offsetof(DELETESTRUCT,&nbsp;dwMov);&nbsp;&nbsp;&nbsp;&nbsp;pDel->dwDeleteFileA&nbsp;-=&nbsp;(DWORD)lpBuf&nbsp;+&nbsp;offsetof(DELETESTRUCT,&nbsp;byRet);&nbsp;&nbsp;&nbsp;&nbsp;DWORD&nbsp;dwWritten;&nbsp;&nbsp;&nbsp;&nbsp;WriteProcessMemory(hProcess,&nbsp;lpBuf,&nbsp;(LPVOID)pDel,&nbsp;dwSize,&nbsp;&amp;dwWritten);//&nbsp;创建线程，远程删除！&nbsp;&nbsp;&nbsp;&nbsp;DWORD&nbsp;dwID;&nbsp;&nbsp;&nbsp;&nbsp;HANDLE&nbsp;hThread&nbsp;=&nbsp;CreateRemoteThread(hProcess,&nbsp;NULL,&nbsp;0,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(LPTHREAD_START_ROUTINE)lpBuf,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(LPVOID)((DWORD)lpBuf&nbsp;+&nbsp;offsetof(DELETESTRUCT,&nbsp;szFile)),&nbsp;0,&nbsp;&amp;dwID);&nbsp;&nbsp;&nbsp;&nbsp;GlobalFree((HGLOBAL)pDel);&nbsp;&nbsp;&nbsp;&nbsp;CloseHandle(hThread);&nbsp;&nbsp;&nbsp;&nbsp;CloseHandle(hProcess);return&nbsp;TRUE;} 至于为什么最后不用VirtualFreeEx释放资源，那是因为注入的远程代码在执行的时候目标exe就已经消失了，所以这里的寄主程序肯定存在着内存泄露，真是造孽啊。 最后说三点。第一，RemoteDel是要挑选一个寄主程序的，这个程序应该始终运行并存在于当前的系统中，我在示例中挑选的是explorer.exe；并且，打开这个进程是需要调试权限的，提权的代码也一并加入在示例代码中，算是弥补了2005年的缺失。第二，为了方便定位，我修改了远程代码中的调用，也就是call ds:xxx（FF 15 xxx）改为了call near xxx（E8 xxx）。第三，自己手写机器码的做法的确不如纯汇编代码重定位来的优雅，但是我认为这里填充并定位Sleep和DeleteFile的片断也是纯汇编的办法无法比拟的。'></span><header class=post-header><h2 class=post-title itemprop="name headline"><a href=/post/file-self-deletion-using-remote-threading/ itemprop=url class=post-title-link>用远线程实现文件自删除</a></h2><div class=post-meta-container><div class=post-meta-items><span class=post-meta-item><span class=post-meta-item-icon><i class="fas fa-solid fa-calendar"></i>
+</span><span class=post-meta-item-text title=发表于>发表于：
+</span><time title="创建时间：2007年11月29日 16:53:00 CST" itemprop="dateCreated datePublished" datetime="2007-11-29 16:53:00 +0800 +0800">2007年11月29日
+</time></span><span class=post-meta-item><span class=post-meta-item-icon><i class="fas fa-solid fa-folder-open"></i>
+</span><span class=post-meta-item-text title=分类于>分类于：
+</span><span itemprop=about itemscope itemtype=http://schema.org/Thing><a href=/categories/safe/ itemprop=url rel=index><span itemprop=name>dev/Safe</span>
+</a></span></span><span class=post-meta-item title=浏览><span class=post-meta-item-icon><i class="fas fa-solid fa-eye"></i>
+</span><span class=post-meta-item-text>浏览：
+</span><span id=pageview-count data-path=/post/file-self-deletion-using-remote-threading/><i class="fa fa-sync fa-spin"></i></span></span></div></div></header><div class=post-body itemprop=articleBody><p><a href=http://www.titilima.cn/sample/deleteme.zip>点这里下载示例代码</a><p>实现文件自删除不是一个特别新的话题了，不过貌似一直没有特别完美的解决方式。从早先Gary Nebbett的堆栈溢出版本到后来的批处理、临时文件等方式，无不存在着各样瑕疵：如堆栈溢出不支持XP，临时文件（批处理）不够优雅等等。<p>当然，还有用驱动发IRP的方式，不过这只是一个自删除，杀鸡焉用牛刀？于是这个方案在我这儿亦不讨论。<p>李马讨论的，只是一个2005年的老调重提：远线程注入。2005年李马提到的<a href="http://www.titilima.cn/readarticle.php?id=65">DLL远程注入技术</a>只是远线程的最简单应用，局限很多，能做的事情很少；下面的自删除示例，则是如何让远线程能够做更多的事，也可以说是一个补充材料，不必记入原创文档了吧就。<p>言归正传。首先，我们假定这个线程函数是这样的：<p><code>DWORD&nbsp;WINAPI&nbsp;DelProc(LPVOID&nbsp;lpParam)<br>{<br>&nbsp;&nbsp;&nbsp;&nbsp;Sleep(50);<br>&nbsp;&nbsp;&nbsp;&nbsp;DeleteFileA((LPCSTR)lpParam);<br>return&nbsp;0;<br>}</code><p>解释一下，先用Sleep等待要删除的程序结束，之后调用DeleteFile删除目标文件。<p>现在，你可以在VC的Project Settings->C/C++->Category: Listing Files->Listing file type中，设置输出文件的类型为“Assembly, Machine Code, and Source”或“Assembly with Machine Code”，这样就会在编译完成后生成带有汇编代码和指令机器码的附属文件供你下一步对照。——当然，如果你极熟悉汇编，这一步可以跳过。<p>在查看附属文件后，我们可以提取出对我们有用的汇编代码：<p><code>push 50<br>call Sleep<br>mov&nbsp; eax, [esp + 4]<br>push eax<br>call DeleteFileA<br>ret&nbsp; 4</code><p>之后，对照着对应的机器码，构造下面的结构：<p><code>#pragma pack(push,&nbsp;1)<br>typedef struct&nbsp;_tagDeleteStruct&nbsp;{<br>&nbsp;&nbsp;&nbsp;&nbsp;BYTE&nbsp;&nbsp;byPush;<br>&nbsp;&nbsp;&nbsp;&nbsp;DWORD&nbsp;dwTime;<br>&nbsp;&nbsp;&nbsp;&nbsp;BYTE&nbsp;&nbsp;wCall1;<br>&nbsp;&nbsp;&nbsp;&nbsp;DWORD&nbsp;dwSleep;<br>&nbsp;&nbsp;&nbsp;&nbsp;DWORD&nbsp;dwMov;<br>&nbsp;&nbsp;&nbsp;&nbsp;BYTE&nbsp;&nbsp;byPushEax;<br>&nbsp;&nbsp;&nbsp;&nbsp;BYTE&nbsp;&nbsp;wCall2;<br>&nbsp;&nbsp;&nbsp;&nbsp;DWORD&nbsp;dwDeleteFileA;<br>&nbsp;&nbsp;&nbsp;&nbsp;BYTE&nbsp;&nbsp;byRet;<br>&nbsp;&nbsp;&nbsp;&nbsp;WORD&nbsp;&nbsp;w4;<br>&nbsp;&nbsp;&nbsp;&nbsp;CHAR&nbsp;&nbsp;szFile[1];<br>}&nbsp;DELETESTRUCT,&nbsp;*PDELETESTRUCT;<br>#pragma pack(pop)</code><p>最后的szFile域，就是用来放置文件名的。其余的就不解释了，因为下面就要填充它了。远线程函数还是很模式化的代码，改造自两年前我的RemoteLoadLibrary：<p><code>BOOL&nbsp;RemoteDel(DWORD&nbsp;dwProcessID,&nbsp;LPCSTR&nbsp;lpszFileName,&nbsp;DWORD&nbsp;dwTime)<br>{<br>//&nbsp;打开目标进程<br>&nbsp;&nbsp;&nbsp;&nbsp;HANDLE&nbsp;hProcess&nbsp;=&nbsp;OpenProcess(<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PROCESS_CREATE_THREAD&nbsp;|&nbsp;PROCESS_VM_OPERATION&nbsp;|&nbsp;PROCESS_VM_WRITE,&nbsp;FALSE,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dwProcessID);<br>if&nbsp;(NULL&nbsp;==&nbsp;hProcess)<br>return&nbsp;FALSE;<br>//&nbsp;向目标进程地址空间写入删除信息<br>&nbsp;&nbsp;&nbsp;&nbsp;DWORD&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dwSize&nbsp;=&nbsp;sizeof(DELETESTRUCT)&nbsp;+&nbsp;lstrlenA(lpszFileName);<br>&nbsp;&nbsp;&nbsp;&nbsp;PDELETESTRUCT&nbsp;pDel&nbsp;&nbsp;&nbsp;=&nbsp;(PDELETESTRUCT)GlobalAlloc(GPTR,&nbsp;dwSize);<br>&nbsp;&nbsp;&nbsp;&nbsp;HMODULE&nbsp;hKernel32&nbsp;=&nbsp;GetModuleHandle(_T("kernel32.dll"));<br>//&nbsp;push&nbsp;dwTime<br>&nbsp;&nbsp;&nbsp;&nbsp;pDel->byPush&nbsp;=&nbsp;0x68;<br>&nbsp;&nbsp;&nbsp;&nbsp;pDel->dwTime&nbsp;=&nbsp;dwTime;<br>//&nbsp;call&nbsp;Sleep<br>&nbsp;&nbsp;&nbsp;&nbsp;pDel->wCall1&nbsp;&nbsp;=&nbsp;0xe8;<br>&nbsp;&nbsp;&nbsp;&nbsp;pDel->dwSleep&nbsp;=&nbsp;(DWORD)GetProcAddress(hKernel32,&nbsp;"Sleep");<br>//&nbsp;mov&nbsp;&nbsp;eax,&nbsp;[esp&nbsp;+&nbsp;4]<br>&nbsp;&nbsp;&nbsp;&nbsp;pDel->dwMov&nbsp;=&nbsp;0x0424448b;<br>//&nbsp;push&nbsp;eax<br>&nbsp;&nbsp;&nbsp;&nbsp;pDel->byPushEax&nbsp;=&nbsp;0x50;<br>//&nbsp;call&nbsp;DeleteFileA<br>&nbsp;&nbsp;&nbsp;&nbsp;pDel->wCall2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;0xe8;<br>&nbsp;&nbsp;&nbsp;&nbsp;pDel->dwDeleteFileA&nbsp;=&nbsp;(DWORD)GetProcAddress(hKernel32,&nbsp;"DeleteFileA");<br>//&nbsp;ret&nbsp;&nbsp;4<br>&nbsp;&nbsp;&nbsp;&nbsp;pDel->byRet&nbsp;=&nbsp;0xc2;<br>&nbsp;&nbsp;&nbsp;&nbsp;pDel->w4&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;0x0004;<br>&nbsp;&nbsp;&nbsp;&nbsp;lstrcpyA(pDel->szFile,&nbsp;lpszFileName);<br>&nbsp;&nbsp;&nbsp;&nbsp;LPVOID&nbsp;lpBuf&nbsp;=&nbsp;VirtualAllocEx(hProcess,&nbsp;NULL,&nbsp;dwSize,&nbsp;MEM_COMMIT,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PAGE_READWRITE);<br>if&nbsp;(NULL&nbsp;==&nbsp;lpBuf)<br>&nbsp;&nbsp;&nbsp;&nbsp;{<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;GlobalFree((HGLOBAL)pDel);<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CloseHandle(hProcess);<br>return&nbsp;FALSE;<br>&nbsp;&nbsp;&nbsp;&nbsp;}<br>//&nbsp;修正近调用<br>&nbsp;&nbsp;&nbsp;&nbsp;pDel->dwSleep&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-=&nbsp;(DWORD)lpBuf&nbsp;+&nbsp;offsetof(DELETESTRUCT,&nbsp;dwMov);<br>&nbsp;&nbsp;&nbsp;&nbsp;pDel->dwDeleteFileA&nbsp;-=&nbsp;(DWORD)lpBuf&nbsp;+&nbsp;offsetof(DELETESTRUCT,&nbsp;byRet);<br>&nbsp;&nbsp;&nbsp;&nbsp;DWORD&nbsp;dwWritten;<br>&nbsp;&nbsp;&nbsp;&nbsp;WriteProcessMemory(hProcess,&nbsp;lpBuf,&nbsp;(LPVOID)pDel,&nbsp;dwSize,&nbsp;&amp;dwWritten);<br>//&nbsp;创建线程，远程删除！<br>&nbsp;&nbsp;&nbsp;&nbsp;DWORD&nbsp;dwID;<br>&nbsp;&nbsp;&nbsp;&nbsp;HANDLE&nbsp;hThread&nbsp;=&nbsp;CreateRemoteThread(hProcess,&nbsp;NULL,&nbsp;0,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(LPTHREAD_START_ROUTINE)lpBuf,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(LPVOID)((DWORD)lpBuf&nbsp;+&nbsp;offsetof(DELETESTRUCT,&nbsp;szFile)),&nbsp;0,&nbsp;&amp;dwID);<br>&nbsp;&nbsp;&nbsp;&nbsp;GlobalFree((HGLOBAL)pDel);<br>&nbsp;&nbsp;&nbsp;&nbsp;CloseHandle(hThread);<br>&nbsp;&nbsp;&nbsp;&nbsp;CloseHandle(hProcess);<br>return&nbsp;TRUE;<br>}</code><p>至于为什么最后不用VirtualFreeEx释放资源，那是因为注入的远程代码在执行的时候目标exe就已经消失了，所以这里的寄主程序肯定存在着内存泄露，真是造孽啊。<p>最后说三点。第一，RemoteDel是要挑选一个寄主程序的，这个程序应该始终运行并存在于当前的系统中，我在示例中挑选的是explorer.exe；并且，打开这个进程是需要调试权限的，提权的代码也一并加入在示例代码中，算是弥补了2005年的缺失。第二，为了方便定位，我修改了远程代码中的调用，也就是call ds:xxx（FF 15 xxx）改为了call near xxx（E8 xxx）。第三，自己手写机器码的做法的确不如纯汇编代码重定位来的优雅，但是我认为这里填充并定位Sleep和DeleteFile的片断也是纯汇编的办法无法比拟的。</p></div><footer class=post-footer><div class=post-button><a class=btn href=/post/file-self-deletion-using-remote-threading/#more rel=contents>阅读全文 &#187;</a></div><div class=post-eof></div></footer></article></div><div class=post-block><article itemscope itemtype=http://schema.org/Article class=post-content lang><link itemprop=mainEntityOfPage href=https://blogs.qipai360.cn/post/edge-highlighting-effect/><span hidden itemprop=author itemscope itemtype=http://schema.org/Person><meta itemprop=image content="/imgs/avatar.jpg"><meta itemprop=name content="Rise"></span><span hidden itemprop=publisher itemscope itemtype=http://schema.org/Organization><meta itemprop=name content="Rise"><meta itemprop=description content="福兮祸兮，焉知所依？冬去冰泮，春来萌荣。朝生暮死，亦可惊鸿。知足者富，自足者强。"></span><span hidden itemprop=post itemscope itemtype=http://schema.org/CreativeWork><meta itemprop=name content="边缘高亮效果"><meta itemprop=description content='游戏要实现模型的突出显示,最好是边缘高亮的效果.刚听到这个东西时,第一个进入头脑中的就是:边缘检测.于是就写了一个:
+
+<tbody>
+
+    <tr>
+
+        <td style="border-right: windowtext 1pt solid; padding-right: 5.4pt; border-top: windowtext 1pt solid; padding-left: 5.4pt; padding-bottom: 0cm; border-left: windowtext 1pt solid; width: 426.1pt; padding-top: 0cm; border-bottom: windowtext 1pt solid" valign="top" width="568">
+
+        <div>Pass 0:</div>
+
+        <div>渲染模型到一个RenderTarget Model上,并把模型的形状写入Alpha通道.</div>
+
+        <div>Pass 1:</div>
+
+        <div>对上面得到的Alpha通道用拉普拉斯模板进行滤波,得到一个边缘,写入另一个RenderTarget Edge.</div>
+
+        <div>Pass 2:</div>
+
+        <div>把前面得到的两个RenderTarget进行合成,输出到屏幕.</div>
+
+        </td>
+
+    </tr>
+
+</tbody>
+
+
+&nbsp;
+虽说效果还不错,但是用掉了两个RenderTarget,显然不合算.而且,用拉普拉斯在PixelShader中进行逐像素的处理,效率并不高.
+&nbsp;
+阿来在GameDev上求得另一种方法:把模型画两遍,其中一次对模型进行一次放大,关闭Z-Write就出来这种效果了.不过有两个问题:
+一是模型直接放缩是以模型坐标系的原点来的,而这个原点并不一定是在模型的中心.就算在中心,对于一些非凸多面体并不能得到很好的效果,有一些边缘会被模型遮住.
+二是,关闭了深度检测,那这个模型怎么跟别的模型来进行遮挡处理呢?
+&nbsp;
+后来在群里有人提醒说在3D游戏程序设计入门这本书上有,我才想起来有一个卡通渲染的例子.卡通渲染?那里面不也有轮廓生成吗?看了一下书上的实现方法,用的是三角形退化,有点复杂.于是google之,发现了一个跟GameDev上那个方法差不多思想的:
+
+<tbody>
+
+    <tr>
+
+        <td style="border-right: windowtext 1pt solid; padding-right: 5.4pt; border-top: windowtext 1pt solid; padding-left: 5.4pt; padding-bottom: 0cm; border-left: windowtext 1pt solid; width: 426.1pt; padding-top: 0cm; border-bottom: windowtext 1pt solid" valign="top" width="568">
+
+        <div>Pass0:</div>
+
+        <div>把模型按法线方向进行放大,然后渲染成单色模型,不过只渲染背面,避免遮住正常的模型.(把D3DRS_CULLMODE设成D3DCULL_CW就可以了)</div>
+
+        <div>Pass1:</div>
+
+        <div>正常渲染模型,不用做什么改变.不过不要忘了把D3DRS_CULLMODE改回来.</div>
+
+        </td>
+
+    </tr>
+
+</tbody>
+
+
+&nbsp;
+Shader:
+
+<tbody>
+
+    <tr>
+
+        <td style="border-right: windowtext 1pt solid; padding-right: 5.4pt; border-top: windowtext 1pt solid; padding-left: 5.4pt; padding-bottom: 0cm; border-left: windowtext 1pt solid; width: 426.1pt; padding-top: 0cm; border-bottom: windowtext 1pt solid" valign="top" width="568">
+
+        <div><span style="color: blue">float4x4</span> matViewProjection;</div>
+
+        <div>&amp;nbsp;</div>
+
+        <div><span style="color: blue">struct</span> VS_INPUT </div>
+
+        <div>{</div>
+
+        <div><span>&amp;nbsp;&amp;nbsp; <span style="color: blue">float4</span> Position : <span style="color: fuchsia">POSITION0</span>;</span></div>
+
+        <div style="margin-left: 21pt; text-indent: -21pt"><span>&amp;nbsp;&amp;nbsp; <span style="color: blue">float3</span> Normal&amp;nbsp;&amp;nbsp; : <span style="color: fuchsia">NORMAL0</span>;</span></div>
+
+        <div>};</div>
+
+        <div>&amp;nbsp;</div>
+
+        <div><span style="color: blue">struct</span> VS_OUTPUT </div>
+
+        <div>{</div>
+
+        <div><span>&amp;nbsp;&amp;nbsp; <span style="color: blue">float4</span> Position : POSITION0;</span></div>
+
+        <div>};</div>
+
+        <div>&amp;nbsp;</div>
+
+        <div>VS_OUTPUT vs_main( VS_INPUT Input )</div>
+
+        <div>{</div>
+
+        <div><span>&amp;nbsp;&amp;nbsp; VS_OUTPUT Output;</span></div>
+
+        <div>&amp;nbsp;</div>
+
+        <div style="margin-left: 21pt; text-indent: -21pt"><span>&amp;nbsp;&amp;nbsp; Output.Position = <span style="color: blue">float4</span>(Input.Position.xyz + Input.Normal*0.4f,1);</span></div>
+
+        <div><span>&amp;nbsp;&amp;nbsp; Output.Position = <span style="color: red">mul</span>( Output.Position, matViewProjection );</span></div>
+
+        <div>&amp;nbsp;</div>
+
+        <div style="margin-left: 21pt; text-indent: -21pt"><span>&amp;nbsp;&amp;nbsp; <span style="color: blue">return</span>( Output );</span></div>
+
+        <div>}</div>
+
+        </td>
+
+    </tr>
+
+    <tr>
+
+        <td style="border-right: windowtext 1pt solid; padding-right: 5.4pt; border-top: medium none; padding-left: 5.4pt; padding-bottom: 0cm; border-left: windowtext 1pt solid; width: 426.1pt; padding-top: 0cm; border-bottom: windowtext 1pt solid" valign="top" width="568">
+
+        <div><span style="color: blue">sampler2D</span> BaseMap;</div>
+
+        <div>&amp;nbsp;</div>
+
+        <div><span style="color: blue">float4</span> ps_main() : <span style="color: fuchsia">COLOR0</span></div>
+
+        <div>{</div>
+
+        <div><span>&amp;nbsp;&amp;nbsp; <span style="color: blue">return</span> <span style="color: blue">float4</span>(0, 1, 0, 1);</span></div>
+
+        <div>}</div>
+
+        </td>
+
+    </tr>
+
+</tbody>
+
+
+&nbsp;
+下面是两种方法实现的效果对比:
+
+差不多哈,区别就是用卡通渲染的那种方法出来的中间也有轮廓线.
+&nbsp;
+a'></span><header class=post-header><h2 class=post-title itemprop="name headline"><a href=/post/edge-highlighting-effect/ itemprop=url class=post-title-link>边缘高亮效果</a></h2><div class=post-meta-container><div class=post-meta-items><span class=post-meta-item><span class=post-meta-item-icon><i class="fas fa-solid fa-calendar"></i>
+</span><span class=post-meta-item-text title=发表于>发表于：
+</span><time title="创建时间：2007年11月29日 16:08:00 CST" itemprop="dateCreated datePublished" datetime="2007-11-29 16:08:00 +0800 +0800">2007年11月29日
+</time></span><span class=post-meta-item><span class=post-meta-item-icon><i class="fas fa-solid fa-folder-open"></i>
+</span><span class=post-meta-item-text title=分类于>分类于：
+</span><span itemprop=about itemscope itemtype=http://schema.org/Thing><a href=/categories/gamedev/ itemprop=url rel=index><span itemprop=name>dev/GameDev</span>
+</a></span></span><span class=post-meta-item title=浏览><span class=post-meta-item-icon><i class="fas fa-solid fa-eye"></i>
+</span><span class=post-meta-item-text>浏览：
+</span><span id=pageview-count data-path=/post/edge-highlighting-effect/><i class="fa fa-sync fa-spin"></i></span></span></div></div></header><div class=post-body itemprop=articleBody><div>游戏要实现模型的突出显示,最好是边缘高亮的效果.刚听到这个东西时,第一个进入头脑中的就是:边缘检测.于是就写了一个:</div><table style=border-right:none;border-top:none;border-left:none;border-bottom:none;border-collapse:collapse cellspacing=0 cellpadding=0 border=1><pre><code>&lt;tbody&gt;
+
+    &lt;tr&gt;
+
+        &lt;td style=&quot;border-right: windowtext 1pt solid; padding-right: 5.4pt; border-top: windowtext 1pt solid; padding-left: 5.4pt; padding-bottom: 0cm; border-left: windowtext 1pt solid; width: 426.1pt; padding-top: 0cm; border-bottom: windowtext 1pt solid&quot; valign=&quot;top&quot; width=&quot;568&quot;&gt;
+
+        &lt;div&gt;Pass 0:&lt;/div&gt;
+
+        &lt;div&gt;渲染模型到一个RenderTarget Model上,并把模型的形状写入Alpha通道.&lt;/div&gt;
+
+        &lt;div&gt;Pass 1:&lt;/div&gt;
+
+        &lt;div&gt;对上面得到的Alpha通道用拉普拉斯模板进行滤波,得到一个边缘,写入另一个RenderTarget Edge.&lt;/div&gt;
+
+        &lt;div&gt;Pass 2:&lt;/div&gt;
+
+        &lt;div&gt;把前面得到的两个RenderTarget进行合成,输出到屏幕.&lt;/div&gt;
+
+        &lt;/td&gt;
+
+    &lt;/tr&gt;
+
+&lt;/tbody&gt;
+</code></pre></table><div>&nbsp;</div><div>虽说效果还不错,但是用掉了两个RenderTarget,显然不合算.而且,用拉普拉斯在PixelShader中进行逐像素的处理,效率并不高.</div><div>&nbsp;</div><div>阿来在GameDev上求得另一种方法:把模型画两遍,其中一次对模型进行一次放大,关闭Z-Write就出来这种效果了.不过有两个问题:</div><div>一是模型直接放缩是以模型坐标系的原点来的,而这个原点并不一定是在模型的中心.就算在中心,对于一些非凸多面体并不能得到很好的效果,有一些边缘会被模型遮住.</div><div>二是,关闭了深度检测,那这个模型怎么跟别的模型来进行遮挡处理呢?</div><div>&nbsp;</div><div>后来在群里有人提醒说在3D游戏程序设计入门这本书上有,我才想起来有一个卡通渲染的例子.卡通渲染?那里面不也有轮廓生成吗?看了一下书上的实现方法,用的是三角形退化,有点复杂.于是google之,发现了一个跟GameDev上那个方法差不多思想的:</div><table style=border-right:none;border-top:none;border-left:none;border-bottom:none;border-collapse:collapse cellspacing=0 cellpadding=0 border=1><pre><code>&lt;tbody&gt;
+
+    &lt;tr&gt;
+
+        &lt;td style=&quot;border-right: windowtext 1pt solid; padding-right: 5.4pt; border-top: windowtext 1pt solid; padding-left: 5.4pt; padding-bottom: 0cm; border-left: windowtext 1pt solid; width: 426.1pt; padding-top: 0cm; border-bottom: windowtext 1pt solid&quot; valign=&quot;top&quot; width=&quot;568&quot;&gt;
+
+        &lt;div&gt;Pass0:&lt;/div&gt;
+
+        &lt;div&gt;把模型按法线方向进行放大,然后渲染成单色模型,不过只渲染背面,避免遮住正常的模型.(把D3DRS_CULLMODE设成D3DCULL_CW就可以了)&lt;/div&gt;
+
+        &lt;div&gt;Pass1:&lt;/div&gt;
+
+        &lt;div&gt;正常渲染模型,不用做什么改变.不过不要忘了把D3DRS_CULLMODE改回来.&lt;/div&gt;
+
+        &lt;/td&gt;
+
+    &lt;/tr&gt;
+
+&lt;/tbody&gt;
+</code></pre></table><div>&nbsp;</div><div>Shader:</div><table style=border-right:none;border-top:none;border-left:none;border-bottom:none;border-collapse:collapse cellspacing=0 cellpadding=0 border=1><pre><code>&lt;tbody&gt;
+
+    &lt;tr&gt;
+
+        &lt;td style=&quot;border-right: windowtext 1pt solid; padding-right: 5.4pt; border-top: windowtext 1pt solid; padding-left: 5.4pt; padding-bottom: 0cm; border-left: windowtext 1pt solid; width: 426.1pt; padding-top: 0cm; border-bottom: windowtext 1pt solid&quot; valign=&quot;top&quot; width=&quot;568&quot;&gt;
+
+        &lt;div&gt;&lt;span style=&quot;color: blue&quot;&gt;float4x4&lt;/span&gt; matViewProjection;&lt;/div&gt;
+
+        &lt;div&gt;&amp;nbsp;&lt;/div&gt;
+
+        &lt;div&gt;&lt;span style=&quot;color: blue&quot;&gt;struct&lt;/span&gt; VS_INPUT &lt;/div&gt;
+
+        &lt;div&gt;{&lt;/div&gt;
+
+        &lt;div&gt;&lt;span&gt;&amp;nbsp;&amp;nbsp; &lt;span style=&quot;color: blue&quot;&gt;float4&lt;/span&gt; Position : &lt;span style=&quot;color: fuchsia&quot;&gt;POSITION0&lt;/span&gt;;&lt;/span&gt;&lt;/div&gt;
+
+        &lt;div style=&quot;margin-left: 21pt; text-indent: -21pt&quot;&gt;&lt;span&gt;&amp;nbsp;&amp;nbsp; &lt;span style=&quot;color: blue&quot;&gt;float3&lt;/span&gt; Normal&amp;nbsp;&amp;nbsp; : &lt;span style=&quot;color: fuchsia&quot;&gt;NORMAL0&lt;/span&gt;;&lt;/span&gt;&lt;/div&gt;
+
+        &lt;div&gt;};&lt;/div&gt;
+
+        &lt;div&gt;&amp;nbsp;&lt;/div&gt;
+
+        &lt;div&gt;&lt;span style=&quot;color: blue&quot;&gt;struct&lt;/span&gt; VS_OUTPUT &lt;/div&gt;
+
+        &lt;div&gt;{&lt;/div&gt;
+
+        &lt;div&gt;&lt;span&gt;&amp;nbsp;&amp;nbsp; &lt;span style=&quot;color: blue&quot;&gt;float4&lt;/span&gt; Position : POSITION0;&lt;/span&gt;&lt;/div&gt;
+
+        &lt;div&gt;};&lt;/div&gt;
+
+        &lt;div&gt;&amp;nbsp;&lt;/div&gt;
+
+        &lt;div&gt;VS_OUTPUT vs_main( VS_INPUT Input )&lt;/div&gt;
+
+        &lt;div&gt;{&lt;/div&gt;
+
+        &lt;div&gt;&lt;span&gt;&amp;nbsp;&amp;nbsp; VS_OUTPUT Output;&lt;/span&gt;&lt;/div&gt;
+
+        &lt;div&gt;&amp;nbsp;&lt;/div&gt;
+
+        &lt;div style=&quot;margin-left: 21pt; text-indent: -21pt&quot;&gt;&lt;span&gt;&amp;nbsp;&amp;nbsp; Output.Position = &lt;span style=&quot;color: blue&quot;&gt;float4&lt;/span&gt;(Input.Position.xyz + Input.Normal*0.4f,1);&lt;/span&gt;&lt;/div&gt;
+
+        &lt;div&gt;&lt;span&gt;&amp;nbsp;&amp;nbsp; Output.Position = &lt;span style=&quot;color: red&quot;&gt;mul&lt;/span&gt;( Output.Position, matViewProjection );&lt;/span&gt;&lt;/div&gt;
+
+        &lt;div&gt;&amp;nbsp;&lt;/div&gt;
+
+        &lt;div style=&quot;margin-left: 21pt; text-indent: -21pt&quot;&gt;&lt;span&gt;&amp;nbsp;&amp;nbsp; &lt;span style=&quot;color: blue&quot;&gt;return&lt;/span&gt;( Output );&lt;/span&gt;&lt;/div&gt;
+
+        &lt;div&gt;}&lt;/div&gt;
+
+        &lt;/td&gt;
+
+    &lt;/tr&gt;
+
+    &lt;tr&gt;
+
+        &lt;td style=&quot;border-right: windowtext 1pt solid; padding-right: 5.4pt; border-top: medium none; padding-left: 5.4pt; padding-bottom: 0cm; border-left: windowtext 1pt solid; width: 426.1pt; padding-top: 0cm; border-bottom: windowtext 1pt solid&quot; valign=&quot;top&quot; width=&quot;568&quot;&gt;
+
+        &lt;div&gt;&lt;span style=&quot;color: blue&quot;&gt;sampler2D&lt;/span&gt; BaseMap;&lt;/div&gt;
+
+        &lt;div&gt;&amp;nbsp;&lt;/div&gt;
+
+        &lt;div&gt;&lt;span style=&quot;color: blue&quot;&gt;float4&lt;/span&gt; ps_main() : &lt;span style=&quot;color: fuchsia&quot;&gt;COLOR0&lt;/span&gt;&lt;/div&gt;
+
+        &lt;div&gt;{&lt;/div&gt;
+
+        &lt;div&gt;&lt;span&gt;&amp;nbsp;&amp;nbsp; &lt;span style=&quot;color: blue&quot;&gt;return&lt;/span&gt; &lt;span style=&quot;color: blue&quot;&gt;float4&lt;/span&gt;(0, 1, 0, 1);&lt;/span&gt;&lt;/div&gt;
+
+        &lt;div&gt;}&lt;/div&gt;
+
+        &lt;/td&gt;
+
+    &lt;/tr&gt;
+
+&lt;/tbody&gt;
+</code></pre></table><div>&nbsp;</div><div>下面是两种方法实现的效果对比:</div><div><img alt src=http://p.blog.csdn.net/images/p_blog_csdn_net/xoyojank/outline.JPG></div><div>差不多哈,区别就是用卡通渲染的那种方法出来的中间也有轮廓线.</div><div>&nbsp;</div><p>a</p></div><footer class=post-footer><div class=post-button><a class=btn href=/post/edge-highlighting-effect/#more rel=contents>阅读全文 &#187;</a></div><div class=post-eof></div></footer></article></div><div class=post-block><article itemscope itemtype=http://schema.org/Article class=post-content lang><link itemprop=mainEntityOfPage href=https://blogs.qipai360.cn/post/directx-9-hlsl-introduction-3-language-basics-2/><span hidden itemprop=author itemscope itemtype=http://schema.org/Person><meta itemprop=image content="/imgs/avatar.jpg"><meta itemprop=name content="Rise"></span><span hidden itemprop=publisher itemscope itemtype=http://schema.org/Organization><meta itemprop=name content="Rise"><meta itemprop=description content="福兮祸兮，焉知所依？冬去冰泮，春来萌荣。朝生暮死，亦可惊鸿。知足者富，自足者强。"></span><span hidden itemprop=post itemscope itemtype=http://schema.org/CreativeWork><meta itemprop=name content="DirectX 9高层着色语言介绍3——语言基础（2）"><meta itemprop=description content="original address: 
+
+    http://blog.csdn.net/starflash2003/archive/2004/10/12/132884.aspx
+    
+
+
+类型修饰符
+在你的着色器中打算使用的HLSL中有几个可选的类型修饰符。通常把不想被着色器的代码修改的量设为const(常量)类型修饰符。在赋值符号左边使用常量(例如作为一个lval)会产生一个编译错误。"></span><header class=post-header><h2 class=post-title itemprop="name headline"><a href=/post/directx-9-hlsl-introduction-3-language-basics-2/ itemprop=url class=post-title-link>DirectX 9高层着色语言介绍3——语言基础（2）</a></h2><div class=post-meta-container><div class=post-meta-items><span class=post-meta-item><span class=post-meta-item-icon><i class="fas fa-solid fa-calendar"></i>
+</span><span class=post-meta-item-text title=发表于>发表于：
+</span><time title="创建时间：2007年11月29日 16:02:00 CST" itemprop="dateCreated datePublished" datetime="2007-11-29 16:02:00 +0800 +0800">2007年11月29日
+</time></span><span class=post-meta-item><span class=post-meta-item-icon><i class="fas fa-solid fa-folder-open"></i>
+</span><span class=post-meta-item-text title=分类于>分类于：
+</span><span itemprop=about itemscope itemtype=http://schema.org/Thing><a href=/categories/gamedev/ itemprop=url rel=index><span itemprop=name>dev/GameDev</span>
+</a></span></span><span class=post-meta-item title=浏览><span class=post-meta-item-icon><i class="fas fa-solid fa-eye"></i>
+</span><span class=post-meta-item-text>浏览：
+</span><span id=pageview-count data-path=/post/directx-9-hlsl-introduction-3-language-basics-2/><i class="fa fa-sync fa-spin"></i></span></span></div></div></header><div class=post-body itemprop=articleBody><p>original address: <a href=http://blog.csdn.net/starflash2003/archive/2004/10/12/132884.aspx><a href=http://blog.csdn.net/starflash2003/archive/2004/10/12/132884.aspx title=http://blog.csdn.net/starflash2003/archive/2004/10/12/132884.aspx rel="noopener external nofollow noreferrer" target=_blank class=exturl>http://blog.csdn.net/starflash2003/archive/2004/10/12/132884.aspx</a></a><br></p><br><h3 class=dtH1>类型修饰符</h3><p>在你的着色器中打算使用的HLSL中有几个可选的类型修饰符。通常把不想被着色器的代码修改的量设为const(常量)类型修饰符。在赋值符号左边使用常量(<span lang=en>例如作为一个</span><em>lval</em>)会产生一个编译错误。</p></div><footer class=post-footer><div class=post-button><a class=btn href=/post/directx-9-hlsl-introduction-3-language-basics-2/#more rel=contents>阅读全文 &#187;</a></div><div class=post-eof></div></footer></article></div><div class=post-block><article itemscope itemtype=http://schema.org/Article class=post-content lang><link itemprop=mainEntityOfPage href=https://blogs.qipai360.cn/post/directx-9-hlsl-introduction-4-language-basics-3/><span hidden itemprop=author itemscope itemtype=http://schema.org/Person><meta itemprop=image content="/imgs/avatar.jpg"><meta itemprop=name content="Rise"></span><span hidden itemprop=publisher itemscope itemtype=http://schema.org/Organization><meta itemprop=name content="Rise"><meta itemprop=description content="福兮祸兮，焉知所依？冬去冰泮，春来萌荣。朝生暮死，亦可惊鸿。知足者富，自足者强。"></span><span hidden itemprop=post itemscope itemtype=http://schema.org/CreativeWork><meta itemprop=name content="DirectX 9高层着色语言介绍4——语言基础（3）"><meta itemprop=description content="original address: 
+
+    http://blog.csdn.net/starflash2003/archive/2004/10/13/135493.aspx
+    
+
+
+强制类型转换
+为了有助于着色器的编写和所产生代码的效率，最好熟悉一下HLSL的强制类型转换机制。强制类型转换常用于扩展或缩减选定的变量以匹配要赋值的变量。例如，在下列例子中，初始化vResult时把float型常量0.0f强制转换为 float4型{0.0f , 0.0f , 0.0f , 0.0f }。"></span><header class=post-header><h2 class=post-title itemprop="name headline"><a href=/post/directx-9-hlsl-introduction-4-language-basics-3/ itemprop=url class=post-title-link>DirectX 9高层着色语言介绍4——语言基础（3）</a></h2><div class=post-meta-container><div class=post-meta-items><span class=post-meta-item><span class=post-meta-item-icon><i class="fas fa-solid fa-calendar"></i>
+</span><span class=post-meta-item-text title=发表于>发表于：
+</span><time title="创建时间：2007年11月29日 16:02:00 CST" itemprop="dateCreated datePublished" datetime="2007-11-29 16:02:00 +0800 +0800">2007年11月29日
+</time></span><span class=post-meta-item><span class=post-meta-item-icon><i class="fas fa-solid fa-folder-open"></i>
+</span><span class=post-meta-item-text title=分类于>分类于：
+</span><span itemprop=about itemscope itemtype=http://schema.org/Thing><a href=/categories/gamedev/ itemprop=url rel=index><span itemprop=name>dev/GameDev</span>
+</a></span></span><span class=post-meta-item title=浏览><span class=post-meta-item-icon><i class="fas fa-solid fa-eye"></i>
+</span><span class=post-meta-item-text>浏览：
+</span><span id=pageview-count data-path=/post/directx-9-hlsl-introduction-4-language-basics-3/><i class="fa fa-sync fa-spin"></i></span></span></div></div></header><div class=post-body itemprop=articleBody><p>original address: <a href=http://blog.csdn.net/starflash2003/archive/2004/10/13/135493.aspx><a href=http://blog.csdn.net/starflash2003/archive/2004/10/13/135493.aspx title=http://blog.csdn.net/starflash2003/archive/2004/10/13/135493.aspx rel="noopener external nofollow noreferrer" target=_blank class=exturl>http://blog.csdn.net/starflash2003/archive/2004/10/13/135493.aspx</a></a><br></p><br><h3 class=dtH1>强制类型转换</h3><p>为了有助于着色器的编写和所产生代码的效率，最好熟悉一下HLSL的强制类型转换机制。强制类型转换常用于扩展或缩减选定的变量以匹配要赋值的变量。例如，在下列例子中，初始化vResult时把float型常量0.0f强制转换为 float4型{0.0f , 0.0f , 0.0f , 0.0f }。</p></div><footer class=post-footer><div class=post-button><a class=btn href=/post/directx-9-hlsl-introduction-4-language-basics-3/#more rel=contents>阅读全文 &#187;</a></div><div class=post-eof></div></footer></article></div><div class=post-block><article itemscope itemtype=http://schema.org/Article class=post-content lang><link itemprop=mainEntityOfPage href=https://blogs.qipai360.cn/post/directx-9-hlsl-introduction-2-language-basics-1/><span hidden itemprop=author itemscope itemtype=http://schema.org/Person><meta itemprop=image content="/imgs/avatar.jpg"><meta itemprop=name content="Rise"></span><span hidden itemprop=publisher itemscope itemtype=http://schema.org/Organization><meta itemprop=name content="Rise"><meta itemprop=description content="福兮祸兮，焉知所依？冬去冰泮，春来萌荣。朝生暮死，亦可惊鸿。知足者富，自足者强。"></span><span hidden itemprop=post itemscope itemtype=http://schema.org/CreativeWork><meta itemprop=name content="DirectX 9高层着色语言介绍2——语言基础（1）"><meta itemprop=description content="original address: 
+
+    http://blog.csdn.net/starflash2003/archive/2004/10/09/130020.aspx
+    
+
+
+语言基础
+现在你已经对什么是HLSL顶点和像素着色器以及他们如何与低层汇编着色器相互作用有了了解，我们将讨论一些语言本身的细节。
+关键字
+关键字是HLSL语言保留的预定义标识符，不能在你的程序中作为标识符使用。标有'*'的关键字不区分大小写。"></span><header class=post-header><h2 class=post-title itemprop="name headline"><a href=/post/directx-9-hlsl-introduction-2-language-basics-1/ itemprop=url class=post-title-link>DirectX 9高层着色语言介绍2——语言基础（1）</a></h2><div class=post-meta-container><div class=post-meta-items><span class=post-meta-item><span class=post-meta-item-icon><i class="fas fa-solid fa-calendar"></i>
+</span><span class=post-meta-item-text title=发表于>发表于：
+</span><time title="创建时间：2007年11月29日 16:01:00 CST" itemprop="dateCreated datePublished" datetime="2007-11-29 16:01:00 +0800 +0800">2007年11月29日
+</time></span><span class=post-meta-item><span class=post-meta-item-icon><i class="fas fa-solid fa-folder-open"></i>
+</span><span class=post-meta-item-text title=分类于>分类于：
+</span><span itemprop=about itemscope itemtype=http://schema.org/Thing><a href=/categories/gamedev/ itemprop=url rel=index><span itemprop=name>dev/GameDev</span>
+</a></span></span><span class=post-meta-item title=浏览><span class=post-meta-item-icon><i class="fas fa-solid fa-eye"></i>
+</span><span class=post-meta-item-text>浏览：
+</span><span id=pageview-count data-path=/post/directx-9-hlsl-introduction-2-language-basics-1/><i class="fa fa-sync fa-spin"></i></span></span></div></div></header><div class=post-body itemprop=articleBody><p>original address: <a href=http://blog.csdn.net/starflash2003/archive/2004/10/09/130020.aspx><a href=http://blog.csdn.net/starflash2003/archive/2004/10/09/130020.aspx title=http://blog.csdn.net/starflash2003/archive/2004/10/09/130020.aspx rel="noopener external nofollow noreferrer" target=_blank class=exturl>http://blog.csdn.net/starflash2003/archive/2004/10/09/130020.aspx</a></a><br></p><br><h2 class=dtH1>语言基础</h2><p>现在你已经对什么是HLSL顶点和像素着色器以及他们如何与低层汇编着色器相互作用有了了解，我们将讨论一些语言本身的细节。</p><h3 class=dtH1>关键字</h3><p>关键字是HLSL语言保留的预定义标识符，不能在你的程序中作为标识符使用。标有'*'的关键字不区分大小写。</p></div><footer class=post-footer><div class=post-button><a class=btn href=/post/directx-9-hlsl-introduction-2-language-basics-1/#more rel=contents>阅读全文 &#187;</a></div><div class=post-eof></div></footer></article></div><div class=post-block><article itemscope itemtype=http://schema.org/Article class=post-content lang><link itemprop=mainEntityOfPage href=https://blogs.qipai360.cn/post/directx-9-hlsl-introduction-1-introduction-examples-assembly/><span hidden itemprop=author itemscope itemtype=http://schema.org/Person><meta itemprop=image content="/imgs/avatar.jpg"><meta itemprop=name content="Rise"></span><span hidden itemprop=publisher itemscope itemtype=http://schema.org/Organization><meta itemprop=name content="Rise"><meta itemprop=description content="福兮祸兮，焉知所依？冬去冰泮，春来萌荣。朝生暮死，亦可惊鸿。知足者富，自足者强。"></span><span hidden itemprop=post itemscope itemtype=http://schema.org/CreativeWork><meta itemprop=name content="DirectX 9高层着色语言介绍1——引言、简单例子、汇编语言和编译对象"><meta itemprop=description content="original address: 
+
+    http://blog.csdn.net/starflash2003/archive/2004/10/08/128688.aspx
+    
+
+
+引言
+高层着色语言(HLSL)是DirectX&#174; 9最为强力的新组件之一。使用这种标准的高级语言, 在进行着色时编写者可以专注于算法而不用再去理会诸如寄存器的分配，寄存器读端口限制, 并行处理指令等等硬件细节. 除了把开发者从硬件细节中解放出来之外，HLSL 也具有高级语言所有的全部优势，诸如：代码重用容易, 可读性增强以及存在一个优化过的编译器。本书和 ShaderX2 - Shader Tips & Tricks 这本书的许多章节就用到了HLSL编写的着色器. 阅读完本章引言后，你会很容易理解那些着色器并在工作中用到它们。"></span><header class=post-header><h2 class=post-title itemprop="name headline"><a href=/post/directx-9-hlsl-introduction-1-introduction-examples-assembly/ itemprop=url class=post-title-link>DirectX 9高层着色语言介绍1——引言、简单例子、汇编语言和编译对象</a></h2><div class=post-meta-container><div class=post-meta-items><span class=post-meta-item><span class=post-meta-item-icon><i class="fas fa-solid fa-calendar"></i>
+</span><span class=post-meta-item-text title=发表于>发表于：
+</span><time title="创建时间：2007年11月29日 16:00:00 CST" itemprop="dateCreated datePublished" datetime="2007-11-29 16:00:00 +0800 +0800">2007年11月29日
+</time></span><span class=post-meta-item><span class=post-meta-item-icon><i class="fas fa-solid fa-folder-open"></i>
+</span><span class=post-meta-item-text title=分类于>分类于：
+</span><span itemprop=about itemscope itemtype=http://schema.org/Thing><a href=/categories/gamedev/ itemprop=url rel=index><span itemprop=name>dev/GameDev</span>
+</a></span></span><span class=post-meta-item title=浏览><span class=post-meta-item-icon><i class="fas fa-solid fa-eye"></i>
+</span><span class=post-meta-item-text>浏览：
+</span><span id=pageview-count data-path=/post/directx-9-hlsl-introduction-1-introduction-examples-assembly/><i class="fa fa-sync fa-spin"></i></span></span></div></div></header><div class=post-body itemprop=articleBody><p>original address: <a href=http://blog.csdn.net/starflash2003/archive/2004/10/08/128688.aspx><a href=http://blog.csdn.net/starflash2003/archive/2004/10/08/128688.aspx title=http://blog.csdn.net/starflash2003/archive/2004/10/08/128688.aspx rel="noopener external nofollow noreferrer" target=_blank class=exturl>http://blog.csdn.net/starflash2003/archive/2004/10/08/128688.aspx</a></a><br></p><br><h2 class=dtH1>引言</h2><p>高层着色语言(HLSL)是DirectX&#174; 9最为强力的新组件之一。使用这种标准的高级语言, 在进行着色时编写者可以专注于算法而不用再去理会诸如寄存器的分配，寄存器读端口限制, 并行处理指令等等硬件细节. 除了把开发者从硬件细节中解放出来之外，HLSL 也具有高级语言所有的全部优势，诸如：代码重用容易, 可读性增强以及存在一个优化过的编译器。本书和 ShaderX<sup>2</sup> - Shader Tips & Tricks 这本书的许多章节就用到了HLSL编写的着色器. 阅读完本章引言后，你会很容易理解那些着色器并在工作中用到它们。</p></div><footer class=post-footer><div class=post-button><a class=btn href=/post/directx-9-hlsl-introduction-1-introduction-examples-assembly/#more rel=contents>阅读全文 &#187;</a></div><div class=post-eof></div></footer></article></div><div class=post-block><article itemscope itemtype=http://schema.org/Article class=post-content lang><link itemprop=mainEntityOfPage href=https://blogs.qipai360.cn/post/timing-in-drive/><span hidden itemprop=author itemscope itemtype=http://schema.org/Person><meta itemprop=image content="/imgs/avatar.jpg"><meta itemprop=name content="Rise"></span><span hidden itemprop=publisher itemscope itemtype=http://schema.org/Organization><meta itemprop=name content="Rise"><meta itemprop=description content="福兮祸兮，焉知所依？冬去冰泮，春来萌荣。朝生暮死，亦可惊鸿。知足者富，自足者强。"></span><span hidden itemprop=post itemscope itemtype=http://schema.org/CreativeWork><meta itemprop=name content="驱动中定时"><meta itemprop=description content="
+
+ 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+
+
+NTSTATUS KeWaitForSingleObject(
+    IN PVOID Object,
+    IN KWAIT_REASON WaitReason,
+    IN KPROCESSOR_MODE WaitMode,
+    IN BOOLEAN Alertable,
+    IN PLARGE_INTEGER Timeout OPTIONAL   // Pointer to a time-out value that specifies the absolute or relative time, in 100 nanosecond units, 
+    );
+
+
+VOID KeStallExecutionProcessor(
+    IN ULONG MicroSeconds                    // </em>Specifies the number of microseconds to stall.
+    );
+
+BOOLEAN KeSetTimer(
+    IN PKTIMER Timer,
+    IN LARGE_INTEGER DueTime, // Specifies the absolute or relative time at which the timer is to expire. If the value of the <em>DueTime</em> parameter is negative, the expiration time is relative to the current system time. Otherwise, the expiration time is absolute. The expiration time is expressed in system time units (100-nanosecond intervals). Absolute expiration times track any changes in the system time; relative expiration times are not affected by system time changes. 
+    IN PKDPC Dpc OPTIONAL
+    );
+
+
+
+为了重复地调用CustomTimerDpc例程，使用KeSetTimerEx来设置定时器，并在Period参数中规定一个再次发生的间隔。除了这个附加的参数，KeSetTimerEx就象KeSetTimer一样。"></span><header class=post-header><h2 class=post-title itemprop="name headline"><a href=/post/timing-in-drive/ itemprop=url class=post-title-link>驱动中定时</a></h2><div class=post-meta-container><div class=post-meta-items><span class=post-meta-item><span class=post-meta-item-icon><i class="fas fa-solid fa-calendar"></i>
+</span><span class=post-meta-item-text title=发表于>发表于：
+</span><time title="创建时间：2007年11月29日 09:14:00 CST" itemprop="dateCreated datePublished" datetime="2007-11-29 09:14:00 +0800 +0800">2007年11月29日
+</time></span><span class=post-meta-item><span class=post-meta-item-icon><i class="fas fa-solid fa-folder-open"></i>
+</span><span class=post-meta-item-text title=分类于>分类于：
+</span><span itemprop=about itemscope itemtype=http://schema.org/Thing><a href=/categories/win32dev/ itemprop=url rel=index><span itemprop=name>dev/Win32Dev</span>
+</a></span></span><span class=post-meta-item title=浏览><span class=post-meta-item-icon><i class="fas fa-solid fa-eye"></i>
+</span><span class=post-meta-item-text>浏览：
+</span><span id=pageview-count data-path=/post/timing-in-drive/><i class="fa fa-sync fa-spin"></i></span></span></div></div></header><div class=post-body itemprop=articleBody><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt id=hl-0-1><a class=lnlinks href=#hl-0-1> 1</a>
+</span><span class=lnt id=hl-0-2><a class=lnlinks href=#hl-0-2> 2</a>
+</span><span class=lnt id=hl-0-3><a class=lnlinks href=#hl-0-3> 3</a>
+</span><span class=lnt id=hl-0-4><a class=lnlinks href=#hl-0-4> 4</a>
+</span><span class=lnt id=hl-0-5><a class=lnlinks href=#hl-0-5> 5</a>
+</span><span class=lnt id=hl-0-6><a class=lnlinks href=#hl-0-6> 6</a>
+</span><span class=lnt id=hl-0-7><a class=lnlinks href=#hl-0-7> 7</a>
+</span><span class=lnt id=hl-0-8><a class=lnlinks href=#hl-0-8> 8</a>
+</span><span class=lnt id=hl-0-9><a class=lnlinks href=#hl-0-9> 9</a>
+</span><span class=lnt id=hl-0-10><a class=lnlinks href=#hl-0-10>10</a>
+</span><span class=lnt id=hl-0-11><a class=lnlinks href=#hl-0-11>11</a>
+</span><span class=lnt id=hl-0-12><a class=lnlinks href=#hl-0-12>12</a>
+</span><span class=lnt id=hl-0-13><a class=lnlinks href=#hl-0-13>13</a>
+</span><span class=lnt id=hl-0-14><a class=lnlinks href=#hl-0-14>14</a>
+</span><span class=lnt id=hl-0-15><a class=lnlinks href=#hl-0-15>15</a>
+</span><span class=lnt id=hl-0-16><a class=lnlinks href=#hl-0-16>16</a>
+</span><span class=lnt id=hl-0-17><a class=lnlinks href=#hl-0-17>17</a>
+</span><span class=lnt id=hl-0-18><a class=lnlinks href=#hl-0-18>18</a>
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=line><span class=cl><span class=n>NTSTATUS</span> <span class=nf>KeWaitForSingleObject</span><span class=p>(</span>
+</span></span><span class=line><span class=cl>    <span class=n>IN</span> <span class=n>PVOID</span> <span class=n>Object</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>    <span class=n>IN</span> <span class=n>KWAIT_REASON</span> <span class=n>WaitReason</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>    <span class=n>IN</span> <span class=n>KPROCESSOR_MODE</span> <span class=n>WaitMode</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>    <span class=n>IN</span> <span class=n>BOOLEAN</span> <span class=n>Alertable</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>    <span class=n>IN</span> <span class=n>PLARGE_INTEGER</span> <span class=n>Timeout</span> <span class=n>OPTIONAL</span>   <span class=c1>// Pointer to a time-out value that specifies the absolute or relative time, in 100 nanosecond units, 
+</span></span></span><span class=line><span class=cl>    <span class=p>);</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>VOID</span> <span class=nf>KeStallExecutionProcessor</span><span class=p>(</span>
+</span></span><span class=line><span class=cl>    <span class=n>IN</span> <span class=n>ULONG</span> <span class=n>MicroSeconds</span>                    <span class=c1>// &lt;/em&gt;Specifies the number of microseconds to stall.
+</span></span></span><span class=line><span class=cl>    <span class=p>);</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>BOOLEAN</span> <span class=nf>KeSetTimer</span><span class=p>(</span>
+</span></span><span class=line><span class=cl>    <span class=n>IN</span> <span class=n>PKTIMER</span> <span class=n>Timer</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>    <span class=n>IN</span> <span class=n>LARGE_INTEGER</span> <span class=n>DueTime</span><span class=p>,</span> <span class=o>//</span> <span class=n>Specifies</span> <span class=n>the</span> <span class=n>absolute</span> <span class=n>or</span> <span class=n>relative</span> <span class=n>time</span> <span class=n>at</span> <span class=n>which</span> <span class=n>the</span> <span class=n>timer</span> <span class=n>is</span> <span class=n>to</span> <span class=n>expire</span><span class=p>.</span> <span class=n>If</span> <span class=n>the</span> <span class=n>value</span> <span class=n>of</span> <span class=n>the</span> <span class=o>&lt;</span><span class=n>em</span><span class=o>&gt;</span><span class=n>DueTime</span><span class=o>&lt;/</span><span class=n>em</span><span class=o>&gt;</span> <span class=n>parameter</span> <span class=n>is</span> <span class=n>negative</span><span class=p>,</span> <span class=n>the</span> <span class=n>expiration</span> <span class=n>time</span> <span class=n>is</span> <span class=n>relative</span> <span class=n>to</span> <span class=n>the</span> <span class=n>current</span> <span class=n>system</span> <span class=n>time</span><span class=p>.</span> <span class=n>Otherwise</span><span class=p>,</span> <span class=n>the</span> <span class=n>expiration</span> <span class=n>time</span> <span class=n>is</span> <span class=n>absolute</span><span class=p>.</span> <span class=n>The</span> <span class=n>expiration</span> <span class=n>time</span> <span class=n>is</span> <span class=n>expressed</span> <span class=n>in</span> <span class=n>system</span> <span class=n>time</span> <span class=nf>units</span> <span class=p>(</span><span class=mi>100</span><span class=o>-</span><span class=n>nanosecond</span> <span class=n>intervals</span><span class=p>).</span> <span class=n>Absolute</span> <span class=n>expiration</span> <span class=n>times</span> <span class=n>track</span> <span class=n>any</span> <span class=n>changes</span> <span class=n>in</span> <span class=n>the</span> <span class=n>system</span> <span class=n>time</span><span class=p>;</span> <span class=n>relative</span> <span class=n>expiration</span> <span class=n>times</span> <span class=n>are</span> <span class=n>not</span> <span class=n>affected</span> <span class=n>by</span> <span class=n>system</span> <span class=n>time</span> <span class=n>changes</span><span class=p>.</span> 
+</span></span><span class=line><span class=cl>    <span class=n>IN</span> <span class=n>PKDPC</span> <span class=n>Dpc</span> <span class=n>OPTIONAL</span>
+</span></span><span class=line><span class=cl>    <span class=p>);</span></span></span></code></pre></td></tr></table></div></div><p>为了重复地调用CustomTimerDpc例程，使用KeSetTimerEx来设置定时器，并在Period参数中规定一个再次发生的间隔。除了这个附加的参数，KeSetTimerEx就象KeSetTimer一样。</p></div><footer class=post-footer><div class=post-button><a class=btn href=/post/timing-in-drive/#more rel=contents>阅读全文 &#187;</a></div><div class=post-eof></div></footer></article></div><div class=post-block><article itemscope itemtype=http://schema.org/Article class=post-content lang><link itemprop=mainEntityOfPage href=https://blogs.qipai360.cn/post/avp-active-defense-hidden-process/><span hidden itemprop=author itemscope itemtype=http://schema.org/Person><meta itemprop=image content="/imgs/avatar.jpg"><meta itemprop=name content="Rise"></span><span hidden itemprop=publisher itemscope itemtype=http://schema.org/Organization><meta itemprop=name content="Rise"><meta itemprop=description content="福兮祸兮，焉知所依？冬去冰泮，春来萌荣。朝生暮死，亦可惊鸿。知足者富，自足者强。"></span><span hidden itemprop=post itemscope itemtype=http://schema.org/CreativeWork><meta itemprop=name content="AVP主动防御之隐藏进程"><meta itemprop=description content="卡巴主动防御中检测隐藏进程的方法：
+    Hook掉系统的SwapContext,这种方法是在2003年被提出的;这个函数被KiSwapThread调用,负责线程调度;下面这部分代码就是卡巴Detour SwapContext的汇编代码的分析(后面附上对应的c代码)："></span><header class=post-header><h2 class=post-title itemprop="name headline"><a href=/post/avp-active-defense-hidden-process/ itemprop=url class=post-title-link>AVP主动防御之隐藏进程</a></h2><div class=post-meta-container><div class=post-meta-items><span class=post-meta-item><span class=post-meta-item-icon><i class="fas fa-solid fa-calendar"></i>
+</span><span class=post-meta-item-text title=发表于>发表于：
+</span><time title="创建时间：2007年11月29日 09:06:00 CST" itemprop="dateCreated datePublished" datetime="2007-11-29 09:06:00 +0800 +0800">2007年11月29日
+</time></span><span class=post-meta-item><span class=post-meta-item-icon><i class="fas fa-solid fa-folder-open"></i>
+</span><span class=post-meta-item-text title=分类于>分类于：
+</span><span itemprop=about itemscope itemtype=http://schema.org/Thing><a href=/categories/safe/ itemprop=url rel=index><span itemprop=name>dev/Safe</span>
+</a></span></span><span class=post-meta-item title=浏览><span class=post-meta-item-icon><i class="fas fa-solid fa-eye"></i>
+</span><span class=post-meta-item-text>浏览：
+</span><span id=pageview-count data-path=/post/avp-active-defense-hidden-process/><i class="fa fa-sync fa-spin"></i></span></span></div></div></header><div class=post-body itemprop=articleBody><p>卡巴主动防御中检测隐藏进程的方法：<br></p><p>    Hook掉系统的SwapContext,这种方法是在2003年被提出的;这个函数被KiSwapThread调用,负责线程调度;下面这部分代码就是卡巴Detour SwapContext的汇编代码的分析(后面附上对应的c代码)：<br></p></div><footer class=post-footer><div class=post-button><a class=btn href=/post/avp-active-defense-hidden-process/#more rel=contents>阅读全文 &#187;</a></div><div class=post-eof></div></footer></article></div><div class=post-block><article itemscope itemtype=http://schema.org/Article class=post-content lang><link itemprop=mainEntityOfPage href=https://blogs.qipai360.cn/post/boiled-tcpmp/><span hidden itemprop=author itemscope itemtype=http://schema.org/Person><meta itemprop=image content="/imgs/avatar.jpg"><meta itemprop=name content="Rise"></span><span hidden itemprop=publisher itemscope itemtype=http://schema.org/Organization><meta itemprop=name content="Rise"><meta itemprop=description content="福兮祸兮，焉知所依？冬去冰泮，春来萌荣。朝生暮死，亦可惊鸿。知足者富，自足者强。"></span><span hidden itemprop=post itemscope itemtype=http://schema.org/CreativeWork><meta itemprop=name content="水煮TCPMP (转)"><meta itemprop=description content="去年年底帮别人做一个项目，了解了一下TCPMP，觉得这个软件的结构写得很好就做了些记录，今天偶然翻出来看看觉得可能对正在研究这个软件的人有点帮助就贴出来。如果转载请注明出处，谢谢。
+TCPMP是一个功能强大开放式的开源多媒体播放器，播放器主要由核心框架模块（common工程）和解码器分离器插件组成。TCPMP的插件非常多，、libmad我们联合几个最常用的插件（ffmpeg、splitter）来说明，其中interface插件实现TCPMP的界面，由于他和媒体播放没有什么关系，这部分可以完全被替换掉，替换成自己的界面。ffmpeg工程是系统主要的音视频解码模块，ffmpeg是一个集录制、转换、音/视频编码解码功能为一体的完整的开源解决方案。FFmpeg的开发是基于Linux操作系统，但是可以在大多数操作系统中编译和使用。ffmpeg支持MPEG、DivX、MPEG4、AC3、DV、FLV等40多种编码，AVI、MPEG、OGG、Matroska、ASF等90多种解码。很多开源播放器都用到了ffmpeg。但是ffmpeg程序解码效率不是很高，系统仅仅使用了FFmpeg的部分解码功能。ffmpeg主目录下主要有libavcodec、libavformat和libavutil等子目录。其中libavcodec用于存放各个encode/decode模块，libavformat用于存放muxer/demuxer模块，libavutil用于存放内存操作等常用模块。本系统的媒体文件分离器有单独的splitter模块完成所以不需要libavformat子目录。ffmpeg目录下libavcodec、libavutil保留子目录。"></span><header class=post-header><h2 class=post-title itemprop="name headline"><a href=/post/boiled-tcpmp/ itemprop=url class=post-title-link>水煮TCPMP (转)</a></h2><div class=post-meta-container><div class=post-meta-items><span class=post-meta-item><span class=post-meta-item-icon><i class="fas fa-solid fa-calendar"></i>
+</span><span class=post-meta-item-text title=发表于>发表于：
+</span><time title="创建时间：2007年11月26日 12:54:00 CST" itemprop="dateCreated datePublished" datetime="2007-11-26 12:54:00 +0800 +0800">2007年11月26日
+</time></span><span class=post-meta-item title=浏览><span class=post-meta-item-icon><i class="fas fa-solid fa-eye"></i>
+</span><span class=post-meta-item-text>浏览：
+</span><span id=pageview-count data-path=/post/boiled-tcpmp/><i class="fa fa-sync fa-spin"></i></span></span></div></div></header><div class=post-body itemprop=articleBody><p><span style=font-size:10pt><span style=font-family:宋体>去年年底帮别人做一个项目，了解了一下</span><span style="font-family:MS Shell Dlg">TCPMP</span><span style=font-family:宋体>，觉得这个软件的结构写得很好就做了些记录，今天偶然翻出来看看觉得可能对正在研究这个软件的人有点帮助就贴出来。如果转载请注明出处，谢谢。</span><span style="font-family:MS Shell Dlg"><p></span></span></p><p><span style=font-size:10pt><span style="font-family:MS Shell Dlg">TCPMP</span><span style=font-family:宋体>是一个功能强大开放式的开源多媒体播放器，</span><span style="font-family:MS Shell Dlg"><br></span><span style=font-family:宋体>播放器主要由核心框架模块（</span><span style="font-family:MS Shell Dlg">common</span><span style=font-family:宋体>工程）和解码器分离器插件组成。</span><span style="font-family:MS Shell Dlg"><br>TCPMP</span><span style=font-family:宋体>的插件非常多，、</span><span style="font-family:MS Shell Dlg">libmad</span><span style=font-family:宋体>我们联合几个最常用的插件（</span><span style="font-family:MS Shell Dlg">ffmpeg</span><span style=font-family:宋体>、</span><span style="font-family:MS Shell Dlg">splitter</span><span style=font-family:宋体>）来说明，其中</span><span style="font-family:MS Shell Dlg">interface</span><span style=font-family:宋体>插件实现</span><span style="font-family:MS Shell Dlg">TCPMP</span><span style=font-family:宋体>的界面，由于他和媒体播放没有什么关系，这部分可以完全被替换掉，替换成自己的界面。</span><span style="font-family:MS Shell Dlg"><br>ffmpeg</span><span style=font-family:宋体>工程是系统主要的音视频解码模块，</span><span style="font-family:MS Shell Dlg">ffmpeg</span><span style=font-family:宋体>是一个集录制、转换、音</span><span style="font-family:MS Shell Dlg">/</span><span style=font-family:宋体>视频编码解码功能为一体的完整的开源解决方案。</span><span style="font-family:MS Shell Dlg">FFmpeg</span><span style=font-family:宋体>的开发是基于</span><span style="font-family:MS Shell Dlg">Linux</span><span style=font-family:宋体>操作系统，但是可以在大多数操作系统中编译和使用。</span><span style="font-family:MS Shell Dlg">ffmpeg</span><span style=font-family:宋体>支持</span><span style="font-family:MS Shell Dlg">MPEG</span><span style=font-family:宋体>、</span><span style="font-family:MS Shell Dlg">DivX</span><span style=font-family:宋体>、</span><span style="font-family:MS Shell Dlg">MPEG4</span><span style=font-family:宋体>、</span><span style="font-family:MS Shell Dlg">AC3</span><span style=font-family:宋体>、</span><span style="font-family:MS Shell Dlg">DV</span><span style=font-family:宋体>、</span><span style="font-family:MS Shell Dlg">FLV</span><span style=font-family:宋体>等</span><span style="font-family:MS Shell Dlg">40</span><span style=font-family:宋体>多种编码，</span><span style="font-family:MS Shell Dlg">AVI</span><span style=font-family:宋体>、</span><span style="font-family:MS Shell Dlg">MPEG</span><span style=font-family:宋体>、</span><span style="font-family:MS Shell Dlg">OGG</span><span style=font-family:宋体>、</span><span style="font-family:MS Shell Dlg">Matroska</span><span style=font-family:宋体>、</span><span style="font-family:MS Shell Dlg">ASF</span><span style=font-family:宋体>等</span><span style="font-family:MS Shell Dlg">90</span><span style=font-family:宋体>多种解码。很多开源播放器都用到了</span><span style="font-family:MS Shell Dlg">ffmpeg</span><span style=font-family:宋体>。但是</span><span style="font-family:MS Shell Dlg">ffmpeg</span><span style=font-family:宋体>程序解码效率不是很高，系统仅仅使用了</span><span style="font-family:MS Shell Dlg">FFmpeg</span><span style=font-family:宋体>的部分解码功能。</span><span style="font-family:MS Shell Dlg"><br>ffmpeg</span><span style=font-family:宋体>主目录下主要有</span><span style="font-family:MS Shell Dlg">libavcodec</span><span style=font-family:宋体>、</span><span style="font-family:MS Shell Dlg">libavformat</span><span style=font-family:宋体>和</span><span style="font-family:MS Shell Dlg">libavutil</span><span style=font-family:宋体>等子目录。其中</span><span style="font-family:MS Shell Dlg">libavcodec</span><span style=font-family:宋体>用于存放各个</span><span style="font-family:MS Shell Dlg">encode/decode</span><span style=font-family:宋体>模块，</span><span style="font-family:MS Shell Dlg">libavformat</span><span style=font-family:宋体>用于存放</span><span style="font-family:MS Shell Dlg">muxer/demuxer</span><span style=font-family:宋体>模块，</span><span style="font-family:MS Shell Dlg">libavutil</span><span style=font-family:宋体>用于存放内存操作等常用模块。本系统的媒体文件分离器有单独的</span><span style="font-family:MS Shell Dlg">splitter</span><span style=font-family:宋体>模块完成所以不需要</span><span style="font-family:MS Shell Dlg">libavformat</span><span style=font-family:宋体>子目录。</span><span style="font-family:MS Shell Dlg">ffmpeg</span><span style=font-family:宋体>目录下</span><span style="font-family:MS Shell Dlg">libavcodec</span><span style=font-family:宋体>、</span><span style="font-family:MS Shell Dlg">libavutil</span><span style=font-family:宋体>保留子目录。</span><span style="font-family:MS Shell Dlg"></p></div><footer class=post-footer><div class=post-button><a class=btn href=/post/boiled-tcpmp/#more rel=contents>阅读全文 &#187;</a></div><div class=post-eof></div></footer></article></div><div class=post-block><article itemscope itemtype=http://schema.org/Article class=post-content lang><link itemprop=mainEntityOfPage href=https://blogs.qipai360.cn/post/chinese-hacker-black-industry/><span hidden itemprop=author itemscope itemtype=http://schema.org/Person><meta itemprop=image content="/imgs/avatar.jpg"><meta itemprop=name content="Rise"></span><span hidden itemprop=publisher itemscope itemtype=http://schema.org/Organization><meta itemprop=name content="Rise"><meta itemprop=description content="福兮祸兮，焉知所依？冬去冰泮，春来萌荣。朝生暮死，亦可惊鸿。知足者富，自足者强。"></span><span hidden itemprop=post itemscope itemtype=http://schema.org/CreativeWork><meta itemprop=name content="中国黑客自揭黑色产业链条：做病毒一定要低调"><meta itemprop=description content="“熊猫烧香”余波未了，“灰鸽子”又飞进了人们的视野。
+　　在这个领域，互联网“险情”不断。
+　　——网络世界，这个表面看起来风平浪静的生态，背后无时不在发生着弱肉强食的事件，就像森林里生物链一样默默发生着变化，而外边望去却一片平静。"></span><header class=post-header><h2 class=post-title itemprop="name headline"><a href=/post/chinese-hacker-black-industry/ itemprop=url class=post-title-link>中国黑客自揭黑色产业链条：做病毒一定要低调</a></h2><div class=post-meta-container><div class=post-meta-items><span class=post-meta-item><span class=post-meta-item-icon><i class="fas fa-solid fa-calendar"></i>
+</span><span class=post-meta-item-text title=发表于>发表于：
+</span><time title="创建时间：2007年11月15日 09:36:00 CST" itemprop="dateCreated datePublished" datetime="2007-11-15 09:36:00 +0800 +0800">2007年11月15日
+</time></span><span class=post-meta-item><span class=post-meta-item-icon><i class="fas fa-solid fa-folder-open"></i>
+</span><span class=post-meta-item-text title=分类于>分类于：
+</span><span itemprop=about itemscope itemtype=http://schema.org/Thing><a href=/categories/safe/ itemprop=url rel=index><span itemprop=name>dev/Safe</span>
+</a></span></span><span class=post-meta-item title=浏览><span class=post-meta-item-icon><i class="fas fa-solid fa-eye"></i>
+</span><span class=post-meta-item-text>浏览：
+</span><span id=pageview-count data-path=/post/chinese-hacker-black-industry/><i class="fa fa-sync fa-spin"></i></span></span></div></div></header><div class=post-body itemprop=articleBody><p>“熊猫烧香”余波未了，“灰鸽子”又飞进了人们的视野。</p><p>　　在这个领域，互联网“险情”不断。</p><p>　　——网络世界，这个表面看起来风平浪静的生态，背后无时不在发生着弱肉强食的事件，就像森林里生物链一样默默发生着变化，而外边望去却一片平静。</p></div><footer class=post-footer><div class=post-button><a class=btn href=/post/chinese-hacker-black-industry/#more rel=contents>阅读全文 &#187;</a></div><div class=post-eof></div></footer></article></div><nav class=pagination><a class="extend prev" rel=prev href=/post/page/38/><i class="fa fa-angle-left"></i>
+</a><a class=page-number href=/post/page/35/>35</a>
+<a class=page-number href=/post/page/36/>36</a>
+<a class=page-number href=/post/page/37/>37</a>
+<a class=page-number href=/post/page/38/>38</a>
+<span class="page-number current">39</span>
+<a class=page-number href=/post/page/40/>40</a>
+<a class=page-number href=/post/page/41/>41</a>
+<a class=page-number href=/post/page/42/>42</a>
+<a class=page-number href=/post/page/43/>43</a>
+<a class="extend next" rel=next href=/post/page/40/><i class="fa fa-angle-right"></i></a></nav></div></main><footer class=footer><div class=footer-inner><div class=copyright>&copy;
+<span itemprop=copyrightYear>2004 - 2026
+</span><span class=with-love><i class="fa fa-heart"></i>
+</span><span class=author itemprop=copyrightHolder>Rise</span></div><div class=powered-by>由 <a href=https://gohugo.io title=0.157.0 target=_blank>Hugo</a> & <a href=https://github.com/hugo-next/hugo-theme-next title=4.8.3 target=_blank>Hugo NexT.Gemini</a> 强力驱动</div><div class=beian><a href=https://beian.miit.gov.cn target=_blank>豫ICP备2021009490号</a>
+<img src=/imgs/gongan.png alt=豫公网安备>
+<a href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=41162302000074" target=_blank>豫公网安备 41162302000074 号</a></div></div></footer><script class=next-config data-name=page type=application/json>{"comments":true,"expired":false,"isHome":false,"isPage":false,"path":"post","permalink":"https://blogs.qipai360.cn/post/","title":"Posts","toc":false,"waline3":{"pagecnt":{"alias":"@waline/client","alias_name":"waline","file":"dist/pageview.js","name":"pageview","version":"3.5.7"}}}</script><script type=text/javascript src=https://blogs.qipai360.cn/js/3rd/animejs/3.2.2/anime.min.js crossorigin=anonymous defer></script><script type=text/javascript src=https://blogs.qipai360.cn/js/3rd/viewerjs/1.11.6/viewer.min.js crossorigin=anonymous defer></script><script class=next-config data-name=main type=application/json>{"bookmark":{"color":"#222","enable":true,"save":"manual"},"copybtn":true,"darkmode":true,"giscus":{"cfg":{"category":"Announcements","categoryid":"DIC_kwDOA6L0YM4CiXf9","emit":false,"inputposition":"top","mapping":"title","reactions":false,"repo":"rise-worlds/rise-worlds.github.io","repoid":"MDEwOlJlcG9zaXRvcnk2MTAxMTA0MA==","theme":"transparent_dark"},"js":"https://giscus.app/client.js"},"hostname":"https://blogs.qipai360.cn/","i18n":{"ds_day":" 天前","ds_days":" 天 ","ds_hour":" 小时前","ds_hours":" 小时 ","ds_just":"刚刚","ds_min":" 分钟前","ds_mins":" 分钟","ds_month":" 个月前","ds_years":" 年 ","empty":"没有找到任何搜索结果：${query}","hits":"找到 ${hits} 个搜索结果","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","placeholder":"搜索..."},"isMultiLang":false,"lang":"zh-CN","lazyload":false,"motion":{"async":true,"enable":true,"transition":{"collheader":"fadeInLeft","postblock":"fadeIn","postbody":"fadeInDown","postheader":"fadeInDown","sidebar":"fadeInUp"}},"postmeta":{"comments":{"enable":false,"plugin":"waline3"},"views":{"enable":true,"plugin":"waline3"}},"root":"/","scheme":"Gemini","share":{"addtoany":{"js":"https://static.addtoany.com/menu/page.js","locale":"zh-CN","num":8},"enable":false},"sidebar":{"display":"post","offset":12,"padding":18,"position":"left","width":256},"vendor":{"plugins":"local","router":{"name":"local","type":"modern","url":"https://blogs.qipai360.cn/js/3rd"}},"version":"4.8.3","waline3":{"cfg":{"emoji":false,"imguploader":false,"placeholder":"请文明发言哟 ヾ(≧▽≦*)o 可用快捷键选取表情符号：😀😄😁🥳👻👽👀🚄 (Window系统：Win+.，Mac系统：Control+Command+Space)","reaction":true,"reactiontext":["点赞","踩一下","得意","不屑","尴尬","睡觉"],"reactiontitle":"你认为这篇文章怎么样？","requiredmeta":["nick","mail"],"search":true,"serverurl":"https://walinejs.comment.lithub.cc","sofa":"快来发表你的意见吧 (≧∀≦)ゞ","wordlimit":200},"css":{"alias":"@waline/client","file":"dist/waline.css","name":"waline","version":"3.5.7"},"js":{"alias":"@waline/client","file":"dist/waline.js","name":"waline","version":"3.5.7"}}}</script><script type=text/javascript src="/js/main.min.js?=1772265585" defer></script></body></html>

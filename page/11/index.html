@@ -1,0 +1,520 @@
+<!doctype html><html lang=zh-CN data-theme=dark><head><meta charset=UTF-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=theme-color content="#222" media="(prefers-color-scheme: dark)"><meta name=generator content="Hugo 0.157.0"><link rel="shortcut icon" type=image/x-icon href=/imgs/icons/favicon.ico><link rel=icon type=image/x-icon href=/imgs/icons/favicon.ico><link rel=icon type=image/png sizes=16x16 href=/imgs/icons/favicon_32_32_next.png><link rel=icon type=image/png sizes=32x32 href=/imgs/icons/favicon_128_128_next.png><link rel=apple-touch-icon sizes=180x180 href=/imgs/icons/apple_touch_icon_next.png><meta itemprop=name content="Rise的自留地"><meta itemprop=description content="福兮祸兮，焉知所依？冬去冰泮，春来萌荣。朝生暮死，亦可惊鸿。知足者富，自足者强。"><meta name=description content="福兮祸兮，焉知所依？冬去冰泮，春来萌荣。朝生暮死，亦可惊鸿。知足者富，自足者强。"><meta itemprop=image content="https://blogs.qipai360.cn/imgs/avatar.jpg"><meta itemprop=keywords content="Rise,ZhangTuohui,技术,C++,Unity3D,Lua,NodeJS,C#,JavaScript,游戏开发,机器学习,深度学习,AI,编程,编程语言,编程技术,编程开发,游戏引擎,游戏设计,游戏制作,游戏开发者,游戏开发者博客,游戏开发者网站,游戏开发者工具,游戏开发者教程,游戏开发者学习,游戏开发者交流,游戏开发者分享,游戏开发者经验,游戏开发者心得,游戏开发者技巧,游戏开发者方法,游戏开发者思路,游戏开发者理念,游戏开发者文化,游戏开发者精神,游戏开发者信仰"><meta property="og:type" content="website"><meta property="og:title" content="Rise的自留地"><meta property="og:description" content="福兮祸兮，焉知所依？冬去冰泮，春来萌荣。朝生暮死，亦可惊鸿。知足者富，自足者强。"><meta property="og:image" content="/imgs/avatar.jpg"><meta property="og:image:width" content="312"><meta property="og:image:height" content="312"><meta property="og:image:type" content="image/jpeg/png/svg/jpg"><meta property="og:url" content="https://blogs.qipai360.cn/"><meta property="og:site_name" content="Rise的自留地"><meta property="og:locale" content="zh-CN"><link type=text/css rel=stylesheet href=https://blogs.qipai360.cn/js/3rd/font-awesome/6.7.2/css/all.min.css><link type=text/css rel=stylesheet href=https://blogs.qipai360.cn/js/3rd/animate.css/3.1.1/animate.min.css><link type=text/css rel=stylesheet href=https://blogs.qipai360.cn/js/3rd/viewerjs/1.11.6/viewer.min.css><link rel=stylesheet href="/css/main.min.css?=1772265585"><style type=text/css>.post-footer hr:after{content:"~ 我可是有底线的哟 ~"}.flinks-list-footer hr:after{content:"~ 我可是有底线的哟 ~"}</style><script type=text/javascript>(function(){localDB={set:function(e,t,n){if(n===0)return;const s=new Date,o=n*864e5,i={value:t,expiry:s.getTime()+o};localStorage.setItem(e,JSON.stringify(i))},get:function(e){const t=localStorage.getItem(e);if(!t)return 0[0];const n=JSON.parse(t),s=new Date;return s.getTime()>n.expiry?(localStorage.removeItem(e),0[0]):n.value}},theme={active:function(){const e=localDB.get("theme");if(e==null)return;theme.toggle(e),window.matchMedia("(prefers-color-scheme: dark)").addListener(function(e){theme.toggle(e.matches?"dark":"light")})},toggle:function(e){document.documentElement.setAttribute("data-theme",e),localDB.set("theme",e,2);const t=document.querySelector("iframe.giscus-frame");if(t){const n={setConfig:{theme:e}};t.contentWindow.postMessage({giscus:n},"https://giscus.app")}}},theme.active()})(window)</script><script type=text/javascript>document.addEventListener("DOMContentLoaded",()=>{var e=document.createElement("script");e.charset="UTF-8",e.src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js",e.async=!1,e.defer=!0,document.head.appendChild(e),e.onload=function(){NexT.utils.fmtBusuanzi()}})</script><script defer src=https://static.cloudflareinsights.com/beacon.min.js data-cf-beacon='{"token": "2b23669184fc49269e400525ac2447d9"}'></script><title>Rise的自留地</title><noscript><link rel=stylesheet href=/css/noscript.css></noscript></head><body itemscope itemtype=http://schema.org/WebPage class=use-motion><div class=headband></div><main class=main><header class=header itemscope itemtype=http://schema.org/WPHeader><div class=header-inner><div class=site-brand-container><div class=site-nav-toggle><div class=toggle aria-label role=button><span class=toggle-line></span>
+<span class=toggle-line></span>
+<span class=toggle-line></span></div></div><div class=site-meta><a href=/ class=brand rel=start><i class=logo-line></i><h1 class=site-title>Rise的自留地</h1><i class=logo-line></i></a><p class=site-subtitle itemprop=description>记录生活中的点滴，分享编程技术和游戏开发经验。</p></div><div class=site-nav-right><div class="toggle popup-trigger"></div></div></div><nav class=site-nav><ul class="main-menu menu"><li class="menu-item menu-item-home"><a href=/ class="hvr-icon-pulse menu-item-active" rel=section><i class="fa fa-home hvr-icon"></i>首页</a></li><li class="menu-item menu-item-about"><a href=/about.html class=hvr-icon-pulse rel=section><i class="fa fa-user hvr-icon"></i>关于</a></li><li class="menu-item menu-item-archives"><a href=/archives/ class=hvr-icon-pulse rel=section><i class="fa fa-archive hvr-icon"></i>归档
+<span class=badge>679</span></a></li><li class="menu-item menu-item-tags"><a href=/tags/ class=hvr-icon-pulse rel=section><i class="fa fa-tags hvr-icon"></i>标签</a></li><li class="menu-item menu-item-message"><a href=/message/ class=hvr-icon-pulse rel=section><i class="fa fa-comments hvr-icon"></i>留言板</a></li><li class="menu-item menu-item-commonweal"><a href=/404.html class=hvr-icon-pulse rel=section><i class="fa fa-heartbeat hvr-icon"></i>公益 404</a></li></ul></nav></div><div class="toggle sidebar-toggle" role=button><span class=toggle-line></span>
+<span class=toggle-line></span>
+<span class=toggle-line></span></div><aside class=sidebar><div class="sidebar-inner sidebar-overview-active"><ul class=sidebar-nav><li class=sidebar-nav-toc>文章目录</li><li class=sidebar-nav-overview>站点概览</li></ul><div class=sidebar-panel-container><div class="post-toc-wrap sidebar-panel"><div class="post-toc animated"><nav id=TableOfContents></nav></div></div><div class="site-overview-wrap sidebar-panel"><div class="site-author site-overview-item animated" itemprop=author itemscope itemtype=http://schema.org/Person><img class=site-author-image itemprop=image alt=Rise src=/imgs/img-lazy-loading.gif data-src=/imgs/avatar.jpg><p class=site-author-name itemprop=name>Rise</p><div class=site-description itemprop=description>福兮祸兮，焉知所依？冬去冰泮，春来萌荣。朝生暮死，亦可惊鸿。知足者富，自足者强。</div></div><div class="site-state-wrap site-overview-item animated"><nav class=site-state><div class="site-state-item site-state-posts"><a href=/archives/><span class=site-state-item-count>679</span>
+<span class=site-state-item-name>日志</span></a></div><div class="site-state-item site-state-categories"><a href=/categories/><span class=site-state-item-count>35</span>
+<span class=site-state-item-name>分类</span></a></div><div class="site-state-item site-state-tags"><a href=/tags/><span class=site-state-item-count>118</span>
+<span class=site-state-item-name>标签</span></a></div></nav></div><div class="links-of-social site-overview-item animated"><span class=links-of-social-item><a href=https://github.com/rise-worlds title="Github → https://github.com/rise-worlds" rel=noopener class=hvr-icon-pulse target=_blank><i class="fab fa-github fa-fw hvr-icon"></i>
+Github
+</a></span><span class=links-of-social-item><a href=mailto:rise.worlds@outlook.com title="E-Mail → mailto:rise.worlds@outlook.com" rel=noopener class=hvr-icon-pulse target=_blank><i class="fa fa-envelope fa-fw hvr-icon"></i>
+E-Mail
+</a></span><span class=links-of-social-item><a href=https://www.zhihu.com/people/rise-worlds title="知乎 → https://www.zhihu.com/people/rise-worlds" rel=noopener class=hvr-icon-pulse target=_blank><i class="fa fa-book fa-fw hvr-icon"></i>
+知乎
+</a></span><span class=links-of-social-item><a href=https://twitter.com/riseworlds title="Twitter → https://twitter.com/riseworlds" rel=noopener class=hvr-icon-pulse target=_blank><i class="fab fa-twitter fa-fw hvr-icon"></i>
+Twitter
+</a></span><span class=links-of-social-item><a href=https://www.facebook.com/rise.worlds title="facebook → https://www.facebook.com/rise.worlds" rel=noopener class=hvr-icon-pulse target=_blank><i class="fab fa-facebook fa-fw hvr-icon"></i>
+facebook
+</a></span><span class=links-of-social-item><a href=https://youtube.com/@YiXuan title="YouTube → https://youtube.com/@YiXuan" rel=noopener class=hvr-icon-pulse target=_blank><i class="fab fa-youtube fa-fw hvr-icon"></i>
+YouTube
+</a></span><span class=links-of-social-item><a href=https://instagram.com/rise.worlds title="Instagram → https://instagram.com/rise.worlds" rel=noopener class=hvr-icon-pulse target=_blank><i class="fab fa-instagram fa-fw hvr-icon"></i>
+Instagram
+</a></span><span class=links-of-social-item><a href=https://t.me/riseworlds title="Telegram → https://t.me/riseworlds" rel=noopener class=hvr-icon-pulse target=_blank><i class="fab fa-telegram fa-fw hvr-icon"></i>
+Telegram</a></span></div><div class="links-of-blogroll site-overview-item animated"><div class=links-of-blogroll-title><i class="fa fa-globe fa-fw"></i>
+友情链接</div><ul class=links-of-blogroll-list><li class=links-of-blogroll-item><a href=https://www.qipai360.cn title=https://www.qipai360.cn target=_blank>Qipai360</a></li><li class=links-of-blogroll-item><a href=https://www.cnblogs.com/flying_bat title=https://www.cnblogs.com/flying_bat target=_blank>博客园</a></li><li class=links-of-blogroll-item><a href=https://zishu.me title=https://zishu.me target=_blank>子舒的博客</a></li><li class=links-of-blogroll-item><a href=https://gitee.com/hugo-next/hugo-theme-next title=https://gitee.com/hugo-next/hugo-theme-next target=_blank>Hugo-NexT</a></li></ul></div></div></div></div><div id=siteinfo-card-widget class=sidebar-card-widget><div class=item-headline><i class="fas fa-chart-line"></i>
+<span>网站资讯</span></div><div class=siteinfo><div class=siteinfo-item><div class=item-name><i class="fa-solid fa-calendar-check"></i>已运行：</div><div class=item-count id=runTimes data-publishdate="2004-10-06 15:24:00 +0800 +0800"></div></div><div class=siteinfo-item><div class=item-name><i class="fas fa fa-user"></i>总访客数：</div><div class=item-count id=busuanzi_value_site_uv><i class="fa fa-sync fa-spin"></i></div></div><div class=siteinfo-item><div class=item-name><i class="fas fa fa-eye"></i>页面浏览：</div><div class=item-count id=busuanzi_value_site_pv><i class="fa fa-sync fa-spin"></i></div></div><div class=siteinfo-item><div class=item-name><i class="fa fa-font"></i>总字数：</div><div class=item-count id=wordsCount data-count=2423147></div></div><div class=siteinfo-item><div class=item-name><i class="fa fa-mug-hot"></i>阅读约：</div><div class=item-count id=readTimes data-times=5207></div></div><div class=siteinfo-item><div class=item-name><i class="fa fa-clock-rotate-left"></i>最后更新于：</div><div class=item-count id=last-push-date data-lastpushdate="2026-02-28 15:59:00 +0800 +0800"></div></div></div></div></aside><div class=sidebar-dimmer></div></header><div class=tool-buttons><div id=goto-comments class="button goto-comments" title=直达评论><i class="fas fa-comments"></i></div><div id=toggle-theme class=button title=深浅模式切换><i class="fas fa-adjust"></i></div><div class=back-to-top role=button title=返回顶部><i class="fa fa-arrow-up"></i>
+<span>0%</span></div></div><div class=reading-progress-bar></div><a role=button class="book-mark-link book-mark-link-fixed"></a><a href=https://github.com/rise-worlds rel="noopener external nofollow noreferrer" target=_blank title="Follow me on GitHub" class="exturl github-corner"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0 0 115 115h15l12 27L250 250V0z"/><path d="M128.3 109C113.8 99.7 119 89.6 119 89.6 122 82.7 120.5 78.6 120.5 78.6 119.2 72 123.4 76.3 123.4 76.3 127.3 80.9 125.5 87.3 125.5 87.3 122.9 97.6 130.6 101.9 134.4 103.2" fill="currentColor" style="transform-origin:130px 106px" class="octo-arm"/><path d="M115 115C114.9 115.1 118.7 116.5 119.8 115.4l13.9-13.8C136.9 99.2 139.9 98.4 142.2 98.6 133.8 88 127.5 74.4 143.8 58 148.5 53.4 154 51.2 159.7 51 160.3 49.4 163.2 43.6 171.4 40.1 171.4 40.1 176.1 42.5 178.8 56.2 183.1 58.6 187.2 61.8 190.9 65.4 194.5 69 197.7 73.2 200.1 77.6 213.8 80.2 216.3 84.9 216.3 84.9 212.7 93.1 206.9 96 205.4 96.6 205.1 102.4 203 107.8 198.3 112.5 181.9 128.9 168.3 122.5 157.7 114.1 157.9 116.9 156.7 120.9 152.7 124.9L141 136.5C139.8 137.7 141.6 141.9 141.8 141.8z" fill="currentColor" class="octo-body"/></svg></a><noscript><div class=noscript-warning>Theme NexT works best with JavaScript enabled</div></noscript><div class="main-inner index posts-expand"><div class=post-block><article itemscope itemtype=http://schema.org/Article class=post-content lang><link itemprop=mainEntityOfPage href=https://blogs.qipai360.cn/post/first-use-git-filter-branch-to-remove-files/><span hidden itemprop=author itemscope itemtype=http://schema.org/Person><meta itemprop=image content="/imgs/avatar.jpg"><meta itemprop=name content="Rise"></span><span hidden itemprop=publisher itemscope itemtype=http://schema.org/Organization><meta itemprop=name content="Rise"><meta itemprop=description content="福兮祸兮，焉知所依？冬去冰泮，春来萌荣。朝生暮死，亦可惊鸿。知足者富，自足者强。"></span><span hidden itemprop=post itemscope itemtype=http://schema.org/CreativeWork><meta itemprop=name content="初次使用 git 的“核弹级选项”：filter-branch 从仓库中删除文件"><meta itemprop=description content="当初看 Pro Git 时就被作者这个“
+
+    核弹级选项
+    
+”的称呼吓到了，因此一直没敢好奇地去尝试。核弹啊，用对了威力无穷，用错了破坏力无穷！
+但是，今天，我不得不用了，因为我想把我的原来写一些代码放到 github 上去公开。由于之前没想过要公开，到上传时才发现不能上传大于50M的文件。"></span><header class=post-header><h2 class=post-title itemprop="name headline"><a href=/post/first-use-git-filter-branch-to-remove-files/ itemprop=url class=post-title-link>初次使用 git 的“核弹级选项”：filter-branch 从仓库中删除文件</a></h2><div class=post-meta-container><div class=post-meta-items><span class=post-meta-item><span class=post-meta-item-icon><i class="fas fa-solid fa-calendar"></i>
+</span><span class=post-meta-item-text title=发表于>发表于：
+</span><time title="创建时间：2014年12月18日 19:02:00 CST" itemprop="dateCreated datePublished" datetime="2014-12-18 19:02:00 +0800 +0800">2014年12月18日
+</time></span><span class=post-meta-item><span class=post-meta-item-icon><i class="fas fa-solid fa-calendar-check"></i>
+</span><span class=post-meta-item-text title=更新于>更新于：
+</span><time title="修改时间：2025年12月31日 17:30:00 CST" itemprop="dateModified dateLastmod" datetime="2025-12-31 17:30:00 +0800 +0800">2025年12月31日
+</time></span><span class=post-meta-item><span class=post-meta-item-icon><i class="fas fa-solid fa-folder-open"></i>
+</span><span class=post-meta-item-text title=分类于>分类于：
+</span><span itemprop=about itemscope itemtype=http://schema.org/Thing><a href=/categories/git/ itemprop=url rel=index><span itemprop=name>dev/Git</span>
+</a></span></span><span class=post-meta-item title=浏览><span class=post-meta-item-icon><i class="fas fa-solid fa-eye"></i>
+</span><span class=post-meta-item-text>浏览：
+</span><span id=pageview-count data-path=/post/first-use-git-filter-branch-to-remove-files/><i class="fa fa-sync fa-spin"></i></span></span></div></div></header><div class=post-body itemprop=articleBody><p>当初看 Pro Git 时就被作者这个“
+<a href=http://git-scm.com/book/zh/Git-%E5%B7%A5%E5%85%B7-%E9%87%8D%E5%86%99%E5%8E%86%E5%8F%B2#%E6%A0%B8%E5%BC%B9%E7%BA%A7%E9%80%89%E9%A1%B9:-filter-branch title=核弹级选项 rel="noopener external nofollow noreferrer" target=_blank class=exturl>核弹级选项
+</a>”的称呼吓到了，因此一直没敢好奇地去尝试。核弹啊，用对了威力无穷，用错了破坏力无穷！</p><p>但是，今天，我不得不用了，因为我想把我的原来写一些代码放到 github 上去公开。由于之前没想过要公开，到上传时才发现不能上传大于50M的文件。</p></div><footer class=post-footer><div class=post-button><a class=btn href=/post/first-use-git-filter-branch-to-remove-files/#more rel=contents>阅读全文 &#187;</a></div><div class=post-eof></div></footer></article></div><div class=post-block><article itemscope itemtype=http://schema.org/Article class=post-content lang><link itemprop=mainEntityOfPage href=https://blogs.qipai360.cn/post/genome2d-compilation-method/><span hidden itemprop=author itemscope itemtype=http://schema.org/Person><meta itemprop=image content="/imgs/avatar.jpg"><meta itemprop=name content="Rise"></span><span hidden itemprop=publisher itemscope itemtype=http://schema.org/Organization><meta itemprop=name content="Rise"><meta itemprop=description content="福兮祸兮，焉知所依？冬去冰泮，春来萌荣。朝生暮死，亦可惊鸿。知足者富，自足者强。"></span><span hidden itemprop=post itemscope itemtype=http://schema.org/CreativeWork><meta itemprop=name content="Genome2D编译方法"><meta itemprop=description content="Genome2D是一个高效的2D引擎，现在支持Flash(stage3d)和HTML5，因为只有作者一个人在维护，就没开源代码。
+最近和作者沟通了下，已经开源啦。"></span><header class=post-header><h2 class=post-title itemprop="name headline"><a href=/post/genome2d-compilation-method/ itemprop=url class=post-title-link>Genome2D编译方法</a></h2><div class=post-meta-container><div class=post-meta-items><span class=post-meta-item><span class=post-meta-item-icon><i class="fas fa-solid fa-calendar"></i>
+</span><span class=post-meta-item-text title=发表于>发表于：
+</span><time title="创建时间：2014年09月21日 21:56:00 CST" itemprop="dateCreated datePublished" datetime="2014-09-21 21:56:00 +0800 +0800">2014年09月21日
+</time></span><span class=post-meta-item><span class=post-meta-item-icon><i class="fas fa-solid fa-calendar-check"></i>
+</span><span class=post-meta-item-text title=更新于>更新于：
+</span><time title="修改时间：2014年09月21日 22:00:00 CST" itemprop="dateModified dateLastmod" datetime="2014-09-21 22:00:00 +0800 +0800">2014年09月21日
+</time></span><span class=post-meta-item><span class=post-meta-item-icon><i class="fas fa-solid fa-folder-open"></i>
+</span><span class=post-meta-item-text title=分类于>分类于：
+</span><span itemprop=about itemscope itemtype=http://schema.org/Thing><a href=/categories/flash/ itemprop=url rel=index><span itemprop=name>dev/Flash</span>
+</a></span></span><span class=post-meta-item title=浏览><span class=post-meta-item-icon><i class="fas fa-solid fa-eye"></i>
+</span><span class=post-meta-item-text>浏览：
+</span><span id=pageview-count data-path=/post/genome2d-compilation-method/><i class="fa fa-sync fa-spin"></i></span></span></div></div></header><div class=post-body itemprop=articleBody><p>Genome2D是一个高效的2D引擎，现在支持Flash(stage3d)和HTML5，因为只有作者一个人在维护，就没开源代码。</p><p>最近和作者沟通了下，已经开源啦。</p></div><footer class=post-footer><div class=post-button><a class=btn href=/post/genome2d-compilation-method/#more rel=contents>阅读全文 &#187;</a></div><div class=post-eof></div></footer></article></div><div class=post-block><article itemscope itemtype=http://schema.org/Article class=post-content lang><link itemprop=mainEntityOfPage href=https://blogs.qipai360.cn/post/batch-converting-dos-files-to-unix-with-ultraedit/><span hidden itemprop=author itemscope itemtype=http://schema.org/Person><meta itemprop=image content="/imgs/avatar.jpg"><meta itemprop=name content="Rise"></span><span hidden itemprop=publisher itemscope itemtype=http://schema.org/Organization><meta itemprop=name content="Rise"><meta itemprop=description content="福兮祸兮，焉知所依？冬去冰泮，春来萌荣。朝生暮死，亦可惊鸿。知足者富，自足者强。"></span><span hidden itemprop=post itemscope itemtype=http://schema.org/CreativeWork><meta itemprop=name content="使用UltraEdit实现从DOS文件到UNIX文件的批量转换"><meta itemprop=description content="最近把公司从SVN切到GIT下，因为大多同事在Windows下开发，又碰到换行符问题，找到一个批量转换方法
+打开UE->在文件中替换，把^p替换成^n，然后设置好要替换的文件和路径，就开始替换吧。"></span><header class=post-header><h2 class=post-title itemprop="name headline"><a href=/post/batch-converting-dos-files-to-unix-with-ultraedit/ itemprop=url class=post-title-link>使用UltraEdit实现从DOS文件到UNIX文件的批量转换</a></h2><div class=post-meta-container><div class=post-meta-items><span class=post-meta-item><span class=post-meta-item-icon><i class="fas fa-solid fa-calendar"></i>
+</span><span class=post-meta-item-text title=发表于>发表于：
+</span><time title="创建时间：2014年08月20日 21:18:00 CST" itemprop="dateCreated datePublished" datetime="2014-08-20 21:18:00 +0800 +0800">2014年08月20日
+</time></span><span class=post-meta-item><span class=post-meta-item-icon><i class="fas fa-solid fa-folder-open"></i>
+</span><span class=post-meta-item-text title=分类于>分类于：
+</span><span itemprop=about itemscope itemtype=http://schema.org/Thing><a href=/categories/toolstips/ itemprop=url rel=index><span itemprop=name>ToolsTips</span>
+</a></span></span><span class=post-meta-item title=浏览><span class=post-meta-item-icon><i class="fas fa-solid fa-eye"></i>
+</span><span class=post-meta-item-text>浏览：
+</span><span id=pageview-count data-path=/post/batch-converting-dos-files-to-unix-with-ultraedit/><i class="fa fa-sync fa-spin"></i></span></span></div></div></header><div class=post-body itemprop=articleBody><p>最近把公司从SVN切到GIT下，因为大多同事在Windows下开发，又碰到换行符问题，找到一个批量转换方法</p><p>打开UE->在文件中替换，把^p替换成^n，然后设置好要替换的文件和路径，就开始替换吧。</p></div><footer class=post-footer><div class=post-button><a class=btn href=/post/batch-converting-dos-files-to-unix-with-ultraedit/#more rel=contents>阅读全文 &#187;</a></div><div class=post-eof></div></footer></article></div><div class=post-block><article itemscope itemtype=http://schema.org/Article class=post-content lang><link itemprop=mainEntityOfPage href=https://blogs.qipai360.cn/post/flashdevelop-generate-swc-library/><span hidden itemprop=author itemscope itemtype=http://schema.org/Person><meta itemprop=image content="/imgs/avatar.jpg"><meta itemprop=name content="Rise"></span><span hidden itemprop=publisher itemscope itemtype=http://schema.org/Organization><meta itemprop=name content="Rise"><meta itemprop=description content="福兮祸兮，焉知所依？冬去冰泮，春来萌荣。朝生暮死，亦可惊鸿。知足者富，自足者强。"></span><span hidden itemprop=post itemscope itemtype=http://schema.org/CreativeWork><meta itemprop=name content="flashdevelop生成swc库"><meta itemprop=description content="flashdevelop没有直接支持生成swc的工程，但flashdevelop生成swc也比较方便，不用任何插件。
+swc库是由 flexsdk的compc.exe生成的，其实我们通过这个命令行也可以直接生成swc。但还是直接在flashdevelop里F8一下，编译+生成来得方便。"></span><header class=post-header><h2 class=post-title itemprop="name headline"><a href=/post/flashdevelop-generate-swc-library/ itemprop=url class=post-title-link>flashdevelop生成swc库</a></h2><div class=post-meta-container><div class=post-meta-items><span class=post-meta-item><span class=post-meta-item-icon><i class="fas fa-solid fa-calendar"></i>
+</span><span class=post-meta-item-text title=发表于>发表于：
+</span><time title="创建时间：2014年07月08日 18:35:00 CST" itemprop="dateCreated datePublished" datetime="2014-07-08 18:35:00 +0800 +0800">2014年07月08日
+</time></span><span class=post-meta-item><span class=post-meta-item-icon><i class="fas fa-solid fa-folder-open"></i>
+</span><span class=post-meta-item-text title=分类于>分类于：
+</span><span itemprop=about itemscope itemtype=http://schema.org/Thing><a href=/categories/flash/ itemprop=url rel=index><span itemprop=name>dev/Flash</span>
+</a></span></span><span class=post-meta-item title=浏览><span class=post-meta-item-icon><i class="fas fa-solid fa-eye"></i>
+</span><span class=post-meta-item-text>浏览：
+</span><span id=pageview-count data-path=/post/flashdevelop-generate-swc-library/><i class="fa fa-sync fa-spin"></i></span></span></div></div></header><div class=post-body itemprop=articleBody><p>flashdevelop没有直接支持生成swc的工程，但flashdevelop生成swc也比较方便，不用任何插件。</p><p>swc库是由 flexsdk的compc.exe生成的，其实我们通过这个命令行也可以直接生成swc。但还是直接在flashdevelop里F8一下，编译+生成来得方便。</p></div><footer class=post-footer><div class=post-button><a class=btn href=/post/flashdevelop-generate-swc-library/#more rel=contents>阅读全文 &#187;</a></div><div class=post-eof></div></footer></article></div><div class=post-block><article itemscope itemtype=http://schema.org/Article class=post-content lang><link itemprop=mainEntityOfPage href=https://blogs.qipai360.cn/post/compiling-boost-1.55.0-32-64-bit-with-vs2013/><span hidden itemprop=author itemscope itemtype=http://schema.org/Person><meta itemprop=image content="/imgs/avatar.jpg"><meta itemprop=name content="Rise"></span><span hidden itemprop=publisher itemscope itemtype=http://schema.org/Organization><meta itemprop=name content="Rise"><meta itemprop=description content="福兮祸兮，焉知所依？冬去冰泮，春来萌荣。朝生暮死，亦可惊鸿。知足者富，自足者强。"></span><span hidden itemprop=post itemscope itemtype=http://schema.org/CreativeWork><meta itemprop=name content="vs2013编译boost1.55.0 32/64位"><meta itemprop=description content="在使用vs2013编译boost-1.55.0之前，先要给boost做下修改：
+boost_1_55_0\boost\intrusive\detail\has_member_function_callable_with.hpp line:222
+
+template<class U>
+
+static BOOST_PP_CAT(zeroarg_checker_, BOOST_INTRUSIVE_HAS_MEMBER_FUNCTION_CALLABLE_WITH_FUNCNAME)
+
+       <U> Test(BOOST_PP_CAT(zeroarg_checker_, BOOST_INTRUSIVE_HAS_MEMBER_FUNCTION_CALLABLE_WITH_FUNCNAME)<U>*);
+
+替换成以下内容：
+
+#ifdef BOOST_MSVC
+
+     template<class U>
+
+     static decltype(boost::move_detail::declval<Fun>().BOOST_INTRUSIVE_HAS_MEMBER_FUNCTION_CALLABLE_WITH_FUNCNAME()
+
+           , boost_intrusive_has_member_function_callable_with::yes_type())
+
+           Test(Fun*);
+
+#else
+
+     template<class U>
+
+     static BOOST_PP_CAT(zeroarg_checker_, BOOST_INTRUSIVE_HAS_MEMBER_FUNCTION_CALLABLE_WITH_FUNCNAME)
+
+           <U> Test(BOOST_PP_CAT(zeroarg_checker_, BOOST_INTRUSIVE_HAS_MEMBER_FUNCTION_CALLABLE_WITH_FUNCNAME)<U>*);
+
+#endif
+
+&nbsp;"></span><header class=post-header><h2 class=post-title itemprop="name headline"><a href=/post/compiling-boost-1.55.0-32-64-bit-with-vs2013/ itemprop=url class=post-title-link>vs2013编译boost1.55.0 32/64位</a></h2><div class=post-meta-container><div class=post-meta-items><span class=post-meta-item><span class=post-meta-item-icon><i class="fas fa-solid fa-calendar"></i>
+</span><span class=post-meta-item-text title=发表于>发表于：
+</span><time title="创建时间：2014年04月08日 23:09:00 CST" itemprop="dateCreated datePublished" datetime="2014-04-08 23:09:00 +0800 +0800">2014年04月08日
+</time></span><span class=post-meta-item><span class=post-meta-item-icon><i class="fas fa-solid fa-calendar-check"></i>
+</span><span class=post-meta-item-text title=更新于>更新于：
+</span><time title="修改时间：2014年04月08日 23:10:00 CST" itemprop="dateModified dateLastmod" datetime="2014-04-08 23:10:00 +0800 +0800">2014年04月08日
+</time></span><span class=post-meta-item><span class=post-meta-item-icon><i class="fas fa-solid fa-folder-open"></i>
+</span><span class=post-meta-item-text title=分类于>分类于：
+</span><span itemprop=about itemscope itemtype=http://schema.org/Thing><a href=/categories/win32dev/ itemprop=url rel=index><span itemprop=name>dev/Win32Dev</span>
+</a></span></span><span class=post-meta-item title=浏览><span class=post-meta-item-icon><i class="fas fa-solid fa-eye"></i>
+</span><span class=post-meta-item-text>浏览：
+</span><span id=pageview-count data-path=/post/compiling-boost-1.55.0-32-64-bit-with-vs2013/><i class="fa fa-sync fa-spin"></i></span></span></div></div></header><div class=post-body itemprop=articleBody><p><span>在使用vs2013编译boost-1.55.0之前，先要给boost做下修改：</span></p><p><span>boost_1_55_0\boost\intrusive\detail\has_member_function_callable_with.hpp line:222</span></p><div class=cnblogs_code><pre>template&lt;<span style=color:#00f>class</span> U&gt;
+
+<span style=color:#00f>static</span><span style=color:#000> BOOST_PP_CAT(zeroarg_checker_, BOOST_INTRUSIVE_HAS_MEMBER_FUNCTION_CALLABLE_WITH_FUNCNAME)
+
+       </span>&lt;U&gt; Test(BOOST_PP_CAT(zeroarg_checker_, BOOST_INTRUSIVE_HAS_MEMBER_FUNCTION_CALLABLE_WITH_FUNCNAME)&lt;U&gt;*<span style=color:#000>);<br></span></pre></div><p>替换成以下内容：</p><div class=cnblogs_code><pre><span style=color:#000>#ifdef BOOST_MSVC
+
+     template</span>&lt;<span style=color:#00f>class</span> U&gt;
+
+     <span style=color:#00f>static</span> decltype(boost::move_detail::declval&lt;Fun&gt;<span style=color:#000>().BOOST_INTRUSIVE_HAS_MEMBER_FUNCTION_CALLABLE_WITH_FUNCNAME()
+
+           , boost_intrusive_has_member_function_callable_with::yes_type())
+
+           Test(Fun</span>*<span style=color:#000>);
+
+</span><span style=color:#00f>#else</span><span style=color:#000>
+
+     template</span>&lt;<span style=color:#00f>class</span> U&gt;
+
+     <span style=color:#00f>static</span><span style=color:#000> BOOST_PP_CAT(zeroarg_checker_, BOOST_INTRUSIVE_HAS_MEMBER_FUNCTION_CALLABLE_WITH_FUNCNAME)
+
+           </span>&lt;U&gt; Test(BOOST_PP_CAT(zeroarg_checker_, BOOST_INTRUSIVE_HAS_MEMBER_FUNCTION_CALLABLE_WITH_FUNCNAME)&lt;U&gt;*<span style=color:#000>);
+
+</span><span style=color:#00f>#endif</span></pre></div><p>&nbsp;</p></div><footer class=post-footer><div class=post-button><a class=btn href=/post/compiling-boost-1.55.0-32-64-bit-with-vs2013/#more rel=contents>阅读全文 &#187;</a></div><div class=post-eof></div></footer></article></div><div class=post-block><article itemscope itemtype=http://schema.org/Article class=post-content lang><link itemprop=mainEntityOfPage href=https://blogs.qipai360.cn/post/richtextfield-emoji-display-issue/><span hidden itemprop=author itemscope itemtype=http://schema.org/Person><meta itemprop=image content="/imgs/avatar.jpg"><meta itemprop=name content="Rise"></span><span hidden itemprop=publisher itemscope itemtype=http://schema.org/Organization><meta itemprop=name content="Rise"><meta itemprop=description content="福兮祸兮，焉知所依？冬去冰泮，春来萌荣。朝生暮死，亦可惊鸿。知足者富，自足者强。"></span><span hidden itemprop=post itemscope itemtype=http://schema.org/CreativeWork><meta itemprop=name content="关于RichTextField2.0表情显示错乱的问题！"><meta itemprop=description content="flex4.5和4.6在textField.getCharBoundaries()这个方法的返回结果上是不一样的。getCharBoundaries()方法只会返回被渲染出来的文字的边框信息，也就是说，如果文本框大小比真正的文本大小要小，那么你想要打印出没有显示的文字的边框信息是不可能的！在4.5中，打印出的边框信息是相对于textfield的textHeight属性，而4.6打印出的边框信息是相对于textfield的height属性。这就造成了richtextfield表情显示上的混乱！解决方法：private function renderSprite(sprite:DisplayObject, index:int):void&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;var rect:Rectangle = textRenderer.getCharBoundaries(index);&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (rect != null)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sprite.x = (rect.x + (rect.width - sprite.width) * 0.5 + 0.5) >> 0;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;var y:Number = (rect.height - sprite.height) * 0.5;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;var lineMetrics:TextLineMetrics = textRenderer.getLineMetrics(textRenderer.getLineIndexOfChar(index));&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//make sure the sprite's y is not smaller than the ascent of line metrics&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (y + sprite.height < lineMetrics.ascent) y = lineMetrics.ascent - sprite.height;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sprite.y = (rect.y + y + 0.5) >> 0;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//flex sdk 4.6添加,否则有显示bug&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sprite.y += -_spriteContainer.y;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;_spriteContainer.addChild(sprite);&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}"></span><header class=post-header><h2 class=post-title itemprop="name headline"><a href=/post/richtextfield-emoji-display-issue/ itemprop=url class=post-title-link>关于RichTextField2.0表情显示错乱的问题！</a></h2><div class=post-meta-container><div class=post-meta-items><span class=post-meta-item><span class=post-meta-item-icon><i class="fas fa-solid fa-calendar"></i>
+</span><span class=post-meta-item-text title=发表于>发表于：
+</span><time title="创建时间：2014年01月09日 19:47:00 CST" itemprop="dateCreated datePublished" datetime="2014-01-09 19:47:00 +0800 +0800">2014年01月09日
+</time></span><span class=post-meta-item><span class=post-meta-item-icon><i class="fas fa-solid fa-folder-open"></i>
+</span><span class=post-meta-item-text title=分类于>分类于：
+</span><span itemprop=about itemscope itemtype=http://schema.org/Thing><a href=/categories/flash/ itemprop=url rel=index><span itemprop=name>dev/Flash</span>
+</a></span></span><span class=post-meta-item title=浏览><span class=post-meta-item-icon><i class="fas fa-solid fa-eye"></i>
+</span><span class=post-meta-item-text>浏览：
+</span><span id=pageview-count data-path=/post/richtextfield-emoji-display-issue/><i class="fa fa-sync fa-spin"></i></span></span></div></div></header><div class=post-body itemprop=articleBody><p><span>flex4.5和4.6在textField.getCharBoundaries()这个方法的返回结果上是不一样的。</span><br><span>getCharBoundaries()方法只会返回被渲染出来的文字的边框信息，也就是说，如果文本框大小比真正的文本大小要小，那么你想要打印出没有显示的文字的边框信息是不可能的！</span><br><span style=color:red>在4.5中，打印出的边框信息是相对于textfield的textHeight属性，而4.6打印出的边框信息是相对于textfield的height属性。这就造成了richtextfield表情显示上的混乱！</span><br><br><span>解决方法：</span><br><br><span>private function renderSprite(sprite:DisplayObject, index:int):void</span><br><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;&nbsp;</span><span>{&nbsp;</span><span>&nbsp;</span><span>&nbsp;&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;&nbsp;</span><br><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;&nbsp;</span><span>var rect:Rectangle = textRenderer.getCharBoundaries(index);&nbsp;</span><span>&nbsp;</span><span>&nbsp;&nbsp;</span><br><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;&nbsp;</span><span>if (rect != null)</span><br><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;&nbsp;</span><span>{</span><br><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;&nbsp;</span><span>sprite.x = (rect.x + (rect.width - sprite.width) * 0.5 + 0.5) >> 0;</span><br><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;&nbsp;</span><span>var y:Number = (rect.height - sprite.height) * 0.5;</span><br><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;&nbsp;</span><span>var lineMetrics:TextLineMetrics = textRenderer.getLineMetrics(textRenderer.getLineIndexOfChar(index));</span><br><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;&nbsp;</span><span>//make sure the sprite's y is not smaller than the ascent of line metrics</span><br><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;&nbsp;</span><span>if (y + sprite.height &lt; lineMetrics.ascent) y = lineMetrics.ascent - sprite.height;</span><br><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;&nbsp;</span><span>sprite.y = (rect.y + y + 0.5) >> 0;</span><br><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span style=color:#000>&nbsp;<span style=color:#ed1c24>//flex sdk 4.6添加,否则有显示bug</span><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=color:#ed1c24>&nbsp;sprite.y += -_spriteContainer.y;</span></span><br><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;&nbsp;</span><span>_spriteContainer.addChild(sprite);</span><br><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;&nbsp;</span><span>}</span><br><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;&nbsp;</span><span>}</span></p></div><footer class=post-footer><div class=post-button><a class=btn href=/post/richtextfield-emoji-display-issue/#more rel=contents>阅读全文 &#187;</a></div><div class=post-eof></div></footer></article></div><div class=post-block><article itemscope itemtype=http://schema.org/Article class=post-content lang><link itemprop=mainEntityOfPage href=https://blogs.qipai360.cn/post/irfanview-4.36-chinese-version-released/><span hidden itemprop=author itemscope itemtype=http://schema.org/Person><meta itemprop=image content="/imgs/avatar.jpg"><meta itemprop=name content="Rise"></span><span hidden itemprop=publisher itemscope itemtype=http://schema.org/Organization><meta itemprop=name content="Rise"><meta itemprop=description content="福兮祸兮，焉知所依？冬去冰泮，春来萌荣。朝生暮死，亦可惊鸿。知足者富，自足者强。"></span><span hidden itemprop=post itemscope itemtype=http://schema.org/CreativeWork><meta itemprop=name content="IrfanView 4.36 中文版发布了"><meta itemprop=description content="IrfanView 4.36 简体中文便携版 小而快的图片浏览器
+仅仅不到2M的小软件，功能却能与体积大到几十M的ACDSee相媲美！这个软件就是IrfanView。图片、音频、视频浏览，图片批量格式转换、批量重命名，JPE图片无损旋转等只是IrfanView最基本的功能。IrfanView是世界第一个支持多页Gif动画的Windows图像查看器，另外强大的插件外挂功能、自定义皮肤功能以及多种热键支持让你可以定制一个完全属于自己的IrfanView！功能过多，不再一一介绍，喜欢小巧而又免费的强大图片浏览器那就马上体验一下IrfanView吧！
+http://115.com/lb/5lbeuosjhgm#iview436.zip 115网盘礼包码：5lbeuosjhgm
+再送一个注册码生成器（.net2.0），不过这个软件是完全免费的，有心有力的话，还是支持下作者吧！"></span><header class=post-header><h2 class=post-title itemprop="name headline"><a href=/post/irfanview-4.36-chinese-version-released/ itemprop=url class=post-title-link>IrfanView 4.36 中文版发布了</a></h2><div class=post-meta-container><div class=post-meta-items><span class=post-meta-item><span class=post-meta-item-icon><i class="fas fa-solid fa-calendar"></i>
+</span><span class=post-meta-item-text title=发表于>发表于：
+</span><time title="创建时间：2013年12月04日 18:48:00 CST" itemprop="dateCreated datePublished" datetime="2013-12-04 18:48:00 +0800 +0800">2013年12月04日
+</time></span><span class=post-meta-item><span class=post-meta-item-icon><i class="fas fa-solid fa-folder-open"></i>
+</span><span class=post-meta-item-text title=分类于>分类于：
+</span><span itemprop=about itemscope itemtype=http://schema.org/Thing><a href=/categories/toolstips/ itemprop=url rel=index><span itemprop=name>ToolsTips</span>
+</a></span></span><span class=post-meta-item title=浏览><span class=post-meta-item-icon><i class="fas fa-solid fa-eye"></i>
+</span><span class=post-meta-item-text>浏览：
+</span><span id=pageview-count data-path=/post/irfanview-4.36-chinese-version-released/><i class="fa fa-sync fa-spin"></i></span></span></div></div></header><div class=post-body itemprop=articleBody><div class=para>IrfanView 4.36 简体中文便携版 小而快的图片浏览器</div><div class=para>仅仅不到2M的小软件，功能却能与体积大到几十M的ACDSee相媲美！这个软件就是IrfanView。图片、音频、视频浏览，图片批量格式转换、批量重命名，JPE图片无损旋转等只是IrfanView最基本的功能。IrfanView是世界第一个支持多页Gif动画的Windows图像查看器，另外强大的插件外挂功能、自定义皮肤功能以及多种热键支持让你可以定制一个完全属于自己的IrfanView！功能过多，不再一一介绍，喜欢小巧而又免费的强大图片浏览器那就马上体验一下IrfanView吧！</div><p><a href=http://115.com/lb/5lbeuosjhgm>http://115.com/lb/5lbeuosjhgm</a>#<br>iview436.zip<br>115网盘礼包码：5lbeuosjhgm</p><p>再送一个注册码生成器（.net2.0），不过这个软件是完全免费的，有心有力的话，还是支持下作者吧！</p></div><footer class=post-footer><div class=post-button><a class=btn href=/post/irfanview-4.36-chinese-version-released/#more rel=contents>阅读全文 &#187;</a></div><div class=post-eof></div></footer></article></div><div class=post-block><article itemscope itemtype=http://schema.org/Article class=post-content lang><link itemprop=mainEntityOfPage href=https://blogs.qipai360.cn/post/using-as3-to-output-bytearray-as-hexadecimal/><span hidden itemprop=author itemscope itemtype=http://schema.org/Person><meta itemprop=image content="/imgs/avatar.jpg"><meta itemprop=name content="Rise"></span><span hidden itemprop=publisher itemscope itemtype=http://schema.org/Organization><meta itemprop=name content="Rise"><meta itemprop=description content="福兮祸兮，焉知所依？冬去冰泮，春来萌荣。朝生暮死，亦可惊鸿。知足者富，自足者强。"></span><span hidden itemprop=post itemscope itemtype=http://schema.org/CreativeWork><meta itemprop=name content="使用AS3输出ByteArray为16进制"><meta itemprop=description content='
+ 1 package  
+
+ 2 {
+
+ 3     import flash.utils.ByteArray;
+
+ 4     /**
+
+ 5      * 输出ByteArray为16进制
+
+ 6      * @author Rise
+
+ 7      */
+
+ 8     public class Byte2Hex 
+
+ 9     {
+
+10         public static function Trace(bytes:ByteArray):void 
+
+11         {
+
+12             if (bytes == null) 
+
+13             {
+
+14                 trace("bytes is null");
+
+15                 return;
+
+16             }
+
+17             var length:int = getHexLen(bytes.length);
+
+18             length = length > 4 ? length : 4;
+
+19             trace(getTitle(length));
+
+20             bytes.position = 0;
+
+21             for (var j:int = 0; bytes.bytesAvailable > 0; j += 16) 
+
+22             {
+
+23                 var line:String = fillHexLen(j, length) + " ";
+
+24                 var str:String = "";
+
+25                 for (var i:int = 0; i < 16; i++) 
+
+26                 {
+
+27                     if (bytes.bytesAvailable > 0) 
+
+28                     {
+
+29                         var char:int = bytes.readByte() & 0xFF;
+
+30                         line += fillHexLen(char, 2) + " ";
+
+31                         str += String.fromCharCode(char);
+
+32                     }
+
+33                     else
+
+34                     {
+
+35                         line += ".. ";
+
+36                     }
+
+37                 }
+
+38                 trace(line, "\t", str);
+
+39             }
+
+40         }
+
+41         
+
+42         private static function fillHexLen(num:int, length:int):String 
+
+43         {
+
+44             var str:String = num.toString(16);
+
+45             var zeros:String = "";
+
+46             for (var i:int = 0; i < length - str.length; i++) 
+
+47             {
+
+48                 zeros += "0";
+
+49             }
+
+50             
+
+51             return zeros + str;
+
+52         }
+
+53         
+
+54         private static function getHexLen(length:int):int
+
+55         {
+
+56             var bit:int = 0x0F;
+
+57             for (var i:int = 1; i <= 8; i++) 
+
+58             {
+
+59                 bit = bit << i | bit;
+
+60                 if (bit > length) 
+
+61                 {
+
+62                     return i;
+
+63                 }
+
+64             }
+
+65             return 8;
+
+66         }
+
+67         
+
+68         private static function getTitle(length:int):String 
+
+69         {
+
+70             var title:String = "";
+
+71             for (var i:int = 0; i < length; i++) 
+
+72             {
+
+73                 title += " ";
+
+74             }
+
+75             return(title + " 00 01 02 03 04 05 06 07 08 09 10 11 12 13 14 15");
+
+76         }
+
+77     }
+
+78 }
+
+代码很烂，高手勿喷。'></span><header class=post-header><h2 class=post-title itemprop="name headline"><a href=/post/using-as3-to-output-bytearray-as-hexadecimal/ itemprop=url class=post-title-link>使用AS3输出ByteArray为16进制</a></h2><div class=post-meta-container><div class=post-meta-items><span class=post-meta-item><span class=post-meta-item-icon><i class="fas fa-solid fa-calendar"></i>
+</span><span class=post-meta-item-text title=发表于>发表于：
+</span><time title="创建时间：2013年11月23日 17:47:00 CST" itemprop="dateCreated datePublished" datetime="2013-11-23 17:47:00 +0800 +0800">2013年11月23日
+</time></span><span class=post-meta-item><span class=post-meta-item-icon><i class="fas fa-solid fa-calendar-check"></i>
+</span><span class=post-meta-item-text title=更新于>更新于：
+</span><time title="修改时间：2013年11月23日 17:53:00 CST" itemprop="dateModified dateLastmod" datetime="2013-11-23 17:53:00 +0800 +0800">2013年11月23日
+</time></span><span class=post-meta-item><span class=post-meta-item-icon><i class="fas fa-solid fa-folder-open"></i>
+</span><span class=post-meta-item-text title=分类于>分类于：
+</span><span itemprop=about itemscope itemtype=http://schema.org/Thing><a href=/categories/flash/ itemprop=url rel=index><span itemprop=name>dev/Flash</span>
+</a></span></span><span class=post-meta-item title=浏览><span class=post-meta-item-icon><i class="fas fa-solid fa-eye"></i>
+</span><span class=post-meta-item-text>浏览：
+</span><span id=pageview-count data-path=/post/using-as3-to-output-bytearray-as-hexadecimal/><i class="fa fa-sync fa-spin"></i></span></span></div></div></header><div class=post-body itemprop=articleBody><div class=cnblogs_code><pre><span style=color:teal> 1</span> <span style=color:#000>package  
+
+</span><span style=color:teal> 2</span> <span style=color:#000>{
+
+</span><span style=color:teal> 3</span>     <span style=color:#00f>import</span><span style=color:#000> flash.utils.ByteArray;
+
+</span><span style=color:teal> 4</span>     <span style=color:green>/*</span><span style=color:green>*
+
+</span><span style=color:teal> 5</span> <span style=color:green>     * 输出ByteArray为16进制
+
+</span><span style=color:teal> 6</span> <span style=color:green>     * @author Rise
+
+</span><span style=color:teal> 7</span>      <span style=color:green>*/</span>
+
+<span style=color:teal> 8</span>     <span style=color:#00f>public</span> <span style=color:#00f>class</span><span style=color:#000> Byte2Hex 
+
+</span><span style=color:teal> 9</span> <span style=color:#000>    {
+
+</span><span style=color:teal>10</span>         <span style=color:#00f>public</span> <span style=color:#00f>static</span> <span style=color:green>function</span> Trace(bytes:ByteArray):<span style=color:#00f>void</span> 
+
+<span style=color:teal>11</span> <span style=color:#000>        {
+
+</span><span style=color:teal>12</span>             <span style=color:#00f>if</span> (bytes == <span style=color:#00f>null</span><span style=color:#000>) 
+
+</span><span style=color:teal>13</span> <span style=color:#000>            {
+
+</span><span style=color:teal>14</span>                 trace(<span style=color:red>"bytes is null"</span><span style=color:#000>);
+
+</span><span style=color:teal>15</span>                 <span style=color:#00f>return</span><span style=color:#000>;
+
+</span><span style=color:teal>16</span> <span style=color:#000>            }
+
+</span><span style=color:teal>17</span>             <span style=color:#00f>var</span> length:int =<span style=color:#000> getHexLen(bytes.length);
+
+</span><span style=color:teal>18</span>             length = length &gt; 4 ? length : 4<span style=color:#000>;
+
+</span><span style=color:teal>19</span> <span style=color:#000>            trace(getTitle(length));
+
+</span><span style=color:teal>20</span>             bytes.position = 0<span style=color:#000>;
+
+</span><span style=color:teal>21</span>             <span style=color:#00f>for</span> (<span style=color:#00f>var</span> j:int = 0; bytes.bytesAvailable &gt; 0; j += 16<span style=color:#000>) 
+
+</span><span style=color:teal>22</span> <span style=color:#000>            {
+
+</span><span style=color:teal>23</span>                 <span style=color:#00f>var</span> line:String = fillHexLen(j, length) + <span style=color:red>" "</span><span style=color:#000>;
+
+</span><span style=color:teal>24</span>                 <span style=color:#00f>var</span> str:String = <span style=color:red>""</span><span style=color:#000>;
+
+</span><span style=color:teal>25</span>                 <span style=color:#00f>for</span> (<span style=color:#00f>var</span> i:int = 0; i &lt; 16; i++<span style=color:#000>) 
+
+</span><span style=color:teal>26</span> <span style=color:#000>                {
+
+</span><span style=color:teal>27</span>                     <span style=color:#00f>if</span> (bytes.bytesAvailable &gt; 0<span style=color:#000>) 
+
+</span><span style=color:teal>28</span> <span style=color:#000>                    {
+
+</span><span style=color:teal>29</span>                         <span style=color:#00f>var</span> char:int = bytes.readByte() &amp; 0xFF<span style=color:#000>;
+
+</span><span style=color:teal>30</span>                         line += fillHexLen(char, 2) + <span style=color:red>" "</span><span style=color:#000>;
+
+</span><span style=color:teal>31</span>                         str +=<span style=color:#000> String.fromCharCode(char);
+
+</span><span style=color:teal>32</span> <span style=color:#000>                    }
+
+</span><span style=color:teal>33</span>                     <span style=color:#00f>else</span>
+
+<span style=color:teal>34</span> <span style=color:#000>                    {
+
+</span><span style=color:teal>35</span>                         line += <span style=color:red>".. "</span><span style=color:#000>;
+
+</span><span style=color:teal>36</span> <span style=color:#000>                    }
+
+</span><span style=color:teal>37</span> <span style=color:#000>                }
+
+</span><span style=color:teal>38</span>                 trace(line, <span style=color:red>"\t"</span><span style=color:#000>, str);
+
+</span><span style=color:teal>39</span> <span style=color:#000>            }
+
+</span><span style=color:teal>40</span> <span style=color:#000>        }
+
+</span><span style=color:teal>41</span>         
+
+<span style=color:teal>42</span>         <span style=color:#00f>private</span> <span style=color:#00f>static</span> <span style=color:green>function</span> fillHexLen(num:int, length:int<span style=color:#000>):String 
+
+</span><span style=color:teal>43</span> <span style=color:#000>        {
+
+</span><span style=color:teal>44</span>             <span style=color:#00f>var</span> str:String = num.toString(16<span style=color:#000>);
+
+</span><span style=color:teal>45</span>             <span style=color:#00f>var</span> zeros:String = <span style=color:red>""</span><span style=color:#000>;
+
+</span><span style=color:teal>46</span>             <span style=color:#00f>for</span> (<span style=color:#00f>var</span> i:int = 0; i &lt; length - str.length; i++<span style=color:#000>) 
+
+</span><span style=color:teal>47</span> <span style=color:#000>            {
+
+</span><span style=color:teal>48</span>                 zeros += <span style=color:red>"0"</span><span style=color:#000>;
+
+</span><span style=color:teal>49</span> <span style=color:#000>            }
+
+</span><span style=color:teal>50</span>             
+
+<span style=color:teal>51</span>             <span style=color:#00f>return</span> zeros +<span style=color:#000> str;
+
+</span><span style=color:teal>52</span> <span style=color:#000>        }
+
+</span><span style=color:teal>53</span>         
+
+<span style=color:teal>54</span>         <span style=color:#00f>private</span> <span style=color:#00f>static</span> <span style=color:green>function</span><span style=color:#000> getHexLen(length:int):int
+
+</span><span style=color:teal>55</span> <span style=color:#000>        {
+
+</span><span style=color:teal>56</span>             <span style=color:#00f>var</span> bit:int = 0x0F<span style=color:#000>;
+
+</span><span style=color:teal>57</span>             <span style=color:#00f>for</span> (<span style=color:#00f>var</span> i:int = 1; i &lt;= 8; i++<span style=color:#000>) 
+
+</span><span style=color:teal>58</span> <span style=color:#000>            {
+
+</span><span style=color:teal>59</span>                 bit = bit &lt;&lt; i |<span style=color:#000> bit;
+
+</span><span style=color:teal>60</span>                 <span style=color:#00f>if</span> (bit &gt;<span style=color:#000> length) 
+
+</span><span style=color:teal>61</span> <span style=color:#000>                {
+
+</span><span style=color:teal>62</span>                     <span style=color:#00f>return</span><span style=color:#000> i;
+
+</span><span style=color:teal>63</span> <span style=color:#000>                }
+
+</span><span style=color:teal>64</span> <span style=color:#000>            }
+
+</span><span style=color:teal>65</span>             <span style=color:#00f>return</span> 8<span style=color:#000>;
+
+</span><span style=color:teal>66</span> <span style=color:#000>        }
+
+</span><span style=color:teal>67</span>         
+
+<span style=color:teal>68</span>         <span style=color:#00f>private</span> <span style=color:#00f>static</span> <span style=color:green>function</span><span style=color:#000> getTitle(length:int):String 
+
+</span><span style=color:teal>69</span> <span style=color:#000>        {
+
+</span><span style=color:teal>70</span>             <span style=color:#00f>var</span> title:String = <span style=color:red>""</span><span style=color:#000>;
+
+</span><span style=color:teal>71</span>             <span style=color:#00f>for</span> (<span style=color:#00f>var</span> i:int = 0; i &lt; length; i++<span style=color:#000>) 
+
+</span><span style=color:teal>72</span> <span style=color:#000>            {
+
+</span><span style=color:teal>73</span>                 title += <span style=color:red>" "</span><span style=color:#000>;
+
+</span><span style=color:teal>74</span> <span style=color:#000>            }
+
+</span><span style=color:teal>75</span>             <span style=color:#00f>return</span>(title + <span style=color:red>" 00 01 02 03 04 05 06 07 08 09 10 11 12 13 14 15"</span><span style=color:#000>);
+
+</span><span style=color:teal>76</span> <span style=color:#000>        }
+
+</span><span style=color:teal>77</span> <span style=color:#000>    }
+
+</span><span style=color:teal>78</span> }</pre></div><p>代码很烂，高手勿喷。</p></div><footer class=post-footer><div class=post-button><a class=btn href=/post/using-as3-to-output-bytearray-as-hexadecimal/#more rel=contents>阅读全文 &#187;</a></div><div class=post-eof></div></footer></article></div><div class=post-block><article itemscope itemtype=http://schema.org/Article class=post-content lang><link itemprop=mainEntityOfPage href=https://blogs.qipai360.cn/post/intellij-idea-usage-summary-zz/><span hidden itemprop=author itemscope itemtype=http://schema.org/Person><meta itemprop=image content="/imgs/avatar.jpg"><meta itemprop=name content="Rise"></span><span hidden itemprop=publisher itemscope itemtype=http://schema.org/Organization><meta itemprop=name content="Rise"><meta itemprop=description content="福兮祸兮，焉知所依？冬去冰泮，春来萌荣。朝生暮死，亦可惊鸿。知足者富，自足者强。"></span><span hidden itemprop=post itemscope itemtype=http://schema.org/CreativeWork><meta itemprop=name content="IntelliJ IDEA 使用总结[zz]"><meta itemprop=description content="
+本文转自：http://cowboy-bebop.iteye.com/blog/1035550，仅做稍微整理，转载请注明出处。
+1. IDEA内存优化
+因机器本身的配置而配置：
+\IntelliJ IDEA 8\bin\idea.exe.vmoptions&nbsp; -----------------------------------------&nbsp; -Xms64m&nbsp; -Xmx256m&nbsp; -XX:MaxPermSize=92m&nbsp; -ea&nbsp; -server&nbsp; -Dsun.awt.keepWorkingSetOnMinimize=true 
+2. 查询快捷键
+CTRL+N&nbsp;&nbsp; 查找类 CTRL+SHIFT+N&nbsp; 查找文件 CTRL+SHIFT+ALT+N 查找类中的方法或变量 CIRL+B&nbsp;&nbsp; 找变量的来源 CTRL+ALT+B&nbsp; 找所有的子类 CTRL+SHIFT+B&nbsp; 找变量的类 CTRL+G&nbsp;&nbsp; 定位行 CTRL+F&nbsp;&nbsp; 在当前窗口查找文本 CTRL+SHIFT+F&nbsp; 在指定窗口查找文本 CTRL+R&nbsp;&nbsp; 在 当前窗口替换文本 CTRL+SHIFT+R&nbsp; 在指定窗口替换文本 ALT+SHIFT+C&nbsp; 查找修改的文件 CTRL+E&nbsp;&nbsp; 最近打开的文件 F3&nbsp;&nbsp; 向下查找关键字出现位置 SHIFT+F3&nbsp; 向上一个关键字出现位置 F4&nbsp;&nbsp; 查找变量来源 CTRL+ALT+F7&nbsp; 选中的字符查找工程出现的地方 CTRL+SHIFT+O&nbsp; 弹出显示查找内容"></span><header class=post-header><h2 class=post-title itemprop="name headline"><a href=/post/intellij-idea-usage-summary-zz/ itemprop=url class=post-title-link>IntelliJ IDEA 使用总结[zz]</a></h2><div class=post-meta-container><div class=post-meta-items><span class=post-meta-item><span class=post-meta-item-icon><i class="fas fa-solid fa-calendar"></i>
+</span><span class=post-meta-item-text title=发表于>发表于：
+</span><time title="创建时间：2013年11月22日 10:34:00 CST" itemprop="dateCreated datePublished" datetime="2013-11-22 10:34:00 +0800 +0800">2013年11月22日
+</time></span><span class=post-meta-item><span class=post-meta-item-icon><i class="fas fa-solid fa-folder-open"></i>
+</span><span class=post-meta-item-text title=分类于>分类于：
+</span><span itemprop=about itemscope itemtype=http://schema.org/Thing><a href=/categories/toolstips/ itemprop=url rel=index><span itemprop=name>ToolsTips</span>
+</a></span></span><span class=post-meta-item title=浏览><span class=post-meta-item-icon><i class="fas fa-solid fa-eye"></i>
+</span><span class=post-meta-item-text>浏览：
+</span><span id=pageview-count data-path=/post/intellij-idea-usage-summary-zz/><i class="fa fa-sync fa-spin"></i></span></span></div></div></header><div class=post-body itemprop=articleBody><div class=BlogContent><p>本文转自：<a href=http://cowboy-bebop.iteye.com/blog/1035550 rel=nofollow>http://cowboy-bebop.iteye.com/blog/1035550</a>，仅做稍微整理，转载请注明出处。</p><p><strong>1. IDEA内存优化</strong></p><p>因机器本身的配置而配置：</p><p>\IntelliJ IDEA 8\bin\idea.exe.vmoptions&nbsp;<br>-----------------------------------------&nbsp;<br>-Xms64m&nbsp;<br>-Xmx256m&nbsp;<br>-XX:MaxPermSize=92m&nbsp;<br>-ea&nbsp;<br>-server&nbsp;<br>-Dsun.awt.keepWorkingSetOnMinimize=true</p><p><strong>2. 查询快捷键</strong></p><p>CTRL+N&nbsp;&nbsp; 查找类<br>CTRL+SHIFT+N&nbsp; 查找文件<br>CTRL+SHIFT+ALT+N 查找类中的方法或变量<br>CIRL+B&nbsp;&nbsp; 找变量的来源<br>CTRL+ALT+B&nbsp; 找所有的子类<br>CTRL+SHIFT+B&nbsp; 找变量的类<br>CTRL+G&nbsp;&nbsp; 定位行<br>CTRL+F&nbsp;&nbsp; 在当前窗口查找文本<br>CTRL+SHIFT+F&nbsp; 在指定窗口查找文本<br>CTRL+R&nbsp;&nbsp; 在 当前窗口替换文本<br>CTRL+SHIFT+R&nbsp; 在指定窗口替换文本<br>ALT+SHIFT+C&nbsp; 查找修改的文件<br>CTRL+E&nbsp;&nbsp; 最近打开的文件<br>F3&nbsp;&nbsp; 向下查找关键字出现位置<br>SHIFT+F3&nbsp; 向上一个关键字出现位置<br>F4&nbsp;&nbsp; 查找变量来源<br>CTRL+ALT+F7&nbsp; 选中的字符查找工程出现的地方<br>CTRL+SHIFT+O&nbsp; 弹出显示查找内容</p></div><footer class=post-footer><div class=post-button><a class=btn href=/post/intellij-idea-usage-summary-zz/#more rel=contents>阅读全文 &#187;</a></div><div class=post-eof></div></footer></article></div><div class=post-block><article itemscope itemtype=http://schema.org/Article class=post-content lang><link itemprop=mainEntityOfPage href=https://blogs.qipai360.cn/post/solution-to-vmware-tools-can-only-be-installed-in-virtual-machine/><span hidden itemprop=author itemscope itemtype=http://schema.org/Person><meta itemprop=image content="/imgs/avatar.jpg"><meta itemprop=name content="Rise"></span><span hidden itemprop=publisher itemscope itemtype=http://schema.org/Organization><meta itemprop=name content="Rise"><meta itemprop=description content="福兮祸兮，焉知所依？冬去冰泮，春来萌荣。朝生暮死，亦可惊鸿。知足者富，自足者强。"></span><span hidden itemprop=post itemscope itemtype=http://schema.org/CreativeWork><meta itemprop=name content="“vmware tools 只能虚拟机中安装”的解决方法"><meta itemprop=description content="vmware安装的一个大坑,最近在开发上需要用到centos 6.4,由于我本身的系统是win8所以决定使用虚拟机,选择了vmware,并且从网上下载的虚拟机的映像文件.中间安装了vmware8,安装完成后vmware tools始终提示无法安装,提示信息是:"></span><header class=post-header><h2 class=post-title itemprop="name headline"><a href=/post/solution-to-vmware-tools-can-only-be-installed-in-virtual-machine/ itemprop=url class=post-title-link>“vmware tools 只能虚拟机中安装”的解决方法</a></h2><div class=post-meta-container><div class=post-meta-items><span class=post-meta-item><span class=post-meta-item-icon><i class="fas fa-solid fa-calendar"></i>
+</span><span class=post-meta-item-text title=发表于>发表于：
+</span><time title="创建时间：2013年11月18日 16:43:00 CST" itemprop="dateCreated datePublished" datetime="2013-11-18 16:43:00 +0800 +0800">2013年11月18日
+</time></span><span class=post-meta-item><span class=post-meta-item-icon><i class="fas fa-solid fa-calendar-check"></i>
+</span><span class=post-meta-item-text title=更新于>更新于：
+</span><time title="修改时间：2013年11月18日 16:59:00 CST" itemprop="dateModified dateLastmod" datetime="2013-11-18 16:59:00 +0800 +0800">2013年11月18日
+</time></span><span class=post-meta-item><span class=post-meta-item-icon><i class="fas fa-solid fa-folder-open"></i>
+</span><span class=post-meta-item-text title=分类于>分类于：
+</span><span itemprop=about itemscope itemtype=http://schema.org/Thing><a href=/categories/toolstips/ itemprop=url rel=index><span itemprop=name>ToolsTips</span>
+</a></span></span><span class=post-meta-item title=浏览><span class=post-meta-item-icon><i class="fas fa-solid fa-eye"></i>
+</span><span class=post-meta-item-text>浏览：
+</span><span id=pageview-count data-path=/post/solution-to-vmware-tools-can-only-be-installed-in-virtual-machine/><i class="fa fa-sync fa-spin"></i></span></span></div></div></header><div class=post-body itemprop=articleBody><p><span class=wp_keywordlink_affiliate>vmware</span>安装的一个大坑,最近在开发上需要用到centos 6.4,由于我本身的系统是win8所以决定使用虚拟机,选择了vmware,并且从网上下载的虚拟机的映像文件.中间安装了vmware8,安装完成后<span class=wp_keywordlink_affiliate>vmware tools</span>始终提示无法安装,提示信息是:</p></div><footer class=post-footer><div class=post-button><a class=btn href=/post/solution-to-vmware-tools-can-only-be-installed-in-virtual-machine/#more rel=contents>阅读全文 &#187;</a></div><div class=post-eof></div></footer></article></div><nav class=pagination><a class="extend prev" rel=prev href=/page/10/><i class="fa fa-angle-left"></i>
+</a><a class=page-number href=/page/7/>7</a>
+<a class=page-number href=/page/8/>8</a>
+<a class=page-number href=/page/9/>9</a>
+<a class=page-number href=/page/10/>10</a>
+<span class="page-number current">11</span>
+<a class=page-number href=/page/12/>12</a>
+<a class=page-number href=/page/13/>13</a>
+<a class=page-number href=/page/14/>14</a>
+<a class=page-number href=/page/15/>15</a>
+<a class="extend next" rel=next href=/page/12/><i class="fa fa-angle-right"></i></a></nav></div></main><footer class=footer><div class=footer-inner><div class=copyright>&copy;
+<span itemprop=copyrightYear>2004 - 2026
+</span><span class=with-love><i class="fa fa-heart"></i>
+</span><span class=author itemprop=copyrightHolder>Rise</span></div><div class=powered-by>由 <a href=https://gohugo.io title=0.157.0 target=_blank>Hugo</a> & <a href=https://github.com/hugo-next/hugo-theme-next title=4.8.3 target=_blank>Hugo NexT.Gemini</a> 强力驱动</div><div class=beian><a href=https://beian.miit.gov.cn target=_blank>豫ICP备2021009490号</a>
+<img src=/imgs/gongan.png alt=豫公网安备>
+<a href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=41162302000074" target=_blank>豫公网安备 41162302000074 号</a></div></div></footer><script class=next-config data-name=page type=application/json>{"comments":true,"expired":false,"isHome":true,"isPage":false,"path":"blogs.qipai360.cn","permalink":"https://blogs.qipai360.cn/","title":"Rise的自留地","toc":false,"waline3":{"pagecnt":{"alias":"@waline/client","alias_name":"waline","file":"dist/pageview.js","name":"pageview","version":"3.5.7"}}}</script><script type=text/javascript src=https://blogs.qipai360.cn/js/3rd/animejs/3.2.2/anime.min.js crossorigin=anonymous defer></script><script type=text/javascript src=https://blogs.qipai360.cn/js/3rd/viewerjs/1.11.6/viewer.min.js crossorigin=anonymous defer></script><script class=next-config data-name=main type=application/json>{"bookmark":{"color":"#222","enable":true,"save":"manual"},"copybtn":true,"darkmode":true,"giscus":{"cfg":{"category":"Announcements","categoryid":"DIC_kwDOA6L0YM4CiXf9","emit":false,"inputposition":"top","mapping":"title","reactions":false,"repo":"rise-worlds/rise-worlds.github.io","repoid":"MDEwOlJlcG9zaXRvcnk2MTAxMTA0MA==","theme":"transparent_dark"},"js":"https://giscus.app/client.js"},"hostname":"https://blogs.qipai360.cn/","i18n":{"ds_day":" 天前","ds_days":" 天 ","ds_hour":" 小时前","ds_hours":" 小时 ","ds_just":"刚刚","ds_min":" 分钟前","ds_mins":" 分钟","ds_month":" 个月前","ds_years":" 年 ","empty":"没有找到任何搜索结果：${query}","hits":"找到 ${hits} 个搜索结果","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","placeholder":"搜索..."},"isMultiLang":false,"lang":"zh-CN","lazyload":false,"motion":{"async":true,"enable":true,"transition":{"collheader":"fadeInLeft","postblock":"fadeIn","postbody":"fadeInDown","postheader":"fadeInDown","sidebar":"fadeInUp"}},"postmeta":{"comments":{"enable":false,"plugin":"waline3"},"views":{"enable":true,"plugin":"waline3"}},"root":"/","scheme":"Gemini","share":{"addtoany":{"js":"https://static.addtoany.com/menu/page.js","locale":"zh-CN","num":8},"enable":false},"sidebar":{"display":"post","offset":12,"padding":18,"position":"left","width":256},"vendor":{"plugins":"local","router":{"name":"local","type":"modern","url":"https://blogs.qipai360.cn/js/3rd"}},"version":"4.8.3","waline3":{"cfg":{"emoji":false,"imguploader":false,"placeholder":"请文明发言哟 ヾ(≧▽≦*)o 可用快捷键选取表情符号：😀😄😁🥳👻👽👀🚄 (Window系统：Win+.，Mac系统：Control+Command+Space)","reaction":true,"reactiontext":["点赞","踩一下","得意","不屑","尴尬","睡觉"],"reactiontitle":"你认为这篇文章怎么样？","requiredmeta":["nick","mail"],"search":true,"serverurl":"https://walinejs.comment.lithub.cc","sofa":"快来发表你的意见吧 (≧∀≦)ゞ","wordlimit":200},"css":{"alias":"@waline/client","file":"dist/waline.css","name":"waline","version":"3.5.7"},"js":{"alias":"@waline/client","file":"dist/waline.js","name":"waline","version":"3.5.7"}}}</script><script type=text/javascript src="/js/main.min.js?=1772265585" defer></script></body></html>

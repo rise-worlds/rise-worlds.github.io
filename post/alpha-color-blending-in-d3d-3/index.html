@@ -1,0 +1,853 @@
+<!doctype html><html lang=zh-CN data-theme=dark><head><meta charset=UTF-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=theme-color content="#222" media="(prefers-color-scheme: dark)"><meta name=generator content="Hugo 0.157.0"><link rel="shortcut icon" type=image/x-icon href=/imgs/icons/favicon.ico><link rel=icon type=image/x-icon href=/imgs/icons/favicon.ico><link rel=icon type=image/png sizes=16x16 href=/imgs/icons/favicon_32_32_next.png><link rel=icon type=image/png sizes=32x32 href=/imgs/icons/favicon_128_128_next.png><link rel=apple-touch-icon sizes=180x180 href=/imgs/icons/apple_touch_icon_next.png><meta itemprop=name content="D3D中的Alpha颜色混合（3）"><meta itemprop=description content="福兮祸兮，焉知所依？冬去冰泮，春来萌荣。朝生暮死，亦可惊鸿。知足者富，自足者强。"><meta name=description content="福兮祸兮，焉知所依？冬去冰泮，春来萌荣。朝生暮死，亦可惊鸿。知足者富，自足者强。"><meta itemprop=datePublished zgotmplz><meta itemprop=dateModified zgotmplz><meta itemprop=image content="https://blogs.qipai360.cn/imgs/avatar.jpg"><meta itemprop=keywords content="direct3d,graphics"><meta property="og:type" content="article"><meta property="og:title" content="D3D中的Alpha颜色混合（3）"><meta property="og:description" content="福兮祸兮，焉知所依？冬去冰泮，春来萌荣。朝生暮死，亦可惊鸿。知足者富，自足者强。"><meta property="og:image" content="/imgs/avatar.jpg"><meta property="og:image:width" content="312"><meta property="og:image:height" content="312"><meta property="og:image:type" content="image/jpeg/png/svg/jpg"><meta property="og:url" content="https://blogs.qipai360.cn/post/alpha-color-blending-in-d3d-3/"><meta property="og:site_name" content="Rise的自留地"><meta property="og:locale" content="zh-CN"><meta property="article:author" content="Rise"><meta property="article:published_time" content="2007-09-20 21:36:00 +0800 +0800"><meta property="article:modified_time" content="2007-09-20 21:36:00 +0800 +0800"><link type=text/css rel=stylesheet href=https://blogs.qipai360.cn/js/3rd/font-awesome/6.7.2/css/all.min.css><link type=text/css rel=stylesheet href=https://blogs.qipai360.cn/js/3rd/animate.css/3.1.1/animate.min.css><link type=text/css rel=stylesheet href=https://blogs.qipai360.cn/js/3rd/viewerjs/1.11.6/viewer.min.css><link rel=stylesheet href="/css/main.min.css?=1772265587"><style type=text/css>.post-footer hr:after{content:"~ 我可是有底线的哟 ~"}.flinks-list-footer hr:after{content:"~ 我可是有底线的哟 ~"}</style><script type=text/javascript>(function(){localDB={set:function(e,t,n){if(n===0)return;const s=new Date,o=n*864e5,i={value:t,expiry:s.getTime()+o};localStorage.setItem(e,JSON.stringify(i))},get:function(e){const t=localStorage.getItem(e);if(!t)return 0[0];const n=JSON.parse(t),s=new Date;return s.getTime()>n.expiry?(localStorage.removeItem(e),0[0]):n.value}},theme={active:function(){const e=localDB.get("theme");if(e==null)return;theme.toggle(e),window.matchMedia("(prefers-color-scheme: dark)").addListener(function(e){theme.toggle(e.matches?"dark":"light")})},toggle:function(e){document.documentElement.setAttribute("data-theme",e),localDB.set("theme",e,2);const t=document.querySelector("iframe.giscus-frame");if(t){const n={setConfig:{theme:e}};t.contentWindow.postMessage({giscus:n},"https://giscus.app")}}},theme.active()})(window)</script><script type=text/javascript>document.addEventListener("DOMContentLoaded",()=>{var e=document.createElement("script");e.charset="UTF-8",e.src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js",e.async=!1,e.defer=!0,document.head.appendChild(e),e.onload=function(){NexT.utils.fmtBusuanzi()}})</script><script defer src=https://static.cloudflareinsights.com/beacon.min.js data-cf-beacon='{"token": "2b23669184fc49269e400525ac2447d9"}'></script><title>D3D中的Alpha颜色混合（3） - Rise的自留地</title><noscript><link rel=stylesheet href=/css/noscript.css></noscript></head><body itemscope itemtype=http://schema.org/WebPage class=use-motion><div class=headband></div><main class=main><header class=header itemscope itemtype=http://schema.org/WPHeader><div class=header-inner><div class=site-brand-container><div class=site-nav-toggle><div class=toggle aria-label role=button><span class=toggle-line></span>
+<span class=toggle-line></span>
+<span class=toggle-line></span></div></div><div class=site-meta><a href=/ class=brand rel=start><i class=logo-line></i><h1 class=site-title>Rise的自留地</h1><i class=logo-line></i></a><p class=site-subtitle itemprop=description>记录生活中的点滴，分享编程技术和游戏开发经验。</p></div><div class=site-nav-right><div class="toggle popup-trigger"></div></div></div><nav class=site-nav><ul class="main-menu menu"><li class="menu-item menu-item-home"><a href=/ class=hvr-icon-pulse rel=section><i class="fa fa-home hvr-icon"></i>首页</a></li><li class="menu-item menu-item-about"><a href=/about.html class=hvr-icon-pulse rel=section><i class="fa fa-user hvr-icon"></i>关于</a></li><li class="menu-item menu-item-archives"><a href=/archives/ class=hvr-icon-pulse rel=section><i class="fa fa-archive hvr-icon"></i>归档
+<span class=badge>679</span></a></li><li class="menu-item menu-item-tags"><a href=/tags/ class=hvr-icon-pulse rel=section><i class="fa fa-tags hvr-icon"></i>标签</a></li><li class="menu-item menu-item-message"><a href=/message/ class=hvr-icon-pulse rel=section><i class="fa fa-comments hvr-icon"></i>留言板</a></li><li class="menu-item menu-item-commonweal"><a href=/404.html class=hvr-icon-pulse rel=section><i class="fa fa-heartbeat hvr-icon"></i>公益 404</a></li></ul></nav></div><div class="toggle sidebar-toggle" role=button><span class=toggle-line></span>
+<span class=toggle-line></span>
+<span class=toggle-line></span></div><aside class=sidebar><div class="sidebar-inner sidebar-overview-active"><ul class=sidebar-nav><li class=sidebar-nav-toc>文章目录</li><li class=sidebar-nav-overview>站点概览</li></ul><div class=sidebar-panel-container><div class="post-toc-wrap sidebar-panel"><div class="post-toc animated"><nav id=TableOfContents><ul><li><ul><li><ul><li><a href=#parameters>Parameters</a></li><li><a href=#return-values>Return Values</a></li><li><a href=#remarks>Remarks</a></li></ul></li></ul></li><li><a href=#usages>Usages</a></li><li><a href=#usage-and-resource-combinations>Usage and Resource Combinations</a><ul><li><ul><li><a href=#constants>Constants</a></li><li><a href=#remarks-1>Remarks</a></li><li><a href=#members>Members</a></li><li><a href=#members-1>Members</a></li><li><a href=#constants-1>Constants</a></li><li><a href=#remarks-2>Remarks</a></li></ul></li></ul></li></ul></nav></div></div><div class="site-overview-wrap sidebar-panel"><div class="site-author site-overview-item animated" itemprop=author itemscope itemtype=http://schema.org/Person><img class=site-author-image itemprop=image alt=Rise src=/imgs/img-lazy-loading.gif data-src=/imgs/avatar.jpg><p class=site-author-name itemprop=name>Rise</p><div class=site-description itemprop=description>福兮祸兮，焉知所依？冬去冰泮，春来萌荣。朝生暮死，亦可惊鸿。知足者富，自足者强。</div></div><div class="site-state-wrap site-overview-item animated"><nav class=site-state><div class="site-state-item site-state-posts"><a href=/archives/><span class=site-state-item-count>679</span>
+<span class=site-state-item-name>日志</span></a></div><div class="site-state-item site-state-categories"><a href=/categories/><span class=site-state-item-count>35</span>
+<span class=site-state-item-name>分类</span></a></div><div class="site-state-item site-state-tags"><a href=/tags/><span class=site-state-item-count>118</span>
+<span class=site-state-item-name>标签</span></a></div></nav></div><div class="links-of-social site-overview-item animated"><span class=links-of-social-item><a href=https://github.com/rise-worlds title="Github → https://github.com/rise-worlds" rel=noopener class=hvr-icon-pulse target=_blank><i class="fab fa-github fa-fw hvr-icon"></i>
+Github
+</a></span><span class=links-of-social-item><a href=mailto:rise.worlds@outlook.com title="E-Mail → mailto:rise.worlds@outlook.com" rel=noopener class=hvr-icon-pulse target=_blank><i class="fa fa-envelope fa-fw hvr-icon"></i>
+E-Mail
+</a></span><span class=links-of-social-item><a href=https://www.zhihu.com/people/rise-worlds title="知乎 → https://www.zhihu.com/people/rise-worlds" rel=noopener class=hvr-icon-pulse target=_blank><i class="fa fa-book fa-fw hvr-icon"></i>
+知乎
+</a></span><span class=links-of-social-item><a href=https://twitter.com/riseworlds title="Twitter → https://twitter.com/riseworlds" rel=noopener class=hvr-icon-pulse target=_blank><i class="fab fa-twitter fa-fw hvr-icon"></i>
+Twitter
+</a></span><span class=links-of-social-item><a href=https://www.facebook.com/rise.worlds title="facebook → https://www.facebook.com/rise.worlds" rel=noopener class=hvr-icon-pulse target=_blank><i class="fab fa-facebook fa-fw hvr-icon"></i>
+facebook
+</a></span><span class=links-of-social-item><a href=https://youtube.com/@YiXuan title="YouTube → https://youtube.com/@YiXuan" rel=noopener class=hvr-icon-pulse target=_blank><i class="fab fa-youtube fa-fw hvr-icon"></i>
+YouTube
+</a></span><span class=links-of-social-item><a href=https://instagram.com/rise.worlds title="Instagram → https://instagram.com/rise.worlds" rel=noopener class=hvr-icon-pulse target=_blank><i class="fab fa-instagram fa-fw hvr-icon"></i>
+Instagram
+</a></span><span class=links-of-social-item><a href=https://t.me/riseworlds title="Telegram → https://t.me/riseworlds" rel=noopener class=hvr-icon-pulse target=_blank><i class="fab fa-telegram fa-fw hvr-icon"></i>
+Telegram</a></span></div><div class="links-of-blogroll site-overview-item animated"><div class=links-of-blogroll-title><i class="fa fa-globe fa-fw"></i>
+友情链接</div><ul class=links-of-blogroll-list><li class=links-of-blogroll-item><a href=https://www.qipai360.cn title=https://www.qipai360.cn target=_blank>Qipai360</a></li><li class=links-of-blogroll-item><a href=https://www.cnblogs.com/flying_bat title=https://www.cnblogs.com/flying_bat target=_blank>博客园</a></li><li class=links-of-blogroll-item><a href=https://zishu.me title=https://zishu.me target=_blank>子舒的博客</a></li><li class=links-of-blogroll-item><a href=https://gitee.com/hugo-next/hugo-theme-next title=https://gitee.com/hugo-next/hugo-theme-next target=_blank>Hugo-NexT</a></li></ul></div></div></div></div><div id=siteinfo-card-widget class=sidebar-card-widget><div class=item-headline><i class="fas fa-chart-line"></i>
+<span>网站资讯</span></div><div class=siteinfo><div class=siteinfo-item><div class=item-name><i class="fa-solid fa-calendar-check"></i>已运行：</div><div class=item-count id=runTimes data-publishdate="2004-10-06 15:24:00 +0800 +0800"></div></div><div class=siteinfo-item><div class=item-name><i class="fas fa fa-user"></i>总访客数：</div><div class=item-count id=busuanzi_value_site_uv><i class="fa fa-sync fa-spin"></i></div></div><div class=siteinfo-item><div class=item-name><i class="fas fa fa-eye"></i>页面浏览：</div><div class=item-count id=busuanzi_value_site_pv><i class="fa fa-sync fa-spin"></i></div></div><div class=siteinfo-item><div class=item-name><i class="fa fa-font"></i>总字数：</div><div class=item-count id=wordsCount data-count=2423147></div></div><div class=siteinfo-item><div class=item-name><i class="fa fa-mug-hot"></i>阅读约：</div><div class=item-count id=readTimes data-times=5207></div></div><div class=siteinfo-item><div class=item-name><i class="fa fa-clock-rotate-left"></i>最后更新于：</div><div class=item-count id=last-push-date data-lastpushdate="2026-02-28 15:59:00 +0800 +0800"></div></div></div></div></aside><div class=sidebar-dimmer></div></header><div class=tool-buttons><div id=goto-comments class="button goto-comments" title=直达评论><i class="fas fa-comments"></i></div><div id=toggle-theme class=button title=深浅模式切换><i class="fas fa-adjust"></i></div><div class=back-to-top role=button title=返回顶部><i class="fa fa-arrow-up"></i>
+<span>0%</span></div></div><div class=reading-progress-bar></div><a role=button class="book-mark-link book-mark-link-fixed"></a><a href=https://github.com/rise-worlds rel="noopener external nofollow noreferrer" target=_blank title="Follow me on GitHub" class="exturl github-corner"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0 0 115 115h15l12 27L250 250V0z"/><path d="M128.3 109C113.8 99.7 119 89.6 119 89.6 122 82.7 120.5 78.6 120.5 78.6 119.2 72 123.4 76.3 123.4 76.3 127.3 80.9 125.5 87.3 125.5 87.3 122.9 97.6 130.6 101.9 134.4 103.2" fill="currentColor" style="transform-origin:130px 106px" class="octo-arm"/><path d="M115 115C114.9 115.1 118.7 116.5 119.8 115.4l13.9-13.8C136.9 99.2 139.9 98.4 142.2 98.6 133.8 88 127.5 74.4 143.8 58 148.5 53.4 154 51.2 159.7 51 160.3 49.4 163.2 43.6 171.4 40.1 171.4 40.1 176.1 42.5 178.8 56.2 183.1 58.6 187.2 61.8 190.9 65.4 194.5 69 197.7 73.2 200.1 77.6 213.8 80.2 216.3 84.9 216.3 84.9 212.7 93.1 206.9 96 205.4 96.6 205.1 102.4 203 107.8 198.3 112.5 181.9 128.9 168.3 122.5 157.7 114.1 157.9 116.9 156.7 120.9 152.7 124.9L141 136.5C139.8 137.7 141.6 141.9 141.8 141.8z" fill="currentColor" class="octo-body"/></svg></a><noscript><div class=noscript-warning>Theme NexT works best with JavaScript enabled</div></noscript><div class="main-inner post posts-expand"><div class=post-block><article itemscope itemtype=http://schema.org/Article class=post-content lang><link itemprop=mainEntityOfPage href=https://blogs.qipai360.cn/post/alpha-color-blending-in-d3d-3/><span hidden itemprop=author itemscope itemtype=http://schema.org/Person><meta itemprop=image content="/imgs/avatar.jpg"><meta itemprop=name content="Rise"></span><span hidden itemprop=publisher itemscope itemtype=http://schema.org/Organization><meta itemprop=name content="Rise"><meta itemprop=description content="福兮祸兮，焉知所依？冬去冰泮，春来萌荣。朝生暮死，亦可惊鸿。知足者富，自足者强。"></span><span hidden itemprop=post itemscope itemtype=http://schema.org/CreativeWork><meta itemprop=name content="D3D中的Alpha颜色混合（3）"><meta itemprop=description content="本篇是{% post_link alpha-color-blending-in-D3D-2 &ldquo;D3D中的Alpha颜色混合（2）&rdquo; %}的后续篇。
+另一种实现实现背景透明显示的简便方法是直接应用渲染管道流水线的Alpha测试功能进行，{% post_link alpha-color-blending-in-D3D-2 &ldquo;D3D中的Alpha颜色混合（2）&rdquo; %}介绍的接口方法实际就是对Alpha测试的一个包装。Alpha测试是对需要写入绘图表面的像素颜色Alpha值进行测试，判断该Alpha值是否满足预先设定的条件，如果满足条件，则将该像素颜色值写入绘图表面，否则不写入。"></span><header class=post-header><h1 class=post-title itemprop="name headline">D3D中的Alpha颜色混合（3）</h1><div class=post-meta-container><div class=post-meta-items><span class=post-meta-item><span class=post-meta-item-icon><i class="fas fa-solid fa-calendar"></i>
+</span><span class=post-meta-item-text title=发表于>发表于：
+</span><time title="创建时间：2007年09月20日 21:36:00 CST" itemprop="dateCreated datePublished" datetime="2007-09-20 21:36:00 +0800 +0800">2007年09月20日
+</time></span><span class=post-meta-item><span class=post-meta-item-icon><i class="fas fa-solid fa-folder-open"></i>
+</span><span class=post-meta-item-text title=分类于>分类于：
+</span><span itemprop=about itemscope itemtype=http://schema.org/Thing><a href=/categories/gamedev/ itemprop=url rel=index><span itemprop=name>dev/GameDev</span></a></span></span></div><div class=post-meta-items><span class=post-meta-item title=字数><span class=post-meta-item-icon><i class="fas fa-solid fa-file-word"></i>
+</span><span class=post-meta-item-text>字数：</span>
+<span>5857</span>
+</span><span class=post-meta-item title=阅读><span class=post-meta-item-icon><i class="fas fa-solid fa-clock"></i>
+</span><span class=post-meta-item-text>阅读：&ap;</span>
+<span>12分钟</span>
+</span><span class=post-meta-item title=浏览><span class=post-meta-item-icon><i class="fas fa-solid fa-eye"></i>
+</span><span class=post-meta-item-text>浏览：
+</span><span id=pageview-count data-path=/post/alpha-color-blending-in-d3d-3/><i class="fa fa-sync fa-spin"></i></span></span></div></div></header><div class=post-body itemprop=articleBody><p>本篇是{% post_link alpha-color-blending-in-D3D-2 &ldquo;D3D中的Alpha颜色混合（2）&rdquo; %}的后续篇。</p><p>另一种实现实现背景透明显示的简便方法是直接应用渲染管道流水线的Alpha测试功能进行，{% post_link alpha-color-blending-in-D3D-2 &ldquo;D3D中的Alpha颜色混合（2）&rdquo; %}介绍的接口方法实际就是对Alpha测试的一个包装。Alpha测试是对需要写入绘图表面的像素颜色Alpha值进行测试，判断该Alpha值是否满足预先设定的条件，如果满足条件，则将该像素颜色值写入绘图表面，否则不写入。</p><a id=more></a><p><img src=/imgs/img-lazy-loading.gif data-src=r_new_gun.bmp alt=示例图></p><p>如上图所示，瞄准器的背景色为标准绿色，为了使瞄准镜可以背景透明地显示在其他图象的上面，需要把瞄准镜的绿色部分镂空。为此，可调用 D3DXCreateTextureFromFileEx函数，相应的创建一个背景为黑色的纹理对象，这个黑色的Alpha值为 0，它的RGBA颜色值则为(0, 0, 0, 0)。然后，开启渲染管道流水线的Alpha测试，并使Alpha测试仅对Alpha值大于或等于某个值的像素颜色值进行写入，以使Alpha值为0的瞄准镜背景黑色不能写入绘图表面，从而使得瞄准镜图象贴在老虎背景画面上时，背景可透明地显示出来。</p><p>来看看 D3DXCreateTextureFromFileEx的具体使用说明：</p><p>Creates a texture from a file. This is a more advanced function than D3DXCreateTextureFromFile.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt id=hl-0-1><a class=lnlinks href=#hl-0-1> 1</a>
+</span><span class=lnt id=hl-0-2><a class=lnlinks href=#hl-0-2> 2</a>
+</span><span class=lnt id=hl-0-3><a class=lnlinks href=#hl-0-3> 3</a>
+</span><span class=lnt id=hl-0-4><a class=lnlinks href=#hl-0-4> 4</a>
+</span><span class=lnt id=hl-0-5><a class=lnlinks href=#hl-0-5> 5</a>
+</span><span class=lnt id=hl-0-6><a class=lnlinks href=#hl-0-6> 6</a>
+</span><span class=lnt id=hl-0-7><a class=lnlinks href=#hl-0-7> 7</a>
+</span><span class=lnt id=hl-0-8><a class=lnlinks href=#hl-0-8> 8</a>
+</span><span class=lnt id=hl-0-9><a class=lnlinks href=#hl-0-9> 9</a>
+</span><span class=lnt id=hl-0-10><a class=lnlinks href=#hl-0-10>10</a>
+</span><span class=lnt id=hl-0-11><a class=lnlinks href=#hl-0-11>11</a>
+</span><span class=lnt id=hl-0-12><a class=lnlinks href=#hl-0-12>12</a>
+</span><span class=lnt id=hl-0-13><a class=lnlinks href=#hl-0-13>13</a>
+</span><span class=lnt id=hl-0-14><a class=lnlinks href=#hl-0-14>14</a>
+</span><span class=lnt id=hl-0-15><a class=lnlinks href=#hl-0-15>15</a>
+</span><span class=lnt id=hl-0-16><a class=lnlinks href=#hl-0-16>16</a>
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=line><span class=cl><span class=n>HRESULT</span> <span class=nf>D3DXCreateTextureFromFileEx</span><span class=p>(</span>
+</span></span><span class=line><span class=cl>  <span class=n>LPDIRECT3DDEVICE9</span> <span class=n>pDevice</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>  <span class=n>LPCTSTR</span> <span class=n>pSrcFile</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>  <span class=n>UINT</span> <span class=n>Width</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>  <span class=n>UINT</span> <span class=n>Height</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>  <span class=n>UINT</span> <span class=n>MipLevels</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>  <span class=n>DWORD</span> <span class=n>Usage</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>  <span class=n>D3DFORMAT</span> <span class=n>Format</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>  <span class=n>D3DPOOL</span> <span class=n>Pool</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>  <span class=n>DWORD</span> <span class=n>Filter</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>  <span class=n>DWORD</span> <span class=n>MipFilter</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>  <span class=n>D3DCOLOR</span> <span class=n>ColorKey</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>  <span class=n>D3DXIMAGE_INFO</span> <span class=o>*</span> <span class=n>pSrcInfo</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>  <span class=n>PALETTEENTRY</span> <span class=o>*</span> <span class=n>pPalette</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>  <span class=n>LPDIRECT3DTEXTURE9</span> <span class=o>*</span> <span class=n>ppTexture</span>
+</span></span><span class=line><span class=cl><span class=p>);</span></span></span></code></pre></td></tr></table></div></div><h4 id=parameters>Parameters
+<a class=header-anchor href=#parameters></a></h4><p><em>pDevice</em></p><p>[in] Pointer to an IDirect3DDevice9 interface, representing the device to be associated with the texture.</p><p><em>pSrcFile</em></p><p>[in] Pointer to a string that specifies the filename. If the compiler settings require Unicode, the data type LPCTSTR resolves to LPCWSTR. Otherwise, the string data type resolves to LPCSTR. See Remarks.</p><p><em>Width</em></p><p>[in] Width in pixels. If this value is zero or D3DX_DEFAULT, the dimensions are taken from the file and rounded up to a power of two. If the device supports non-power of 2 textures and D3DX_DEFAULT_NONPOW2 is specified, the size will not be rounded.</p><p><em>Height</em></p><p>[in] Height, in pixels. If this value is zero or D3DX_DEFAULT, the dimensions are taken from the file and rounded up to a power of two. If the device supports non-power of 2 textures and <strong>D3DX_DEFAULT_NONPOW2</strong> is sepcified, the size will not be rounded.</p><p><em>MipLevels</em></p><p>[in] Number of mip levels requested. If this value is zero or D3DX_DEFAULT, a complete mipmap chain is created. If D3DX_FROM_FILE, the size will be taken exactly as it is in the file, and the call will fail if this violates device capabilities.</p><p><em>Usage</em></p><p>[in] 0, D3DUSAGE_RENDERTARGET, or <strong>D3DUSAGE_DYNAMIC</strong>. Setting this flag to <strong>D3DUSAGE_RENDERTARGET</strong> indicates that the surface is to be used as a render target. The resource can then be passed to the pNewRenderTarget parameter of the IDirect3DDevice9::SetRenderTarget method. If either <strong>D3DUSAGE_RENDERTARGET</strong> or <strong>D3DUSAGE_DYNAMIC</strong> is specified, Pool must be set to D3DPOOL_DEFAULT, and the application should check that the device supports this operation by calling IDirect3D9::CheckDeviceFormat. <strong>D3DUSAGE_DYNAMIC</strong> indicates that the surface should be handled dynamically. See Using Dynamic Textures.</p><p><em>Format</em></p><p>[in] Member of the D3DFORMAT enumerated type, describing the requested pixel format for the texture. The returned texture might have a different format from that specified by Format. Applications should check the format of the returned texture. If D3DFMT_UNKNOWN, the format is taken from the file. If D3DFMT_FROM_FILE, the format is taken exactly as it is in the file, and the call will fail if this violates device capabilities.</p><p><em>Pool</em></p><p>[in] Member of the D3DPOOL enumerated type, describing the memory class into which the texture should be placed.</p><p><em>Filter</em></p><p>[in] A combination of one or more D3DX_FILTER constants controlling how the image is filtered. Specifying <strong>D3DX_DEFAULT</strong> for this parameter is the equivalent of specifying D3DX_FILTER_TRIANGLE | D3DX_FILTER_DITHER.</p><p><em>MipFilter</em></p><p>[in] A combination of one or more <strong>D3DX_FILTER</strong> constants controlling how the image is filtered. Specifying D3DX_DEFAULT for this parameter is the equivalent of specifying D3DX_FILTER_BOX. In addition, use bits 27-31 to specify the number of mip levels to be skipped (from the top of the mipmap chain) when a .dds texture is loaded into memory; this allows you to skip up to 32 levels.</p><p><em>ColorKey</em></p><p>[in] D3DCOLOR value to replace with transparent black, or 0 to disable the color key. This is always a 32-bit ARGB color, independent of the source image format. Alpha is significant and should usually be set to FF for opaque color keys. Thus, for opaque black, the value would be equal to 0xFF000000.</p><p><em>pSrcInfo</em></p><p>[in, out] Pointer to a D3DXIMAGE_INFO structure to be filled in with a description of the data in the source image file, or NULL.</p><p><em>pPalette</em></p><p>[out] Pointer to a PALETTEENTRY structure, representing a 256-color palette to fill in, or NULL.</p><p><em>ppTexture</em></p><p>[out] Address of a pointer to an IDirect3DTexture9 interface, representing the created texture object.</p><h4 id=return-values>Return Values
+<a class=header-anchor href=#return-values></a></h4><p>If the function succeeds, the return value is D3D_OK. If the function fails, the return value can be one of the following: D3DERR_INVALIDCALL.</p><p>D3DERR_NOTAVAILABLED3DERR_OUTOFVIDEOMEMORYD3DXERR_INVALIDDATAE_OUTOFMEMORY</p><h4 id=remarks>Remarks
+<a class=header-anchor href=#remarks></a></h4><p>The compiler setting also determines the function version. If Unicode is defined, the function call resolves to D3DXCreateTextureFromFileExW. Otherwise, the function call resolves to D3DXCreateTextureFromFileExA because ANSI strings are being used.</p><p>Use D3DXCheckTextureRequirements to determine if your device can support the texture given the current state.</p><p>This function supports the following file formats: .bmp, .dds, .dib, .hdr, .jpg, .pfm, .png, .ppm, and .tga. See D3DXIMAGE_FILEFORMAT.</p><p>Mipmapped textures automatically have each level filled with the loaded texture. When loading images into mipmapped textures, some devices are unable to go to a 1x1 image and this function will fail. If this happens, then the images need to be loaded manually.</p><p>For the best performance when using <strong>D3DXCreateTextureFromFileEx</strong>:</p><ol><li>Doing image scaling and format conversion at load time can be slow. Store images in the format and resolution they will be used. If the target hardware requires power of 2 dimensions, then create and store images using power of 2 dimensions.</li><li>For mipmap image creation at load time, filter using <strong>D3DX_FILTER_BOX</strong>. A box filter is much faster than other filter types such as <strong>D3DX_FILTER_TRIANGLE</strong>.</li><li>Consider using DDS files. Since DDS files can be used to represent any Direct3D 9 texture format, they are very easy for D3DX to read. Also, they can store mipmaps, so any mipmap-generation algorithms can be used to author the images.</li></ol><p>When skipping mipmap levels while loading a .dds file, use the D3DX_SKIP_DDS_MIP_LEVELS macro to generate the MipFilter value. This macro takes the number of levels to skip and the filter type and returns the filter value, which would then be passed into the MipFilter parameter.</p><p>再来看看参数Usage可以使用的枚举类型D3DUSAGE_RENDERTARGET的详细说明：</p><p>Usage options that identify how resources are to be used.</p><h2 id=usages>Usages
+<a class=header-anchor href=#usages></a></h2><p>The following table summarizes the available usage options.</p><table><thead><tr><th>#define</th><th>Description</th></tr></thead><tbody><tr><td>D3DUSAGE_AUTOGENMIPMAP</td><td>The resource will automatically generate mipmaps. See Automatic Generation of Mipmaps (Direct3D 9). Automatic generation of mipmaps is not supported for volume textures and depth stencil surfaces/textures. This usage is not valid for a resource in system memory (D3DPOOL_SYSTEMMEM).</td></tr><tr><td>D3DUSAGE_DEPTHSTENCIL</td><td>The resource will be a depth stencil buffer. D3DUSAGE_DEPTHSTENCIL can only be used with D3DPOOL_DEFAULT.</td></tr><tr><td>D3DUSAGE_DMAP</td><td>The resource will be a displacement map.</td></tr><tr><td>D3DUSAGE_DONOTCLIP</td><td>Set to indicate that the vertex buffer content will never require clipping. When rendering with buffers that have this flag set, the D3DRS_CLIPPING render state must be set to false.</td></tr><tr><td>D3DUSAGE_DYNAMIC</td><td>Set to indicate that the vertex buffer requires dynamic memory use. This is useful for drivers because it enables them to decide where to place the buffer. In general, static vertex buffers are placed in video memory and dynamic vertex buffers are placed in AGP memory. Note that there is no separate static use. If you do not specify D3DUSAGE_DYNAMIC, the vertex buffer is made static. D3DUSAGE_DYNAMIC is strictly enforced through the D3DLOCK_DISCARD and D3DLOCK_NOOVERWRITE locking flags. As a result, D3DLOCK_DISCARD and D3DLOCK_NOOVERWRITE are valid only on vertex buffers created with D3DUSAGE_DYNAMIC. They are not valid flags on static vertex buffers. For more information, see Managing Resources (Direct3D 9).</td></tr><tr><td>For more information about using dynamic vertex buffers, see Performance Optimizations (Direct3D 9).</td><td></td></tr></tbody></table><p>D3DUSAGE_DYNAMIC and D3DPOOL_MANAGED are incompatible and should not be used together. See D3DPOOL.</p><p>Textures can specify D3DUSAGE_DYNAMIC. However, managed textures cannot use D3DUSAGE_DYNAMIC. For more information about dynamic textures, see Using Dynamic Textures.</p><p>|
+| D3DUSAGE_NPATCHES | Set to indicate that the vertex buffer is to be used for drawing N-patches. |
+| D3DUSAGE_POINTS | Set to indicate that the vertex or index buffer will be used for drawing point sprites. The buffer will be loaded in system memory if software vertex processing is needed to emulate point sprites. |
+| D3DUSAGE_RENDERTARGET | The resource will be a render target. D3DUSAGE_RENDERTARGET can only be used with D3DPOOL_DEFAULT. |
+| D3DUSAGE_RTPATCHES | Set to indicate that the vertex buffer is to be used for drawing high-order primitives. |
+| D3DUSAGE_SOFTWAREPROCESSING | If this flag is used, vertex processing is done in software. If this flag is not used, vertex processing is done in hardware.</p><p>The D3DUSAGE_SOFTWAREPROCESSING flag can be set when mixed-mode or software vertex processing (D3DCREATE_MIXED_VERTEXPROCESSING / D3DCREATE_SOFTWARE_VERTEXPROCESSING) is enabled for that device. D3DUSAGE_SOFTWAREPROCESSING must be set for buffers to be used with software vertex processing in mixed mode, but it should not be set for the best possible performance when using hardware index processing in mixed mode (D3DCREATE_HARDWARE_VERTEXPROCESSING). However, setting D3DUSAGE_SOFTWAREPROCESSING is the only option when a single buffer is used with both hardware and software vertex processing. D3DUSAGE_SOFTWAREPROCESSING is allowed for mixed and software devices.</p><p>D3DUSAGE_SOFTWAREPROCESSING is used with IDirect3D9::CheckDeviceFormat to find out if a particular texture format can be used as a vertex texture during software vertex processing. If it can, the texture must be created in D3DPOOL_SCRATCH.</p><p>|
+| D3DUSAGE_WRITEONLY | Informs the system that the application writes only to the vertex buffer. Using this flag enables the driver to choose the best memory location for efficient write operations and rendering. Attempts to read from a vertex buffer that is created with this capability will fail. Buffers created with D3DPOOL_DEFAULT that do not specify D3DUSAGE_WRITEONLY might suffer a severe performance penalty. |</p><h2 id=usage-and-resource-combinations>Usage and Resource Combinations
+<a class=header-anchor href=#usage-and-resource-combinations></a></h2><p>Usages are either specified when a resource is created, or specified with IDirect3D9::CheckDeviceType to test the capability of an existing resource. The following table identifies which usages can be applied to which resource types.</p><table><thead><tr><th>Usage</th><th>Vertex buffer create</th><th>Index buffer create</th><th>Texture create</th><th>Cube texture create</th><th>Volume texture create</th><th>Surface create</th><th>Check device format</th></tr></thead><tbody><tr><td>D3DUSAGE_AUTOGENMIPMAP</td><td> </td><td> </td><td>x</td><td>x</td><td> </td><td> </td><td>x</td></tr><tr><td>D3DUSAGE_DEPTHSTENCIL</td><td> </td><td> </td><td>x</td><td>x</td><td> </td><td>x</td><td>x</td></tr><tr><td>D3DUSAGE_DMAP</td><td> </td><td> </td><td>x</td><td> </td><td> </td><td> </td><td>x</td></tr><tr><td>D3DUSAGE_DONOTCLIP</td><td>x</td><td>x</td><td> </td><td> </td><td> </td><td> </td><td> </td></tr><tr><td>D3DUSAGE_DYNAMIC</td><td>x</td><td>x</td><td>x</td><td>x</td><td>x</td><td> </td><td>x</td></tr><tr><td>D3DUSAGE_NPATCHES</td><td>x</td><td>x</td><td> </td><td> </td><td> </td><td> </td><td> </td></tr><tr><td>D3DUSAGE_POINTS</td><td>x</td><td>x</td><td> </td><td> </td><td> </td><td> </td><td> </td></tr><tr><td>D3DUSAGE_RTPATCHES</td><td>x</td><td>x</td><td> </td><td> </td><td> </td><td> </td><td> </td></tr><tr><td>D3DUSAGE_RENDERTARGET</td><td> </td><td> </td><td>x</td><td>x</td><td> </td><td>x</td><td>x</td></tr><tr><td>D3DUSAGE_SOFTWAREPROCESSING</td><td>x</td><td>x</td><td>x</td><td>x</td><td>x</td><td> </td><td>x</td></tr><tr><td>D3DUSAGE_WRITEONLY</td><td>x</td><td>x</td><td> </td><td> </td><td> </td><td> </td><td> </td></tr></tbody></table><p>Use <strong>IDirect3D9::CheckDeviceFormat</strong> to check hardware support for these usages.</p><p>Each of the resource creation methods is listed here.</p><ul><li>IDirect3DDevice9::CreateCubeTexture</li><li>IDirect3DDevice9::CreateDepthStencilSurface</li><li>IDirect3DDevice9::CreateIndexBuffer</li><li>IDirect3DDevice9::CreateOffscreenPlainSurface</li><li>IDirect3DDevice9::CreateRenderTarget</li><li>IDirect3DDevice9::CreateTexture</li><li>IDirect3DDevice9::CreateVertexBuffer</li><li>IDirect3DDevice9::CreateVolumeTexture</li></ul><p>The D3DXCreatexxx texturing functions also use some of these constant values for resource creation.</p><p>For more information about pool types and their restrictions with certain usages, see <strong>D3DPOOL</strong>.</p><p>再来看看参数Pool的D3DPOOL枚举类型的详细信息:</p><p>Defines the memory class that holds the buffers for a resource.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt id=hl-1-1><a class=lnlinks href=#hl-1-1>1</a>
+</span><span class=lnt id=hl-1-2><a class=lnlinks href=#hl-1-2>2</a>
+</span><span class=lnt id=hl-1-3><a class=lnlinks href=#hl-1-3>3</a>
+</span><span class=lnt id=hl-1-4><a class=lnlinks href=#hl-1-4>4</a>
+</span><span class=lnt id=hl-1-5><a class=lnlinks href=#hl-1-5>5</a>
+</span><span class=lnt id=hl-1-6><a class=lnlinks href=#hl-1-6>6</a>
+</span><span class=lnt id=hl-1-7><a class=lnlinks href=#hl-1-7>7</a>
+</span><span class=lnt id=hl-1-8><a class=lnlinks href=#hl-1-8>8</a>
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-c++ data-lang=c++><span class=line><span class=cl><span class=k>typedef</span> <span class=k>enum</span> <span class=nc>D3DPOOL</span>
+</span></span><span class=line><span class=cl><span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=n>D3DPOOL_DEFAULT</span> <span class=o>=</span> <span class=mi>0</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>    <span class=n>D3DPOOL_MANAGED</span> <span class=o>=</span> <span class=mi>1</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>    <span class=n>D3DPOOL_SYSTEMMEM</span> <span class=o>=</span> <span class=mi>2</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>    <span class=n>D3DPOOL_SCRATCH</span> <span class=o>=</span> <span class=mi>3</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>    <span class=n>D3DPOOL_FORCE_DWORD</span> <span class=o>=</span> <span class=mh>0x7fffffff</span><span class=p>,</span>
+</span></span><span class=line><span class=cl><span class=p>}</span> <span class=n>D3DPOOL</span><span class=p>,</span> <span class=o>*</span><span class=n>LPD3DPOOL</span><span class=p>;</span></span></span></code></pre></td></tr></table></div></div><h4 id=constants>Constants
+<a class=header-anchor href=#constants></a></h4><p>D3DPOOL_DEFAULT</p><p>Resources are placed in the memory pool most appropriate for the set of usages requested for the given resource. This is usually video memory, including both local video memory and AGP memory. The D3DPOOL_DEFAULT pool is separate from D3DPOOL_MANAGED and D3DPOOL_SYSTEMMEM, and it specifies that the resource is placed in the preferred memory for device access. Note that D3DPOOL_DEFAULT never indicates that either D3DPOOL_MANAGED or D3DPOOL_SYSTEMMEM should be chosen as the memory pool type for this resource. Textures placed in the D3DPOOL_DEFAULT pool cannot be locked unless they are dynamic textures or they are private, FOURCC, driver formats. To access unlockable textures, you must use functions such as IDirect3DDevice9::UpdateSurface, IDirect3DDevice9::UpdateTexture, IDirect3DDevice9::GetFrontBufferData, and IDirect3DDevice9::GetRenderTargetData. D3DPOOL_MANAGED is probably a better choice than D3DPOOL_DEFAULT for most applications. Note that some textures created in driver-proprietary pixel formats, unknown to the Direct3D runtime, can be locked. Also note that - unlike textures - swap chain back buffers, render targets, vertex buffers, and index buffers can be locked. When a device is lost, resources created using D3DPOOL_DEFAULT must be released before calling IDirect3DDevice9::Reset. For more information, see Lost Devices (Direct3D 9).</p><p>When creating resources with D3DPOOL_DEFAULT, if video card memory is already committed, managed resources will be evicted to free enough memory to satisfy the request.</p><p>D3DPOOL_MANAGED</p><p>Resources are copied automatically to device-accessible memory as needed. Managed resources are backed by system memory and do not need to be recreated when a device is lost. See Managing Resources (Direct3D 9) for more information. Managed resources can be locked. Only the system-memory copy is directly modified. Direct3D copies your changes to driver-accessible memory as needed.</p><p>D3DPOOL_SYSTEMMEM</p><p>Resources are placed in memory that is not typically accessible by the Direct3D device. This memory allocation consumes system RAM but does not reduce pageable RAM. These resources do not need to be recreated when a device is lost. Resources in this pool can be locked and can be used as the source for a <strong>IDirect3DDevice9::UpdateSurface</strong> or <strong>IDirect3DDevice9::UpdateTexture</strong> operation to a memory resource created with D3DPOOL_DEFAULT.</p><p>D3DPOOL_SCRATCH</p><p>Resources are placed in system RAM and do not need to be recreated when a device is lost. These resources are not bound by device size or format restrictions. Because of this, these resources cannot be accessed by the Direct3D device nor set as textures or render targets. However, these resources can always be created, locked, and copied.</p><p>D3DPOOL_FORCE_DWORD</p><p>Forces this enumeration to compile to 32 bits in size. Without this value, some compilers would allow this enumeration to compile to a size other than 32 bits. This value is not used.</p><h4 id=remarks-1>Remarks
+<a class=header-anchor href=#remarks-1></a></h4><p>All pool types are valid with all resources. This includes: vertex buffers, index buffers, textures, and surfaces.</p><p>The following tables indicate restrictions on pool types for render targets, depth stencils, and dynamic and mipmap usages. An x indicates a compatible combination; lack of an x indicates incompatibility.</p><table><thead><tr><th>Pool</th><th>D3DUSAGE_RENDERTARGET</th><th>D3DUSAGE_DEPTHSTENCIL</th></tr></thead><tbody><tr><td>D3DPOOL_DEFAULT</td><td>x</td><td>x</td></tr><tr><td>D3DPOOL_MANAGED</td><td> </td><td> </td></tr><tr><td>D3DPOOL_SCRATCH</td><td> </td><td> </td></tr><tr><td>D3DPOOL_SYSTEMMEM</td><td> </td><td> </td></tr></tbody></table><table><thead><tr><th>Pool</th><th>D3DUSAGE_DYNAMIC</th><th>D3DUSAGE_AUTOGENMIPMAP</th></tr></thead><tbody><tr><td>D3DPOOL_DEFAULT</td><td>x</td><td>x</td></tr><tr><td>D3DPOOL_MANAGED</td><td> </td><td>x</td></tr><tr><td>D3DPOOL_SCRATCH</td><td> </td><td> </td></tr><tr><td>D3DPOOL_SYSTEMMEM</td><td>x</td><td> </td></tr></tbody></table><p>For more information about usage types, see D3DUSAGE.</p><p>Pools cannot be mixed for different objects contained within one resource (mip levels in a mipmap) and, when a pool is chosen, it cannot be changed.</p><p>Applications should use D3DPOOL_MANAGED for most static resources because this saves the application from having to deal with lost devices. (Managed resources are restored by the runtime.) This is especially beneficial for unified memory architecture (UMA) systems. Other dynamic resources are not a good match for D3DPOOL_MANAGED. In fact, index buffers and vertex buffers cannot be created using D3DPOOL_MANAGED together with D3DUSAGE_DYNAMIC.</p><p>For dynamic textures, it is sometimes desirable to use a pair of video memory and system memory textures, allocating the video memory using D3DPOOL_DEFAULT and the system memory using D3DPOOL_SYSTEMMEM. You can lock and modify the bits of the system memory texture using a locking method. Then you can update the video memory texture using <strong>IDirect3DDevice9::UpdateTexture</strong>.</p><p>再来看看参数Filter与MipFilter可以使用的枚举类型D3DX_FILTER的详细说明:</p><p>The following flags are used to specify which channels in a texture to operate on.</p><table><thead><tr><th>#define</th><th>Description</th></tr></thead><tbody><tr><td>D3DX_FILTER_NONE</td><td>No scaling or filtering will take place. Pixels outside the bounds of the source image are assumed to be transparent black.</td></tr><tr><td>D3DX_FILTER_POINT</td><td>Each destination pixel is computed by sampling the nearest pixel from the source image.</td></tr><tr><td>D3DX_FILTER_LINEAR</td><td>Each destination pixel is computed by sampling the four nearest pixels from the source image. This filter works best when the scale on both axes is less than two.</td></tr><tr><td>D3DX_FILTER_TRIANGLE</td><td>Every pixel in the source image contributes equally to the destination image. This is the slowest of the filters.</td></tr><tr><td>D3DX_FILTER_BOX</td><td>Each pixel is computed by averaging a 2x2(x2) box of pixels from the source image. This filter works only when the dimensions of the destination are half those of the source, as is the case with mipmaps.</td></tr><tr><td>D3DX_FILTER_MIRROR_U</td><td>Pixels off the edge of the texture on the u-axis should be mirrored, not wrapped.</td></tr><tr><td>D3DX_FILTER_MIRROR_V</td><td>Pixels off the edge of the texture on the v-axis should be mirrored, not wrapped.</td></tr><tr><td>D3DX_FILTER_MIRROR_W</td><td>Pixels off the edge of the texture on the w-axis should be mirrored, not wrapped.</td></tr><tr><td>D3DX_FILTER_MIRROR</td><td>Specifying this flag is the same as specifying the D3DX_FILTER_MIRROR_U, D3DX_FILTER_MIRROR_V, and D3DX_FILTER_MIRROR_W flags.</td></tr><tr><td>D3DX_FILTER_DITHER</td><td>The resulting image must be dithered using a 4x4 ordered dither algorithm.</td></tr><tr><td>D3DX_FILTER_SRGB_IN</td><td>Input data is in sRGB (gamma 2.2) color space.</td></tr><tr><td>D3DX_FILTER_SRGB_OUT</td><td>The output data is in sRGB (gamma 2.2) color space.</td></tr><tr><td>D3DX_FILTER_SRGB</td><td>Same as specifying D3DX_FILTER_SRGB_IN</td></tr></tbody></table><p>Each valid filter must contain exactly one of the following flags: D3DX_FILTER_NONE, D3DX_FILTER_POINT, D3DX_FILTER_LINEAR, D3DX_FILTER_TRIANGLE, or D3DX_FILTER_BOX. In addition, you can use the OR operator to specify zero or more of the following optional flags with a valid filter: D3DX_FILTER_MIRROR_U, D3DX_FILTER_MIRROR_V, D3DX_FILTER_MIRROR_W, D3DX_FILTER_MIRROR, D3DX_FILTER_DITHER, D3DX_FILTER_SRGB_IN, D3DX_FILTER_SRGB_OUT or D3DX_FILTER_SRGB.</p><p>Specifying D3DX_DEFAULT for this parameter is usually the equivalent of specifying D3DX_FILTER_TRIANGLE | D3DX_FILTER_DITHER. However, D3DX_DEFAULT can have different meanings, depending on which method uses the filter. For example:</p><ul><li>When using D3DXCreateTextureFromFileEx, D3DX_DEFAULT maps to D3DX_FILTER_TRIANGLE | D3DX_FILTER_DITHER.</li><li>When using D3DXFilterTexture, D3DX_DEFAULT maps to D3DX_FILTER_BOX if the texture size is a power of two, and D3DX_FILTER_BOX | D3DX_FILTER_DITHER otherwise.</li></ul><p>Reference each method to check for information about how D3DX_DEFAULT filter is mapped.</p><p>参数pSrcInfo的类型D3DXIMAGE_INFO详细说明：</p><p>Returns a description of the original contents of an image file.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt id=hl-2-1><a class=lnlinks href=#hl-2-1>1</a>
+</span><span class=lnt id=hl-2-2><a class=lnlinks href=#hl-2-2>2</a>
+</span><span class=lnt id=hl-2-3><a class=lnlinks href=#hl-2-3>3</a>
+</span><span class=lnt id=hl-2-4><a class=lnlinks href=#hl-2-4>4</a>
+</span><span class=lnt id=hl-2-5><a class=lnlinks href=#hl-2-5>5</a>
+</span><span class=lnt id=hl-2-6><a class=lnlinks href=#hl-2-6>6</a>
+</span><span class=lnt id=hl-2-7><a class=lnlinks href=#hl-2-7>7</a>
+</span><span class=lnt id=hl-2-8><a class=lnlinks href=#hl-2-8>8</a>
+</span><span class=lnt id=hl-2-9><a class=lnlinks href=#hl-2-9>9</a>
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-c++ data-lang=c++><span class=line><span class=cl><span class=k>typedef</span> <span class=k>struct</span> <span class=nc>D3DXIMAGE_INFO</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=n>UINT</span> <span class=n>Width</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=n>UINT</span> <span class=n>Height</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=n>UINT</span> <span class=n>Depth</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=n>UINT</span> <span class=n>MipLevels</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=n>D3DFORMAT</span> <span class=n>Format</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=n>D3DRESOURCETYPE</span> <span class=n>ResourceType</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=n>D3DXIMAGE_FILEFORMAT</span> <span class=n>ImageFileFormat</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span> <span class=n>D3DXIMAGE_INFO</span><span class=p>,</span> <span class=o>*</span><span class=n>LPD3DXIMAGE_INFO</span><span class=p>;</span></span></span></code></pre></td></tr></table></div></div><h4 id=members>Members
+<a class=header-anchor href=#members></a></h4><p><strong>Width</strong></p><p>Width of original image in pixels.</p><p><strong>Height</strong></p><p>Height of original image in pixels.</p><p><strong>Depth</strong></p><p>Depth of original image in pixels.</p><p><strong>MipLevels</strong></p><p>Number of mip levels in original image.</p><p><strong>Format</strong></p><p>A value from the D3DFORMAT enumerated type that most closely describes the data in the original image.</p><p><strong>ResourceType</strong></p><p>Represents the type of the texture stored in the file. It is either D3DRTYPE_TEXTURE, D3DRTYPE_VOLUMETEXTURE, or D3DRTYPE_CubeTexture.</p><p><strong>ImageFileFormat</strong></p><p>Represents the format of the image file.</p><p>参数pPalette的类型PALETTEENTRY的详细说明：</p><p>Specifies the color and usage of an entry in a logical palette.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt id=hl-3-1><a class=lnlinks href=#hl-3-1>1</a>
+</span><span class=lnt id=hl-3-2><a class=lnlinks href=#hl-3-2>2</a>
+</span><span class=lnt id=hl-3-3><a class=lnlinks href=#hl-3-3>3</a>
+</span><span class=lnt id=hl-3-4><a class=lnlinks href=#hl-3-4>4</a>
+</span><span class=lnt id=hl-3-5><a class=lnlinks href=#hl-3-5>5</a>
+</span><span class=lnt id=hl-3-6><a class=lnlinks href=#hl-3-6>6</a>
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-c++ data-lang=c++><span class=line><span class=cl><span class=k>typedef</span> <span class=k>struct</span> <span class=nc>PALETTEENTRY</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=n>BYTE</span> <span class=n>peRed</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=n>BYTE</span> <span class=n>peGreen</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=n>BYTE</span> <span class=n>peBlue</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=n>BYTE</span> <span class=n>peFlags</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span> <span class=n>PALETTEENTRY</span><span class=p>,</span> <span class=o>*</span><span class=n>LPPALETTEENTRY</span><span class=p>;</span></span></span></code></pre></td></tr></table></div></div><h4 id=members-1>Members
+<a class=header-anchor href=#members-1></a></h4><p><strong>peRed</strong></p><p>The red intensity value for the palette entry.</p><p><strong>peGreen</strong></p><p>The green intensity value for the palette entry.</p><p><strong>peBlue</strong></p><p>The blue intensity value for the palette entry.</p><p><strong>peFlags</strong></p><p>The alpha intensity value for the palette entry. Note that as of DirectX 8, this member is treated differently than documented in the Platform SDK.</p><p>当背景色为透明黑色的纹理创建以后，就可以将该纹理对象所表示的图象透明地显示在其他图象的上面。</p><p>此时，需要设置渲染管道流水线的D3DRS_ALPHATESTENABLE状态值为TRUE，以开启Alpha测试。</p><p>D3DRS_ALPHATESTENABLE</p><p>TRUE to enable per pixel alpha testing. If the test passes, the pixel is processed by the frame buffer. Otherwise, all frame-buffer processing is skipped for the pixel.
+The test is done by comparing the incoming alpha value with the reference alpha value, using the comparison function provided by the D3DRS_ALPHAFUNC render state. The reference alpha value is determined by the value set for D3DRS_ALPHAREF. For more information, see Alpha Testing State (Direct3D 9).</p><p>The default value of this parameter is FALSE.</p><p>// enable per pixel alpha testing
+_d3d_device->SetRenderState(D3DRS_ALPHATESTENABLE, TRUE);</p><p>接着设置D3DRS_ALPHAREF的状态为一个0~255范围内的整数值。</p><p>// specifies a reference alpha value against which pixels are tested
+ _d3d_device->SetRenderState(D3DRS_ALPHAREF, 0x01);</p><p>再接着设置3DRS_ALPHAFUNC状态为D3DCMPFUNC的枚举值，决定测试将使用比较方式。</p><p>Defines the supported compare functions.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt id=hl-4-1><a class=lnlinks href=#hl-4-1> 1</a>
+</span><span class=lnt id=hl-4-2><a class=lnlinks href=#hl-4-2> 2</a>
+</span><span class=lnt id=hl-4-3><a class=lnlinks href=#hl-4-3> 3</a>
+</span><span class=lnt id=hl-4-4><a class=lnlinks href=#hl-4-4> 4</a>
+</span><span class=lnt id=hl-4-5><a class=lnlinks href=#hl-4-5> 5</a>
+</span><span class=lnt id=hl-4-6><a class=lnlinks href=#hl-4-6> 6</a>
+</span><span class=lnt id=hl-4-7><a class=lnlinks href=#hl-4-7> 7</a>
+</span><span class=lnt id=hl-4-8><a class=lnlinks href=#hl-4-8> 8</a>
+</span><span class=lnt id=hl-4-9><a class=lnlinks href=#hl-4-9> 9</a>
+</span><span class=lnt id=hl-4-10><a class=lnlinks href=#hl-4-10>10</a>
+</span><span class=lnt id=hl-4-11><a class=lnlinks href=#hl-4-11>11</a>
+</span><span class=lnt id=hl-4-12><a class=lnlinks href=#hl-4-12>12</a>
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-c++ data-lang=c++><span class=line><span class=cl><span class=k>typedef</span> <span class=k>enum</span> <span class=nc>D3DCMPFUNC</span>
+</span></span><span class=line><span class=cl><span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=n>D3DCMP_NEVER</span> <span class=o>=</span> <span class=mi>1</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>    <span class=n>D3DCMP_LESS</span> <span class=o>=</span> <span class=mi>2</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>    <span class=n>D3DCMP_EQUAL</span> <span class=o>=</span> <span class=mi>3</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>    <span class=n>D3DCMP_LESSEQUAL</span> <span class=o>=</span> <span class=mi>4</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>    <span class=n>D3DCMP_GREATER</span> <span class=o>=</span> <span class=mi>5</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>    <span class=n>D3DCMP_NOTEQUAL</span> <span class=o>=</span> <span class=mi>6</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>    <span class=n>D3DCMP_GREATEREQUAL</span> <span class=o>=</span> <span class=mi>7</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>    <span class=n>D3DCMP_ALWAYS</span> <span class=o>=</span> <span class=mi>8</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>    <span class=n>D3DCMP_FORCE_DWORD</span> <span class=o>=</span> <span class=mh>0x7fffffff</span><span class=p>,</span>
+</span></span><span class=line><span class=cl><span class=p>}</span> <span class=n>D3DCMPFUNC</span><span class=p>,</span> <span class=o>*</span><span class=n>LPD3DCMPFUNC</span><span class=p>;</span></span></span></code></pre></td></tr></table></div></div><h4 id=constants-1>Constants
+<a class=header-anchor href=#constants-1></a></h4><p>D3DCMP_NEVER</p><p>Always fail the test.</p><p>D3DCMP_LESS</p><p>Accept the new pixel if its value is less than the value of the current pixel.</p><p>D3DCMP_EQUAL</p><p>Accept the new pixel if its value equals the value of the current pixel.</p><p>D3DCMP_LESSEQUAL</p><p>Accept the new pixel if its value is less than or equal to the value of the current pixel.</p><p>D3DCMP_GREATER</p><p>Accept the new pixel if its value is greater than the value of the current pixel.</p><p>D3DCMP_NOTEQUAL</p><p>Accept the new pixel if its value does not equal the value of the current pixel.</p><p>D3DCMP_GREATEREQUAL</p><p>Accept the new pixel if its value is greater than or equal to the value of the current pixel.</p><p>D3DCMP_ALWAYS</p><p>Always pass the test.</p><p>D3DCMP_FORCE_DWORD</p><p>Forces this enumeration to compile to 32 bits in size. Without this value, some compilers would allow this enumeration to compile to a size other than 32 bits. This value is not used.</p><h4 id=remarks-2>Remarks
+<a class=header-anchor href=#remarks-2></a></h4><p>The values in this enumerated type define the supported compare functions for the D3DRS_ZFUNC, D3DRS_ALPHAFUNC, and D3DRS_STENCILFUNC render states.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt id=hl-5-1><a class=lnlinks href=#hl-5-1>1</a>
+</span><span class=lnt id=hl-5-2><a class=lnlinks href=#hl-5-2>2</a>
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-c++ data-lang=c++><span class=line><span class=cl><span class=c1>// Accept the new pixel if its value is greater than the value of the current pixel
+</span></span></span><span class=line><span class=cl><span class=n>_d3d_device</span><span class=o>-&gt;</span><span class=n>SetRenderState</span><span class=p>(</span><span class=n>D3DRS_ALPHAFUNC</span><span class=p>,</span> <span class=n>D3DCMP_GREATEREQUAL</span><span class=p>);</span></span></span></code></pre></td></tr></table></div></div><hr><p>好了，该死的DirectX API 使用说明介绍终于可以结束了，来看一个具体的例子。</p><p>需要在工程中设置链接d3dx9.lib d3d9.lib dinput8.lib dxguid.lib。
+由于文件中用到了GE_APP和GE_INPUT这两个类，它的具体使用说明请参阅
+<a href=http://www.cppblog.com/lovedday/archive/2007/05/07/23546.html title=主窗口和DirectInput的封装。 rel="noopener external nofollow noreferrer" target=_blank class=exturl>主窗口和DirectInput的封装。</a></p><p>若发现代码中存在错误，敬请指出。</p><p><a href=http://www.cppblog.com/Files/lovedday/TransparentBlend.rar title=源码及素材下载 rel="noopener external nofollow noreferrer" target=_blank class=exturl>源码及素材下载</a></p><p>来看看头文件TransparentBlend.h的定义：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt id=hl-6-1><a class=lnlinks href=#hl-6-1> 1</a>
+</span><span class=lnt id=hl-6-2><a class=lnlinks href=#hl-6-2> 2</a>
+</span><span class=lnt id=hl-6-3><a class=lnlinks href=#hl-6-3> 3</a>
+</span><span class=lnt id=hl-6-4><a class=lnlinks href=#hl-6-4> 4</a>
+</span><span class=lnt id=hl-6-5><a class=lnlinks href=#hl-6-5> 5</a>
+</span><span class=lnt id=hl-6-6><a class=lnlinks href=#hl-6-6> 6</a>
+</span><span class=lnt id=hl-6-7><a class=lnlinks href=#hl-6-7> 7</a>
+</span><span class=lnt id=hl-6-8><a class=lnlinks href=#hl-6-8> 8</a>
+</span><span class=lnt id=hl-6-9><a class=lnlinks href=#hl-6-9> 9</a>
+</span><span class=lnt id=hl-6-10><a class=lnlinks href=#hl-6-10>10</a>
+</span><span class=lnt id=hl-6-11><a class=lnlinks href=#hl-6-11>11</a>
+</span><span class=lnt id=hl-6-12><a class=lnlinks href=#hl-6-12>12</a>
+</span><span class=lnt id=hl-6-13><a class=lnlinks href=#hl-6-13>13</a>
+</span><span class=lnt id=hl-6-14><a class=lnlinks href=#hl-6-14>14</a>
+</span><span class=lnt id=hl-6-15><a class=lnlinks href=#hl-6-15>15</a>
+</span><span class=lnt id=hl-6-16><a class=lnlinks href=#hl-6-16>16</a>
+</span><span class=lnt id=hl-6-17><a class=lnlinks href=#hl-6-17>17</a>
+</span><span class=lnt id=hl-6-18><a class=lnlinks href=#hl-6-18>18</a>
+</span><span class=lnt id=hl-6-19><a class=lnlinks href=#hl-6-19>19</a>
+</span><span class=lnt id=hl-6-20><a class=lnlinks href=#hl-6-20>20</a>
+</span><span class=lnt id=hl-6-21><a class=lnlinks href=#hl-6-21>21</a>
+</span><span class=lnt id=hl-6-22><a class=lnlinks href=#hl-6-22>22</a>
+</span><span class=lnt id=hl-6-23><a class=lnlinks href=#hl-6-23>23</a>
+</span><span class=lnt id=hl-6-24><a class=lnlinks href=#hl-6-24>24</a>
+</span><span class=lnt id=hl-6-25><a class=lnlinks href=#hl-6-25>25</a>
+</span><span class=lnt id=hl-6-26><a class=lnlinks href=#hl-6-26>26</a>
+</span><span class=lnt id=hl-6-27><a class=lnlinks href=#hl-6-27>27</a>
+</span><span class=lnt id=hl-6-28><a class=lnlinks href=#hl-6-28>28</a>
+</span><span class=lnt id=hl-6-29><a class=lnlinks href=#hl-6-29>29</a>
+</span><span class=lnt id=hl-6-30><a class=lnlinks href=#hl-6-30>30</a>
+</span><span class=lnt id=hl-6-31><a class=lnlinks href=#hl-6-31>31</a>
+</span><span class=lnt id=hl-6-32><a class=lnlinks href=#hl-6-32>32</a>
+</span><span class=lnt id=hl-6-33><a class=lnlinks href=#hl-6-33>33</a>
+</span><span class=lnt id=hl-6-34><a class=lnlinks href=#hl-6-34>34</a>
+</span><span class=lnt id=hl-6-35><a class=lnlinks href=#hl-6-35>35</a>
+</span><span class=lnt id=hl-6-36><a class=lnlinks href=#hl-6-36>36</a>
+</span><span class=lnt id=hl-6-37><a class=lnlinks href=#hl-6-37>37</a>
+</span><span class=lnt id=hl-6-38><a class=lnlinks href=#hl-6-38>38</a>
+</span><span class=lnt id=hl-6-39><a class=lnlinks href=#hl-6-39>39</a>
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-c++ data-lang=c++><span class=line><span class=cl><span class=cm>/*************************************************************************************
+</span></span></span><span class=line><span class=cl><span class=cm> [Include File]
+</span></span></span><span class=line><span class=cl><span class=cm>
+</span></span></span><span class=line><span class=cl><span class=cm> PURPOSE: 
+</span></span></span><span class=line><span class=cl><span class=cm>    Defines for Transparent blend.
+</span></span></span><span class=line><span class=cl><span class=cm>*************************************************************************************/</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=cp>#ifndef TRANSPARENT_BLEND_H
+</span></span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=cp>#define TRANSPARENT_BLEND_Hstruct CUSTOM_VERTEX
+</span></span></span><span class=line><span class=cl><span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=kt>float</span> <span class=n>x</span><span class=p>,</span> <span class=n>y</span><span class=p>,</span> <span class=n>z</span><span class=p>,</span> <span class=n>rhw</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=kt>float</span> <span class=n>u</span><span class=p>,</span> <span class=n>v</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>};</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=cp>#define CUSTOM_VERTEX_FVF   (D3DFVF_XYZRHW | D3DFVF_TEX1)
+</span></span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>class</span> <span class=nc>TRANSPARENT_BLEND</span>
+</span></span><span class=line><span class=cl><span class=p>{</span>
+</span></span><span class=line><span class=cl><span class=k>private</span><span class=o>:</span>
+</span></span><span class=line><span class=cl>    <span class=n>IDirect3D9</span><span class=o>*</span> <span class=n>_d3d</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=n>IDirect3DDevice9</span><span class=o>*</span> <span class=n>_d3d_device</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=n>IDirect3DVertexBuffer9</span><span class=o>*</span> <span class=n>_tiger_vertex_buffer</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=n>IDirect3DVertexBuffer9</span><span class=o>*</span> <span class=n>_gun_vertex_buffer</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=n>IDirect3DTexture9</span><span class=o>*</span> <span class=n>_tiger_texture</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=n>IDirect3DTexture9</span><span class=o>*</span> <span class=n>_gun_texture</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=k>public</span><span class=o>:</span>
+</span></span><span class=line><span class=cl>    <span class=kt>float</span> <span class=n>m_gun_pos_x</span><span class=p>,</span> <span class=n>m_gun_pos_y</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=k>public</span><span class=o>:</span>
+</span></span><span class=line><span class=cl>    <span class=n>TRANSPARENT_BLEND</span><span class=p>();</span>
+</span></span><span class=line><span class=cl>    <span class=o>~</span><span class=n>TRANSPARENT_BLEND</span><span class=p>();</span>
+</span></span><span class=line><span class=cl>    <span class=kt>bool</span> <span class=nf>Create_D3D_Device</span><span class=p>(</span><span class=n>HWND</span> <span class=n>hwnd</span><span class=p>,</span> <span class=kt>bool</span> <span class=n>full_screen</span> <span class=o>=</span> <span class=nb>true</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=kt>bool</span> <span class=nf>Init_Tiger_Vertex_Buffer</span><span class=p>();</span>
+</span></span><span class=line><span class=cl>    <span class=kt>bool</span> <span class=nf>Init_Gun_Vertex_Buffer</span><span class=p>();</span>
+</span></span><span class=line><span class=cl>    <span class=kt>bool</span> <span class=nf>Create_All_Texture</span><span class=p>();</span>
+</span></span><span class=line><span class=cl>    <span class=kt>void</span> <span class=nf>Render</span><span class=p>();</span>
+</span></span><span class=line><span class=cl>    <span class=kt>void</span> <span class=nf>Release_COM_Object</span><span class=p>();</span>
+</span></span><span class=line><span class=cl><span class=p>};</span>
+</span></span><span class=line><span class=cl><span class=cp>#endif</span></span></span></code></pre></td></tr></table></div></div><p>再来看看TransparentBlend.cpp的定义：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt id=hl-7-1><a class=lnlinks href=#hl-7-1>  1</a>
+</span><span class=lnt id=hl-7-2><a class=lnlinks href=#hl-7-2>  2</a>
+</span><span class=lnt id=hl-7-3><a class=lnlinks href=#hl-7-3>  3</a>
+</span><span class=lnt id=hl-7-4><a class=lnlinks href=#hl-7-4>  4</a>
+</span><span class=lnt id=hl-7-5><a class=lnlinks href=#hl-7-5>  5</a>
+</span><span class=lnt id=hl-7-6><a class=lnlinks href=#hl-7-6>  6</a>
+</span><span class=lnt id=hl-7-7><a class=lnlinks href=#hl-7-7>  7</a>
+</span><span class=lnt id=hl-7-8><a class=lnlinks href=#hl-7-8>  8</a>
+</span><span class=lnt id=hl-7-9><a class=lnlinks href=#hl-7-9>  9</a>
+</span><span class=lnt id=hl-7-10><a class=lnlinks href=#hl-7-10> 10</a>
+</span><span class=lnt id=hl-7-11><a class=lnlinks href=#hl-7-11> 11</a>
+</span><span class=lnt id=hl-7-12><a class=lnlinks href=#hl-7-12> 12</a>
+</span><span class=lnt id=hl-7-13><a class=lnlinks href=#hl-7-13> 13</a>
+</span><span class=lnt id=hl-7-14><a class=lnlinks href=#hl-7-14> 14</a>
+</span><span class=lnt id=hl-7-15><a class=lnlinks href=#hl-7-15> 15</a>
+</span><span class=lnt id=hl-7-16><a class=lnlinks href=#hl-7-16> 16</a>
+</span><span class=lnt id=hl-7-17><a class=lnlinks href=#hl-7-17> 17</a>
+</span><span class=lnt id=hl-7-18><a class=lnlinks href=#hl-7-18> 18</a>
+</span><span class=lnt id=hl-7-19><a class=lnlinks href=#hl-7-19> 19</a>
+</span><span class=lnt id=hl-7-20><a class=lnlinks href=#hl-7-20> 20</a>
+</span><span class=lnt id=hl-7-21><a class=lnlinks href=#hl-7-21> 21</a>
+</span><span class=lnt id=hl-7-22><a class=lnlinks href=#hl-7-22> 22</a>
+</span><span class=lnt id=hl-7-23><a class=lnlinks href=#hl-7-23> 23</a>
+</span><span class=lnt id=hl-7-24><a class=lnlinks href=#hl-7-24> 24</a>
+</span><span class=lnt id=hl-7-25><a class=lnlinks href=#hl-7-25> 25</a>
+</span><span class=lnt id=hl-7-26><a class=lnlinks href=#hl-7-26> 26</a>
+</span><span class=lnt id=hl-7-27><a class=lnlinks href=#hl-7-27> 27</a>
+</span><span class=lnt id=hl-7-28><a class=lnlinks href=#hl-7-28> 28</a>
+</span><span class=lnt id=hl-7-29><a class=lnlinks href=#hl-7-29> 29</a>
+</span><span class=lnt id=hl-7-30><a class=lnlinks href=#hl-7-30> 30</a>
+</span><span class=lnt id=hl-7-31><a class=lnlinks href=#hl-7-31> 31</a>
+</span><span class=lnt id=hl-7-32><a class=lnlinks href=#hl-7-32> 32</a>
+</span><span class=lnt id=hl-7-33><a class=lnlinks href=#hl-7-33> 33</a>
+</span><span class=lnt id=hl-7-34><a class=lnlinks href=#hl-7-34> 34</a>
+</span><span class=lnt id=hl-7-35><a class=lnlinks href=#hl-7-35> 35</a>
+</span><span class=lnt id=hl-7-36><a class=lnlinks href=#hl-7-36> 36</a>
+</span><span class=lnt id=hl-7-37><a class=lnlinks href=#hl-7-37> 37</a>
+</span><span class=lnt id=hl-7-38><a class=lnlinks href=#hl-7-38> 38</a>
+</span><span class=lnt id=hl-7-39><a class=lnlinks href=#hl-7-39> 39</a>
+</span><span class=lnt id=hl-7-40><a class=lnlinks href=#hl-7-40> 40</a>
+</span><span class=lnt id=hl-7-41><a class=lnlinks href=#hl-7-41> 41</a>
+</span><span class=lnt id=hl-7-42><a class=lnlinks href=#hl-7-42> 42</a>
+</span><span class=lnt id=hl-7-43><a class=lnlinks href=#hl-7-43> 43</a>
+</span><span class=lnt id=hl-7-44><a class=lnlinks href=#hl-7-44> 44</a>
+</span><span class=lnt id=hl-7-45><a class=lnlinks href=#hl-7-45> 45</a>
+</span><span class=lnt id=hl-7-46><a class=lnlinks href=#hl-7-46> 46</a>
+</span><span class=lnt id=hl-7-47><a class=lnlinks href=#hl-7-47> 47</a>
+</span><span class=lnt id=hl-7-48><a class=lnlinks href=#hl-7-48> 48</a>
+</span><span class=lnt id=hl-7-49><a class=lnlinks href=#hl-7-49> 49</a>
+</span><span class=lnt id=hl-7-50><a class=lnlinks href=#hl-7-50> 50</a>
+</span><span class=lnt id=hl-7-51><a class=lnlinks href=#hl-7-51> 51</a>
+</span><span class=lnt id=hl-7-52><a class=lnlinks href=#hl-7-52> 52</a>
+</span><span class=lnt id=hl-7-53><a class=lnlinks href=#hl-7-53> 53</a>
+</span><span class=lnt id=hl-7-54><a class=lnlinks href=#hl-7-54> 54</a>
+</span><span class=lnt id=hl-7-55><a class=lnlinks href=#hl-7-55> 55</a>
+</span><span class=lnt id=hl-7-56><a class=lnlinks href=#hl-7-56> 56</a>
+</span><span class=lnt id=hl-7-57><a class=lnlinks href=#hl-7-57> 57</a>
+</span><span class=lnt id=hl-7-58><a class=lnlinks href=#hl-7-58> 58</a>
+</span><span class=lnt id=hl-7-59><a class=lnlinks href=#hl-7-59> 59</a>
+</span><span class=lnt id=hl-7-60><a class=lnlinks href=#hl-7-60> 60</a>
+</span><span class=lnt id=hl-7-61><a class=lnlinks href=#hl-7-61> 61</a>
+</span><span class=lnt id=hl-7-62><a class=lnlinks href=#hl-7-62> 62</a>
+</span><span class=lnt id=hl-7-63><a class=lnlinks href=#hl-7-63> 63</a>
+</span><span class=lnt id=hl-7-64><a class=lnlinks href=#hl-7-64> 64</a>
+</span><span class=lnt id=hl-7-65><a class=lnlinks href=#hl-7-65> 65</a>
+</span><span class=lnt id=hl-7-66><a class=lnlinks href=#hl-7-66> 66</a>
+</span><span class=lnt id=hl-7-67><a class=lnlinks href=#hl-7-67> 67</a>
+</span><span class=lnt id=hl-7-68><a class=lnlinks href=#hl-7-68> 68</a>
+</span><span class=lnt id=hl-7-69><a class=lnlinks href=#hl-7-69> 69</a>
+</span><span class=lnt id=hl-7-70><a class=lnlinks href=#hl-7-70> 70</a>
+</span><span class=lnt id=hl-7-71><a class=lnlinks href=#hl-7-71> 71</a>
+</span><span class=lnt id=hl-7-72><a class=lnlinks href=#hl-7-72> 72</a>
+</span><span class=lnt id=hl-7-73><a class=lnlinks href=#hl-7-73> 73</a>
+</span><span class=lnt id=hl-7-74><a class=lnlinks href=#hl-7-74> 74</a>
+</span><span class=lnt id=hl-7-75><a class=lnlinks href=#hl-7-75> 75</a>
+</span><span class=lnt id=hl-7-76><a class=lnlinks href=#hl-7-76> 76</a>
+</span><span class=lnt id=hl-7-77><a class=lnlinks href=#hl-7-77> 77</a>
+</span><span class=lnt id=hl-7-78><a class=lnlinks href=#hl-7-78> 78</a>
+</span><span class=lnt id=hl-7-79><a class=lnlinks href=#hl-7-79> 79</a>
+</span><span class=lnt id=hl-7-80><a class=lnlinks href=#hl-7-80> 80</a>
+</span><span class=lnt id=hl-7-81><a class=lnlinks href=#hl-7-81> 81</a>
+</span><span class=lnt id=hl-7-82><a class=lnlinks href=#hl-7-82> 82</a>
+</span><span class=lnt id=hl-7-83><a class=lnlinks href=#hl-7-83> 83</a>
+</span><span class=lnt id=hl-7-84><a class=lnlinks href=#hl-7-84> 84</a>
+</span><span class=lnt id=hl-7-85><a class=lnlinks href=#hl-7-85> 85</a>
+</span><span class=lnt id=hl-7-86><a class=lnlinks href=#hl-7-86> 86</a>
+</span><span class=lnt id=hl-7-87><a class=lnlinks href=#hl-7-87> 87</a>
+</span><span class=lnt id=hl-7-88><a class=lnlinks href=#hl-7-88> 88</a>
+</span><span class=lnt id=hl-7-89><a class=lnlinks href=#hl-7-89> 89</a>
+</span><span class=lnt id=hl-7-90><a class=lnlinks href=#hl-7-90> 90</a>
+</span><span class=lnt id=hl-7-91><a class=lnlinks href=#hl-7-91> 91</a>
+</span><span class=lnt id=hl-7-92><a class=lnlinks href=#hl-7-92> 92</a>
+</span><span class=lnt id=hl-7-93><a class=lnlinks href=#hl-7-93> 93</a>
+</span><span class=lnt id=hl-7-94><a class=lnlinks href=#hl-7-94> 94</a>
+</span><span class=lnt id=hl-7-95><a class=lnlinks href=#hl-7-95> 95</a>
+</span><span class=lnt id=hl-7-96><a class=lnlinks href=#hl-7-96> 96</a>
+</span><span class=lnt id=hl-7-97><a class=lnlinks href=#hl-7-97> 97</a>
+</span><span class=lnt id=hl-7-98><a class=lnlinks href=#hl-7-98> 98</a>
+</span><span class=lnt id=hl-7-99><a class=lnlinks href=#hl-7-99> 99</a>
+</span><span class=lnt id=hl-7-100><a class=lnlinks href=#hl-7-100>100</a>
+</span><span class=lnt id=hl-7-101><a class=lnlinks href=#hl-7-101>101</a>
+</span><span class=lnt id=hl-7-102><a class=lnlinks href=#hl-7-102>102</a>
+</span><span class=lnt id=hl-7-103><a class=lnlinks href=#hl-7-103>103</a>
+</span><span class=lnt id=hl-7-104><a class=lnlinks href=#hl-7-104>104</a>
+</span><span class=lnt id=hl-7-105><a class=lnlinks href=#hl-7-105>105</a>
+</span><span class=lnt id=hl-7-106><a class=lnlinks href=#hl-7-106>106</a>
+</span><span class=lnt id=hl-7-107><a class=lnlinks href=#hl-7-107>107</a>
+</span><span class=lnt id=hl-7-108><a class=lnlinks href=#hl-7-108>108</a>
+</span><span class=lnt id=hl-7-109><a class=lnlinks href=#hl-7-109>109</a>
+</span><span class=lnt id=hl-7-110><a class=lnlinks href=#hl-7-110>110</a>
+</span><span class=lnt id=hl-7-111><a class=lnlinks href=#hl-7-111>111</a>
+</span><span class=lnt id=hl-7-112><a class=lnlinks href=#hl-7-112>112</a>
+</span><span class=lnt id=hl-7-113><a class=lnlinks href=#hl-7-113>113</a>
+</span><span class=lnt id=hl-7-114><a class=lnlinks href=#hl-7-114>114</a>
+</span><span class=lnt id=hl-7-115><a class=lnlinks href=#hl-7-115>115</a>
+</span><span class=lnt id=hl-7-116><a class=lnlinks href=#hl-7-116>116</a>
+</span><span class=lnt id=hl-7-117><a class=lnlinks href=#hl-7-117>117</a>
+</span><span class=lnt id=hl-7-118><a class=lnlinks href=#hl-7-118>118</a>
+</span><span class=lnt id=hl-7-119><a class=lnlinks href=#hl-7-119>119</a>
+</span><span class=lnt id=hl-7-120><a class=lnlinks href=#hl-7-120>120</a>
+</span><span class=lnt id=hl-7-121><a class=lnlinks href=#hl-7-121>121</a>
+</span><span class=lnt id=hl-7-122><a class=lnlinks href=#hl-7-122>122</a>
+</span><span class=lnt id=hl-7-123><a class=lnlinks href=#hl-7-123>123</a>
+</span><span class=lnt id=hl-7-124><a class=lnlinks href=#hl-7-124>124</a>
+</span><span class=lnt id=hl-7-125><a class=lnlinks href=#hl-7-125>125</a>
+</span><span class=lnt id=hl-7-126><a class=lnlinks href=#hl-7-126>126</a>
+</span><span class=lnt id=hl-7-127><a class=lnlinks href=#hl-7-127>127</a>
+</span><span class=lnt id=hl-7-128><a class=lnlinks href=#hl-7-128>128</a>
+</span><span class=lnt id=hl-7-129><a class=lnlinks href=#hl-7-129>129</a>
+</span><span class=lnt id=hl-7-130><a class=lnlinks href=#hl-7-130>130</a>
+</span><span class=lnt id=hl-7-131><a class=lnlinks href=#hl-7-131>131</a>
+</span><span class=lnt id=hl-7-132><a class=lnlinks href=#hl-7-132>132</a>
+</span><span class=lnt id=hl-7-133><a class=lnlinks href=#hl-7-133>133</a>
+</span><span class=lnt id=hl-7-134><a class=lnlinks href=#hl-7-134>134</a>
+</span><span class=lnt id=hl-7-135><a class=lnlinks href=#hl-7-135>135</a>
+</span><span class=lnt id=hl-7-136><a class=lnlinks href=#hl-7-136>136</a>
+</span><span class=lnt id=hl-7-137><a class=lnlinks href=#hl-7-137>137</a>
+</span><span class=lnt id=hl-7-138><a class=lnlinks href=#hl-7-138>138</a>
+</span><span class=lnt id=hl-7-139><a class=lnlinks href=#hl-7-139>139</a>
+</span><span class=lnt id=hl-7-140><a class=lnlinks href=#hl-7-140>140</a>
+</span><span class=lnt id=hl-7-141><a class=lnlinks href=#hl-7-141>141</a>
+</span><span class=lnt id=hl-7-142><a class=lnlinks href=#hl-7-142>142</a>
+</span><span class=lnt id=hl-7-143><a class=lnlinks href=#hl-7-143>143</a>
+</span><span class=lnt id=hl-7-144><a class=lnlinks href=#hl-7-144>144</a>
+</span><span class=lnt id=hl-7-145><a class=lnlinks href=#hl-7-145>145</a>
+</span><span class=lnt id=hl-7-146><a class=lnlinks href=#hl-7-146>146</a>
+</span><span class=lnt id=hl-7-147><a class=lnlinks href=#hl-7-147>147</a>
+</span><span class=lnt id=hl-7-148><a class=lnlinks href=#hl-7-148>148</a>
+</span><span class=lnt id=hl-7-149><a class=lnlinks href=#hl-7-149>149</a>
+</span><span class=lnt id=hl-7-150><a class=lnlinks href=#hl-7-150>150</a>
+</span><span class=lnt id=hl-7-151><a class=lnlinks href=#hl-7-151>151</a>
+</span><span class=lnt id=hl-7-152><a class=lnlinks href=#hl-7-152>152</a>
+</span><span class=lnt id=hl-7-153><a class=lnlinks href=#hl-7-153>153</a>
+</span><span class=lnt id=hl-7-154><a class=lnlinks href=#hl-7-154>154</a>
+</span><span class=lnt id=hl-7-155><a class=lnlinks href=#hl-7-155>155</a>
+</span><span class=lnt id=hl-7-156><a class=lnlinks href=#hl-7-156>156</a>
+</span><span class=lnt id=hl-7-157><a class=lnlinks href=#hl-7-157>157</a>
+</span><span class=lnt id=hl-7-158><a class=lnlinks href=#hl-7-158>158</a>
+</span><span class=lnt id=hl-7-159><a class=lnlinks href=#hl-7-159>159</a>
+</span><span class=lnt id=hl-7-160><a class=lnlinks href=#hl-7-160>160</a>
+</span><span class=lnt id=hl-7-161><a class=lnlinks href=#hl-7-161>161</a>
+</span><span class=lnt id=hl-7-162><a class=lnlinks href=#hl-7-162>162</a>
+</span><span class=lnt id=hl-7-163><a class=lnlinks href=#hl-7-163>163</a>
+</span><span class=lnt id=hl-7-164><a class=lnlinks href=#hl-7-164>164</a>
+</span><span class=lnt id=hl-7-165><a class=lnlinks href=#hl-7-165>165</a>
+</span><span class=lnt id=hl-7-166><a class=lnlinks href=#hl-7-166>166</a>
+</span><span class=lnt id=hl-7-167><a class=lnlinks href=#hl-7-167>167</a>
+</span><span class=lnt id=hl-7-168><a class=lnlinks href=#hl-7-168>168</a>
+</span><span class=lnt id=hl-7-169><a class=lnlinks href=#hl-7-169>169</a>
+</span><span class=lnt id=hl-7-170><a class=lnlinks href=#hl-7-170>170</a>
+</span><span class=lnt id=hl-7-171><a class=lnlinks href=#hl-7-171>171</a>
+</span><span class=lnt id=hl-7-172><a class=lnlinks href=#hl-7-172>172</a>
+</span><span class=lnt id=hl-7-173><a class=lnlinks href=#hl-7-173>173</a>
+</span><span class=lnt id=hl-7-174><a class=lnlinks href=#hl-7-174>174</a>
+</span><span class=lnt id=hl-7-175><a class=lnlinks href=#hl-7-175>175</a>
+</span><span class=lnt id=hl-7-176><a class=lnlinks href=#hl-7-176>176</a>
+</span><span class=lnt id=hl-7-177><a class=lnlinks href=#hl-7-177>177</a>
+</span><span class=lnt id=hl-7-178><a class=lnlinks href=#hl-7-178>178</a>
+</span><span class=lnt id=hl-7-179><a class=lnlinks href=#hl-7-179>179</a>
+</span><span class=lnt id=hl-7-180><a class=lnlinks href=#hl-7-180>180</a>
+</span><span class=lnt id=hl-7-181><a class=lnlinks href=#hl-7-181>181</a>
+</span><span class=lnt id=hl-7-182><a class=lnlinks href=#hl-7-182>182</a>
+</span><span class=lnt id=hl-7-183><a class=lnlinks href=#hl-7-183>183</a>
+</span><span class=lnt id=hl-7-184><a class=lnlinks href=#hl-7-184>184</a>
+</span><span class=lnt id=hl-7-185><a class=lnlinks href=#hl-7-185>185</a>
+</span><span class=lnt id=hl-7-186><a class=lnlinks href=#hl-7-186>186</a>
+</span><span class=lnt id=hl-7-187><a class=lnlinks href=#hl-7-187>187</a>
+</span><span class=lnt id=hl-7-188><a class=lnlinks href=#hl-7-188>188</a>
+</span><span class=lnt id=hl-7-189><a class=lnlinks href=#hl-7-189>189</a>
+</span><span class=lnt id=hl-7-190><a class=lnlinks href=#hl-7-190>190</a>
+</span><span class=lnt id=hl-7-191><a class=lnlinks href=#hl-7-191>191</a>
+</span><span class=lnt id=hl-7-192><a class=lnlinks href=#hl-7-192>192</a>
+</span><span class=lnt id=hl-7-193><a class=lnlinks href=#hl-7-193>193</a>
+</span><span class=lnt id=hl-7-194><a class=lnlinks href=#hl-7-194>194</a>
+</span><span class=lnt id=hl-7-195><a class=lnlinks href=#hl-7-195>195</a>
+</span><span class=lnt id=hl-7-196><a class=lnlinks href=#hl-7-196>196</a>
+</span><span class=lnt id=hl-7-197><a class=lnlinks href=#hl-7-197>197</a>
+</span><span class=lnt id=hl-7-198><a class=lnlinks href=#hl-7-198>198</a>
+</span><span class=lnt id=hl-7-199><a class=lnlinks href=#hl-7-199>199</a>
+</span><span class=lnt id=hl-7-200><a class=lnlinks href=#hl-7-200>200</a>
+</span><span class=lnt id=hl-7-201><a class=lnlinks href=#hl-7-201>201</a>
+</span><span class=lnt id=hl-7-202><a class=lnlinks href=#hl-7-202>202</a>
+</span><span class=lnt id=hl-7-203><a class=lnlinks href=#hl-7-203>203</a>
+</span><span class=lnt id=hl-7-204><a class=lnlinks href=#hl-7-204>204</a>
+</span><span class=lnt id=hl-7-205><a class=lnlinks href=#hl-7-205>205</a>
+</span><span class=lnt id=hl-7-206><a class=lnlinks href=#hl-7-206>206</a>
+</span><span class=lnt id=hl-7-207><a class=lnlinks href=#hl-7-207>207</a>
+</span><span class=lnt id=hl-7-208><a class=lnlinks href=#hl-7-208>208</a>
+</span><span class=lnt id=hl-7-209><a class=lnlinks href=#hl-7-209>209</a>
+</span><span class=lnt id=hl-7-210><a class=lnlinks href=#hl-7-210>210</a>
+</span><span class=lnt id=hl-7-211><a class=lnlinks href=#hl-7-211>211</a>
+</span><span class=lnt id=hl-7-212><a class=lnlinks href=#hl-7-212>212</a>
+</span><span class=lnt id=hl-7-213><a class=lnlinks href=#hl-7-213>213</a>
+</span><span class=lnt id=hl-7-214><a class=lnlinks href=#hl-7-214>214</a>
+</span><span class=lnt id=hl-7-215><a class=lnlinks href=#hl-7-215>215</a>
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-c++ data-lang=c++><span class=line><span class=cl><span class=cm>/*************************************************************************************
+</span></span></span><span class=line><span class=cl><span class=cm> [Implement File]
+</span></span></span><span class=line><span class=cl><span class=cm>
+</span></span></span><span class=line><span class=cl><span class=cm> PURPOSE: 
+</span></span></span><span class=line><span class=cl><span class=cm>    Defines for Transparent blend.
+</span></span></span><span class=line><span class=cl><span class=cm>*************************************************************************************/</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=cp>#include</span> <span class=cpf>&#34;GE_COMMON.h&#34;</span><span class=cp>
+</span></span></span><span class=line><span class=cl><span class=cp>#include</span> <span class=cpf>&#34;TransparentBlend.h&#34;</span><span class=cp>
+</span></span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>//------------------------------------------------------------------------------------
+</span></span></span><span class=line><span class=cl><span class=c1>// Constructor, initialize data.
+</span></span></span><span class=line><span class=cl><span class=c1>//------------------------------------------------------------------------------------
+</span></span></span><span class=line><span class=cl><span class=n>TRANSPARENT_BLEND</span><span class=o>::</span><span class=n>TRANSPARENT_BLEND</span><span class=p>()</span>
+</span></span><span class=line><span class=cl><span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=n>_d3d</span>                 <span class=o>=</span> <span class=nb>NULL</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=n>_d3d_device</span>          <span class=o>=</span> <span class=nb>NULL</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=n>_tiger_vertex_buffer</span> <span class=o>=</span> <span class=nb>NULL</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=n>_gun_vertex_buffer</span>   <span class=o>=</span> <span class=nb>NULL</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=n>_tiger_texture</span>       <span class=o>=</span> <span class=nb>NULL</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=n>_gun_texture</span>         <span class=o>=</span> <span class=nb>NULL</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=n>m_gun_pos_x</span>  <span class=o>=</span> <span class=mf>500.0f</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=n>m_gun_pos_y</span>  <span class=o>=</span> <span class=mf>180.0f</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>//------------------------------------------------------------------------------------
+</span></span></span><span class=line><span class=cl><span class=c1>// Destructor, release COM object.
+</span></span></span><span class=line><span class=cl><span class=c1>//------------------------------------------------------------------------------------
+</span></span></span><span class=line><span class=cl><span class=n>TRANSPARENT_BLEND</span><span class=o>::~</span><span class=n>TRANSPARENT_BLEND</span><span class=p>()</span>
+</span></span><span class=line><span class=cl><span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=n>Release_COM_Object</span><span class=p>();</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=c1>//------------------------------------------------------------------------------------
+</span></span></span><span class=line><span class=cl><span class=c1>// Create direct3D interface and direct3D device.
+</span></span></span><span class=line><span class=cl><span class=c1>//------------------------------------------------------------------------------------
+</span></span></span><span class=line><span class=cl><span class=kt>bool</span> <span class=n>TRANSPARENT_BLEND</span><span class=o>::</span><span class=n>Create_D3D_Device</span><span class=p>(</span><span class=n>HWND</span> <span class=n>hwnd</span><span class=p>,</span> <span class=kt>bool</span> <span class=n>full_screen</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=c1>// Create a IDirect3D9 object and returns an interace to it.
+</span></span></span><span class=line><span class=cl>    <span class=n>_d3d</span> <span class=o>=</span> <span class=n>Direct3DCreate9</span><span class=p>(</span><span class=n>D3D_SDK_VERSION</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=k>if</span><span class=p>(</span><span class=n>_d3d</span> <span class=o>==</span> <span class=nb>NULL</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=k>return</span> <span class=nb>false</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=c1>// retrieve adapter capability
+</span></span></span><span class=line><span class=cl>    <span class=n>D3DCAPS9</span> <span class=n>d3d_caps</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=n>_d3d</span><span class=o>-&gt;</span><span class=n>GetDeviceCaps</span><span class=p>(</span><span class=n>D3DADAPTER_DEFAULT</span><span class=p>,</span> <span class=n>D3DDEVTYPE_HAL</span><span class=p>,</span> <span class=o>&amp;</span><span class=n>d3d_caps</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=kt>bool</span> <span class=n>hardware_process_enable</span> <span class=o>=</span> <span class=p>(</span><span class=n>d3d_caps</span><span class=p>.</span><span class=n>DevCaps</span> <span class=o>&amp;</span> <span class=n>D3DDEVCAPS_HWTRANSFORMANDLIGHT</span> <span class=o>?</span> <span class=nb>true</span> <span class=o>:</span> <span class=nb>false</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=c1>// Retrieves the current display mode of the adapter.
+</span></span></span><span class=line><span class=cl>    <span class=n>D3DDISPLAYMODE</span> <span class=n>display_mode</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=k>if</span><span class=p>(</span><span class=n>FAILED</span><span class=p>(</span><span class=n>_d3d</span><span class=o>-&gt;</span><span class=n>GetAdapterDisplayMode</span><span class=p>(</span><span class=n>D3DADAPTER_DEFAULT</span><span class=p>,</span> <span class=o>&amp;</span><span class=n>display_mode</span><span class=p>)))</span>
+</span></span><span class=line><span class=cl>        <span class=k>return</span> <span class=nb>false</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=c1>// set present parameter for direct3D device
+</span></span></span><span class=line><span class=cl>    <span class=n>D3DPRESENT_PARAMETERS</span> <span class=n>present_param</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=n>ZeroMemory</span><span class=p>(</span><span class=o>&amp;</span><span class=n>present_param</span><span class=p>,</span> <span class=k>sizeof</span><span class=p>(</span><span class=n>present_param</span><span class=p>));</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=n>present_param</span><span class=p>.</span><span class=n>BackBufferWidth</span>      <span class=o>=</span> <span class=n>WINDOW_WIDTH</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=n>present_param</span><span class=p>.</span><span class=n>BackBufferHeight</span>     <span class=o>=</span> <span class=n>WINDOW_HEIGHT</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=n>present_param</span><span class=p>.</span><span class=n>BackBufferFormat</span>     <span class=o>=</span> <span class=n>display_mode</span><span class=p>.</span><span class=n>Format</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=n>present_param</span><span class=p>.</span><span class=n>BackBufferCount</span>      <span class=o>=</span> <span class=mi>1</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=n>present_param</span><span class=p>.</span><span class=n>hDeviceWindow</span>        <span class=o>=</span> <span class=n>hwnd</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=n>present_param</span><span class=p>.</span><span class=n>Windowed</span>             <span class=o>=</span> <span class=o>!</span><span class=n>full_screen</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=n>present_param</span><span class=p>.</span><span class=n>SwapEffect</span>           <span class=o>=</span> <span class=n>D3DSWAPEFFECT_FLIP</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=n>present_param</span><span class=p>.</span><span class=n>PresentationInterval</span> <span class=o>=</span> <span class=n>D3DPRESENT_INTERVAL_DEFAULT</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=c1>// Creates a device to represent the display adapter.
+</span></span></span><span class=line><span class=cl>    <span class=n>DWORD</span> <span class=n>behavior_flags</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=n>behavior_flags</span> <span class=o>=</span> <span class=n>hardware_process_enable</span> <span class=o>?</span> <span class=nl>D3DCREATE_HARDWARE_VERTEXPROCESSING</span> <span class=p>:</span> <span class=n>D3DCREATE_SOFTWARE_VERTEXPROCESSING</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=k>if</span><span class=p>(</span><span class=n>FAILED</span><span class=p>(</span><span class=n>_d3d</span><span class=o>-&gt;</span><span class=n>CreateDevice</span><span class=p>(</span><span class=n>D3DADAPTER_DEFAULT</span><span class=p>,</span> <span class=n>D3DDEVTYPE_HAL</span><span class=p>,</span> <span class=n>hwnd</span><span class=p>,</span> <span class=n>behavior_flags</span><span class=p>,</span> 
+</span></span><span class=line><span class=cl>                                 <span class=o>&amp;</span><span class=n>present_param</span><span class=p>,</span> <span class=o>&amp;</span><span class=n>_d3d_device</span><span class=p>)))</span>
+</span></span><span class=line><span class=cl>    <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=k>return</span> <span class=nb>false</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>    <span class=c1>// create successfully
+</span></span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=nb>true</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=c1>//------------------------------------------------------------------------------------
+</span></span></span><span class=line><span class=cl><span class=c1>// Initialize vertex buffer for tiger image. 
+</span></span></span><span class=line><span class=cl><span class=c1>//------------------------------------------------------------------------------------
+</span></span></span><span class=line><span class=cl><span class=kt>bool</span> <span class=n>TRANSPARENT_BLEND</span><span class=o>::</span><span class=n>Init_Tiger_Vertex_Buffer</span><span class=p>()</span>
+</span></span><span class=line><span class=cl><span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=n>CUSTOM_VERTEX</span> <span class=n>tiger_vertex</span><span class=p>[]</span> <span class=o>=</span>
+</span></span><span class=line><span class=cl>    <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=p>{</span><span class=mf>0.0f</span><span class=p>,</span>   <span class=mf>0.0f</span><span class=p>,</span>   <span class=mf>0.0f</span><span class=p>,</span> <span class=mf>1.0f</span><span class=p>,</span> <span class=mf>0.0f</span><span class=p>,</span> <span class=mf>0.0f</span><span class=p>},</span>
+</span></span><span class=line><span class=cl>        <span class=p>{</span><span class=mf>800.0f</span><span class=p>,</span> <span class=mf>0.0f</span><span class=p>,</span>   <span class=mf>0.0f</span><span class=p>,</span> <span class=mf>1.0f</span><span class=p>,</span> <span class=mf>1.0f</span><span class=p>,</span> <span class=mf>0.0f</span><span class=p>},</span>
+</span></span><span class=line><span class=cl>        <span class=p>{</span><span class=mf>0.0f</span><span class=p>,</span>   <span class=mf>600.0f</span><span class=p>,</span> <span class=mf>0.0f</span><span class=p>,</span> <span class=mf>1.0f</span><span class=p>,</span> <span class=mf>0.0f</span><span class=p>,</span> <span class=mf>1.0f</span><span class=p>},</span>
+</span></span><span class=line><span class=cl>        <span class=p>{</span><span class=mf>800.0f</span><span class=p>,</span> <span class=mf>600.0f</span><span class=p>,</span> <span class=mf>0.0f</span><span class=p>,</span> <span class=mf>1.0f</span><span class=p>,</span> <span class=mf>1.0f</span><span class=p>,</span> <span class=mf>1.0f</span><span class=p>}</span>
+</span></span><span class=line><span class=cl>    <span class=p>};</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=n>BYTE</span><span class=o>*</span> <span class=n>vertex_data</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=c1>// create vertex buffer
+</span></span></span><span class=line><span class=cl>    <span class=k>if</span><span class=p>(</span><span class=n>FAILED</span><span class=p>(</span><span class=n>_d3d_device</span><span class=o>-&gt;</span><span class=n>CreateVertexBuffer</span><span class=p>(</span><span class=mi>4</span> <span class=o>*</span> <span class=k>sizeof</span><span class=p>(</span><span class=n>CUSTOM_VERTEX</span><span class=p>),</span> <span class=mi>0</span><span class=p>,</span> <span class=n>CUSTOM_VERTEX_FVF</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>                            <span class=n>D3DPOOL_MANAGED</span><span class=p>,</span> <span class=o>&amp;</span><span class=n>_tiger_vertex_buffer</span><span class=p>,</span> <span class=nb>NULL</span><span class=p>)))</span>
+</span></span><span class=line><span class=cl>    <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=k>return</span> <span class=nb>false</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>    <span class=c1>// get data pointer to vertex buffer
+</span></span></span><span class=line><span class=cl>    <span class=k>if</span><span class=p>(</span><span class=n>FAILED</span><span class=p>(</span><span class=n>_tiger_vertex_buffer</span><span class=o>-&gt;</span><span class=n>Lock</span><span class=p>(</span><span class=mi>0</span><span class=p>,</span> <span class=mi>0</span><span class=p>,</span> <span class=p>(</span><span class=kt>void</span> <span class=o>**</span><span class=p>)</span> <span class=o>&amp;</span><span class=n>vertex_data</span><span class=p>,</span> <span class=mi>0</span><span class=p>)))</span>
+</span></span><span class=line><span class=cl>        <span class=k>return</span> <span class=nb>false</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=c1>// copy custom vertex data into vertex buffer
+</span></span></span><span class=line><span class=cl>    <span class=n>memcpy</span><span class=p>(</span><span class=n>vertex_data</span><span class=p>,</span> <span class=n>tiger_vertex</span><span class=p>,</span> <span class=k>sizeof</span><span class=p>(</span><span class=n>tiger_vertex</span><span class=p>));</span>
+</span></span><span class=line><span class=cl>    <span class=c1>// unlock vertex buffer
+</span></span></span><span class=line><span class=cl>    <span class=n>_tiger_vertex_buffer</span><span class=o>-&gt;</span><span class=n>Unlock</span><span class=p>();</span>
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=nb>true</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=c1>//------------------------------------------------------------------------------------
+</span></span></span><span class=line><span class=cl><span class=c1>// Initialize vertex buffer for gun image. 
+</span></span></span><span class=line><span class=cl><span class=c1>//------------------------------------------------------------------------------------
+</span></span></span><span class=line><span class=cl><span class=kt>bool</span> <span class=n>TRANSPARENT_BLEND</span><span class=o>::</span><span class=n>Init_Gun_Vertex_Buffer</span><span class=p>()</span>
+</span></span><span class=line><span class=cl><span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=n>CUSTOM_VERTEX</span> <span class=n>gun_vertex</span><span class=p>[]</span> <span class=o>=</span>
+</span></span><span class=line><span class=cl>    <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=p>{</span><span class=n>m_gun_pos_x</span><span class=p>,</span>        <span class=n>m_gun_pos_y</span><span class=p>,</span>         <span class=mf>0.0f</span><span class=p>,</span>   <span class=mf>1.0f</span><span class=p>,</span>   <span class=mf>0.0f</span><span class=p>,</span>   <span class=mf>0.0f</span><span class=p>},</span>
+</span></span><span class=line><span class=cl>        <span class=p>{</span><span class=n>m_gun_pos_x</span><span class=o>+</span><span class=mf>130.0f</span><span class=p>,</span> <span class=n>m_gun_pos_y</span><span class=p>,</span>         <span class=mf>0.0f</span><span class=p>,</span>   <span class=mf>1.0f</span><span class=p>,</span>   <span class=mf>1.0f</span><span class=p>,</span>   <span class=mf>0.0f</span><span class=p>},</span>
+</span></span><span class=line><span class=cl>        <span class=p>{</span><span class=n>m_gun_pos_x</span><span class=p>,</span>        <span class=n>m_gun_pos_y</span><span class=o>+</span><span class=mf>130.0f</span><span class=p>,</span>  <span class=mf>0.0f</span><span class=p>,</span>   <span class=mf>1.0f</span><span class=p>,</span>   <span class=mf>0.0f</span><span class=p>,</span>   <span class=mf>1.0f</span><span class=p>},</span>
+</span></span><span class=line><span class=cl>        <span class=p>{</span><span class=n>m_gun_pos_x</span><span class=o>+</span><span class=mf>130.0f</span><span class=p>,</span> <span class=n>m_gun_pos_y</span><span class=o>+</span><span class=mf>130.0f</span><span class=p>,</span>  <span class=mf>0.0f</span><span class=p>,</span>   <span class=mf>1.0f</span><span class=p>,</span>   <span class=mf>1.0f</span><span class=p>,</span>   <span class=mf>1.0f</span><span class=p>}</span>
+</span></span><span class=line><span class=cl>    <span class=p>};</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=n>BYTE</span><span class=o>*</span> <span class=n>vertex_data</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=c1>// create vertex buffer
+</span></span></span><span class=line><span class=cl>    <span class=k>if</span><span class=p>(</span><span class=n>FAILED</span><span class=p>(</span><span class=n>_d3d_device</span><span class=o>-&gt;</span><span class=n>CreateVertexBuffer</span><span class=p>(</span><span class=mi>4</span> <span class=o>*</span> <span class=k>sizeof</span><span class=p>(</span><span class=n>CUSTOM_VERTEX</span><span class=p>),</span> <span class=mi>0</span><span class=p>,</span> <span class=n>CUSTOM_VERTEX_FVF</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>                            <span class=n>D3DPOOL_MANAGED</span><span class=p>,</span> <span class=o>&amp;</span><span class=n>_gun_vertex_buffer</span><span class=p>,</span> <span class=nb>NULL</span><span class=p>)))</span>
+</span></span><span class=line><span class=cl>    <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=k>return</span> <span class=nb>false</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>    <span class=c1>// get data pointer to vertex buffer
+</span></span></span><span class=line><span class=cl>    <span class=k>if</span><span class=p>(</span><span class=n>FAILED</span><span class=p>(</span><span class=n>_gun_vertex_buffer</span><span class=o>-&gt;</span><span class=n>Lock</span><span class=p>(</span><span class=mi>0</span><span class=p>,</span> <span class=mi>0</span><span class=p>,</span> <span class=p>(</span><span class=kt>void</span> <span class=o>**</span><span class=p>)</span> <span class=o>&amp;</span><span class=n>vertex_data</span><span class=p>,</span> <span class=mi>0</span><span class=p>)))</span>
+</span></span><span class=line><span class=cl>        <span class=k>return</span> <span class=nb>false</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=c1>// copy custom vertex data into vertex buffer
+</span></span></span><span class=line><span class=cl>    <span class=n>memcpy</span><span class=p>(</span><span class=n>vertex_data</span><span class=p>,</span> <span class=n>gun_vertex</span><span class=p>,</span> <span class=k>sizeof</span><span class=p>(</span><span class=n>gun_vertex</span><span class=p>));</span>
+</span></span><span class=line><span class=cl>    <span class=c1>// unlock vertex buffer
+</span></span></span><span class=line><span class=cl>    <span class=n>_gun_vertex_buffer</span><span class=o>-&gt;</span><span class=n>Unlock</span><span class=p>();</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=nb>true</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>//------------------------------------------------------------------------------------
+</span></span></span><span class=line><span class=cl><span class=c1>// Create all texture interfaces from file.
+</span></span></span><span class=line><span class=cl><span class=c1>//------------------------------------------------------------------------------------
+</span></span></span><span class=line><span class=cl><span class=kt>bool</span> <span class=n>TRANSPARENT_BLEND</span><span class=o>::</span><span class=n>Create_All_Texture</span><span class=p>()</span>
+</span></span><span class=line><span class=cl><span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=c1>// Creates tiger texture from file
+</span></span></span><span class=line><span class=cl>    <span class=k>if</span><span class=p>(</span><span class=n>FAILED</span><span class=p>(</span><span class=n>D3DXCreateTextureFromFile</span><span class=p>(</span><span class=n>_d3d_device</span><span class=p>,</span> <span class=s>&#34;tiger.jpg&#34;</span><span class=p>,</span> <span class=o>&amp;</span><span class=n>_tiger_texture</span><span class=p>)))</span>
+</span></span><span class=line><span class=cl>    <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=n>MessageBox</span><span class=p>(</span><span class=nb>NULL</span><span class=p>,</span> <span class=s>&#34;Create texture interface for image tiger failed.&#34;</span><span class=p>,</span> <span class=s>&#34;ERROR&#34;</span><span class=p>,</span> <span class=n>MB_OK</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>        <span class=k>return</span> <span class=nb>false</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>    <span class=c1>// Creates gun texture from file
+</span></span></span><span class=line><span class=cl>    <span class=k>if</span><span class=p>(</span><span class=n>FAILED</span><span class=p>(</span><span class=n>D3DXCreateTextureFromFileEx</span><span class=p>(</span>
+</span></span><span class=line><span class=cl>        <span class=n>_d3d_device</span><span class=p>,</span>        <span class=c1>// Pointer to an IDirect3DDevice9 interface
+</span></span></span><span class=line><span class=cl>        <span class=s>&#34;gun.bmp&#34;</span><span class=p>,</span>          <span class=c1>// Pointer to a string that specifies the filename
+</span></span></span><span class=line><span class=cl>        <span class=n>D3DX_DEFAULT</span><span class=p>,</span>       <span class=c1>// Width in pixels
+</span></span></span><span class=line><span class=cl>        <span class=n>D3DX_DEFAULT</span><span class=p>,</span>       <span class=c1>// Height in pixels.
+</span></span></span><span class=line><span class=cl>        <span class=n>D3DX_DEFAULT</span><span class=p>,</span>       <span class=c1>// Number of mip levels requested, D3DX_DEFAULT means a complete mipmap chain is created.
+</span></span></span><span class=line><span class=cl>        <span class=mi>0</span><span class=p>,</span>                  <span class=c1>// Usage
+</span></span></span><span class=line><span class=cl>        <span class=n>D3DFMT_A8R8G8B8</span><span class=p>,</span>    <span class=c1>// describing the requested pixel format for the texture
+</span></span></span><span class=line><span class=cl>        <span class=n>D3DPOOL_MANAGED</span><span class=p>,</span>    <span class=c1>// describing the memory class into which the texture should be placed
+</span></span></span><span class=line><span class=cl>        <span class=n>D3DX_FILTER_TRIANGLE</span><span class=p>,</span>           <span class=c1>// how the image is filtered (Filter)
+</span></span></span><span class=line><span class=cl>        <span class=n>D3DX_FILTER_TRIANGLE</span><span class=p>,</span>           <span class=c1>// how the image is filtered (MipFilter)
+</span></span></span><span class=line><span class=cl>        <span class=n>D3DCOLOR_RGBA</span><span class=p>(</span><span class=mi>0</span><span class=p>,</span> <span class=mi>255</span><span class=p>,</span> <span class=mi>0</span><span class=p>,</span> <span class=mi>255</span><span class=p>),</span>  <span class=c1>// D3DCOLOR value to replace with transparent black
+</span></span></span><span class=line><span class=cl>        <span class=nb>NULL</span><span class=p>,</span>               <span class=c1>// Pointer to a D3DXIMAGE_INFO structure to be filled in with a description of the data 
+</span></span></span><span class=line><span class=cl>                            <span class=c1>// in the source image file
+</span></span></span><span class=line><span class=cl>        <span class=nb>NULL</span><span class=p>,</span>               <span class=c1>// Pointer to a PALETTEENTRY structure, representing a 256-color palette to fill in
+</span></span></span><span class=line><span class=cl>        <span class=o>&amp;</span><span class=n>_gun_texture</span><span class=p>)))</span>    <span class=c1>// Address of a pointer to an IDirect3DTexture9 interface
+</span></span></span><span class=line><span class=cl>    <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=n>MessageBox</span><span class=p>(</span><span class=nb>NULL</span><span class=p>,</span> <span class=s>&#34;Create texture interface for image gun failed.&#34;</span><span class=p>,</span> <span class=s>&#34;ERROR&#34;</span><span class=p>,</span> <span class=n>MB_OK</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>        <span class=k>return</span> <span class=nb>false</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=nb>true</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=c1>//------------------------------------------------------------------------------------
+</span></span></span><span class=line><span class=cl><span class=c1>// Render image tiger and gun.
+</span></span></span><span class=line><span class=cl><span class=c1>//------------------------------------------------------------------------------------
+</span></span></span><span class=line><span class=cl><span class=kt>void</span> <span class=n>TRANSPARENT_BLEND</span><span class=o>::</span><span class=n>Render</span><span class=p>()</span>
+</span></span><span class=line><span class=cl><span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=k>if</span><span class=p>(</span><span class=n>_d3d_device</span> <span class=o>==</span> <span class=nb>NULL</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=k>return</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=c1>// clear back surface with color black
+</span></span></span><span class=line><span class=cl>    <span class=n>_d3d_device</span><span class=o>-&gt;</span><span class=n>Clear</span><span class=p>(</span><span class=mi>0</span><span class=p>,</span> <span class=nb>NULL</span><span class=p>,</span> <span class=n>D3DCLEAR_TARGET</span><span class=p>,</span> <span class=n>D3DCOLOR_XRGB</span><span class=p>(</span><span class=mi>0</span><span class=p>,</span> <span class=mi>0</span><span class=p>,</span> <span class=mi>0</span><span class=p>),</span> <span class=mf>1.0</span><span class=p>,</span> <span class=mi>0</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=c1>// indicate d3d device begin draw scene
+</span></span></span><span class=line><span class=cl>    <span class=n>_d3d_device</span><span class=o>-&gt;</span><span class=n>BeginScene</span><span class=p>();</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=c1>// 1) draw for image tiger
+</span></span></span><span class=line><span class=cl>    <span class=c1>// Binds a vertex buffer to a device data stream.
+</span></span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=n>_d3d_device</span><span class=o>-&gt;</span><span class=n>SetStreamSource</span><span class=p>(</span><span class=mi>0</span><span class=p>,</span> <span class=n>_tiger_vertex_buffer</span><span class=p>,</span> <span class=mi>0</span><span class=p>,</span> <span class=k>sizeof</span><span class=p>(</span><span class=n>CUSTOM_VERTEX</span><span class=p>));</span><span class=c1>// Sets the current vertex stream declaration.
+</span></span></span><span class=line><span class=cl>    <span class=n>_d3d_device</span><span class=o>-&gt;</span><span class=n>SetFVF</span><span class=p>(</span><span class=n>CUSTOM_VERTEX_FVF</span><span class=p>);</span><span class=c1>// Assigns a texture to a stage for a device.
+</span></span></span><span class=line><span class=cl>    <span class=n>_d3d_device</span><span class=o>-&gt;</span><span class=n>SetTexture</span><span class=p>(</span><span class=mi>0</span><span class=p>,</span> <span class=n>_tiger_texture</span><span class=p>);</span><span class=c1>// draw tiger image
+</span></span></span><span class=line><span class=cl>    <span class=n>_d3d_device</span><span class=o>-&gt;</span><span class=n>DrawPrimitive</span><span class=p>(</span><span class=n>D3DPT_TRIANGLESTRIP</span><span class=p>,</span> <span class=mi>0</span><span class=p>,</span> <span class=mi>2</span><span class=p>);</span><span class=c1>// 2) draw for image gun
+</span></span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=c1>// Binds a vertex buffer to a device data stream
+</span></span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=n>_d3d_device</span><span class=o>-&gt;</span><span class=n>SetStreamSource</span><span class=p>(</span><span class=mi>0</span><span class=p>,</span> <span class=n>_gun_vertex_buffer</span><span class=p>,</span> <span class=mi>0</span><span class=p>,</span> <span class=k>sizeof</span><span class=p>(</span><span class=n>CUSTOM_VERTEX</span><span class=p>));</span><span class=c1>// Assigns a texture to a stage for a device
+</span></span></span><span class=line><span class=cl>    <span class=n>_d3d_device</span><span class=o>-&gt;</span><span class=n>SetTexture</span><span class=p>(</span><span class=mi>0</span><span class=p>,</span> <span class=n>_gun_texture</span><span class=p>);</span><span class=c1>// enable per pixel alpha testing
+</span></span></span><span class=line><span class=cl>    <span class=n>_d3d_device</span><span class=o>-&gt;</span><span class=n>SetRenderState</span><span class=p>(</span><span class=n>D3DRS_ALPHATESTENABLE</span><span class=p>,</span> <span class=n>TRUE</span><span class=p>);</span><span class=c1>// specifies a reference alpha value against which pixels are tested
+</span></span></span><span class=line><span class=cl>    <span class=n>_d3d_device</span><span class=o>-&gt;</span><span class=n>SetRenderState</span><span class=p>(</span><span class=n>D3DRS_ALPHAREF</span><span class=p>,</span> <span class=mh>0x01</span><span class=p>);</span><span class=c1>// Accept the new pixel if its value is greater than the value of the current pixel
+</span></span></span><span class=line><span class=cl>    <span class=n>_d3d_device</span><span class=o>-&gt;</span><span class=n>SetRenderState</span><span class=p>(</span><span class=n>D3DRS_ALPHAFUNC</span><span class=p>,</span> <span class=n>D3DCMP_GREATEREQUAL</span><span class=p>);</span>    <span class=c1>// draw gun image
+</span></span></span><span class=line><span class=cl>    <span class=n>_d3d_device</span><span class=o>-&gt;</span><span class=n>DrawPrimitive</span><span class=p>(</span><span class=n>D3DPT_TRIANGLESTRIP</span><span class=p>,</span> <span class=mi>0</span><span class=p>,</span> <span class=mi>2</span><span class=p>);</span><span class=c1>// disable per pixel alpha testing now
+</span></span></span><span class=line><span class=cl>    <span class=n>_d3d_device</span><span class=o>-&gt;</span><span class=n>SetRenderState</span><span class=p>(</span><span class=n>D3DRS_ALPHATESTENABLE</span><span class=p>,</span> <span class=n>FALSE</span><span class=p>);</span><span class=c1>// indicate d3d device to end scene
+</span></span></span><span class=line><span class=cl>    <span class=n>_d3d_device</span><span class=o>-&gt;</span><span class=n>EndScene</span><span class=p>();</span><span class=c1>// Presents the contents of the next buffer in the sequence of back buffers owned by the device.
+</span></span></span><span class=line><span class=cl>    <span class=n>_d3d_device</span><span class=o>-&gt;</span><span class=n>Present</span><span class=p>(</span><span class=nb>NULL</span><span class=p>,</span> <span class=nb>NULL</span><span class=p>,</span> <span class=nb>NULL</span><span class=p>,</span> <span class=nb>NULL</span><span class=p>);</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=c1>//------------------------------------------------------------------------------------
+</span></span></span><span class=line><span class=cl><span class=c1>// Release all COM object.
+</span></span></span><span class=line><span class=cl><span class=c1>//------------------------------------------------------------------------------------
+</span></span></span><span class=line><span class=cl><span class=kt>void</span> <span class=n>TRANSPARENT_BLEND</span><span class=o>::</span><span class=n>Release_COM_Object</span><span class=p>()</span>
+</span></span><span class=line><span class=cl><span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=n>Safe_Release</span><span class=p>(</span><span class=n>_tiger_texture</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=n>Safe_Release</span><span class=p>(</span><span class=n>_gun_texture</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=n>Safe_Release</span><span class=p>(</span><span class=n>_tiger_vertex_buffer</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=n>Safe_Release</span><span class=p>(</span><span class=n>_gun_vertex_buffer</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=n>Safe_Release</span><span class=p>(</span><span class=n>_d3d_device</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=n>Safe_Release</span><span class=p>(</span><span class=n>_d3d</span><span class=p>);</span>
+</span></span><span class=line><span class=cl><span class=p>}</span></span></span></code></pre></td></tr></table></div></div><p>注释很详尽，看懂应该没问题了。</p><p>来看看测试文件main.cpp的定义：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt id=hl-8-1><a class=lnlinks href=#hl-8-1> 1</a>
+</span><span class=lnt id=hl-8-2><a class=lnlinks href=#hl-8-2> 2</a>
+</span><span class=lnt id=hl-8-3><a class=lnlinks href=#hl-8-3> 3</a>
+</span><span class=lnt id=hl-8-4><a class=lnlinks href=#hl-8-4> 4</a>
+</span><span class=lnt id=hl-8-5><a class=lnlinks href=#hl-8-5> 5</a>
+</span><span class=lnt id=hl-8-6><a class=lnlinks href=#hl-8-6> 6</a>
+</span><span class=lnt id=hl-8-7><a class=lnlinks href=#hl-8-7> 7</a>
+</span><span class=lnt id=hl-8-8><a class=lnlinks href=#hl-8-8> 8</a>
+</span><span class=lnt id=hl-8-9><a class=lnlinks href=#hl-8-9> 9</a>
+</span><span class=lnt id=hl-8-10><a class=lnlinks href=#hl-8-10>10</a>
+</span><span class=lnt id=hl-8-11><a class=lnlinks href=#hl-8-11>11</a>
+</span><span class=lnt id=hl-8-12><a class=lnlinks href=#hl-8-12>12</a>
+</span><span class=lnt id=hl-8-13><a class=lnlinks href=#hl-8-13>13</a>
+</span><span class=lnt id=hl-8-14><a class=lnlinks href=#hl-8-14>14</a>
+</span><span class=lnt id=hl-8-15><a class=lnlinks href=#hl-8-15>15</a>
+</span><span class=lnt id=hl-8-16><a class=lnlinks href=#hl-8-16>16</a>
+</span><span class=lnt id=hl-8-17><a class=lnlinks href=#hl-8-17>17</a>
+</span><span class=lnt id=hl-8-18><a class=lnlinks href=#hl-8-18>18</a>
+</span><span class=lnt id=hl-8-19><a class=lnlinks href=#hl-8-19>19</a>
+</span><span class=lnt id=hl-8-20><a class=lnlinks href=#hl-8-20>20</a>
+</span><span class=lnt id=hl-8-21><a class=lnlinks href=#hl-8-21>21</a>
+</span><span class=lnt id=hl-8-22><a class=lnlinks href=#hl-8-22>22</a>
+</span><span class=lnt id=hl-8-23><a class=lnlinks href=#hl-8-23>23</a>
+</span><span class=lnt id=hl-8-24><a class=lnlinks href=#hl-8-24>24</a>
+</span><span class=lnt id=hl-8-25><a class=lnlinks href=#hl-8-25>25</a>
+</span><span class=lnt id=hl-8-26><a class=lnlinks href=#hl-8-26>26</a>
+</span><span class=lnt id=hl-8-27><a class=lnlinks href=#hl-8-27>27</a>
+</span><span class=lnt id=hl-8-28><a class=lnlinks href=#hl-8-28>28</a>
+</span><span class=lnt id=hl-8-29><a class=lnlinks href=#hl-8-29>29</a>
+</span><span class=lnt id=hl-8-30><a class=lnlinks href=#hl-8-30>30</a>
+</span><span class=lnt id=hl-8-31><a class=lnlinks href=#hl-8-31>31</a>
+</span><span class=lnt id=hl-8-32><a class=lnlinks href=#hl-8-32>32</a>
+</span><span class=lnt id=hl-8-33><a class=lnlinks href=#hl-8-33>33</a>
+</span><span class=lnt id=hl-8-34><a class=lnlinks href=#hl-8-34>34</a>
+</span><span class=lnt id=hl-8-35><a class=lnlinks href=#hl-8-35>35</a>
+</span><span class=lnt id=hl-8-36><a class=lnlinks href=#hl-8-36>36</a>
+</span><span class=lnt id=hl-8-37><a class=lnlinks href=#hl-8-37>37</a>
+</span><span class=lnt id=hl-8-38><a class=lnlinks href=#hl-8-38>38</a>
+</span><span class=lnt id=hl-8-39><a class=lnlinks href=#hl-8-39>39</a>
+</span><span class=lnt id=hl-8-40><a class=lnlinks href=#hl-8-40>40</a>
+</span><span class=lnt id=hl-8-41><a class=lnlinks href=#hl-8-41>41</a>
+</span><span class=lnt id=hl-8-42><a class=lnlinks href=#hl-8-42>42</a>
+</span><span class=lnt id=hl-8-43><a class=lnlinks href=#hl-8-43>43</a>
+</span><span class=lnt id=hl-8-44><a class=lnlinks href=#hl-8-44>44</a>
+</span><span class=lnt id=hl-8-45><a class=lnlinks href=#hl-8-45>45</a>
+</span><span class=lnt id=hl-8-46><a class=lnlinks href=#hl-8-46>46</a>
+</span><span class=lnt id=hl-8-47><a class=lnlinks href=#hl-8-47>47</a>
+</span><span class=lnt id=hl-8-48><a class=lnlinks href=#hl-8-48>48</a>
+</span><span class=lnt id=hl-8-49><a class=lnlinks href=#hl-8-49>49</a>
+</span><span class=lnt id=hl-8-50><a class=lnlinks href=#hl-8-50>50</a>
+</span><span class=lnt id=hl-8-51><a class=lnlinks href=#hl-8-51>51</a>
+</span><span class=lnt id=hl-8-52><a class=lnlinks href=#hl-8-52>52</a>
+</span><span class=lnt id=hl-8-53><a class=lnlinks href=#hl-8-53>53</a>
+</span><span class=lnt id=hl-8-54><a class=lnlinks href=#hl-8-54>54</a>
+</span><span class=lnt id=hl-8-55><a class=lnlinks href=#hl-8-55>55</a>
+</span><span class=lnt id=hl-8-56><a class=lnlinks href=#hl-8-56>56</a>
+</span><span class=lnt id=hl-8-57><a class=lnlinks href=#hl-8-57>57</a>
+</span><span class=lnt id=hl-8-58><a class=lnlinks href=#hl-8-58>58</a>
+</span><span class=lnt id=hl-8-59><a class=lnlinks href=#hl-8-59>59</a>
+</span><span class=lnt id=hl-8-60><a class=lnlinks href=#hl-8-60>60</a>
+</span><span class=lnt id=hl-8-61><a class=lnlinks href=#hl-8-61>61</a>
+</span><span class=lnt id=hl-8-62><a class=lnlinks href=#hl-8-62>62</a>
+</span><span class=lnt id=hl-8-63><a class=lnlinks href=#hl-8-63>63</a>
+</span><span class=lnt id=hl-8-64><a class=lnlinks href=#hl-8-64>64</a>
+</span><span class=lnt id=hl-8-65><a class=lnlinks href=#hl-8-65>65</a>
+</span><span class=lnt id=hl-8-66><a class=lnlinks href=#hl-8-66>66</a>
+</span><span class=lnt id=hl-8-67><a class=lnlinks href=#hl-8-67>67</a>
+</span><span class=lnt id=hl-8-68><a class=lnlinks href=#hl-8-68>68</a>
+</span><span class=lnt id=hl-8-69><a class=lnlinks href=#hl-8-69>69</a>
+</span><span class=lnt id=hl-8-70><a class=lnlinks href=#hl-8-70>70</a>
+</span><span class=lnt id=hl-8-71><a class=lnlinks href=#hl-8-71>71</a>
+</span><span class=lnt id=hl-8-72><a class=lnlinks href=#hl-8-72>72</a>
+</span><span class=lnt id=hl-8-73><a class=lnlinks href=#hl-8-73>73</a>
+</span><span class=lnt id=hl-8-74><a class=lnlinks href=#hl-8-74>74</a>
+</span><span class=lnt id=hl-8-75><a class=lnlinks href=#hl-8-75>75</a>
+</span><span class=lnt id=hl-8-76><a class=lnlinks href=#hl-8-76>76</a>
+</span><span class=lnt id=hl-8-77><a class=lnlinks href=#hl-8-77>77</a>
+</span><span class=lnt id=hl-8-78><a class=lnlinks href=#hl-8-78>78</a>
+</span><span class=lnt id=hl-8-79><a class=lnlinks href=#hl-8-79>79</a>
+</span><span class=lnt id=hl-8-80><a class=lnlinks href=#hl-8-80>80</a>
+</span><span class=lnt id=hl-8-81><a class=lnlinks href=#hl-8-81>81</a>
+</span><span class=lnt id=hl-8-82><a class=lnlinks href=#hl-8-82>82</a>
+</span><span class=lnt id=hl-8-83><a class=lnlinks href=#hl-8-83>83</a>
+</span><span class=lnt id=hl-8-84><a class=lnlinks href=#hl-8-84>84</a>
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=line><span class=cl><span class=cm>/*************************************************************************************
+</span></span></span><span class=line><span class=cl><span class=cm> [Implement File]
+</span></span></span><span class=line><span class=cl><span class=cm>
+</span></span></span><span class=line><span class=cl><span class=cm> PURPOSE: 
+</span></span></span><span class=line><span class=cl><span class=cm>    Test for transparent blending.
+</span></span></span><span class=line><span class=cl><span class=cm>*************************************************************************************/</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=cp>#define DIRECTINPUT_VERSION 0x0800
+</span></span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=cp>#include</span> <span class=cpf>&#34;GE_COMMON.h&#34;</span><span class=cp>
+</span></span></span><span class=line><span class=cl><span class=cp>#include</span> <span class=cpf>&#34;GE_APP.h&#34;</span><span class=cp>
+</span></span></span><span class=line><span class=cl><span class=cp>#include</span> <span class=cpf>&#34;GE_INPUT.h&#34;</span><span class=cp>
+</span></span></span><span class=line><span class=cl><span class=cp>#include</span> <span class=cpf>&#34;TransparentBlend.h&#34;</span><span class=cp>
+</span></span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=cp>#pragma warning(disable : 4305 4996)
+</span></span></span><span class=line><span class=cl><span class=kt>int</span> <span class=n>WINAPI</span> <span class=nf>WinMain</span><span class=p>(</span><span class=n>HINSTANCE</span> <span class=n>instance</span><span class=p>,</span> <span class=n>HINSTANCE</span><span class=p>,</span> <span class=n>LPSTR</span> <span class=n>cmd_line</span><span class=p>,</span> <span class=kt>int</span> <span class=n>cmd_show</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=n>GE_APP</span> <span class=n>ge_app</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=n>GE_INPUT</span> <span class=n>ge_input</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=n>TRANSPARENT_BLEND</span> <span class=n>tb</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=n>MSG</span> <span class=n>msg</span> <span class=o>=</span> <span class=p>{</span><span class=mi>0</span><span class=p>};</span><span class=c1>// create window
+</span></span></span><span class=line><span class=cl>    <span class=k>if</span><span class=p>(</span><span class=o>!</span> <span class=n>ge_app</span><span class=p>.</span><span class=nf>Create_Window</span><span class=p>(</span><span class=s>&#34;Transparent blending test&#34;</span><span class=p>,</span> <span class=n>instance</span><span class=p>,</span> <span class=n>cmd_show</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>        <span class=k>return</span> <span class=nb>false</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=n>HWND</span> <span class=n>hwnd</span> <span class=o>=</span> <span class=n>ge_app</span><span class=p>.</span><span class=nf>Get_Window_Handle</span><span class=p>();</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=nf>SetWindowPos</span><span class=p>(</span><span class=n>hwnd</span><span class=p>,</span> <span class=mi>0</span><span class=p>,</span> <span class=mi>0</span><span class=p>,</span><span class=mi>0</span><span class=p>,</span><span class=mi>0</span><span class=p>,</span><span class=mi>0</span><span class=p>,</span> <span class=n>SWP_NOSIZE</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=nf>SetCursorPos</span><span class=p>(</span><span class=mi>0</span><span class=p>,</span> <span class=mi>0</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=c1>// create direct input
+</span></span></span><span class=line><span class=cl>    <span class=n>ge_input</span><span class=p>.</span><span class=nf>Create_Input</span><span class=p>(</span><span class=n>instance</span><span class=p>,</span> <span class=n>hwnd</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=c1>// Create direct3D interface and direct3D device.
+</span></span></span><span class=line><span class=cl>    <span class=k>if</span><span class=p>(</span><span class=o>!</span> <span class=n>tb</span><span class=p>.</span><span class=nf>Create_D3D_Device</span><span class=p>(</span><span class=n>hwnd</span><span class=p>,</span> <span class=nb>false</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>        <span class=k>return</span> <span class=nb>false</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=c1>// initialize vertex buffer for tiger
+</span></span></span><span class=line><span class=cl>    <span class=k>if</span><span class=p>(</span><span class=o>!</span> <span class=n>tb</span><span class=p>.</span><span class=nf>Init_Tiger_Vertex_Buffer</span><span class=p>())</span>
+</span></span><span class=line><span class=cl>        <span class=k>return</span> <span class=nb>false</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=c1>// initialize vertex buffer for gun
+</span></span></span><span class=line><span class=cl>    <span class=k>if</span><span class=p>(</span><span class=o>!</span> <span class=n>tb</span><span class=p>.</span><span class=nf>Init_Gun_Vertex_Buffer</span><span class=p>())</span>
+</span></span><span class=line><span class=cl>        <span class=k>return</span> <span class=nb>false</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=c1>// Create all texture interfaces from file.
+</span></span></span><span class=line><span class=cl>    <span class=n>tb</span><span class=p>.</span><span class=nf>Create_All_Texture</span><span class=p>();</span>
+</span></span><span class=line><span class=cl>    <span class=c1>// draw tiger and gun
+</span></span></span><span class=line><span class=cl>    <span class=n>tb</span><span class=p>.</span><span class=nf>Render</span><span class=p>();</span>
+</span></span><span class=line><span class=cl>    <span class=k>while</span><span class=p>(</span><span class=n>msg</span><span class=p>.</span><span class=n>message</span> <span class=o>!=</span> <span class=n>WM_QUIT</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=k>if</span><span class=p>(</span><span class=nf>PeekMessage</span><span class=p>(</span><span class=o>&amp;</span><span class=n>msg</span><span class=p>,</span> <span class=nb>NULL</span><span class=p>,</span> <span class=mi>0</span><span class=p>,</span><span class=mi>0</span> <span class=p>,</span> <span class=n>PM_REMOVE</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>        <span class=p>{</span>
+</span></span><span class=line><span class=cl>            <span class=nf>TranslateMessage</span><span class=p>(</span><span class=o>&amp;</span><span class=n>msg</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>            <span class=nf>DispatchMessage</span><span class=p>(</span><span class=o>&amp;</span><span class=n>msg</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>        <span class=p>}</span>
+</span></span><span class=line><span class=cl>        <span class=k>else</span>
+</span></span><span class=line><span class=cl>        <span class=p>{</span>
+</span></span><span class=line><span class=cl>            <span class=c1>// get keyboard input
+</span></span></span><span class=line><span class=cl>            <span class=k>if</span><span class=p>(</span><span class=n>ge_input</span><span class=p>.</span><span class=nf>Read_Keyboard</span><span class=p>())</span>
+</span></span><span class=line><span class=cl>            <span class=p>{</span>
+</span></span><span class=line><span class=cl>                <span class=k>if</span><span class=p>(</span><span class=n>ge_input</span><span class=p>.</span><span class=nf>Is_Key_Pressed</span><span class=p>(</span><span class=n>DIK_ESCAPE</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>                    <span class=nf>PostQuitMessage</span><span class=p>(</span><span class=mi>0</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>                <span class=kt>bool</span> <span class=n>key_right_pressed</span>  <span class=o>=</span> <span class=n>ge_input</span><span class=p>.</span><span class=nf>Is_Key_Pressed</span><span class=p>(</span><span class=n>DIK_RIGHT</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>                <span class=kt>bool</span> <span class=n>key_left_pressed</span>   <span class=o>=</span> <span class=n>ge_input</span><span class=p>.</span><span class=nf>Is_Key_Pressed</span><span class=p>(</span><span class=n>DIK_LEFT</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>                <span class=kt>bool</span> <span class=n>key_up_pressed</span>     <span class=o>=</span> <span class=n>ge_input</span><span class=p>.</span><span class=nf>Is_Key_Pressed</span><span class=p>(</span><span class=n>DIK_UP</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>                <span class=kt>bool</span> <span class=n>key_down_pressed</span>   <span class=o>=</span> <span class=n>ge_input</span><span class=p>.</span><span class=nf>Is_Key_Pressed</span><span class=p>(</span><span class=n>DIK_DOWN</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>                <span class=k>if</span><span class=p>(</span><span class=n>key_right_pressed</span> <span class=o>||</span> <span class=n>key_left_pressed</span> <span class=o>||</span> <span class=n>key_up_pressed</span> <span class=o>||</span> <span class=n>key_down_pressed</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>                <span class=p>{</span>
+</span></span><span class=line><span class=cl>                    <span class=k>if</span><span class=p>(</span><span class=n>key_right_pressed</span><span class=p>)</span>       <span class=c1>// press key &#34;→&#34;
+</span></span></span><span class=line><span class=cl>                        <span class=n>b</span><span class=p>.</span><span class=n>m_gun_pos_x</span> <span class=o>+=</span> <span class=mf>5.5f</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>                    <span class=k>if</span><span class=p>(</span><span class=n>key_left_pressed</span><span class=p>)</span>        <span class=c1>// press key &#34;←&#34;
+</span></span></span><span class=line><span class=cl>                        <span class=n>tb</span><span class=p>.</span><span class=n>m_gun_pos_x</span> <span class=o>-=</span> <span class=mf>5.5f</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>                    <span class=k>if</span><span class=p>(</span><span class=n>key_up_pressed</span><span class=p>)</span>          <span class=c1>// press key &#34;↑&#34;
+</span></span></span><span class=line><span class=cl>                        <span class=n>tb</span><span class=p>.</span><span class=n>m_gun_pos_y</span> <span class=o>-=</span> <span class=mf>5.5f</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>                    <span class=k>if</span><span class=p>(</span><span class=n>key_down_pressed</span><span class=p>)</span>        <span class=c1>// press key &#34;↓&#34;
+</span></span></span><span class=line><span class=cl>                        <span class=n>tb</span><span class=p>.</span><span class=n>m_gun_pos_y</span> <span class=o>+=</span> <span class=mf>5.5f</span><span class=p>;</span>  
+</span></span><span class=line><span class=cl>                    <span class=c1>// reset vertex buffer for gun
+</span></span></span><span class=line><span class=cl>                    <span class=n>tb</span><span class=p>.</span><span class=nf>Init_Gun_Vertex_Buffer</span><span class=p>();</span>
+</span></span><span class=line><span class=cl>                    <span class=c1>// render tiger and gun
+</span></span></span><span class=line><span class=cl>                    <span class=n>tb</span><span class=p>.</span><span class=nf>Render</span><span class=p>();</span>
+</span></span><span class=line><span class=cl>                <span class=p>}</span>
+</span></span><span class=line><span class=cl>            <span class=p>}</span>
+</span></span><span class=line><span class=cl>        <span class=p>}</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=nf>UnregisterClass</span><span class=p>(</span><span class=n>WINDOW_CLASS_NAME</span><span class=p>,</span> <span class=n>instance</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=nb>true</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span></span></span></code></pre></td></tr></table></div></div><p>运行效果：</p><p><img src=/imgs/img-lazy-loading.gif data-src=r_sprite1.jpg alt=运行效果></p></div><footer class=post-footer><div class=post-tags><a href=/tags/direct3d/>direct3d
+</a><a href=/tags/graphics/>graphics</a></div><hr><div class=post-copyright><img src=/imgs/cc/cc.svg class=cc-icon width=75 height=75 align=right alt=共享知识 title=共享知识><ul><li class=post-copyright-title><strong>文章标题：</strong>
+D3D中的Alpha颜色混合（3）</li><li class=post-copyright-author><strong>本文作者： </strong>Rise</li><li class=post-copyright-link><strong>本文链接：</strong>
+<a id=post-cr-link href=https://blogs.qipai360.cn/post/alpha-color-blending-in-d3d-3/ title=D3D中的Alpha颜色混合（3）>https://blogs.qipai360.cn/post/alpha-color-blending-in-d3d-3/</a></li><li class=post-copyright-license><strong>版权声明： </strong>本作品采用 <i class="fab fa-fw fa-creative-commons"></i><a target=_blank href=https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh-hans>BY-NC-SA</a> 许可协议。转载请注明出处！</li><li><div class=license-icons><a href=https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh-hans target=_blank><img src=/imgs/cc/big/by_nc_sa.svg alt=BY-NC-SA title=BY-NC-SA>
+</a><a href=https://notbyai.fyi target=_blank><img src=/imgs/notbyai/zh-hans/black.svg title="Not By AI"></a></div></li></ul></div><div class=followme><span>欢迎关注我的其它发布渠道</span><div class=social-list><div class=social-item><a target=_blank class=social-link href=https://www.zhihu.com/people/rise-worlds><span class=icon><i class="fa fa-book"></i>
+</span><span class=label>知乎</span></a></div><div class=social-item><a target=_blank class=social-link href=https://twitter.com/riseworlds><span class=icon><i class="fab fa-twitter"></i>
+</span><span class=label>Twitter</span></a></div><div class=social-item><a target=_blank class=social-link href=https://www.facebook.com/rise.worlds><span class=icon><i class="fab fa-facebook"></i>
+</span><span class=label>facebook</span></a></div><div class=social-item><a target=_blank class=social-link href=https://youtube.com/@YiXuan><span class=icon><i class="fab fa-youtube"></i>
+</span><span class=label>YouTube</span></a></div><div class=social-item><a target=_blank class=social-link href=https://instagram.com/rise.worlds><span class=icon><i class="fab fa-instagram"></i>
+</span><span class=label>Instagram</span></a></div><div class=social-item><a target=_blank class=social-link href=https://t.me/riseworlds><span class=icon><i class="fab fa-telegram"></i>
+</span><span class=label>Telegram</span></a></div></div></div><div class=post-nav><div class="post-nav-next post-nav-item"><a href=/post/windows-nt-2000-xp-ring0-implementation-without-driver/ rel=next title="Windows NT/2000/XP下不用驱动的Ring0代码实现"><i class="fa fa-chevron-left"></i> Windows NT/2000/XP下不用驱动的Ring0代码实现</a></div><div class="post-nav-prev post-nav-item"><a href=/post/alpha-color-blending-in-d3d-2/ rel=prev title=D3D中的Alpha颜色混合（2）>D3D中的Alpha颜色混合（2）
+<i class="fa fa-chevron-right"></i></a></div></div></footer></article></div><div id=comments class=post-comments><div class=comment-head><div class=comment-headline><i class="fas fa-comments fa-fw"></i>
+<span>评论交流</span></div></div><div class=comment-wrap><div><div class=comment-loading><i class="fa fa-sync fa-spin"></i></div><div class=giscus-container></div></div></div></div></div></main><footer class=footer><div class=footer-inner><div class=copyright>&copy;
+<span itemprop=copyrightYear>2004 - 2026
+</span><span class=with-love><i class="fa fa-heart"></i>
+</span><span class=author itemprop=copyrightHolder>Rise</span></div><div class=powered-by>由 <a href=https://gohugo.io title=0.157.0 target=_blank>Hugo</a> & <a href=https://github.com/hugo-next/hugo-theme-next title=4.8.3 target=_blank>Hugo NexT.Gemini</a> 强力驱动</div><div class=beian><a href=https://beian.miit.gov.cn target=_blank>豫ICP备2021009490号</a>
+<img src=/imgs/gongan.png alt=豫公网安备>
+<a href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=41162302000074" target=_blank>豫公网安备 41162302000074 号</a></div></div></footer><script class=next-config data-name=page type=application/json>{"clipboard":{"js":{"alias":"clipboard","file":"dist/clipboard.min.js","name":"clipboard.js","version":"2.0.11"}},"comments":true,"expired":false,"isHome":false,"isPage":true,"path":"alpha-color-blending-in-d3d-3","permalink":"https://blogs.qipai360.cn/post/alpha-color-blending-in-d3d-3/","title":"D3D中的Alpha颜色混合（3）","toc":false,"waline3":{"pagecnt":{"alias":"@waline/client","alias_name":"waline","file":"dist/pageview.js","name":"pageview","version":"3.5.7"}}}</script><script type=text/javascript src=https://blogs.qipai360.cn/js/3rd/animejs/3.2.2/anime.min.js crossorigin=anonymous defer></script><script type=text/javascript src=https://blogs.qipai360.cn/js/3rd/viewerjs/1.11.6/viewer.min.js crossorigin=anonymous defer></script><script class=next-config data-name=main type=application/json>{"bookmark":{"color":"#222","enable":true,"save":"manual"},"copybtn":true,"darkmode":true,"giscus":{"cfg":{"category":"Announcements","categoryid":"DIC_kwDOA6L0YM4CiXf9","emit":false,"inputposition":"top","mapping":"title","reactions":false,"repo":"rise-worlds/rise-worlds.github.io","repoid":"MDEwOlJlcG9zaXRvcnk2MTAxMTA0MA==","theme":"transparent_dark"},"js":"https://giscus.app/client.js"},"hostname":"https://blogs.qipai360.cn/","i18n":{"ds_day":" 天前","ds_days":" 天 ","ds_hour":" 小时前","ds_hours":" 小时 ","ds_just":"刚刚","ds_min":" 分钟前","ds_mins":" 分钟","ds_month":" 个月前","ds_years":" 年 ","empty":"没有找到任何搜索结果：${query}","hits":"找到 ${hits} 个搜索结果","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","placeholder":"搜索..."},"isMultiLang":false,"lang":"zh-CN","lazyload":false,"motion":{"async":true,"enable":true,"transition":{"collheader":"fadeInLeft","postblock":"fadeIn","postbody":"fadeInDown","postheader":"fadeInDown","sidebar":"fadeInUp"}},"postmeta":{"comments":{"enable":false,"plugin":"waline3"},"views":{"enable":true,"plugin":"waline3"}},"root":"/","scheme":"Gemini","share":{"addtoany":{"js":"https://static.addtoany.com/menu/page.js","locale":"zh-CN","num":8},"enable":false},"sidebar":{"display":"post","offset":12,"padding":18,"position":"left","width":256},"vendor":{"plugins":"local","router":{"name":"local","type":"modern","url":"https://blogs.qipai360.cn/js/3rd"}},"version":"4.8.3","waline3":{"cfg":{"emoji":false,"imguploader":false,"placeholder":"请文明发言哟 ヾ(≧▽≦*)o 可用快捷键选取表情符号：😀😄😁🥳👻👽👀🚄 (Window系统：Win+.，Mac系统：Control+Command+Space)","reaction":true,"reactiontext":["点赞","踩一下","得意","不屑","尴尬","睡觉"],"reactiontitle":"你认为这篇文章怎么样？","requiredmeta":["nick","mail"],"search":true,"serverurl":"https://walinejs.comment.lithub.cc","sofa":"快来发表你的意见吧 (≧∀≦)ゞ","wordlimit":200},"css":{"alias":"@waline/client","file":"dist/waline.css","name":"waline","version":"3.5.7"},"js":{"alias":"@waline/client","file":"dist/waline.js","name":"waline","version":"3.5.7"}}}</script><script type=text/javascript src="/js/main.min.js?=1772265585" defer></script><script type=text/javascript src="/js/clipboard.min.js?=1772265587" defer></script></body></html>

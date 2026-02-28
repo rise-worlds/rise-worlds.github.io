@@ -1,0 +1,512 @@
+<!doctype html><html lang=zh-CN data-theme=dark><head><meta charset=UTF-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=theme-color content="#222" media="(prefers-color-scheme: dark)"><meta name=generator content="Hugo 0.157.0"><link rel="shortcut icon" type=image/x-icon href=/imgs/icons/favicon.ico><link rel=icon type=image/x-icon href=/imgs/icons/favicon.ico><link rel=icon type=image/png sizes=16x16 href=/imgs/icons/favicon_32_32_next.png><link rel=icon type=image/png sizes=32x32 href=/imgs/icons/favicon_128_128_next.png><link rel=apple-touch-icon sizes=180x180 href=/imgs/icons/apple_touch_icon_next.png><meta itemprop=name content="Posts"><meta itemprop=description content="福兮祸兮，焉知所依？冬去冰泮，春来萌荣。朝生暮死，亦可惊鸿。知足者富，自足者强。"><meta name=description content="福兮祸兮，焉知所依？冬去冰泮，春来萌荣。朝生暮死，亦可惊鸿。知足者富，自足者强。"><meta itemprop=image content="https://blogs.qipai360.cn/imgs/avatar.jpg"><meta itemprop=keywords content="Rise,ZhangTuohui,技术,C++,Unity3D,Lua,NodeJS,C#,JavaScript,游戏开发,机器学习,深度学习,AI,编程,编程语言,编程技术,编程开发,游戏引擎,游戏设计,游戏制作,游戏开发者,游戏开发者博客,游戏开发者网站,游戏开发者工具,游戏开发者教程,游戏开发者学习,游戏开发者交流,游戏开发者分享,游戏开发者经验,游戏开发者心得,游戏开发者技巧,游戏开发者方法,游戏开发者思路,游戏开发者理念,游戏开发者文化,游戏开发者精神,游戏开发者信仰"><meta property="og:type" content="website"><meta property="og:title" content="Posts"><meta property="og:description" content="福兮祸兮，焉知所依？冬去冰泮，春来萌荣。朝生暮死，亦可惊鸿。知足者富，自足者强。"><meta property="og:image" content="/imgs/avatar.jpg"><meta property="og:image:width" content="312"><meta property="og:image:height" content="312"><meta property="og:image:type" content="image/jpeg/png/svg/jpg"><meta property="og:url" content="https://blogs.qipai360.cn/post/"><meta property="og:site_name" content="Rise的自留地"><meta property="og:locale" content="zh-CN"><link type=text/css rel=stylesheet href=https://blogs.qipai360.cn/js/3rd/font-awesome/6.7.2/css/all.min.css><link type=text/css rel=stylesheet href=https://blogs.qipai360.cn/js/3rd/animate.css/3.1.1/animate.min.css><link type=text/css rel=stylesheet href=https://blogs.qipai360.cn/js/3rd/viewerjs/1.11.6/viewer.min.css><link rel=stylesheet href="/css/main.min.css?=1772265587"><style type=text/css>.post-footer hr:after{content:"~ 我可是有底线的哟 ~"}.flinks-list-footer hr:after{content:"~ 我可是有底线的哟 ~"}</style><script type=text/javascript>(function(){localDB={set:function(e,t,n){if(n===0)return;const s=new Date,o=n*864e5,i={value:t,expiry:s.getTime()+o};localStorage.setItem(e,JSON.stringify(i))},get:function(e){const t=localStorage.getItem(e);if(!t)return 0[0];const n=JSON.parse(t),s=new Date;return s.getTime()>n.expiry?(localStorage.removeItem(e),0[0]):n.value}},theme={active:function(){const e=localDB.get("theme");if(e==null)return;theme.toggle(e),window.matchMedia("(prefers-color-scheme: dark)").addListener(function(e){theme.toggle(e.matches?"dark":"light")})},toggle:function(e){document.documentElement.setAttribute("data-theme",e),localDB.set("theme",e,2);const t=document.querySelector("iframe.giscus-frame");if(t){const n={setConfig:{theme:e}};t.contentWindow.postMessage({giscus:n},"https://giscus.app")}}},theme.active()})(window)</script><script type=text/javascript>document.addEventListener("DOMContentLoaded",()=>{var e=document.createElement("script");e.charset="UTF-8",e.src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js",e.async=!1,e.defer=!0,document.head.appendChild(e),e.onload=function(){NexT.utils.fmtBusuanzi()}})</script><script defer src=https://static.cloudflareinsights.com/beacon.min.js data-cf-beacon='{"token": "2b23669184fc49269e400525ac2447d9"}'></script><title>post - Rise的自留地</title><noscript><link rel=stylesheet href=/css/noscript.css></noscript></head><body itemscope itemtype=http://schema.org/WebPage class=use-motion><div class=headband></div><main class=main><header class=header itemscope itemtype=http://schema.org/WPHeader><div class=header-inner><div class=site-brand-container><div class=site-nav-toggle><div class=toggle aria-label role=button><span class=toggle-line></span>
+<span class=toggle-line></span>
+<span class=toggle-line></span></div></div><div class=site-meta><a href=/ class=brand rel=start><i class=logo-line></i><h1 class=site-title>Rise的自留地</h1><i class=logo-line></i></a><p class=site-subtitle itemprop=description>记录生活中的点滴，分享编程技术和游戏开发经验。</p></div><div class=site-nav-right><div class="toggle popup-trigger"></div></div></div><nav class=site-nav><ul class="main-menu menu"><li class="menu-item menu-item-home"><a href=/ class=hvr-icon-pulse rel=section><i class="fa fa-home hvr-icon"></i>首页</a></li><li class="menu-item menu-item-about"><a href=/about.html class=hvr-icon-pulse rel=section><i class="fa fa-user hvr-icon"></i>关于</a></li><li class="menu-item menu-item-archives"><a href=/archives/ class=hvr-icon-pulse rel=section><i class="fa fa-archive hvr-icon"></i>归档
+<span class=badge>679</span></a></li><li class="menu-item menu-item-tags"><a href=/tags/ class=hvr-icon-pulse rel=section><i class="fa fa-tags hvr-icon"></i>标签</a></li><li class="menu-item menu-item-message"><a href=/message/ class=hvr-icon-pulse rel=section><i class="fa fa-comments hvr-icon"></i>留言板</a></li><li class="menu-item menu-item-commonweal"><a href=/404.html class=hvr-icon-pulse rel=section><i class="fa fa-heartbeat hvr-icon"></i>公益 404</a></li></ul></nav></div><div class="toggle sidebar-toggle" role=button><span class=toggle-line></span>
+<span class=toggle-line></span>
+<span class=toggle-line></span></div><aside class=sidebar><div class="sidebar-inner sidebar-overview-active"><ul class=sidebar-nav><li class=sidebar-nav-toc>文章目录</li><li class=sidebar-nav-overview>站点概览</li></ul><div class=sidebar-panel-container><div class="post-toc-wrap sidebar-panel"><div class="post-toc animated"><nav id=TableOfContents></nav></div></div><div class="site-overview-wrap sidebar-panel"><div class="site-author site-overview-item animated" itemprop=author itemscope itemtype=http://schema.org/Person><img class=site-author-image itemprop=image alt=Rise src=/imgs/img-lazy-loading.gif data-src=/imgs/avatar.jpg><p class=site-author-name itemprop=name>Rise</p><div class=site-description itemprop=description>福兮祸兮，焉知所依？冬去冰泮，春来萌荣。朝生暮死，亦可惊鸿。知足者富，自足者强。</div></div><div class="site-state-wrap site-overview-item animated"><nav class=site-state><div class="site-state-item site-state-posts"><a href=/archives/><span class=site-state-item-count>679</span>
+<span class=site-state-item-name>日志</span></a></div><div class="site-state-item site-state-categories"><a href=/categories/><span class=site-state-item-count>35</span>
+<span class=site-state-item-name>分类</span></a></div><div class="site-state-item site-state-tags"><a href=/tags/><span class=site-state-item-count>118</span>
+<span class=site-state-item-name>标签</span></a></div></nav></div><div class="links-of-social site-overview-item animated"><span class=links-of-social-item><a href=https://github.com/rise-worlds title="Github → https://github.com/rise-worlds" rel=noopener class=hvr-icon-pulse target=_blank><i class="fab fa-github fa-fw hvr-icon"></i>
+Github
+</a></span><span class=links-of-social-item><a href=mailto:rise.worlds@outlook.com title="E-Mail → mailto:rise.worlds@outlook.com" rel=noopener class=hvr-icon-pulse target=_blank><i class="fa fa-envelope fa-fw hvr-icon"></i>
+E-Mail
+</a></span><span class=links-of-social-item><a href=https://www.zhihu.com/people/rise-worlds title="知乎 → https://www.zhihu.com/people/rise-worlds" rel=noopener class=hvr-icon-pulse target=_blank><i class="fa fa-book fa-fw hvr-icon"></i>
+知乎
+</a></span><span class=links-of-social-item><a href=https://twitter.com/riseworlds title="Twitter → https://twitter.com/riseworlds" rel=noopener class=hvr-icon-pulse target=_blank><i class="fab fa-twitter fa-fw hvr-icon"></i>
+Twitter
+</a></span><span class=links-of-social-item><a href=https://www.facebook.com/rise.worlds title="facebook → https://www.facebook.com/rise.worlds" rel=noopener class=hvr-icon-pulse target=_blank><i class="fab fa-facebook fa-fw hvr-icon"></i>
+facebook
+</a></span><span class=links-of-social-item><a href=https://youtube.com/@YiXuan title="YouTube → https://youtube.com/@YiXuan" rel=noopener class=hvr-icon-pulse target=_blank><i class="fab fa-youtube fa-fw hvr-icon"></i>
+YouTube
+</a></span><span class=links-of-social-item><a href=https://instagram.com/rise.worlds title="Instagram → https://instagram.com/rise.worlds" rel=noopener class=hvr-icon-pulse target=_blank><i class="fab fa-instagram fa-fw hvr-icon"></i>
+Instagram
+</a></span><span class=links-of-social-item><a href=https://t.me/riseworlds title="Telegram → https://t.me/riseworlds" rel=noopener class=hvr-icon-pulse target=_blank><i class="fab fa-telegram fa-fw hvr-icon"></i>
+Telegram</a></span></div><div class="links-of-blogroll site-overview-item animated"><div class=links-of-blogroll-title><i class="fa fa-globe fa-fw"></i>
+友情链接</div><ul class=links-of-blogroll-list><li class=links-of-blogroll-item><a href=https://www.qipai360.cn title=https://www.qipai360.cn target=_blank>Qipai360</a></li><li class=links-of-blogroll-item><a href=https://www.cnblogs.com/flying_bat title=https://www.cnblogs.com/flying_bat target=_blank>博客园</a></li><li class=links-of-blogroll-item><a href=https://zishu.me title=https://zishu.me target=_blank>子舒的博客</a></li><li class=links-of-blogroll-item><a href=https://gitee.com/hugo-next/hugo-theme-next title=https://gitee.com/hugo-next/hugo-theme-next target=_blank>Hugo-NexT</a></li></ul></div></div></div></div><div id=siteinfo-card-widget class=sidebar-card-widget><div class=item-headline><i class="fas fa-chart-line"></i>
+<span>网站资讯</span></div><div class=siteinfo><div class=siteinfo-item><div class=item-name><i class="fa-solid fa-calendar-check"></i>已运行：</div><div class=item-count id=runTimes data-publishdate="2004-10-06 15:24:00 +0800 +0800"></div></div><div class=siteinfo-item><div class=item-name><i class="fas fa fa-user"></i>总访客数：</div><div class=item-count id=busuanzi_value_site_uv><i class="fa fa-sync fa-spin"></i></div></div><div class=siteinfo-item><div class=item-name><i class="fas fa fa-eye"></i>页面浏览：</div><div class=item-count id=busuanzi_value_site_pv><i class="fa fa-sync fa-spin"></i></div></div><div class=siteinfo-item><div class=item-name><i class="fa fa-font"></i>总字数：</div><div class=item-count id=wordsCount data-count=2423147></div></div><div class=siteinfo-item><div class=item-name><i class="fa fa-mug-hot"></i>阅读约：</div><div class=item-count id=readTimes data-times=5207></div></div><div class=siteinfo-item><div class=item-name><i class="fa fa-clock-rotate-left"></i>最后更新于：</div><div class=item-count id=last-push-date data-lastpushdate="2026-02-28 15:59:00 +0800 +0800"></div></div></div></div></aside><div class=sidebar-dimmer></div></header><div class=tool-buttons><div id=goto-comments class="button goto-comments" title=直达评论><i class="fas fa-comments"></i></div><div id=toggle-theme class=button title=深浅模式切换><i class="fas fa-adjust"></i></div><div class=back-to-top role=button title=返回顶部><i class="fa fa-arrow-up"></i>
+<span>0%</span></div></div><div class=reading-progress-bar></div><a role=button class="book-mark-link book-mark-link-fixed"></a><a href=https://github.com/rise-worlds rel="noopener external nofollow noreferrer" target=_blank title="Follow me on GitHub" class="exturl github-corner"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0 0 115 115h15l12 27L250 250V0z"/><path d="M128.3 109C113.8 99.7 119 89.6 119 89.6 122 82.7 120.5 78.6 120.5 78.6 119.2 72 123.4 76.3 123.4 76.3 127.3 80.9 125.5 87.3 125.5 87.3 122.9 97.6 130.6 101.9 134.4 103.2" fill="currentColor" style="transform-origin:130px 106px" class="octo-arm"/><path d="M115 115C114.9 115.1 118.7 116.5 119.8 115.4l13.9-13.8C136.9 99.2 139.9 98.4 142.2 98.6 133.8 88 127.5 74.4 143.8 58 148.5 53.4 154 51.2 159.7 51 160.3 49.4 163.2 43.6 171.4 40.1 171.4 40.1 176.1 42.5 178.8 56.2 183.1 58.6 187.2 61.8 190.9 65.4 194.5 69 197.7 73.2 200.1 77.6 213.8 80.2 216.3 84.9 216.3 84.9 212.7 93.1 206.9 96 205.4 96.6 205.1 102.4 203 107.8 198.3 112.5 181.9 128.9 168.3 122.5 157.7 114.1 157.9 116.9 156.7 120.9 152.7 124.9L141 136.5C139.8 137.7 141.6 141.9 141.8 141.8z" fill="currentColor" class="octo-body"/></svg></a><noscript><div class=noscript-warning>Theme NexT works best with JavaScript enabled</div></noscript><div class="main-inner index posts-expand"><div class=post-block><article itemscope itemtype=http://schema.org/Article class=post-content lang><link itemprop=mainEntityOfPage href=https://blogs.qipai360.cn/post/d3d-alpha-mixed-sample/><span hidden itemprop=author itemscope itemtype=http://schema.org/Person><meta itemprop=image content="/imgs/avatar.jpg"><meta itemprop=name content="Rise"></span><span hidden itemprop=publisher itemscope itemtype=http://schema.org/Organization><meta itemprop=name content="Rise"><meta itemprop=description content="福兮祸兮，焉知所依？冬去冰泮，春来萌荣。朝生暮死，亦可惊鸿。知足者富，自足者强。"></span><span hidden itemprop=post itemscope itemtype=http://schema.org/CreativeWork><meta itemprop=name content="ALPHA混合示例"><meta itemprop=description content="技巧如下：
+设置可变顶点格式时增加一个D3DCOLOR类型的漫反射分量，其中的alpha值指定了alpha混合因子。
+
+
+
+ 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+
+
+// The 2D vertex format and descriptor
+typedef struct
+{
+    float  x, y, z;        // 2D coordinates
+    float  rhw;            // rhw
+    D3DCOLOR diffuse;      // diffuse color component
+} VERTEX;
+
+#define  VERTEX_FVF  (D3DFVF_XYZRHW | D3DFVF_DIFFUSE)
+
+// initialize vertex data
+VERTEX verts[] = {
+    { 100.0f, 100.0f, 1.0f, 1.0f, D3DCOLOR_RGBA( 0, 64, 128, 255 ) },
+    { 300.0f, 100.0f, 1.0f, 1.0f, D3DCOLOR_RGBA( 0, 64, 128, 255 ) },
+    { 100.0f, 300.0f, 1.0f, 1.0f, D3DCOLOR_RGBA( 0, 64, 128, 255 ) },
+    { 300.0f, 300.0f, 1.0f, 1.0f, D3DCOLOR_RGBA( 0, 64, 128, 255 ) },
+    {  50.0f, 150.0f, 1.0f, 1.0f, D3DCOLOR_RGBA( 128, 0, 0, 128 )  },
+    { 350.0f, 150.0f, 1.0f, 1.0f, D3DCOLOR_RGBA( 128, 0, 0, 128 )  },
+    {  50.0f, 350.0f, 1.0f, 1.0f, D3DCOLOR_RGBA( 128, 0, 0, 128 )  },
+    { 350.0f, 350.0f, 1.0f, 1.0f, D3DCOLOR_RGBA( 128, 0, 0, 128 )  }
+};
+
+
+
+D3DCOLOR类型可以用 D3DCOLOR_RGBA宏来生成，定义如下："></span><header class=post-header><h2 class=post-title itemprop="name headline"><a href=/post/d3d-alpha-mixed-sample/ itemprop=url class=post-title-link>ALPHA混合示例</a></h2><div class=post-meta-container><div class=post-meta-items><span class=post-meta-item><span class=post-meta-item-icon><i class="fas fa-solid fa-calendar"></i>
+</span><span class=post-meta-item-text title=发表于>发表于：
+</span><time title="创建时间：2007年08月27日 17:30:00 CST" itemprop="dateCreated datePublished" datetime="2007-08-27 17:30:00 +0800 +0800">2007年08月27日
+</time></span><span class=post-meta-item><span class=post-meta-item-icon><i class="fas fa-solid fa-folder-open"></i>
+</span><span class=post-meta-item-text title=分类于>分类于：
+</span><span itemprop=about itemscope itemtype=http://schema.org/Thing><a href=/categories/gamedev/ itemprop=url rel=index><span itemprop=name>dev/GameDev</span>
+</a></span></span><span class=post-meta-item title=浏览><span class=post-meta-item-icon><i class="fas fa-solid fa-eye"></i>
+</span><span class=post-meta-item-text>浏览：
+</span><span id=pageview-count data-path=/post/d3d-alpha-mixed-sample/><i class="fa fa-sync fa-spin"></i></span></span></div></div></header><div class=post-body itemprop=articleBody><p>技巧如下：</p><p>设置可变顶点格式时增加一个D3DCOLOR类型的漫反射分量，其中的alpha值指定了alpha混合因子。</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt id=hl-0-1><a class=lnlinks href=#hl-0-1> 1</a>
+</span><span class=lnt id=hl-0-2><a class=lnlinks href=#hl-0-2> 2</a>
+</span><span class=lnt id=hl-0-3><a class=lnlinks href=#hl-0-3> 3</a>
+</span><span class=lnt id=hl-0-4><a class=lnlinks href=#hl-0-4> 4</a>
+</span><span class=lnt id=hl-0-5><a class=lnlinks href=#hl-0-5> 5</a>
+</span><span class=lnt id=hl-0-6><a class=lnlinks href=#hl-0-6> 6</a>
+</span><span class=lnt id=hl-0-7><a class=lnlinks href=#hl-0-7> 7</a>
+</span><span class=lnt id=hl-0-8><a class=lnlinks href=#hl-0-8> 8</a>
+</span><span class=lnt id=hl-0-9><a class=lnlinks href=#hl-0-9> 9</a>
+</span><span class=lnt id=hl-0-10><a class=lnlinks href=#hl-0-10>10</a>
+</span><span class=lnt id=hl-0-11><a class=lnlinks href=#hl-0-11>11</a>
+</span><span class=lnt id=hl-0-12><a class=lnlinks href=#hl-0-12>12</a>
+</span><span class=lnt id=hl-0-13><a class=lnlinks href=#hl-0-13>13</a>
+</span><span class=lnt id=hl-0-14><a class=lnlinks href=#hl-0-14>14</a>
+</span><span class=lnt id=hl-0-15><a class=lnlinks href=#hl-0-15>15</a>
+</span><span class=lnt id=hl-0-16><a class=lnlinks href=#hl-0-16>16</a>
+</span><span class=lnt id=hl-0-17><a class=lnlinks href=#hl-0-17>17</a>
+</span><span class=lnt id=hl-0-18><a class=lnlinks href=#hl-0-18>18</a>
+</span><span class=lnt id=hl-0-19><a class=lnlinks href=#hl-0-19>19</a>
+</span><span class=lnt id=hl-0-20><a class=lnlinks href=#hl-0-20>20</a>
+</span><span class=lnt id=hl-0-21><a class=lnlinks href=#hl-0-21>21</a>
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-c++ data-lang=c++><span class=line><span class=cl><span class=c1>// The 2D vertex format and descriptor
+</span></span></span><span class=line><span class=cl><span class=k>typedef</span> <span class=k>struct</span>
+</span></span><span class=line><span class=cl><span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=kt>float</span>  <span class=n>x</span><span class=p>,</span> <span class=n>y</span><span class=p>,</span> <span class=n>z</span><span class=p>;</span>        <span class=c1>// 2D coordinates
+</span></span></span><span class=line><span class=cl>    <span class=kt>float</span>  <span class=n>rhw</span><span class=p>;</span>            <span class=c1>// rhw
+</span></span></span><span class=line><span class=cl>    <span class=n>D3DCOLOR</span> <span class=n>diffuse</span><span class=p>;</span>      <span class=c1>// diffuse color component
+</span></span></span><span class=line><span class=cl><span class=p>}</span> <span class=n>VERTEX</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=cp>#define  VERTEX_FVF  (D3DFVF_XYZRHW | D3DFVF_DIFFUSE)
+</span></span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>// initialize vertex data
+</span></span></span><span class=line><span class=cl><span class=n>VERTEX</span> <span class=n>verts</span><span class=p>[]</span> <span class=o>=</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=p>{</span> <span class=mf>100.0f</span><span class=p>,</span> <span class=mf>100.0f</span><span class=p>,</span> <span class=mf>1.0f</span><span class=p>,</span> <span class=mf>1.0f</span><span class=p>,</span> <span class=n>D3DCOLOR_RGBA</span><span class=p>(</span> <span class=mi>0</span><span class=p>,</span> <span class=mi>64</span><span class=p>,</span> <span class=mi>128</span><span class=p>,</span> <span class=mi>255</span> <span class=p>)</span> <span class=p>},</span>
+</span></span><span class=line><span class=cl>    <span class=p>{</span> <span class=mf>300.0f</span><span class=p>,</span> <span class=mf>100.0f</span><span class=p>,</span> <span class=mf>1.0f</span><span class=p>,</span> <span class=mf>1.0f</span><span class=p>,</span> <span class=n>D3DCOLOR_RGBA</span><span class=p>(</span> <span class=mi>0</span><span class=p>,</span> <span class=mi>64</span><span class=p>,</span> <span class=mi>128</span><span class=p>,</span> <span class=mi>255</span> <span class=p>)</span> <span class=p>},</span>
+</span></span><span class=line><span class=cl>    <span class=p>{</span> <span class=mf>100.0f</span><span class=p>,</span> <span class=mf>300.0f</span><span class=p>,</span> <span class=mf>1.0f</span><span class=p>,</span> <span class=mf>1.0f</span><span class=p>,</span> <span class=n>D3DCOLOR_RGBA</span><span class=p>(</span> <span class=mi>0</span><span class=p>,</span> <span class=mi>64</span><span class=p>,</span> <span class=mi>128</span><span class=p>,</span> <span class=mi>255</span> <span class=p>)</span> <span class=p>},</span>
+</span></span><span class=line><span class=cl>    <span class=p>{</span> <span class=mf>300.0f</span><span class=p>,</span> <span class=mf>300.0f</span><span class=p>,</span> <span class=mf>1.0f</span><span class=p>,</span> <span class=mf>1.0f</span><span class=p>,</span> <span class=n>D3DCOLOR_RGBA</span><span class=p>(</span> <span class=mi>0</span><span class=p>,</span> <span class=mi>64</span><span class=p>,</span> <span class=mi>128</span><span class=p>,</span> <span class=mi>255</span> <span class=p>)</span> <span class=p>},</span>
+</span></span><span class=line><span class=cl>    <span class=p>{</span>  <span class=mf>50.0f</span><span class=p>,</span> <span class=mf>150.0f</span><span class=p>,</span> <span class=mf>1.0f</span><span class=p>,</span> <span class=mf>1.0f</span><span class=p>,</span> <span class=n>D3DCOLOR_RGBA</span><span class=p>(</span> <span class=mi>128</span><span class=p>,</span> <span class=mi>0</span><span class=p>,</span> <span class=mi>0</span><span class=p>,</span> <span class=mi>128</span> <span class=p>)</span>  <span class=p>},</span>
+</span></span><span class=line><span class=cl>    <span class=p>{</span> <span class=mf>350.0f</span><span class=p>,</span> <span class=mf>150.0f</span><span class=p>,</span> <span class=mf>1.0f</span><span class=p>,</span> <span class=mf>1.0f</span><span class=p>,</span> <span class=n>D3DCOLOR_RGBA</span><span class=p>(</span> <span class=mi>128</span><span class=p>,</span> <span class=mi>0</span><span class=p>,</span> <span class=mi>0</span><span class=p>,</span> <span class=mi>128</span> <span class=p>)</span>  <span class=p>},</span>
+</span></span><span class=line><span class=cl>    <span class=p>{</span>  <span class=mf>50.0f</span><span class=p>,</span> <span class=mf>350.0f</span><span class=p>,</span> <span class=mf>1.0f</span><span class=p>,</span> <span class=mf>1.0f</span><span class=p>,</span> <span class=n>D3DCOLOR_RGBA</span><span class=p>(</span> <span class=mi>128</span><span class=p>,</span> <span class=mi>0</span><span class=p>,</span> <span class=mi>0</span><span class=p>,</span> <span class=mi>128</span> <span class=p>)</span>  <span class=p>},</span>
+</span></span><span class=line><span class=cl>    <span class=p>{</span> <span class=mf>350.0f</span><span class=p>,</span> <span class=mf>350.0f</span><span class=p>,</span> <span class=mf>1.0f</span><span class=p>,</span> <span class=mf>1.0f</span><span class=p>,</span> <span class=n>D3DCOLOR_RGBA</span><span class=p>(</span> <span class=mi>128</span><span class=p>,</span> <span class=mi>0</span><span class=p>,</span> <span class=mi>0</span><span class=p>,</span> <span class=mi>128</span> <span class=p>)</span>  <span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>};</span></span></span></code></pre></td></tr></table></div></div><p>D3DCOLOR类型可以用 D3DCOLOR_RGBA宏来生成，定义如下：</p></div><footer class=post-footer><div class=post-button><a class=btn href=/post/d3d-alpha-mixed-sample/#more rel=contents>阅读全文 &#187;</a></div><div class=post-eof></div></footer></article></div><div class=post-block><article itemscope itemtype=http://schema.org/Article class=post-content lang><link itemprop=mainEntityOfPage href=https://blogs.qipai360.cn/post/vista-driver-loss-solution/><span hidden itemprop=author itemscope itemtype=http://schema.org/Person><meta itemprop=image content="/imgs/avatar.jpg"><meta itemprop=name content="Rise"></span><span hidden itemprop=publisher itemscope itemtype=http://schema.org/Organization><meta itemprop=name content="Rise"><meta itemprop=description content="福兮祸兮，焉知所依？冬去冰泮，春来萌荣。朝生暮死，亦可惊鸿。知足者富，自足者强。"></span><span hidden itemprop=post itemscope itemtype=http://schema.org/CreativeWork><meta itemprop=name content="关于部分Vista驱动丢失的解决办法"><meta itemprop=description content="用Vista也一年多了（非正版），最近公司换了新电脑，开始用深度的XP，用Vista习惯了，在用XP感觉真不好。
+索性就换成Vista U，安装完成后才发现SYS盘空间太小，用PQ把SYS盘加大5G。
+重启后发现D盘没了，在磁盘管理里提示无法加载，有提示有查找新硬件，在于设备查看器里是Ｄ盘，于是安装“通用卷”，可是已经用Vista优化大师把驱动备份删除了，于是加载Ｖｉｓｔａ盘，用ＩＭＡＧＥＸ把ＩＮＳＴＡＬＬ．ＷＩＮ解压，ＣＯＰＹ其中的Windows\System32\DriverStore\FileRepository目录到Ｖｉｓｔａ系统的相对位子，重新启动ＯＫ．
+（如果不行，打开设备查看器管理器重新查找驱动就行了．）
+天天在论坛上看贴，今天终于发帖了！！
+大侠不要骂我．．．"></span><header class=post-header><h2 class=post-title itemprop="name headline"><a href=/post/vista-driver-loss-solution/ itemprop=url class=post-title-link>关于部分Vista驱动丢失的解决办法</a></h2><div class=post-meta-container><div class=post-meta-items><span class=post-meta-item><span class=post-meta-item-icon><i class="fas fa-solid fa-calendar"></i>
+</span><span class=post-meta-item-text title=发表于>发表于：
+</span><time title="创建时间：2007年08月25日 13:57:00 CST" itemprop="dateCreated datePublished" datetime="2007-08-25 13:57:00 +0800 +0800">2007年08月25日
+</time></span><span class=post-meta-item><span class=post-meta-item-icon><i class="fas fa-solid fa-folder-open"></i>
+</span><span class=post-meta-item-text title=分类于>分类于：
+</span><span itemprop=about itemscope itemtype=http://schema.org/Thing><a href=/categories/toolstips/ itemprop=url rel=index><span itemprop=name>ToolsTips</span>
+</a></span></span><span class=post-meta-item title=浏览><span class=post-meta-item-icon><i class="fas fa-solid fa-eye"></i>
+</span><span class=post-meta-item-text>浏览：
+</span><span id=pageview-count data-path=/post/vista-driver-loss-solution/><i class="fa fa-sync fa-spin"></i></span></span></div></div></header><div class=post-body itemprop=articleBody><p>用Vista也一年多了（非正版），最近公司换了新电脑，开始用深度的XP，用Vista习惯了，在用XP感觉真不好。</p><p>索性就换成Vista U，安装完成后才发现SYS盘空间太小，用PQ把SYS盘加大5G。</p><p>重启后发现D盘没了，在磁盘管理里提示无法加载，有提示有查找新硬件，在于设备查看器里是Ｄ盘，于是安装“通用卷”，可是已经用Vista优化大师把驱动备份删除了，于是加载Ｖｉｓｔａ盘，用ＩＭＡＧＥＸ把ＩＮＳＴＡＬＬ．ＷＩＮ解压，ＣＯＰＹ其中的Windows\System32\DriverStore\FileRepository目录到Ｖｉｓｔａ系统的相对位子，重新启动ＯＫ．</p><p>（如果不行，打开设备查看器管理器重新查找驱动就行了．）</p><p>天天在论坛上看贴，今天终于发帖了！！</p><p>大侠不要骂我．．．</p></div><footer class=post-footer><div class=post-button><a class=btn href=/post/vista-driver-loss-solution/#more rel=contents>阅读全文 &#187;</a></div><div class=post-eof></div></footer></article></div><div class=post-block><article itemscope itemtype=http://schema.org/Article class=post-content lang><link itemprop=mainEntityOfPage href=https://blogs.qipai360.cn/post/chapter-5-sun-disease-outline-part-1/><span hidden itemprop=author itemscope itemtype=http://schema.org/Person><meta itemprop=image content="/imgs/avatar.jpg"><meta itemprop=name content="Rise"></span><span hidden itemprop=publisher itemscope itemtype=http://schema.org/Organization><meta itemprop=name content="Rise"><meta itemprop=description content="福兮祸兮，焉知所依？冬去冰泮，春来萌荣。朝生暮死，亦可惊鸿。知足者富，自足者强。"></span><span hidden itemprop=post itemscope itemtype=http://schema.org/CreativeWork><meta itemprop=name content="第五章 太阳病纲要（1）"><meta itemprop=description content="一、篇题讲解
+读太阳篇我们首先要看这个篇题，就像读书首先要读书名一样。这个习惯大家应该
+养成，特别是一些需要精读的书，那是一个字也不能放过。读经典必须弄清三义，即字
+义、句义、总义。三义清楚了，没有读不懂的经典。我们首先从总义的角度来看这个篇
+题：&ldquo;辨太阳病脉证并治&rdquo;，它讲的是什么内容呢？它主要讨论辨别与判断与太阳相关的
+病名、病机、脉、证及其相关的治疗这样一个问题。透过这样一个题目的分析，我们就
+能把握中医的一些性质。现在有一种思潮，认为中医只讲辨证不讲辨病，或者详于辨证
+略于辨病，所以，要与西医相结合，要辨病加上辨证。对于持这样一个看法的人，我常
+常说他们根本没有读过《伤寒论》，不能算是中医说的话。你读过《伤寒论》你就知道，
+中医怎么不辨病呢？中医首先是辨病然后才是辨证。辨病是首位，辨证是次位。你不首
+先确定是太阳病，你怎么去进一步肯定它是中风还是伤寒。所以，说中医没有辨病，那
+是个天大的误解。"></span><header class=post-header><h2 class=post-title itemprop="name headline"><a href=/post/chapter-5-sun-disease-outline-part-1/ itemprop=url class=post-title-link>第五章 太阳病纲要（1）</a></h2><div class=post-meta-container><div class=post-meta-items><span class=post-meta-item><span class=post-meta-item-icon><i class="fas fa-solid fa-calendar"></i>
+</span><span class=post-meta-item-text title=发表于>发表于：
+</span><time title="创建时间：2007年08月25日 11:44:00 CST" itemprop="dateCreated datePublished" datetime="2007-08-25 11:44:00 +0800 +0800">2007年08月25日
+</time></span><span class=post-meta-item><span class=post-meta-item-icon><i class="fas fa-solid fa-calendar-check"></i>
+</span><span class=post-meta-item-text title=更新于>更新于：
+</span><time title="修改时间：2007年08月27日 17:01:00 CST" itemprop="dateModified dateLastmod" datetime="2007-08-27 17:01:00 +0800 +0800">2007年08月27日
+</time></span><span class=post-meta-item><span class=post-meta-item-icon><i class="fas fa-solid fa-folder-open"></i>
+</span><span class=post-meta-item-text title=分类于>分类于：
+</span><span itemprop=about itemscope itemtype=http://schema.org/Thing><a href=/categories/tcm/ itemprop=url rel=index><span itemprop=name>TCM</span>
+</a></span></span><span class=post-meta-item title=浏览><span class=post-meta-item-icon><i class="fas fa-solid fa-eye"></i>
+</span><span class=post-meta-item-text>浏览：
+</span><span id=pageview-count data-path=/post/chapter-5-sun-disease-outline-part-1/><i class="fa fa-sync fa-spin"></i></span></span></div></div></header><div class=post-body itemprop=articleBody><p><span style=font-weight:700>一、篇题讲解</span></p><p>读太阳篇我们首先要看这个篇题，就像读书首先要读书名一样。这个习惯大家应该
+养成，特别是一些需要精读的书，那是一个字也不能放过。读经典必须弄清三义，即字
+义、句义、总义。三义清楚了，没有读不懂的经典。我们首先从总义的角度来看这个篇
+题：&ldquo;辨太阳病脉证并治&rdquo;，它讲的是什么内容呢？它主要讨论辨别与判断与太阳相关的
+病名、病机、脉、证及其相关的治疗这样一个问题。透过这样一个题目的分析，我们就
+能把握中医的一些性质。现在有一种思潮，认为中医只讲辨证不讲辨病，或者详于辨证
+略于辨病，所以，要与西医相结合，要辨病加上辨证。对于持这样一个看法的人，我常
+常说他们根本没有读过《伤寒论》，不能算是中医说的话。你读过《伤寒论》你就知道，
+中医怎么不辨病呢？中医首先是辨病然后才是辨证。辨病是首位，辨证是次位。你不首
+先确定是太阳病，你怎么去进一步肯定它是中风还是伤寒。所以，说中医没有辨病，那
+是个天大的误解。</p></div><footer class=post-footer><div class=post-button><a class=btn href=/post/chapter-5-sun-disease-outline-part-1/#more rel=contents>阅读全文 &#187;</a></div><div class=post-eof></div></footer></article></div><div class=post-block><article itemscope itemtype=http://schema.org/Article class=post-content lang><link itemprop=mainEntityOfPage href=https://blogs.qipai360.cn/post/chapter-4-treatment-principles-part-2/><span hidden itemprop=author itemscope itemtype=http://schema.org/Person><meta itemprop=image content="/imgs/avatar.jpg"><meta itemprop=name content="Rise"></span><span hidden itemprop=publisher itemscope itemtype=http://schema.org/Organization><meta itemprop=name content="Rise"><meta itemprop=description content="福兮祸兮，焉知所依？冬去冰泮，春来萌荣。朝生暮死，亦可惊鸿。知足者富，自足者强。"></span><span hidden itemprop=post itemscope itemtype=http://schema.org/CreativeWork><meta itemprop=name content="第四章 治病法要（2）"><meta itemprop=description content='二、临证察机
+《皇汉医学》讲的"临证察机，使药要和"，可简称为"察机药和"。察机实际上就是
+求本，&ldquo;察机药和"就是治病求本。机是病机，病是疾病，那么机呢？这个问题我们前面
+已经讨论过，机就是导致事物发生的关键要素。现在政要所在的地方为什么又称机关呢？
+当地要发展，看什么呢？就看那栋楼！因为它是党政机关所在。所以病机就是导致疾病
+发生的那个最关键的因素。这与病理变化这个面显然有很大的区别。原子弹的威力大不
+大？当然很大。可是这个启动按钮没必要搞得那么大，一点就行了。病机实际上就是这
+么一回事。'></span><header class=post-header><h2 class=post-title itemprop="name headline"><a href=/post/chapter-4-treatment-principles-part-2/ itemprop=url class=post-title-link>第四章 治病法要（2）</a></h2><div class=post-meta-container><div class=post-meta-items><span class=post-meta-item><span class=post-meta-item-icon><i class="fas fa-solid fa-calendar"></i>
+</span><span class=post-meta-item-text title=发表于>发表于：
+</span><time title="创建时间：2007年08月25日 09:39:00 CST" itemprop="dateCreated datePublished" datetime="2007-08-25 09:39:00 +0800 +0800">2007年08月25日
+</time></span><span class=post-meta-item><span class=post-meta-item-icon><i class="fas fa-solid fa-calendar-check"></i>
+</span><span class=post-meta-item-text title=更新于>更新于：
+</span><time title="修改时间：2007年08月27日 17:01:00 CST" itemprop="dateModified dateLastmod" datetime="2007-08-27 17:01:00 +0800 +0800">2007年08月27日
+</time></span><span class=post-meta-item><span class=post-meta-item-icon><i class="fas fa-solid fa-folder-open"></i>
+</span><span class=post-meta-item-text title=分类于>分类于：
+</span><span itemprop=about itemscope itemtype=http://schema.org/Thing><a href=/categories/tcm/ itemprop=url rel=index><span itemprop=name>TCM</span>
+</a></span></span><span class=post-meta-item title=浏览><span class=post-meta-item-icon><i class="fas fa-solid fa-eye"></i>
+</span><span class=post-meta-item-text>浏览：
+</span><span id=pageview-count data-path=/post/chapter-4-treatment-principles-part-2/><i class="fa fa-sync fa-spin"></i></span></span></div></div></header><div class=post-body itemprop=articleBody><p><span style=font-weight:700>二、临证察机</span></p><p>《皇汉医学》讲的"临证察机，使药要和"，可简称为"察机药和"。察机实际上就是
+求本，&ldquo;察机药和"就是治病求本。机是病机，病是疾病，那么机呢？这个问题我们前面
+已经讨论过，机就是导致事物发生的关键要素。现在政要所在的地方为什么又称机关呢？
+当地要发展，看什么呢？就看那栋楼！因为它是党政机关所在。所以病机就是导致疾病
+发生的那个最关键的因素。这与病理变化这个面显然有很大的区别。原子弹的威力大不
+大？当然很大。可是这个启动按钮没必要搞得那么大，一点就行了。病机实际上就是这
+么一回事。</p></div><footer class=post-footer><div class=post-button><a class=btn href=/post/chapter-4-treatment-principles-part-2/#more rel=contents>阅读全文 &#187;</a></div><div class=post-eof></div></footer></article></div><div class=post-block><article itemscope itemtype=http://schema.org/Article class=post-content lang><link itemprop=mainEntityOfPage href=https://blogs.qipai360.cn/post/chapter-4-treatment-principles-part-1/><span hidden itemprop=author itemscope itemtype=http://schema.org/Person><meta itemprop=image content="/imgs/avatar.jpg"><meta itemprop=name content="Rise"></span><span hidden itemprop=publisher itemscope itemtype=http://schema.org/Organization><meta itemprop=name content="Rise"><meta itemprop=description content="福兮祸兮，焉知所依？冬去冰泮，春来萌荣。朝生暮死，亦可惊鸿。知足者富，自足者强。"></span><span hidden itemprop=post itemscope itemtype=http://schema.org/CreativeWork><meta itemprop=name content="第四章 治病法要（1）"><meta itemprop=description content='在正式地进入太阳篇前，我们要讨论"治病法要"这样一个问题。只有这个问题清楚
+了、把握了，做医生才有一个依靠处。
+一、医者的两个层次'></span><header class=post-header><h2 class=post-title itemprop="name headline"><a href=/post/chapter-4-treatment-principles-part-1/ itemprop=url class=post-title-link>第四章 治病法要（1）</a></h2><div class=post-meta-container><div class=post-meta-items><span class=post-meta-item><span class=post-meta-item-icon><i class="fas fa-solid fa-calendar"></i>
+</span><span class=post-meta-item-text title=发表于>发表于：
+</span><time title="创建时间：2007年08月24日 20:48:00 CST" itemprop="dateCreated datePublished" datetime="2007-08-24 20:48:00 +0800 +0800">2007年08月24日
+</time></span><span class=post-meta-item><span class=post-meta-item-icon><i class="fas fa-solid fa-calendar-check"></i>
+</span><span class=post-meta-item-text title=更新于>更新于：
+</span><time title="修改时间：2007年08月27日 17:00:00 CST" itemprop="dateModified dateLastmod" datetime="2007-08-27 17:00:00 +0800 +0800">2007年08月27日
+</time></span><span class=post-meta-item><span class=post-meta-item-icon><i class="fas fa-solid fa-folder-open"></i>
+</span><span class=post-meta-item-text title=分类于>分类于：
+</span><span itemprop=about itemscope itemtype=http://schema.org/Thing><a href=/categories/tcm/ itemprop=url rel=index><span itemprop=name>TCM</span>
+</a></span></span><span class=post-meta-item title=浏览><span class=post-meta-item-icon><i class="fas fa-solid fa-eye"></i>
+</span><span class=post-meta-item-text>浏览：
+</span><span id=pageview-count data-path=/post/chapter-4-treatment-principles-part-1/><i class="fa fa-sync fa-spin"></i></span></span></div></div></header><div class=post-body itemprop=articleBody><p>在正式地进入太阳篇前，我们要讨论"治病法要"这样一个问题。只有这个问题清楚
+了、把握了，做医生才有一个依靠处。</p><p><span style=font-weight:700>一、医者的两个层次</span></p></div><footer class=post-footer><div class=post-button><a class=btn href=/post/chapter-4-treatment-principles-part-1/#more rel=contents>阅读全文 &#187;</a></div><div class=post-eof></div></footer></article></div><div class=post-block><article itemscope itemtype=http://schema.org/Article class=post-content lang><link itemprop=mainEntityOfPage href=https://blogs.qipai360.cn/post/chapter-3-yin-yang-mechanism-part-4/><span hidden itemprop=author itemscope itemtype=http://schema.org/Person><meta itemprop=image content="/imgs/avatar.jpg"><meta itemprop=name content="Rise"></span><span hidden itemprop=publisher itemscope itemtype=http://schema.org/Organization><meta itemprop=name content="Rise"><meta itemprop=description content="福兮祸兮，焉知所依？冬去冰泮，春来萌荣。朝生暮死，亦可惊鸿。知足者富，自足者强。"></span><span hidden itemprop=post itemscope itemtype=http://schema.org/CreativeWork><meta itemprop=name content="第三章 阴阳的工作机制（4）"><meta itemprop=description content='4.伤寒传足不传手
+这一节我们讨论阴阳的离合机制，讨论开合枢，从《素问·阴阳离合论》里我们可
+以看到，它讲的是足三阴三阳，没有提手三阴三阳。而《灵枢·根结篇》里也谈到开合
+枢的问题，它讲开合枢也是在足经里讲，讲手经它不提这个问题。再加上《素问·热论》
+这样一篇论述"伤寒"的祖文，也是论足不论手，这就给后世的许多人产生一个误解，认
+为伤寒传足不传手，温病传手不传足。大家都知道，中医很重要的一个观念是整体观念，
+人与天地都是一个整体，天地的变化都会不时地影响人体，怎么可能手足之间不会产生
+影响、不会相传呢？但是，《内经》、《伤寒》在谈到上述问题时，又的确是偏重在足的一
+面，这是什么原因呢？要弄清这个问题，必须从以下几个方面来考虑。'></span><header class=post-header><h2 class=post-title itemprop="name headline"><a href=/post/chapter-3-yin-yang-mechanism-part-4/ itemprop=url class=post-title-link>第三章 阴阳的工作机制（4）</a></h2><div class=post-meta-container><div class=post-meta-items><span class=post-meta-item><span class=post-meta-item-icon><i class="fas fa-solid fa-calendar"></i>
+</span><span class=post-meta-item-text title=发表于>发表于：
+</span><time title="创建时间：2007年08月24日 19:31:00 CST" itemprop="dateCreated datePublished" datetime="2007-08-24 19:31:00 +0800 +0800">2007年08月24日
+</time></span><span class=post-meta-item><span class=post-meta-item-icon><i class="fas fa-solid fa-calendar-check"></i>
+</span><span class=post-meta-item-text title=更新于>更新于：
+</span><time title="修改时间：2007年08月27日 17:00:00 CST" itemprop="dateModified dateLastmod" datetime="2007-08-27 17:00:00 +0800 +0800">2007年08月27日
+</time></span><span class=post-meta-item><span class=post-meta-item-icon><i class="fas fa-solid fa-folder-open"></i>
+</span><span class=post-meta-item-text title=分类于>分类于：
+</span><span itemprop=about itemscope itemtype=http://schema.org/Thing><a href=/categories/tcm/ itemprop=url rel=index><span itemprop=name>TCM</span>
+</a></span></span><span class=post-meta-item title=浏览><span class=post-meta-item-icon><i class="fas fa-solid fa-eye"></i>
+</span><span class=post-meta-item-text>浏览：
+</span><span id=pageview-count data-path=/post/chapter-3-yin-yang-mechanism-part-4/><i class="fa fa-sync fa-spin"></i></span></span></div></div></header><div class=post-body itemprop=articleBody><p><span style=font-weight:700>4.伤寒传足不传手</span></p><p>这一节我们讨论阴阳的离合机制，讨论开合枢，从《素问·阴阳离合论》里我们可
+以看到，它讲的是足三阴三阳，没有提手三阴三阳。而《灵枢·根结篇》里也谈到开合
+枢的问题，它讲开合枢也是在足经里讲，讲手经它不提这个问题。再加上《素问·热论》
+这样一篇论述"伤寒"的祖文，也是论足不论手，这就给后世的许多人产生一个误解，认
+为伤寒传足不传手，温病传手不传足。大家都知道，中医很重要的一个观念是整体观念，
+人与天地都是一个整体，天地的变化都会不时地影响人体，怎么可能手足之间不会产生
+影响、不会相传呢？但是，《内经》、《伤寒》在谈到上述问题时，又的确是偏重在足的一
+面，这是什么原因呢？要弄清这个问题，必须从以下几个方面来考虑。</p></div><footer class=post-footer><div class=post-button><a class=btn href=/post/chapter-3-yin-yang-mechanism-part-4/#more rel=contents>阅读全文 &#187;</a></div><div class=post-eof></div></footer></article></div><div class=post-block><article itemscope itemtype=http://schema.org/Article class=post-content lang><link itemprop=mainEntityOfPage href=https://blogs.qipai360.cn/post/chapter-3-yin-yang-mechanism-part-3/><span hidden itemprop=author itemscope itemtype=http://schema.org/Person><meta itemprop=image content="/imgs/avatar.jpg"><meta itemprop=name content="Rise"></span><span hidden itemprop=publisher itemscope itemtype=http://schema.org/Organization><meta itemprop=name content="Rise"><meta itemprop=description content="福兮祸兮，焉知所依？冬去冰泮，春来萌荣。朝生暮死，亦可惊鸿。知足者富，自足者强。"></span><span hidden itemprop=post itemscope itemtype=http://schema.org/CreativeWork><meta itemprop=name content="第三章 阴阳的工作机制（3）"><meta itemprop=description content="3.开合枢病变
+开合枢的正常功用 我们讨论过了，这些功用失常就会产生病变。所以，六经病变
+说实在的，就是开合枢的失调，就是开合枢的病变。"></span><header class=post-header><h2 class=post-title itemprop="name headline"><a href=/post/chapter-3-yin-yang-mechanism-part-3/ itemprop=url class=post-title-link>第三章 阴阳的工作机制（3）</a></h2><div class=post-meta-container><div class=post-meta-items><span class=post-meta-item><span class=post-meta-item-icon><i class="fas fa-solid fa-calendar"></i>
+</span><span class=post-meta-item-text title=发表于>发表于：
+</span><time title="创建时间：2007年08月24日 19:03:00 CST" itemprop="dateCreated datePublished" datetime="2007-08-24 19:03:00 +0800 +0800">2007年08月24日
+</time></span><span class=post-meta-item><span class=post-meta-item-icon><i class="fas fa-solid fa-calendar-check"></i>
+</span><span class=post-meta-item-text title=更新于>更新于：
+</span><time title="修改时间：2007年08月27日 17:00:00 CST" itemprop="dateModified dateLastmod" datetime="2007-08-27 17:00:00 +0800 +0800">2007年08月27日
+</time></span><span class=post-meta-item><span class=post-meta-item-icon><i class="fas fa-solid fa-folder-open"></i>
+</span><span class=post-meta-item-text title=分类于>分类于：
+</span><span itemprop=about itemscope itemtype=http://schema.org/Thing><a href=/categories/tcm/ itemprop=url rel=index><span itemprop=name>TCM</span>
+</a></span></span><span class=post-meta-item title=浏览><span class=post-meta-item-icon><i class="fas fa-solid fa-eye"></i>
+</span><span class=post-meta-item-text>浏览：
+</span><span id=pageview-count data-path=/post/chapter-3-yin-yang-mechanism-part-3/><i class="fa fa-sync fa-spin"></i></span></span></div></div></header><div class=post-body itemprop=articleBody><p><span style=font-weight:700>3.开合枢病变</span></p><p>开合枢的正常功用 我们讨论过了，这些功用失常就会产生病变。所以，六经病变
+说实在的，就是开合枢的失调，就是开合枢的病变。</p></div><footer class=post-footer><div class=post-button><a class=btn href=/post/chapter-3-yin-yang-mechanism-part-3/#more rel=contents>阅读全文 &#187;</a></div><div class=post-eof></div></footer></article></div><div class=post-block><article itemscope itemtype=http://schema.org/Article class=post-content lang><link itemprop=mainEntityOfPage href=https://blogs.qipai360.cn/post/chapter-3-yin-yang-mechanism-part-2/><span hidden itemprop=author itemscope itemtype=http://schema.org/Person><meta itemprop=image content="/imgs/avatar.jpg"><meta itemprop=name content="Rise"></span><span hidden itemprop=publisher itemscope itemtype=http://schema.org/Organization><meta itemprop=name content="Rise"><meta itemprop=description content="福兮祸兮，焉知所依？冬去冰泮，春来萌荣。朝生暮死，亦可惊鸿。知足者富，自足者强。"></span><span hidden itemprop=post itemscope itemtype=http://schema.org/CreativeWork><meta itemprop=name content="第三章 阴阳的工作机制（2）"><meta itemprop=description content='二、阴阳的离合机制
+以上我们讨论了三阴三阳引入厥阴、阳明的意义，三阴三阳建立起来后，中医的基
+本模型便随之确定。所以，到了《素问》的第六篇，就专门有一个"阴阳离合论"。怎么
+叫"阴阳离合"呢？首先从"合"的角度讲，合就是从综合来看，从总体来看，它谈的是很
+基本的层面，这个层面就是一阴一阳。阴阳的这个合的层面，在易系统里又叫做"道"，
+故《易·系辞》里面说：&ldquo;一阴一阳之谓道。&ldquo;我们前面讲的阳生阴长，阳杀阴藏，就主
+要是从合的这个层面谈。那么离呢？离就是分开来讲，《素问》里面谈到阴阳的无限可分
+性：&ldquo;阴阳者，数之可十，推之可百，数之可千，推之可万，万之大不可胜数。&ldquo;如果这
+样来分，那我们怎么能把握？所以，谈阴阳的离，我们不需这样来分，分成三就行了。
+阴分为三，阳分为三，这就是三阴三阳。用道家的说法，这叫做"一气含三造化功&rdquo;。因
+此，阴阳的离合实际上就是谈一个分工合作的问题。合作就是要实现第二章所谈的阴阳
+的生长收藏，阳气的释放和蓄积，而要实现这样一个过程，就必须有不同的作用机制，
+这就要牵涉到分工，这也是《素问·阴阳离合论》最关注的一个问题。'></span><header class=post-header><h2 class=post-title itemprop="name headline"><a href=/post/chapter-3-yin-yang-mechanism-part-2/ itemprop=url class=post-title-link>第三章 阴阳的工作机制（2）</a></h2><div class=post-meta-container><div class=post-meta-items><span class=post-meta-item><span class=post-meta-item-icon><i class="fas fa-solid fa-calendar"></i>
+</span><span class=post-meta-item-text title=发表于>发表于：
+</span><time title="创建时间：2007年08月24日 18:40:00 CST" itemprop="dateCreated datePublished" datetime="2007-08-24 18:40:00 +0800 +0800">2007年08月24日
+</time></span><span class=post-meta-item><span class=post-meta-item-icon><i class="fas fa-solid fa-calendar-check"></i>
+</span><span class=post-meta-item-text title=更新于>更新于：
+</span><time title="修改时间：2007年08月27日 17:00:00 CST" itemprop="dateModified dateLastmod" datetime="2007-08-27 17:00:00 +0800 +0800">2007年08月27日
+</time></span><span class=post-meta-item><span class=post-meta-item-icon><i class="fas fa-solid fa-folder-open"></i>
+</span><span class=post-meta-item-text title=分类于>分类于：
+</span><span itemprop=about itemscope itemtype=http://schema.org/Thing><a href=/categories/tcm/ itemprop=url rel=index><span itemprop=name>TCM</span>
+</a></span></span><span class=post-meta-item title=浏览><span class=post-meta-item-icon><i class="fas fa-solid fa-eye"></i>
+</span><span class=post-meta-item-text>浏览：
+</span><span id=pageview-count data-path=/post/chapter-3-yin-yang-mechanism-part-2/><i class="fa fa-sync fa-spin"></i></span></span></div></div></header><div class=post-body itemprop=articleBody><p><span style=font-weight:700>二、阴阳的离合机制</span></p><p>以上我们讨论了三阴三阳引入厥阴、阳明的意义，三阴三阳建立起来后，中医的基
+本模型便随之确定。所以，到了《素问》的第六篇，就专门有一个"阴阳离合论"。怎么
+叫"阴阳离合"呢？首先从"合"的角度讲，合就是从综合来看，从总体来看，它谈的是很
+基本的层面，这个层面就是一阴一阳。阴阳的这个合的层面，在易系统里又叫做"道"，
+故《易·系辞》里面说：&ldquo;一阴一阳之谓道。&ldquo;我们前面讲的阳生阴长，阳杀阴藏，就主
+要是从合的这个层面谈。那么离呢？离就是分开来讲，《素问》里面谈到阴阳的无限可分
+性：&ldquo;阴阳者，数之可十，推之可百，数之可千，推之可万，万之大不可胜数。&ldquo;如果这
+样来分，那我们怎么能把握？所以，谈阴阳的离，我们不需这样来分，分成三就行了。
+阴分为三，阳分为三，这就是三阴三阳。用道家的说法，这叫做"一气含三造化功&rdquo;。因
+此，阴阳的离合实际上就是谈一个分工合作的问题。合作就是要实现第二章所谈的阴阳
+的生长收藏，阳气的释放和蓄积，而要实现这样一个过程，就必须有不同的作用机制，
+这就要牵涉到分工，这也是《素问·阴阳离合论》最关注的一个问题。</p></div><footer class=post-footer><div class=post-button><a class=btn href=/post/chapter-3-yin-yang-mechanism-part-2/#more rel=contents>阅读全文 &#187;</a></div><div class=post-eof></div></footer></article></div><div class=post-block><article itemscope itemtype=http://schema.org/Article class=post-content lang><link itemprop=mainEntityOfPage href=https://blogs.qipai360.cn/post/chapter-3-yin-yang-mechanism-part-1/><span hidden itemprop=author itemscope itemtype=http://schema.org/Person><meta itemprop=image content="/imgs/avatar.jpg"><meta itemprop=name content="Rise"></span><span hidden itemprop=publisher itemscope itemtype=http://schema.org/Organization><meta itemprop=name content="Rise"><meta itemprop=description content="福兮祸兮，焉知所依？冬去冰泮，春来萌荣。朝生暮死，亦可惊鸿。知足者富，自足者强。"></span><span hidden itemprop=post itemscope itemtype=http://schema.org/CreativeWork><meta itemprop=name content="第三章 阴阳的工作机制（1）"><meta itemprop=description content='一、道生一，一生二，二生三，三生万物
+1.易有太极，是生两仪
+上面，对阴阳已经讨论了很多，对这个问题已经有所了解。现在我们来讨论"阴阳的
+工作机制"，弄清楚这个以后对理解《伤寒论》的许多问题就会很方便。阴阳是一体两面，
+一分为二。它的来源与《易》很有关联。孔子在《易·系辞》里说"易有太极，是生两仪
+&ldquo;，两仪是什么？两仪就是阴阳，因此，阴阳是从太极来的。太极是《易》系统的一个重
+要概念，这个概念弄不清楚，中医的很多问题就不容易搞究竟。&ldquo;太"这个字经常用，像
+太公太婆、太上皇等，所以，比较容易理解，那么，&ldquo;极"呢？极这个概念在《说文》叫
+做"栋&rdquo;，就是屋脊的意思，是一个最高点。太极显然就是比这个脊更高的地方，比最高
+的地方还高，这个说法似乎抽象了一点。有没有更具体一些的意义呢？有关极的概念，
+在最早的一本天文历法书《周髀算经》中有专门的涵义，该经的下卷说：&ldquo;阴阳之数，日
+月之法，十九岁为一章。四章为一蔀，七十六岁。二十蔀为一遂，遂千五百二十岁。三
+遂为一首，首四千五百六十岁。七首为一极，极三万一千九百二十岁。生数皆终，万物
+复始。天以更元，作纪历。&ldquo;以上的经文谈到五个重要的概念，就是章、蔀、遂、首、极。
+章是十九岁，十九这个数就叫做章，这里面就透着一个法度。《素问·至真要大论》讲病
+机，为什么讲"十九"条？为什么没有加上一个燥？这里面就有一个章法问题，不是随意
+地加一个可以，减一个也可以。这个章法是很严肃的问题，这是含糊不得的。接下去是
+四章为一蔀，二十蔀为一遂，三遂为一首，七首为一极。这个"极"是多少年呢？是三万
+一千九百二十年。也就是说，三万一千九百二十年就叫做一极。那么，到了这个三万一
+千九百二十年会有什么变化呢？有一个非常大的变化，就是"生数皆终，万物复始&rdquo;。在
+这个极点到来的时候，所有的"生数"都终了，在所有的生命结构及生命所需的条件完结
+之后，又再开始"万物复始"的新的循环。天地宇宙便是在这样一个交替变化中行进。而
+在每一个新的"极"开始的时候，从天文的角度，都需要重新纪元，重新纪历。这叫做&rdquo;
+天以更元，作纪历&rdquo;。上述这个极的认识大家不要小看了，我们看现代科学发展到今天，
+它对宇宙有些什么认识呢？一个热寂说，一个大爆炸，一个熵定律，总起来说，宇宙在
+大爆炸中诞生，诞生形成以后，就按照熵的定律不断演变，直至达到熵的最大值。此时
+所有有用的能量消耗一空，世界进入死寂，宇宙不可避免地走向死亡。这实际就是"生数
+皆终"的时候，就是极变到来的时候。是不是这个死亡就这样一直地持续下去，如果真是
+这样，那史前文明这个概念怎么来？我们这一个文明史怎么产生？所以，这个死亡不会
+一直地持续下去，它还会变化，还会爆炸，还会有"万物复始"的时候。这个过程，古印
+度的哲学把它叫做"成、住、坏、空&rdquo;，宇宙就是在这样一个成、住、坏、空中演进。宇
+宙形成以后，会有很长一个"住"世的过程，而这个"住"的过程，如果按照熵定律，就是
+一个熵值不断增大的过程。增大到一定的程度就会产生坏灭，然后不可避免地进入空亡。
+这个变化过程就叫做一劫，劫后又要复生，又有新劫产生，又有新的成、住、坏、空。
+从上面这个认识我们可以看到，《周髀算经》的也好，古印度的也好，现代科学的也好，
+虽然在周期的长短上，在时间单位的意义上会有出入，但究其实质而言，三个认识都是
+相同的。那我们不禁要问，现代科学有这样先进的理论，有那么多现代化的手段可以利
+用，它得出这样一个宇宙认识并不奇怪，而古人根本没有这些先进的东西，他们凭什么
+也得出了同样的认识？这就再一次提醒我们，古人的那套东西真的不可轻视。我们研究
+古代的东西，不可以用一个"朴素"就搪塞过去，应该知道其中必有奥妙的地方。上面这
+个成、住、坏、空的周期，古人已经提出来了，就是三万一千九百二十岁，这个就是"
+极"。在极的终点就会产生很大的变化，这个时候生数已经终了，一切都完蛋了。既然一
+切完蛋了，怎么还会万物复始呢？在这个节骨眼上，古人认识到，要想在一个极变终了
+之后还会有另一个极产生，要想使极与极之间能够顺利的转换，就必然有一个比"极"更
+高的东西，就像孩子生不出孩子，必是母亲方能生出孩子一样。那么，这个"母亲"，这
+个比"极"更高一辈的东西，就称之为"太极"，太极的概念就这样诞生了。有了太极，在
+生数终了以后，就可以万物复始，就可以产生新生命，就可以产生新的成、住、坏、空。
+所以，太极是一个什么东西呢？太极就是这样一个东西，惟有它，宇宙才能不断地循环
+下去，惟有它，生命才能终而复始。所以，太极就是这样一个如环无端的东西。我们看
+由北宋周敦颐所传出的太极图，画出的就是一个空空的圆。这样一个圆，它如环无端，
+正好体现了太极概念的涵义。只可惜后世的许多人误将那个阴阳鱼的画面当作太极图，
+闹成天大的笑话。有阴阳鱼的这个画面，只能称作两仪图，或者阴阳图，当然，如果连
+上阴阳图外面这一圈看，叫做太极阴阳图也未尝不可。但，绝不能将阴阳鱼这个画面单
+称太极图，这如同指子为母，岂不可笑。《系辞》曰：&ldquo;生生之谓易。&ldquo;又曰：&ldquo;易有太极，
+是生两仪，两仪生四象，四象生八卦，八卦定吉凶，吉凶生大业。&ldquo;易是什么呢？易就是
+产生生命的那个东西，那个道理。这个东西，这个道理又是什么呢？就是太极！前几十
+年，由于人工胰岛素合成成功，于是在科学界产生了一种思潮，认为生命也可以合成。
+既然蛋白质可以合成，而人又是由蛋白质构成的，那为什么生命不可以合成呢？生命究
+竟能不能合成？这个问题梁漱溟前辈在他的《人心与人生》中发表过专门的见解：&ldquo;自然
+生命靡非始于分化孳息，而人工之造物恒必从构合入手，此世所共见。今曰从构合入手
+取得生命，吾窃疑其貌似在此。&ldquo;生命来自单细胞的分裂，就是当今最时髦的无性繁殖，
+克隆术，也没有违背这个过程。只有分化才能孳息，合成怎么孳息呢？所以，生命不可
+能由合成产生。只有太极生两仪，两仪生四象，四象生八卦，这个过程不可能倒过来。
+因此，生命可以合成，在现代找不到根据，在古代也找不到根据。而从这一点我们可以
+看到，传统与现代并不相违，越是深层的问题越是这样。所以，传统钻得越深，往往对
+现代的理解就越深刻。当然，反过来也是这样，对现代的问题钻研得越深，有可能对传
+统的看法就越深刻。所以，传统与现代需要对话，需要高层次的交流。只有这样，东西
+方文化才有可能真正沟通，才有可能相互获益。而这个对话必须平等，你要高高在上，
+独称老大，那这个交流就没有办法实现。从"生生之谓易&rdquo;，从易这门学问对生命的界定，
+我们应该有这样一个感受，传统的学问绝不容轻视。它不但涉及一般的问题，而且触及
+科学最深层的问题。生命来自分裂，不来自合成。太极生两仪是分裂过程，两仪生四象
+也是个分裂过程。在两仪阶段，阴阳初判，这个时候尚未形成生命，等到四象产生了，
+有了生长收藏，植物类的东西就有可能产生。四象的时候就是二阴二阳，太阳少阳，太
+阴少阴，或者称少阳老阳，少阴老阴。在这个基础上继续分化，变成三阴三阳，生命就
+开始形成了。所以，我们要研究生命，特别是研究人的生命，就要特别注意这个三阴三
+阳。'></span><header class=post-header><h2 class=post-title itemprop="name headline"><a href=/post/chapter-3-yin-yang-mechanism-part-1/ itemprop=url class=post-title-link>第三章 阴阳的工作机制（1）</a></h2><div class=post-meta-container><div class=post-meta-items><span class=post-meta-item><span class=post-meta-item-icon><i class="fas fa-solid fa-calendar"></i>
+</span><span class=post-meta-item-text title=发表于>发表于：
+</span><time title="创建时间：2007年08月24日 16:39:00 CST" itemprop="dateCreated datePublished" datetime="2007-08-24 16:39:00 +0800 +0800">2007年08月24日
+</time></span><span class=post-meta-item><span class=post-meta-item-icon><i class="fas fa-solid fa-calendar-check"></i>
+</span><span class=post-meta-item-text title=更新于>更新于：
+</span><time title="修改时间：2007年08月27日 17:00:00 CST" itemprop="dateModified dateLastmod" datetime="2007-08-27 17:00:00 +0800 +0800">2007年08月27日
+</time></span><span class=post-meta-item><span class=post-meta-item-icon><i class="fas fa-solid fa-folder-open"></i>
+</span><span class=post-meta-item-text title=分类于>分类于：
+</span><span itemprop=about itemscope itemtype=http://schema.org/Thing><a href=/categories/tcm/ itemprop=url rel=index><span itemprop=name>TCM</span>
+</a></span></span><span class=post-meta-item title=浏览><span class=post-meta-item-icon><i class="fas fa-solid fa-eye"></i>
+</span><span class=post-meta-item-text>浏览：
+</span><span id=pageview-count data-path=/post/chapter-3-yin-yang-mechanism-part-1/><i class="fa fa-sync fa-spin"></i></span></span></div></div></header><div class=post-body itemprop=articleBody><p><span style=font-weight:700>一、道生一，一生二，二生三，三生万物</span></p><p><span style=font-weight:700>1.易有太极，是生两仪</span></p><p>上面，对阴阳已经讨论了很多，对这个问题已经有所了解。现在我们来讨论"阴阳的
+工作机制"，弄清楚这个以后对理解《伤寒论》的许多问题就会很方便。阴阳是一体两面，
+一分为二。它的来源与《易》很有关联。孔子在《易·系辞》里说"易有太极，是生两仪
+&ldquo;，两仪是什么？两仪就是阴阳，因此，阴阳是从太极来的。太极是《易》系统的一个重
+要概念，这个概念弄不清楚，中医的很多问题就不容易搞究竟。&ldquo;太"这个字经常用，像
+太公太婆、太上皇等，所以，比较容易理解，那么，&ldquo;极"呢？极这个概念在《说文》叫
+做"栋&rdquo;，就是屋脊的意思，是一个最高点。太极显然就是比这个脊更高的地方，比最高
+的地方还高，这个说法似乎抽象了一点。有没有更具体一些的意义呢？有关极的概念，
+在最早的一本天文历法书《周髀算经》中有专门的涵义，该经的下卷说：&ldquo;阴阳之数，日
+月之法，十九岁为一章。四章为一蔀，七十六岁。二十蔀为一遂，遂千五百二十岁。三
+遂为一首，首四千五百六十岁。七首为一极，极三万一千九百二十岁。生数皆终，万物
+复始。天以更元，作纪历。&ldquo;以上的经文谈到五个重要的概念，就是章、蔀、遂、首、极。
+章是十九岁，十九这个数就叫做章，这里面就透着一个法度。《素问·至真要大论》讲病
+机，为什么讲"十九"条？为什么没有加上一个燥？这里面就有一个章法问题，不是随意
+地加一个可以，减一个也可以。这个章法是很严肃的问题，这是含糊不得的。接下去是
+四章为一蔀，二十蔀为一遂，三遂为一首，七首为一极。这个"极"是多少年呢？是三万
+一千九百二十年。也就是说，三万一千九百二十年就叫做一极。那么，到了这个三万一
+千九百二十年会有什么变化呢？有一个非常大的变化，就是"生数皆终，万物复始&rdquo;。在
+这个极点到来的时候，所有的"生数"都终了，在所有的生命结构及生命所需的条件完结
+之后，又再开始"万物复始"的新的循环。天地宇宙便是在这样一个交替变化中行进。而
+在每一个新的"极"开始的时候，从天文的角度，都需要重新纪元，重新纪历。这叫做&rdquo;
+天以更元，作纪历&rdquo;。上述这个极的认识大家不要小看了，我们看现代科学发展到今天，
+它对宇宙有些什么认识呢？一个热寂说，一个大爆炸，一个熵定律，总起来说，宇宙在
+大爆炸中诞生，诞生形成以后，就按照熵的定律不断演变，直至达到熵的最大值。此时
+所有有用的能量消耗一空，世界进入死寂，宇宙不可避免地走向死亡。这实际就是"生数
+皆终"的时候，就是极变到来的时候。是不是这个死亡就这样一直地持续下去，如果真是
+这样，那史前文明这个概念怎么来？我们这一个文明史怎么产生？所以，这个死亡不会
+一直地持续下去，它还会变化，还会爆炸，还会有"万物复始"的时候。这个过程，古印
+度的哲学把它叫做"成、住、坏、空&rdquo;，宇宙就是在这样一个成、住、坏、空中演进。宇
+宙形成以后，会有很长一个"住"世的过程，而这个"住"的过程，如果按照熵定律，就是
+一个熵值不断增大的过程。增大到一定的程度就会产生坏灭，然后不可避免地进入空亡。
+这个变化过程就叫做一劫，劫后又要复生，又有新劫产生，又有新的成、住、坏、空。
+从上面这个认识我们可以看到，《周髀算经》的也好，古印度的也好，现代科学的也好，
+虽然在周期的长短上，在时间单位的意义上会有出入，但究其实质而言，三个认识都是
+相同的。那我们不禁要问，现代科学有这样先进的理论，有那么多现代化的手段可以利
+用，它得出这样一个宇宙认识并不奇怪，而古人根本没有这些先进的东西，他们凭什么
+也得出了同样的认识？这就再一次提醒我们，古人的那套东西真的不可轻视。我们研究
+古代的东西，不可以用一个"朴素"就搪塞过去，应该知道其中必有奥妙的地方。上面这
+个成、住、坏、空的周期，古人已经提出来了，就是三万一千九百二十岁，这个就是"
+极"。在极的终点就会产生很大的变化，这个时候生数已经终了，一切都完蛋了。既然一
+切完蛋了，怎么还会万物复始呢？在这个节骨眼上，古人认识到，要想在一个极变终了
+之后还会有另一个极产生，要想使极与极之间能够顺利的转换，就必然有一个比"极"更
+高的东西，就像孩子生不出孩子，必是母亲方能生出孩子一样。那么，这个"母亲"，这
+个比"极"更高一辈的东西，就称之为"太极"，太极的概念就这样诞生了。有了太极，在
+生数终了以后，就可以万物复始，就可以产生新生命，就可以产生新的成、住、坏、空。
+所以，太极是一个什么东西呢？太极就是这样一个东西，惟有它，宇宙才能不断地循环
+下去，惟有它，生命才能终而复始。所以，太极就是这样一个如环无端的东西。我们看
+由北宋周敦颐所传出的太极图，画出的就是一个空空的圆。这样一个圆，它如环无端，
+正好体现了太极概念的涵义。只可惜后世的许多人误将那个阴阳鱼的画面当作太极图，
+闹成天大的笑话。有阴阳鱼的这个画面，只能称作两仪图，或者阴阳图，当然，如果连
+上阴阳图外面这一圈看，叫做太极阴阳图也未尝不可。但，绝不能将阴阳鱼这个画面单
+称太极图，这如同指子为母，岂不可笑。《系辞》曰：&ldquo;生生之谓易。&ldquo;又曰：&ldquo;易有太极，
+是生两仪，两仪生四象，四象生八卦，八卦定吉凶，吉凶生大业。&ldquo;易是什么呢？易就是
+产生生命的那个东西，那个道理。这个东西，这个道理又是什么呢？就是太极！前几十
+年，由于人工胰岛素合成成功，于是在科学界产生了一种思潮，认为生命也可以合成。
+既然蛋白质可以合成，而人又是由蛋白质构成的，那为什么生命不可以合成呢？生命究
+竟能不能合成？这个问题梁漱溟前辈在他的《人心与人生》中发表过专门的见解：&ldquo;自然
+生命靡非始于分化孳息，而人工之造物恒必从构合入手，此世所共见。今曰从构合入手
+取得生命，吾窃疑其貌似在此。&ldquo;生命来自单细胞的分裂，就是当今最时髦的无性繁殖，
+克隆术，也没有违背这个过程。只有分化才能孳息，合成怎么孳息呢？所以，生命不可
+能由合成产生。只有太极生两仪，两仪生四象，四象生八卦，这个过程不可能倒过来。
+因此，生命可以合成，在现代找不到根据，在古代也找不到根据。而从这一点我们可以
+看到，传统与现代并不相违，越是深层的问题越是这样。所以，传统钻得越深，往往对
+现代的理解就越深刻。当然，反过来也是这样，对现代的问题钻研得越深，有可能对传
+统的看法就越深刻。所以，传统与现代需要对话，需要高层次的交流。只有这样，东西
+方文化才有可能真正沟通，才有可能相互获益。而这个对话必须平等，你要高高在上，
+独称老大，那这个交流就没有办法实现。从"生生之谓易&rdquo;，从易这门学问对生命的界定，
+我们应该有这样一个感受，传统的学问绝不容轻视。它不但涉及一般的问题，而且触及
+科学最深层的问题。生命来自分裂，不来自合成。太极生两仪是分裂过程，两仪生四象
+也是个分裂过程。在两仪阶段，阴阳初判，这个时候尚未形成生命，等到四象产生了，
+有了生长收藏，植物类的东西就有可能产生。四象的时候就是二阴二阳，太阳少阳，太
+阴少阴，或者称少阳老阳，少阴老阴。在这个基础上继续分化，变成三阴三阳，生命就
+开始形成了。所以，我们要研究生命，特别是研究人的生命，就要特别注意这个三阴三
+阳。</p></div><footer class=post-footer><div class=post-button><a class=btn href=/post/chapter-3-yin-yang-mechanism-part-1/#more rel=contents>阅读全文 &#187;</a></div><div class=post-eof></div></footer></article></div><div class=post-block><article itemscope itemtype=http://schema.org/Article class=post-content lang><link itemprop=mainEntityOfPage href=https://blogs.qipai360.cn/post/chapter-2-typhoid-significance-part-3/><span hidden itemprop=author itemscope itemtype=http://schema.org/Person><meta itemprop=image content="/imgs/avatar.jpg"><meta itemprop=name content="Rise"></span><span hidden itemprop=publisher itemscope itemtype=http://schema.org/Organization><meta itemprop=name content="Rise"><meta itemprop=description content="福兮祸兮，焉知所依？冬去冰泮，春来萌荣。朝生暮死，亦可惊鸿。知足者富，自足者强。"></span><span hidden itemprop=post itemscope itemtype=http://schema.org/CreativeWork><meta itemprop=name content="第二章 伤寒之意义（3）"><meta itemprop=description content="2.伤寒总说
+以上我们讲到了两个关系，一个主导，一个体用。阴阳的这些东西弄清以后，就可
+以解答上述的那三个问题。
+（1）寒为冬气 首先，我们来看寒，寒是冬日的正气，这一点我们在《中基》里面
+已经学过。春温、夏热、秋凉、冬寒，怎么会产生寒呢？这一点我们前面已经提到过，
+阳的本性是属热的，春夏的阳气处于释放状态，热的东西散发出来了，所以，天气变得
+温热。但是，春天释放的程度要比夏天小，因此，春天的温度要比夏天低。到了秋冬，
+阳气由释放转入到收藏，热的东西收藏起来了，关闭起来了，天气也就变得渐渐地寒冷。
+但是从程度而言，秋天的收藏不及冬日，因此，冬日的气温更为寒冷。这是寒的一个根
+本意义。从这个意义我们可以看到，寒实际上是反映阳气的收藏状态，是阳气收藏的外
+在表现。所以，寒不但是冬之气，其实也是藏之气。现在我们暂且放下时间，来看一看
+空间方位的情况。在我们国家，大家都很清楚，西北的气温要较东南低得多，我们每年
+冬天看天气预报，北方有些地区都零下十几度了，南方还在零上二十多度。这个反差太
+大了，要是海南的人到北方出差，上飞机前穿衬衣，下飞机就要穿皮袄了。为什么会出
+现这样大的差别呢？看一看《内经》就清楚了。《素问·阴阳应象大论》说：&ldquo;西北方阴
+也，东南方阳也。&ldquo;阳就是用，就是释放，阴就是体，就是收藏。从地域方位的角度而言，
+整个西北方以收藏为主，整个东南方以释放为主，所以，就产生了这个气温上的悬殊。
+这就提示我们一个问题，学中医不但要注意时间，也要注意空间方位。时空在中医里是
+同一的，是统一的，这个观念必须牢牢记住。前面我们提出过，阴阳的问题要真正弄清，
+不能光停留在书本的那几点上，要有切身的感受。什么事情都要养成用阴阳来思维，比
+如我们生活在南宁的人，时间都快到春节了，身上却还穿着衬衣，这是为什么呢？如果
+我们不从阴阳这个角度去思考，去弄清它，那作为一个学中医的人，你就麻木了，就凭
+这个麻木，你要学好中医，我看没多少可能。"></span><header class=post-header><h2 class=post-title itemprop="name headline"><a href=/post/chapter-2-typhoid-significance-part-3/ itemprop=url class=post-title-link>第二章 伤寒之意义（3）</a></h2><div class=post-meta-container><div class=post-meta-items><span class=post-meta-item><span class=post-meta-item-icon><i class="fas fa-solid fa-calendar"></i>
+</span><span class=post-meta-item-text title=发表于>发表于：
+</span><time title="创建时间：2007年08月24日 16:05:00 CST" itemprop="dateCreated datePublished" datetime="2007-08-24 16:05:00 +0800 +0800">2007年08月24日
+</time></span><span class=post-meta-item><span class=post-meta-item-icon><i class="fas fa-solid fa-calendar-check"></i>
+</span><span class=post-meta-item-text title=更新于>更新于：
+</span><time title="修改时间：2007年08月27日 17:00:00 CST" itemprop="dateModified dateLastmod" datetime="2007-08-27 17:00:00 +0800 +0800">2007年08月27日
+</time></span><span class=post-meta-item><span class=post-meta-item-icon><i class="fas fa-solid fa-folder-open"></i>
+</span><span class=post-meta-item-text title=分类于>分类于：
+</span><span itemprop=about itemscope itemtype=http://schema.org/Thing><a href=/categories/tcm/ itemprop=url rel=index><span itemprop=name>TCM</span>
+</a></span></span><span class=post-meta-item title=浏览><span class=post-meta-item-icon><i class="fas fa-solid fa-eye"></i>
+</span><span class=post-meta-item-text>浏览：
+</span><span id=pageview-count data-path=/post/chapter-2-typhoid-significance-part-3/><i class="fa fa-sync fa-spin"></i></span></span></div></div></header><div class=post-body itemprop=articleBody><p><span style=font-weight:700>2.伤寒总说</span></p><p>以上我们讲到了两个关系，一个主导，一个体用。阴阳的这些东西弄清以后，就可
+以解答上述的那三个问题。</p><p><span style=font-weight:700>（1）寒为冬气</span> 首先，我们来看寒，寒是冬日的正气，这一点我们在《中基》里面
+已经学过。春温、夏热、秋凉、冬寒，怎么会产生寒呢？这一点我们前面已经提到过，
+阳的本性是属热的，春夏的阳气处于释放状态，热的东西散发出来了，所以，天气变得
+温热。但是，春天释放的程度要比夏天小，因此，春天的温度要比夏天低。到了秋冬，
+阳气由释放转入到收藏，热的东西收藏起来了，关闭起来了，天气也就变得渐渐地寒冷。
+但是从程度而言，秋天的收藏不及冬日，因此，冬日的气温更为寒冷。这是寒的一个根
+本意义。从这个意义我们可以看到，寒实际上是反映阳气的收藏状态，是阳气收藏的外
+在表现。所以，寒不但是冬之气，其实也是藏之气。现在我们暂且放下时间，来看一看
+空间方位的情况。在我们国家，大家都很清楚，西北的气温要较东南低得多，我们每年
+冬天看天气预报，北方有些地区都零下十几度了，南方还在零上二十多度。这个反差太
+大了，要是海南的人到北方出差，上飞机前穿衬衣，下飞机就要穿皮袄了。为什么会出
+现这样大的差别呢？看一看《内经》就清楚了。《素问·阴阳应象大论》说：&ldquo;西北方阴
+也，东南方阳也。&ldquo;阳就是用，就是释放，阴就是体，就是收藏。从地域方位的角度而言，
+整个西北方以收藏为主，整个东南方以释放为主，所以，就产生了这个气温上的悬殊。
+这就提示我们一个问题，学中医不但要注意时间，也要注意空间方位。时空在中医里是
+同一的，是统一的，这个观念必须牢牢记住。前面我们提出过，阴阳的问题要真正弄清，
+不能光停留在书本的那几点上，要有切身的感受。什么事情都要养成用阴阳来思维，比
+如我们生活在南宁的人，时间都快到春节了，身上却还穿着衬衣，这是为什么呢？如果
+我们不从阴阳这个角度去思考，去弄清它，那作为一个学中医的人，你就麻木了，就凭
+这个麻木，你要学好中医，我看没多少可能。</p></div><footer class=post-footer><div class=post-button><a class=btn href=/post/chapter-2-typhoid-significance-part-3/#more rel=contents>阅读全文 &#187;</a></div><div class=post-eof></div></footer></article></div><nav class=pagination><a class="extend prev" rel=prev href=/post/page/50/><i class="fa fa-angle-left"></i>
+</a><a class=page-number href=/post/page/47/>47</a>
+<a class=page-number href=/post/page/48/>48</a>
+<a class=page-number href=/post/page/49/>49</a>
+<a class=page-number href=/post/page/50/>50</a>
+<span class="page-number current">51</span>
+<a class=page-number href=/post/page/52/>52</a>
+<a class=page-number href=/post/page/53/>53</a>
+<a class=page-number href=/post/page/54/>54</a>
+<a class=page-number href=/post/page/55/>55</a>
+<a class="extend next" rel=next href=/post/page/52/><i class="fa fa-angle-right"></i></a></nav></div></main><footer class=footer><div class=footer-inner><div class=copyright>&copy;
+<span itemprop=copyrightYear>2004 - 2026
+</span><span class=with-love><i class="fa fa-heart"></i>
+</span><span class=author itemprop=copyrightHolder>Rise</span></div><div class=powered-by>由 <a href=https://gohugo.io title=0.157.0 target=_blank>Hugo</a> & <a href=https://github.com/hugo-next/hugo-theme-next title=4.8.3 target=_blank>Hugo NexT.Gemini</a> 强力驱动</div><div class=beian><a href=https://beian.miit.gov.cn target=_blank>豫ICP备2021009490号</a>
+<img src=/imgs/gongan.png alt=豫公网安备>
+<a href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=41162302000074" target=_blank>豫公网安备 41162302000074 号</a></div></div></footer><script class=next-config data-name=page type=application/json>{"comments":true,"expired":false,"isHome":false,"isPage":false,"path":"post","permalink":"https://blogs.qipai360.cn/post/","title":"Posts","toc":false,"waline3":{"pagecnt":{"alias":"@waline/client","alias_name":"waline","file":"dist/pageview.js","name":"pageview","version":"3.5.7"}}}</script><script type=text/javascript src=https://blogs.qipai360.cn/js/3rd/animejs/3.2.2/anime.min.js crossorigin=anonymous defer></script><script type=text/javascript src=https://blogs.qipai360.cn/js/3rd/viewerjs/1.11.6/viewer.min.js crossorigin=anonymous defer></script><script class=next-config data-name=main type=application/json>{"bookmark":{"color":"#222","enable":true,"save":"manual"},"copybtn":true,"darkmode":true,"giscus":{"cfg":{"category":"Announcements","categoryid":"DIC_kwDOA6L0YM4CiXf9","emit":false,"inputposition":"top","mapping":"title","reactions":false,"repo":"rise-worlds/rise-worlds.github.io","repoid":"MDEwOlJlcG9zaXRvcnk2MTAxMTA0MA==","theme":"transparent_dark"},"js":"https://giscus.app/client.js"},"hostname":"https://blogs.qipai360.cn/","i18n":{"ds_day":" 天前","ds_days":" 天 ","ds_hour":" 小时前","ds_hours":" 小时 ","ds_just":"刚刚","ds_min":" 分钟前","ds_mins":" 分钟","ds_month":" 个月前","ds_years":" 年 ","empty":"没有找到任何搜索结果：${query}","hits":"找到 ${hits} 个搜索结果","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","placeholder":"搜索..."},"isMultiLang":false,"lang":"zh-CN","lazyload":false,"motion":{"async":true,"enable":true,"transition":{"collheader":"fadeInLeft","postblock":"fadeIn","postbody":"fadeInDown","postheader":"fadeInDown","sidebar":"fadeInUp"}},"postmeta":{"comments":{"enable":false,"plugin":"waline3"},"views":{"enable":true,"plugin":"waline3"}},"root":"/","scheme":"Gemini","share":{"addtoany":{"js":"https://static.addtoany.com/menu/page.js","locale":"zh-CN","num":8},"enable":false},"sidebar":{"display":"post","offset":12,"padding":18,"position":"left","width":256},"vendor":{"plugins":"local","router":{"name":"local","type":"modern","url":"https://blogs.qipai360.cn/js/3rd"}},"version":"4.8.3","waline3":{"cfg":{"emoji":false,"imguploader":false,"placeholder":"请文明发言哟 ヾ(≧▽≦*)o 可用快捷键选取表情符号：😀😄😁🥳👻👽👀🚄 (Window系统：Win+.，Mac系统：Control+Command+Space)","reaction":true,"reactiontext":["点赞","踩一下","得意","不屑","尴尬","睡觉"],"reactiontitle":"你认为这篇文章怎么样？","requiredmeta":["nick","mail"],"search":true,"serverurl":"https://walinejs.comment.lithub.cc","sofa":"快来发表你的意见吧 (≧∀≦)ゞ","wordlimit":200},"css":{"alias":"@waline/client","file":"dist/waline.css","name":"waline","version":"3.5.7"},"js":{"alias":"@waline/client","file":"dist/waline.js","name":"waline","version":"3.5.7"}}}</script><script type=text/javascript src="/js/main.min.js?=1772265585" defer></script></body></html>
