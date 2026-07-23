@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Adsl on Rise的自留地</title><link>https://blogs.qipai360.cn/tags/adsl/</link><description>Recent content in Adsl on Rise的自留地</description><generator>Hugo</generator><language>zh-CN</language><lastBuildDate>Fri, 09 Dec 2005 16:57:00 +0800</lastBuildDate><atom:link href="https://blogs.qipai360.cn/tags/adsl/rss.xml" rel="self" type="application/rss+xml"/><item><title>ADSL知识合集</title><link>https://blogs.qipai360.cn/post/adsl-knowledge-collection/</link><pubDate>Fri, 09 Dec 2005 16:57:00 +0800</pubDate><guid>https://blogs.qipai360.cn/post/adsl-knowledge-collection/</guid><description>&lt;p&gt;1，512K ADSL是什么意思？
+512K=512Kbps=512K bits/s=64K bytes/s
+我想这个换算应该没什么问题。&lt;/p&gt;
+&lt;p&gt;2，64K bytes/s意味着什么？&lt;/p&gt;
+&lt;p&gt;　　这个64K的真正含义是“个人用户所能独享的最大下载带宽”
+　　那么这又是什么意思呢，不知道现在有没有人注意过电信ADSL安装的申请表，上面的带宽项目写的是都是“不高于512K”，“不高于8M”等等，也就是说我们在正常的情况下可以拥有最多不超过64K的专有带宽。
+　　注意是“不高于”，那么也就是说很多时候我们的专有带宽可能小于64K，那有又是为什么呢？
+　　事实上，中国电信的ADSL是运行在ATM上面，ATM到chinanet边缘路由器带宽是155M，每一个边缘路由器可以连接3000用户，如果这些用户同时上网，那么每个用户其实只有50k bit/s的带宽，也就是7K bytes/s，加上路由器衰减，那么最终可能只有普通modem的速度了。
+　　当然以上只是假想的情况，毕竟3000人同时连在一台边缘路由器上面几乎是不可能的，电信也不会让路由器满负荷连接而使得速度下降如此之巨。
+　　但是，64K是最高专有带宽是毋庸置疑的。&lt;/p&gt;</description></item></channel></rss>

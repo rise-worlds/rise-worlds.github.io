@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>热更新 on Rise的自留地</title><link>https://blogs.qipai360.cn/tags/%E7%83%AD%E6%9B%B4%E6%96%B0/</link><description>Recent content in 热更新 on Rise的自留地</description><generator>Hugo</generator><language>zh-CN</language><lastBuildDate>Sat, 10 May 2025 14:37:27 +0800</lastBuildDate><atom:link href="https://blogs.qipai360.cn/tags/%E7%83%AD%E6%9B%B4%E6%96%B0/rss.xml" rel="self" type="application/rss+xml"/><item><title>xlua</title><link>https://blogs.qipai360.cn/post/xlua/</link><pubDate>Sat, 10 May 2025 14:37:27 +0800</pubDate><guid>https://blogs.qipai360.cn/post/xlua/</guid><description>&lt;h2 id="lua解析器"&gt;Lua解析器
+&lt;a class="header-anchor" href="#lua%e8%a7%a3%e6%9e%90%e5%99%a8"&gt;&lt;/a&gt;
+&lt;/h2&gt;&lt;p&gt;Lua解析器能够让我们在Unity中执行Lua&lt;/p&gt;
+&lt;p&gt;默认的Lua脚本放在&lt;code&gt;Resources&lt;/code&gt;文件夹下，并且要加上&lt;code&gt;.txt&lt;/code&gt;后缀 才能被执行&lt;/p&gt;
+
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt" id="hl-0-1"&gt;&lt;a class="lnlinks" href="#hl-0-1"&gt;1&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-2"&gt;&lt;a class="lnlinks" href="#hl-0-2"&gt;2&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-3"&gt;&lt;a class="lnlinks" href="#hl-0-3"&gt;3&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-4"&gt;&lt;a class="lnlinks" href="#hl-0-4"&gt;4&lt;/a&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-c#" data-lang="c#"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;LuaEnv&lt;/span&gt; &lt;span class="n"&gt;env&lt;/span&gt; &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;LuaEnv&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;env&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;DoString&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;print(&amp;#39;你好世界&amp;#39;)&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;//执行一个lua脚本&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;env&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;DoString&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;require(&amp;#39;Main&amp;#39;)&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;垃圾回收&lt;/strong&gt;&lt;/p&gt;</description></item></channel></rss>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Crash on Rise的自留地</title><link>https://blogs.qipai360.cn/tags/crash/</link><description>Recent content in Crash on Rise的自留地</description><generator>Hugo</generator><language>zh-CN</language><lastBuildDate>Sat, 28 Nov 2020 19:37:00 +0800</lastBuildDate><atom:link href="https://blogs.qipai360.cn/tags/crash/rss.xml" rel="self" type="application/rss+xml"/><item><title>Windows C++ 程序崩溃收集工具</title><link>https://blogs.qipai360.cn/post/windows-c++-program-crash-report-tool/</link><pubDate>Sat, 28 Nov 2020 19:37:00 +0800</pubDate><guid>https://blogs.qipai360.cn/post/windows-c++-program-crash-report-tool/</guid><description>&lt;h3 id="说明"&gt;说明
+&lt;a class="header-anchor" href="#%e8%af%b4%e6%98%8e"&gt;&lt;/a&gt;
+&lt;/h3&gt;&lt;p&gt;MiniDumper(LPCTSTR DumpFileNamePrefix)&lt;/p&gt;
+&lt;p&gt;MiniDumper(LPCTSTR DumpFileNamePrefix, LPCTSTR CmdLine, LPCTSTR ExeNameToReboot /* = NULL */)&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;DumpFileNamePrefix&lt;/code&gt; 崩溃文件名前缀&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;CmdLine&lt;/code&gt; 生成崩溃文件后执行命令（包含参数）&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;ExeNameToReboot&lt;/code&gt; 生成崩溃文件后执行指定程序&lt;/p&gt;
+&lt;h3 id="使用示例"&gt;使用示例
+&lt;a class="header-anchor" href="#%e4%bd%bf%e7%94%a8%e7%a4%ba%e4%be%8b"&gt;&lt;/a&gt;
+&lt;/h3&gt;&lt;p&gt;在崩溃时调用指定的程序，下面的示例是调用&lt;code&gt;CrashReport.exe&lt;/code&gt;上传到指定的服务器&lt;/p&gt;</description></item></channel></rss>

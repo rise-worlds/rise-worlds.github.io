@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Llvm on Rise的自留地</title><link>https://blogs.qipai360.cn/tags/llvm/</link><description>Recent content in Llvm on Rise的自留地</description><generator>Hugo</generator><language>zh-CN</language><lastBuildDate>Mon, 20 May 2024 10:11:31 +0800</lastBuildDate><atom:link href="https://blogs.qipai360.cn/tags/llvm/rss.xml" rel="self" type="application/rss+xml"/><item><title>Ollvm混淆与反混淆： goron框架字符串加密的实现原理</title><link>https://blogs.qipai360.cn/post/the-goron-framework-string-encryption-implementation-principle/</link><pubDate>Mon, 20 May 2024 10:11:31 +0800</pubDate><guid>https://blogs.qipai360.cn/post/the-goron-framework-string-encryption-implementation-principle/</guid><description>&lt;p&gt;函数实现逻辑在llvm/lib/Transforms/Obfuscation/StringEncryption.cpp文件中，IndirectBranch，集成自类ModulePass，实现了runOnModule函数&lt;/p&gt;</description></item><item><title>Ollvm混淆与反混淆： Goron框架编译与使用</title><link>https://blogs.qipai360.cn/post/the-goron-framework-is-compiled-and-used/</link><pubDate>Mon, 20 May 2024 09:29:28 +0800</pubDate><guid>https://blogs.qipai360.cn/post/the-goron-framework-is-compiled-and-used/</guid><description>&lt;p&gt;很多App实现的定制ollvm框架中都有goron框架的影子，或多或少的借鉴了它的功能，包括&lt;/p&gt;
+&lt;p&gt;间接跳转,并加密跳转目标(-mllvm -irobf-indbr)
+间接函数调用,并加密目标函数地址(-mllvm -irobf-icall)
+间接全局变量引用,并加密变量地址(-mllvm -irobf-indgv)
+字符串(c string)加密功能(-mllvm -irobf-cse)
+过程相关控制流平坦混淆(-mllvm -irobf-cff)
+想要了解怎么针对这些混淆功能完成去混淆，势必要先对其混淆过程有所了解，那么第一步就是对goron框架的编译使用&lt;/p&gt;</description></item><item><title>深入剖析 iOS 编译 Clang / LLVM</title><link>https://blogs.qipai360.cn/post/deeply-analyse-llvm/</link><pubDate>Thu, 31 Aug 2017 15:14:00 +0800</pubDate><guid>https://blogs.qipai360.cn/post/deeply-analyse-llvm/</guid><description>&lt;h2 id="前言"&gt;前言
+&lt;a class="header-anchor" href="#%e5%89%8d%e8%a8%80"&gt;&lt;/a&gt;
+&lt;/h2&gt;&lt;p&gt;2000年，伊利诺伊大学厄巴纳－香槟分校（University of Illinois at Urbana-Champaign 简称UIUC）这所享有世界声望的一流公立研究型大学的 Chris Lattner（他的 twitter 
+&lt;a href="https://twitter.com/clattner_llvm" title="@clattner_llvm" rel="noopener external nofollow noreferrer" target="_blank" class=" exturl"&gt;
+ @clattner_llvm
+ 
+&lt;/a&gt; ） 开发了一个叫作 Low Level Virtual Machine 的编译器开发工具套件，后来涉及范围越来越大，可以用于常规编译器，JIT编译器，汇编器，调试器，静态分析工具等一系列跟编程语言相关的工作，于是就把简称 LLVM 这个简称作为了正式的名字。Chris Lattner 后来又开发了 Clang，使得 LLVM 直接挑战 GCC 的地位。2012年，LLVM 获得美国计算机学会 ACM 的软件系统大奖，和 UNIX，WWW，TCP/IP，Tex，JAVA 等齐名。&lt;/p&gt;</description></item></channel></rss>

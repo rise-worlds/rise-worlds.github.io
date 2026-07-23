@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Translations on Rise的自留地</title><link>https://blogs.qipai360.cn/tags/translations/</link><description>Recent content in Translations on Rise的自留地</description><generator>Hugo</generator><language>zh-CN</language><lastBuildDate>Wed, 12 Jun 2024 09:57:02 +0800</lastBuildDate><atom:link href="https://blogs.qipai360.cn/tags/translations/rss.xml" rel="self" type="application/rss+xml"/><item><title>Telegram 设置自定义翻译语言界面</title><link>https://blogs.qipai360.cn/post/telegram-setting-up-a-translation-interface-language/</link><pubDate>Wed, 12 Jun 2024 09:57:02 +0800</pubDate><guid>https://blogs.qipai360.cn/post/telegram-setting-up-a-translation-interface-language/</guid><description>&lt;ol&gt;
+&lt;li&gt;进入官方语言翻译网页：https://translations.telegram.org&lt;/li&gt;
+&lt;li&gt;点击网页中的 &lt;code&gt;Start Translating&lt;/code&gt; 地址，就会弹出选择语言的界面&lt;/li&gt;
+&lt;li&gt;选择对应的语言之后会跳转到对应的网页，然后点击下面 &lt;code&gt;Actions&lt;/code&gt; 下的 &lt;code&gt;Use Telegram in Xxx&lt;/code&gt; (Xxx表示对应的语言)&lt;/li&gt;
+&lt;li&gt;之后会在新页面内唤醒本地安装的 &lt;code&gt;Telegram&lt;/code&gt; 软件并提示你切换为对应语言，确认即可（多端都支持）
+注：也可以使用 &lt;code&gt;Sharing Link&lt;/code&gt; 内的链接发送给任何人，点击访问后也会唤起软件自动设置为对应语言&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id="设置为简体中文"&gt;设置为简体中文
+&lt;a class="header-anchor" href="#%e8%ae%be%e7%bd%ae%e4%b8%ba%e7%ae%80%e4%bd%93%e4%b8%ad%e6%96%87"&gt;&lt;/a&gt;
+&lt;/h2&gt;&lt;p&gt;如果你不想自己找，我这里给出官方的简中语言包设置地址：
+
+&lt;a href="https://t.me/setlanguage/zh-hans-beta" title="简体中文" rel="noopener external nofollow noreferrer" target="_blank" class=" exturl"&gt;
+ 简体中文
+ 
+&lt;/a&gt;
+
+&lt;a href="https://t.me/setlanguage/zh-hant-beta" title="繁体中文" rel="noopener external nofollow noreferrer" target="_blank" class=" exturl"&gt;
+ 繁体中文
+ 
+&lt;/a&gt;
+
+&lt;a href="https://t.me/setlanguage/uk" title="俄语" rel="noopener external nofollow noreferrer" target="_blank" class=" exturl"&gt;
+ 俄语
+ 
+&lt;/a&gt;
+
+&lt;a href="https://t.me/setlanguage/ja-beta" title="日语" rel="noopener external nofollow noreferrer" target="_blank" class=" exturl"&gt;
+ 日语
+ 
+&lt;/a&gt;
+
+&lt;a href="https://t.me/setlanguage/ru" title="乌克兰" rel="noopener external nofollow noreferrer" target="_blank" class=" exturl"&gt;
+ 乌克兰
+ 
+&lt;/a&gt;&lt;/p&gt;</description></item></channel></rss>

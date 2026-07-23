@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Git on Rise的自留地</title><link>https://blogs.qipai360.cn/tags/git/</link><description>Recent content in Git on Rise的自留地</description><generator>Hugo</generator><language>zh-CN</language><lastBuildDate>Wed, 31 Dec 2025 17:30:00 +0800</lastBuildDate><atom:link href="https://blogs.qipai360.cn/tags/git/rss.xml" rel="self" type="application/rss+xml"/><item><title>修改git提交的名字和邮箱</title><link>https://blogs.qipai360.cn/post/change-git-commit-name-email/</link><pubDate>Mon, 20 Jan 2020 15:05:00 +0800</pubDate><guid>https://blogs.qipai360.cn/post/change-git-commit-name-email/</guid><description>&lt;p&gt;由于有些规定，要保密个人信息，只能通过这种方法来把个人信息给过滤掉。&lt;/p&gt;
+&lt;p&gt;修改&lt;code&gt;OLD_EMAIL&lt;/code&gt;为要替换的旧邮箱，&lt;code&gt;NEW_NAME&lt;/code&gt;和&lt;code&gt;NEW_EMAIL&lt;/code&gt;为新的个人名字和邮箱，修改完成后强制更新到服务器。&lt;/p&gt;</description></item><item><title>初次使用 git 的“核弹级选项”：filter-branch 从仓库中删除文件</title><link>https://blogs.qipai360.cn/post/first-use-git-filter-branch-to-remove-files/</link><pubDate>Thu, 18 Dec 2014 19:02:00 +0800</pubDate><guid>https://blogs.qipai360.cn/post/first-use-git-filter-branch-to-remove-files/</guid><description>&lt;p&gt;当初看 Pro Git 时就被作者这个“
+&lt;a href="http://git-scm.com/book/zh/Git-%E5%B7%A5%E5%85%B7-%E9%87%8D%E5%86%99%E5%8E%86%E5%8F%B2#%E6%A0%B8%E5%BC%B9%E7%BA%A7%E9%80%89%E9%A1%B9:-filter-branch" title="核弹级选项" rel="noopener external nofollow noreferrer" target="_blank" class=" exturl"&gt;
+ 核弹级选项
+ 
+&lt;/a&gt;”的称呼吓到了，因此一直没敢好奇地去尝试。核弹啊，用对了威力无穷，用错了破坏力无穷！&lt;/p&gt;
+&lt;p&gt;但是，今天，我不得不用了，因为我想把我的原来写一些代码放到 github 上去公开。由于之前没想过要公开，到上传时才发现不能上传大于50M的文件。&lt;/p&gt;</description></item><item><title>Git 少用 Pull 多用 Fetch 和 Merge</title><link>https://blogs.qipai360.cn/post/git-use-fetch-merge-not-pull/</link><pubDate>Tue, 05 Nov 2013 15:23:00 +0800</pubDate><guid>https://blogs.qipai360.cn/post/git-use-fetch-merge-not-pull/</guid><description>&lt;p&gt;本文有点长而且有点乱，但就像_Mark Twain 
+&lt;a href="http://en.wikiquote.org/wiki/Blaise_Pascal" title="Blaise Pascal" rel="noopener external nofollow noreferrer" target="_blank" class=" exturl"&gt;
+ Blaise Pascal
+ 
+&lt;/a&gt;的_笑话里说的那样：我没有时间让它更短些。在Git的邮件列表里有很多
+&lt;a href="http://thread.gmane.org/gmane.comp.version-control.git/116903/" title="关于本文的讨论" rel="noopener external nofollow noreferrer" target="_blank" class=" exturl"&gt;
+ 关于本文的讨论
+ 
+&lt;/a&gt;，我会尽量把其中相关的观点列在下面。&lt;/p&gt;</description></item><item><title>Git中的AutoCRLF与SafeCRLF换行符问题</title><link>https://blogs.qipai360.cn/post/git-lf-and-safecrlf-newline-problems/</link><pubDate>Mon, 16 Sep 2013 18:20:00 +0800</pubDate><guid>https://blogs.qipai360.cn/post/git-lf-and-safecrlf-newline-problems/</guid><description>&lt;p&gt;最近在使用GitHub，发现不时没有修改过的文件要提交，对比发现文件全部修改，但找不到不一样的地方。
+想可能是换行符的问题，因为&lt;code&gt;Windows&lt;/code&gt;和&lt;code&gt;Linux&lt;/code&gt;的换行符不一样，而&lt;code&gt;Git&lt;/code&gt;默认应该是&lt;code&gt;Linux&lt;/code&gt;的，今天Bing了下，果然是这个问题。&lt;/p&gt;</description></item></channel></rss>
